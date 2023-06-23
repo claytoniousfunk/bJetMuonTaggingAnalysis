@@ -1,0 +1,3 @@
+# ignore Emacs temporary files (all files ending in "~")
+*~
+

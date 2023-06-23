@@ -1,0 +1,8 @@
+int isMC_status = 0;
+int AASetup_status = 0;
+TString jetTreeString = "akCs4PFJetAnalyzer";
+TString hltString = "hltanalysis";
+TString muonTreeString = "ggHiNtuplizer";
+const int NeventFilters = 3;
+std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter","pphfCoincFilter2Th4","pclusterCompatibilityFilter"};
+
