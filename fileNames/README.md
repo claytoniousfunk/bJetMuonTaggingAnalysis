@@ -3,12 +3,12 @@
 This folder contains .txt files containing all the files used for each dataset in the analysis.
 
 ## fileNames_HYDJET_MinBias.txt
-Dataset: /MinBias_Hydjet_Drum5F_2018_5p02TeV/HINPbPbAutumn18DR-NoPUmva98_103X_upgrade2018_realistic_HI_v11-v1/AODSIM
-Notes: Used to measure trigger turn-on curves in simulation and compare to PbPb MinBias data.
+- Dataset: /MinBias_Hydjet_Drum5F_2018_5p02TeV/HINPbPbAutumn18DR-NoPUmva98_103X_upgrade2018_realistic_HI_v11-v1/AODSIM
+- Notes: Used to measure trigger turn-on curves in simulation and compare to PbPb MinBias data.
 
 ## fileNames_PYTHIAHYDJET_BJet.txt
-Dataset: /Bjet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/HINPbPbAutumn18DR-mva98_103X_upgrade2018_realistic_HI_v11-v1/AODSIM
-Notes: Used for statistical enhancement of the b-jet muon rel-pt templates.
+- Dataset: /Bjet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/HINPbPbAutumn18DR-mva98_103X_upgrade2018_realistic_HI_v11-v1/AODSIM
+- Notes: Used for statistical enhancement of the b-jet muon rel-pt templates.
 
 ## fileNames_PYTHIAHYDJET_DiJet.txt
 Dataset: /DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/HINPbPbAutumn18DR-mva98_103X_upgrade2018_realistic_HI_v11-v1/AODSIM
