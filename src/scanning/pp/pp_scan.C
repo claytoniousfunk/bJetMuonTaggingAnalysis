@@ -105,8 +105,8 @@ TH1D *h_muphi_inclRecoMuonTag_triggerOn[NJetPtIndices];
 void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_SingleMuon_L3Mu5_18Dec22/SingleMuon/crab_pp_SingleMuon_L3Mu5_18Dec22/221217_212444/0000/HiForestAOD_10.root", TString output = "out.root"){
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("../../../JetEnergyCorrections/"); // L2Relative correction
-  Files.push_back("../../../JetEnergyCorrections/"); // L2L3Residual correction
+  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   JetCorrector JEC(Files);
   /// >>>>>>>>>>>>>>> print out some info
   printIntroduction_pp_scan_V3p7();
