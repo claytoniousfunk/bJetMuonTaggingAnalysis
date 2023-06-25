@@ -3,12 +3,10 @@ from myProcesses.condor.condor_utility import jobManager
 jobname = 'PbPb_SingleMuon_scan'
 
 #put the file list here
-dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_PbPb_SingleMuon_19Dec22.txt'
-#dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_PbPb_MB_0_20Mar23.txt'
-#dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_PbPb_minBias_collection.txt'
+dblist = '../../../fileNames/fileNames_PbPb_SingleMuon.txt'
+#dblist = '../../../fileNames/fileNames_PbPb_MinBias.txt'
 
 exe = 'PbPb_scan.C'
-#exe = 'PbPb_scan_V3p7_JERsmear.C'
 
 jm = jobManager(jobSite ='cern', 
 	jobname = jobname, 	

@@ -1,11 +1,10 @@
 from myProcesses.condor.condor_utility import jobManager
 
-jobname = 'pp_scan'
+jobname = 'pp_SingleMuon_scan'
 
 #put the file list here
-dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_pp_SingleMuon_19Dec22.txt'
-#dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_pp_MB_1May23.txt'
-#dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_pp_MB_4_12Jun23.txt'
+dblist = '../../../fileNames/fileNames_pp_SingleMuon.txt'
+#dblist = '../../../fileNames/fileNames_pp_MinBias.txt'
 
 exe = 'pp_scan.C'
 

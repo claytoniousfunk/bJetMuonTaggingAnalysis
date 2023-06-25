@@ -3,7 +3,7 @@ from myProcesses.condor.condor_utility import jobManager
 jobname = 'PYTHIA_response'
 
 #put the file list here
-dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_PYTHIA_DiJet_5Nov22.txt'
+dblist = '../../../fileNames/fileNames_PYTHIA_DiJet.txt'
 
 exe = 'PYTHIA_response_bJets.C'
 

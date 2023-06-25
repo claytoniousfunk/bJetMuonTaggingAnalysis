@@ -3,22 +3,14 @@ from myProcesses.condor.condor_utility import jobManager
 jobname = 'PYTHIAHYDJET_DiJet_scan'
 
 #put the file list here
-dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_PH_DiJet_20Feb23.txt'
-#dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_PH_MuJet_27Feb23.txt'
-#dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_PYTHIAHYDJET_MuJet_5Jun23.txt'
-#dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23.txt'
-#dblist = '/afs/cern.ch/user/c/cbennett/condorSkim/fileNames/fileNames_PH_BJet_23Feb23.txt'
+dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet.txt'
+#dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_BJet.txt'
+#dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_MuJet.txt'
+#dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut.txt'
+
 
 
 exe = 'PYTHIAHYDJET_scan.C'
-#exe = 'PYTHIAHYDJET_scan_V3p7_JEU.C'
-#exe = 'PYTHIAHYDJET_scan_V3p7_JERsmear.C'
-#exe = 'PYTHIAHYDJET_scan_response_v2.C'
-#exe = 'PYTHIAHYDJET_scan_response_v2_bJets.C'
-#exe = 'PYTHIAHYDJET_scan_response_v2_JERsmear.C'
-#exe = 'PYTHIAHYDJET_scan_V3p7_noVzWeight_noHiBinWeight.C'
-#exe = 'PYTHIAHYDJET_scan_V3p7_noVzWeight.C'
-#exe = 'PYTHIAHYDJET_scan_V3p7_mugenfilter_emulation.C'
 
 jm = jobManager(jobSite ='cern', 
 	jobname = jobname, 	
