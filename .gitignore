@@ -3,3 +3,7 @@
 
 # ignore my rootFiles folder
 rootFiles/
+
+# ignore all root file
+*.root
+
