@@ -76,7 +76,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 #include "../../../headers/config/readConfig.h"
 
 
-void PYTHIAHYDJET_scan_response_bJets(TString input = "", TString output = "out.root"){
+void PYTHIAHYDJET_scan_response_bJets(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/230606_054515/0000/HiForestAOD_1.root", TString output = "out.root"){
 
   
   printIntroduction();
