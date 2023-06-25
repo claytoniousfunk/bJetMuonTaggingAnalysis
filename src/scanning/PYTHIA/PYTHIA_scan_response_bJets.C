@@ -75,7 +75,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 #include "../../../headers/config/readConfig.h"
 
 
-void PYTHIA_scan_response_bJets(TString input = "", TString output = "out.root"){
+void PYTHIA_scan_response_bJets(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_noRecoJetPtCut_10Aug22/QCD_pThat-15_Dijet_TuneCP5_5p02TeV_pythia8/crab_PYTHIA_forest_noRecoJetPtCut_10Aug22/220810_175022/0000/HiForestAOD_100.root", TString output = "out.root"){
 
   
   printIntroduction();
