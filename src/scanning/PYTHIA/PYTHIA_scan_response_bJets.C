@@ -31,48 +31,48 @@
 #include <stdlib.h>
 
 // event map
-#include "/afs/cern.ch/user/c/cbennett/CMSSW_10_3_3_patch1/src/myProcesses/hiforest/plugin/eventMap_hiForest.h"
+#include "../../../eventMap/eventMap.h"
 // jet corrector
-#include "/afs/cern.ch/user/c/cbennett/CMSSW_10_3_3_patch1/src/JetEnergyCorrections/JetCorrector.h"
+#include "../../../JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/fitParameters/vzFitParams_PYTHIA.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA.h"
 // hiBin-fit parameters
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/fitParameters/hiBinFitParams.h"
+#include "../../../headers/fitParameters/hiBinFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/fitFunctions/fitFxn_vz_PYTHIA.h"
+#include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // hiBin-fit function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/fitFunctions/fitFxn_hiBin.h"
+#include "../../../headers/fitFunctions/fitFxn_hiBin.h"
 
 // eta-phi mask function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/etaPhiMask.h"
+#include "../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/getDr.h"
+#include "../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/getJetPtBin.h"
+#include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/getPtRel.h"
+#include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/isQualityMuon_tight.h"
+#include "../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/isWDecayMuon.h"
+#include "../../../headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/triggerIsOn.h"
+#include "../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/introductions/printIntroduction_PYTHIAHYDJET_response_v2.h"
+#include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_response_v2.h"
 // analysis config
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/config/config_PYTHIA.h"
+#include "../../../headers/config/config_PYTHIA.h"
 // read config
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/config/readConfig.h"
+#include "../../../headers/config/readConfig.h"
 
 
 void PYTHIA_scan_response_bJets(TString input = "", TString output = "out.root"){

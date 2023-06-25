@@ -31,41 +31,41 @@
 #include <stdlib.h>
 
 // event map
-#include "/afs/cern.ch/user/c/cbennett/CMSSW_10_3_3_patch1/src/myProcesses/hiforest/plugin/eventMap_hiForest.h"
+#include "../../../eventMap/eventMap_hiForest.h"
 // jet corrector
-#include "/afs/cern.ch/user/c/cbennett/CMSSW_10_3_3_patch1/src/JetEnergyCorrections/JetCorrector.h"
+#include "../../../JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p1.h"
 
 // eta-phi mask function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/etaPhiMask.h"
+#include "../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/getDr.h"
+#include "../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/getJetPtBin.h"
+#include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/getPtRel.h"
+#include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/isQualityMuon_tight.h"
+#include "../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/isWDecayMuon.h"
+#include "../../../headers/functions/isWDecayMuon.h"
 // isWDecayMuon_raw function (input is rawJetPt)
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/isWDecayMuon_raw.h"
+#include "../../../headers/functions/isWDecayMuon_raw.h"
 // triggerIsOn function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/triggerIsOn.h"
+#include "../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
+#include "../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/config/config_PbPb_SingleMuon.h"
-//#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/config/config_PbPb_MinBias.h"
+#include "../../../headers/config/config_PbPb_SingleMuon.h"
+//#include "../../../headers/config/config_PbPb_MinBias.h"
 // read config
-#include "/afs/cern.ch/user/c/cbennett/condorSkim/headers/config/readConfig.h"
+#include "../../../headers/config/readConfig.h"
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TH1D *h_NEvents;
