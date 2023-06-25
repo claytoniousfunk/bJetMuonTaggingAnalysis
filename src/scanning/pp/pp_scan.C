@@ -258,7 +258,7 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
    
    // set the weight as 1/prescale value
 
-   double w_trig = 1.0 * triggerDecision_Prescl * 1.0
+   double w_trig = 1.0 / ( triggerDecision_Prescl * 1.0 );
    
    bool eventHasGoodJet = false;
    bool eventHasInclRecoMuonTag = false;
