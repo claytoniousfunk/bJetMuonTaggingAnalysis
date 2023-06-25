@@ -1,6 +1,6 @@
 from myProcesses.condor.condor_utility import jobManager
 
-jobname = 'PYTHIA_response'
+jobname = 'PYTHIA_response_bJets'
 
 #put the file list here
 dblist = '../../../fileNames/fileNames_PYTHIA_DiJet.txt'
