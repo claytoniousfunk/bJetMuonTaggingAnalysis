@@ -84,7 +84,7 @@ void PYTHIA_scan_response_bJets(TString input = "", TString output = "out.root")
   // JET ENERGY CORRECTIONS
   vector<string> Files;
   
-  Files.push_back("/afs/cern.ch/user/c/cbennett/CMSSW_10_3_3_patch1/src/JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 

@@ -85,7 +85,7 @@ void PYTHIAHYDJET_scan_response_bJets(TString input = "", TString output = "out.
   // JET ENERGY CORRECTIONS
   vector<string> Files;
   
-  Files.push_back("/afs/cern.ch/user/c/cbennett/CMSSW_10_3_3_patch1/src/JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 

@@ -181,12 +181,11 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  //Files.push_back("/home/clayton/Analysis/code/JetEnergyCorrections/Autumn18_HI_V6_MC_L2Relative_AK4PF.txt"); // LOCAL
-  Files.push_back("/afs/cern.ch/user/c/cbennett/CMSSW_10_3_3_patch1/src/JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 
-  JetUncertainty JEU("/afs/cern.ch/user/c/cbennett/CMSSW_10_3_3_patch1/src/JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
 
   
   printIntroduction_PYTHIAHYDJET_scan_V3p7();
