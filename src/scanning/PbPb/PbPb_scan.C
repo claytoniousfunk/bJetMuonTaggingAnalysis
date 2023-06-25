@@ -31,7 +31,7 @@
 #include <stdlib.h>
 
 // event map
-#include "../../../eventMap/eventMap_hiForest.h"
+#include "../../../eventMap/eventMap.h"
 // jet corrector
 #include "../../../JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
