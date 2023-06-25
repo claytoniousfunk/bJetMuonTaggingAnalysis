@@ -113,7 +113,7 @@ TH2D *h_mupt_muptrel[NCentralityIndices][NJetPtIndices];
 TH2D *h_muptrel_jetpt[NCentralityIndices];
 
 ///////////////////////  start the program
-void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/PbPbMB_Run2MiniAOD_HIMinimumBias0_20Mar23/HIMinimumBias0/crab_PbPbMB_Run2MiniAOD_HIMinimumBias0_20Mar23/230320_184105/0000/HiForestMiniAOD_1-1.root", TString output = "out.root"){
+void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/PbPb_SingleMuon_L3Mu5_11Dec22/HISingleMuon/crab_PbPb_SingleMuon_L3Mu5_11Dec22/221211_222201/0000/HiForestAOD_1.root", TString output = "out.root"){
 
 
   // Version notes:
