@@ -339,14 +339,6 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
     if(em->checkEventFilter()) continue;
 
 
-
-    cout << "  runNumber(" << evi << ") = " << em->runNumber << endl;
-
-
-
-
-
-
     // In data, event weight = 1
     double w = 1.0;
     
