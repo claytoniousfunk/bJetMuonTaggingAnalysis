@@ -1,3 +1,4 @@
+// general analysis options
 int isMC_status = 1;
 int AASetup_status = 0;
 //TString jetTreeString = "akFlowPuCs4PFJetAnalyzer";
@@ -6,3 +7,7 @@ TString muonTreeString = "ggHiNtuplizerGED";
 TString hltString = "hltanalysis";
 const int NeventFilters = 5;
 std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter", "HBHENoiseFilterResultRun2Loose", "collisionEventSelectionAODv2", "phfCoincFilter3Th4", "pclusterCompatibilityFilter"};
+// options for systematic studies
+bool apply_JER_smear = false;
+bool apply_JEU_shift_up = false;
+bool apply_JEU_shift_down = false;
