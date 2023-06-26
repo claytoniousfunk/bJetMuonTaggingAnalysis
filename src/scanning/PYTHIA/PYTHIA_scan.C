@@ -441,9 +441,19 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
       double correctedPt_down = x * (1 - JEU.GetUncertainty().first);
       double correctedPt_up = x * (1 + JEU.GetUncertainty().second);
 
-      //x = correctedPt_down;
-      //x = correctedPt_up;
+      if(apply_JEU_shift_up) x = correctedPt_up;
+      else if(apply_JEU_shift_down) x = correctedPt_down;
 
+      double mu = 1.0;
+      double sigma = 0.2;
+      double smear = 0.0;
+
+      if(apply_JER_smear){
+	sigma = 0.663*JER_fxn->Eval(x); // apply a 20% smear
+	smear = randomGenerator->Gaus(mu,sigma);
+	x = x * smear;
+      }
+      
       
       if(etaPhiMask(y,z)) continue;
 
