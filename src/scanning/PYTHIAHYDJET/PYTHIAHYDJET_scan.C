@@ -34,7 +34,7 @@
 #include "../../../eventMap/eventMap.h"
 // jet corrector
 #include "../../../JetEnergyCorrections/JetCorrector.h"
-// jet corrector
+// jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
 #include "../../../headers/AnalysisSetupV2p1.h"
