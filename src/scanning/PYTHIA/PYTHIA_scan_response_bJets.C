@@ -37,7 +37,7 @@
 // jet uncertainty
 #include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/Analysis/SetupV2p1.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
 #include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/fitParameters/vzFitParams_PYTHIA.h"
 // hiBin-fit parameters
