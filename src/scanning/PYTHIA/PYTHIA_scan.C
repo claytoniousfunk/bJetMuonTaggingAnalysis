@@ -34,50 +34,50 @@
 // User includes
 
 // event map
-#include "../../../eventMap/eventMap.h"
+#include "~/bJetMuonTaggingAnalysis/eventMap/eventMap.h"
 // jet corrector
-#include "../../../JetEnergyCorrections/JetCorrector.h"
+#include "~/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
 // jet uncertainty
-#include "../../../JetEnergyCorrections/JetUncertainty.h"
+#include "~/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p1.h"
+#include "~/bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA.h"
+#include "~/bJetMuonTaggingAnalysis/headers/fitParameters/vzFitParams_PYTHIA.h"
 // hiBin-fit parameters
-#include "../../../headers/fitParameters/hiBinFitParams.h"
+#include "~/bJetMuonTaggingAnalysis/headers/fitParameters/hiBinFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
+#include "~/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // hiBin-fit function
-#include "../../../headers/fitFunctions/fitFxn_hiBin.h"
+#include "~/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_hiBin.h"
 
 // eta-phi mask function
-#include "../../../headers/functions/etaPhiMask.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../headers/functions/getDr.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../headers/functions/getJetPtBin.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../headers/functions/getCentBin_v2.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../headers/functions/getPtRel.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../headers/functions/isQualityMuon_tight.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../headers/functions/isWDecayMuon.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "../../../headers/functions/triggerIsOn.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "~/bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "../../../headers/introductions/printIntroduction_PYTHIA_scan_V3p7.h"
+#include "~/bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_PYTHIA_scan_V3p7.h"
 // analysis config
-#include "../../../headers/config/config_PYTHIA.h"
+#include "~/bJetMuonTaggingAnalysis/headers/config/config_PYTHIA.h"
 // read config
-#include "../../../headers/config/readConfig.h"
+#include "~/bJetMuonTaggingAnalysis/headers/config/readConfig.h"
 
 
 
@@ -164,11 +164,11 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("~/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
   JetCorrector JEC(Files);
 
 
-  JetUncertainty JEU("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("~/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
 
 
 
