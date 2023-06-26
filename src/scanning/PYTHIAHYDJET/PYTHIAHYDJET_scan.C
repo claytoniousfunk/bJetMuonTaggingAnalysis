@@ -31,50 +31,50 @@
 #include <stdlib.h>
 
 // event map
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/eventMap/eventMap.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/eventMap/eventMap.h"
 // jet corrector
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
 // jet uncertainty
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetUncertainty.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/fitParameters/vzFitParams_PH.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/fitParameters/vzFitParams_PH.h"
 // hiBin-fit parameters
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/fitParameters/hiBinFitParams.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/fitParameters/hiBinFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_vz_PH.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_vz_PH.h"
 // hiBin-fit function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_hiBin.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_hiBin.h"
 
 // eta-phi mask function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
 // getDr function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/getDr.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/getDr.h"
 // getJetPtBin function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/config/config_PYTHIAHYDJET.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/config/config_PYTHIAHYDJET.h"
 // read config
-#include "/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/config/readConfig.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/headers/config/readConfig.h"
 
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -181,11 +181,11 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 
-  JetUncertainty JEU("/bJetMuonTaggingAnalysis/bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
 
   
   printIntroduction_PYTHIAHYDJET_scan_V3p7();

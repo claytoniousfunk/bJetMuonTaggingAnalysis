@@ -31,50 +31,50 @@
 #include <stdlib.h>
 
 // event map
-#include "/bJetMuonTaggingAnalysis/eventMap/eventMap.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/eventMap/eventMap.h"
 // jet corrector
-#include "/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
 // jet uncertainty
-#include "/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetUncertainty.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "/bJetMuonTaggingAnalysis/headers/Analysis/SetupV2p1.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/Analysis/SetupV2p1.h"
 // vz-fit parameters
-#include "/bJetMuonTaggingAnalysis/headers/fitParameters/vzFitParams_PYTHIA.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/fitParameters/vzFitParams_PYTHIA.h"
 // hiBin-fit parameters
-#include "/bJetMuonTaggingAnalysis/headers/fitParameters/hiBinFitParams.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/fitParameters/hiBinFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_vz_PYTHIA.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // hiBin-fit function
-#include "/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_hiBin.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_hiBin.h"
 
 // eta-phi mask function
-#include "/bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
 // getDr function
-#include "/bJetMuonTaggingAnalysis/headers/functions/getDr.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getDr.h"
 // getJetPtBin function
-#include "/bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "/bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "/bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "/bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "/bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "/bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "/bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_PYTHIAHYDJET_response_v2.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_PYTHIAHYDJET_response_v2.h"
 // analysis config
-#include "/bJetMuonTaggingAnalysis/headers/config/config_PYTHIA.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/config/config_PYTHIA.h"
 // read config
-#include "~/bJetMuonTaggingAnalysis/headers/config/readConfig.h"
+#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/config/readConfig.h"
 
 
 void PYTHIA_scan_response_bJets(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_noRecoJetPtCut_10Aug22/QCD_pThat-15_Dijet_TuneCP5_5p02TeV_pythia8/crab_PYTHIA_forest_noRecoJetPtCut_10Aug22/220810_175022/0000/HiForestAOD_100.root", TString output = "out.root"){
@@ -86,11 +86,11 @@ void PYTHIA_scan_response_bJets(TString input = "/eos/user/c/cbennett/forests/PY
   // JET ENERGY CORRECTIONS
   vector<string> Files;
   
-  Files.push_back("~/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 
-  JetUncertainty JEU("~/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
 
   // WEIGHT FUNCTIONS
 
