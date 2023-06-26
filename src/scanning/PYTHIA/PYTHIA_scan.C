@@ -37,6 +37,8 @@
 #include "../../../eventMap/eventMap.h"
 // jet corrector
 #include "../../../JetEnergyCorrections/JetCorrector.h"
+// jet uncertainty
+#include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
@@ -164,6 +166,11 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
   vector<string> Files;
   Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
   JetCorrector JEC(Files);
+
+
+  JetUncertainty JEU("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
+
+
 
   // WEIGHT FUNCTIONS
 
@@ -427,6 +434,17 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
       double y = em->jeteta[i]; // recoJetEta
       double z = em->jetphi[i]; // recoJetPhi
 
+      JEU.SetJetPT(x);
+      JEU.SetJetEta(y);
+      JEU.SetJetPhi(z);
+
+      double correctedPt_down = x * (1 - JEU.GetUncertainty().first);
+      double correctedPt_up = x * (1 + JEU.GetUncertainty().second);
+
+      //x = correctedPt_down;
+      //x = correctedPt_up;
+
+      
       if(etaPhiMask(y,z)) continue;
 
       double muPtRel = -1.0;

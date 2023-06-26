@@ -604,6 +604,20 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       double y = em->jeteta[i]; // recoJetEta
       double z = em->jetphi[i]; // recoJetPhi
 
+      JEU.SetJetPT(x);
+      JEU.SetJetEta(y);
+      JEU.SetJetPhi(z);
+
+      double correctedPt_down = x * (1 - JEU.GetUncertainty().first);
+      double correctedPt_up = x * (1 + JEU.GetUncertainty().second);
+
+      //x = correctedPt_down;
+      //x = correctedPt_up;
+
+
+
+      
+
       if(etaPhiMask(y,z)) continue;
 
       double muPtRel = -1.0;
