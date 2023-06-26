@@ -6,7 +6,7 @@ jobname = 'pp_SingleMuon_scan'
 dblist = '../../../fileNames/fileNames_pp_SingleMuon.txt'
 #dblist = '../../../fileNames/fileNames_pp_MinBias.txt'
 
-exe = 'pp_scan.C'
+exe = '../scanning/pp/pp_scan.C'
 
 jm = jobManager(jobSite ='cern', 
 	jobname = jobname, 	
