@@ -35,6 +35,8 @@
 #include "../../../eventMap/eventMap.h"
 // jet corrector
 #include "../../../JetEnergyCorrections/JetCorrector.h"
+// jet uncertainty
+#include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
@@ -88,6 +90,10 @@ void PYTHIAHYDJET_scan_response_bJets(TString input = "root://cmsxrootd.fnal.gov
   Files.push_back("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
+
+  JetUncertainty JEU("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
+
+
 
   // WEIGHT FUNCTIONS
 
@@ -304,6 +310,17 @@ void PYTHIAHYDJET_scan_response_bJets(TString input = "root://cmsxrootd.fnal.gov
 	    //matchedRecoJetPt = em->jetpt[k];
 	    matchedRawJetPt = em->rawpt[k];
 
+	    JEU.SetJetPT(matchedRecoJetPt);
+	    JEU.SetJetEta(em->jeteta[k]);
+	    JEU.SetJetPhi(em->jetphi[k]);
+
+	    double correctedPt_down = x * (1 - JEU.GetUncertainty().first);
+	    double correctedPt_up = x * (1 + JEU.GetUncertainty().second);
+
+	    //matchedRecoJetPt = correctedPt_down;
+	    //matchedRecoJetPt = correctedPt_up;
+
+	    
 	    //if(x>60) cout << "dR(reco,gen) = " << minDr << " | genPt = " << x << " | rawPt = " << em->rawpt[k] << " | jetPt = " << em->jetpt[k] << " | corrPt = " << JEC.GetCorrectedPT() << endl;
 
 	  }	
