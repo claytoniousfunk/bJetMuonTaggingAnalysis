@@ -516,6 +516,14 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
 
+  TRandom *randomGenerator = new TRandom2();
+
+  // jet-energy resolution fit function
+  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
+  JER_fxn->SetParameter(0,-1.91758e-05);
+  JER_fxn->SetParameter(1,-1.79691e+00);
+  JER_fxn->SetParameter(2,1.09880e+01);
+
   // define vz & hiBin reweighting functions
   loadFitFxn_vz();
 
@@ -608,11 +616,27 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       JEU.SetJetEta(y);
       JEU.SetJetPhi(z);
 
-      double correctedPt_down = x * (1 - JEU.GetUncertainty().first);
-      double correctedPt_up = x * (1 + JEU.GetUncertainty().second);
+      double correctedPt_down = 1.0;
+      double correctedPt_up = 1.0;
 
-      //x = correctedPt_down;
-      //x = correctedPt_up;
+      if(apply_JEU_shift_up){
+	correctedPt_up = x * (1 + JEU.GetUncertainty().second);
+	x = correctedPt_up;
+      }
+      else if(apply_JEU_shift_down){
+	correctedPt_down = x * (1 - JEU.GetUncertainty().first);
+	x = correctedPt_down;
+      }
+
+      double mu = 1.0;
+      double sigma = 0.2;
+      double smear = 0.0;
+
+      if(apply_JER_smear){
+	sigma = 0.663*JER_fxn->Eval(x); // apply a 20% smear
+	smear = randomGenerator->Gaus(mu,sigma);
+	x = x * smear;
+      }
 
 
 

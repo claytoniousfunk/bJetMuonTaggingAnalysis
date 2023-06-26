@@ -177,7 +177,7 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
   //TF1 *fVzWeightFunction = new TF1("fvz", "pol1", -15, 15);
   //fVzWeightFunction->SetParameters(1.01655,-0.0184946);
 
-  loadFitFxn_vz();
+  
 
 
 
@@ -373,6 +373,8 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
   JER_fxn->SetParameter(0,1.26585e-01);
   JER_fxn->SetParameter(1,-9.72986e-01);
   JER_fxn->SetParameter(2,3.67352e-04);
+
+  loadFitFxn_vz();
 
   // event loop
   int evi_frac = 0;

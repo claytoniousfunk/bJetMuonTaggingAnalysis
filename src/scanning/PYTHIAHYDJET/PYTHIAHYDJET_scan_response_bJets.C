@@ -210,6 +210,27 @@ void PYTHIAHYDJET_scan_response_bJets(TString input = "root://cmsxrootd.fnal.gov
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
 
+  TRandom *randomGenerator = new TRandom2();
+
+  // jet-energy resolution fit function
+  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
+  JER_fxn->SetParameter(0,-1.91758e-05);
+  JER_fxn->SetParameter(1,-1.79691e+00);
+  JER_fxn->SetParameter(2,1.09880e+01);
+
+  // define vz & hiBin reweighting functions
+  loadFitFxn_vz();
+
+  fitFxn_hiBin = new TF1("fitFxn_hiBin","[0]+[1]*x+[2]*x*x+[3]*x*x*x+[4]*x*x*x*x+[5]*x*x*x*x*x+[6]*x*x*x*x*x*x+[7]*x*x*x*x*x*x*x+[8]*x*x*x*x*x*x*x*x",0,190);
+  fitFxn_hiBin->SetParameter(0,hiBinFitParam_0);
+  fitFxn_hiBin->SetParameter(1,hiBinFitParam_1);
+  fitFxn_hiBin->SetParameter(2,hiBinFitParam_2);
+  fitFxn_hiBin->SetParameter(3,hiBinFitParam_3);
+  fitFxn_hiBin->SetParameter(4,hiBinFitParam_4);
+  fitFxn_hiBin->SetParameter(5,hiBinFitParam_5);
+  fitFxn_hiBin->SetParameter(6,hiBinFitParam_6);
+  fitFxn_hiBin->SetParameter(7,hiBinFitParam_7);
+  fitFxn_hiBin->SetParameter(8,hiBinFitParam_8);
 
   // event loop
   int evi_frac = 0;
@@ -244,23 +265,9 @@ void PYTHIAHYDJET_scan_response_bJets(TString input = "root://cmsxrootd.fnal.gov
     if(CentralityIndex < 0) continue;
 
 
-    fitFxn_hiBin = new TF1("fitFxn_hiBin","[0]+[1]*x+[2]*x*x+[3]*x*x*x+[4]*x*x*x*x+[5]*x*x*x*x*x+[6]*x*x*x*x*x*x+[7]*x*x*x*x*x*x*x+[8]*x*x*x*x*x*x*x*x",0,190);
-    fitFxn_hiBin->SetParameter(0,hiBinFitParam_0);
-    fitFxn_hiBin->SetParameter(1,hiBinFitParam_1);
-    fitFxn_hiBin->SetParameter(2,hiBinFitParam_2);
-    fitFxn_hiBin->SetParameter(3,hiBinFitParam_3);
-    fitFxn_hiBin->SetParameter(4,hiBinFitParam_4);
-    fitFxn_hiBin->SetParameter(5,hiBinFitParam_5);
-    fitFxn_hiBin->SetParameter(6,hiBinFitParam_6);
-    fitFxn_hiBin->SetParameter(7,hiBinFitParam_7);
-    fitFxn_hiBin->SetParameter(8,hiBinFitParam_8);
-
+    
     double w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-10);
 
-
-    TF1 *fitFxn_vz = new TF1("fitFxn_vz","[0]+[1]*x",-15,15);
-    fitFxn_vz->SetParameter(0,1.02162);
-    fitFxn_vz->SetParameter(1,-0.0215271);
 	
     double w_reweight_vz = fitFxn_vz->Eval(em->vz);
 	
@@ -314,15 +321,29 @@ void PYTHIAHYDJET_scan_response_bJets(TString input = "root://cmsxrootd.fnal.gov
 	    JEU.SetJetEta(em->jeteta[k]);
 	    JEU.SetJetPhi(em->jetphi[k]);
 
-	    double correctedPt_down = x * (1 - JEU.GetUncertainty().first);
-	    double correctedPt_up = x * (1 + JEU.GetUncertainty().second);
+	    // initialize
+	    double correctedPt_down = 1.0;
+	    double correctedPt_up = 1.0;
 
-	    //matchedRecoJetPt = correctedPt_down;
-	    //matchedRecoJetPt = correctedPt_up;
+	    if(apply_JEU_shift_up){
+	      correctedPt_up = matchedRecoJetPt * (1 + JEU.GetUncertainty().second);
+	      matchedRecoJetPt = correctedPt_up;
+	    }
+	    else if(apply_JEU_shift_down){
+	      correctedPt_down = matchedRecoJetPt * (1 - JEU.GetUncertainty().first);
+	      matchedRecoJetPt = correctedPt_down;
+	    }
 
+	    double mu = 1.0;
+	    double sigma = 0.2;
+	    double smear = 0.0;
+
+	    if(apply_JER_smear){
+	      sigma = 0.663*JER_fxn->Eval(matchedRecoJetPt); // apply a 20% smear
+	      smear = randomGenerator->Gaus(mu,sigma);
+	      matchedRecoJetPt = matchedRecoJetPt * smear;
+	    }
 	    
-	    //if(x>60) cout << "dR(reco,gen) = " << minDr << " | genPt = " << x << " | rawPt = " << em->rawpt[k] << " | jetPt = " << em->jetpt[k] << " | corrPt = " << JEC.GetCorrectedPT() << endl;
-
 	  }	
 	}
 
