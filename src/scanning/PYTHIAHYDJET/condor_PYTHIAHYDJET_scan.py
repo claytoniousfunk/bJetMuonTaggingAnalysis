@@ -10,7 +10,7 @@ dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet.txt'
 
 
 
-exe = '../../scanning/PYTHIAHYDJET/PYTHIAHYDJET_scan.C'
+exe = 'PYTHIAHYDJET_scan.C'
 
 jm = jobManager(jobSite ='cern', 
 	jobname = jobname, 	

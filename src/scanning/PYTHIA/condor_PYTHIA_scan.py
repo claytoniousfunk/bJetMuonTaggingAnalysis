@@ -5,7 +5,7 @@ jobname = 'PYTHIA_scan'
 #put the file list here
 dblist = '../../../fileNames/fileNames_PYTHIA_DiJet.txt'
 
-exe = '../../scanning/PYTHIA/PYTHIA_scan.C'
+exe = 'PYTHIA_scan.C'
 
 jm = jobManager(jobSite ='cern', 
 	jobname = jobname, 	

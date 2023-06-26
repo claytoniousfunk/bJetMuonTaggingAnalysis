@@ -3,9 +3,9 @@ from myProcesses.condor.condor_utility import jobManager
 jobname = 'PYTHIA_response_bJets'
 
 #put the file list here
-dblist = '../../../fileNames/fileNames_PYTHIA_DiJet.txt'
+dblist = '../../../fileNames/fileNames_PYTHIA_DiJet_noRecoJetPtCut.txt'
 
-exe = '../../scanning/PYTHIA/PYTHIA_response_bJets.C'
+exe = 'PYTHIA_response_bJets.C'
 
 jm = jobManager(jobSite ='cern', 
 	jobname = jobname, 	
