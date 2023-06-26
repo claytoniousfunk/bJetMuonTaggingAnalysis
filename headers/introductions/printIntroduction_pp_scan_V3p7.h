@@ -10,7 +10,7 @@ cout << "   ',$$P       ,ggs.     `$$b:                       " << endl;
 cout << "   `d$$'     ,$Ph'   .    $$$                        " << endl;
 cout << "    $$P      d$'     ,    $$P                        " << endl;
 cout << "    $$:      $$.   -    ,d$$'                        " << endl;
-cout << "    $$\;      Y$b._   _,d$P'                         " << endl;
+cout << "    $$h'     Y$b._   _,d$P'                         " << endl;
 cout << "    Y$$.    `.`hY$$$$Ph'                             " << endl;
 cout << "    `$$b      h-.__                                  " << endl;
 cout << "     `Y$$                                            " << endl;
