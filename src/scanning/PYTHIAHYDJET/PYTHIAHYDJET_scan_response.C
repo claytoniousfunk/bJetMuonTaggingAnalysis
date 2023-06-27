@@ -78,7 +78,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 #include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/config/readConfig.h"
 
 
-void PYTHIAHYDJET_scan_response_bJets(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/230606_054515/0000/HiForestAOD_1.root", TString output = "out.root"){
+void PYTHIAHYDJET_scan_response(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/230606_054515/0000/HiForestAOD_1.root", TString output = "out.root"){
 
   
   printIntroduction();
@@ -350,11 +350,6 @@ void PYTHIAHYDJET_scan_response_bJets(TString input = "root://cmsxrootd.fnal.gov
       }
 
       jetFlavorInt = em->refparton_flavorForB[recoJetFlavorFlag];
-     
-
-      if(TMath::Abs(jetFlavorInt) != 5) continue; // only accept bJets	
-
-
 			
 			
       // fill response matrix
