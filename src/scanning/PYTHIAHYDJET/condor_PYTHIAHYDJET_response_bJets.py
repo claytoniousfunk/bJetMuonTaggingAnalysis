@@ -3,7 +3,7 @@ from myProcesses.condor.condor_utility import jobManager
 jobname = 'PYTHIAHYDJET_DiJet_response_bJets'
 
 #put the file list here
-dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut.txt'
+dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet_onlyMuonTaggedJets_noRecoJetPtCut.txt'
 
 
 exe = 'PYTHIAHYDJET_response_bJets.C'
