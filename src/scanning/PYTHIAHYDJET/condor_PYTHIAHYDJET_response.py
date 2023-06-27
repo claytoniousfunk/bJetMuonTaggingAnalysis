@@ -6,7 +6,7 @@ jobname = 'PYTHIAHYDJET_DiJet_response_bJets'
 dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet_onlyMuonTaggedJets_noRecoJetPtCut.txt'
 
 
-exe = 'PYTHIAHYDJET_scan_response_bJets.C'
+exe = 'PYTHIAHYDJET_scan_response.C'
 
 jm = jobManager(jobSite ='cern', 
 	jobname = jobname, 	
