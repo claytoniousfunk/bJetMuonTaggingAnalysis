@@ -564,8 +564,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     double w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-10);
     //double w_reweight_hiBin = 1.0;
 
-    double w_reweight_vz = fitFxn_vz->Eval(em->vz);
-    //double w_reweight_vz = 1.0;
+    //double w_reweight_vz = fitFxn_vz->Eval(em->vz);
+    double w_reweight_vz = 1.0;
    
     double w = em->weight * w_reweight_hiBin * w_reweight_vz;
 
