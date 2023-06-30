@@ -354,21 +354,15 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
 
     int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
-    //int triggerDecision = em->HLT_HIL3Mu12_v1;
-    //int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
-    //double w_trig = 1.0* triggerDecision_Prescl * 1.0;
-    double w_trig = 1.0; // don't scale by prescales for templates
+    double w_trig = 1.0 / ( triggerDecision_Prescl * 1.0 ); // set weight as 1/prescl for triggered events
+    //double w_trig = 1.0; // don't scale by prescales for templates
     
     // skip if the trigger is off or if the prescale is zero
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)){
       evtTriggerDecision = true;
       eventCounter++;
-      // set the weight as trigger prescale value
-      //w_trig = 1.0 * triggerDecision_Prescl;
     }
-    // set the weight as 1/prescale value
-    //if(evtTriggerDecision) w = 1.0 / (triggerDecision_Prescl * 1.0);
    
     bool eventHasGoodJet = false;
     bool eventHasInclRecoMuonTag = false;
