@@ -6,10 +6,7 @@
 *~
 *#
 
-# ignore my rootFiles folder
-rootFiles/
-
-# ignore all root file
+# ignore all root files
 *.root
 
 
