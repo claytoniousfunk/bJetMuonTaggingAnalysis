@@ -569,6 +569,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
    
     double w = em->weight * w_reweight_hiBin * w_reweight_vz;
 
+    
     if(w <= 0.0) continue;
    
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
@@ -585,10 +586,10 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     //int triggerDecision = em->HLT_HIL3Mu12_v1;
     //int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
-
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
       evtTriggerDecision = true;
       eventCounter++;
+      w = w / ( triggerDecision_Prescl * 1.0 ) ; // set weight as 1/prescl for triggered events
     }
    
    
