@@ -160,8 +160,6 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
   printIntroduction_PYTHIA_scan_V3p7();
   readConfig();
 
-
-
   // JET ENERGY CORRECTIONS
   vector<string> Files;
   Files.push_back("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
@@ -169,16 +167,6 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
 
   JetUncertainty JEU("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
-
-
-
-  // WEIGHT FUNCTIONS
-
-  //TF1 *fVzWeightFunction = new TF1("fvz", "pol1", -15, 15);
-  //fVzWeightFunction->SetParameters(1.01655,-0.0184946);
-
-  
-
 
 
   
@@ -393,12 +381,6 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
     if(fabs(em->vz) > 15.0) continue;
     if(em->checkEventFilter()) continue;
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
-
-    // event weights
-    // TF1 *fitFxn_vz = new TF1("fitFxn_vz","[0]+[1]*x+[2]*x*x",-15,15);
-    // fitFxn_vz->SetParameter(0,0.905734);
-    // fitFxn_vz->SetParameter(1,0.00137);
-    // fitFxn_vz->SetParameter(2,0.00288076);
 	
     double w_reweight_vz = fitFxn_vz->Eval(em->vz);
     //double w_reweight_vz = 1.0;
@@ -416,8 +398,14 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
     bool evtHasGoodJet = false;
     bool evtHasGoodMuonTaggedJet = false;
     bool evtHasGoodMuonTaggedJetTriggerOn = false;
-    if(triggerIsOn(em->HLT_HIL3Mu5_NHitQ10_v1, em->HLT_HIL3Mu5_NHitQ10_v1_Prescl)) evtTriggerDecision = true;
-
+    
+    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1; 
+    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl; 
+    
+    if(triggerIsOn(triggerDecision,triggerDecision_Prescl)){
+      evtTriggerDecision = true;
+      w = w / (triggerDecision_Prescl * 1.0) ; // set weight to 1/prescl for triggered events 
+    }
     double leadingRecoJetPt = -1.0;
     double leadingGenJetPt = -1.0;
 
