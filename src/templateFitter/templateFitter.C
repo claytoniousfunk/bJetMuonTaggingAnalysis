@@ -1,20 +1,105 @@
+#include <iostream>
+#include "TFile.h"
+#include "TRandom.h"
+#include "TTree.h"
+#include "TH1F.h"
+#include "TH1D.h"
+#include "TProfile.h"
+#include "TRandom.h"
+#include "TGraph.h"
+#include "TGraphErrors.h"
+#include "TProfile2D.h"
+#include <TF1.h>
+#include "assert.h"
+#include <fstream>
+#include "TMath.h"
+#include "TH2F.h"
+#include "TH2D.h"
+#include "TMath.h"
+#include <TNtuple.h>
+#include "TChain.h"
+#include <TString.h>
+#include <TLatex.h>
+#include <TCut.h>
+#include "TDatime.h"
+#include <vector>
+#include "TCanvas.h"
+#include <dirent.h>  
+#include <stdio.h> 
+#include <string.h> 
+#include <stdlib.h>
+
+#include "../../headers/goldenFileNames.h"
+
+TFile *f1, *f2, *f3, *f_data;
+
+// There are 3 classes of histograms, labeled "h", "g", and "k"
+// - h class: either PYTHIA or DiJet PYTHIA+HYDJET MC
+// - g class: MuJet PYTHIA+HYDJET MC
+// - k class: BJet PYTHIA+HYDJET MC
+
+
+TH2D *h0, *g0, *k0;
+
+TH1D *h0_incl;
+TH1D *h0_b, *h0_c, *h0_d, *h0_g, *h0_s, *h0_u, *h0_x, *h0_y, *h0_l;
+// h0_x = ghost jets, h0_y = undefined flavor (gen jets with inaccessible recoJet pair)
+// h0_l = light jets combined together
+TH1D *h0_bbar, *h0_cbar, *h0_dbar, *h0_sbar, *h0_ubar;
+
+TH1D *g0_incl;
+TH1D *g0_b, *g0_c, *g0_d, *g0_g, *g0_s, *g0_u, *g0_x, *g0_y, *g0_l;
+// g0_x = ghost jets, g0_y = undefined flavor (gen jets with inaccessible recoJet pair)
+// g0_l = light jets combined together
+TH1D *g0_bbar, *g0_cbar, *g0_dbar, *g0_sbar, *g0_ubar;
+
+TH1D *k0_incl;
+TH1D *k0_b, *k0_c, *k0_d, *k0_g, *k0_s, *k0_u, *k0_x, *k0_y, *k0_l;
+// k0_x = ghost jets, k0_y = undefined flavor (gen jets with inaccessible recoJet pair)
+// k0_l = light jets combined together
+TH1D *k0_bbar, *k0_cbar, *k0_dbar, *k0_sbar, *k0_ubar;
+
+
+// histograms for rebinning
+TH1D *h0_inclR, *h0_lR, *h0_bR, *h0_cR, *h0_xR;
+
+
+
+double func_temp_1(double *x, double *par){
+  double xx = x[0];
+  int bin = h0_bR->FindBin(xx);
+  //h0_lR->Add(h0_cR);
+  double b = (par[0])*h0_bR->GetBinContent(bin);
+  double e = (1-par[0])*h0_lR->GetBinContent(bin);
+  return b+e;
+}
+
+double func_temp_2(double *x, double *par){
+  double xx = x[0];
+  int bin = h0_bR->FindBin(xx);
+  double b = (par[0])*h0_bR->GetBinContent(bin);
+  double c = (par[1])*h0_cR->GetBinContent(bin);
+  double e = (1-par[0]-par[1])*h0_lR->GetBinContent(bin);
+  return b+e+c;
+}
+
+
+
 double templateFitter(bool isData = 1,
-		    TString pp_fileName = "",
-		    TString PbPb_fileName = "",
-		    int returnValueIndex = 1,
-		    bool isJ0 = 1,
-		    bool isJ1 = 0,
-		    bool isJ2 = 0,
-		    bool isJ3 = 0,
-		    bool isJ4 = 0,
-		    bool isJ5 = 0,
-		    bool isJ6 = 0,
-		    bool isC0 = 1,
-		    bool isC1 = 0,
-		    bool isC2 = 0,
-		    bool isC3 = 0,
-		    bool isC4 = 0,
-		    bool ispp = 0
+		      bool ispp = 0,
+		      bool isC0 = 0,
+		      bool isC1 = 1,
+		      bool isC2 = 0,
+		      bool isJ0 = 0,
+		      bool isJ1 = 0,
+		      bool isJ2 = 0,
+		      bool isJ3 = 1,
+		      bool isJ4 = 0,
+		      bool isJ5 = 0,
+		      bool isJ6 = 0,
+		      bool mergeCtemplates = false,
+		      bool mergeBtemplates = false,
+		      int returnValueIndex = 1
 		    ){
 
   double result[4];
@@ -26,9 +111,9 @@ double templateFitter(bool isData = 1,
   
   if(ispp){
 	
-    f1 = TFile::Open(PYTHIA_filename);
-    if(!isData) f_data = TFile::Open(PYTHIA_filename);
-    else f_data = TFile::Open(pp_SingleMuon_filename);	
+    f1 = TFile::Open(goldenFile_PYTHIA);
+    if(!isData) f_data = TFile::Open(goldenFile_PYTHIA);
+    else f_data = TFile::Open(goldenFile_pp_SingleMuon);	
 
     if(isJ0){
       f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J0",h0);
@@ -64,11 +149,11 @@ double templateFitter(bool isData = 1,
   
   if(!ispp){
 	
-    f1 = TFile::Open(PYTHIAHYDJET_DiJet_filename);
-    f2 = TFile::Open(PYTHIAHYDJET_MuJet_filename);
-    f3 = TFile::Open(PYTHIAHYDJET_BJet_filename);
-    if(!isData) f_data = TFile::Open(PYTHIAHYDJET_DiJet_filename);
-    else f_data = TFile::Open(PbPb_SingleMuon_filename);
+    f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
+    f2 = TFile::Open(goldenFile_PYTHIAHYDJET_BJet);
+    f3 = TFile::Open(goldenFile_PYTHIAHYDJET_MuJet);
+    if(!isData) f_data = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
+    else f_data = TFile::Open(goldenFile_PbPb_SingleMuon);
 
     if(isC0){
 
@@ -261,8 +346,8 @@ double templateFitter(bool isData = 1,
     h0_dbar = (TH1D*) h0->ProjectionX("h0_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
     h0_sbar = (TH1D*) h0->ProjectionX("h0_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
     h0_ubar = (TH1D*) h0->ProjectionX("h0_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
-    h0_ghost = (TH1D*) h0->ProjectionX("h0_ghost",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
-    h0_noFlavor = (TH1D*) h0->ProjectionX("h0_noFlavor",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
+    h0_x = (TH1D*) h0->ProjectionX("h0_x",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
+    h0_y = (TH1D*) h0->ProjectionX("h0_y",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
 
     h0_b->Add(h0_bbar);
     h0_c->Add(h0_cbar);
@@ -298,8 +383,8 @@ double templateFitter(bool isData = 1,
     h0_dbar = (TH1D*) h0->ProjectionX("h0_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
     h0_sbar = (TH1D*) h0->ProjectionX("h0_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
     h0_ubar = (TH1D*) h0->ProjectionX("h0_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
-    h0_ghost = (TH1D*) h0->ProjectionX("h0_ghost",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
-    h0_noFlavor = (TH1D*) h0->ProjectionX("h0_noFlavor",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
+    h0_x = (TH1D*) h0->ProjectionX("h0_x",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
+    h0_y = (TH1D*) h0->ProjectionX("h0_y",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
 
     h0_b->Add(h0_bbar);
     h0_c->Add(h0_cbar);
@@ -326,8 +411,8 @@ double templateFitter(bool isData = 1,
     g0_dbar = (TH1D*) g0->ProjectionX("g0_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
     g0_sbar = (TH1D*) g0->ProjectionX("g0_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
     g0_ubar = (TH1D*) g0->ProjectionX("g0_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
-    g0_ghost = (TH1D*) g0->ProjectionX("g0_ghost",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
-    g0_noFlavor = (TH1D*) g0->ProjectionX("g0_noFlavor",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
+    g0_x = (TH1D*) g0->ProjectionX("g0_x",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
+    g0_y = (TH1D*) g0->ProjectionX("g0_y",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
 
     g0_b->Add(g0_bbar);
     g0_c->Add(g0_cbar);
@@ -354,8 +439,8 @@ double templateFitter(bool isData = 1,
     k0_dbar = (TH1D*) k0->ProjectionX("k0_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
     k0_sbar = (TH1D*) k0->ProjectionX("k0_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
     k0_ubar = (TH1D*) k0->ProjectionX("k0_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
-    k0_ghost = (TH1D*) k0->ProjectionX("k0_ghost",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
-    k0_noFlavor = (TH1D*) k0->ProjectionX("k0_noFlavor",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
+    k0_x = (TH1D*) k0->ProjectionX("k0_x",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
+    k0_y = (TH1D*) k0->ProjectionX("k0_y",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
 
     k0_b->Add(k0_bbar);
     k0_c->Add(k0_cbar);
@@ -425,22 +510,27 @@ double templateFitter(bool isData = 1,
 
   }
 
-
-  h0_l->Add(h0_ghost);
+  // merge ghost jets with lights
+  h0_l->Add(h0_x);
   
+  // add cJets to lJets (for 2-template fit)
+  //h0_l->Add(h0_c);
+
+
+
   cout << "b-jets: N = " << h0_b->GetEntries() << ", I = " << h0_b->Integral() << ", I/N = " << (1.0*h0_b->Integral())/(1.0*h0_b->GetEntries()) << endl;
   cout << "c-jets: N = " << h0_c->GetEntries() << ", I = " << h0_c->Integral() << ", I/N = " << (1.0*h0_c->Integral())/(1.0*h0_c->GetEntries()) << endl;
   cout << "l-jets: N = " << h0_l->GetEntries() << ", I = " << h0_l->Integral() << ", I/N = " << (1.0*h0_l->Integral())/(1.0*h0_l->GetEntries()) << endl;
 
 
-  h0_l->Add(h0_c);
+
  
   
   ///////////// clone the flavor histograms
   TH1D *h0_b_draw = (TH1D*) h0_b->Clone("h0_b_draw");
   TH1D *h0_c_draw = (TH1D*) h0_c->Clone("h0_c_draw");
   TH1D *h0_l_draw = (TH1D*) h0_l->Clone("h0_l_draw");
-  TH1D *h0_ghost_draw = (TH1D*) h0_ghost->Clone("h0_ghost_draw");
+  TH1D *h0_x_draw = (TH1D*) h0_x->Clone("h0_x_draw");
 
   /*
   if(ispp){
@@ -485,7 +575,7 @@ double templateFitter(bool isData = 1,
   h0_l_draw->Scale(1./h0_l_draw->Integral());
   h0_b_draw->Scale(1./h0_b_draw->Integral());
   h0_c_draw->Scale(1./h0_c_draw->Integral());
-  h0_ghost_draw->Scale(1./h0_ghost_draw->Integral());
+  h0_x_draw->Scale(1./h0_x_draw->Integral());
 
   /*
   // calculate ptrel upper bound over which 99.9% of b-jets are contained
@@ -542,12 +632,12 @@ double templateFitter(bool isData = 1,
   h0_lR = (TH1D*) h0_l->Rebin(M-1,"h0_lR",muRelPtAxis);
   h0_bR = (TH1D*) h0_b->Rebin(M-1,"h0_bR",muRelPtAxis);
   h0_cR = (TH1D*) h0_c->Rebin(M-1,"h0_cR",muRelPtAxis);
-  h0_ghostR = (TH1D*) h0_ghost->Rebin(M-1,"h0_ghostR",muRelPtAxis);
+  h0_xR = (TH1D*) h0_x->Rebin(M-1,"h0_xR",muRelPtAxis);
 
   TH1D *h0_b_drawR = (TH1D*) h0_b_draw->Rebin(M-1,"h0_b_drawR",muRelPtAxis);
   TH1D *h0_c_drawR = (TH1D*) h0_c_draw->Rebin(M-1,"h0_c_drawR",muRelPtAxis);
   TH1D *h0_l_drawR = (TH1D*) h0_l_draw->Rebin(M-1,"h0_l_drawR",muRelPtAxis);	
-  TH1D *h0_ghost_drawR = (TH1D*) h0_ghost_draw->Rebin(M-1,"h0_ghost_drawR",muRelPtAxis);
+  TH1D *h0_x_drawR = (TH1D*) h0_x_draw->Rebin(M-1,"h0_x_drawR",muRelPtAxis);
 
 
   
@@ -557,12 +647,12 @@ double templateFitter(bool isData = 1,
   h0_lR->SetBinContent(lastBin-1,h0_lR->GetBinContent(lastBin)+h0_lR->GetBinContent(lastBin-1));
   h0_bR->SetBinContent(lastBin-1,h0_bR->GetBinContent(lastBin)+h0_bR->GetBinContent(lastBin-1));
   h0_cR->SetBinContent(lastBin-1,h0_cR->GetBinContent(lastBin)+h0_cR->GetBinContent(lastBin-1));
-  h0_ghostR->SetBinContent(lastBin-1,h0_ghostR->GetBinContent(lastBin)+h0_ghostR->GetBinContent(lastBin-1));
+  h0_xR->SetBinContent(lastBin-1,h0_xR->GetBinContent(lastBin)+h0_xR->GetBinContent(lastBin-1));
 
   h0_l_drawR->SetBinContent(lastBin-1,h0_l_drawR->GetBinContent(lastBin)+h0_l_drawR->GetBinContent(lastBin-1));
   h0_c_drawR->SetBinContent(lastBin-1,h0_c_drawR->GetBinContent(lastBin)+h0_c_drawR->GetBinContent(lastBin-1));
   h0_b_drawR->SetBinContent(lastBin-1,h0_b_drawR->GetBinContent(lastBin)+h0_b_drawR->GetBinContent(lastBin-1));
-  h0_ghost_drawR->SetBinContent(lastBin-1,h0_ghost_drawR->GetBinContent(lastBin)+h0_ghost_drawR->GetBinContent(lastBin-1));
+  h0_x_drawR->SetBinContent(lastBin-1,h0_x_drawR->GetBinContent(lastBin)+h0_x_drawR->GetBinContent(lastBin-1));
   
 	
   // normalize by bin width
@@ -611,18 +701,18 @@ double templateFitter(bool isData = 1,
     }
   }
 
-  int N_ghost = h0_ghostR->GetSize();
-  for(int i=0;i<N_ghost;i++){
-    double x1 = h0_ghostR->GetBinWidth(i);
-    double y1 = h0_ghostR->GetBinContent(i);
-    double z1 = h0_ghostR->GetBinError(i);
+  int N_x = h0_xR->GetSize();
+  for(int i=0;i<N_x;i++){
+    double x1 = h0_xR->GetBinWidth(i);
+    double y1 = h0_xR->GetBinContent(i);
+    double z1 = h0_xR->GetBinError(i);
     if(x1!=0){
-      h0_ghostR->SetBinContent(i,y1/x1);
-      h0_ghostR->SetBinError(i,z1/x1);
+      h0_xR->SetBinContent(i,y1/x1);
+      h0_xR->SetBinError(i,z1/x1);
     }
   }
 
-  for(int i=0;i<N_ghost;i++){
+  for(int i=0;i<N_x;i++){
     double x1 = h0_l_drawR->GetBinWidth(i);
     double y1 = h0_l_drawR->GetBinContent(i);
     double z1 = h0_l_drawR->GetBinError(i);
@@ -632,7 +722,7 @@ double templateFitter(bool isData = 1,
     }
   }
 
-  for(int i=0;i<N_ghost;i++){
+  for(int i=0;i<N_x;i++){
     double x1 = h0_b_drawR->GetBinWidth(i);
     double y1 = h0_b_drawR->GetBinContent(i);
     double z1 = h0_b_drawR->GetBinError(i);
@@ -642,7 +732,7 @@ double templateFitter(bool isData = 1,
     }
   }
 
-  for(int i=0;i<N_ghost;i++){
+  for(int i=0;i<N_x;i++){
     double x1 = h0_c_drawR->GetBinWidth(i);
     double y1 = h0_c_drawR->GetBinContent(i);
     double z1 = h0_c_drawR->GetBinError(i);
@@ -652,13 +742,13 @@ double templateFitter(bool isData = 1,
     }
   }
 
-  for(int i=0;i<N_ghost;i++){
-    double x1 = h0_ghost_drawR->GetBinWidth(i);
-    double y1 = h0_ghost_drawR->GetBinContent(i);
-    double z1 = h0_ghost_drawR->GetBinError(i);
+  for(int i=0;i<N_x;i++){
+    double x1 = h0_x_drawR->GetBinWidth(i);
+    double y1 = h0_x_drawR->GetBinContent(i);
+    double z1 = h0_x_drawR->GetBinError(i);
     if(x1!=0){
-      h0_ghost_drawR->SetBinContent(i,y1/x1);
-      h0_ghost_drawR->SetBinError(i,z1/x1);
+      h0_x_drawR->SetBinContent(i,y1/x1);
+      h0_x_drawR->SetBinError(i,z1/x1);
     }
   }
 	
@@ -680,7 +770,8 @@ double templateFitter(bool isData = 1,
 
   /////////////////////// Configure the fit function /////////////////////
 		    
-  func = new TF1("func",func_temp_1,low_x,high_x,1);
+  //func = new TF1("func",func_temp_1,low_x,high_x,1);
+  func = new TF1("func",func_temp_2,low_x,high_x,2);
   
   ////////////////////  End configure fit function ///////////////////////////
 
@@ -733,12 +824,12 @@ double templateFitter(bool isData = 1,
   h0_bR->SetStats(0);
   h0_cR->SetStats(0);
   h0_lR->SetStats(0);
-  h0_ghostR->SetStats(0);
+  h0_xR->SetStats(0);
 
   h0_b_drawR->SetStats(0);
   h0_c_drawR->SetStats(0);
   h0_l_drawR->SetStats(0);
-  h0_ghost_drawR->SetStats(0);
+  h0_x_drawR->SetStats(0);
 
   double alphaVal = 0.6;
   double markerVal = 0.0;
@@ -779,38 +870,38 @@ double templateFitter(bool isData = 1,
  
     h0_lR->SetMarkerStyle(20);
     h0_lR->SetMarkerSize(markerVal);
-    h0_lR->SetMarkerColor(kBlue+2);
-    h0_lR->SetLineColor(kBlue+2);
-    h0_lR->SetFillColorAlpha(kBlue+2,alphaVal);
-    //h0_lR->SetMarkerColor(kBlue-4);
-    //h0_lR->SetLineColor(kBlue-4);
-    //h0_lR->SetFillColorAlpha(kBlue-4,alphaVal);
+    //h0_lR->SetMarkerColor(kBlue+2);
+    //h0_lR->SetLineColor(kBlue+2);
+    //h0_lR->SetFillColorAlpha(kBlue+2,alphaVal);
+    h0_lR->SetMarkerColor(kBlue-4);
+    h0_lR->SetLineColor(kBlue-4);
+    h0_lR->SetFillColorAlpha(kBlue-4,alphaVal);
 
     h0_l_drawR->SetMarkerStyle(20);
     h0_l_drawR->SetMarkerSize(markerVal2);
-    h0_l_drawR->SetMarkerColor(kBlue+2);
-    h0_l_drawR->SetLineColor(kBlue+2);
-    h0_l_drawR->SetFillColorAlpha(kBlue+2,alphaVal);
-    //h0_l_drawR->SetMarkerColor(kBlue-4);
-    //h0_l_drawR->SetLineColor(kBlue-4);
-    //h0_l_drawR->SetFillColorAlpha(kBlue-4,alphaVal);
+    //h0_l_drawR->SetMarkerColor(kBlue+2);
+    //h0_l_drawR->SetLineColor(kBlue+2);
+    //h0_l_drawR->SetFillColorAlpha(kBlue+2,alphaVal);
+    h0_l_drawR->SetMarkerColor(kBlue-4);
+    h0_l_drawR->SetLineColor(kBlue-4);
+    h0_l_drawR->SetFillColorAlpha(kBlue-4,alphaVal);
  
   TH1D *h0_lR2 = (TH1D*) h0_lR->Clone("h0_lR2");
  
 		
-  h0_ghostR->SetMarkerStyle(20);
-  h0_ghostR->SetMarkerSize(markerVal);
-  h0_ghostR->SetMarkerColor(kPink+1);
-  h0_ghostR->SetLineColor(kPink+1);
-  h0_ghostR->SetFillColorAlpha(kPink+1,alphaVal);
+  h0_xR->SetMarkerStyle(20);
+  h0_xR->SetMarkerSize(markerVal);
+  h0_xR->SetMarkerColor(kPink+1);
+  h0_xR->SetLineColor(kPink+1);
+  h0_xR->SetFillColorAlpha(kPink+1,alphaVal);
 
-  TH1D *h0_ghostR2 = (TH1D*) h0_ghostR->Clone("h0_ghostR2");
+  TH1D *h0_xR2 = (TH1D*) h0_xR->Clone("h0_xR2");
 
-  h0_ghost_drawR->SetMarkerStyle(20);
-  h0_ghost_drawR->SetMarkerSize(markerVal2);
-  h0_ghost_drawR->SetMarkerColor(kPink+1);
-  h0_ghost_drawR->SetLineColor(kPink+1);
-  h0_ghost_drawR->SetFillColorAlpha(kPink+1,alphaVal);
+  h0_x_drawR->SetMarkerStyle(20);
+  h0_x_drawR->SetMarkerSize(markerVal2);
+  h0_x_drawR->SetMarkerColor(kPink+1);
+  h0_x_drawR->SetLineColor(kPink+1);
+  h0_x_drawR->SetFillColorAlpha(kPink+1,alphaVal);
 
 
   double p0 = func->GetParameter(0);
@@ -832,12 +923,12 @@ double templateFitter(bool isData = 1,
   TH1D *h_muRelPt_l_scaled = (TH1D*) h0_lR->Clone("h_muRelPt_l_scaled");
   TH1D *h_muRelPt_c_scaled = (TH1D*) h0_cR->Clone("h_muRelPt_c_scaled");
   TH1D *h_muRelPt_b_scaled = (TH1D*) h0_bR->Clone("h_muRelPt_b_scaled");
-  TH1D *h_muRelPt_x_scaled = (TH1D*) h0_ghostR->Clone("h_muRelPt_x_scaled");
+  TH1D *h_muRelPt_x_scaled = (TH1D*) h0_xR->Clone("h_muRelPt_x_scaled");
 
   TH1D *h_muRelPt_l_scaled2 = (TH1D*) h0_lR2->Clone("h_muRelPt_l_scaled2");
   TH1D *h_muRelPt_c_scaled2 = (TH1D*) h0_cR2->Clone("h_muRelPt_c_scaled2");
   TH1D *h_muRelPt_b_scaled2 = (TH1D*) h0_bR2->Clone("h_muRelPt_b_scaled2");
-  TH1D *h_muRelPt_x_scaled2 = (TH1D*) h0_ghostR2->Clone("h_muRelPt_x_scaled2");
+  TH1D *h_muRelPt_x_scaled2 = (TH1D*) h0_xR2->Clone("h_muRelPt_x_scaled2");
 		
   //TH1D *h_muRelPt_bGS_scaled = (TH1D*) h_muRelPt_bGS->Clone("h_muRelPt_bGS_scaled");
 
@@ -847,9 +938,11 @@ double templateFitter(bool isData = 1,
   //////////////  configure scaled histos ///////////////////
  
   h_muRelPt_b_scaled->Scale(p0);
-  h_muRelPt_l_scaled->Scale(1-p0);
+  h_muRelPt_c_scaled->Scale(p1);
+  h_muRelPt_l_scaled->Scale(1-p0-p1);
   h_muRelPt_b_scaled2->Scale(p0);
-  h_muRelPt_l_scaled2->Scale(1-p0);
+  h_muRelPt_c_scaled2->Scale(p1);
+  h_muRelPt_l_scaled2->Scale(1-p0-p1);
   
 
   h0_l->SetStats(0);
@@ -860,8 +953,10 @@ double templateFitter(bool isData = 1,
   //////////////// configure stacked histogram
   
   h_stack->Add(h_muRelPt_l_scaled);
+  h_stack->Add(h_muRelPt_c_scaled);
   h_stack->Add(h_muRelPt_b_scaled);
   h_stack2->Add(h_muRelPt_l_scaled2);
+  h_stack2->Add(h_muRelPt_c_scaled2);
   h_stack2->Add(h_muRelPt_b_scaled2);
 
   ////////////// end configure stacked histogram
@@ -891,8 +986,9 @@ double templateFitter(bool isData = 1,
   }
 	
   legend->AddEntry(h_muRelPt_b_scaled,"#font[52]{b} jets","f");
-
-  legend->AddEntry(h_muRelPt_l_scaled,"light+#font[52]{c} jets","f");
+  legend->AddEntry(h_muRelPt_c_scaled,"#font[52]{c} jets","f");
+  //legend->AddEntry(h_muRelPt_l_scaled,"light+#font[52]{c} jets","f");
+  legend->AddEntry(h_muRelPt_l_scaled,"light jets","f");
   
   legend->SetBorderSize(0);
   legend->Draw();
@@ -935,8 +1031,6 @@ double templateFitter(bool isData = 1,
     if(isC0) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 0-90%, #sqrt{#font[52]{s}} = 5 TeV}");
     if(isC1) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 0-30%, #sqrt{#font[52]{s}} = 5 TeV}");
     if(isC2) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 30-90%, #sqrt{#font[52]{s}} = 5 TeV}");
-    if(isC3) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 30-50%, #sqrt{#font[52]{s}} = 5 TeV}");
-    if(isC4) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 50-90%, #sqrt{#font[52]{s}} = 5 TeV}");
   }
             
   if(!isData) {
@@ -944,8 +1038,6 @@ double templateFitter(bool isData = 1,
     if(isC0) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 0-90%, #sqrt{#font[52]{s}} = 5 TeV}");
     if(isC1) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 0-30%, #sqrt{#font[52]{s}} = 5 TeV}");
     if(isC2) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 30-90%, #sqrt{#font[52]{s}} = 5 TeV}");
-    if(isC3) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 30-50%, #sqrt{#font[52]{s}} = 5 TeV}");
-    if(isC4) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 50-90%, #sqrt{#font[52]{s}} = 5 TeV}");
   }
 
 			
