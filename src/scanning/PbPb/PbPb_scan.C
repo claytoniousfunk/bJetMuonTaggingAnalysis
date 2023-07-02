@@ -31,41 +31,41 @@
 #include <stdlib.h>
 
 // event map
-#include "../../../bJetMuonTaggingAnalysis/eventMap/eventMap.h"
+#include "../../../../eventMap/eventMap.h"
 // jet corrector
-#include "../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
+#include "../../../../JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
-#include "../../../bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
+#include "../../../../headers/AnalysisSetupV2p1.h"
 
 // eta-phi mask function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
+#include "../../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/getDr.h"
+#include "../../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
+#include "../../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
+#include "../../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
+#include "../../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
+#include "../../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
+#include "../../../../headers/functions/isWDecayMuon.h"
 // isWDecayMuon_raw function (input is rawJetPt)
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon_raw.h"
+#include "../../../../headers/functions/isWDecayMuon_raw.h"
 // triggerIsOn function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
+#include "../../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "../../../bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
+#include "../../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-#include "../../../bJetMuonTaggingAnalysis/headers/config/config_PbPb_SingleMuon.h"
-//#include "../../../bJetMuonTaggingAnalysis/headers/config/config_PbPb_MinBias.h"
+#include "../../../../headers/config/config_PbPb_SingleMuon.h"
+//#include "../../../../headers/config/config_PbPb_MinBias.h"
 // read config
-#include "../../../bJetMuonTaggingAnalysis/headers/config/readConfig.h"
+#include "../../../../headers/config/readConfig.h"
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TH1D *h_NEvents;
@@ -126,8 +126,8 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
-  Files.push_back("../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+  Files.push_back("../../../../JetEnergyCorrections/Autumn18_HI_V8_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+  Files.push_back("../../../../JetEnergyCorrections/Autumn18_HI_V8_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   JetCorrector JEC(Files);
   /// print out some info
   printIntroduction_PbPb_scan_V3p7();

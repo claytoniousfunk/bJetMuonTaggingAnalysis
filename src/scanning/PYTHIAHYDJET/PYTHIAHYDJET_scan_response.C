@@ -32,50 +32,50 @@
 #include <stdlib.h>
 
 // event map
-#include "../../../bJetMuonTaggingAnalysis/eventMap/eventMap.h"
+#include "../../../../eventMap/eventMap.h"
 // jet corrector
-#include "../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
+#include "../../../../JetEnergyCorrections/JetCorrector.h"
 // jet uncertainty
-#include "../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/JetUncertainty.h"
+#include "../../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
+#include "../../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../bJetMuonTaggingAnalysis/headers/fitParameters/vzFitParams_PH.h"
+#include "../../../../headers/fitParameters/vzFitParams_PH.h"
 // hiBin-fit parameters
-#include "../../../bJetMuonTaggingAnalysis/headers/fitParameters/hiBinFitParams.h"
+#include "../../../../headers/fitParameters/hiBinFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "../../../bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_vz_PH.h"
+#include "../../../../headers/fitFunctions/fitFxn_vz_PH.h"
 // hiBin-fit function
-#include "../../../bJetMuonTaggingAnalysis/headers/fitFunctions/fitFxn_hiBin.h"
+#include "../../../../headers/fitFunctions/fitFxn_hiBin.h"
 
 // eta-phi mask function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
+#include "../../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/getDr.h"
+#include "../../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
+#include "../../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
+#include "../../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
+#include "../../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
+#include "../../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
+#include "../../../../headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
+#include "../../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "../../../bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_PYTHIAHYDJET_response_v2.h"
+#include "../../../../headers/introductions/printIntroduction_PYTHIAHYDJET_response_v2.h"
 // analysis config
-#include "../../../bJetMuonTaggingAnalysis/headers/config/config_PYTHIAHYDJET.h"
+#include "../../../../headers/config/config_PYTHIAHYDJET.h"
 // read config
-#include "../../../bJetMuonTaggingAnalysis/headers/config/readConfig.h"
+#include "../../../../headers/config/readConfig.h"
 
 
 void PYTHIAHYDJET_scan_response(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/230606_054515/0000/HiForestAOD_1.root", TString output = "out.root"){
@@ -87,11 +87,11 @@ void PYTHIAHYDJET_scan_response(TString input = "root://cmsxrootd.fnal.gov//stor
   // JET ENERGY CORRECTIONS
   vector<string> Files;
   
-  Files.push_back("../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("../../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 
-  JetUncertainty JEU("../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("../../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
 
 
 
