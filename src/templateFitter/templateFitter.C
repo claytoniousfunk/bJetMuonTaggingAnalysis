@@ -86,19 +86,21 @@ double func_temp_2(double *x, double *par){
 
 
 double templateFitter(bool isData = 1,
-		      bool ispp = 0,
+		      bool ispp = 1,
 		      bool isC0 = 0,
-		      bool isC1 = 1,
+		      bool isC1 = 0,
 		      bool isC2 = 0,
 		      bool isJ0 = 0,
 		      bool isJ1 = 0,
 		      bool isJ2 = 0,
-		      bool isJ3 = 1,
-		      bool isJ4 = 0,
+		      bool isJ3 = 0,
+		      bool isJ4 = 1,
 		      bool isJ5 = 0,
 		      bool isJ6 = 0,
-		      bool mergeCtemplates = false,
-		      bool mergeBtemplates = false,
+		      bool mergeCtemplates = true,
+		      bool mergeBtemplates = true,
+		      bool do2templateFit = true,
+		      bool do3templateFit = false,
 		      int returnValueIndex = 1
 		    ){
 
@@ -150,7 +152,7 @@ double templateFitter(bool isData = 1,
   if(!ispp){
 	
     f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
-    f2 = TFile::Open(goldenFile_PYTHIAHYDJET_BJet);
+    f2 = TFile::Open("/home/clayton/Analysis/code/skimming/PYTHIAHYDJET_scan/rootFiles/V3p3/PYTHIAHYDJET_BJet_CsJets_V3p3_15May23.root");
     f3 = TFile::Open(goldenFile_PYTHIAHYDJET_MuJet);
     if(!isData) f_data = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
     else f_data = TFile::Open(goldenFile_PbPb_SingleMuon);
@@ -512,10 +514,19 @@ double templateFitter(bool isData = 1,
 
   // merge ghost jets with lights
   h0_l->Add(h0_x);
+
+  // scaling before merging the c-template.
+  double c_truth = h0_c->Integral() / (h0_l->Integral() + h0_b->Integral() + h0_c->Integral());
+  double l_truth = h0_l->Integral() / (h0_l->Integral() + h0_b->Integral() + h0_c->Integral());
+  cout << "c_truth = " << c_truth << ", l_truth = " << l_truth << endl;
   
   // add cJets to lJets (for 2-template fit)
-  //h0_l->Add(h0_c);
+  if(do2templateFit){
+    h0_c->Scale(c_truth / h0_c->Integral());
+    h0_l->Scale(l_truth / h0_l->Integral());
 
+    h0_l->Add(h0_c);
+  }
 
 
   cout << "b-jets: N = " << h0_b->GetEntries() << ", I = " << h0_b->Integral() << ", I/N = " << (1.0*h0_b->Integral())/(1.0*h0_b->GetEntries()) << endl;
@@ -769,9 +780,13 @@ double templateFitter(bool isData = 1,
   TF1 *func;
 
   /////////////////////// Configure the fit function /////////////////////
-		    
-  //func = new TF1("func",func_temp_1,low_x,high_x,1);
-  func = new TF1("func",func_temp_2,low_x,high_x,2);
+
+  if(do2templateFit){
+    func = new TF1("func",func_temp_1,low_x,high_x,1);
+  }
+  else if(do3templateFit){
+    func = new TF1("func",func_temp_2,low_x,high_x,2);
+  }
   
   ////////////////////  End configure fit function ///////////////////////////
 
@@ -799,8 +814,13 @@ double templateFitter(bool isData = 1,
   }
 
 	
-  func->SetParName(0,"b");
-
+  if(do2templateFit){
+    func->SetParName(0,"b");
+  }
+  else if(do3templateFit){
+    func->SetParName(0,"b");
+    func->SetParName(1,"c");
+  }
   func->SetParLimits(0,0.0,1.0);
   func->SetParLimits(1,0.0,1.0);
   //func->SetParLimits(2,0.0,1.0);
@@ -866,25 +886,28 @@ double templateFitter(bool isData = 1,
   h0_cR2->SetFillColorAlpha(kGreen+1,1);
 
   //////// Configure histogram fill color /////////////
-		
- 
+	        
     h0_lR->SetMarkerStyle(20);
     h0_lR->SetMarkerSize(markerVal);
-    //h0_lR->SetMarkerColor(kBlue+2);
-    //h0_lR->SetLineColor(kBlue+2);
-    //h0_lR->SetFillColorAlpha(kBlue+2,alphaVal);
-    h0_lR->SetMarkerColor(kBlue-4);
-    h0_lR->SetLineColor(kBlue-4);
-    h0_lR->SetFillColorAlpha(kBlue-4,alphaVal);
-
     h0_l_drawR->SetMarkerStyle(20);
     h0_l_drawR->SetMarkerSize(markerVal2);
-    //h0_l_drawR->SetMarkerColor(kBlue+2);
-    //h0_l_drawR->SetLineColor(kBlue+2);
-    //h0_l_drawR->SetFillColorAlpha(kBlue+2,alphaVal);
-    h0_l_drawR->SetMarkerColor(kBlue-4);
-    h0_l_drawR->SetLineColor(kBlue-4);
-    h0_l_drawR->SetFillColorAlpha(kBlue-4,alphaVal);
+    if(do2templateFit){
+      h0_lR->SetMarkerColor(kBlue+2);
+      h0_lR->SetLineColor(kBlue+2);
+      h0_lR->SetFillColorAlpha(kBlue+2,alphaVal);
+      h0_l_drawR->SetMarkerColor(kBlue+2);
+      h0_l_drawR->SetLineColor(kBlue+2);
+      h0_l_drawR->SetFillColorAlpha(kBlue+2,alphaVal);
+    }
+    else{
+      h0_lR->SetMarkerColor(kBlue-4);
+      h0_lR->SetLineColor(kBlue-4);
+      h0_lR->SetFillColorAlpha(kBlue-4,alphaVal);
+      h0_l_drawR->SetMarkerColor(kBlue-4);
+      h0_l_drawR->SetLineColor(kBlue-4);
+      h0_l_drawR->SetFillColorAlpha(kBlue-4,alphaVal);
+    }
+
  
   TH1D *h0_lR2 = (TH1D*) h0_lR->Clone("h0_lR2");
  
@@ -936,14 +959,21 @@ double templateFitter(bool isData = 1,
 
 		
   //////////////  configure scaled histos ///////////////////
- 
-  h_muRelPt_b_scaled->Scale(p0);
-  h_muRelPt_c_scaled->Scale(p1);
-  h_muRelPt_l_scaled->Scale(1-p0-p1);
-  h_muRelPt_b_scaled2->Scale(p0);
-  h_muRelPt_c_scaled2->Scale(p1);
-  h_muRelPt_l_scaled2->Scale(1-p0-p1);
-  
+
+  if(do2templateFit){
+    h_muRelPt_b_scaled->Scale(p0);
+    h_muRelPt_l_scaled->Scale(1-p0);
+    h_muRelPt_b_scaled2->Scale(p0);
+    h_muRelPt_l_scaled2->Scale(1-p0);
+  }
+  else if(do3templateFit){
+    h_muRelPt_b_scaled->Scale(p0);
+    h_muRelPt_c_scaled->Scale(p1);
+    h_muRelPt_l_scaled->Scale(1-p0-p1);
+    h_muRelPt_b_scaled2->Scale(p0);
+    h_muRelPt_c_scaled2->Scale(p1);
+    h_muRelPt_l_scaled2->Scale(1-p0-p1);
+  }
 
   h0_l->SetStats(0);
 
@@ -953,10 +983,10 @@ double templateFitter(bool isData = 1,
   //////////////// configure stacked histogram
   
   h_stack->Add(h_muRelPt_l_scaled);
-  h_stack->Add(h_muRelPt_c_scaled);
+  if(do3templateFit) h_stack->Add(h_muRelPt_c_scaled);
   h_stack->Add(h_muRelPt_b_scaled);
   h_stack2->Add(h_muRelPt_l_scaled2);
-  h_stack2->Add(h_muRelPt_c_scaled2);
+  if(do3templateFit) h_stack2->Add(h_muRelPt_c_scaled2);
   h_stack2->Add(h_muRelPt_b_scaled2);
 
   ////////////// end configure stacked histogram
@@ -986,9 +1016,12 @@ double templateFitter(bool isData = 1,
   }
 	
   legend->AddEntry(h_muRelPt_b_scaled,"#font[52]{b} jets","f");
-  legend->AddEntry(h_muRelPt_c_scaled,"#font[52]{c} jets","f");
-  //legend->AddEntry(h_muRelPt_l_scaled,"light+#font[52]{c} jets","f");
-  legend->AddEntry(h_muRelPt_l_scaled,"light jets","f");
+  if(do3templateFit){
+    legend->AddEntry(h_muRelPt_c_scaled,"#font[52]{c} jets","f");
+    legend->AddEntry(h_muRelPt_l_scaled,"light jets","f");
+  }
+  else legend->AddEntry(h_muRelPt_l_scaled,"light+#font[52]{c} jets","f");
+  
   
   legend->SetBorderSize(0);
   legend->Draw();
@@ -1129,15 +1162,15 @@ double templateFitter(bool isData = 1,
   
   h0_l_drawR->Draw();
   h0_b_drawR->Draw("same");
-  h0_c_drawR->Draw("same");
+  if(do3templateFit) h0_c_drawR->Draw("same");
   
   TLegend *l2 = new TLegend(0.65,0.25,0.85,0.5);
 
   /////// configure the legend for template shapes plot
 
-  l2->AddEntry(h0_l_drawR,"light+#font[52]{c} jets","p");
-  //l2->AddEntry(h0_l_drawR,"light jets","p");
-  l2->AddEntry(h0_c_drawR,"#font[52]{c} jets","p");
+  if(do2templateFit) l2->AddEntry(h0_l_drawR,"light+#font[52]{c} jets","p");
+  else l2->AddEntry(h0_l_drawR,"light jets","p");
+  if(do3templateFit) l2->AddEntry(h0_c_drawR,"#font[52]{c} jets","p");
   l2->AddEntry(h0_b_drawR,"#font[52]{b} jets","p");
   //l2->AddEntry(h0_ghost_drawR,"#font[52]{x} jets","p");
   
@@ -1194,7 +1227,7 @@ double templateFitter(bool isData = 1,
   r1->GetXaxis()->SetRangeUser(muRelPtAxis[0],muRelPtAxis[M-1]);
   r1->GetYaxis()->SetNdivisions(404);
   r1->Draw();
-  r2->Draw("same");
+  if(do3templateFit) r2->Draw("same");
   line2->Draw();
 
   // save the plots
