@@ -5,7 +5,7 @@
 # ignore Emacs temporary files (all files ending in "~")
 *~
 *#
-#*
+.#*
 
 # ignore all root files
 *.root
