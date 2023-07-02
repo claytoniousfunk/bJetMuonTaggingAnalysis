@@ -86,10 +86,10 @@ double func_temp_2(double *x, double *par){
 
 
 double templateFitter(bool isData = 1,
-		      bool ispp = 1,
+		      bool ispp = 0,
 		      bool isC0 = 0,
 		      bool isC1 = 0,
-		      bool isC2 = 0,
+		      bool isC2 = 1,
 		      bool isJ0 = 0,
 		      bool isJ1 = 0,
 		      bool isJ2 = 0,
@@ -543,35 +543,6 @@ double templateFitter(bool isData = 1,
   TH1D *h0_l_draw = (TH1D*) h0_l->Clone("h0_l_draw");
   TH1D *h0_x_draw = (TH1D*) h0_x->Clone("h0_x_draw");
 
-  /*
-  if(ispp){
-    if(isJ1 || isJ2){
-      h0_l->Add(h0_c);
-      h0_l->Add(h0_ghost);
-    }
-    else{
-      h0_l->Add(h0_ghost);
-    }
-  }
-  else if(isC2){
-    if(isJ1 || isJ2){
-      h0_l->Add(h0_c);
-      h0_l->Add(h0_ghost);
-    }
-    else{
-      h0_l->Add(h0_ghost);
-    }
-  }
-  else if(isC1){
-    if(isJ1 || isJ2){
-      h0_l->Add(h0_c);
-      h0_l->Add(h0_g);
-    }
-    else{
-      h0_l->Add(h0_ghost);
-    }
-  }
-  */
 
   //////////// Done configuring/merging templates /////////////////////
 	
@@ -587,37 +558,7 @@ double templateFitter(bool isData = 1,
   h0_b_draw->Scale(1./h0_b_draw->Integral());
   h0_c_draw->Scale(1./h0_c_draw->Integral());
   h0_x_draw->Scale(1./h0_x_draw->Integral());
-
-  /*
-  // calculate ptrel upper bound over which 99.9% of b-jets are contained
-  double integralTot = 0.0;
-  double integralFrac = 0.0;
-  int ptBin1 = 0;
-  int ptBin2 = 0;
-  int ptBinStop = 0;
-  double muptrelStop = 0.0;
-
-  integralTot = h0_b->Integral(h0_b->FindBin(0.001),h0_b->FindBin(9.99));
-
-  cout << "IntTot = " << integralTot << endl;
-
-  bool ptValFound = false;
-
-  for(int i = 0; i < h0_b->GetSize(); i++){
-
-  integralFrac = h0_b->Integral(h0_b->FindBin(0.001),i);
-
-  if(integralFrac / integralTot > 0.999){
-  ptBinStop = i;
-  muptrelStop = h0_b->GetBinCenter(i);
-  //cout << "BINGO!" << endl;
-  ptValFound = true;
-				
-  }
-
-  if(ptValFound) continue;
-  }
-  */
+ 
 
   // normalize the data
   h0_incl->Scale(1./h0_incl->Integral());
