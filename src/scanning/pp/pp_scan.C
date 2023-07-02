@@ -31,38 +31,38 @@
 #include <stdlib.h>
 
 // event map
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/eventMap/eventMap.h"
+#include "../../../bJetMuonTaggingAnalysis/eventMap/eventMap.h"
 // jet corrector
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
+#include "../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
 
 // eta-phi mask function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
 // getDr function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getDr.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/getDr.h"
 // getJetPtBin function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_pp_scan_V3p7.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_pp_scan_V3p7.h"
 // analysis config
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/config/config_pp_SingleMuon.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/config/config_pp_SingleMuon.h"
 // read config
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/config/readConfig.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/config/readConfig.h"
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // -----------------------------------------events w/ incl. reco jet -------
@@ -105,8 +105,8 @@ TH1D *h_muphi_inclRecoMuonTag_triggerOn[NJetPtIndices];
 void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_SingleMuon_L3Mu5_18Dec22/SingleMuon/crab_pp_SingleMuon_L3Mu5_18Dec22/221217_212444/0000/HiForestAOD_10.root", TString output = "out.root"){
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
-  Files.push_back("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+  Files.push_back("../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+  Files.push_back("../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   JetCorrector JEC(Files);
   /// >>>>>>>>>>>>>>> print out some info
   printIntroduction_pp_scan_V3p7();
