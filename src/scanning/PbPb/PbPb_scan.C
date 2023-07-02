@@ -31,41 +31,41 @@
 #include <stdlib.h>
 
 // event map
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/eventMap/eventMap.h"
+#include "../../../bJetMuonTaggingAnalysis/eventMap/eventMap.h"
 // jet corrector
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
+#include "../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/AnalysisSetupV2p1.h"
 
 // eta-phi mask function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/etaPhiMask.h"
 // getDr function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getDr.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/getDr.h"
 // getJetPtBin function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon.h"
 // isWDecayMuon_raw function (input is rawJetPt)
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon_raw.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/isWDecayMuon_raw.h"
 // triggerIsOn function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/config/config_PbPb_SingleMuon.h"
-//#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/config/config_PbPb_MinBias.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/config/config_PbPb_SingleMuon.h"
+//#include "../../../bJetMuonTaggingAnalysis/headers/config/config_PbPb_MinBias.h"
 // read config
-#include "/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/headers/config/readConfig.h"
+#include "../../../bJetMuonTaggingAnalysis/headers/config/readConfig.h"
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TH1D *h_NEvents;
@@ -126,8 +126,8 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
-  Files.push_back("/afs/cern.ch/user/c/cbennett/bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+  Files.push_back("../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+  Files.push_back("../../../bJetMuonTaggingAnalysis/JetEnergyCorrections/Autumn18_HI_V8_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   JetCorrector JEC(Files);
   /// print out some info
   printIntroduction_PbPb_scan_V3p7();
@@ -401,7 +401,7 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
       if(etaPhiMask(y,z)) continue;
 
       //cout << "Event " << evi << ", jet " << i << endl;
-      //cout << "/afs/cern.ch/user/c/cbennett~~~  jetPt = " << em->jetpt[i] << ", corrJetPt = " << x << endl;
+      //cout << "../../..~~~  jetPt = " << em->jetpt[i] << ", corrJetPt = " << x << endl;
 
       double muPtRel = -1.0;
       double muPt = -1.0;
