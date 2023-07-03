@@ -149,7 +149,7 @@ void bPurityCalculator(){
 
 
 
-
+  canv->SaveAs("../../figures/bPurity/bPurity.pdf");
   
   TFile *bFracResults_PYTHIAHYDJET = TFile::Open("../../rootFiles/bPurityResults/bPurityResults.root","recreate");
 	
