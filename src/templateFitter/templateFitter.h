@@ -100,14 +100,14 @@ double templateFitter(bool isData = 1,
 		      bool mergeBtemplates = true,
 		      bool do2templateFit = true,
 		      bool do3templateFit = false,
+		      double low_x = 0.0,
+		      double high_x = 4.0,
 		      int returnValueIndex = 1
 		    ){
 
   double result[4];
 
-  double low_x = 0.0;
-  double high_x = 4.0;  
-	
+  
 	
   
   if(ispp){
