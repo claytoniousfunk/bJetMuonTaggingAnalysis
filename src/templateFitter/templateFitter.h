@@ -87,7 +87,6 @@ double func_temp_2(double *x, double *par){
 
 double templateFitter(bool isData = 1,
 		      bool ispp = 0,
-		      bool isC0 = 0,
 		      bool isC1 = 0,
 		      bool isC2 = 1,
 		      bool isJ0 = 0,
@@ -156,61 +155,6 @@ double templateFitter(bool isData = 1,
     f3 = TFile::Open(goldenFile_PYTHIAHYDJET_MuJet);
     if(!isData) f_data = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
     else f_data = TFile::Open(goldenFile_PbPb_SingleMuon);
-
-    if(isC0){
-
-      if(isJ0){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J0",h0);
-	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J0",g0);
-	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J0",k0);
-	//if(isData) f_data->GetObject("h_muPtRel_C0J0",h0_incl);
-	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C0J0",h0_incl);	
-      }
-      if(isJ1){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J1",h0);
-	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J1",g0);
-	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J1",k0);
-	//if(isData) f_data->GetObject("h_muPtRel_C0J1",h0_incl);
-	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C0J1",h0_incl);
-      }
-      if(isJ2){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J2",h0);
-	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J2",g0);
-	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J2",k0);
-	//if(isData) f_data->GetObject("h_muPtRel_C0J2",h0_incl);
-	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C0J2",h0_incl);
-      }
-      if(isJ3){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J3",h0);
-	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J3",g0);
-	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J3",k0);
-	//if(isData) f_data->GetObject("h_muPtRel_C0J3",h0_incl);
-	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C0J3",h0_incl);
-      }
-      if(isJ4){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J4",h0);
-	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J4",g0);
-	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J4",k0);
-	//if(isData) f_data->GetObject("h_muPtRel_C0J4",h0_incl);
-	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C0J4",h0_incl);
-      }
-      if(isJ5){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J5",h0);
-	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J5",g0);
-	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J5",k0);
-	//if(isData) f_data->GetObject("h_muPtRel_C0J5",h0_incl);
-	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C0J5",h0_incl);
-      }
-      if(isJ6){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J6",h0);
-	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J6",g0);
-	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C0J6",k0);
-	//if(isData) f_data->GetObject("h_muPtRel_C0J6",h0_incl);
-	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C0J6",h0_incl);
-      }
-
-    }
-
 
     if(isC1){
 
@@ -1002,14 +946,12 @@ double templateFitter(bool isData = 1,
   if(isData){
     if(ispp) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{pp, #sqrt{#font[52]{s}} = 5 TeV}");
 	  
-    if(isC0) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 0-90%, #sqrt{#font[52]{s}} = 5 TeV}");
     if(isC1) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 0-30%, #sqrt{#font[52]{s}} = 5 TeV}");
     if(isC2) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 30-90%, #sqrt{#font[52]{s}} = 5 TeV}");
   }
             
   if(!isData) {
     if(ispp) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA, #sqrt{#font[52]{s}} = 5 TeV}");
-    if(isC0) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 0-90%, #sqrt{#font[52]{s}} = 5 TeV}");
     if(isC1) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 0-30%, #sqrt{#font[52]{s}} = 5 TeV}");
     if(isC2) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 30-90%, #sqrt{#font[52]{s}} = 5 TeV}");
   }
