@@ -1058,7 +1058,7 @@ double templateFitter(bool isData = 1,
 			
 			
   
-  else if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
+  if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
   else if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{60 < #font[52]{p}_{T}^{jet} < 80 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
   else if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{80 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
   else if(isJ4) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{120 < #font[52]{p}_{T}^{jet} < 200 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
