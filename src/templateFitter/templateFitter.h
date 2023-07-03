@@ -89,7 +89,6 @@ double templateFitter(bool isData = 1,
 		      bool ispp = 0,
 		      bool isC1 = 0,
 		      bool isC2 = 1,
-		      bool isJ0 = 0,
 		      bool isJ1 = 0,
 		      bool isJ2 = 0,
 		      bool isJ3 = 0,
@@ -116,10 +115,6 @@ double templateFitter(bool isData = 1,
     if(!isData) f_data = TFile::Open(goldenFile_PYTHIA);
     else f_data = TFile::Open(goldenFile_pp_SingleMuon);	
 
-    if(isJ0){
-      f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J0",h0);
-      if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_J0",h0_incl);		
-    }
     if(isJ1){
       f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J1",h0);
       if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_J1",h0_incl);		
@@ -158,13 +153,6 @@ double templateFitter(bool isData = 1,
 
     if(isC1){
 
-      if(isJ0){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J0",h0);
-	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J0",g0);
-	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J0",k0);
-	//if(isData) f_data->GetObject("h_muPtRel_C1J0",h0_incl);
-	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C1J0",h0_incl);
-      }
       if(isJ1){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J1",h0);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J1",g0);
@@ -212,13 +200,6 @@ double templateFitter(bool isData = 1,
 
     if(isC2){
 
-      if(isJ0){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J0",h0);
-	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J0",g0);
-	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J0",k0);
-	//if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J0",h0_incl);
-	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C2J0",h0_incl);
-      }
       if(isJ1){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J1",h0);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J1",g0);
@@ -957,7 +938,7 @@ double templateFitter(bool isData = 1,
   }
 
 			
-  if(isJ0) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{50 < #font[52]{p}_{T}^{jet} < 500 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
+  
   if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
   if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{60 < #font[52]{p}_{T}^{jet} < 80 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
   if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{80 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
@@ -1076,7 +1057,7 @@ double templateFitter(bool isData = 1,
             
 			
 			
-  if(isJ0) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{50 < #font[52]{p}_{T}^{jet} < 500 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
+  
   else if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
   else if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{60 < #font[52]{p}_{T}^{jet} < 80 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
   else if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{80 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
