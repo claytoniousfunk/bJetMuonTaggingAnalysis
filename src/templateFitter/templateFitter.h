@@ -632,6 +632,7 @@ double templateFitter(bool isData = 1,
   TH1D *fitRatio = (TH1D*) h0_inclR->Clone("fitRatio");
 
   ////////////////////////////  template fit plot      
+
   TCanvas *c1 = new TCanvas("c1","c1",500,500);
   c1->cd();
   TPad *pad1 = new TPad("pad1", "pad1", 0.0, 0.3, 1.0, 1.0);
@@ -1100,23 +1101,25 @@ double templateFitter(bool isData = 1,
   if(ispp){
 
     if(isJ1){
-      c1->SaveAs("../../figures/temlpateFits/pp/J1/templateFit_diJet.pdf");		
+      c1->SaveAs("../../figures/templateFits/pp/J1/templateFit_diJet.pdf");		
       c2->SaveAs("../../figures/templateShapes/pp/J1/templateShape_diJet.pdf");
     }		
     if(isJ2){
-      c1->SaveAs("../../figures/temlpateFits/pp/J2/templateFit_diJet.pdf");		
+      c1->cd();
+      c1->SaveAs("../../figures/templateFits/pp/J2/templateFit_diJet.pdf");		
+      c2->cd();
       c2->SaveAs("../../figures/templateShapes/pp/J2/templateShape_diJet.pdf");
     }		
     if(isJ3){
-      c1->SaveAs("../../figures/temlpateFits/pp/J3/templateFit_diJet.pdf");		
+      c1->SaveAs("../../figures/templateFits/pp/J3/templateFit_diJet.pdf");		
       c2->SaveAs("../../figures/templateShapes/pp/J3/templateShape_diJet.pdf");
     }		
     if(isJ4){
-      c1->SaveAs("../../figures/temlpateFits/pp/J4/templateFit_diJet.pdf");		
+      c1->SaveAs("../../figures/templateFits/pp/J4/templateFit_diJet.pdf");		
       c2->SaveAs("../../figures/templateShapes/pp/J4/templateShape_diJet.pdf");
     }		
     if(isJ5){
-      c1->SaveAs("../../figures/temlpateFits/pp/J5/templateFit_diJet.pdf");		
+      c1->SaveAs("../../figures/templateFits/pp/J5/templateFit_diJet.pdf");		
       c2->SaveAs("../../figures/templateShapes/pp/J5/templateShape_diJet.pdf");
     }		
     if(isJ6){
