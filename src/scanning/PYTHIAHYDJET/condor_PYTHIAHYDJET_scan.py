@@ -5,6 +5,7 @@ jobname = 'PYTHIAHYDJET_DiJet_scan'
 #put the file list here
 dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet.txt'
 #dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_BJet.txt'
+#dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_BJet_onlyMuonTaggedJets.txt'
 #dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_MuJet.txt'
 #dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut.txt'
 
