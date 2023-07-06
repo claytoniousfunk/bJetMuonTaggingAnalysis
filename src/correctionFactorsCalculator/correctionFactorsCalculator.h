@@ -1,4 +1,5 @@
 
+#include "../../headers/functions/divideByBinwidth.h"
 #include "../../headers/goldenFileNames.h"
 
 TFile *f1, *f2;
@@ -326,356 +327,74 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC2 = 0, bool isC1 = 0){
 	
   // DIVIDE BY BIN-WIDTH
 	
-  // PT
-  // CENT BIN 0
-  // inclusive jets
-  for(int k = 0; k < h0_inclR->GetSize();k++){
-    double ptCenter = h0_inclR->GetBinContent(k);
-    double ptError = h0_inclR->GetBinError(k);
-    double ptBinWidth = h0_inclR->GetBinWidth(k);
-    if(ptBinWidth!=0){
-      h0_inclR->SetBinContent(k,ptCenter/ptBinWidth);
-      h0_inclR->SetBinError(k,ptError/ptBinWidth);
-    }
-  }
-  // bJets
-  for(int k = 0; k < h0_bR->GetSize();k++){
-    double ptCenter = h0_bR->GetBinContent(k);
-    double ptError = h0_bR->GetBinError(k);
-    double ptBinWidth = h0_bR->GetBinWidth(k);
-    if(ptBinWidth!=0){
-      h0_bR->SetBinContent(k,ptCenter/ptBinWidth);
-      h0_bR->SetBinError(k,ptError/ptBinWidth);
-    }
-  }
+ 
+  // allJets
+  h0_inclR = divideByBinwidth(h0_inclR);
+  // bJets  
+  h0_bR = divideByBinwidth(h0_bR);
   // cJets
-  for(int k = 0; k < h0_cR->GetSize();k++){
-    double ptCenter = h0_cR->GetBinContent(k);
-    double ptError = h0_cR->GetBinError(k);
-    double ptBinWidth = h0_cR->GetBinWidth(k);
-    if(ptBinWidth!=0){
-      h0_cR->SetBinContent(k,ptCenter/ptBinWidth);
-      h0_cR->SetBinError(k,ptError/ptBinWidth);
-    }
-  }
+  h0_cR = divideByBinwidth(h0_cR);
   // lJets
-  for(int k = 0; k < h0_lR->GetSize();k++){
-    double ptCenter = h0_lR->GetBinContent(k);
-    double ptError = h0_lR->GetBinError(k);
-    double ptBinWidth = h0_lR->GetBinWidth(k);
-    if(ptBinWidth!=0){
-      h0_lR->SetBinContent(k,ptCenter/ptBinWidth);
-      h0_lR->SetBinError(k,ptError/ptBinWidth);
-    }
-  }
+  h0_lR = divideByBinwidth(h0_lR);
   // ghostJets
-  for(int k = 0; k < h0_ghostR->GetSize();k++){
-    double ptCenter = h0_ghostR->GetBinContent(k);
-    double ptError = h0_ghostR->GetBinError(k);
-    double ptBinWidth = h0_ghostR->GetBinWidth(k);
-    if(ptBinWidth!=0){
-      h0_ghostR->SetBinContent(k,ptCenter/ptBinWidth);
-      h0_ghostR->SetBinError(k,ptError/ptBinWidth);
-    }
-  }
+  h0_ghostR = divideByBinwidth(h0_ghostR);
   // noFlavorJets
-  for(int k = 0; k < h0_noFlavorR->GetSize();k++){
-    double ptCenter = h0_noFlavorR->GetBinContent(k);
-    double ptError = h0_noFlavorR->GetBinError(k);
-    double ptBinWidth = h0_noFlavorR->GetBinWidth(k);
-    if(ptBinWidth!=0){
-      h0_noFlavorR->SetBinContent(k,ptCenter/ptBinWidth);
-      h0_noFlavorR->SetBinError(k,ptError/ptBinWidth);
-    }
-  }
+  h0_noFlavorR = divideByBinwidth(h0_noFlavorR);
 
-
-
-	
-  // ETA
-  // CENT BIN 0
-  // inclusive jets
-  for(int k = 0; k < j0_inclR->GetSize();k++){
-    double etaCenter = j0_inclR->GetBinContent(k);
-    double etaError = j0_inclR->GetBinError(k);
-    double etaBinWidth = j0_inclR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j0_inclR->SetBinContent(k,etaCenter/etaBinWidth);
-      j0_inclR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
-  // bJets
-  for(int k = 0; k < j0_bR->GetSize();k++){
-    double etaCenter = j0_bR->GetBinContent(k);
-    double etaError = j0_bR->GetBinError(k);
-    double etaBinWidth = j0_bR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j0_bR->SetBinContent(k,etaCenter/etaBinWidth);
-      j0_bR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  // allJets
+  j0_inclR = divideByBinwidth(j0_inclR);
+  // bJets  
+  j0_bR = divideByBinwidth(j0_bR);
   // cJets
-  for(int k = 0; k < j0_cR->GetSize();k++){
-    double etaCenter = j0_cR->GetBinContent(k);
-    double etaError = j0_cR->GetBinError(k);
-    double etaBinWidth = j0_cR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j0_cR->SetBinContent(k,etaCenter/etaBinWidth);
-      j0_cR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j0_cR = divideByBinwidth(j0_cR);
   // lJets
-  for(int k = 0; k < j0_lR->GetSize();k++){
-    double etaCenter = j0_lR->GetBinContent(k);
-    double etaError = j0_lR->GetBinError(k);
-    double etaBinWidth = j0_lR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j0_lR->SetBinContent(k,etaCenter/etaBinWidth);
-      j0_lR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j0_lR = divideByBinwidth(j0_lR);
   // ghostJets
-  for(int k = 0; k < j0_ghostR->GetSize();k++){
-    double etaCenter = j0_ghostR->GetBinContent(k);
-    double etaError = j0_ghostR->GetBinError(k);
-    double etaBinWidth = j0_ghostR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j0_ghostR->SetBinContent(k,etaCenter/etaBinWidth);
-      j0_ghostR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j0_ghostR = divideByBinwidth(j0_ghostR);
   // noFlavorJets
-  for(int k = 0; k < j0_noFlavorR->GetSize();k++){
-    double etaCenter = j0_noFlavorR->GetBinContent(k);
-    double etaError = j0_noFlavorR->GetBinError(k);
-    double etaBinWidth = j0_noFlavorR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j0_noFlavorR->SetBinContent(k,etaCenter/etaBinWidth);
-      j0_noFlavorR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j0_noFlavorR = divideByBinwidth(j0_noFlavorR);
 
-
-
-
-  // inclusive jets
-  for(int k = 0; k < j1_inclR->GetSize();k++){
-    double etaCenter = j1_inclR->GetBinContent(k);
-    double etaError = j1_inclR->GetBinError(k);
-    double etaBinWidth = j1_inclR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j1_inclR->SetBinContent(k,etaCenter/etaBinWidth);
-      j1_inclR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
-  // bJets
-  for(int k = 0; k < j1_bR->GetSize();k++){
-    double etaCenter = j1_bR->GetBinContent(k);
-    double etaError = j1_bR->GetBinError(k);
-    double etaBinWidth = j1_bR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j1_bR->SetBinContent(k,etaCenter/etaBinWidth);
-      j1_bR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  // allJets
+  j1_inclR = divideByBinwidth(j1_inclR);
+  // bJets  
+  j1_bR = divideByBinwidth(j1_bR);
   // cJets
-  for(int k = 0; k < j1_cR->GetSize();k++){
-    double etaCenter = j1_cR->GetBinContent(k);
-    double etaError = j1_cR->GetBinError(k);
-    double etaBinWidth = j1_cR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j1_cR->SetBinContent(k,etaCenter/etaBinWidth);
-      j1_cR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j1_cR = divideByBinwidth(j1_cR);
   // lJets
-  for(int k = 0; k < j1_lR->GetSize();k++){
-    double etaCenter = j1_lR->GetBinContent(k);
-    double etaError = j1_lR->GetBinError(k);
-    double etaBinWidth = j1_lR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j1_lR->SetBinContent(k,etaCenter/etaBinWidth);
-      j1_lR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j1_lR = divideByBinwidth(j1_lR);
   // ghostJets
-  for(int k = 0; k < j1_ghostR->GetSize();k++){
-    double etaCenter = j1_ghostR->GetBinContent(k);
-    double etaError = j1_ghostR->GetBinError(k);
-    double etaBinWidth = j1_ghostR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j1_ghostR->SetBinContent(k,etaCenter/etaBinWidth);
-      j1_ghostR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j1_ghostR = divideByBinwidth(j1_ghostR);
   // noFlavorJets
-  for(int k = 0; k < j1_noFlavorR->GetSize();k++){
-    double etaCenter = j1_noFlavorR->GetBinContent(k);
-    double etaError = j1_noFlavorR->GetBinError(k);
-    double etaBinWidth = j1_noFlavorR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j1_noFlavorR->SetBinContent(k,etaCenter/etaBinWidth);
-      j1_noFlavorR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j1_noFlavorR = divideByBinwidth(j1_noFlavorR);
 
-
-
-
-
-  // inclusive jets
-  for(int k = 0; k < j2_inclR->GetSize();k++){
-    double etaCenter = j2_inclR->GetBinContent(k);
-    double etaError = j2_inclR->GetBinError(k);
-    double etaBinWidth = j2_inclR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j2_inclR->SetBinContent(k,etaCenter/etaBinWidth);
-      j2_inclR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
-  // bJets
-  for(int k = 0; k < j2_bR->GetSize();k++){
-    double etaCenter = j2_bR->GetBinContent(k);
-    double etaError = j2_bR->GetBinError(k);
-    double etaBinWidth = j2_bR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j2_bR->SetBinContent(k,etaCenter/etaBinWidth);
-      j2_bR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  // allJets
+  j2_inclR = divideByBinwidth(j2_inclR);
+  // bJets  
+  j2_bR = divideByBinwidth(j2_bR);
   // cJets
-  for(int k = 0; k < j2_cR->GetSize();k++){
-    double etaCenter = j2_cR->GetBinContent(k);
-    double etaError = j2_cR->GetBinError(k);
-    double etaBinWidth = j2_cR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j2_cR->SetBinContent(k,etaCenter/etaBinWidth);
-      j2_cR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j2_cR = divideByBinwidth(j2_cR);
   // lJets
-  for(int k = 0; k < j2_lR->GetSize();k++){
-    double etaCenter = j2_lR->GetBinContent(k);
-    double etaError = j2_lR->GetBinError(k);
-    double etaBinWidth = j2_lR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j2_lR->SetBinContent(k,etaCenter/etaBinWidth);
-      j2_lR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j2_lR = divideByBinwidth(j2_lR);
   // ghostJets
-  for(int k = 0; k < j2_ghostR->GetSize();k++){
-    double etaCenter = j2_ghostR->GetBinContent(k);
-    double etaError = j2_ghostR->GetBinError(k);
-    double etaBinWidth = j2_ghostR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j2_ghostR->SetBinContent(k,etaCenter/etaBinWidth);
-      j2_ghostR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j2_ghostR = divideByBinwidth(j2_ghostR);
   // noFlavorJets
-  for(int k = 0; k < j2_noFlavorR->GetSize();k++){
-    double etaCenter = j2_noFlavorR->GetBinContent(k);
-    double etaError = j2_noFlavorR->GetBinError(k);
-    double etaBinWidth = j2_noFlavorR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j2_noFlavorR->SetBinContent(k,etaCenter/etaBinWidth);
-      j2_noFlavorR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j2_noFlavorR = divideByBinwidth(j2_noFlavorR);
 
-
-
-  // inclusive jets
-  for(int k = 0; k < j3_inclR->GetSize();k++){
-    double etaCenter = j3_inclR->GetBinContent(k);
-    double etaError = j3_inclR->GetBinError(k);
-    double etaBinWidth = j3_inclR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j3_inclR->SetBinContent(k,etaCenter/etaBinWidth);
-      j3_inclR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
-  // bJets
-  for(int k = 0; k < j3_bR->GetSize();k++){
-    double etaCenter = j3_bR->GetBinContent(k);
-    double etaError = j3_bR->GetBinError(k);
-    double etaBinWidth = j3_bR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j3_bR->SetBinContent(k,etaCenter/etaBinWidth);
-      j3_bR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  // allJets
+  j3_inclR = divideByBinwidth(j3_inclR);
+  // bJets  
+  j3_bR = divideByBinwidth(j3_bR);
   // cJets
-  for(int k = 0; k < j3_cR->GetSize();k++){
-    double etaCenter = j3_cR->GetBinContent(k);
-    double etaError = j3_cR->GetBinError(k);
-    double etaBinWidth = j3_cR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j3_cR->SetBinContent(k,etaCenter/etaBinWidth);
-      j3_cR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j3_cR = divideByBinwidth(j3_cR);
   // lJets
-  for(int k = 0; k < j3_lR->GetSize();k++){
-    double etaCenter = j3_lR->GetBinContent(k);
-    double etaError = j3_lR->GetBinError(k);
-    double etaBinWidth = j3_lR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j3_lR->SetBinContent(k,etaCenter/etaBinWidth);
-      j3_lR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j3_lR = divideByBinwidth(j3_lR);
   // ghostJets
-  for(int k = 0; k < j3_ghostR->GetSize();k++){
-    double etaCenter = j3_ghostR->GetBinContent(k);
-    double etaError = j3_ghostR->GetBinError(k);
-    double etaBinWidth = j3_ghostR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j3_ghostR->SetBinContent(k,etaCenter/etaBinWidth);
-      j3_ghostR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j3_ghostR = divideByBinwidth(j3_ghostR);
   // noFlavorJets
-  for(int k = 0; k < j3_noFlavorR->GetSize();k++){
-    double etaCenter = j3_noFlavorR->GetBinContent(k);
-    double etaError = j3_noFlavorR->GetBinError(k);
-    double etaBinWidth = j3_noFlavorR->GetBinWidth(k);
-    if(etaBinWidth!=0){
-      j3_noFlavorR->SetBinContent(k,etaCenter/etaBinWidth);
-      j3_noFlavorR->SetBinError(k,etaError/etaBinWidth);
-    }
-  }
+  j3_noFlavorR = divideByBinwidth(j3_noFlavorR);
 
 
-
-
-
-
-
-
-  // STYLE STUFF 
-	
-  // PT
-  // CENT BIN 0
-  /*
-    h0_bR->SetLineColor(kRed);
-    h0_cR->SetLineColor(kGreen+1);
-    h0_lR->SetLineColor(kBlue);
-    h0_ghostR->SetLineColor(kCyan+2);
-    h0_noFlavorR->SetLineColor(kMagenta);
-
-    h0_bR->SetMarkerColor(kRed);
-    h0_cR->SetMarkerColor(kGreen+1);
-    h0_lR->SetMarkerColor(kBlue);
-    h0_ghostR->SetMarkerColor(kCyan+2);
-    h0_noFlavorR->SetMarkerColor(kMagenta);
-  */
-	
-	
-
-  // ETA
-  // CENT BIN 0
+  // style stuff
   h0_bR->SetLineColor(kRed);
   j0_bR->SetLineColor(kGreen+1);
   j1_bR->SetLineColor(kBlue);
