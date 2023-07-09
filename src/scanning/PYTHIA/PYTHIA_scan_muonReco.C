@@ -229,7 +229,7 @@ void PYTHIA_scan_muonReco(TString input = "/eos/user/c/cbennett/forests/PYTHIA_f
 	h_matchedGenMuonEta->Fill(genMuEta_j,w);
 
 	h_matchedRecoMuonPtOverGenMuonPt_genMuonPt->Fill(matchedRecoMuPt_j / genMuPt_j, genMuPt_j, w);
-	h_matchedRecoMuonPtOverGenMuonPt_genMuonPt->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
+	h_matchedRecoMuonPtOverGenMuonPt_genMuonEta->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
 
       }
 
