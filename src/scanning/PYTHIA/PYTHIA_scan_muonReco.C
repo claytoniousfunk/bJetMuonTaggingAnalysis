@@ -87,7 +87,7 @@ TH1D *h_matchedGenMuonEta;
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonPt;
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonEta;
 
-void PYTHIA_scan_muonReco(){
+void PYTHIA_scan_muonReco(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10Aug22/QCD_pThat-15_Dijet_TuneCP5_5p02TeV_pythia8/crab_PYTHIA_forest_10Aug22/220810_170721/0000/HiForestAOD_100.root", TString output = "out.root"){
 
   readConfig();
 
@@ -105,8 +105,8 @@ void PYTHIA_scan_muonReco(){
   h_matchedGenMuonPt = new TH1D("h_matchedGenMuonPt","gen muon p_{T}",NMuPtBins,muPtMin,muPtMax);
   h_matchedGenMuonEta = new TH1D("h_matchedGenMuonEta","gen muon #eta",NTrkEtaBins,trkEtaMin,trkEtaMax);
    
-  h_matchedRecoMuonPtOverGenMuonPt_genMuonPt = new TH2D("h_matchedRecoMuonPtOverGenMuonPt_genMuonPt",500,0,5,NMuPtBins,muPtMin,muPtMax);
-  h_matchedRecoMuonPtOverGenMuonPt_genMuonEta = new TH2D("h_matchedRecoMuonPtOverGenMuonEta_genMuonPt",500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
+  h_matchedRecoMuonPtOverGenMuonPt_genMuonPt = new TH2D("h_matchedRecoMuonPtOverGenMuonPt_genMuonPt","p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. p_{T}^{gen,#mu}",500,0,5,NMuPtBins,muPtMin,muPtMax);
+  h_matchedRecoMuonPtOverGenMuonPt_genMuonEta = new TH2D("h_matchedRecoMuonPtOverGenMuonEta_genMuonPt","p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}",500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
 
   h_inclGenMuonPt->Sumw2();
   h_inclGenMuonEta->Sumw2();
