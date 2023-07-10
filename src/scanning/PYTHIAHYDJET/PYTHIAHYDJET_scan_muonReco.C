@@ -117,7 +117,7 @@ void PYTHIAHYDJET_scan_muonReco(TString input = "/eos/user/c/cbennett/forests/PY
       h_matchedGenMuonEta[c] = new TH1D(Form("h_matchedGenMuonEta_C%i",c),Form("matched-gen muon #eta, hiBin %i - %i",centEdges[c-1],centEdges[c]),NTrkEtaBins,trkEtaMin,trkEtaMax);
    
       h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[c] = new TH2D(Form("h_matchedRecoMuonPtOverGenMuonPt_genMuonPt_C%i",c),Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. p_{T}^{gen,#mu}, hiBin %i - %i",centEdges[c-1],centEdges[c]),500,0,5,NMuPtBins,muPtMin,muPtMax);
-      h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c] = new TH2D("h_matchedRecoMuonPtOverGenMuonPt_genMuonEta_C%i",Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}, hiBin %i - %i",centEdges[c-1],centEdges[c]),500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
+      h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c] = new TH2D(Form("h_matchedRecoMuonPtOverGenMuonPt_genMuonEta_C%i",c),Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}, hiBin %i - %i",centEdges[c-1],centEdges[c]),500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
 
     }
 
