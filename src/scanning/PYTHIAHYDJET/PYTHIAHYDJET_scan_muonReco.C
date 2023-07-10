@@ -99,13 +99,13 @@ void PYTHIAHYDJET_scan_muonReco(TString input = "/eos/user/c/cbennett/forests/PY
 
     if(c == 0){
 
-      h_inclGenMuonPt[c] = new TH1D(Form("h_inclGenMuonPt_C%i",c),Form("gen muon p_{T}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices]),NMuPtBins,muPtMin,muPtMax);
-      h_inclGenMuonEta[c] = new TH1D(Form("h_inclGenMuonEta_C%i",c),Form("gen muon #eta, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices]),NTrkEtaBins,trkEtaMin,trkEtaMax);
-      h_matchedGenMuonPt[c] = new TH1D(Form("h_matchedGenMuonPt_C%i",c),Form("matched-gen muon p_{T}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices]),NMuPtBins,muPtMin,muPtMax);
-      h_matchedGenMuonEta[c] = new TH1D(Form("h_matchedGenMuonEta_C%i",c),Form("matched-gen muon #eta, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+      h_inclGenMuonPt[c] = new TH1D(Form("h_inclGenMuonPt_C%i",c),Form("gen muon p_{T}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NMuPtBins,muPtMin,muPtMax);
+      h_inclGenMuonEta[c] = new TH1D(Form("h_inclGenMuonEta_C%i",c),Form("gen muon #eta, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+      h_matchedGenMuonPt[c] = new TH1D(Form("h_matchedGenMuonPt_C%i",c),Form("matched-gen muon p_{T}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NMuPtBins,muPtMin,muPtMax);
+      h_matchedGenMuonEta[c] = new TH1D(Form("h_matchedGenMuonEta_C%i",c),Form("matched-gen muon #eta, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
    
-      h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[c] = new TH2D(Form("h_matchedRecoMuonPtOverGenMuonPt_genMuonPt_C%i",c),Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. p_{T}^{gen,#mu}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices]),500,0,5,NMuPtBins,muPtMin,muPtMax);
-      h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c] = new TH2D("h_matchedRecoMuonPtOverGenMuonPt_genMuonEta",Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices]),500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
+      h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[c] = new TH2D(Form("h_matchedRecoMuonPtOverGenMuonPt_genMuonPt_C%i",c),Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. p_{T}^{gen,#mu}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,NMuPtBins,muPtMin,muPtMax);
+      h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c] = new TH2D("h_matchedRecoMuonPtOverGenMuonPt_genMuonEta",Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
 
     }
 
