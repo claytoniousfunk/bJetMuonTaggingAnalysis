@@ -1,7 +1,7 @@
 // MC
 TString goldenFile_PYTHIA = "../../rootFiles/scanningOutput/PYTHIA/PYTHIA_scan.root";
-TString goldenFile_PYTHIA_response = "../../rootFiles/scanningOutput/PYTHIA/PYTHIA_scan_response.root";
-TString goldenFile_PYTHIA_muonReco = "../../rootFiles/scanningOutput/PYTHIA/PYTHIA_scan_muonReco.root";
+TString goldenFile_PYTHIA_response = "../../rootFiles/scanningOutput/PYTHIA/PYTHIA_response.root";
+TString goldenFile_PYTHIA_muonReco = "../../rootFiles/scanningOutput/PYTHIA/PYTHIA_muonReco.root";
 
 TString goldenFile_PYTHIAHYDJET_DiJet = "../../rootFiles/scanningOutput/PYTHIAHYDJET/PYTHIAHYDJET_DiJet_scan.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_response = "../../rootFiles/scanningOutput/PYTHIAHYDJET/PYTHIAHYDJET_DiJet_response.root";
