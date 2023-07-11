@@ -210,6 +210,31 @@ void PYTHIAHYDJET_scan_muonReco_bJets(TString input = "/eos/user/c/cbennett/fore
       if(fabs(genMuEta_j) > trkEtaMax) continue;
       if(etaPhiMask(genMuEta_j,genMuPhi_j)) continue;
 
+      // look for match to bJet
+
+      bool hasBJetMatch = false;
+      
+      for(int jeti = 0; jeti < em->njet; jeti++){
+
+	double jetPt_i = em->jetpt[jeti];
+	double jetEta_i = em->jeteta[jeti];
+	double jetPhi_i = em->jetphi[jeti];
+	int flavor_i = em->refparton_flavorForB[jeti];
+
+	if(jetPt_i < 60.0 || fabs(jetEta_i) > 1.6  || fabs(flavor_i) != 5) continue;  // only consider bJets in our kinematic range
+
+	double dR_ji = getDr(jetEta_i,jetPhi_i,genMuEta_j,genMuPhi_j);
+
+	if(dR_ji < epsilon_mm){
+
+	  hasBJetMatch = true;
+
+	}
+
+      }
+
+      if(!hasBJetMatch) continue;
+
       h_inclGenMuonPt[0]->Fill(genMuPt_j,w);
       h_inclGenMuonEta[0]->Fill(genMuEta_j,w);
 
