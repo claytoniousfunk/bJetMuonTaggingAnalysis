@@ -9,8 +9,8 @@ TH1D *D1, *D2, *D3;
 
 void muonReconstructionEfficiencyCalculator(){
 
-  f1 = TFile::Open(goldenFile_PYTHIA_muonReco);
-  f2 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_muonReco);
+  f1 = TFile::Open(goldenFile_PYTHIA_muonReco_bJets);
+  f2 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_muonReco_bJets);
 
   f1->GetObject("h_matchedGenMuonPt",n1);
   f1->GetObject("h_inclGenMuonPt",d1);
@@ -133,7 +133,6 @@ void muonReconstructionEfficiencyCalculator(){
   TPad *p_pt = new TPad("p_pt","p_pt",0,0,1,1);
   p_pt->SetLeftMargin(0.2);
   p_pt->SetBottomMargin(0.2);
-  p_pt->SetTopMargin(0.18);
   p_pt->Draw();
   p_pt->cd();
 
@@ -148,13 +147,17 @@ void muonReconstructionEfficiencyCalculator(){
   mg_pt->GetXaxis()->SetTitle("Muon #font[52]{p}_{T} [GeV]");
   mg_pt->SetTitle("");
   mg_pt->Draw("AP ep");
-  // TLatex *la = new TLatex();
-  // la->SetTextSize(0.035);
-  // la->SetTextFont(42);
-  // la->DrawLatexNDC(0.21,0.95,sampleName);
-  // la->SetTextSize(0.03);
-  // la->DrawLatexNDC(0.21,0.9,triggerName);
-  // la->DrawLatexNDC(0.21,0.85,muonInfo);
+  TLatex *la = new TLatex();
+  la->SetTextSize(0.032);
+  la->SetTextFont(42);
+  TString sampleName = "#scale[1.2]{#font[62]{CMS}} #font[52]{Preliminary}                        #sqrt{s_{NN}} = 5.02 TeV";
+  TString muonInfo = "Muon reconstruction";
+  la->DrawLatexNDC(0.21,0.92,sampleName);
+  la->SetTextSize(0.03);
+  //la->DrawLatexNDC(0.21,0.9,triggerName);
+  la->DrawLatexNDC(0.25,0.5,muonInfo);
+  la->DrawLatexNDC(0.25,0.46,"Tight muon ID");
+  la->DrawLatexNDC(0.25,0.42,"Tagged to #font[52]{b}-jets, #font[52]{p}_{T}^{jet} > 60 GeV, |#eta^{jet}| < 1.6");
 
   TLegend *leg = new TLegend(0.22,0.25,0.5,0.38);
   leg->SetBorderSize(0);
@@ -170,7 +173,6 @@ void muonReconstructionEfficiencyCalculator(){
   TPad *p_eta = new TPad("p_eta","p_eta",0,0,1,1);
   p_eta->SetLeftMargin(0.2);
   p_eta->SetBottomMargin(0.2);
-  p_eta->SetTopMargin(0.18);
   p_eta->Draw();
   p_eta->cd();
 
@@ -184,8 +186,18 @@ void muonReconstructionEfficiencyCalculator(){
   mg_eta->GetXaxis()->SetTitle("Muon #eta");
   mg_eta->SetTitle("");
   mg_eta->Draw("AP ep");
+  la->SetTextSize(0.032);
+  la->DrawLatexNDC(0.21,0.92,sampleName);
+  la->SetTextSize(0.03);
+  //la->DrawLatexNDC(0.21,0.9,triggerName);
+  la->DrawLatexNDC(0.25,0.5,muonInfo);
+  la->DrawLatexNDC(0.25,0.46,"Tight muon ID");
+  la->DrawLatexNDC(0.25,0.42,"Tagged to #font[52]{b}-jets, #font[52]{p}_{T}^{jet} > 60 GeV, |#eta^{jet}| < 1.6");
 
   leg->Draw();
+
+  c_pt->SaveAs("../../figures/muonReconstructionEfficiency/muonPt_bJets.pdf");
+  c_eta->SaveAs("../../figures/muonReconstructionEfficiency/muonEta_bJets.pdf");
 
 
   
