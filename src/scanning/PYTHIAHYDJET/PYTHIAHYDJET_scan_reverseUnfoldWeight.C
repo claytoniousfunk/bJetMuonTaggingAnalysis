@@ -672,7 +672,7 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
       eventHasGoodJet = true;
 
-      if(CentralityIndex = 1){ // apply an additional "reverse-unfolding" weight to central (experimental!)
+      if(CentralityIndex == 1){ // apply an additional "reverse-unfolding" weight to central (experimental!)
 
 	w_reverseUnfold = 1.0 / f_reverseUnfold->Eval(x) ;
 
