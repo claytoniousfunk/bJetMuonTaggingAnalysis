@@ -11,7 +11,7 @@ dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet.txt'
 
 
 
-exe = 'PYTHIAHYDJET_scan.C'
+exe = 'PYTHIAHYDJET_scan_reverseUnfold.C'
 
 jm = jobManager(jobSite ='cern', 
 	jobname = jobname, 	
