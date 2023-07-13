@@ -492,72 +492,73 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
       bool hasMatchedRecoMuonTag = false;
 
 
-
-      // look for a genMuon match
-      for(int j = 0; j < em->gppdgIDp->size(); j++){
+      if(!skipGenParticles){
+	// look for a genMuon match
+	for(int j = 0; j < em->gppdgIDp->size(); j++){
 
                         
-	bool isMatchedGenMuon = false;
+	  bool isMatchedGenMuon = false;
 
-	if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	genMuIndex++;
+	  genMuIndex++;
 
-	if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
+	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 		
-	double a = em->gpptp->at(j);
-	double am = -1.0;
-	double b = em->gpetap->at(j);
-	double bm = -1.0;
-	double c = em->gpphip->at(j);
-	double cm = -1.0;
+	  double a = em->gpptp->at(j);
+	  double am = -1.0;
+	  double b = em->gpetap->at(j);
+	  double bm = -1.0;
+	  double c = em->gpphip->at(j);
+	  double cm = -1.0;
 
 
-	if(a < muPtCut || fabs(b) > trkEtaMax) continue;                        
+	  if(a < muPtCut || fabs(b) > trkEtaMax) continue;                        
 
-	for(int l = 0; l < em->nMu; l++){
+	  for(int l = 0; l < em->nMu; l++){
 
-	  if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > trkEtaMax) continue;
+	    if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > trkEtaMax) continue;
 	 
-	  if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				  em->muInnerD0->at(l),
-				  em->muInnerDz->at(l),
-				  em->muMuonHits->at(l),
-				  em->muPixelHits->at(l),
-				  em->muIsGlobal->at(l),
-				  em->muIsPF->at(l),
-				  em->muStations->at(l),
-				  em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+				    em->muInnerD0->at(l),
+				    em->muInnerDz->at(l),
+				    em->muMuonHits->at(l),
+				    em->muPixelHits->at(l),
+				    em->muIsGlobal->at(l),
+				    em->muIsPF->at(l),
+				    em->muStations->at(l),
+				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 
 
-	  if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
+	    if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
-	  double aR = em->muPt->at(l);
-	  double bR = em->muEta->at(l);
-	  double cR = em->muPhi->at(l);
+	    double aR = em->muPt->at(l);
+	    double bR = em->muEta->at(l);
+	    double cR = em->muPhi->at(l);
 
-	  if(getDr(b,c,bR,cR) < epsilon){
+	    if(getDr(b,c,bR,cR) < epsilon){
 				
-	    isMatchedGenMuon = true;
-	    am = aR;
-	    bm = bR;
-	    cm = cR;
+	      isMatchedGenMuon = true;
+	      am = aR;
+	      bm = bR;
+	      cm = cR;
 			
+	    }
+
 	  }
 
-	}
-
-	if(getDr(b,c,y,z) < deltaRCut){
+	  if(getDr(b,c,y,z) < deltaRCut){
 				
-	  matchFlag[genMuIndex] = 1;
-	  hasInclGenMuonTag = true;
-	  if(isMatchedGenMuon) hasMatchedGenMuonTag = true;
+	    matchFlag[genMuIndex] = 1;
+	    hasInclGenMuonTag = true;
+	    if(isMatchedGenMuon) hasMatchedGenMuonTag = true;
 
-	} 
+	  } 
 
-      } // end genMuon loop
+	} // end genMuon loop
+      }
 
 	
 
@@ -585,23 +586,24 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 	// match to genMuon
 	bool isMatchedRecoMuon = false;
 
-	for(int j = 0; j < em->gppdgIDp->size(); j++){
+	if(!skipGenParticles){
+	  for(int j = 0; j < em->gppdgIDp->size(); j++){
 
 
-	  //cout << "genID = " << em->gppdgIDp->at(j) << endl;
+	    //cout << "genID = " << em->gppdgIDp->at(j) << endl;
 			
-	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	    if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	  if(em->gpptp->at(j) < muPtCut || fabs(em->gpetap->at(j)) > trkEtaMax) continue;                        
+	    if(em->gpptp->at(j) < muPtCut || fabs(em->gpetap->at(j)) > trkEtaMax) continue;                        
 		
-	  if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
+	    if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
 
-	    isMatchedRecoMuon = true;
+	      isMatchedRecoMuon = true;
 			
+	    }
+
 	  }
-
 	}
-
 	// match to recoJets
 	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
 
@@ -818,84 +820,78 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
       bool hasMatchedRecoMuonTag = false;
 
 
-
-      // look for a genMuon match
-      for(int j = 0; j < em->gppdgIDp->size(); j++){
+      if(!skipGenParticles){
+	// look for a genMuon match
+	for(int j = 0; j < em->gppdgIDp->size(); j++){
 
                         
-	bool isMatchedGenMuon = false;
+	  bool isMatchedGenMuon = false;
 
-	if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	genMuIndex++;
+	  genMuIndex++;
 
-	if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
+	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 		
-	double a = em->gpptp->at(j);
-	double am = -1.0;
-	double b = em->gpetap->at(j);
-	double bm = -1.0;
-	double c = em->gpphip->at(j);
-	double cm = -1.0;
+	  double a = em->gpptp->at(j);
+	  double am = -1.0;
+	  double b = em->gpetap->at(j);
+	  double bm = -1.0;
+	  double c = em->gpphip->at(j);
+	  double cm = -1.0;
 
-	if(a < muPtCut || fabs(b) > trkEtaMax) continue;                        
+	  if(a < muPtCut || fabs(b) > trkEtaMax) continue;                        
 
-	for(int l = 0; l < em->nMu; l++){
+	  for(int l = 0; l < em->nMu; l++){
 
-	  if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > trkEtaMax) continue;
+	    if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > trkEtaMax) continue;
 	  
-	  if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				  em->muInnerD0->at(l),
-				  em->muInnerDz->at(l),
-				  em->muMuonHits->at(l),
-				  em->muPixelHits->at(l),
-				  em->muIsGlobal->at(l),
-				  em->muIsPF->at(l),
-				  em->muStations->at(l),
-				  em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+				    em->muInnerD0->at(l),
+				    em->muInnerDz->at(l),
+				    em->muMuonHits->at(l),
+				    em->muPixelHits->at(l),
+				    em->muIsGlobal->at(l),
+				    em->muIsPF->at(l),
+				    em->muStations->at(l),
+				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 
 
-	  //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
+	    //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
 
 			
-	  double aR = em->muPt->at(l);
-	  double bR = em->muEta->at(l);
-	  double cR = em->muPhi->at(l);
+	    double aR = em->muPt->at(l);
+	    double bR = em->muEta->at(l);
+	    double cR = em->muPhi->at(l);
 
 			
 
-	  if(getDr(b,c,bR,cR) < epsilon){
+	    if(getDr(b,c,bR,cR) < epsilon){
 				
-	    isMatchedGenMuon = true;
-	    am = aR;
-	    bm = bR;
-	    cm = cR;
+	      isMatchedGenMuon = true;
+	      am = aR;
+	      bm = bR;
+	      cm = cR;
 			
+	    }
+
+			
+
 	  }
 
-			
-
-	}
-
-
-
-
-	if(getDr(b,c,y,z) < deltaRCut){
+	  if(getDr(b,c,y,z) < deltaRCut){
 				
-	  matchFlag[genMuIndex] = 1;
-	  hasInclGenMuonTag = true;
-	  if(isMatchedGenMuon) hasMatchedGenMuonTag = true;
+	    matchFlag[genMuIndex] = 1;
+	    hasInclGenMuonTag = true;
+	    if(isMatchedGenMuon) hasMatchedGenMuonTag = true;
 	
-	} 
+	  } 
 
-                        
-
-
-      } // end genMuon loop
-
+	} // end genMuon loop
+      }
 	
 
       // look for recoMuon match		
