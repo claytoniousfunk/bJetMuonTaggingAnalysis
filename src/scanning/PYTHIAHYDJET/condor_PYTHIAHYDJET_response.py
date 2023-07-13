@@ -4,6 +4,7 @@ jobname = 'PYTHIAHYDJET_DiJet_response'
 
 #put the file list here
 dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet_onlyMuonTaggedJets_noRecoJetPtCut.txt'
+#dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_excludeNeutrinos.txt'
 
 
 exe = 'PYTHIAHYDJET_scan_response.C'
