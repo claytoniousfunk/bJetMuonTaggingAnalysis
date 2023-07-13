@@ -4,6 +4,7 @@ jobname = 'PYTHIA_scan'
 
 #put the file list here
 dblist = '../../../fileNames/fileNames_PYTHIA_DiJet.txt'
+#dblist = '../../../fileNames/fileNames_PYTHIA_DiJet_noRecoJetPtCut.txt'
 
 exe = 'PYTHIA_scan.C'
 
