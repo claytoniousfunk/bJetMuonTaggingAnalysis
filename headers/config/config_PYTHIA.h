@@ -10,3 +10,7 @@ std::string eventFilters[NeventFilters] = {"pPAprimaryVertexFilter", "HBHENoiseF
 bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
+// options to skip genParticle loops (for forests with no genParticle info)
+bool skipGenParticles = false;
+
+
