@@ -1060,21 +1060,21 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
     if(eventHasGoodJet){
 
-      h_hiBin->Fill(em->hiBin-10,w_jet);
-      h_vz[0]->Fill(em->vz,w_jet);
-      h_vz[CentralityIndex]->Fill(em->vz,w_jet);
+      h_hiBin->Fill(em->hiBin-10,w);
+      h_vz[0]->Fill(em->vz,w);
+      h_vz[CentralityIndex]->Fill(em->vz,w);
 
       if(eventHasInclRecoMuonTag){
 
-	h_hiBin_inclRecoMuonTag->Fill(em->hiBin-10,w_jet);
-	h_vz_inclRecoMuonTag[0]->Fill(em->vz,w_jet);
-	h_vz_inclRecoMuonTag[CentralityIndex]->Fill(em->vz,w_jet);
+	h_hiBin_inclRecoMuonTag->Fill(em->hiBin-10,w);
+	h_vz_inclRecoMuonTag[0]->Fill(em->vz,w);
+	h_vz_inclRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
 
 	if(eventHasInclRecoMuonTagPlusTrigger){
 
-	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin-10,w_jet);
-	  h_vz_inclRecoMuonTag_triggerOn[0]->Fill(em->vz,w_jet);
-	  h_vz_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w_jet);
+	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin-10,w);
+	  h_vz_inclRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
+	  h_vz_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
 
 	}
        
@@ -1083,15 +1083,15 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
       if(eventHasMatchedRecoMuonTag){
 
-	h_hiBin_matchedRecoMuonTag->Fill(em->hiBin-10,w_jet);
-	h_vz_matchedRecoMuonTag[0]->Fill(em->vz,w_jet);
-	h_vz_matchedRecoMuonTag[CentralityIndex]->Fill(em->vz,w_jet);
+	h_hiBin_matchedRecoMuonTag->Fill(em->hiBin-10,w);
+	h_vz_matchedRecoMuonTag[0]->Fill(em->vz,w);
+	h_vz_matchedRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
 
 	if(eventHasMatchedRecoMuonTagPlusTrigger){
 
-	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(em->hiBin-10,w_jet);
-	  h_vz_matchedRecoMuonTag_triggerOn[0]->Fill(em->vz,w_jet);
-	  h_vz_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w_jet);
+	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(em->hiBin-10,w);
+	  h_vz_matchedRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
+	  h_vz_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
 
 	}
        
