@@ -601,6 +601,8 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
 
+      double w_jet = w ; // jet-level weight
+
       // JET VARIABLES
 				
       JEC.SetJetPT(em->rawpt[i]);
@@ -676,7 +678,7 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
 	w_reverseUnfold = 1.0 / f_reverseUnfold->Eval(x) ;
 
-	w = w * w_reverseUnfold ;
+	w_jet = w_jet * w_reverseUnfold ;
 	
       }
       
@@ -685,8 +687,8 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
 
       // fill genJetPt vs pthat
-      h_recoJetPt_pthat[0]->Fill(x,em->pthat,w);
-      h_recoJetPt_pthat[CentralityIndex]->Fill(x,em->pthat,w);
+      h_recoJetPt_pthat[0]->Fill(x,em->pthat,w_jet);
+      h_recoJetPt_pthat[CentralityIndex]->Fill(x,em->pthat,w_jet);
 
       double dR_recoGen_min = 100.0;
       double dPt_recoGen_min = 100.0;
@@ -717,10 +719,10 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
       if(hasGenJetMatch){
 
-	h_recoGenDr_flavor[0]->Fill(dR_recoGen_min,jetFlavorInt,w);
-	h_recoGenDr_flavor[CentralityIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
-	h_recoGenDpt_flavor[0]->Fill(dPt_recoGen_min,jetFlavorInt,w);
-	h_recoGenDpt_flavor[CentralityIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
+	h_recoGenDr_flavor[0]->Fill(dR_recoGen_min,jetFlavorInt,w_jet);
+	h_recoGenDr_flavor[CentralityIndex]->Fill(dR_recoGen_min,jetFlavorInt,w_jet);
+	h_recoGenDpt_flavor[0]->Fill(dPt_recoGen_min,jetFlavorInt,w_jet);
+	h_recoGenDpt_flavor[CentralityIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w_jet);
 
       }
 
@@ -861,29 +863,29 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
       // Fill the jet/event histograms
      
 
-      h_inclRecoJetPt_flavor[0]->Fill(x,jetFlavorInt,w);
-      h_inclRecoJetPt_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-      h_inclRecoJetEta_flavor[0]->Fill(y,jetFlavorInt,w);
-      h_inclRecoJetEta_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w);
-      h_inclRecoJetPhi_flavor[0]->Fill(z,jetFlavorInt,w);
-      h_inclRecoJetPhi_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w);
-      h_inclRecoJetPt_inclRecoJetEta[0]->Fill(x,y,w);
-      h_inclRecoJetPt_inclRecoJetEta[CentralityIndex]->Fill(x,y,w);
-      h_inclRecoJetPt_inclRecoJetPhi[0]->Fill(x,z,w);
-      h_inclRecoJetPt_inclRecoJetPhi[CentralityIndex]->Fill(x,z,w);
+      h_inclRecoJetPt_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+      h_inclRecoJetPt_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
+      h_inclRecoJetEta_flavor[0]->Fill(y,jetFlavorInt,w_jet);
+      h_inclRecoJetEta_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w_jet);
+      h_inclRecoJetPhi_flavor[0]->Fill(z,jetFlavorInt,w_jet);
+      h_inclRecoJetPhi_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w_jet);
+      h_inclRecoJetPt_inclRecoJetEta[0]->Fill(x,y,w_jet);
+      h_inclRecoJetPt_inclRecoJetEta[CentralityIndex]->Fill(x,y,w_jet);
+      h_inclRecoJetPt_inclRecoJetPhi[0]->Fill(x,z,w_jet);
+      h_inclRecoJetPt_inclRecoJetPhi[CentralityIndex]->Fill(x,z,w_jet);
       
-      h_refPartonFlavorForB_matchedPartonFlavor[0]->Fill(refPartonFlavorForB,matchedPartonFlavor,w);
-      h_refPartonFlavorForB_matchedPartonFlavor[CentralityIndex]->Fill(refPartonFlavorForB,matchedPartonFlavor,w);
+      h_refPartonFlavorForB_matchedPartonFlavor[0]->Fill(refPartonFlavorForB,matchedPartonFlavor,w_jet);
+      h_refPartonFlavorForB_matchedPartonFlavor[CentralityIndex]->Fill(refPartonFlavorForB,matchedPartonFlavor,w_jet);
 
 
 
       // histograms by jetPt index
 
-      h_inclRecoJetEta_inclRecoJetPhi[0][0]->Fill(y,z,w);
-      h_inclRecoJetEta_inclRecoJetPhi[CentralityIndex][0]->Fill(y,z,w);
+      h_inclRecoJetEta_inclRecoJetPhi[0][0]->Fill(y,z,w_jet);
+      h_inclRecoJetEta_inclRecoJetPhi[CentralityIndex][0]->Fill(y,z,w_jet);
       if(jetPtIndex > 0){
-	h_inclRecoJetEta_inclRecoJetPhi[0][jetPtIndex]->Fill(y,z,w);
-	h_inclRecoJetEta_inclRecoJetPhi[CentralityIndex][jetPtIndex]->Fill(y,z,w);
+	h_inclRecoJetEta_inclRecoJetPhi[0][jetPtIndex]->Fill(y,z,w_jet);
+	h_inclRecoJetEta_inclRecoJetPhi[CentralityIndex][jetPtIndex]->Fill(y,z,w_jet);
       }
 
 
@@ -895,23 +897,23 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 		
       if(hasInclGenMuonTag){
 
-	h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[0][0]->Fill(y,z,w);
-	h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[CentralityIndex][0]->Fill(y,z,w);
+	h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[0][0]->Fill(y,z,w_jet);
+	h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[CentralityIndex][0]->Fill(y,z,w_jet);
 	if(jetPtIndex > 0){
-	  h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[0][jetPtIndex]->Fill(y,z,w);
-	  h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[CentralityIndex][jetPtIndex]->Fill(y,z,w);
+	  h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[0][jetPtIndex]->Fill(y,z,w_jet);
+	  h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[CentralityIndex][jetPtIndex]->Fill(y,z,w_jet);
 	}
 
-	h_inclRecoJetPt_inclGenMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	h_inclRecoJetPt_inclGenMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-	h_inclRecoJetEta_inclGenMuonTag_flavor[0]->Fill(y,jetFlavorInt,w);
-	h_inclRecoJetEta_inclGenMuonTag_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w);
-	h_inclRecoJetPhi_inclGenMuonTag_flavor[0]->Fill(z,jetFlavorInt,w);
-	h_inclRecoJetPhi_inclGenMuonTag_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w);
-	h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag[0]->Fill(x,y,w);
-	h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag[CentralityIndex]->Fill(x,y,w);
-	h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag[0]->Fill(x,z,w);
-	h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag[CentralityIndex]->Fill(x,z,w);
+	h_inclRecoJetPt_inclGenMuonTag_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	h_inclRecoJetPt_inclGenMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
+	h_inclRecoJetEta_inclGenMuonTag_flavor[0]->Fill(y,jetFlavorInt,w_jet);
+	h_inclRecoJetEta_inclGenMuonTag_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w_jet);
+	h_inclRecoJetPhi_inclGenMuonTag_flavor[0]->Fill(z,jetFlavorInt,w_jet);
+	h_inclRecoJetPhi_inclGenMuonTag_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w_jet);
+	h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag[0]->Fill(x,y,w_jet);
+	h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag[CentralityIndex]->Fill(x,y,w_jet);
+	h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag[0]->Fill(x,z,w_jet);
+	h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag[CentralityIndex]->Fill(x,z,w_jet);
 
       } 
 
@@ -919,85 +921,85 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
 	eventHasInclRecoMuonTag = true;
 
-	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0][0]->Fill(y,z,w);
-	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[CentralityIndex][0]->Fill(y,z,w);
+	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0][0]->Fill(y,z,w_jet);
+	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[CentralityIndex][0]->Fill(y,z,w_jet);
 	if(jetPtIndex > 0){
-	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0][jetPtIndex]->Fill(y,z,w);
-	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[CentralityIndex][jetPtIndex]->Fill(y,z,w);
+	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0][jetPtIndex]->Fill(y,z,w_jet);
+	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[CentralityIndex][jetPtIndex]->Fill(y,z,w_jet);
 	}
 
 	
 
-	h_inclRecoJetPt_inclRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	h_inclRecoJetPt_inclRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-	h_inclRecoJetEta_inclRecoMuonTag_flavor[0]->Fill(y,jetFlavorInt,w);
-	h_inclRecoJetEta_inclRecoMuonTag_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w);
-	h_inclRecoJetPhi_inclRecoMuonTag_flavor[0]->Fill(z,jetFlavorInt,w);
-	h_inclRecoJetPhi_inclRecoMuonTag_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w);
-	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag[0]->Fill(x,y,w);
-	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag[CentralityIndex]->Fill(x,y,w);
-	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(x,z,w);
-	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag[CentralityIndex]->Fill(x,z,w);
+	h_inclRecoJetPt_inclRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	h_inclRecoJetPt_inclRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
+	h_inclRecoJetEta_inclRecoMuonTag_flavor[0]->Fill(y,jetFlavorInt,w_jet);
+	h_inclRecoJetEta_inclRecoMuonTag_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w_jet);
+	h_inclRecoJetPhi_inclRecoMuonTag_flavor[0]->Fill(z,jetFlavorInt,w_jet);
+	h_inclRecoJetPhi_inclRecoMuonTag_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w_jet);
+	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag[0]->Fill(x,y,w_jet);
+	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag[CentralityIndex]->Fill(x,y,w_jet);
+	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(x,z,w_jet);
+	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag[CentralityIndex]->Fill(x,z,w_jet);
 
 	
 	if(evtTriggerDecision){
 	 
 	  eventHasInclRecoMuonTagPlusTrigger = true;
 
-	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[0][0]->Fill(y,z,w);
-	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[CentralityIndex][0]->Fill(y,z,w);
+	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[0][0]->Fill(y,z,w_jet);
+	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[CentralityIndex][0]->Fill(y,z,w_jet);
 	  if(jetPtIndex > 0){
-	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[0][jetPtIndex]->Fill(y,z,w);
-	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[CentralityIndex][jetPtIndex]->Fill(y,z,w);
+	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[0][jetPtIndex]->Fill(y,z,w_jet);
+	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[CentralityIndex][jetPtIndex]->Fill(y,z,w_jet);
 	  }
 
-	  h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor[0]->Fill(x,jetFlavorInt,w);
-	  h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-	  h_inclRecoJetEta_inclRecoMuonTag_triggerOn_flavor[0]->Fill(y,jetFlavorInt,w);
-	  h_inclRecoJetEta_inclRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w);
-	  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn_flavor[0]->Fill(z,jetFlavorInt,w);
-	  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w);
-	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn[0]->Fill(x,y,w);
-	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(x,y,w);
-	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn[0]->Fill(x,z,w);
-	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(x,z,w);
+	  h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	  h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
+	  h_inclRecoJetEta_inclRecoMuonTag_triggerOn_flavor[0]->Fill(y,jetFlavorInt,w_jet);
+	  h_inclRecoJetEta_inclRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w_jet);
+	  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn_flavor[0]->Fill(z,jetFlavorInt,w_jet);
+	  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w_jet);
+	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn[0]->Fill(x,y,w_jet);
+	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(x,y,w_jet);
+	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn[0]->Fill(x,z,w_jet);
+	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(x,z,w_jet);
 
 
 	    
-	  h_muptrel_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muPtRel,jetFlavorInt,w);
-	  h_mupt_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muPt,jetFlavorInt,w);
-	  h_mueta_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muEta,jetFlavorInt,w);
-	  h_muphi_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muPhi,jetFlavorInt,w);
+	  h_muptrel_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muPtRel,jetFlavorInt,w_jet);
+	  h_mupt_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muPt,jetFlavorInt,w_jet);
+	  h_mueta_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muEta,jetFlavorInt,w_jet);
+	  h_muphi_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muPhi,jetFlavorInt,w_jet);
 
-	  h_mupt_jetpt[0]->Fill(muPt,x,w);
-	  h_mupt_jetpt[CentralityIndex]->Fill(muPt,x,w);
+	  h_mupt_jetpt[0]->Fill(muPt,x,w_jet);
+	  h_mupt_jetpt[CentralityIndex]->Fill(muPt,x,w_jet);
 	  
-	  h_muptrel_jetpt[0]->Fill(muPtRel,x,w);
-	  h_muptrel_jetpt[CentralityIndex]->Fill(muPtRel,x,w);
+	  h_muptrel_jetpt[0]->Fill(muPtRel,x,w_jet);
+	  h_muptrel_jetpt[CentralityIndex]->Fill(muPtRel,x,w_jet);
 	 
 
 	  if(jetPtIndex > 0){
 
 	    	    
-	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muPtRel,jetFlavorInt,w);
-	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muPtRel,jetFlavorInt,w);
-	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muPtRel,jetFlavorInt,w);
+	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muPtRel,jetFlavorInt,w_jet);
+	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muPtRel,jetFlavorInt,w_jet);
+	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muPtRel,jetFlavorInt,w_jet);
 
-	    h_mupt_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muPt,jetFlavorInt,w);
-	    h_mupt_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muPt,jetFlavorInt,w);
-	    h_mupt_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muPt,jetFlavorInt,w);
+	    h_mupt_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muPt,jetFlavorInt,w_jet);
+	    h_mupt_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muPt,jetFlavorInt,w_jet);
+	    h_mupt_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muPt,jetFlavorInt,w_jet);
 
-	    h_mueta_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muEta,jetFlavorInt,w);
-	    h_mueta_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muEta,jetFlavorInt,w);
-	    h_mueta_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muEta,jetFlavorInt,w);
+	    h_mueta_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muEta,jetFlavorInt,w_jet);
+	    h_mueta_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muEta,jetFlavorInt,w_jet);
+	    h_mueta_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muEta,jetFlavorInt,w_jet);
 
-	    h_muphi_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muPhi,jetFlavorInt,w);
-	    h_muphi_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muPhi,jetFlavorInt,w);
-	    h_muphi_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muPhi,jetFlavorInt,w);
+	    h_muphi_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muPhi,jetFlavorInt,w_jet);
+	    h_muphi_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muPhi,jetFlavorInt,w_jet);
+	    h_muphi_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muPhi,jetFlavorInt,w_jet);
 
-	    h_mupt_muptrel[0][0]->Fill(muPt,muPtRel,w);
-	    h_mupt_muptrel[CentralityIndex][0]->Fill(muPt,muPtRel,w);
-	    h_mupt_muptrel[CentralityIndex][jetPtIndex]->Fill(muPt,muPtRel,w);
+	    h_mupt_muptrel[0][0]->Fill(muPt,muPtRel,w_jet);
+	    h_mupt_muptrel[CentralityIndex][0]->Fill(muPt,muPtRel,w_jet);
+	    h_mupt_muptrel[CentralityIndex][jetPtIndex]->Fill(muPt,muPtRel,w_jet);
 	    
 	  }
 	} 
@@ -1006,45 +1008,45 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
 	  eventHasMatchedRecoMuonTag = true;
 
-	  h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[0][0]->Fill(y,z,w);
-	  h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[CentralityIndex][0]->Fill(y,z,w);
+	  h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[0][0]->Fill(y,z,w_jet);
+	  h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[CentralityIndex][0]->Fill(y,z,w_jet);
 	  if(jetPtIndex > 0){
-	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[0][jetPtIndex]->Fill(y,z,w);
-	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[CentralityIndex][jetPtIndex]->Fill(y,z,w);
+	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[0][jetPtIndex]->Fill(y,z,w_jet);
+	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[CentralityIndex][jetPtIndex]->Fill(y,z,w_jet);
 	  }
 
-	  h_inclRecoJetPt_matchedRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	  h_inclRecoJetPt_matchedRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-	  h_inclRecoJetEta_matchedRecoMuonTag_flavor[0]->Fill(y,jetFlavorInt,w);
-	  h_inclRecoJetEta_matchedRecoMuonTag_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w);
-	  h_inclRecoJetPhi_matchedRecoMuonTag_flavor[0]->Fill(z,jetFlavorInt,w);
-	  h_inclRecoJetPhi_matchedRecoMuonTag_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w);
-	  h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag[0]->Fill(x,y,w);
-	  h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag[CentralityIndex]->Fill(x,y,w);
-	  h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag[0]->Fill(x,z,w);
-	  h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag[CentralityIndex]->Fill(x,z,w);
+	  h_inclRecoJetPt_matchedRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	  h_inclRecoJetPt_matchedRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
+	  h_inclRecoJetEta_matchedRecoMuonTag_flavor[0]->Fill(y,jetFlavorInt,w_jet);
+	  h_inclRecoJetEta_matchedRecoMuonTag_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w_jet);
+	  h_inclRecoJetPhi_matchedRecoMuonTag_flavor[0]->Fill(z,jetFlavorInt,w_jet);
+	  h_inclRecoJetPhi_matchedRecoMuonTag_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w_jet);
+	  h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag[0]->Fill(x,y,w_jet);
+	  h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag[CentralityIndex]->Fill(x,y,w_jet);
+	  h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag[0]->Fill(x,z,w_jet);
+	  h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag[CentralityIndex]->Fill(x,z,w_jet);
 
 	  if(evtTriggerDecision){
 
 	    eventHasMatchedRecoMuonTagPlusTrigger = true;
 
-	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[0][0]->Fill(y,z,w);
-	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[CentralityIndex][0]->Fill(y,z,w);
+	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[0][0]->Fill(y,z,w_jet);
+	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[CentralityIndex][0]->Fill(y,z,w_jet);
 	    if(jetPtIndex > 0){
-	      h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[0][jetPtIndex]->Fill(y,z,w);
-	      h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[CentralityIndex][jetPtIndex]->Fill(y,z,w);
+	      h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[0][jetPtIndex]->Fill(y,z,w_jet);
+	      h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[CentralityIndex][jetPtIndex]->Fill(y,z,w_jet);
 	    }
 	  	   
-	    h_inclRecoJetPt_matchedRecoMuonTag_triggerOn_flavor[0]->Fill(x,jetFlavorInt,w);
-	    h_inclRecoJetPt_matchedRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-	    h_inclRecoJetEta_matchedRecoMuonTag_triggerOn_flavor[0]->Fill(y,jetFlavorInt,w);
-	    h_inclRecoJetEta_matchedRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w);
-	    h_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_flavor[0]->Fill(z,jetFlavorInt,w);
-	    h_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w);
-	    h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn[0]->Fill(x,y,w);
-	    h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(x,y,w);
-	    h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[0]->Fill(x,z,w);
-	    h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(x,z,w);
+	    h_inclRecoJetPt_matchedRecoMuonTag_triggerOn_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	    h_inclRecoJetPt_matchedRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
+	    h_inclRecoJetEta_matchedRecoMuonTag_triggerOn_flavor[0]->Fill(y,jetFlavorInt,w_jet);
+	    h_inclRecoJetEta_matchedRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(y,jetFlavorInt,w_jet);
+	    h_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_flavor[0]->Fill(z,jetFlavorInt,w_jet);
+	    h_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(z,jetFlavorInt,w_jet);
+	    h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn[0]->Fill(x,y,w_jet);
+	    h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(x,y,w_jet);
+	    h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[0]->Fill(x,z,w_jet);
+	    h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(x,z,w_jet);
 
 	  }
 
@@ -1058,21 +1060,21 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
     if(eventHasGoodJet){
 
-      h_hiBin->Fill(em->hiBin-10,w);
-      h_vz[0]->Fill(em->vz,w);
-      h_vz[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin->Fill(em->hiBin-10,w_jet);
+      h_vz[0]->Fill(em->vz,w_jet);
+      h_vz[CentralityIndex]->Fill(em->vz,w_jet);
 
       if(eventHasInclRecoMuonTag){
 
-	h_hiBin_inclRecoMuonTag->Fill(em->hiBin-10,w);
-	h_vz_inclRecoMuonTag[0]->Fill(em->vz,w);
-	h_vz_inclRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
+	h_hiBin_inclRecoMuonTag->Fill(em->hiBin-10,w_jet);
+	h_vz_inclRecoMuonTag[0]->Fill(em->vz,w_jet);
+	h_vz_inclRecoMuonTag[CentralityIndex]->Fill(em->vz,w_jet);
 
 	if(eventHasInclRecoMuonTagPlusTrigger){
 
-	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin-10,w);
-	  h_vz_inclRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
-	  h_vz_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
+	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin-10,w_jet);
+	  h_vz_inclRecoMuonTag_triggerOn[0]->Fill(em->vz,w_jet);
+	  h_vz_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w_jet);
 
 	}
        
@@ -1081,15 +1083,15 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
       if(eventHasMatchedRecoMuonTag){
 
-	h_hiBin_matchedRecoMuonTag->Fill(em->hiBin-10,w);
-	h_vz_matchedRecoMuonTag[0]->Fill(em->vz,w);
-	h_vz_matchedRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
+	h_hiBin_matchedRecoMuonTag->Fill(em->hiBin-10,w_jet);
+	h_vz_matchedRecoMuonTag[0]->Fill(em->vz,w_jet);
+	h_vz_matchedRecoMuonTag[CentralityIndex]->Fill(em->vz,w_jet);
 
 	if(eventHasMatchedRecoMuonTagPlusTrigger){
 
-	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(em->hiBin-10,w);
-	  h_vz_matchedRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
-	  h_vz_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
+	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(em->hiBin-10,w_jet);
+	  h_vz_matchedRecoMuonTag_triggerOn[0]->Fill(em->vz,w_jet);
+	  h_vz_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w_jet);
 
 	}
        
