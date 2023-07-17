@@ -111,9 +111,9 @@ double templateFitter(bool isData = 1,
   
   if(ispp){
 	
-    f1 = TFile::Open(goldenFile_PYTHIA);
-    if(!isData) f_data = TFile::Open(goldenFile_PYTHIA);
-    else f_data = TFile::Open(goldenFile_pp_SingleMuon);	
+    f1 = TFile::Open(goldenFile_PYTHIA_mu7);
+    if(!isData) f_data = TFile::Open(goldenFile_PYTHIA_mu7);
+    else f_data = TFile::Open(goldenFile_pp_SingleMuon_mu7);	
 
     if(isJ1){
       f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J1",h0);
@@ -145,11 +145,11 @@ double templateFitter(bool isData = 1,
   
   if(!ispp){
 	
-    f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
+    f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7);
     f2 = TFile::Open("/home/clayton/Analysis/code/skimming/PYTHIAHYDJET_scan/rootFiles/V3p3/PYTHIAHYDJET_BJet_CsJets_V3p3_15May23.root");
     f3 = TFile::Open(goldenFile_PYTHIAHYDJET_MuJet);
-    if(!isData) f_data = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
-    else f_data = TFile::Open(goldenFile_PbPb_SingleMuon);
+    if(!isData) f_data = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7);
+    else f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu7);
 
     if(isC1){
 
