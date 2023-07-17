@@ -673,18 +673,8 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
       if(!passesLeadingGenJetPthatFilter(x,em->pthat)) continue;
 
       eventHasGoodJet = true;
-
-      if(CentralityIndex == 1){ // apply an additional "reverse-unfolding" weight to central (experimental!)
-
-	w_reverseUnfold = 1.0 / f_reverseUnfold->Eval(x) ;
-
-	w_jet = w_jet * w_reverseUnfold ;
-	
-      }
-      
 		        
       int jetPtIndex = getJetPtBin(x);
-
 
       // fill genJetPt vs pthat
       h_recoJetPt_pthat[0]->Fill(x,em->pthat,w_jet);
@@ -1102,12 +1092,11 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
     }
 
 
-    
-
     // start genJet LOOP
     for(int i = 0; i < em->ngj ; i++){
 
-
+      double w_jet = w ; // jet-level weight
+      
       double x = em->genjetpt[i];  // recoJetPt
       double y = em->genjeteta[i]; // recoJetEta
       double z = em->genjetphi[i]; // recoJetPhi
@@ -1115,14 +1104,7 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
       double muPtRel = -1.0;
 
       if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
-
-
-      // fill genJetPt vs pthat
-      h_genJetPt_pthat[0]->Fill(x,em->pthat,w);
-      h_genJetPt_pthat[CentralityIndex]->Fill(x,em->pthat,w);
-
-
-
+            
       int jetPtIndex = getJetPtBin(x);
 
       //cout << "jetPt = " << x << " | index = " << jetPtIndex << endl;
@@ -1154,12 +1136,27 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
       }
 
+      
+
      
       if(hasRecoJetMatch) {
 	jetFlavorInt = em->refparton_flavorForB[recoJetFlavorFlag];
 	matchedRecoJetPt = em->jetpt[recoJetFlavorFlag];
 	//cout << "genJet flavor match: (event#" << evi << ", genJet#" << i << ", recoJet#" << recoJetFlavorFlag << ") = " << jetFlavorInt << endl;
+	
+	if(CentralityIndex == 1 && fabs(jetFlavorInt) == 5){ // apply an additional "reverse-unfolding" weight to central bJets (experimental!)
+
+	  w_reverseUnfold = 1.0 / f_reverseUnfold->Eval(x) ;
+
+	  w_jet = w_jet * w_reverseUnfold ;
+	
+	}
       }
+
+      // fill genJetPt vs pthat
+      h_genJetPt_pthat[0]->Fill(x,em->pthat,w_jet);
+      h_genJetPt_pthat[CentralityIndex]->Fill(x,em->pthat,w_jet);
+
 
       int genMuIndex = -1;
       bool hasInclGenMuonTag = false;
@@ -1319,64 +1316,58 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
 		
 
-      h_inclGenJetPt_flavor[0]->Fill(x,jetFlavorInt,w);
-      h_inclGenJetPt_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+      h_inclGenJetPt_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+      h_inclGenJetPt_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
 
-      h_matchedRecoJetPt_genJetPt[0]->Fill(matchedRecoJetPt,x,w);
-      h_matchedRecoJetPt_genJetPt[CentralityIndex]->Fill(matchedRecoJetPt,x,w);
+      h_matchedRecoJetPt_genJetPt[0]->Fill(matchedRecoJetPt,x,w_jet);
+      h_matchedRecoJetPt_genJetPt[CentralityIndex]->Fill(matchedRecoJetPt,x,w_jet);
         
 
       if(hasInclGenMuonTag){
 
 	
 		
-	h_inclGenJetPt_inclGenMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	h_inclGenJetPt_inclGenMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+	h_inclGenJetPt_inclGenMuonTag_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	h_inclGenJetPt_inclGenMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
 
       } 
 
       if(hasInclRecoMuonTag){
 
-	h_inclGenJetPt_inclRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	h_inclGenJetPt_inclRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+	h_inclGenJetPt_inclRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	h_inclGenJetPt_inclRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
 			
 	if(evtTriggerDecision){
-	  h_inclGenJetPt_inclRecoMuonTag_triggerOn_flavor[0]->Fill(x,jetFlavorInt,w);
-	  h_inclGenJetPt_inclRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-	  h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muPtRel,jetFlavorInt,w);
+	  h_inclGenJetPt_inclRecoMuonTag_triggerOn_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	  h_inclGenJetPt_inclRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
+	  h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[0][0]->Fill(muPtRel,jetFlavorInt,w_jet);
 	  if(jetPtIndex > 0){
-	    h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muPtRel,jetFlavorInt,w);
-	    h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muPtRel,jetFlavorInt,w);
-	    h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muPtRel,jetFlavorInt,w);
+	    h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[0][jetPtIndex]->Fill(muPtRel,jetFlavorInt,w_jet);
+	    h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][0]->Fill(muPtRel,jetFlavorInt,w_jet);
+	    h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[CentralityIndex][jetPtIndex]->Fill(muPtRel,jetFlavorInt,w_jet);
 	  }
 	} 
 
 	if(hasMatchedRecoMuonTag){
 
-	  h_inclGenJetPt_matchedRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	  h_inclGenJetPt_matchedRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+	  h_inclGenJetPt_matchedRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	  h_inclGenJetPt_matchedRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
 
 	  if(evtTriggerDecision){
-	    h_inclGenJetPt_matchedRecoMuonTag_triggerOn_flavor[0]->Fill(x,jetFlavorInt,w);
-	    h_inclGenJetPt_matchedRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+	    h_inclGenJetPt_matchedRecoMuonTag_triggerOn_flavor[0]->Fill(x,jetFlavorInt,w_jet);
+	    h_inclGenJetPt_matchedRecoMuonTag_triggerOn_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w_jet);
 	  }
 
 
 	}
 
       }
-		
-
 
     }// end genJet loop
-    
-
 
   } // end event loop
 
   h_NEvents->Fill(eventCounter);
-
-
  
   delete f;
   // WRITE
@@ -1471,7 +1462,6 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
       h_mupt_muptrel[i][j]->Write();
     }
   }
-
 
   wf->Close();
   return;
