@@ -21,35 +21,35 @@ void bPurityCalculator(){
   //                               2tempFit,3tempFit,  low_x,high_x,  return)
 
   
-  results_pp[0] = templateFitter(1,  1,0,0,  0,1,0,0,0,0,  1,1,  0,1,  0.0,4.0,  1);
-  err_results_pp[0] = templateFitter(1,  1,0,0,  0,1,0,0,0,0,  1,1,  0,1,  0.0,4.0,  2);
+  results_pp[0] = templateFitter(1,  1,0,0,  0,1,0,0,0,0,  0,0,  0,1,  0.0,4.0,  1);
+  err_results_pp[0] = templateFitter(1,  1,0,0,  0,1,0,0,0,0,  0,0,  0,1,  0.0,4.0,  2);
 
-  results_pp[1] = templateFitter(1,  1,0,0,  0,0,1,0,0,0,  1,1,  0,1,  0.0,4.0,  1);
-  err_results_pp[1] = templateFitter(1,  1,0,0,  0,0,1,0,0,0,  1,1,  0,1,  0.0,4.0,  2);
+  results_pp[1] = templateFitter(1,  1,0,0,  0,0,1,0,0,0,  0,0,  0,1,  0.0,4.0,  1);
+  err_results_pp[1] = templateFitter(1,  1,0,0,  0,0,1,0,0,0,  0,0,  0,1,  0.0,4.0,  2);
 
-  results_pp[2] = templateFitter(1,  1,0,0,  0,0,0,1,0,0,  1,1,  1,0,  0.0,4.0,  1);
-  err_results_pp[2] = templateFitter(1,  1,0,0,  0,0,0,1,0,0,  1,1,  1,0,  0.0,4.0,  2);
-
-
-
-  results_C1[0] = templateFitter(1,  0,1,0,  0,1,0,0,0,0,  1,1,  0,1,  0.0,4.0,  1);
-  err_results_C1[0] = templateFitter(1,  0,1,0,  0,1,0,0,0,0,  1,1,  0,1,  0.0,4.0,  2);
-
-  results_C1[1] = templateFitter(1,  0,1,0,  0,0,1,0,0,0,  1,1,  0,1,  0.0,4.0,  1);
-  err_results_C1[1] = templateFitter(1,  0,1,0,  0,0,1,0,0,0,  1,1,  0,1,  0.0,4.0,  2);
-
-  results_C1[2] = templateFitter(1,  0,1,0,  0,0,0,1,0,0,  1,1,  1,0,  0.0,4.0,  1);
-  err_results_C1[2] = templateFitter(1,  0,1,0,  0,0,0,1,0,0,  1,1,  1,0,  0.0,4.0,  2);
+  results_pp[2] = templateFitter(1,  1,0,0,  0,0,0,1,0,0,  0,0,  1,0,  0.0,4.0,  1);
+  err_results_pp[2] = templateFitter(1,  1,0,0,  0,0,0,1,0,0,  0,0,  1,0,  0.0,4.0,  2);
 
 
-  results_C2[0] = templateFitter(1,  0,0,1,  0,1,0,0,0,0,  1,1,  0,1,  0.0,4.0,  1);
-  err_results_C2[0] = templateFitter(1,  0,0,1,  0,1,0,0,0,0,  1,1,  0,1,  0.0,4.0,  2);
 
-  results_C2[1] = templateFitter(1,  0,0,1,  0,0,1,0,0,0,  1,1,  0,1,  0.0,4.0,  1);
-  err_results_C2[1] = templateFitter(1,  0,0,1,  0,0,1,0,0,0,  1,1,  0,1,  0.0,4.0,  2);
+  results_C1[0] = templateFitter(1,  0,1,0,  0,1,0,0,0,0,  0,0,  0,1,  0.0,4.0,  1);
+  err_results_C1[0] = templateFitter(1,  0,1,0,  0,1,0,0,0,0,  0,0,  0,1,  0.0,4.0,  2);
 
-  results_C2[2] = templateFitter(1,  0,0,1,  0,0,0,1,0,0,  1,1,  1,0,  0.0,4.0,  1);
-  err_results_C2[2] = templateFitter(1,  0,0,1,  0,0,0,1,0,0,  1,1,  1,0,  0.0,4.0,  2);
+  results_C1[1] = templateFitter(1,  0,1,0,  0,0,1,0,0,0,  0,0,  0,1,  0.0,4.0,  1);
+  err_results_C1[1] = templateFitter(1,  0,1,0,  0,0,1,0,0,0,  0,0,  0,1,  0.0,4.0,  2);
+
+  results_C1[2] = templateFitter(1,  0,1,0,  0,0,0,1,0,0,  0,0,  1,0,  0.0,4.0,  1);
+  err_results_C1[2] = templateFitter(1,  0,1,0,  0,0,0,1,0,0,  0,0,  1,0,  0.0,4.0,  2);
+
+
+  results_C2[0] = templateFitter(1,  0,0,1,  0,1,0,0,0,0,  0,0,  0,1,  0.0,4.0,  1);
+  err_results_C2[0] = templateFitter(1,  0,0,1,  0,1,0,0,0,0,  0,0,  0,1,  0.0,4.0,  2);
+
+  results_C2[1] = templateFitter(1,  0,0,1,  0,0,1,0,0,0,  0,0,  0,1,  0.0,4.0,  1);
+  err_results_C2[1] = templateFitter(1,  0,0,1,  0,0,1,0,0,0,  0,0,  0,1,  0.0,4.0,  2);
+
+  results_C2[2] = templateFitter(1,  0,0,1,  0,0,0,1,0,0,  0,0,  1,0,  0.0,4.0,  1);
+  err_results_C2[2] = templateFitter(1,  0,0,1,  0,0,0,1,0,0,  0,0,  1,0,  0.0,4.0,  2);
 
 
 
