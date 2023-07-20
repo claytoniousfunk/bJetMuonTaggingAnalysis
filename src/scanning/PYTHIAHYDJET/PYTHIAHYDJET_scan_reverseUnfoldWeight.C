@@ -519,15 +519,15 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
   TRandom *randomGenerator = new TRandom2();
 
   // jet-energy resolution fit function
-  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
+  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,500);
   JER_fxn->SetParameter(0,-1.91758e-05);
   JER_fxn->SetParameter(1,-1.79691e+00);
   JER_fxn->SetParameter(2,1.09880e+01);
 
   // reverse-unfold weight function
-  TF1 *f_reverseUnfold = new TF1("f_reverseUnfold","[0] + exp(-[1]*x)",60,500);
-  f_reverseUnfold->SetParameter(0,9.72208e-01);
-  f_reverseUnfold->SetParameter(1,1.10903e-02);
+  TF1 *f_reverseUnfold = new TF1("f_reverseUnfold","[0] + exp(-[1]*x)",50,500);
+  f_reverseUnfold->SetParameter(0,9.0e-01);
+  f_reverseUnfold->SetParameter(1,1.4e-02);
 
   double w_reverseUnfold = 1.0 ;
   
@@ -590,13 +590,68 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
       eventCounter++;
       w = w / ( triggerDecision_Prescl * 1.0 ) ; // set weight as 1/prescl for triggered events
     }
-   
-   
+      
     bool eventHasGoodJet = false;
     bool eventHasInclRecoMuonTag = false;
     bool eventHasInclRecoMuonTagPlusTrigger = false;
     bool eventHasMatchedRecoMuonTag = false;
     bool eventHasMatchedRecoMuonTagPlusTrigger = false;
+
+    // calculate reverse-unfold weight by looping through genJets
+    // GEN JET LOOP
+    for(int i = 0; i < em->ngj ; i++){
+      
+      double genJetPt = em->genjetpt[i];
+      double genJetEta = em->genjeteta[i];
+      double genJetPhi = em->genjetphi[i];
+
+      if(genJetPt < jetPtCut || fabs(genJetEta) > etaMax) continue;
+
+      // GET FLAVOR FROM RECO MATCH
+      bool hasRecoJetMatch = false;
+      int recoJetFlavorFlag = 0;
+      double minDr = 100.0;
+      int jetFlavorInt = 19;
+	
+      double matchedRecoJetPt = -1.0;
+
+      // get gen-flavor from recoJet match
+      for(int k = 0; k < em->njet; k++){
+		
+	double dr = getDr(em->jeteta[k],em->jetphi[k],genJetEta,genJetPhi);
+
+	if(dr < minDr){ 
+
+	  minDr = dr;
+
+	  if(minDr < epsilon_mm){
+
+	    recoJetFlavorFlag = k;
+	    hasRecoJetMatch = true;
+	    			
+	  }	
+	}
+
+      }
+
+      
+
+     
+      if(hasRecoJetMatch) {
+	jetFlavorInt = em->refparton_flavorForB[recoJetFlavorFlag];
+	matchedRecoJetPt = em->jetpt[recoJetFlavorFlag];
+	//cout << "genJet flavor match: (event#" << evi << ", genJet#" << i << ", recoJet#" << recoJetFlavorFlag << ") = " << jetFlavorInt << endl;
+	
+	if(CentralityIndex == 1 && fabs(jetFlavorInt) == 5){ // apply an additional "reverse-unfolding" weight to central bJets (experimental!)
+	  w_reverseUnfold = 1.0 / f_reverseUnfold->Eval(genJetPt) ;
+
+	  w = w * w_reverseUnfold ; // alter the event weight by the reverseUnfold function
+	
+	}
+      }
+
+    } // end GEN JET LOOP
+    
    
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
@@ -732,7 +787,7 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 
 	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
-	  double a = em->gpptp->at(j);
+j	  double a = em->gpptp->at(j);
 	  double am = -1.0;
 	  double b = em->gpetap->at(j);
 	  double bm = -1.0;
@@ -1143,14 +1198,6 @@ void PYTHIAHYDJET_scan_reverseUnfoldWeight(TString input = "/eos/user/c/cbennett
 	jetFlavorInt = em->refparton_flavorForB[recoJetFlavorFlag];
 	matchedRecoJetPt = em->jetpt[recoJetFlavorFlag];
 	//cout << "genJet flavor match: (event#" << evi << ", genJet#" << i << ", recoJet#" << recoJetFlavorFlag << ") = " << jetFlavorInt << endl;
-	
-	if(CentralityIndex == 1 && fabs(jetFlavorInt) == 5){ // apply an additional "reverse-unfolding" weight to central bJets (experimental!)
-
-	  w_reverseUnfold = 1.0 / f_reverseUnfold->Eval(x) ;
-
-	  w_jet = w_jet * w_reverseUnfold ;
-	
-	}
       }
 
       // fill genJetPt vs pthat
