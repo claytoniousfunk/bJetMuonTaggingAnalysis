@@ -97,7 +97,7 @@ TH2D *h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn;
 TH2D *h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn;
 TH2D *h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[NJetPtIndices];
 // ~~~~~~~~~ muon variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-TH1D *h_inclMuPt_triggerOn;
+TH1D *h_inclMuPt;
 TH1D *h_muptrel_inclRecoMuonTag_triggerOn[NJetPtIndices];
 TH1D *h_mupt_inclRecoMuonTag_triggerOn[NJetPtIndices];
 TH1D *h_mueta_inclRecoMuonTag_triggerOn[NJetPtIndices];
@@ -140,7 +140,7 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
   h_inclRecoJetPhi_inclRecoMuonTag_triggerOn = new TH1D("h_inclRecoJetPhi_inclRecoMuonTag_triggerOn","incl. reco #phi^{jet}, tagged with incl. reco muon, trigger ON",NPhiBins,phiMin,phiMax);
   h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn = new TH2D("h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn","incl. reco #eta^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
   h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn = new TH2D("h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn","incl. reco #phi^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
-  h_inclMuPt_triggerOn = new TH1D("h_inclMuPt_triggerOn","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
+  h_inclMuPt = new TH1D("h_inclMuPt","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
 
   // Sumw2 commands
   h_hiBin->Sumw2();
@@ -167,7 +167,7 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
   h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Sumw2();
   h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Sumw2();
   h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Sumw2();
-  h_inclMuPt_triggerOn->Sumw2();
+  h_inclMuPt->Sumw2();
   
   // loop through jet pt indices
   for(int j = 0; j < NJetPtIndices; j++){
@@ -289,8 +289,8 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
 			       em->muIsPF->at(m),
 			       em->muStations->at(m),
 			       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
-       if(!evtTriggerDecision) continue;
-       h_inclMuPt_triggerOn->Fill(muPt_m,w);
+
+       h_inclMuPt->Fill(muPt_m,w);
 
    }
 
@@ -480,7 +480,7 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
- h_inclMuPt_triggerOn->Write();
+ h_inclMuPt->Write();
 
  
  for(int j = 0; j < NJetPtIndices; j++){
@@ -490,8 +490,8 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
    h_mueta_inclRecoMuonTag_triggerOn[j]->Write();
    h_muphi_inclRecoMuonTag_triggerOn[j]->Write();
    h_inclRecoJetEta_inclRecoJetPhi[j]->Write();
-    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[j]->Write();
-    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[j]->Write();
+   h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[j]->Write();
+   h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[j]->Write();
      
  }
  
