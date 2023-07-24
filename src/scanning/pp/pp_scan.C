@@ -480,7 +480,7 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
- h_inclMuPt_triggerOn->Sumw2();
+ h_inclMuPt_triggerOn->Write();
 
  
  for(int j = 0; j < NJetPtIndices; j++){
