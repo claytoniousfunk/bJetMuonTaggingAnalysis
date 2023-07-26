@@ -62,8 +62,8 @@
 // print introduction
 #include "../../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-#include "../../../../headers/config/config_PbPb_SingleMuon.h"
-//#include "../../../../headers/config/config_PbPb_MinBias.h"
+//#include "../../../../headers/config/config_PbPb_SingleMuon.h"
+#include "../../../../headers/config/config_PbPb_MinBias.h"
 // read config
 #include "../../../../headers/config/readConfig.h"
 // initialize histograms
@@ -363,6 +363,8 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
 
     int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+
+    if(triggerDecision_Prescl != 1) continue;
 
     double w_trig = 1.0 / ( triggerDecision_Prescl * 1.0 ); // set weight as 1/prescl for triggered events
     //double w_trig = 1.0; // don't scale by prescales for templates
