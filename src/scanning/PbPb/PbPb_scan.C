@@ -101,6 +101,7 @@ TH2D *h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn[NCentralityIndice
 TH2D *h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn[NCentralityIndices];
 TH2D *h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[NCentralityIndices][NJetPtIndices];
 // ~~~~~~~~~ muon variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TH1D *h_inclMuPt;
 TH1D *h_muptrel_inclRecoMuonTag_triggerOn[NCentralityIndices][NJetPtIndices];
 TH1D *h_mupt_inclRecoMuonTag_triggerOn[NCentralityIndices][NJetPtIndices];
 TH1D *h_mueta_inclRecoMuonTag_triggerOn[NCentralityIndices][NJetPtIndices];
@@ -137,6 +138,14 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
   h_hiBin = new TH1D("h_hiBin","hiBin, events with inclRecoJet",200,0,200);
   h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",200,0,200);
   h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",200,0,200);
+  h_inclMuPt = new TH1D("h_inclMuPt","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
+
+  h_NEvents->Sumw2();
+  h_hiBin->Sumw2();
+  h_hiBin_inclRecoMuonTag->Sumw2();
+  h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
+  h_inclMuPt->Sumw2();
+  
   // for loop through the centrality indices
   for(int i = 0; i < NCentralityIndices; i++){
     // the inclusive centrality histogram	
@@ -341,7 +350,7 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
 
     // In data, event weight = 1
     double w = 1.0;
-    
+
    
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
 
@@ -369,7 +378,33 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
     bool eventHasInclRecoMuonTagPlusTrigger = false;
     bool eventHasMatchedRecoMuonTag = false;
     bool eventHasMatchedRecoMuonTagPlusTrigger = false;
-   
+
+    
+    // RECO MUON LOOP
+    for(int m = 0; m < em->nMu; m++){
+
+      double muPt_m = em->muPt->at(m);
+      double muEta_m = em->muEta->at(m);
+      double muPhi_m = em->muPhi->at(m);
+      // skip if muon has already been matched to a jet in this event
+      // muon kinematic cuts
+      if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
+      // muon quality cuts
+      if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+			      em->muInnerD0->at(m),
+			      em->muInnerDz->at(m),
+			      em->muMuonHits->at(m),
+			      em->muPixelHits->at(m),
+			      em->muIsGlobal->at(m),
+			      em->muIsPF->at(m),
+			      em->muStations->at(m),
+			      em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+
+      h_inclMuPt->Fill(muPt_m,w);
+
+    }
+
+    
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
 
@@ -642,6 +677,7 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
   h_hiBin->Write();
   h_hiBin_inclRecoMuonTag->Write();
   h_hiBin_inclRecoMuonTag_triggerOn->Write();
+  h_inclMuPt->Write();
 
   for(int i = 0; i < NCentralityIndices; i++){
 
