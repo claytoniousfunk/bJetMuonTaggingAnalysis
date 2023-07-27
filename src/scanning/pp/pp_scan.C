@@ -260,9 +260,22 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
    // skip if the trigger is off or if the prescale is zero
    if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) evtTriggerDecision = true;
    
-   // set the weight as 1/prescale value
+   // set the weight equal to the "gluing" parameter
+   double w_trig = 1.0;
+   if(triggerDecision_Prescl == 0){ continue;}
+   else if(triggerDecision_Prescl == 1){
+     w_trig = w / 1.0 ;
+   }
+   else if(triggerDecision_Prescl == 3){
+     w_trig = w / 6.04088 ;
+   }
+   else if(triggerDecision_Prescl == 5){
+     w_trig = w / 8.68813 ;
+   }
+   else{ continue ;}
 
-   double w_trig = 1.0 / ( triggerDecision_Prescl * 1.0 );
+
+
    
    bool eventHasGoodJet = false;
    bool eventHasInclRecoMuonTag = false;
