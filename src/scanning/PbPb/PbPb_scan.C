@@ -364,39 +364,39 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
     int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    double w_trig = 1.0;
+    
 
     if(triggerDecision_Prescl == 0) continue;
     else if(triggerDecision_Prescl == 1){
-      w_trig = w;
+      w = 1.0;
     }
     else if(triggerDecision_Prescl == 2){
-      w_trig = w / 0.075286;
+      w = 1.0 / 0.075286;
     }
     else if(triggerDecision_Prescl == 3){
-      w_trig = w / 12.7009;
+      w = 1.0 / 12.7009;
     }
     else if(triggerDecision_Prescl == 5){
-      w_trig = w / 8.15831;
+      w = 1.0 / 8.15831;
     }
     else if(triggerDecision_Prescl == 7){
-      w_trig = w / 1.4304;
+      w = 1.0 / 1.4304;
     }
     else if(triggerDecision_Prescl == 11){
-      w_trig = w / 5.66539;
+      w = 1.0 / 5.66539;
     }
     else if(triggerDecision_Prescl == 13){
-      w_trig = w / 9.45714;
+      w = 1.0 / 9.45714;
     }
     else if(triggerDecision_Prescl == 15){
-      w_trig = w / 0.280557;
+      w = 1.0 / 0.280557;
     }
     else if(triggerDecision_Prescl == 17){
-      w_trig = w / 0.124149;
+      w = 1.0 / 0.124149;
     }
     else{continue ; }
 
-    
+    double w_trig = w;
     //double w_trig = 1.0 / ( triggerDecision_Prescl * 1.0 ); // set weight as 1/prescl for triggered events
     //double w_trig = 1.0; // don't scale by prescales for templates
     
