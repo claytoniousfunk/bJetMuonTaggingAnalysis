@@ -378,7 +378,7 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
       w = 1.0 / 8.15831;
     }
     else if(triggerDecision_Prescl == 7){
-      w = 1.0 / 1.31741;
+      w = 1.0 / 1.4304;
     }
     else if(triggerDecision_Prescl == 11){
       w = 1.0 / 5.66539;
