@@ -60,7 +60,8 @@
 // print introduction
 #include "../../../../headers/introductions/printIntroduction_pp_scan_V3p7.h"
 // analysis config
-#include "../../../../headers/config/config_pp_SingleMuon.h"
+//#include "../../../../headers/config/config_pp_SingleMuon.h"
+#include "../../../../headers/config/config_pp_MB.h"
 // read config
 #include "../../../../headers/config/readConfig.h"
 // initialize histograms
@@ -261,20 +262,20 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
    if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) evtTriggerDecision = true;
    
    // set the weight equal to the "gluing" parameter
-   double w_trig = 1.0;
+   
    if(triggerDecision_Prescl == 0){ continue;}
    else if(triggerDecision_Prescl == 1){
-     w_trig = w / 1.0 ;
+     w = 1.0 ;
    }
    else if(triggerDecision_Prescl == 3){
-     w_trig = w / 6.04088 ;
+     w = 1.0 / 6.04088 ;
    }
    else if(triggerDecision_Prescl == 5){
-     w_trig = w / 8.68813 ;
+     w = 1.0 / 8.68813 ;
    }
    else{ continue ;}
 
-
+   double w_trig = w;
 
    
    bool eventHasGoodJet = false;
