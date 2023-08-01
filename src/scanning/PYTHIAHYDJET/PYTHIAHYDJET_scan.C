@@ -590,6 +590,31 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     bool eventHasInclRecoMuonTagPlusTrigger = false;
     bool eventHasMatchedRecoMuonTag = false;
     bool eventHasMatchedRecoMuonTagPlusTrigger = false;
+
+    double leadingGenJetPt_i = 0.0;
+    double leadingGenJetEta_i = 0.0;
+    double leadingGenJetPhi_i = 0.0;
+
+    // quick genJet loop to get leadingGenJetPt
+    for(int j = 0; j < em->ngj ; j++){
+
+	double genJetPt_j = em->genjetpt[j];  // genJetPt
+	double genJetEta_j = em->genjeteta[j]; // genJetEta
+	double genJetPhi_j = em->genjetphi[j]; // genJetPhi
+
+	if(fabs(genJetEta_j) > etaMax) continue;
+	
+	
+	if(genJetPt_j > leadingGenJetPt_i){
+
+	  leadingGenJetPt_i = genJetPt_j;
+	  
+	}	
+
+    }
+
+    // pthat filter cut
+    if(!passesLeadingGenJetPthatFilter(leadingGenJetPt_i,em->pthat)) continue;    
    
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
@@ -659,10 +684,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 		
       // jet kinematic cuts
       if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
-		
-      // pthat filter cut
-      if(!passesLeadingGenJetPthatFilter(x,em->pthat)) continue;
-
+     
       eventHasGoodJet = true;
 		        
       int jetPtIndex = getJetPtBin(x);
