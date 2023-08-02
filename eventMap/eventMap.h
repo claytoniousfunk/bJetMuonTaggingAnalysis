@@ -87,7 +87,7 @@ public :
   int njet=0, ngj = 0;
   Float_t jetpt[jetMax],jeteta[jetMax],jetphi[jetMax],jet_wta_eta[jetMax],jet_wta_phi[jetMax], ref_jetpt[jetMax], rawpt[jetMax];
   Float_t mupt[jetMax], mueta[jetMax], muphi[jetMax], muptrel[jetMax];
-  Int_t jetTrkMax[jetMax];
+  Float_t jetTrkMax[jetMax];
   Float_t genjetpt[jetMax],genjeteta[jetMax],genjetphi[jetMax],genjet_wta_eta[jetMax],genjet_wta_phi[jetMax];
   Float_t partonFlavor[jetMax], hadronFlavor[jetMax];
   Int_t matchedPartonFlavor[jetMax], matchedHadronFlavor[jetMax];
