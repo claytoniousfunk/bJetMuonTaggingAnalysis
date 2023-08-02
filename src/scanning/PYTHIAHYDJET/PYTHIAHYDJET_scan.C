@@ -69,6 +69,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 #include "../../../../headers/functions/triggerIsOn.h"
 // pthat filter function
 #include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+// JetTrkMax filter function
+#include "../../../../headers/functions/passesJetTrkMaxFilter.h"
 // print introduction
 #include "../../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
@@ -628,6 +630,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       double x = JEC.GetCorrectedPT();  // recoJetPt
       double y = em->jeteta[i]; // recoJetEta
       double z = em->jetphi[i]; // recoJetPhi
+      double jetTrkMax_i = em->jetTrkMax[i];
 
       JEU.SetJetPT(x);
       JEU.SetJetEta(y);
@@ -655,9 +658,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 	x = x * smear;
       }
 
-
-
-      
+      if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
 
       if(etaPhiMask(y,z)) continue;
 
