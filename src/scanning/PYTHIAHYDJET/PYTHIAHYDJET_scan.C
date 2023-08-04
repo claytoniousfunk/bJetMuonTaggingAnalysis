@@ -162,8 +162,8 @@ TH2D *h_inclGenJetPt_matchedRecoMuonTag_triggerOn_flavor[NCentralityIndices];
 // ------------------------------- in-jet reco muons by flavor, trigger on ----
 TH2D *h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[NCentralityIndices][NJetPtIndices];
 // ------------------------------------- analysis histograms ------------------
-TH2D *h_recoGenDr_flavor[NCentralityIndices];
-TH2D *h_recoGenDpt_flavor[NCentralityIndices];
+TH2D *h_recoGenDr_flavor[NCentralityIndices][NJetPtIndices];
+TH2D *h_recoGenDpt_flavor[NCentralityIndices][NJetPtIndices];
 TH2D *h_recoJetPt_pthat[NCentralityIndices];
 TH2D *h_genJetPt_pthat[NCentralityIndices];
 TH2D *h_refPartonFlavorForB_matchedPartonFlavor[NCentralityIndices];
@@ -260,8 +260,6 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn[i] = new TH2D(Form("h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn_C%i",i),Form("incl. reco #eta^{jet} vs. incl reco p_{T}^{jet}, tagged with matched reco muon, trigger ON, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
       h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i] = new TH2D(Form("h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_C%i",i),Form("incl. reco #phi^{jet} vs. incl reco p_{T}^{jet}, tagged with matched reco muon, trigger ON, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
       // ------------------------------------- analysis histograms ------------------
-      h_recoGenDr_flavor[i] = new TH2D(Form("h_recoGenDr_C%i",i),Form("JetFlavorID vs #Delta r(recoJet,genJet), hiBin %i - hiBin %i",centEdges[0],centEdges[NCentralityIndices-1]),100,0,1,27,-5,22); 
-      h_recoGenDpt_flavor[i] = new TH2D(Form("h_recoGenDpt_C%i",i),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), hiBin %i - hiBin %i",centEdges[0],centEdges[NCentralityIndices-1]),100,0,5,27,-5,22); 
       h_recoJetPt_pthat[i] = new TH2D(Form("h_recoJetPt_pthat_C%i",i),Form("reco p_{T}^{jet} vs. #hat{p}_{T}, hiBin %i - hiBin %i; reco p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_genJetPt_pthat[i] = new TH2D(Form("h_genJetPt_pthat_C%i",i),Form("gen p_{T}^{jet} vs. #hat{p}_{T}, hiBin %i - hiBin %i; gen p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_refPartonFlavorForB_matchedPartonFlavor[i] = new TH2D(Form("h_refPartonFlavorForB_matchedPartonFlavor_C%i",i),Form("refPartonFlavorForB vs matchedPartonFlavor, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),27,-5,22,27,-5,22);
@@ -368,8 +366,6 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn[i]->Sumw2();
     h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i]->Sumw2();
 
-    h_recoGenDr_flavor[i]->Sumw2();
-    h_recoGenDpt_flavor[i]->Sumw2();
     h_recoJetPt_pthat[i]->Sumw2();
     h_genJetPt_pthat[i]->Sumw2();
     h_refPartonFlavorForB_matchedPartonFlavor[i]->Sumw2();
@@ -420,6 +416,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with incl. reco muon, trigger ON, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
 	h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
 	h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, trigger ON, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
+	h_recoGenDr_flavor[i][j] = new TH2D(Form("h_recoGenDr_C%iJ%i",i,j),Form("JetFlavorID vs #Delta r(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f ",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1,27,-5,22); 
+	h_recoGenDpt_flavor[i][j] = new TH2D(Form("h_recoGenDpt_C%iJ%i",i,j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,5,27,-5,22); 
       }
       else if(i==0){
 	h_muptrel_inclRecoMuonTag_triggerOn_flavor[i][j] = new TH2D(Form("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C%iJ%i",i,j),Form("JetFlavorID vs. p_{T}^{rel}, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -433,6 +431,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with incl. reco muon, trigger ON, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
 	h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
 	h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, trigger ON, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
+	h_recoGenDr_flavor[i][j] = new TH2D(Form("h_recoGenDr_C%iJ%i",i,j),Form("JetFlavorID vs #Delta r(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f ",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),100,0,1,27,-5,22); 
+	h_recoGenDpt_flavor[i][j] = new TH2D(Form("h_recoGenDpt_C%iJ%i",i,j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),100,0,5,27,-5,22); 
       }
       else if(j==0){
 	h_muptrel_inclRecoMuonTag_triggerOn_flavor[i][j] = new TH2D(Form("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C%iJ%i",i,j),Form("JetFlavorID vs. p_{T}^{rel}, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -446,6 +446,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with incl. reco muon, trigger ON, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
 	h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
 	h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, trigger ON, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
+	h_recoGenDr_flavor[i][j] = new TH2D(Form("h_recoGenDr_C%iJ%i",i,j),Form("JetFlavorID vs #Delta r(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f ",centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1,27,-5,22); 
+	h_recoGenDpt_flavor[i][j] = new TH2D(Form("h_recoGenDpt_C%iJ%i",i,j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f",centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,5,27,-5,22); 
       }
       else{
 	h_muptrel_inclRecoMuonTag_triggerOn_flavor[i][j] = new TH2D(Form("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C%iJ%i",i,j),Form("JetFlavorID vs. p_{T}^{rel}, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -459,6 +461,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with incl. reco muon, trigger ON, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
 	h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
 	h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i][j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_C%iJ%i",i,j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, trigger ON, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
+	h_recoGenDr_flavor[i][j] = new TH2D(Form("h_recoGenDr_C%iJ%i",i,j),Form("JetFlavorID vs #Delta r(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f ",centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),100,0,1,27,-5,22); 
+	h_recoGenDpt_flavor[i][j] = new TH2D(Form("h_recoGenDpt_C%iJ%i",i,j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f",centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),100,0,5,27,-5,22); 
       }
 
       h_muptrel_inclRecoMuonTag_triggerOn_flavor[i][j]->Sumw2();
@@ -472,6 +476,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i][j]->Sumw2();
       h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[i][j]->Sumw2();
       h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i][j]->Sumw2();
+      h_recoGenDr_flavor[i][j]->Sumw2();
+      h_recoGenDpt_flavor[i][j]->Sumw2();
       
       if(i==0 && j==0){
 	h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[i][j] = new TH2D(Form("h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor_C%iJ%i",i,j),Form("JetFlavorID vs. p_{T}^{rel} (w.r.t. genJet), hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -724,10 +730,15 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 
       if(hasGenJetMatch){
 
-	h_recoGenDr_flavor[0]->Fill(dR_recoGen_min,jetFlavorInt,w);
-	h_recoGenDr_flavor[CentralityIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
-	h_recoGenDpt_flavor[0]->Fill(dPt_recoGen_min,jetFlavorInt,w);
-	h_recoGenDpt_flavor[CentralityIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
+	h_recoGenDr_flavor[0][0]->Fill(dR_recoGen_min,jetFlavorInt,w);
+	h_recoGenDr_flavor[0][jetPtIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
+	h_recoGenDr_flavor[CentralityIndex][0]->Fill(dR_recoGen_min,jetFlavorInt,w);
+	h_recoGenDr_flavor[CentralityIndex][jetPtIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
+
+	h_recoGenDpt_flavor[0][0]->Fill(dPt_recoGen_min,jetFlavorInt,w);
+	h_recoGenDpt_flavor[0][jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
+	h_recoGenDpt_flavor[CentralityIndex][0]->Fill(dPt_recoGen_min,jetFlavorInt,w);
+	h_recoGenDpt_flavor[CentralityIndex][jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
 
       }
 
@@ -1441,8 +1452,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn[i]->Write();
     h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i]->Write();
 
-    h_recoGenDr_flavor[i]->Write();
-    h_recoGenDpt_flavor[i]->Write();
+    
     h_recoJetPt_pthat[i]->Write();
     h_genJetPt_pthat[i]->Write();
 
@@ -1474,6 +1484,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       h_muphi_inclRecoMuonTag_triggerOn_flavor[i][j]->Write();
       h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[i][j]->Write();
       h_mupt_muptrel[i][j]->Write();
+      h_recoGenDr_flavor[i][j]->Write();
+      h_recoGenDpt_flavor[i][j]->Write();
     }
   }
 
