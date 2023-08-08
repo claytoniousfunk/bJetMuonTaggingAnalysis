@@ -205,8 +205,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
   h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_matchedRecoMuonTag = new TH1D("h_hiBin_matchedRecoMuonTag","hiBin, events with inclRecoJet-matchedRecoMuonTag",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_matchedRecoMuonTag_triggerOn = new TH1D("h_hiBin_matchedRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-matchedRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
-  h_weight_pthat_xJets_C1J3 = new TH2D("h_weight_pthat_xJets_C1J3","pthat vs w_{pthat}, xJets, 80 < p_{T} < 120 GeV, cent. 0-30%",100,0,0.1,100,0,500);
-  h_weight_pthat_bJets_C1J3 = new TH2D("h_weight_pthat_bJets_C1J3","pthat vs w_{pthat}, bJets, 80 < p_{T} < 120 GeV, cent. 0-30%",100,0,0.1,100,0,500);
+  h_weight_pthat_xJets_C1J3 = new TH2D("h_weight_pthat_xJets_C1J3","pthat vs w_{pthat}, xJets, 80 < p_{T} < 120 GeV, cent. 0-30%",100,0,0.01,100,0,500);
+  h_weight_pthat_bJets_C1J3 = new TH2D("h_weight_pthat_bJets_C1J3","pthat vs w_{pthat}, bJets, 80 < p_{T} < 120 GeV, cent. 0-30%",100,0,0.01,100,0,500);
 
   h_hiBin->Sumw2();
   h_hiBin_inclGenMuonTag->Sumw2();
