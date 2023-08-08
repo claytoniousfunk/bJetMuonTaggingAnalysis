@@ -707,11 +707,11 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       h_recoJetPt_pthat[CentralityIndex]->Fill(x,em->pthat,w);
 
       if(jetFlavorInt == 0 && CentralityIndex == 1 && jetPtIndex == 3){
-	h_weight_pthat_xJets_C1J3->(em->weight,em->pthat);
+	h_weight_pthat_xJets_C1J3->Fill(em->weight,em->pthat);
       }
 
       if(fabs(jetFlavorInt) == 5 && CentralityIndex == 1 && jetPtIndex == 3){
-	h_weight_pthat_bJets_C1J3->(em->weight,em->pthat);
+	h_weight_pthat_bJets_C1J3->Fill(em->weight,em->pthat);
       }
 
       
