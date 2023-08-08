@@ -371,28 +371,28 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
       w = 1.0;
     }
     else if(triggerDecision_Prescl == 2){
-      w = 1.0 / 0.075286;
+      w = 1.0 / 0.0318182;
     }
     else if(triggerDecision_Prescl == 3){
-      w = 1.0 / 12.7009;
+      w = 1.0 / 13.4136;
     }
     else if(triggerDecision_Prescl == 5){
-      w = 1.0 / 8.15831;
+      w = 1.0 / 8.80909;
     }
     else if(triggerDecision_Prescl == 7){
-      w = 1.0 / 1.4304;
+      w = 1.0 / 1.48182;
     }
     else if(triggerDecision_Prescl == 11){
-      w = 1.0 / 5.66539;
+      w = 1.0 / 6.06818;
     }
     else if(triggerDecision_Prescl == 13){
-      w = 1.0 / 9.45714;
+      w = 1.0 / 9.90455;
     }
     else if(triggerDecision_Prescl == 15){
-      w = 1.0 / 0.280557;
+      w = 1.0 / 0.318182;
     }
     else if(triggerDecision_Prescl == 17){
-      w = 1.0 / 0.124149;
+      w = 1.0 / 0.15;
     }
     else{continue ; }
 
