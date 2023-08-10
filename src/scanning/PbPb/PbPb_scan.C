@@ -394,6 +394,9 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
     else if(triggerDecision_Prescl == 17){
       w = 1.0 / 0.15;
     }
+    else if(triggerDecision_Prescl == 23){
+      w = 1.0 / 9.80455;
+    }
     else{continue ; }
 
     double w_trig = w;
