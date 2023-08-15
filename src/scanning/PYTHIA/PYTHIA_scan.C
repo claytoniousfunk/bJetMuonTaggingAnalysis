@@ -72,6 +72,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 #include "../../../../headers/functions/triggerIsOn.h"
 // pthat filter function
 #include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+// JetTrkMax filter function
+#include "../../../../headers/functions/passesJetTrkMaxFilter.h"
 // print introduction
 #include "../../../../headers/introductions/printIntroduction_PYTHIA_scan_V3p7.h"
 // analysis config
