@@ -655,7 +655,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       double testJetPt_j = JEC.GetCorrectedPT();
       double testJetEta_j = em->jeteta[j];
       double testJetPhi_j = em->jetphi[j];
-      int testJetFlavor_j = em->matchedPartonFlavor[i];
+      int testJetFlavor_j = em->matchedPartonFlavor[j];
 
       if(fabs(testJetEta_j) > etaMax) continue;
       
