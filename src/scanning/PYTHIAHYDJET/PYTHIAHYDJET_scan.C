@@ -666,13 +666,14 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 
     }
 
-    h_leadingRecoJetPt[0]->Fill(leadingRecoJetPt_i,w);
-    h_leadingRecoJetPt[CentralityIndex]->Fill(leadingRecoJetPt_i,w);
-    if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > em->pthat){
-      h_leadingRecoJetPt_xJets_greaterThanPthat[0]->Fill(leadingRecoJetPt_i,w);
-      h_leadingRecoJetPt_xJets_greaterThanPthat[CentralityIndex]->Fill(leadingRecoJetPt_i,w);
+    if(leadingRecoJetPt_i != 0.0){
+      h_leadingRecoJetPt[0]->Fill(leadingRecoJetPt_i,w);
+      h_leadingRecoJetPt[CentralityIndex]->Fill(leadingRecoJetPt_i,w);
+      if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > em->pthat){
+	h_leadingRecoJetPt_xJets_greaterThanPthat[0]->Fill(leadingRecoJetPt_i,w);
+	h_leadingRecoJetPt_xJets_greaterThanPthat[CentralityIndex]->Fill(leadingRecoJetPt_i,w);
+      }
     }
-    
    
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
