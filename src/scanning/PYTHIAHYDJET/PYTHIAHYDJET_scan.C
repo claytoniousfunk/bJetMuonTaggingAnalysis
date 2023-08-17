@@ -788,6 +788,18 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 
       }
 
+      if(jetFlavorInt == 0 && dR_recoGen_min > 0.5){
+	cout << "EVENT #" << evi << ", xJet, dR(Reco,Gen) > 0.5" << endl;
+	cout << "--- Reco Jets ---" << evi << endl;
+	for(int k = 0; k < em->njet; k++){
+	  cout << "(pt, eta, phi, flavor) = (" << em->jetpt[k] << ", " << em->jeteta[k] << ", " << em->jetphi[k] << ", " << em->matchedPartonFlavor[k] << ")" << endl;
+	}
+	cout << "--- Gen Jets ---" << evi << endl;
+	for(int k = 0; k < em->ngj; k++){
+	  cout << "(pt, eta, phi, flavor) = (" << em->genjetpt[k] << ", " << em->genjeteta[k] << ", " << em->genjetphi[k] << ", ?)" << endl;
+	}
+      }
+
       if(hasGenJetMatch){
 
 	h_recoGenDr_flavor[0][0]->Fill(dR_recoGen_min,jetFlavorInt,w);
