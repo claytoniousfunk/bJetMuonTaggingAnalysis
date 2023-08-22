@@ -667,11 +667,11 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     }
 
     if(leadingRecoJetPt_i != 0.0){
-      h_leadingRecoJetPt[0]->Fill(leadingRecoJetPt_i,w);
-      h_leadingRecoJetPt[CentralityIndex]->Fill(leadingRecoJetPt_i,w);
+      h_leadingRecoJetPt[0]->Fill(leadingRecoJetPt_i,1.);
+      h_leadingRecoJetPt[CentralityIndex]->Fill(leadingRecoJetPt_i,1.);
       if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > em->pthat){
-	h_leadingRecoJetPt_xJets_greaterThanPthat[0]->Fill(leadingRecoJetPt_i,w);
-	h_leadingRecoJetPt_xJets_greaterThanPthat[CentralityIndex]->Fill(leadingRecoJetPt_i,w);
+	h_leadingRecoJetPt_xJets_greaterThanPthat[0]->Fill(leadingRecoJetPt_i,1.);
+	h_leadingRecoJetPt_xJets_greaterThanPthat[CentralityIndex]->Fill(leadingRecoJetPt_i,1.);
       }
     }
    
@@ -788,7 +788,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 
       }
 
-      if(jetFlavorInt == 0 && dR_recoGen_min > 0.5 && x > 120.){
+      if(jetFlavorInt == 0 && dR_recoGen_min > 0.5 && x > 100.){
 	cout << "EVENT #" << evi << ", xJet, dR_min(Reco,Gen) =" << dR_recoGen_min << endl;
 	cout << "--- Reco Jets ---" << evi << endl;
 	for(int k = 0; k < em->njet; k++){
