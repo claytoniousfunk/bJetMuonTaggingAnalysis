@@ -674,8 +674,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     }
 
     // reweight if we didn't dump the event.
-    TF1 *xDumpReweightFxn = new TF1("xDumpReweightFxn","[0] * exp([1] * x)",50,500);
-    xDumpReweightFxn->SetParameters(7.78005e-01,-9.54072e-02);
+    TF1 *xDumpReweightFxn = new TF1("xDumpReweightFxn","[0] * exp([1] * x) + [2] * exp([3] * x)",0,500);
+    xDumpReweightFxn->SetParameters(2.37340e+00,-1.17024e-01,9.04691e-01,-1.17024e-01);
 
     double xDump_reweight_subFactor = xDumpReweightFxn->Eval(leadingGenJetPt_i);
     double xDump_reweight_factor = 1. / (1. - xDump_reweight_subFactor);
