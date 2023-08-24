@@ -666,6 +666,11 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 
     }
 
+    // dump event if flavor==x && pT > pThat
+    if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > em->pthat){
+      continue;
+    }
+
     if(leadingRecoJetPt_i != 0.0){
       h_leadingRecoJetPt[0]->Fill(leadingRecoJetPt_i,1.);
       h_leadingRecoJetPt[CentralityIndex]->Fill(leadingRecoJetPt_i,1.);
