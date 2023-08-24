@@ -275,8 +275,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       h_matchedRecoJetPt_genJetPt[i] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_C%i",i),Form("matchedRecoJetPt vs genJetPt, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_mupt_jetpt[i] = new TH2D(Form("h_mupt_jetpt_C%i",i),Form("jetPt vs. muPt, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
       h_muptrel_jetpt[i] = new TH2D(Form("h_muptrel_jetpt_C%i",i),Form("jetPt vs. muRelPt, hiBin %i - %i", centEdges[0], centEdges[NCentralityIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-      h_leadingRecoJetPt[i] = new TH1D(Form("h_leadingRecoJetPt_C%i",i),Form("leadingRecoJetPt, hiBin %i - %i",centEdges[0], centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
-      h_leadingRecoJetPt_xJets_greaterThanPthat[i] = new TH1D(Form("h_leadingRecoJetPt_xJets_greaterThanPthat_C%i",i),Form("leadingRecoJetPt, xJets, pT > pThat, hiBin %i - %i",centEdges[0], centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+      h_leadingRecoJetPt[i] = new TH1D(Form("h_leadingRecoJetPt_C%i",i),Form("leadingRecoJetPt, hiBin %i - %i",centEdges[0], centEdges[NCentralityIndices-1]),500,0,500);
+      h_leadingRecoJetPt_xJets_greaterThanPthat[i] = new TH1D(Form("h_leadingRecoJetPt_xJets_greaterThanPthat_C%i",i),Form("leadingRecoJetPt, xJets, pT > pThat, hiBin %i - %i",centEdges[0], centEdges[NCentralityIndices-1]),500,0,500);
     }
     else{
       // ----------------------------------------- event histograms -----------------
@@ -329,8 +329,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
       h_matchedRecoJetPt_genJetPt[i] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_C%i",i),Form("matchedRecoJetPt vs genJetPt, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_mupt_jetpt[i] = new TH2D(Form("h_mupt_jetpt_C%i",i),Form("jetPt vs. muPt, hiBin %i - %i",centEdges[i-1],centEdges[i]),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
       h_muptrel_jetpt[i] = new TH2D(Form("h_muptrel_jetpt_C%i",i),Form("jetPt vs. muRelPt, hiBin %i - %i", centEdges[i-1], centEdges[i]),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-      h_leadingRecoJetPt[i] = new TH1D(Form("h_leadingRecoJetPt_C%i",i),Form("leadingRecoJetPt, hiBin %i - %i",centEdges[i-1], centEdges[i]),NPtBins,ptMin,ptMax);
-      h_leadingRecoJetPt_xJets_greaterThanPthat[i] = new TH1D(Form("h_leadingRecoJetPt_xJets_greaterThanPthat_C%i",i),Form("leadingRecoJetPt, xJets, pT > pThat, hiBin %i - %i",centEdges[i-1], centEdges[i]),NPtBins,ptMin,ptMax);
+      h_leadingRecoJetPt[i] = new TH1D(Form("h_leadingRecoJetPt_C%i",i),Form("leadingRecoJetPt, hiBin %i - %i",centEdges[i-1], centEdges[i]),500,0,500);
+      h_leadingRecoJetPt_xJets_greaterThanPthat[i] = new TH1D(Form("h_leadingRecoJetPt_xJets_greaterThanPthat_C%i",i),Form("leadingRecoJetPt, xJets, pT > pThat, hiBin %i - %i",centEdges[i-1], centEdges[i]),500,0,500);
     }
 	
 
