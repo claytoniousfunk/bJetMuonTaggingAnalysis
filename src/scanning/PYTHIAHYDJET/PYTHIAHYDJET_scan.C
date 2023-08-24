@@ -666,7 +666,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 
     }
 
-    /*
+    
     bool leadingXjetDump = false;
     // dump event if flavor==x && pT > pThat
     if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > em->pthat){
@@ -675,14 +675,17 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     }
 
     // reweight if we didn't dump the event.
-    TF1 *xDumpReweightFxn = new TF1("xDumpReweightFxn","[0] * exp([1] * x) + [2] * exp([3] * x)",0,500);
-    xDumpReweightFxn->SetParameters(2.37340e+00,-1.17024e-01,9.04691e-01,-1.17024e-01);
+    TFile *f_xDump = TFile::Open("../xDumpReweight.root");
+    TH1D *h_xDump;
+    f_xDump->GetObject("r",h_xDump);
 
-    double xDump_reweight_subFactor = xDumpReweightFxn->Eval(leadingGenJetPt_i);
+    double xDump_reweight_subFactor = h_xDump->GetBinContent(h_xDump->FindBin(leadingGenJetPt_i));
     double xDump_reweight_factor = 1. / (1. - xDump_reweight_subFactor);
 
+    cout << "xDump_reweight_factor = " << xDump_reweight_factor << endl;
+
     w = w * xDump_reweight_factor ;
-    */
+    
     
     if(leadingRecoJetPt_i != 0.0){
       h_leadingGenJetPt[0]->Fill(leadingGenJetPt_i,1.);
