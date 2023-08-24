@@ -551,7 +551,11 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
   loadFitFxn_vz();
 
   loadFitFxn_hiBin();
-  
+
+  // xDump reweight
+  TFile *f_xDump = TFile::Open("../xDumpReweight.root");
+  TH1D *h_xDump;
+  f_xDump->GetObject("r",h_xDump);
  
   // event loop
   int eventCounter = 0;
@@ -675,9 +679,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     }
 
     // reweight if we didn't dump the event.
-    TFile *f_xDump = TFile::Open("../xDumpReweight.root");
-    TH1D *h_xDump;
-    f_xDump->GetObject("r",h_xDump);
+    
 
     double xDump_reweight_subFactor = h_xDump->GetBinContent(h_xDump->FindBin(leadingGenJetPt_i));
     double xDump_reweight_factor = 1. / (1. - xDump_reweight_subFactor);
