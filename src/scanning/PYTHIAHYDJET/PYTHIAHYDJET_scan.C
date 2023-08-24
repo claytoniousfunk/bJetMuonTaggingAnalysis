@@ -666,11 +666,23 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 
     }
 
+    bool leadingXjetDump = false;
     // dump event if flavor==x && pT > pThat
     if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > em->pthat){
-      continue;
+      leadingXjetDump = true;
+      continue; // dump event
     }
 
+    // reweight if we didn't dump the event.
+    TF1 *xDumpReweightFxn = new TF1("xDumpReweightFxn","[0] * exp([1] * x)",50,500);
+    xDumpReweightFxn->SetParameters(7.78005e-01,-9.54072e-02);
+
+    double xDump_reweight_subFactor = xDumpReweightFxn->Eval(leadingGenJetPt_i);
+    double xDump_reweight_factor = 1. / (1. - xDump_reweight_subFactor);
+
+    w = w * xDump_reweight_factor ;
+
+    
     if(leadingRecoJetPt_i != 0.0){
       h_leadingRecoJetPt[0]->Fill(leadingRecoJetPt_i,1.);
       h_leadingRecoJetPt[CentralityIndex]->Fill(leadingRecoJetPt_i,1.);
