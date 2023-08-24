@@ -684,7 +684,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     double xDump_reweight_subFactor = h_xDump->GetBinContent(h_xDump->FindBin(leadingGenJetPt_i));
     double xDump_reweight_factor = 1. / (1. - xDump_reweight_subFactor);
 
-    cout << "xDump_reweight_factor = " << xDump_reweight_factor << endl;
+    //cout << "xDump_reweight_factor = " << xDump_reweight_factor << endl;
 
     w = w * xDump_reweight_factor ;
     
