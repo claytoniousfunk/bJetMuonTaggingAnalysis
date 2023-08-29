@@ -608,9 +608,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
       evtTriggerDecision = true;
       eventCounter++;
-      w = w / ( triggerDecision_Prescl * 1.0 ) ; // set weight as 1/prescl for triggered events
     }
-   
    
     bool eventHasGoodJet = false;
     bool eventHasInclRecoMuonTag = false;
@@ -672,8 +670,9 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 
     
     bool leadingXjetDump = false;
+    double xDumpPthatScalar = 1.0;
     // dump event if flavor==x && pT > pThat
-    if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > em->pthat){
+    if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > xDumpPthatScalar * em->pthat){
       leadingXjetDump = true;
       continue; // dump event
     }
