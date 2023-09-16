@@ -98,6 +98,7 @@ public :
   Float_t disc_csvV2[jetMax];
   Int_t GSP_evt[jetMax];
   Int_t muN[jetMax];
+  Float_t jtPfCHF[jetMax], jtPfNHF[jetMax], jtPfCEF[jetMax], jtPfNEF[jetMax], jtPfMUF[jetMax];
 
   // muon info
   static const int muonMax = 9999;
@@ -241,6 +242,11 @@ void eventMap::loadJet(const char* name){
   //evtTree->SetBranchAddress("WTAphi", &jet_wta_phi);
   evtTree->SetBranchAddress("discr_csvV2", &disc_csvV2);
   evtTree->SetBranchAddress("trackMax", &jetTrkMax);
+  evtTree->SetBranchAddress("jtPfCHF",&jtPfCHF);
+  evtTree->SetBranchAddress("jtPfNHF",&jtPfNHF);
+  evtTree->SetBranchAddress("jtPfCEF",&jtPfCEF);
+  evtTree->SetBranchAddress("jtPfNEF",&jtPfNEF);
+  evtTree->SetBranchAddress("jtPfMUF",&jtPfMUF);
   if(isMC){
     evtTree->SetBranchAddress("genmatchindex", &genMatchIndex);// for reco jets
     //if(AASetup) evtTree->SetBranchAddress("matchedHadronFlavor", &flavor_forb);// for reco jets
