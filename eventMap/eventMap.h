@@ -84,7 +84,7 @@ public :
   std::vector<int>  *gppdgIDp=0, *gpchgp=0, *gpsube=0, *gpStableTag=0;
 
   // pfCandidate info
-  std::vector<int> *pfId=0;
+  std::vector<int> *pfId=0, *pfPt=0, *pfEta=0, *pfPhi=0;
 
   //jet set
   static const int jetMax = 9999;
@@ -234,6 +234,9 @@ void eventMap::loadParticleFlowAnalyzer(const char* name){
   pfTree = (TTree*) _file->Get(Form("%s/pftree",name));
   evtTree->AddFriend(pfTree);
   evtTree->SetBranchAddress("pfId",&pfId);
+  evtTree->SetBranchAddress("pfPt",&pfPt);
+  evtTree->SetBranchAddress("pfEta",&pfEta);
+  evtTree->SetBranchAddress("pfPhi",&pfPhi);
 }
 
 void eventMap::unloadGP(){
