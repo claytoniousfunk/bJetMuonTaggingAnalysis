@@ -230,7 +230,7 @@ void eventMap::loadGenParticle(){
   if(!stableOnly) evtTree->SetBranchAddress("sta",&gpStableTag);
 }
 
-void eventMap::loadParticleFlowAnalyzer(){
+void eventMap::loadParticleFlowAnalyzer(const char* name){
   pfTree = (TTree*) _file->Get(Form("%s/pftree",name));
   evtTree->AddFriend(pfTree);
   evtTree->SetBranchAddress("pfId",&pfId);
