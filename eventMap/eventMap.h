@@ -37,6 +37,7 @@ public :
   void unloadGP();
   void regEventFilter(int nfilter, std::string *filtername);
   void regEventFilter(std::vector<std::string> &filtername);
+  void loadParticleFlowAnalyzer(const char* name);
   bool checkEventFilter(){
     //mScrapingFilterreturn 1 for event needs to be skipped
     for(auto & it : filters) if(!it) return 1;
@@ -53,7 +54,7 @@ public :
   int gppdgID(int j) {return gppdgIDp->at(j);}
   int gpIsStable(int j) {return gpStableTag->at(j);}
   int gpSube(int j){ return gpsube->at(j);}
-  TTree *hltTree, *filterTree, *trkTree, *gpTree, *jetTree=nullptr, *muonTree=nullptr, *muonTriggerTree=nullptr, *muonAnalyzerTree=nullptr;
+  TTree *hltTree, *filterTree, *trkTree, *gpTree, *jetTree=nullptr, *muonTree=nullptr, *muonTriggerTree=nullptr, *muonAnalyzerTree=nullptr, *pfTree=nullptr;
   TTree *evtTree;
   TFile *_file = 0;
   std::vector<Int_t> filters;
@@ -81,6 +82,9 @@ public :
   bool stableOnly = 1;
   std::vector<float> *gpptp=0, *gpetap=0, *gpphip=0;
   std::vector<int>  *gppdgIDp=0, *gpchgp=0, *gpsube=0, *gpStableTag=0;
+
+  // pfCandidate info
+  std::vector<int> *pfId=0;
 
   //jet set
   static const int jetMax = 9999;
@@ -224,6 +228,12 @@ void eventMap::loadGenParticle(){
   evtTree->SetBranchAddress("pdg", &gppdgIDp);
   if(!AASetup) evtTree->SetBranchAddress("sube",&gpsube);
   if(!stableOnly) evtTree->SetBranchAddress("sta",&gpStableTag);
+}
+
+void eventMap::loadParticleFlowAnalyzer(){
+  pfTree = (TTree*) _file->Get(Form("%s/pftree",name));
+  evtTree->AddFriend(pfTree);
+  evtTree->SetBranchAddress("pfId",&pfId);
 }
 
 void eventMap::unloadGP(){
