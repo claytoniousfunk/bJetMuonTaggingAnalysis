@@ -179,7 +179,7 @@ TH1D *h_leadingGenJetPt_xJets_greaterThanPthat[NCentralityIndices];
 
 
 
-void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJET_DiJet_5July22/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_5July22/220705_212159/0000/HiForestAOD_104.root", TString output = "out.root"){
+void PYTHIAHYDJET_scan(TString input = "/home/clayton/Analysis/code/HLTAnalysis/rootFiles/HiForestMiniAOD_PbPb.root", TString output = "out.root"){
 
 
 
@@ -769,7 +769,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJE
 		        
       int jetPtIndex = getJetPtBin(x);
 
-
+      if(jetPtIndex < 0) continue;
+      
       // fill genJetPt vs pthat
       h_recoJetPt_pthat[0]->Fill(x,em->pthat,w);
       h_recoJetPt_pthat[CentralityIndex]->Fill(x,em->pthat,w);
