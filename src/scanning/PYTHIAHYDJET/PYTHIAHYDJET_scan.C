@@ -553,9 +553,9 @@ void PYTHIAHYDJET_scan(TString input = "/home/clayton/Analysis/code/HLTAnalysis/
   loadFitFxn_hiBin();
 
   // xDump reweight
-  TFile *f_xDump = TFile::Open("../xDumpReweight.root");
-  TH1D *h_xDump;
-  f_xDump->GetObject("r",h_xDump);
+  //TFile *f_xDump = TFile::Open("../xDumpReweight.root");
+  //TH1D *h_xDump;
+  //f_xDump->GetObject("r",h_xDump);
  
   // event loop
   int eventCounter = 0;
@@ -680,7 +680,8 @@ void PYTHIAHYDJET_scan(TString input = "/home/clayton/Analysis/code/HLTAnalysis/
     // reweight if we didn't dump the event.
     
 
-    double xDump_reweight_subFactor = h_xDump->GetBinContent(h_xDump->FindBin(leadingGenJetPt_i));
+    //double xDump_reweight_subFactor = h_xDump->GetBinContent(h_xDump->FindBin(leadingGenJetPt_i));
+    double xDump_reweight_subFactor = 0.0; // ignore xDump reweight for now
     double xDump_reweight_factor = 1. / (1. - xDump_reweight_subFactor);
 
     //cout << "xDump_reweight_factor = " << xDump_reweight_factor << endl;
