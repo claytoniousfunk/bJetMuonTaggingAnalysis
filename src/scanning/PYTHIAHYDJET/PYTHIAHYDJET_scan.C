@@ -179,7 +179,7 @@ TH1D *h_leadingGenJetPt_xJets_greaterThanPthat[NCentralityIndices];
 
 
 
-void PYTHIAHYDJET_scan(TString input = "/home/clayton/Analysis/code/HLTAnalysis/rootFiles/HiForestMiniAOD_PbPb.root", TString output = "out.root"){
+void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cbennett/PYTHIAHYDJET_DiJet_19Sep23/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_19Sep23/230919_075910/0000/HiForestAOD_1.root", TString output = "out.root"){
 
 
 
