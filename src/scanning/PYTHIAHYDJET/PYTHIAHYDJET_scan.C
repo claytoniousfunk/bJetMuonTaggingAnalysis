@@ -812,17 +812,17 @@ void PYTHIAHYDJET_scan(TString input = "/home/clayton/Analysis/code/HLTAnalysis/
 
       }
 
-      if(jetFlavorInt == 0 && dR_recoGen_min > 0.5 && x > 100.){
-	cout << "EVENT #" << evi << ", xJet, dR_min(Reco,Gen) =" << dR_recoGen_min << endl;
-	cout << "--- Reco Jets ---" << evi << endl;
-	for(int k = 0; k < em->njet; k++){
-	  cout << "(pt, eta, phi, flavor) = (" << em->jetpt[k] << ", " << em->jeteta[k] << ", " << em->jetphi[k] << ", " << em->matchedPartonFlavor[k] << ")" << endl;
-	}
-	cout << "--- Gen Jets ---" << evi << endl;
-	for(int k = 0; k < em->ngj; k++){
-	  cout << "(pt, eta, phi, flavor) = (" << em->genjetpt[k] << ", " << em->genjeteta[k] << ", " << em->genjetphi[k] << ", ?)" << endl;
-	}
-      }
+      // if(jetFlavorInt == 0 && dR_recoGen_min > 0.5 && x > 100.){
+      // 	cout << "EVENT #" << evi << ", xJet, dR_min(Reco,Gen) =" << dR_recoGen_min << endl;
+      // 	cout << "--- Reco Jets ---" << evi << endl;
+      // 	for(int k = 0; k < em->njet; k++){
+      // 	  cout << "(pt, eta, phi, flavor) = (" << em->jetpt[k] << ", " << em->jeteta[k] << ", " << em->jetphi[k] << ", " << em->matchedPartonFlavor[k] << ")" << endl;
+      // 	}
+      // 	cout << "--- Gen Jets ---" << evi << endl;
+      // 	for(int k = 0; k < em->ngj; k++){
+      // 	  cout << "(pt, eta, phi, flavor) = (" << em->genjetpt[k] << ", " << em->genjeteta[k] << ", " << em->genjetphi[k] << ", ?)" << endl;
+      // 	}
+      // }
 
       if(hasGenJetMatch){
 
