@@ -78,8 +78,8 @@ const double vzMin = -15.0;
 const double vzMax = 15.0;
 
 
-const double pthatcut = 15.0;
-//const double pthatcut = 30.0;
+//const double pthatcut = 15.0;
+const double pthatcut = 30.0;
 //const double pthatcut = 40.0;
 
 
