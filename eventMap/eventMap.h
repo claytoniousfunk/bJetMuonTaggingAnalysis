@@ -113,7 +113,7 @@ public :
   vector <int> *innerNTrkHits=0;
 
   // muon trigger info
-  int HLT_HIL3Mu5_v1, HLT_HIL3Mu7_v1, HLT_HIL3Mu5_v1_Prescl;
+  int HLT_HIL3Mu5_v1, HLT_HIL3Mu7_v1, HLT_HIL3Mu5_v1_Prescl, HLT_HIL3Mu7_v1_Prescl;
   int HLT_HIL3Mu5_NHitQ10_v1, HLT_HIL3Mu7_NHitQ10_v1, HLT_HIL3Mu3_NHitQ10_v1;
   int HLT_HIL3Mu5_NHitQ10_v1_Prescl, HLT_HIL3Mu7_NHitQ10_v1_Prescl, HLT_HIL3Mu3_NHitQ10_v1_Prescl;
   int HLT_HIL3Mu5_NHitQ10_tagging_v1, HLT_HIL3Mu7_NHitQ10_tagging_v1, HLT_HIL3Mu3_NHitQ10_tagging_v1;
@@ -335,6 +335,7 @@ void eventMap::loadMuonTrigger(const char* name){
   evtTree->SetBranchAddress("HLT_HIL3Mu5_NHitQ10_tagging_v1_Prescl",&HLT_HIL3Mu5_NHitQ10_tagging_v1_Prescl);
   evtTree->SetBranchAddress("HLT_HIL3Mu7_NHitQ10_v1_Prescl",&HLT_HIL3Mu7_NHitQ10_v1_Prescl);
   evtTree->SetBranchAddress("HLT_HIL3Mu7_v1",&HLT_HIL3Mu7_v1);
+  evtTree->SetBranchAddress("HLT_HIL3Mu7_v1_Prescl",&HLT_HIL3Mu7_v1_Prescl);
   evtTree->SetBranchAddress("HLT_HIL3Mu5_AK4PFJet30_v1",&HLT_HIL3Mu5_AK4PFJet30_v1);
   evtTree->SetBranchAddress("HLT_HIL3Mu5_AK4PFJet40_v1",&HLT_HIL3Mu5_AK4PFJet40_v1);
   evtTree->SetBranchAddress("HLT_HIL3Mu5_AK4PFJet60_v1",&HLT_HIL3Mu5_AK4PFJet60_v1);
