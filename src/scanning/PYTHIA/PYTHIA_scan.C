@@ -414,10 +414,84 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
     
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)){
       evtTriggerDecision = true;
-      w = w / (triggerDecision_Prescl * 1.0) ; // set weight to 1/prescl for triggered events 
+      //w = w / (triggerDecision_Prescl * 1.0) ; // set weight to 1/prescl for triggered events 
     }
     double leadingRecoJetPt = -1.0;
     double leadingGenJetPt = -1.0;
+
+    double leadingGenJetPt_i = 0.0;
+    double leadingGenJetEta_i = 0.0;
+    double leadingGenJetPhi_i = 0.0;
+
+    // quick genJet loop to get leadingGenJetPt
+    for(int j = 0; j < em->ngj ; j++){
+
+	double genJetPt_j = em->genjetpt[j];  // genJetPt
+	double genJetEta_j = em->genjeteta[j]; // genJetEta
+	double genJetPhi_j = em->genjetphi[j]; // genJetPhi
+
+	if(fabs(genJetEta_j) > etaMax) continue;
+	
+	
+	if(genJetPt_j > leadingGenJetPt_i){
+
+	  leadingGenJetPt_i = genJetPt_j;
+	  
+	}	
+
+    }
+    // pthat filter cut
+    if(!passesLeadingGenJetPthatFilter(leadingGenJetPt_i,em->pthat)) continue;
+  
+
+    // quick recoJet loop to get leadingRecoJetPt
+    double leadingRecoJetPt_i = 0.0;
+    double leadingRecoJetEta_i = 0.0;
+    double leadingRecoJetPhi_i = 0.0;
+    int leadingRecoJetFlavor_i = -100;
+    
+    for(int j = 0; j < em->njet ; j++){
+
+      JEC.SetJetPT(em->rawpt[j]);
+      JEC.SetJetEta(em->jeteta[j]);
+      JEC.SetJetPhi(em->jetphi[j]);
+      
+      double testJetPt_j = JEC.GetCorrectedPT();
+      double testJetEta_j = em->jeteta[j];
+      double testJetPhi_j = em->jetphi[j];
+      int testJetFlavor_j = em->matchedPartonFlavor[j];
+
+      if(fabs(testJetEta_j) > etaMax) continue;
+      
+      if(testJetPt_j > leadingRecoJetPt_i){
+	leadingRecoJetPt_i = testJetPt_j;
+	leadingRecoJetFlavor_i = testJetFlavor_j;
+      }
+
+    }
+
+    
+    bool leadingXjetDump = false;
+    double xDumpPthatScalar = 1.0;
+    // dump event if flavor==x && pT > pThat
+    if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > xDumpPthatScalar * em->pthat){
+      leadingXjetDump = true;
+      continue; // dump event
+    }
+
+    // reweight if we didn't dump the event.
+    
+
+    //double xDump_reweight_subFactor = h_xDump->GetBinContent(h_xDump->FindBin(leadingGenJetPt_i));
+    double xDump_reweight_subFactor = 0.0; // ignore xDump reweight for now
+    double xDump_reweight_factor = 1. / (1. - xDump_reweight_subFactor);
+
+    //cout << "xDump_reweight_factor = " << xDump_reweight_factor << endl;
+
+    w = w * xDump_reweight_factor ;
+    
+
+    
 
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
@@ -500,7 +574,7 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
       bool hasInclRecoMuonTag = false;
       bool hasMatchedRecoMuonTag = false;
 
-          double dR_recoGen_min = 100.0;
+      double dR_recoGen_min = 100.0;
       double dPt_recoGen_min = 100.0;
 
       // look for a genJet match
