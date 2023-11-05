@@ -862,7 +862,7 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
     // END recoJet LOOP
 
     // fill reco-based event histograms
-    if(evtHasGoodJet){
+    if(evtHasGoodJet && leadingRecoJetPt > 60){
 
       h_vz->Fill(em->vz,w);
 
