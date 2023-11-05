@@ -329,8 +329,17 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
      //double x = em->jetpt[i]; // use built-in JEC
      double y = em->jeteta[i]; // recoJetEta
      double z = em->jetphi[i]; // recoJetPhi
+     double jetTrkMax_i = em->jetTrkMax[i];
 
-     if(etaPhiMask(y,z)) continue;
+     if(doJetTrkMaxFilter){
+	if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
+      }
+     
+     if(doEtaPhiMask){
+       if(etaPhiMask(y,z)) continue;
+     }
+
+     
      
      double muPtRel = -1.0;
      double muPt = -1.0;
