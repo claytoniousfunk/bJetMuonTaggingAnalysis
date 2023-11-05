@@ -2,8 +2,6 @@
 // ---------- vz fit parameters
 // ---------- 3rd order polynomial
 
-cout << "loading fit params ... " << endl;
-
 int N_vzFitParam = 4;
 
 double vzFitParam_0 = 0.951479;
@@ -16,4 +14,3 @@ double e_vzFitParam_1 = 0.00332478;
 double e_vzFitParam_2 = 0.00021252;
 double e_vzFitParam_3 = 2.97868e-05;
 
-cout << " ... done! " << endl;
