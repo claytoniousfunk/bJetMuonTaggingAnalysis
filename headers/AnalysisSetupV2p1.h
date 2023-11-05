@@ -51,7 +51,9 @@ const double muPtMax = 100.0;
 
 const double deltaRCut = 0.4;  // muon-matching dR
 
-double muPtCut = 7.0;
+double muPtCut = 7.0; // mu5 scans
+//double muPtCut = 9.0; // mu7 scans
+//double muPtCut = 14.0; // mu12 scans
 
 const int NMuRelPtBins = 100;
 const double muRelPtMin = 0.0;
