@@ -43,6 +43,8 @@
 #include "../../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
 #include "../../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
+//#include "../../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h
+//#include "../../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // hiBin-fit parameters
 #include "../../../../headers/fitParameters/hiBinFitParams.h"
 
@@ -413,7 +415,13 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
     bool evtHasGoodMuonTaggedJetTriggerOn = false;
     
     int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1; 
-    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl; 
+    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+
+    //int triggerDecision = em->HLT_HIL3Mu7_v1; 
+    //int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+
+    //int triggerDecision = em->HLT_HIL3Mu12_v1; 
+    //int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl; 
     
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)){
       evtTriggerDecision = true;
