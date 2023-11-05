@@ -315,7 +315,7 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
    }
 
 
-
+   double leadingRecoJetPt = 0.0;
    // RECO JET LOOP
    for(int i = 0; i < em->njet ; i++){
 
@@ -352,6 +352,7 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
      if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
 
      eventHasGoodJet = true;
+     if(x > leadingRecoJetPt) leadingRecoJetPt = x;
 		        
      int jetPtIndex = getJetPtBin(x);
 
@@ -452,7 +453,7 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
    }
    // END recoJet LOOP
 
-   if(eventHasGoodJet){
+   if(eventHasGoodJet && leadingRecoJetPt > 60){
 
      h_vz->Fill(em->vz,w);
      h_hiBin->Fill(em->hiBin,w);
