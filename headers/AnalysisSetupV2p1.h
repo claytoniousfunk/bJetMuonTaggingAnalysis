@@ -36,9 +36,9 @@ const int NTrkEtaBins = 200;
 const double trkEtaMin = -2.0;
 const double trkEtaMax = 2.0;
 
-const int NPtBins = 100;
-const double jetPtCut = 50.0; // cut on muon jets
-const double ptMin = 0.0;
+const int NPtBins = 96;
+const double jetPtCut = 20.0; // cut on muon jets
+const double ptMin = 20.0;
 const double ptMax = 500.0;
 
 const int NTrkPtBins = 100;
@@ -52,7 +52,6 @@ const double muPtMax = 100.0;
 const double deltaRCut = 0.4;  // muon-matching dR
 
 double muPtCut = 7.0;
-double muPtCutMax = 30.0;
 
 const int NMuRelPtBins = 100;
 const double muRelPtMin = 0.0;
@@ -78,10 +77,10 @@ const double vzMin = -15.0;
 const double vzMax = 15.0;
 
 
-//const double pthatcut = 15.0;
-const double pthatcut = 30.0;
+const double pthatcut = 15.0;
+//const double pthatcut = 30.0;
 //const double pthatcut = 40.0;
-
+//const double pthatcut = 40.0;
 
 
 const double epsilon = 0.1;
