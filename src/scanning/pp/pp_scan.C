@@ -60,8 +60,8 @@
 // print introduction
 #include "../../../../headers/introductions/printIntroduction_pp_scan_V3p7.h"
 // analysis config
-//#include "../../../../headers/config/config_pp_SingleMuon.h"
-#include "../../../../headers/config/config_pp_MB.h"
+#include "../../../../headers/config/config_pp_SingleMuon.h"
+//#include "../../../../headers/config/config_pp_MB.h"
 // read config
 #include "../../../../headers/config/readConfig.h"
 // initialize histograms
@@ -258,22 +258,28 @@ void pp_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/pp_
    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
+   // int triggerDecision = em->HLT_HIL3Mu7_v1;
+   // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+
+   // int triggerDecision = em->HLT_HIL3Mu12_v1;
+   // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+
    // skip if the trigger is off or if the prescale is zero
    if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) evtTriggerDecision = true;
    
    // set the weight equal to the "gluing" parameter
    
-   if(triggerDecision_Prescl == 0){ continue;}
-   else if(triggerDecision_Prescl == 1){
-     w = 1.0 ;
-   }
-   else if(triggerDecision_Prescl == 3){
-     w = 1.0 / 6.04088 ;
-   }
-   else if(triggerDecision_Prescl == 5){
-     w = 1.0 / 8.68813 ;
-   }
-   else{ continue ;}
+   // if(triggerDecision_Prescl == 0){ continue;}
+   // else if(triggerDecision_Prescl == 1){
+   //   w = 1.0 ;
+   // }
+   // else if(triggerDecision_Prescl == 3){
+   //   w = 1.0 / 6.04088 ;
+   // }
+   // else if(triggerDecision_Prescl == 5){
+   //   w = 1.0 / 8.68813 ;
+   // }
+   // else{ continue ;}
 
    double w_trig = w;
 
