@@ -42,7 +42,7 @@
 // general analysis variables
 #include "../../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../../headers/fitParameters/vzFitParams_PYTHIA.h"
+#include "../../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
 // hiBin-fit parameters
 #include "../../../../headers/fitParameters/hiBinFitParams.h"
 
