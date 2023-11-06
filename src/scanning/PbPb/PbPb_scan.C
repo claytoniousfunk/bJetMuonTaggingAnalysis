@@ -59,11 +59,13 @@
 #include "../../../../headers/functions/triggerIsOn.h"
 // pthat filter function
 #include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+// JetTrkMax filter function
+#include "../../../../headers/functions/passesJetTrkMaxFilter.h"
 // print introduction
 #include "../../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-//#include "../../../../headers/config/config_PbPb_SingleMuon.h"
-#include "../../../../headers/config/config_PbPb_MinBias.h"
+#include "../../../../headers/config/config_PbPb_SingleMuon.h"
+//#include "../../../../headers/config/config_PbPb_MinBias.h"
 // read config
 #include "../../../../headers/config/readConfig.h"
 // initialize histograms
@@ -366,38 +368,38 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
 
     
 
-    if(triggerDecision_Prescl == 0) continue;
-    else if(triggerDecision_Prescl == 1){
-      w = 1.0;
-    }
-    else if(triggerDecision_Prescl == 2){
-      w = 1.0 / 0.0318182;
-    }
-    else if(triggerDecision_Prescl == 3){
-      w = 1.0 / 13.4136;
-    }
-    else if(triggerDecision_Prescl == 5){
-      w = 1.0 / 8.80909;
-    }
-    else if(triggerDecision_Prescl == 7){
-      w = 1.0 / 1.48182;
-    }
-    else if(triggerDecision_Prescl == 11){
-      w = 1.0 / 6.06818;
-    }
-    else if(triggerDecision_Prescl == 13){
-      w = 1.0 / 9.90455;
-    }
-    else if(triggerDecision_Prescl == 15){
-      w = 1.0 / 0.318182;
-    }
-    else if(triggerDecision_Prescl == 17){
-      w = 1.0 / 0.15;
-    }
-    else if(triggerDecision_Prescl == 23){
-      w = 1.0 / 9.80455;
-    }
-    else{continue ; }
+    // if(triggerDecision_Prescl == 0) continue;
+    // else if(triggerDecision_Prescl == 1){
+    //   w = 1.0;
+    // }
+    // else if(triggerDecision_Prescl == 2){
+    //   w = 1.0 / 0.0318182;
+    // }
+    // else if(triggerDecision_Prescl == 3){
+    //   w = 1.0 / 13.4136;
+    // }
+    // else if(triggerDecision_Prescl == 5){
+    //   w = 1.0 / 8.80909;
+    // }
+    // else if(triggerDecision_Prescl == 7){
+    //   w = 1.0 / 1.48182;
+    // }
+    // else if(triggerDecision_Prescl == 11){
+    //   w = 1.0 / 6.06818;
+    // }
+    // else if(triggerDecision_Prescl == 13){
+    //   w = 1.0 / 9.90455;
+    // }
+    // else if(triggerDecision_Prescl == 15){
+    //   w = 1.0 / 0.318182;
+    // }
+    // else if(triggerDecision_Prescl == 17){
+    //   w = 1.0 / 0.15;
+    // }
+    // else if(triggerDecision_Prescl == 23){
+    //   w = 1.0 / 9.80455;
+    // }
+    // else{continue ; }
 
     double w_trig = w;
     //double w_trig = 1.0 / ( triggerDecision_Prescl * 1.0 ); // set weight as 1/prescl for triggered events
@@ -464,12 +466,15 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
       //cout << "smear = " << smear << endl;
       
       //x = x*smear;
-      
+      if(doJetTrkMaxFilter){
+	if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
+      }      
 
 
       //cout << "rawPt = " << em->rawpt[i] << "  |  jetPt = " << em->jetpt[i] << "  |  corrPt = " << x << endl;
-
-      if(etaPhiMask(y,z)) continue;
+      if(doEtaPhiMask){
+	if(etaPhiMask(y,z)) continue;
+      }
 
       //cout << "Event " << evi << ", jet " << i << endl;
       //cout << "../../..~~~  jetPt = " << em->jetpt[i] << ", corrJetPt = " << x << endl;
