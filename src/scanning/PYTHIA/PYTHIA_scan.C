@@ -435,25 +435,26 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
     double leadingGenJetPhi_i = 0.0;
 
     // quick genJet loop to get leadingGenJetPt
-    if(doGenJetPthatFilter){
-      for(int j = 0; j < em->ngj ; j++){
+    
+    for(int j = 0; j < em->ngj ; j++){
 
-	double genJetPt_j = em->genjetpt[j];  // genJetPt
-	double genJetEta_j = em->genjeteta[j]; // genJetEta
-	double genJetPhi_j = em->genjetphi[j]; // genJetPhi
+      double genJetPt_j = em->genjetpt[j];  // genJetPt
+      double genJetEta_j = em->genjeteta[j]; // genJetEta
+      double genJetPhi_j = em->genjetphi[j]; // genJetPhi
 
-	if(fabs(genJetEta_j) > etaMax) continue;
+      if(fabs(genJetEta_j) > etaMax) continue;
 	
 	
-	if(genJetPt_j > leadingGenJetPt_i){
+      if(genJetPt_j > leadingGenJetPt_i){
 
-	  leadingGenJetPt_i = genJetPt_j;
+	leadingGenJetPt_i = genJetPt_j;
 	  
-	}	
+      }	
 
-      }
-      // pthat filter cut
-
+    }
+    
+    // pthat filter cut
+    if(doGenJetPthatFilter){
       if(!passesLeadingGenJetPthatFilter(leadingGenJetPt_i,em->pthat)) continue;
     }
 
