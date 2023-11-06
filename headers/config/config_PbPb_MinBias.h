@@ -5,3 +5,6 @@ TString muonTreeString = "ggHiNtuplizer";
 TString hltString = "hltanalysis";
 const int NeventFilters = 2;
 std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter", "pclusterCompatibilityFilter"};
+bool doJetTrkMaxFilter = true;
+bool doEtaPhiMask = true;
+
