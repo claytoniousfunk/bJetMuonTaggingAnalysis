@@ -442,7 +442,7 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
 
     }
 
-    
+    double leadingRecoJetPt = 0.0;
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
 
@@ -490,6 +490,8 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
       // jet kinematic cuts
       if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
 
+      if(x > leadingRecoJetPt) leadingRecoJetPt = x;
+      
       eventHasGoodJet = true;
 		        
       int jetPtIndex = getJetPtBin(x);
@@ -677,7 +679,7 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
     }
     // END recoJet LOOP
 
-    if(eventHasGoodJet){
+    if(eventHasGoodJet && leadingRecoJetPt > 60){
 
       h_vz[0]->Fill(em->vz,w);
       h_vz[CentralityIndex]->Fill(em->vz,w);
