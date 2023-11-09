@@ -580,11 +580,17 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
     if(em->checkEventFilter()) continue;
 
     // calculate event weight
-    double w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-10);
-    //double w_reweight_hiBin = 1.0;
+    
+    double w_reweight_hiBin = 1.0;
+    if(doHiBinReweight){
+      w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-10);
+    }
 
-    //double w_reweight_vz = fitFxn_vz->Eval(em->vz);
     double w_reweight_vz = 1.0;
+    if(doVzReweight){
+      w_reweight_vz = fitFxn_vz->Eval(em->vz);
+    }
+    
    
     double w = em->weight * w_reweight_hiBin * w_reweight_vz;
 
@@ -602,6 +608,10 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 
     int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+
+    //int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
+    //int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
+
     //int triggerDecision = em->HLT_HIL3Mu12_v1;
     //int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
@@ -621,7 +631,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
     double leadingGenJetPhi_i = 0.0;
 
     // quick genJet loop to get leadingGenJetPt
-    for(int j = 0; j < em->ngj ; j++){
+    if(doGenJetPthatFilter){
+      for(int j = 0; j < em->ngj ; j++){
 
 	double genJetPt_j = em->genjetpt[j];  // genJetPt
 	double genJetEta_j = em->genjeteta[j]; // genJetEta
@@ -636,10 +647,10 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 	  
 	}	
 
+      }
+      // pthat filter cut
+      if(!passesLeadingGenJetPthatFilter(leadingGenJetPt_i,em->pthat)) continue;
     }
-    // pthat filter cut
-    if(!passesLeadingGenJetPthatFilter(leadingGenJetPt_i,em->pthat)) continue;
-
     
 
     // quick recoJet loop to get leadingRecoJetPt
@@ -647,34 +658,37 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
     double leadingRecoJetEta_i = 0.0;
     double leadingRecoJetPhi_i = 0.0;
     int leadingRecoJetFlavor_i = -100;
-    
-    for(int j = 0; j < em->njet ; j++){
 
-      JEC.SetJetPT(em->rawpt[j]);
-      JEC.SetJetEta(em->jeteta[j]);
-      JEC.SetJetPhi(em->jetphi[j]);
-      
-      double testJetPt_j = JEC.GetCorrectedPT();
-      double testJetEta_j = em->jeteta[j];
-      double testJetPhi_j = em->jetphi[j];
-      int testJetFlavor_j = em->matchedPartonFlavor[j];
 
-      if(fabs(testJetEta_j) > etaMax) continue;
+    if(doLeadingXjetDumpFilter){
+      for(int j = 0; j < em->njet ; j++){
+
+	JEC.SetJetPT(em->rawpt[j]);
+	JEC.SetJetEta(em->jeteta[j]);
+	JEC.SetJetPhi(em->jetphi[j]);
       
-      if(testJetPt_j > leadingRecoJetPt_i){
-	leadingRecoJetPt_i = testJetPt_j;
-	leadingRecoJetFlavor_i = testJetFlavor_j;
+	double testJetPt_j = JEC.GetCorrectedPT();
+	double testJetEta_j = em->jeteta[j];
+	double testJetPhi_j = em->jetphi[j];
+	int testJetFlavor_j = em->matchedPartonFlavor[j];
+
+	if(fabs(testJetEta_j) > etaMax) continue;
+      
+	if(testJetPt_j > leadingRecoJetPt_i){
+	  leadingRecoJetPt_i = testJetPt_j;
+	  leadingRecoJetFlavor_i = testJetFlavor_j;
+	}
+
       }
 
-    }
-
     
-    bool leadingXjetDump = false;
-    double xDumpPthatScalar = 1.0;
-    // dump event if flavor==x && pT > pThat
-    if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > xDumpPthatScalar * em->pthat){
-      leadingXjetDump = true;
-      continue; // dump event
+      bool leadingXjetDump = false;
+      double xDumpPthatScalar = 1.0;
+      // dump event if flavor==x && pT > pThat
+      if(leadingRecoJetFlavor_i == 0 && leadingRecoJetPt_i > xDumpPthatScalar * em->pthat){
+	leadingXjetDump = true;
+	continue; // dump event
+      }
     }
 
     // reweight if we didn't dump the event.
@@ -686,8 +700,9 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 
     //cout << "xDump_reweight_factor = " << xDump_reweight_factor << endl;
 
-    w = w * xDump_reweight_factor ;
-    
+    if(doXdumpReweight){
+      w = w * xDump_reweight_factor ;
+    }
     
     if(leadingRecoJetPt_i != 0.0){
       h_leadingGenJetPt[0]->Fill(leadingGenJetPt_i,1.);
@@ -697,6 +712,8 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 	h_leadingGenJetPt_xJets_greaterThanPthat[CentralityIndex]->Fill(leadingGenJetPt_i,1.);
       }
     }
+
+    
    
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
@@ -738,9 +755,13 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 	x = x * smear;
       }
 
-      if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
+      if(doJetTrkMaxFilter){
+	if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
+      }
 
-      if(etaPhiMask(y,z)) continue;
+      if(doEtaPhiMask){
+	if(etaPhiMask(y,z)) continue;
+      }
 
       double muPtRel = -1.0;
       double muPt = -1.0;
