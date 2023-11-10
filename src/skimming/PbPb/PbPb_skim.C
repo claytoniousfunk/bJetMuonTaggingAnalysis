@@ -35,7 +35,7 @@ void PbPb_skim(){
 
   string output_file_base = "./";
 
-  output_file_base += "PbPb_skim" ;
+  output_file_base += "PbPb_skim_output" ;
   
   string output_file_extension = "";
   output_file_extension += ".root";
