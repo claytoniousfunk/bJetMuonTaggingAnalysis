@@ -58,8 +58,11 @@ void PbPb_skim(){
 
   const int MAXJETS = 500;
 
+
   Float_t t_jtpt[MAXJETS], t_jteta[MAXJETS], t_jtphi[MAXJETS];
 
+  
+  int endfile = 7176;
   while(instr>>filename && ifile<endfile){
     
     cout << "Filename is " << filename << endl;
