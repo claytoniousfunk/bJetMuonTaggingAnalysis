@@ -70,7 +70,7 @@ void PbPb_skim(){
 
     TFile *my_file = TFile::Open(filename.c_str());
     
-    inp_tree = (TTree*) my_file->Get("akCs4PFJetAnalyzer");
+    inp_tree = (TTree*) my_file->Get("akCs4PFJetAnalyzer/t");
 
     cout << "tree loaded" << endl;
 
