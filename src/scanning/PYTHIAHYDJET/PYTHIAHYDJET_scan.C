@@ -39,13 +39,17 @@
 // general analysis variables
 #include "../../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../../headers/fitParameters/vzFitParams_PH.h"
+#include "../../../../headers/fitParameters/vzFitParams_PH_mu5.h"
+//#include "../../../../headers/fitParameters/vzFitParams_PH_mu7.h"
+//#include "../../../../headers/fitParameters/vzFitParams_PH_mu12.h"
 // hiBin-fit parameters
 #include "../../../../headers/fitParameters/hiBinFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "../../../../headers/fitFunctions/fitFxn_vz_PH.h"
+#include "../../../../headers/fitFunctions/fitFxn_vz_PH_mu5.h"
+#include "../../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
+#include "../../../../headers/fitFunctions/fitFxn_vz_PH_mu12.h"
 // hiBin-fit function
 #include "../../../../headers/fitFunctions/fitFxn_hiBin.h"
 
