@@ -53,7 +53,9 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 //#include "../../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
 //#include "../../../../headers/fitFunctions/fitFxn_vz_PH_mu12.h"
 // hiBin-fit function
-#include "../../../../headers/fitFunctions/fitFxn_hiBin.h"
+#include "../../../../headers/fitFunctions/fitFxn_hiBin_mu5.h"
+//#include "../../../../headers/fitFunctions/fitFxn_hiBin_mu7.h"
+//#include "../../../../headers/fitFunctions/fitFxn_hiBin_mu12.h"
 
 // eta-phi mask function
 #include "../../../../headers/functions/etaPhiMask.h"
