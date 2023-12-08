@@ -250,7 +250,7 @@ void PYTHIA_skim(int group = 0,
     gen_particle_tree->SetBranchAddress("eta",&t_eta);
     gen_particle_tree->SetBranchAddress("phi",&t_phi);
     gen_particle_tree->SetBranchAddress("chg",&t_chg);
-    gen_particle_tree->SetBranchAddress("pdg",&t_pdg);
+    //gen_particle_tree->SetBranchAddress("pdg",&t_pdg);
     gen_particle_tree->SetBranchAddress("n",t_n);    
 
     int n_evt = evt_tree->GetEntriesFast();
@@ -360,7 +360,7 @@ void PYTHIA_skim(int group = 0,
 	eta = t_eta->at(geni);
 	phi = t_phi->at(geni);
 	chg = t_chg->at(geni);
-	pdg = t_pdg->at(geni);
+	//pdg = t_pdg->at(geni);
 
 	// fill the tree
 	my_gen_particle_tree->Fill();
