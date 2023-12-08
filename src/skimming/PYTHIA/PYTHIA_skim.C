@@ -342,11 +342,10 @@ void PYTHIA_skim(int group = 0,
 
       nMu = nMu_prime;
 
-
       int n_prime = 0;
       
       // start gen-particle loop
-      for(int geni = 0; geni < pt->size(); geni++){
+      for(int geni = 0; geni < t_pt->size(); geni++){
 
 	pt = t_pt->at(geni);
 	eta = t_eta->at(geni);
