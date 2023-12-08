@@ -76,8 +76,8 @@ void PYTHIA_skim(int group = 0,
   my_evt_tree->Branch("vz",&vz);
 
   // ----- HLT variables
-  Int_t HLT_HIL3Mu5_NHitQ10_v1, HLT_HIL3Mu7_v1, HLT_HIL3Mu12_v1;
-  Int_t HLT_HIL3Mu5_NHitQ10_v1_Prescl, HLT_HIL3Mu7_v1_Prescl, HLT_HIL3Mu12_v1_Prescl;
+  Int_t HLT_HIL3Mu5_NHitQ10_v1, HLT_HIL3Mu7_v1, HLT_HIL3Mu12_v1,
+    HLT_HIL3Mu5_NHitQ10_v1_Prescl, HLT_HIL3Mu7_v1_Prescl, HLT_HIL3Mu12_v1_Prescl;
   my_hlt_tree->Branch("HLT_HIL3Mu5_NHitQ10_v1",&HLT_HIL3Mu5_NHitQ10_v1);
   my_hlt_tree->Branch("HLT_HIL3Mu7_v1",&HLT_HIL3Mu7_v1);
   my_hlt_tree->Branch("HLT_HIL3Mu12_v1",&HLT_HIL3Mu12_v1);
@@ -102,10 +102,8 @@ void PYTHIA_skim(int group = 0,
   
 
   // ----- muon variables
-  Float_t muPt, muEta, muPhi;
-  Float_t muChi2NDF, muInnerD0, muInnerDz;
-  Int_t muIsPF, muIsGlobal, muIsTracker, muMuonHits, muStations, muTrkLayers, muPixelHits, muCharge;
-  Int_t nMu;
+  Float_t muPt, muEta, muPhi, muChi2NDF, muInnerD0, muInnerDz;
+  Int_t muIsPF, muIsGlobal, muIsTracker, muMuonHits, muStations, muTrkLayers, muPixelHits, muCharge, nMu;
   my_muon_tree->Branch("muPt",&muPt);
   my_muon_tree->Branch("muEta",&muEta);
   my_muon_tree->Branch("muPhi",&muPhi);
@@ -170,27 +168,24 @@ void PYTHIA_skim(int group = 0,
 
   int endfile = 1193;
   while(instr>>filename && ifile<endfile){
-    
-    
 
     //cout << "Filename is " << filename << endl;
     ifile++;
 
     if(ifile < startgroup || ifile > endgroup) continue;
 
-
     cout << (100.)*(1.0*ifile / (1.0*endfile)) << " %" << endl;
 
     TFile *my_file = TFile::Open(filename.c_str());
     
-    filter_tree        = (TTree*) my_file->Get("skimanalysis/HltTree");
-    evt_tree           = (TTree*) my_file->Get("hiEvtAnalyzer/HiTree");
-    hlt_tree           = (TTree*) my_file->Get("hltanalysis/HltTree");
-    jet_tree           = (TTree*) my_file->Get("ak4PFJetAnalyzer/t");
-    jet_evt_tree       = (TTree*) my_file->Get("ak4PFJetAnalyzer/t");
-    muon_tree          = (TTree*) my_file->Get("ggHiNtuplizerGED/EventTree");
-    muon_evt_tree      = (TTree*) my_file->Get("ggHiNtuplizerGED/EventTree");
-    gen_particle_tree  = (TTree*) my_file->Get("HiGenParticleAna/hi");
+    filter_tree            = (TTree*) my_file->Get("skimanalysis/HltTree");
+    evt_tree               = (TTree*) my_file->Get("hiEvtAnalyzer/HiTree");
+    hlt_tree               = (TTree*) my_file->Get("hltanalysis/HltTree");
+    jet_tree               = (TTree*) my_file->Get("ak4PFJetAnalyzer/t");
+    jet_evt_tree           = (TTree*) my_file->Get("ak4PFJetAnalyzer/t");
+    muon_tree              = (TTree*) my_file->Get("ggHiNtuplizerGED/EventTree");
+    muon_evt_tree          = (TTree*) my_file->Get("ggHiNtuplizerGED/EventTree");
+    gen_particle_tree      = (TTree*) my_file->Get("HiGenParticleAna/hi");
     gen_particle_evt_tree  = (TTree*) my_file->Get("HiGenParticleAna/hi");
 
     //cout << "trees loaded" << endl;
