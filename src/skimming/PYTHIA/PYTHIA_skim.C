@@ -261,7 +261,7 @@ void PYTHIA_skim(int group = 0,
       jet_evt_tree->GetEntry(evi);
       muon_tree->GetEntry(evi);
       muon_evt_tree->GetEntry(evi);
-      gen_particle_tree->GetEntry(evi);
+      //gen_particle_tree->GetEntry(evi);
       
       pPAprimaryVertexFilter = t_pPAprimaryVertexFilter[0];
       HBHENoiseFilterResultRun2Loose = t_HBHENoiseFilterResultRun2Loose[0];
@@ -348,26 +348,26 @@ void PYTHIA_skim(int group = 0,
 
       int n_prime = 0;
       
-      // start gen-particle loop
-      for(int geni = 0; geni < t_n[0]; geni++){
+      // // start gen-particle loop
+      // for(int geni = 0; geni < t_n[0]; geni++){
 
-	pt = t_pt->at(geni);
-	eta = t_eta->at(geni);
-	phi = t_phi->at(geni);
-	chg = t_chg->at(geni);
-	pdg = t_pdg->at(geni);
+      // 	pt = t_pt->at(geni);
+      // 	eta = t_eta->at(geni);
+      // 	phi = t_phi->at(geni);
+      // 	chg = t_chg->at(geni);
+      // 	pdg = t_pdg->at(geni);
 
-	// fill the tree
-	my_gen_particle_tree->Fill();
-	n_prime++;
+      // 	// fill the tree
+      // 	my_gen_particle_tree->Fill();
+      // 	n_prime++;
 
-      }
+      // }
 
       n = n_prime;
       
       // fill event trees
       my_muon_evt_tree->Fill();
-      my_gen_particle_evt_tree->Fill();
+      //my_gen_particle_evt_tree->Fill();
       my_jet_evt_tree->Fill();
       my_filter_tree->Fill();
       my_evt_tree->Fill();
@@ -390,8 +390,8 @@ void PYTHIA_skim(int group = 0,
   my_jet_evt_tree->Write();
   my_muon_tree->Write();
   my_muon_evt_tree->Write();
-  my_gen_particle_tree->Write();
-  my_gen_particle_evt_tree->Write();
+  //my_gen_particle_tree->Write();
+  //my_gen_particle_evt_tree->Write();
   output_file->Close();
 
   cout << "done" << endl;
