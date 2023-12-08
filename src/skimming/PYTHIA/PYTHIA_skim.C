@@ -75,7 +75,7 @@ void PYTHIA_skim(int group = 0,
   my_evt_tree->Branch("evt",&evt);
   my_evt_tree->Branch("vz",&vz);
 
-  // ----- HLT variables
+  pp// ----- HLT variables
   Int_t HLT_HIL3Mu5_NHitQ10_v1, HLT_HIL3Mu7_v1, HLT_HIL3Mu12_v1;
   Int_t HLT_HIL3Mu5_NHitQ10_v1_Prescl, HLT_HIL3Mu7_v1_Prescl, HLT_HIL3Mu12_v1_Prescl;
   my_hlt_tree->Branch("HLT_HIL3Mu5_NHitQ10_v1",&HLT_HIL3Mu5_NHitQ10_v1);
@@ -142,7 +142,7 @@ void PYTHIA_skim(int group = 0,
   // -- tree variables
   // ----- filter variables 
   Int_t t_pPAprimaryVertexFilter[1], 
-    t_HBHENoiseFilterResultRun2Loose[1], 
+    t_HBHENoiseFilterResultRun2Loose[1];
     
   // ----- event variables
   Int_t t_hiBin[1];
@@ -166,13 +166,9 @@ void PYTHIA_skim(int group = 0,
   vector<Float_t> *t_pt=0, *t_eta=0, *t_phi=0;
   vector<Int_t> *t_chg=0, *t_pdg=0;
   Int_t t_n[1];
-
-
-
   
-  //int endfile = 7176;
-  
-  int endfile = 6033;
+
+  int endfile = 1193;
   while(instr>>filename && ifile<endfile){
     
     
@@ -272,7 +268,7 @@ void PYTHIA_skim(int group = 0,
 
       // --- event-filter cuts
       if(pPAprimaryVertexFilter         == 0 || 
-         HBHENoiseFilterResultRun2Loose == 0 || 
+         HBHENoiseFilterResultRun2Loose == 0
 	 ) continue;
       
       hiBin = t_hiBin[0];
