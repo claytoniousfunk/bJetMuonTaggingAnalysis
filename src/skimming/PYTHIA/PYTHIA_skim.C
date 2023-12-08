@@ -33,7 +33,7 @@ void PYTHIA_skim(int group = 0,
   string in_file_name;
   string output_file_base = "./";
   in_file_name = "fileNames/fileNames_PYTHIA_DiJet.txt";
-  output_file_base += Form("output/PYTHIA_skim_output_%i",startgroup) ;
+  output_file_base += Form("output/PYTHIA_skim_output_%i",group) ;
   cout << "trying a file list named " << in_file_name << endl;
   string output_file_extension = "";
   output_file_extension += ".root";
