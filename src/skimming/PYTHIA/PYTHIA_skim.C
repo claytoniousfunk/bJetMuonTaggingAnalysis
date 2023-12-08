@@ -120,13 +120,14 @@ void PYTHIA_skim(int group = 0,
   my_muon_tree->Branch("muCharge",&muCharge);
   my_muon_evt_tree->Branch("nMu",&nMu);
 
-  // ----- gen-particle variables (only gen muons from forest, not saving pdg because of unknown crashes)
+  // ----- gen-particle variables
   Float_t pt, eta, phi;
   Int_t chg, pdg, n;
   my_gen_particle_tree->Branch("pt",&pt);
   my_gen_particle_tree->Branch("eta",&eta);
   my_gen_particle_tree->Branch("phi",&phi);
   my_gen_particle_tree->Branch("chg",&chg);
+  my_gen_particle_tree->Branch("pdg",&pdg);
   my_gen_particle_evt_tree->Branch("n",&n);
   
   
@@ -161,7 +162,7 @@ void PYTHIA_skim(int group = 0,
   Int_t t_nMu[1];
   // ----- gen-particle variables
   vector<Float_t> *t_pt=0, *t_eta=0, *t_phi=0;
-  vector<Int_t> *t_chg=0;
+  vector<Int_t> *t_chg=0, *t_pdg=0;
   Int_t t_n[1];
   
 
@@ -249,6 +250,7 @@ void PYTHIA_skim(int group = 0,
     gen_particle_tree->SetBranchAddress("eta",&t_eta);
     gen_particle_tree->SetBranchAddress("phi",&t_phi);
     gen_particle_tree->SetBranchAddress("chg",&t_chg);
+    gen_particle_tree->SetBranchAddress("pdg",&t_pdg);
     gen_particle_tree->SetBranchAddress("n",t_n);    
 
     int n_evt = evt_tree->GetEntriesFast();
@@ -358,6 +360,7 @@ void PYTHIA_skim(int group = 0,
 	eta = t_eta->at(geni);
 	phi = t_phi->at(geni);
 	chg = t_chg->at(geni);
+	pdg = t_pdg->at(geni);
 
 	// fill the tree
 	my_gen_particle_tree->Fill();
