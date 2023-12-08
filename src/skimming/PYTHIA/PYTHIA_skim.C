@@ -347,6 +347,8 @@ void PYTHIA_skim(int group = 0,
 
 
       int n_prime = 0;
+
+      cout << "t_n = " << t_n[0] << endl;
       
       // // start gen-particle loop
       // for(int geni = 0; geni < t_n[0]; geni++){
