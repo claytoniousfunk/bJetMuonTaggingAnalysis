@@ -350,20 +350,20 @@ void PYTHIA_skim(int group = 0,
 
       cout << "t_n = " << t_n[0] << endl;
       
-      // // start gen-particle loop
-      // for(int geni = 0; geni < t_n[0]; geni++){
+      // start gen-particle loop
+      for(int geni = 0; geni < t_n[0]; geni++){
 
-      // 	pt = t_pt->at(geni);
-      // 	eta = t_eta->at(geni);
-      // 	phi = t_phi->at(geni);
-      // 	chg = t_chg->at(geni);
-      // 	pdg = t_pdg->at(geni);
+	pt = t_pt->at(geni);
+	eta = t_eta->at(geni);
+	phi = t_phi->at(geni);
+	chg = t_chg->at(geni);
+	pdg = t_pdg->at(geni);
 
-      // 	// fill the tree
-      // 	my_gen_particle_tree->Fill();
-      // 	n_prime++;
+	// fill the tree
+	my_gen_particle_tree->Fill();
+	n_prime++;
 
-      // }
+      }
 
       n = n_prime;
       
