@@ -289,12 +289,8 @@ void PYTHIA_skim(int group = 0,
       HLT_HIL3Mu5_NHitQ10_v1_Prescl = t_HLT_HIL3Mu5_NHitQ10_v1_Prescl[0];
       HLT_HIL3Mu7_v1_Prescl = t_HLT_HIL3Mu7_v1_Prescl[0];
       HLT_HIL3Mu12_v1_Prescl = t_HLT_HIL3Mu12_v1_Prescl[0];
-      
-      // if all muon-triggers are off, dismiss event
-      if(HLT_HIL3Mu5_NHitQ10_v1 == 0 &&
-	 HLT_HIL3Mu7_v1 == 0 &&
-	 HLT_HIL3Mu12_v1 == 0) continue;
 
+      
       int nref_prime = 0; // counter variable for nref
 
       // start jet loop
