@@ -241,11 +241,11 @@ void PYTHIA_skim(int group = 0,
     muon_tree->SetBranchAddress("muCharge",&t_muCharge);
     muon_tree->SetBranchAddress("nMu",t_nMu);
     // ----- gen-particle variables
-    gen_particle_tree->SetBranchAddress("pt",t_pt);
-    gen_particle_tree->SetBranchAddress("eta",t_eta);
-    gen_particle_tree->SetBranchAddress("phi",t_phi);
-    gen_particle_tree->SetBranchAddress("chg",t_chg);
-    gen_particle_tree->SetBranchAddress("pdg",t_pdg);
+    gen_particle_tree->SetBranchAddress("pt",&t_pt);
+    gen_particle_tree->SetBranchAddress("eta",&t_eta);
+    gen_particle_tree->SetBranchAddress("phi",&t_phi);
+    gen_particle_tree->SetBranchAddress("chg",&t_chg);
+    gen_particle_tree->SetBranchAddress("pdg",&t_pdg);
     gen_particle_tree->SetBranchAddress("n",t_n);    
 
     int n_evt = evt_tree->GetEntriesFast();
