@@ -177,6 +177,16 @@ void PYTHIA_skim(int group = 0,
     cout << (100.)*(1.0*ifile / (1.0*endfile)) << " %" << endl;
 
     TFile *my_file = TFile::Open(filename.c_str());
+
+    if(!my_file){ 
+      cout << "File cannot be found!!" << endl; 
+      continue; 
+    }	
+
+    if(my_file->IsZombie()) { 
+      cout << "Is zombie" << endl;
+      continue;
+    }
     
     filter_tree            = (TTree*) my_file->Get("skimanalysis/HltTree");
     evt_tree               = (TTree*) my_file->Get("hiEvtAnalyzer/HiTree");
