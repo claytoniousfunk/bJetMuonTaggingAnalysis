@@ -75,7 +75,7 @@ void PYTHIA_skim(int group = 0,
   my_evt_tree->Branch("evt",&evt);
   my_evt_tree->Branch("vz",&vz);
 
-  pp// ----- HLT variables
+  // ----- HLT variables
   Int_t HLT_HIL3Mu5_NHitQ10_v1, HLT_HIL3Mu7_v1, HLT_HIL3Mu12_v1;
   Int_t HLT_HIL3Mu5_NHitQ10_v1_Prescl, HLT_HIL3Mu7_v1_Prescl, HLT_HIL3Mu12_v1_Prescl;
   my_hlt_tree->Branch("HLT_HIL3Mu5_NHitQ10_v1",&HLT_HIL3Mu5_NHitQ10_v1);
