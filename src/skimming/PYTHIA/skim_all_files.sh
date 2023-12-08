@@ -23,7 +23,7 @@ do
 	let ENDGROUP=1193
     fi
 
-    root -l -q "pp_skim.C($i,$STARTGROUP,$ENDGROUP)"
+    root -l -q "PYTHIA_skim.C($i,$STARTGROUP,$ENDGROUP)"
 
 done
 
