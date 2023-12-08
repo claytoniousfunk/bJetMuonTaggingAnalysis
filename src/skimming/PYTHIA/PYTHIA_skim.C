@@ -254,6 +254,8 @@ void PYTHIA_skim(int group = 0,
 
     for(int evi = 0; evi < n_evt; evi++){
 
+      cout << "event " << evi << endl;
+
       filter_tree->GetEntry(evi);
       evt_tree->GetEntry(evi);
       hlt_tree->GetEntry(evi);
