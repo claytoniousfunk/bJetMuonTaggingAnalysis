@@ -28,6 +28,8 @@ void PYTHIA_skim(int group = 0,
 		 int startgroup = 0,
 		 int endgroup = 20){
 
+  TFile *my_file;
+
   TTree *jet_tree, *jet_evt_tree, *muon_tree, *muon_evt_tree, *hlt_tree, *evt_tree, *filter_tree, *gen_particle_tree, *gen_particle_evt_tree;
   string in_file_name;
   string output_file_base = "./";
@@ -176,7 +178,7 @@ void PYTHIA_skim(int group = 0,
 
     cout << (100.)*(1.0*ifile / (1.0*endfile)) << " %" << endl;
 
-    TFile *my_file = TFile::Open(filename.c_str());
+    my_file = TFile::Open(filename.c_str());
 
     if(!my_file){ 
       cout << "File cannot be found!!" << endl; 
