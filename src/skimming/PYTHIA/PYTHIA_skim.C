@@ -279,7 +279,7 @@ void PYTHIA_skim(int group = 0,
       vz = t_vz[0];
 
       // --- event cuts
-      if(fabs(vz) > 15.0 || hiHF > 5500) continue;
+      if(fabs(vz) > 15.0) continue;
 
       HLT_HIL3Mu5_NHitQ10_v1 = t_HLT_HIL3Mu5_NHitQ10_v1[0];
       HLT_HIL3Mu7_v1 = t_HLT_HIL3Mu7_v1[0];
