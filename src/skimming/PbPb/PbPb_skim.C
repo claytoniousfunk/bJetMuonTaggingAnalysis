@@ -24,18 +24,20 @@
 
 using namespace std;
 
-void PbPb_skim(){
+void PbPb_skim(int group = 0){
 
   TTree *jet_tree, *jet_evt_tree, *muon_tree, *muon_evt_tree, *hlt_tree, *evt_tree, *filter_tree;
   string in_file_name;
-
-  in_file_name = "fileNames_PbPb_SingleMuon_3Oct23.txt";
+  string output_file_base = "./";
+  
+  
+  in_file_name = Form("fileNames/fileNames_PbPb_SingleMuon_3Oct23_%i.txt",group);
+  output_file_base += Form("output/PbPb_skim_output_%i",group) ;
+  
 
   cout << "trying a file list named " << in_file_name << endl;
 
-  string output_file_base = "./";
-
-  output_file_base += "PbPb_skim_output" ;
+  
   
   string output_file_extension = "";
   output_file_extension += ".root";
@@ -51,7 +53,7 @@ void PbPb_skim(){
 
   
   // ----- filter variables 
-  int pprimaryVertexFilter,
+  Int_t pprimaryVertexFilter,
     HBHENoiseFilterResultRun2Loose,
     collisionEventSelectionAODv2,
     phfCoincFilter3Th4,
@@ -63,8 +65,8 @@ void PbPb_skim(){
   my_filter_tree->Branch("pclusterCompatibilityFilter",&pclusterCompatibilityFilter);
 
   // ----- event variables
-  int hiBin, run, lumi, evt;
-  float vz, hiHF;
+  Int_t hiBin, run, lumi, evt;
+  Float_t vz, hiHF;
   my_evt_tree->Branch("hiBin",&hiBin);
   my_evt_tree->Branch("hiHF",&hiHF);
   my_evt_tree->Branch("run",&run);
@@ -83,11 +85,13 @@ void PbPb_skim(){
   my_hlt_tree->Branch("HLT_HIL3Mu12_v1_Prescl",&HLT_HIL3Mu12_v1_Prescl);
 
   // ----- jet variables
-  Float_t jtpt, jteta, jtphi;
+  Float_t jtpt, rawpt, jteta, jtphi, trackMax;
   Int_t nref;
   my_jet_tree->Branch("jtpt",&jtpt);
+  my_jet_tree->Branch("rawpt",&rawpt);
   my_jet_tree->Branch("jteta",&jteta);
   my_jet_tree->Branch("jtphi",&jtphi);
+  my_jet_tree->Branch("trackMax",&trackMax);
   my_jet_evt_tree->Branch("nref",&nref);
 
   // ----- muon variables
@@ -134,8 +138,8 @@ void PbPb_skim(){
   Int_t t_HLT_HIL3Mu5_NHitQ10_v1[1], t_HLT_HIL3Mu7_NHitQ10_v1[1], t_HLT_HIL3Mu12_v1[1];
   Int_t t_HLT_HIL3Mu5_NHitQ10_v1_Prescl[1], t_HLT_HIL3Mu7_NHitQ10_v1_Prescl[1], t_HLT_HIL3Mu12_v1_Prescl[1];
   // ----- jet variables
-  const int MAXJETS = 500;
-  Float_t t_jtpt[MAXJETS], t_jteta[MAXJETS], t_jtphi[MAXJETS];
+  const int MAXJETS = 1000;
+  Float_t t_jtpt[MAXJETS], t_rawpt[MAXJETS], t_jteta[MAXJETS], t_jtphi[MAXJETS], t_trackMax[MAXJETS];
   Int_t t_nref[1];
   // ----- muon variables
   vector<float> *t_muPt=0, *t_muEta=0, *t_muPhi=0;
@@ -143,7 +147,9 @@ void PbPb_skim(){
   vector<Int_t> *t_muIsPF=0, *t_muIsGlobal=0, *t_muIsTracker=0, *t_muMuonHits=0, *t_muStations=0, *t_muTrkLayers=0, *t_muPixelHits=0, *t_muCharge=0;
   Int_t t_nMu[1];
   
-  int endfile = 7176;
+  //int endfile = 7176;
+  int startfile = 0;
+  int endfile = 100;
   while(instr>>filename && ifile<endfile){
     
     //cout << "Filename is " << filename << endl;
@@ -185,9 +191,11 @@ void PbPb_skim(){
     hlt_tree->SetBranchAddress("HLT_HIL3Mu12_v1_Prescl",t_HLT_HIL3Mu12_v1_Prescl);
     // ----- jet variables
     jet_tree->SetBranchAddress("jtpt",t_jtpt);
+    jet_tree->SetBranchAddress("rawpt",t_rawpt);
     jet_tree->SetBranchAddress("jteta",t_jteta);
     jet_tree->SetBranchAddress("jtphi",t_jtphi);
-    jet_evt_tree->SetBranchAddress("nref",t_nref);
+    jet_tree->SetBranchAddress("trackMax",t_trackMax);
+    jet_tree->SetBranchAddress("nref",t_nref);
     // ----- muon variables
     muon_tree->SetBranchAddress("muPt",&t_muPt);
     muon_tree->SetBranchAddress("muEta",&t_muEta);
@@ -203,11 +211,9 @@ void PbPb_skim(){
     muon_tree->SetBranchAddress("muTrkLayers",&t_muTrkLayers);
     muon_tree->SetBranchAddress("muPixelHits",&t_muPixelHits);
     muon_tree->SetBranchAddress("muCharge",&t_muCharge);
-    muon_evt_tree->SetBranchAddress("nMu",&t_nMu);
+    muon_tree->SetBranchAddress("nMu",t_nMu);
 
-
-
-    int n_evt = jet_tree->GetEntriesFast();
+    int n_evt = evt_tree->GetEntriesFast();
 
     //cout << "Entries: " << n_evt << endl;
 
@@ -221,8 +227,6 @@ void PbPb_skim(){
       muon_tree->GetEntry(evi);
       muon_evt_tree->GetEntry(evi);
       
-
-
       pprimaryVertexFilter = t_pprimaryVertexFilter[0];
       HBHENoiseFilterResultRun2Loose = t_HBHENoiseFilterResultRun2Loose[0];
       collisionEventSelectionAODv2 = t_collisionEventSelectionAODv2[0];
@@ -237,7 +241,6 @@ void PbPb_skim(){
 	 pclusterCompatibilityFilter    == 0
 	 ) continue;
       
-
       hiBin = t_hiBin[0];
       hiHF = t_hiHF[0];
       run = t_run[0];
@@ -246,7 +249,7 @@ void PbPb_skim(){
       vz = t_vz[0];
 
       // --- event cuts
-      if(hiBin > 180 || fabs(vz) > 15.0 || hiHF > 5000) continue;
+      if(hiBin > 180 || fabs(vz) > 15.0 || hiHF > 5500) continue;
 
       HLT_HIL3Mu5_NHitQ10_v1 = t_HLT_HIL3Mu5_NHitQ10_v1[0];
       HLT_HIL3Mu7_NHitQ10_v1 = t_HLT_HIL3Mu7_NHitQ10_v1[0];
@@ -254,29 +257,21 @@ void PbPb_skim(){
       HLT_HIL3Mu5_NHitQ10_v1_Prescl = t_HLT_HIL3Mu5_NHitQ10_v1_Prescl[0];
       HLT_HIL3Mu7_NHitQ10_v1_Prescl = t_HLT_HIL3Mu7_NHitQ10_v1_Prescl[0];
       HLT_HIL3Mu12_v1_Prescl = t_HLT_HIL3Mu12_v1_Prescl[0];
-
-      //cout << "HLT_HIL3Mu12_v1 = " << HLT_HIL3Mu12_v1 << endl;
       
+      // if all muon-triggers are off, dismiss event
+      if(HLT_HIL3Mu5_NHitQ10_v1 == 0 &&
+	 HLT_HIL3Mu7_NHitQ10_v1 == 0 &&
+	 HLT_HIL3Mu12_v1 == 0) continue;
 
-      
-
-      my_filter_tree->Fill();
-      my_evt_tree->Fill();
-      my_hlt_tree->Fill();
-
-
-      
       int nref_prime = 0; // counter variable for nref
       
       for(int jeti = 0; jeti < t_nref[0]; jeti++){
 
-	if(fabs(t_jteta[jeti]) > 1.6 || t_jtpt[jeti] < 50.) continue;
-
 	jtpt = t_jtpt[jeti];
+	rawpt = t_rawpt[jeti];
 	jteta = t_jteta[jeti];
 	jtphi = t_jtphi[jeti];
-	
-
+	trackMax = t_trackMax[jeti];
 
 	// fill the tree
 	my_jet_tree->Fill();
@@ -285,16 +280,10 @@ void PbPb_skim(){
       } // end jet loop
 
       nref = nref_prime;
-      my_jet_evt_tree->Fill();
-
-
-
       
       int nMu_prime = 0;
       
       for(int mui = 0; mui < t_nMu[0]; mui++){
-
-	if(t_muPt->at(mui) < 5.0 || fabs(t_muEta->at(mui)) > 2.0) continue;
 
 	muPt = t_muPt->at(mui);
 	muEta = t_muEta->at(mui);
@@ -318,8 +307,16 @@ void PbPb_skim(){
       } // end muon loop
 
       nMu = nMu_prime;
-      my_muon_evt_tree->Fill();
       
+      
+      // fill event trees
+      my_muon_evt_tree->Fill();
+      my_jet_evt_tree->Fill();
+      my_filter_tree->Fill();
+      my_evt_tree->Fill();
+      my_hlt_tree->Fill();
+
+
     } // end event loop
 
     my_file->Close();
