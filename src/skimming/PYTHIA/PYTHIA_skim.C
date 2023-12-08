@@ -29,7 +29,11 @@ void PYTHIA_skim(int group = 0,
 		 int endgroup = 20){
 
   TFile *my_file;
+  TFile *output_file = new TFile((TString) (output_file_base+output_file_extension), "RECREATE");
 
+
+
+  
   TTree *jet_tree, *jet_evt_tree, *muon_tree, *muon_evt_tree, *hlt_tree, *evt_tree, *filter_tree, *gen_particle_tree, *gen_particle_evt_tree;
   string in_file_name;
   string output_file_base = "./";
@@ -48,7 +52,7 @@ void PYTHIA_skim(int group = 0,
   string output_file_extension = "";
   output_file_extension += ".root";
 
-  TFile *output_file = new TFile((TString) (output_file_base+output_file_extension), "RECREATE");
+
   TTree *my_filter_tree = new TTree("filterTree","");
   TTree *my_evt_tree = new TTree("evtTree","");
   TTree *my_hlt_tree = new TTree("hltTree","");
