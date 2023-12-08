@@ -261,7 +261,7 @@ void PYTHIA_skim(int group = 0,
 
     for(int evi = 0; evi < n_evt; evi++){
 
-      cout << "event " << evi << endl;
+      //cout << "event " << evi << endl;
 
       filter_tree->GetEntry(evi);
       evt_tree->GetEntry(evi);
@@ -353,7 +353,7 @@ void PYTHIA_skim(int group = 0,
 
       int n_prime = 0;
 
-      cout << "t_n = " << t_n[0] << endl;
+      //cout << "t_n = " << t_n[0] << endl;
       
       // start gen-particle loop
       for(int geni = 0; geni < t_n[0]; geni++){
