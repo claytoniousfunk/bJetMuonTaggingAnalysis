@@ -30,25 +30,16 @@ void PYTHIA_skim(int group = 0,
 
   TFile *my_file;
 
+  string in_file_name;
+  string output_file_base = "./";
   in_file_name = "fileNames/fileNames_PYTHIA_DiJet.txt";
   output_file_base += Form("output/PYTHIA_skim_output_%i",startgroup) ;
   cout << "trying a file list named " << in_file_name << endl;
   string output_file_extension = "";
   output_file_extension += ".root";
   TFile *output_file = new TFile((TString) (output_file_base+output_file_extension), "RECREATE");
-
-
-
   
   TTree *jet_tree, *jet_evt_tree, *muon_tree, *muon_evt_tree, *hlt_tree, *evt_tree, *filter_tree, *gen_particle_tree, *gen_particle_evt_tree;
-  string in_file_name;
-  string output_file_base = "./";
- 
-
-  
-  
-  
-
 
   TTree *my_filter_tree = new TTree("filterTree","");
   TTree *my_evt_tree = new TTree("evtTree","");
