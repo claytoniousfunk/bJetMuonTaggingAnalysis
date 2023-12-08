@@ -29,6 +29,12 @@ void PYTHIA_skim(int group = 0,
 		 int endgroup = 20){
 
   TFile *my_file;
+
+  in_file_name = "fileNames/fileNames_PYTHIA_DiJet.txt";
+  output_file_base += Form("output/PYTHIA_skim_output_%i",startgroup) ;
+  cout << "trying a file list named " << in_file_name << endl;
+  string output_file_extension = "";
+  output_file_extension += ".root";
   TFile *output_file = new TFile((TString) (output_file_base+output_file_extension), "RECREATE");
 
 
@@ -41,16 +47,7 @@ void PYTHIA_skim(int group = 0,
 
   
   
-  in_file_name = "fileNames/fileNames_PYTHIA_DiJet.txt";
-  output_file_base += Form("output/PYTHIA_skim_output_%i",startgroup) ;
   
-
-  cout << "trying a file list named " << in_file_name << endl;
-
-  
-  
-  string output_file_extension = "";
-  output_file_extension += ".root";
 
 
   TTree *my_filter_tree = new TTree("filterTree","");
