@@ -75,8 +75,8 @@ void PYTHIAHYDJET_skim(int group = 0,
   my_evt_tree->Branch("vz",&vz);
 
   // ----- HLT variables
-  Int_t HLT_HIL3Mu5_NHitQ10_v1, HLT_HIL3Mu7_v1, HLT_HIL3Mu12_v1,
-    HLT_HIL3Mu5_NHitQ10_v1_Prescl, HLT_HIL3Mu7_v1_Prescl, HLT_HIL3Mu12_v1_Prescl;
+  Int_t HLT_HIL3Mu5_NHitQ10_v1, HLT_HIL3Mu7_NHitQ10_v1, HLT_HIL3Mu12_v1,
+    HLT_HIL3Mu5_NHitQ10_v1_Prescl, HLT_HIL3Mu7_NHitQ10_v1_Prescl, HLT_HIL3Mu12_v1_Prescl;
   my_hlt_tree->Branch("HLT_HIL3Mu5_NHitQ10_v1",&HLT_HIL3Mu5_NHitQ10_v1);
   my_hlt_tree->Branch("HLT_HIL3Mu7_NHitQ10_v1",&HLT_HIL3Mu7_NHitQ10_v1);
   my_hlt_tree->Branch("HLT_HIL3Mu12_v1",&HLT_HIL3Mu12_v1);
@@ -152,8 +152,8 @@ void PYTHIAHYDJET_skim(int group = 0,
   Float_t t_hiHF[1];
   Float_t t_vz[1];
   // ----- HLT variables
-  Int_t t_HLT_HIL3Mu5_NHitQ10_v1[1], t_HLT_HIL3Mu7_v1[1], t_HLT_HIL3Mu12_v1[1];
-  Int_t t_HLT_HIL3Mu5_NHitQ10_v1_Prescl[1], t_HLT_HIL3Mu7_v1_Prescl[1], t_HLT_HIL3Mu12_v1_Prescl[1];
+  Int_t t_HLT_HIL3Mu5_NHitQ10_v1[1], t_HLT_HIL3Mu7_NHitQ10_v1[1], t_HLT_HIL3Mu12_v1[1];
+  Int_t t_HLT_HIL3Mu5_NHitQ10_v1_Prescl[1], t_HLT_HIL3Mu7_NHitQ10_v1_Prescl[1], t_HLT_HIL3Mu12_v1_Prescl[1];
   // ----- jet variables
   const int MAXJETS = 1000;
   Float_t t_jtpt[MAXJETS], t_rawpt[MAXJETS], t_jteta[MAXJETS], t_jtphi[MAXJETS], t_trackMax[MAXJETS], t_genpt[MAXJETS], t_geneta[MAXJETS], t_genphi[MAXJETS];
