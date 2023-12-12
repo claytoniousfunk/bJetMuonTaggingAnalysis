@@ -24,14 +24,16 @@
 
 using namespace std;
 
-void PbPb_skim(int group = 0){
+void PbPb_skim(int group = 0,
+	       int startgroup = 0,
+	       int endgroup = 20){
 
   TTree *jet_tree, *jet_evt_tree, *muon_tree, *muon_evt_tree, *hlt_tree, *evt_tree, *filter_tree;
   string in_file_name;
   string output_file_base = "./";
   
   
-  in_file_name = Form("fileNames/fileNames_PbPb_SingleMuon_3Oct23_%i.txt",group);
+  in_file_name = "fileNames/fileNames_PbPb_SingleMuon_3Oct23_%i.txt";
   output_file_base += Form("output/PbPb_skim_output_%i",group) ;
   
 
@@ -147,14 +149,15 @@ void PbPb_skim(int group = 0){
   vector<Int_t> *t_muIsPF=0, *t_muIsGlobal=0, *t_muIsTracker=0, *t_muMuonHits=0, *t_muStations=0, *t_muTrkLayers=0, *t_muPixelHits=0, *t_muCharge=0;
   Int_t t_nMu[1];
   
-  //int endfile = 7176;
-  int startfile = 0;
-  int endfile = 100;
+  int endfile = 7176;
+    
   while(instr>>filename && ifile<endfile){
     
     //cout << "Filename is " << filename << endl;
     ifile++;
 
+    if(ifile < startgroup || ifile > endgroup) continue;
+    
     cout << (100.)*(1.0*ifile / (1.0*endfile)) << " %" << endl;
 
     TFile *my_file = TFile::Open(filename.c_str());
