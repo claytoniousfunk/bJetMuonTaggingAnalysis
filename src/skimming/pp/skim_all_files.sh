@@ -4,7 +4,7 @@ STARTGROUP=0
 ENDGROUP=0
 j=0
 
-for i in {208..302}
+for i in {1..302}
 
 do
     
