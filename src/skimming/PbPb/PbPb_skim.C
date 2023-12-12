@@ -33,7 +33,7 @@ void PbPb_skim(int group = 0,
   string output_file_base = "./";
   
   
-  in_file_name = "fileNames/fileNames_PbPb_SingleMuon_3Oct23_%i.txt";
+  in_file_name = "fileNames/fileNames_PbPb_SingleMuon_3Oct23.txt";
   output_file_base += Form("output/PbPb_skim_output_%i",group) ;
   
 
