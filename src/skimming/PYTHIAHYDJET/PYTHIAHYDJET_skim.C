@@ -169,7 +169,7 @@ void PYTHIAHYDJET_skim(int group = 0,
 
   
 
-  int endfile = 1193;
+  int endfile = 7202;
   while(instr>>filename && ifile<endfile){
 
     //cout << "Filename is " << filename << endl;
@@ -191,15 +191,15 @@ void PYTHIAHYDJET_skim(int group = 0,
       continue;
     }
     
-    filter_tree            = (TTree*) my_file->Get("skimanalysis/HltTree");
-    evt_tree               = (TTree*) my_file->Get("hiEvtAnalyzer/HiTree");
-    hlt_tree               = (TTree*) my_file->Get("hltanalysis/HltTree");
-    jet_tree               = (TTree*) my_file->Get("akCs4PFJetAnalyzer/t");
-    jet_evt_tree           = (TTree*) my_file->Get("akCs4PFJetAnalyzer/t");
-    muon_tree              = (TTree*) my_file->Get("ggHiNtuplizerGED/EventTree");
-    muon_evt_tree          = (TTree*) my_file->Get("ggHiNtuplizerGED/EventTree");
-    gen_particle_tree      = (TTree*) my_file->Get("HiGenParticleAna/hi");
-    gen_particle_evt_tree  = (TTree*) my_file->Get("HiGenParticleAna/hi");
+    filter_tree           = (TTree*) my_file->Get("skimanalysis/HltTree");
+    evt_tree              = (TTree*) my_file->Get("hiEvtAnalyzer/HiTree");
+    hlt_tree              = (TTree*) my_file->Get("hltanalysis/HltTree");
+    jet_tree              = (TTree*) my_file->Get("akCs4PFJetAnalyzer/t");
+    jet_evt_tree          = (TTree*) my_file->Get("akCs4PFJetAnalyzer/t");
+    muon_tree             = (TTree*) my_file->Get("ggHiNtuplizerGED/EventTree");
+    muon_evt_tree         = (TTree*) my_file->Get("ggHiNtuplizerGED/EventTree");
+    gen_particle_tree     = (TTree*) my_file->Get("HiGenParticleAna/hi");
+    gen_particle_evt_tree = (TTree*) my_file->Get("HiGenParticleAna/hi");
 
     //cout << "trees loaded" << endl;
 
