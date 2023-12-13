@@ -1,0 +1,75 @@
+#+title: Analysis workflow
+
+* Abstract
+
+* Introduction
+
+* The CMS Detector
+
+* Trigger, Event Selection, and Centrality Determination
+
+** Primary Datasets and Triggers
+
+** Event Selection
+
+** Centrality Determination
+
+* Monte Carlo Simulations
+
+* Jet Reconstruction and Selection
+
+** Jet Reconstruction Algorithm
+
+** Jet Energy Scale Corrections
+
+** Jet Selections and Kinematics
+
+* Muon Reconstruction
+
+**  Muon Quality Cuts
+
+* b-jet Identification
+
+** Muon pTrel Template Shapes
+
+** Template Enhancement
+
+** Correction Factors
+
+* Unfolding
+
+* Closure Tests
+
+* Systematic Uncertainties
+
+* Results
+
+* Vz Reweight Plots
+
+* Jet Spectra Plots
+
+* Muon Spectra Plots
+
+* Jet Energy Resolution and Scale Plots
+
+* Muon pTrel Template Shapes
+
+* Template Enhancement Plots
+
+* Response Matrix Plots
+
+* Systematic Uncertainties Plots
+
+** c-fraction Variation
+
+** Fit Lower-bound
+
+** c-jet Template Enhancement
+
+** b-jet Template Enhancement
+
+** Jet Energy Resolution
+
+* Muon pTrel Template Fit Plots
+
+* Plots Used to Derive the pThat-filter Function
