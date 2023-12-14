@@ -124,6 +124,7 @@ void PYTHIA_skim(int group = 0,
   my_gen_particle_tree->Branch("phi",&phi);
   my_gen_particle_tree->Branch("chg",&chg);
   my_gen_particle_tree->Branch("pdg",&pdg);
+  my_gen_particle_evt_tree->Branch("n",&n);
  
   
   
@@ -160,7 +161,7 @@ void PYTHIA_skim(int group = 0,
   // ----- gen-particle variables
   vector<Float_t> *t_pt=0, *t_eta=0, *t_phi=0;
   vector<Int_t> *t_chg=0, *t_pdg=0;
-
+  Int_t t_n[1];
   
 
   int endfile = 1193;
@@ -249,6 +250,7 @@ void PYTHIA_skim(int group = 0,
     gen_particle_tree->SetBranchAddress("eta",&t_eta);
     gen_particle_tree->SetBranchAddress("phi",&t_phi);
     gen_particle_tree->SetBranchAddress("chg",&t_chg);
+    gen_particle_tree->SetBranchAddress("n",&t_n);
     //gen_particle_tree->SetBranchAddress("pdg",&t_pdg);
 
 
@@ -352,7 +354,7 @@ void PYTHIA_skim(int group = 0,
       int n_prime = 0;
       
       // start gen-particle loop
-      for(int geni = 0; geni < t_pt->size(); geni++){
+      for(int geni = 0; geni < t_n[0]; geni++){
 
 	pt  = t_pt->at(geni);
 	eta = t_eta->at(geni);
