@@ -61,13 +61,15 @@ void PYTHIA_skim(int group = 0,
 
   // ----- event variables
   Int_t hiBin, run, lumi, evt;
-  Float_t vz, hiHF;
+  Float_t vz, hiHF, pthat, weight;
   my_evt_tree->Branch("hiBin",&hiBin);
   my_evt_tree->Branch("hiHF",&hiHF);
   my_evt_tree->Branch("run",&run);
   my_evt_tree->Branch("lumi",&lumi);
   my_evt_tree->Branch("evt",&evt);
   my_evt_tree->Branch("vz",&vz);
+  my_evt_tree->Branch("pthat",&pthat);
+  my_evt_tree->Branch("weight",&weight);
 
   // ----- HLT variables
   Int_t HLT_HIL3Mu5_NHitQ10_v1, HLT_HIL3Mu7_v1, HLT_HIL3Mu12_v1,
@@ -140,8 +142,9 @@ void PYTHIA_skim(int group = 0,
   Int_t t_hiBin[1];
   UInt_t t_run[1], t_lumi[1];
   ULong64_t t_evt[1];
-  Float_t t_hiHF[1];
-  Float_t t_vz[1];
+  Float_t t_vz[1], t_hiHF[1], t_pthat[1], t_weight[1];
+  
+  
   // ----- HLT variables
   Int_t t_HLT_HIL3Mu5_NHitQ10_v1[1], t_HLT_HIL3Mu7_v1[1], t_HLT_HIL3Mu12_v1[1];
   Int_t t_HLT_HIL3Mu5_NHitQ10_v1_Prescl[1], t_HLT_HIL3Mu7_v1_Prescl[1], t_HLT_HIL3Mu12_v1_Prescl[1];
@@ -204,6 +207,8 @@ void PYTHIA_skim(int group = 0,
     evt_tree->SetBranchAddress("lumi",t_lumi);
     evt_tree->SetBranchAddress("evt",t_evt);
     evt_tree->SetBranchAddress("vz",t_vz);
+    evt_tree->SetBranchAddress("pthat",t_pthat);
+    evt_tree->SetBranchAddress("weight",t_weight);
     // ----- HLT variables
     hlt_tree->SetBranchAddress("HLT_HIL3Mu5_NHitQ10_v1",t_HLT_HIL3Mu5_NHitQ10_v1);
     hlt_tree->SetBranchAddress("HLT_HIL3Mu7_v1",t_HLT_HIL3Mu7_v1);
@@ -278,6 +283,8 @@ void PYTHIA_skim(int group = 0,
       lumi = t_lumi[0];
       evt = t_evt[0];
       vz = t_vz[0];
+      pthat = t_pthat[0];
+      weight = t_weight[0];
 
       // --- event cuts
       if(fabs(vz) > 15.0) continue;
@@ -295,16 +302,16 @@ void PYTHIA_skim(int group = 0,
       // start jet loop
       for(int jeti = 0; jeti < t_nref[0]; jeti++){
 
-	jtpt = t_jtpt[jeti];
-	rawpt = t_rawpt[jeti];
-	jteta = t_jteta[jeti];
-	jtphi = t_jtphi[jeti];
-	trackMax = t_trackMax[jeti];
+	jtpt           = t_jtpt[jeti];
+	rawpt          = t_rawpt[jeti];
+	jteta          = t_jteta[jeti];
+	jtphi          = t_jtphi[jeti];
+	trackMax       = t_trackMax[jeti];
 	jtPartonFlavor = t_jtPartonFlavor[jeti];
 	jtHadronFlavor = t_jtHadronFlavor[jeti];
-	genpt = t_genpt[jeti];
-	geneta = t_geneta[jeti];
-	genphi = t_genphi[jeti];
+	genpt          = t_genpt[jeti];
+	geneta         = t_geneta[jeti];
+	genphi         = t_genphi[jeti];
 	
 	// fill the tree
 	my_jet_tree->Fill();
@@ -319,20 +326,20 @@ void PYTHIA_skim(int group = 0,
       // start muon loop
       for(int mui = 0; mui < t_nMu[0]; mui++){
 
-	muPt = t_muPt->at(mui);
-	muEta = t_muEta->at(mui);
-	muPhi = t_muPhi->at(mui);
-	muChi2NDF = t_muChi2NDF->at(mui);
-	muInnerD0 = t_muInnerD0->at(mui);
-	muInnerDz = t_muInnerDz->at(mui);
-	muIsPF = t_muIsPF->at(mui);
-	muIsGlobal = t_muIsGlobal->at(mui);
+	muPt        = t_muPt->at(mui);
+	muEta       = t_muEta->at(mui);
+	muPhi       = t_muPhi->at(mui);
+	muChi2NDF   = t_muChi2NDF->at(mui);
+	muInnerD0   = t_muInnerD0->at(mui);
+	muInnerDz   = t_muInnerDz->at(mui);
+	muIsPF      = t_muIsPF->at(mui);
+	muIsGlobal  = t_muIsGlobal->at(mui);
 	muIsTracker = t_muIsTracker->at(mui);
-	muMuonHits = t_muMuonHits->at(mui);
-	muStations = t_muStations->at(mui);
+	muMuonHits  = t_muMuonHits->at(mui);
+	muStations  = t_muStations->at(mui);
 	muTrkLayers = t_muTrkLayers->at(mui);
 	muPixelHits = t_muPixelHits->at(mui);
-	muCharge = t_muCharge->at(mui);
+	muCharge    = t_muCharge->at(mui);
 
 	// fill the tree
 	my_muon_tree->Fill();
@@ -347,7 +354,7 @@ void PYTHIA_skim(int group = 0,
       // start gen-particle loop
       for(int geni = 0; geni < t_pt->size(); geni++){
 
-	pt = t_pt->at(geni);
+	pt  = t_pt->at(geni);
 	eta = t_eta->at(geni);
 	phi = t_phi->at(geni);
 	chg = t_chg->at(geni);
