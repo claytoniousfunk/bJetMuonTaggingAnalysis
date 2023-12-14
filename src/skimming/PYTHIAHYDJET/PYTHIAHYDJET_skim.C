@@ -66,13 +66,15 @@ void PYTHIAHYDJET_skim(int group = 0,
 
   // ----- event variables
   Int_t hiBin, run, lumi, evt;
-  Float_t vz, hiHF;
+  Float_t vz, hiHF, pthat, weight;
   my_evt_tree->Branch("hiBin",&hiBin);
   my_evt_tree->Branch("hiHF",&hiHF);
   my_evt_tree->Branch("run",&run);
   my_evt_tree->Branch("lumi",&lumi);
   my_evt_tree->Branch("evt",&evt);
   my_evt_tree->Branch("vz",&vz);
+  my_evt_tree->Branch("pthat",&pthat);
+  my_evt_tree->Branch("weight",&weight);
 
   // ----- HLT variables
   Int_t HLT_HIL3Mu5_NHitQ10_v1, HLT_HIL3Mu7_NHitQ10_v1, HLT_HIL3Mu12_v1,
@@ -149,8 +151,7 @@ void PYTHIAHYDJET_skim(int group = 0,
   Int_t t_hiBin[1];
   UInt_t t_run[1], t_lumi[1];
   ULong64_t t_evt[1];
-  Float_t t_hiHF[1];
-  Float_t t_vz[1];
+  Float_t t_hiHF[1], t_vz[1], t_pthat[1], t_weight[1];
   // ----- HLT variables
   Int_t t_HLT_HIL3Mu5_NHitQ10_v1[1], t_HLT_HIL3Mu7_NHitQ10_v1[1], t_HLT_HIL3Mu12_v1[1];
   Int_t t_HLT_HIL3Mu5_NHitQ10_v1_Prescl[1], t_HLT_HIL3Mu7_NHitQ10_v1_Prescl[1], t_HLT_HIL3Mu12_v1_Prescl[1];
@@ -216,6 +217,8 @@ void PYTHIAHYDJET_skim(int group = 0,
     evt_tree->SetBranchAddress("lumi",t_lumi);
     evt_tree->SetBranchAddress("evt",t_evt);
     evt_tree->SetBranchAddress("vz",t_vz);
+    evt_tree->SetBranchAddress("pthat",t_pthat);
+    evt_tree->SetBranchAddress("weight",t_weight);
     // ----- HLT variables
     hlt_tree->SetBranchAddress("HLT_HIL3Mu5_NHitQ10_v1",t_HLT_HIL3Mu5_NHitQ10_v1);
     hlt_tree->SetBranchAddress("HLT_HIL3Mu7_NHitQ10_v1",t_HLT_HIL3Mu7_NHitQ10_v1);
@@ -291,13 +294,15 @@ void PYTHIAHYDJET_skim(int group = 0,
 	 pclusterCompatibilityFilter    == 0 
 	 ) continue;
       
-      hiBin = t_hiBin[0];
-      hiHF = t_hiHF[0];
-      run = t_run[0];
-      lumi = t_lumi[0];
-      evt = t_evt[0];
-      vz = t_vz[0];
-
+      hiBin  = t_hiBin[0];
+      hiHF   = t_hiHF[0];
+      run    = t_run[0];
+      lumi   = t_lumi[0];
+      evt    = t_evt[0];
+      vz     = t_vz[0];
+      pthat  = t_pthat[0];
+      weight = t_weight[0];
+      
       // --- event cuts
       if(fabs(vz) > 15.0) continue;
 
