@@ -34,54 +34,54 @@
 // User includes
 
 // event map
-#include "../../../../eventMap/eventMap.h"
+#include "../../../eventMap/eventMap.h"
 // jet corrector
-#include "../../../../JetEnergyCorrections/JetCorrector.h"
+#include "../../../JetEnergyCorrections/JetCorrector.h"
 // jet uncertainty
-#include "../../../../JetEnergyCorrections/JetUncertainty.h"
+#include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
-//#include "../../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-//#include "../../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // hiBin-fit parameters
-#include "../../../../headers/fitParameters/hiBinFitParams.h"
+#include "../../../headers/fitParameters/hiBinFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "../../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
+#include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // hiBin-fit function
-#include "../../../../headers/fitFunctions/fitFxn_hiBin.h"
+#include "../../../headers/fitFunctions/fitFxn_hiBin.h"
 
 // eta-phi mask function
-#include "../../../../headers/functions/etaPhiMask.h"
+#include "../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../../headers/functions/getDr.h"
+#include "../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../../headers/functions/getJetPtBin.h"
+#include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../../headers/functions/getPtRel.h"
+#include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../../headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../../headers/functions/isQualityMuon_tight.h"
+#include "../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../../headers/functions/isWDecayMuon.h"
+#include "../../../headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "../../../../headers/functions/triggerIsOn.h"
+#include "../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // JetTrkMax filter function
-#include "../../../../headers/functions/passesJetTrkMaxFilter.h"
+#include "../../../headers/functions/passesJetTrkMaxFilter.h"
 // print introduction
-#include "../../../../headers/introductions/printIntroduction_PYTHIA_scan_V3p7.h"
+#include "../../../headers/introductions/printIntroduction_PYTHIA_scan_V3p7.h"
 // analysis config
-#include "../../../../headers/config/config_PYTHIA.h"
+#include "../../../headers/config/config_PYTHIA.h"
 // read config
-#include "../../../../headers/config/readConfig.h"
+#include "../../../headers/config/readConfig.h"
 
 
 
@@ -160,7 +160,11 @@ TH2D *h_genJetPt_pthat;
 TH2D *h_recoGenDr_flavor[NJetPtIndices];
 TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 
-void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10Aug22/QCD_pThat-15_Dijet_TuneCP5_5p02TeV_pythia8/crab_PYTHIA_forest_10Aug22/220810_170721/0000/HiForestAOD_100.root", TString output = "out.root"){
+void PYTHIA_scan(int group = 1){
+
+  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIA/output/PYTHIA_skim_output_%i.root",group);
+  //TString input = "../../../rootFiles/skimmingOutput/PYTHIA/test/testFile.root";
+  TString output = Form("output/PYTHIA_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -168,11 +172,11 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("../../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
   JetCorrector JEC(Files);
 
 
-  JetUncertainty JEU("../../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
 
 
   
@@ -364,8 +368,9 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
 
   // define event filters
-  em->regEventFilter(NeventFilters, eventFilters);
+  //em->regEventFilter(NeventFilters, eventFilters);
 
+  
   TRandom *randomGenerator = new TRandom2();
 
   // jet-energy resolution fit function
@@ -391,7 +396,7 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
     //cout << "Applying global event cuts..." << endl;
     if(em->pthat <= pthatcut) continue;
     if(fabs(em->vz) > 15.0) continue;
-    if(em->checkEventFilter()) continue;
+    //if(em->checkEventFilter()) continue;
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
 
     double w_reweight_vz = 1.0;
@@ -509,13 +514,11 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
       w = w * xDump_reweight_factor ;
     }
 
-    
 
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
 
       // JET VARIABLES
-		
 		
       JEC.SetJetPT(em->rawpt[i]);
       JEC.SetJetEta(em->jeteta[i]);
@@ -637,24 +640,24 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
       if(!skipGenParticles){
 	// look for a genMuon match
-	for(int j = 0; j < em->gppdgIDp->size(); j++){
+	for(int j = 0; j < em->ngp; j++){
 
                         
 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
 
 	  genMuIndex++;
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp[j],x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 		
-	  double a = em->gpptp->at(j);
+	  double a = em->gpptp[j];
 	  double am = -1.0;
-	  double b = em->gpetap->at(j);
+	  double b = em->gpetap[j];
 	  double bm = -1.0;
-	  double c = em->gpphip->at(j);
+	  double c = em->gpphip[j];
 	  double cm = -1.0;
 
 
@@ -662,24 +665,24 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
 	  for(int l = 0; l < em->nMu; l++){
 
-	    if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > trkEtaMax) continue;
+	    if(em->muPt[l] < muPtCut || fabs(em->muEta[l]) > trkEtaMax) continue;
 	 
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				    em->muInnerD0->at(l),
-				    em->muInnerDz->at(l),
-				    em->muMuonHits->at(l),
-				    em->muPixelHits->at(l),
-				    em->muIsGlobal->at(l),
-				    em->muIsPF->at(l),
-				    em->muStations->at(l),
-				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF[l],
+				    em->muInnerD0[l],
+				    em->muInnerDz[l],
+				    em->muMuonHits[l],
+				    em->muPixelHits[l],
+				    em->muIsGlobal[l],
+				    em->muIsPF[l],
+				    em->muStations[l],
+				    em->muTrkLayers[l])) continue; // skip if muon doesnt pass quality cuts	
 
 
-	    if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
+	    if(isWDecayMuon(em->muPt[l],x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
-	    double aR = em->muPt->at(l);
-	    double bR = em->muEta->at(l);
-	    double cR = em->muPhi->at(l);
+	    double aR = em->muPt[l];
+	    double bR = em->muEta[l];
+	    double cR = em->muPhi[l];
 
 	    if(getDr(b,c,bR,cR) < epsilon){
 				
@@ -711,35 +714,35 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
 	if(matchFlagR[m] == 1) continue;
 
-	if(em->muPt->at(m) < muPtCut || fabs(em->muEta->at(m)) > trkEtaMax) continue;
+	if(em->muPt[m] < muPtCut || fabs(em->muEta[m]) > trkEtaMax) continue;
 			 
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_tight(em->muChi2NDF[m],
+				em->muInnerD0[m],
+				em->muInnerDz[m],
+				em->muMuonHits[m],
+				em->muPixelHits[m],
+				em->muIsGlobal[m],
+				em->muIsPF[m],
+				em->muStations[m],
+				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
 
 
-	if(isWDecayMuon(em->muPt->at(m),x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	if(isWDecayMuon(em->muPt[m],x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 			
 	// match to genMuon
 	bool isMatchedRecoMuon = false;
 
 	if(!skipGenParticles){
-	  for(int j = 0; j < em->gppdgIDp->size(); j++){
+	  for(int j = 0; j < em->ngp; j++){
 
 
 	    //cout << "genID = " << em->gppdgIDp->at(j) << endl;
 			
-	    if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	    if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
 
-	    if(em->gpptp->at(j) < muPtCut || fabs(em->gpetap->at(j)) > trkEtaMax) continue;                        
+	    if(em->gpptp[j] < muPtCut || fabs(em->gpetap[j]) > trkEtaMax) continue;                        
 		
-	    if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
+	    if(getDr(em->muEta[m],em->muPhi[m],em->gpetap[j],em->gpphip[j]) < epsilon){
 
 	      isMatchedRecoMuon = true;
 			
@@ -748,16 +751,16 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 	  }
 	}
 	// match to recoJets
-	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
+	if(getDr(em->muEta[m],em->muPhi[m],y,z) < epsilon_mm){
 
 	  matchFlagR[m] = 1;
 				
 	  hasInclRecoMuonTag = true;
 
-	  muPtRel = getPtRel(em->muPt->at(m),em->muEta->at(m),em->muPhi->at(m),x,y,z);
-	  muPt = em->muPt->at(m);
-	  muEta = em->muEta->at(m);
-	  muPhi = em->muPhi->at(m);
+	  muPtRel = getPtRel(em->muPt[m],em->muEta[m],em->muPhi[m],x,y,z);
+	  muPt = em->muPt[m];
+	  muEta = em->muEta[m];
+	  muPhi = em->muPhi[m];
 	  
 	  if(isMatchedRecoMuon) hasMatchedRecoMuonTag = true;
 
@@ -937,7 +940,10 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
       }
 
      
-      if(hasRecoJetMatch) jetFlavorInt = em->partonFlavor[recoJetFlavorFlag];
+      if(hasRecoJetMatch) {
+	jetFlavorInt = em->partonFlavor[recoJetFlavorFlag];
+	//cout << "jetFlavorInt = " << jetFlavorInt << endl;
+      }
 
 		        
       int jetPtIndex = getJetPtBin(x);
@@ -965,50 +971,50 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
       if(!skipGenParticles){
 	// look for a genMuon match
-	for(int j = 0; j < em->gppdgIDp->size(); j++){
+	for(int j = 0; j < em->ngp; j++){
 
                         
 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
 
 	  genMuIndex++;
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp[j],x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 		
-	  double a = em->gpptp->at(j);
+	  double a = em->gpptp[j];
 	  double am = -1.0;
-	  double b = em->gpetap->at(j);
+	  double b = em->gpetap[j];
 	  double bm = -1.0;
-	  double c = em->gpphip->at(j);
+	  double c = em->gpphip[j];
 	  double cm = -1.0;
 
 	  if(a < muPtCut || fabs(b) > trkEtaMax) continue;                        
 
 	  for(int l = 0; l < em->nMu; l++){
 
-	    if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > trkEtaMax) continue;
+	    if(em->muPt[l] < muPtCut || fabs(em->muEta[l]) > trkEtaMax) continue;
 	  
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				    em->muInnerD0->at(l),
-				    em->muInnerDz->at(l),
-				    em->muMuonHits->at(l),
-				    em->muPixelHits->at(l),
-				    em->muIsGlobal->at(l),
-				    em->muIsPF->at(l),
-				    em->muStations->at(l),
-				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF[l],
+				    em->muInnerD0[l],
+				    em->muInnerDz[l],
+				    em->muMuonHits[l],
+				    em->muPixelHits[l],
+				    em->muIsGlobal[l],
+				    em->muIsPF[l],
+				    em->muStations[l],
+				    em->muTrkLayers[l])) continue; // skip if muon doesnt pass quality cuts	
 
 
 	    //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
 
 			
-	    double aR = em->muPt->at(l);
-	    double bR = em->muEta->at(l);
-	    double cR = em->muPhi->at(l);
+	    double aR = em->muPt[l];
+	    double bR = em->muEta[l];
+	    double cR = em->muPhi[l];
 
 			
 
@@ -1043,20 +1049,20 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
 	if(matchFlagR[m] == 1) continue;
 
-	if(em->muPt->at(m) < muPtCut || fabs(em->muEta->at(m)) > trkEtaMax) continue;
+	if(em->muPt[m] < muPtCut || fabs(em->muEta[m]) > trkEtaMax) continue;
 
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_tight(em->muChi2NDF[m],
+				em->muInnerD0[m],
+				em->muInnerDz[m],
+				em->muMuonHits[m],
+				em->muPixelHits[m],
+				em->muIsGlobal[m],
+				em->muIsPF[m],
+				em->muStations[m],
+				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
 
 
-	if(isWDecayMuon(em->muPt->at(m),x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	if(isWDecayMuon(em->muPt[m],x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 			
 			
 	// match to genMuon
@@ -1064,16 +1070,16 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
 	bool isMatchedRecoMuon = false;
 
-	for(int j = 0; j < em->gppdgIDp->size(); j++){
+	for(int j = 0; j < em->ngp; j++){
 
 
 	  //cout << "genID = " << em->gppdgIDp->at(j) << endl;
 			
-	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
 
-	  if(em->gpptp->at(j) < muPtCut || fabs(em->gpetap->at(j)) > trkEtaMax) continue;                        
+	  if(em->gpptp[j] < muPtCut || fabs(em->gpetap[j]) > trkEtaMax) continue;                        
 		
-	  if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
+	  if(getDr(em->muEta[m],em->muPhi[m],em->gpetap[j],em->gpphip[j]) < epsilon){
 
 	    isMatchedRecoMuon = true;
 			
@@ -1082,13 +1088,13 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 	}
 
 	// match to recoJets
-	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
+	if(getDr(em->muEta[m],em->muPhi[m],y,z) < epsilon_mm){
 
 	  matchFlagR[m] = 1;
 				
 	  hasInclRecoMuonTag = true;
 
-	  muPtRel = getPtRel(em->muPt->at(m),em->muEta->at(m),em->muPhi->at(m),x,y,z);
+	  muPtRel = getPtRel(em->muPt[m],em->muEta[m],em->muPhi[m],x,y,z);
 				
 	  if(isMatchedRecoMuon) hasMatchedRecoMuonTag = true;
 
@@ -1126,7 +1132,7 @@ void PYTHIA_scan(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10A
 
 	  h_inclGenJetPt_matchedRecoMuonTag_flavor->Fill(x,jetFlavorInt,w);
 
-	  if(evtTriggerDecision) 	h_inclGenJetPt_matchedRecoMuonTag_triggerOn_flavor->Fill(x,jetFlavorInt,w);
+	  if(evtTriggerDecision) h_inclGenJetPt_matchedRecoMuonTag_triggerOn_flavor->Fill(x,jetFlavorInt,w);
 
 
 	}
