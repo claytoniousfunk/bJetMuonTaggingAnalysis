@@ -44,7 +44,8 @@ void PYTHIA_skim(int group = 0,
   TTree *my_filter_tree = new TTree("filterTree","");
   TTree *my_evt_tree = new TTree("evtTree","");
   TTree *my_hlt_tree = new TTree("hltTree","");
-  TTree *my_jet_tree = new TTree("jetTree","");
+  TTree *my_reco_jet_tree = new TTree("recoJetTree","");
+  TTree *my_gen_jet_tree = new TTree("genJetTree","");
   TTree *my_jet_evt_tree = new TTree("jetEvtTree","");
   TTree *my_muon_tree = new TTree("muonTree","");
   TTree *my_muon_evt_tree = new TTree("muonEvtTree","");
@@ -84,16 +85,16 @@ void PYTHIA_skim(int group = 0,
   // ----- jet variables
   Float_t jtpt, rawpt, jteta, jtphi, trackMax, genpt, geneta, genphi, jtPartonFlavor, jtHadronFlavor;
   Int_t nref, ngen;
-  my_jet_tree->Branch("jtpt",&jtpt);
-  my_jet_tree->Branch("rawpt",&rawpt);
-  my_jet_tree->Branch("jteta",&jteta);
-  my_jet_tree->Branch("jtphi",&jtphi);
-  my_jet_tree->Branch("trackMax",&trackMax);
-  my_jet_tree->Branch("jtPartonFlavor",&jtPartonFlavor);
-  my_jet_tree->Branch("jtHadronFlavor",&jtHadronFlavor);
-  my_jet_tree->Branch("genpt",&genpt);
-  my_jet_tree->Branch("geneta",&geneta);
-  my_jet_tree->Branch("genphi",&genphi);
+  my_reco_jet_tree->Branch("jtpt",&jtpt);
+  my_reco_jet_tree->Branch("rawpt",&rawpt);
+  my_reco_jet_tree->Branch("jteta",&jteta);
+  my_reco_jet_tree->Branch("jtphi",&jtphi);
+  my_reco_jet_tree->Branch("trackMax",&trackMax);
+  my_reco_jet_tree->Branch("jtPartonFlavor",&jtPartonFlavor);
+  my_reco_jet_tree->Branch("jtHadronFlavor",&jtHadronFlavor);
+  my_gen_jet_tree->Branch("genpt",&genpt);
+  my_gen_jet_tree->Branch("geneta",&geneta);
+  my_gen_jet_tree->Branch("genphi",&genphi);
   my_jet_evt_tree->Branch("nref",&nref);
   my_jet_evt_tree->Branch("ngen",&ngen);
   
@@ -316,7 +317,7 @@ void PYTHIA_skim(int group = 0,
 	
 	
 	// fill the tree
-	my_jet_tree->Fill();
+	my_reco_jet_tree->Fill();
 	nref_prime++;
 
       } // end jet loop
@@ -333,7 +334,7 @@ void PYTHIA_skim(int group = 0,
 	genphi         = t_genphi[jetj];
 
 	// fill the tree
-	my_jet_tree->Fill();
+	my_gen_jet_tree->Fill();
 	ngen_prime++;
 
       }
