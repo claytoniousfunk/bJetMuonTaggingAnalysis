@@ -187,9 +187,11 @@ TH1D *h_leadingGenJetPt_xJets_greaterThanPthat[NCentralityIndices];
 
 
 
-void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cbennett/PYTHIAHYDJET_DiJet_19Sep23/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_19Sep23/230919_075910/0000/HiForestAOD_1.root", TString output = "out.root"){
+void PYTHIAHYDJET_scan(int group = 1){
 
-
+  //TString input = Form("../../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output/PYTHIAHYDJET_skim_output_%i.root",group);
+  TString input = "../../../../rootFiles/skimmingOutput/PYTHIAHYDJET/test/testFile.root";
+  TString output = Form("../output/PYTHIAHYDJET_scan_output_%i.root",group);
 
 
   
@@ -585,7 +587,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
     // global event cuts
     if(em->pthat <= pthatcut) continue;
     if(fabs(em->vz) > 15.0) continue;
-    if(em->checkEventFilter()) continue;
+    //if(em->checkEventFilter()) continue;  // get rid of event filter when doing local skims 
 
     // calculate event weight
     
@@ -599,8 +601,10 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
       w_reweight_vz = fitFxn_vz->Eval(em->vz);
     }
     
-   
-    double w = em->weight * w_reweight_hiBin * w_reweight_vz;
+
+    double w_pthat = em->weight;
+    
+    double w = w_pthat * w_reweight_hiBin * w_reweight_vz;
 
     
     if(w <= 0.0) continue;
@@ -870,24 +874,24 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 
       if(!skipGenParticles){
 	// look for a genMuon match to recoJet
-	for(int j = 0; j < em->gppdgIDp->size(); j++){
+	for(int j = 0; j < em->ngp; j++){
 
                         
 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
 
 	  genMuIndex++;
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp[j],x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
-	  double a = em->gpptp->at(j);
+	  double a = em->gpptp[j];
 	  double am = -1.0;
-	  double b = em->gpetap->at(j);
+	  double b = em->gpetap[j];
 	  double bm = -1.0;
-	  double c = em->gpphip->at(j);
+	  double c = em->gpphip[j];
 	  double cm = -1.0;
 
 	  if(a < muPtCut || fabs(b) > trkEtaMax) continue;                        
@@ -896,19 +900,19 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 	  for(int l = 0; l < em->nMu; l++){
 
 
-	    double aR = em->muPt->at(l);
-	    double bR = em->muEta->at(l);
-	    double cR = em->muPhi->at(l);
+	    double aR = em->muPt[l];
+	    double bR = em->muEta[l];
+	    double cR = em->muPhi[l];
 
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				    em->muInnerD0->at(l),
-				    em->muInnerDz->at(l),
-				    em->muMuonHits->at(l),
-				    em->muPixelHits->at(l),
-				    em->muIsGlobal->at(l),
-				    em->muIsPF->at(l),
-				    em->muStations->at(l),
-				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF[l],
+				    em->muInnerD0[l],
+				    em->muInnerDz[l],
+				    em->muMuonHits[l],
+				    em->muPixelHits[l],
+				    em->muIsGlobal[l],
+				    em->muIsPF[l],
+				    em->muStations[l],
+				    em->muTrkLayers[l])) continue; // skip if muon doesnt pass quality cuts	
 
 
 
@@ -938,23 +942,23 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
       // look for recoMuon match to recoJet		
       for(int m = 0; m < em->nMu; m++){
 
-	double muPt_m = em->muPt->at(m);
-	double muEta_m = em->muEta->at(m);
-	double muPhi_m = em->muPhi->at(m);
+	double muPt_m = em->muPt[m];
+	double muEta_m = em->muEta[m];
+	double muPhi_m = em->muPhi[m];
 
 	if(matchFlagR[m] == 1) continue;
 	// muon kinematic cuts
 	if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
 	// muon quality cuts
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_tight(em->muChi2NDF[m],
+				em->muInnerD0[m],
+				em->muInnerDz[m],
+				em->muMuonHits[m],
+				em->muPixelHits[m],
+				em->muIsGlobal[m],
+				em->muIsPF[m],
+				em->muStations[m],
+				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
 
 			
 
@@ -968,11 +972,11 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 
 	if(!skipGenParticles){
 
-	  for(int j = 0; j < em->gppdgIDp->size(); j++){
+	  for(int j = 0; j < em->ngp; j++){
 			
-	    if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	    if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
 		
-	    if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
+	    if(getDr(em->muEta[m],em->muPhi[m],em->gpetap[j],em->gpphip[j]) < epsilon){
 
 	      isMatchedRecoMuon = true;
 			
@@ -982,7 +986,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 	}
 
 	// match to recoJets
-	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
+	if(getDr(em->muEta[m],em->muPhi[m],y,z) < epsilon_mm){
 
 	  matchFlagR[m] = 1;
 				
@@ -1314,7 +1318,7 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
       // look for a genMuon match
       if(!skipGenParticles){
 
-	for(int j = 0; j < em->gppdgIDp->size(); j++){
+	for(int j = 0; j < em->ngp; j++){
 
 	  //cout << "N_genParticles = " << em->gppdgIDp->size() << endl;
 	  //cout << "pdg of particle " << j <<" = " << em->gppdgIDp->at(j) << endl;
@@ -1322,19 +1326,19 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
                         
 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
 
 	  genMuIndex++;
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp[j],x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
-	  double a = em->gpptp->at(j);
+	  double a = em->gpptp[j];
 	  double am = -1.0;
-	  double b = em->gpetap->at(j);
+	  double b = em->gpetap[j];
 	  double bm = -1.0;
-	  double c = em->gpphip->at(j);
+	  double c = em->gpphip[j];
 	  double cm = -1.0;
 
 
@@ -1345,24 +1349,24 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 	  for(int l = 0; l < em->nMu; l++){
 
 
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				    em->muInnerD0->at(l),
-				    em->muInnerDz->at(l),
-				    em->muMuonHits->at(l),
-				    em->muPixelHits->at(l),
-				    em->muIsGlobal->at(l),
-				    em->muIsPF->at(l),
-				    em->muStations->at(l),
-				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF[l],
+				    em->muInnerD0[l],
+				    em->muInnerDz[l],
+				    em->muMuonHits[l],
+				    em->muPixelHits[l],
+				    em->muIsGlobal[l],
+				    em->muIsPF[l],
+				    em->muStations[l],
+				    em->muTrkLayers[l])) continue; // skip if muon doesnt pass quality cuts	
 
 
 	    //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
 
 			
-	    double aR = em->muPt->at(l);
-	    double bR = em->muEta->at(l);
-	    double cR = em->muPhi->at(l);
+	    double aR = em->muPt[l];
+	    double bR = em->muEta[l];
+	    double cR = em->muPhi[l];
 
 			
 
@@ -1395,21 +1399,21 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 
 	if(matchFlagR[m] == 1) continue;
 			 
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_tight(em->muChi2NDF[m],
+				em->muInnerD0[m],
+				em->muInnerDz[m],
+				em->muMuonHits[m],
+				em->muPixelHits[m],
+				em->muIsGlobal[m],
+				em->muIsPF[m],
+				em->muStations[m],
+				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
 
 			
 
 
 
-	if(isWDecayMuon(em->muPt->at(m),x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	if(isWDecayMuon(em->muPt[m],x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 			
 			
 	// match to genMuon
@@ -1419,15 +1423,15 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 
 	if(!skipGenParticles){
 
-	  for(int l = 0; l < em->gppdgIDp->size(); l++){
+	  for(int l = 0; l < em->ngp; l++){
 
 	    //cout << "genID = " << em->gppdgIDp->at(j) << endl;
 			
-	    if(TMath::Abs(em->gppdgIDp->at(l)) != 13) continue;
+	    if(TMath::Abs(em->gppdgIDp[l]) != 13) continue;
 
-	    if(em->gpptp->at(l) < muPtCut || fabs(em->gpetap->at(l)) > trkEtaMax) continue;                        
+	    if(em->gpptp[l] < muPtCut || fabs(em->gpetap[l]) > trkEtaMax) continue;                        
 		
-	    if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(l),em->gpphip->at(l)) < epsilon){
+	    if(getDr(em->muEta[m],em->muPhi[m],em->gpetap[l],em->gpphip[l]) < epsilon){
 
 	      isMatchedRecoMuon = true;
 			
@@ -1438,13 +1442,13 @@ void PYTHIAHYDJET_scan(TString input = "/eos/cms/store/group/phys_heavyions/cben
 	}
 
 	// match to genJets
-	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
+	if(getDr(em->muEta[m],em->muPhi[m],y,z) < epsilon_mm){
 
 	  matchFlagR[m] = 1;
 				
 	  hasInclRecoMuonTag = true;
 
-	  muPtRel = getPtRel(em->muPt->at(m),em->muEta->at(m),em->muPhi->at(m),x,y,z);
+	  muPtRel = getPtRel(em->muPt[m],em->muEta[m],em->muPhi[m],x,y,z);
 
 	  //cout << "(Event "<< evi << ", Jet " << i << ", Muon " << m << ") muPtRel = " << muPtRel << endl;
 				
