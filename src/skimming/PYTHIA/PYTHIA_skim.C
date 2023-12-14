@@ -83,7 +83,7 @@ void PYTHIA_skim(int group = 0,
 
   // ----- jet variables
   Float_t jtpt, rawpt, jteta, jtphi, trackMax, genpt, geneta, genphi, jtPartonFlavor, jtHadronFlavor;
-  Int_t nref;
+  Int_t nref, ngen;
   my_jet_tree->Branch("jtpt",&jtpt);
   my_jet_tree->Branch("rawpt",&rawpt);
   my_jet_tree->Branch("jteta",&jteta);
@@ -95,6 +95,7 @@ void PYTHIA_skim(int group = 0,
   my_jet_tree->Branch("geneta",&geneta);
   my_jet_tree->Branch("genphi",&genphi);
   my_jet_evt_tree->Branch("nref",&nref);
+  my_jet_evt_tree->Branch("ngen",&ngen);
   
 
   // ----- muon variables
@@ -152,7 +153,7 @@ void PYTHIA_skim(int group = 0,
   // ----- jet variables
   const int MAXJETS = 1000;
   Float_t t_jtpt[MAXJETS], t_rawpt[MAXJETS], t_jteta[MAXJETS], t_jtphi[MAXJETS], t_trackMax[MAXJETS], t_jtPartonFlavor[MAXJETS], t_jtHadronFlavor[MAXJETS], t_genpt[MAXJETS], t_geneta[MAXJETS], t_genphi[MAXJETS];
-  Int_t t_nref[1];
+  Int_t t_nref[1], t_ngen[1];
   // ----- muon variables
   vector<Float_t> *t_muPt=0, *t_muEta=0, *t_muPhi=0;
   vector<Float_t> *t_muChi2NDF=0, *t_muInnerD0=0, *t_muInnerDz=0;
@@ -229,6 +230,7 @@ void PYTHIA_skim(int group = 0,
     jet_tree->SetBranchAddress("genpt",t_genpt);
     jet_tree->SetBranchAddress("geneta",t_geneta);
     jet_tree->SetBranchAddress("genphi",t_genphi);
+    jet_tree->SetBranchAddress("ngen",t_ngen);
     // ----- muon variables
     muon_tree->SetBranchAddress("muPt",&t_muPt);
     muon_tree->SetBranchAddress("muEta",&t_muEta);
@@ -301,7 +303,7 @@ void PYTHIA_skim(int group = 0,
       
       int nref_prime = 0; // counter variable for nref
 
-      // start jet loop
+      // start reco-jet loop
       for(int jeti = 0; jeti < t_nref[0]; jeti++){
 
 	jtpt           = t_jtpt[jeti];
@@ -311,9 +313,7 @@ void PYTHIA_skim(int group = 0,
 	trackMax       = t_trackMax[jeti];
 	jtPartonFlavor = t_jtPartonFlavor[jeti];
 	jtHadronFlavor = t_jtHadronFlavor[jeti];
-	genpt          = t_genpt[jeti];
-	geneta         = t_geneta[jeti];
-	genphi         = t_genphi[jeti];
+	
 	
 	// fill the tree
 	my_jet_tree->Fill();
@@ -322,6 +322,23 @@ void PYTHIA_skim(int group = 0,
       } // end jet loop
 
       nref = nref_prime;
+
+      int ngen_prime = 0;
+
+      // start gen-jet loop
+      for(int jetj = 0; jetj < t_ngen[0]; jetj++){
+
+	genpt          = t_genpt[jetj];
+	geneta         = t_geneta[jetj];
+	genphi         = t_genphi[jetj];
+
+	// fill the tree
+	my_jet_tree->Fill();
+	ngen_prime++;
+
+      }
+
+      ngen = ngen_prime;
       
       int nMu_prime = 0;
 
