@@ -263,6 +263,13 @@ void pp_skim(int group = 0,
 	 HLT_HIL3Mu12_v1 == 0) continue;
 
       int nref_prime = 0; // counter variable for nref
+
+      // set default (nref = 0) values
+      jtpt = -999.0;
+      rawpt = -999.0;
+      jteta = -999.0;
+      jtphi = -999.0;
+      trackMax = -999.0;
       
       for(int jeti = 0; jeti < t_nref[0]; jeti++){
 
@@ -281,6 +288,23 @@ void pp_skim(int group = 0,
       nref = nref_prime;
       
       int nMu_prime = 0;
+
+      // specify defual (nMu = 0) values
+      muPt = -999.0;
+      muEta = -999.0;
+      muPhi = -999.0;
+      muEta = -999.0;
+      muChi2NDF = -999.0;
+      muInnerD0 = -999.0;
+      muInnerDz = -999.0;
+      muIsPF = -999.0;
+      muIsGlobal = -999.0;
+      muIsTracker = -999.0;
+      muMuonHits = -999.0;
+      muStations = -999.0;
+      muTrkLayers = -999.0;
+      muPixelHits = -999.0;
+      muCharge = -999.0;
       
       for(int mui = 0; mui < t_nMu[0]; mui++){
 
@@ -309,7 +333,9 @@ void pp_skim(int group = 0,
       
       
       // fill event trees
+      if(nMu == 0) my_muon_tree->Fill();
       my_muon_evt_tree->Fill();
+      if(nref == 0) my_jet_tree->Fill();
       my_jet_evt_tree->Fill();
       my_filter_tree->Fill();
       my_evt_tree->Fill();
