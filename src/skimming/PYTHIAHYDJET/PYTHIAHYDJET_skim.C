@@ -44,7 +44,8 @@ void PYTHIAHYDJET_skim(int group = 0,
   TTree *my_filter_tree           = new TTree("filterTree","");
   TTree *my_evt_tree              = new TTree("evtTree","");
   TTree *my_hlt_tree              = new TTree("hltTree","");
-  TTree *my_jet_tree              = new TTree("jetTree","");
+  TTree *my_reco_jet_tree         = new TTree("recoJetTree","");
+  TTree *my_gen_jet_tree          = new TTree("genJetTree","");
   TTree *my_jet_evt_tree          = new TTree("jetEvtTree","");
   TTree *my_muon_tree             = new TTree("muonTree","");
   TTree *my_muon_evt_tree         = new TTree("muonEvtTree","");
@@ -88,19 +89,20 @@ void PYTHIAHYDJET_skim(int group = 0,
 
   // ----- jet variables
   Float_t jtpt, rawpt, jteta, jtphi, trackMax, genpt, geneta, genphi;
-  Int_t nref, matchedPartonFlavor, matchedHadronFlavor, refparton_flavorForB;
-  my_jet_tree->Branch("jtpt",&jtpt);
-  my_jet_tree->Branch("rawpt",&rawpt);
-  my_jet_tree->Branch("jteta",&jteta);
-  my_jet_tree->Branch("jtphi",&jtphi);
-  my_jet_tree->Branch("trackMax",&trackMax);
-  my_jet_tree->Branch("matchedPartonFlavor",&matchedPartonFlavor);
-  my_jet_tree->Branch("matchedHadronFlavor",&matchedHadronFlavor);
-  my_jet_tree->Branch("refparton_flavorForB",&refparton_flavorForB);
-  my_jet_tree->Branch("genpt",&genpt);
-  my_jet_tree->Branch("geneta",&geneta);
-  my_jet_tree->Branch("genphi",&genphi);
+  Int_t nref, ngen, matchedPartonFlavor, matchedHadronFlavor, refparton_flavorForB;
+  my_reco_jet_tree->Branch("jtpt",&jtpt);
+  my_reco_jet_tree->Branch("rawpt",&rawpt);
+  my_reco_jet_tree->Branch("jteta",&jteta);
+  my_reco_jet_tree->Branch("jtphi",&jtphi);
+  my_reco_jet_tree->Branch("trackMax",&trackMax);
+  my_reco_jet_tree->Branch("matchedPartonFlavor",&matchedPartonFlavor);
+  my_reco_jet_tree->Branch("matchedHadronFlavor",&matchedHadronFlavor);
+  my_reco_jet_tree->Branch("refparton_flavorForB",&refparton_flavorForB);
+  my_gen_jet_tree->Branch("genpt",&genpt);
+  my_gen_jet_tree->Branch("geneta",&geneta);
+  my_gen_jet_tree->Branch("genphi",&genphi);
   my_jet_evt_tree->Branch("nref",&nref);
+  my_jet_evt_tree->Branch("ngen",&ngen);
   
 
   // ----- muon variables
@@ -159,7 +161,7 @@ void PYTHIAHYDJET_skim(int group = 0,
   // ----- jet variables
   const int MAXJETS = 1000;
   Float_t t_jtpt[MAXJETS], t_rawpt[MAXJETS], t_jteta[MAXJETS], t_jtphi[MAXJETS], t_trackMax[MAXJETS], t_genpt[MAXJETS], t_geneta[MAXJETS], t_genphi[MAXJETS];
-  Int_t t_nref[1], t_matchedPartonFlavor[MAXJETS], t_matchedHadronFlavor[MAXJETS], t_refparton_flavorForB[MAXJETS];
+  Int_t t_nref[1], t_ngen[1], t_matchedPartonFlavor[MAXJETS], t_matchedHadronFlavor[MAXJETS], t_refparton_flavorForB[MAXJETS];
   // ----- muon variables
   vector<Float_t> *t_muPt=0, *t_muEta=0, *t_muPhi=0;
   vector<Float_t> *t_muChi2NDF=0, *t_muInnerD0=0, *t_muInnerDz=0;
@@ -241,6 +243,7 @@ void PYTHIAHYDJET_skim(int group = 0,
     jet_tree->SetBranchAddress("genpt",t_genpt);
     jet_tree->SetBranchAddress("geneta",t_geneta);
     jet_tree->SetBranchAddress("genphi",t_genphi);
+    jet_tree->SetBranchAddress("ngen",t_ngen);
     // ----- muon variables
     muon_tree->SetBranchAddress("muPt",&t_muPt);
     muon_tree->SetBranchAddress("muEta",&t_muEta);
@@ -318,7 +321,7 @@ void PYTHIAHYDJET_skim(int group = 0,
       
       int nref_prime = 0; // counter variable for nref
 
-      // start jet loop
+      // start reco-jet loop
       for(int jeti = 0; jeti < t_nref[0]; jeti++){
 
 	jtpt                 = t_jtpt[jeti];
@@ -329,17 +332,34 @@ void PYTHIAHYDJET_skim(int group = 0,
 	matchedPartonFlavor  = t_matchedPartonFlavor[jeti];
 	matchedHadronFlavor  = t_matchedHadronFlavor[jeti];
 	refparton_flavorForB = t_refparton_flavorForB[jeti];
-	genpt                = t_genpt[jeti];
-	geneta               = t_geneta[jeti];
-	genphi               = t_genphi[jeti];
 	
 	// fill the tree
-	my_jet_tree->Fill();
+	my_reco_jet_tree->Fill();
 	nref_prime++;
 
       } // end jet loop
 
       nref = nref_prime;
+
+      
+      int ngen_prime = 0;
+
+      // start gen-jet loop
+      for(int jetj = 0; jetj < t_ngen[0]; jetj++){
+
+	genpt          = t_genpt[jetj];
+	geneta         = t_geneta[jetj];
+	genphi         = t_genphi[jetj];
+
+	// fill the tree
+	my_gen_jet_tree->Fill();
+	ngen_prime++;
+
+      }
+
+      ngen = ngen_prime;
+      
+
       
       int nMu_prime = 0;
 
@@ -409,7 +429,8 @@ void PYTHIAHYDJET_skim(int group = 0,
   my_filter_tree->Write();
   my_evt_tree->Write();
   my_hlt_tree->Write();
-  my_jet_tree->Write();
+  my_reco_jet_tree->Write();
+  my_gen_jet_tree->Write();
   my_jet_evt_tree->Write();
   my_muon_tree->Write();
   my_muon_evt_tree->Write();
