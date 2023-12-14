@@ -36,7 +36,7 @@ void pp_skim(int group = 0,
   
   
   in_file_name = "fileNames/fileNames_pp_SingleMuon_24Oct23.txt";
-  output_file_base += Form("output/pp_skim_slim_output_%i",group);
+  output_file_base += Form("output/pp_skim_output_%i",group);
   
 
   cout << "trying a file list named " << in_file_name << endl;
