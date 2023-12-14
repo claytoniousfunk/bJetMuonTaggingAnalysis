@@ -43,18 +43,18 @@ public :
     for(auto & it : filters) if(!it) return 1;
     return 0;
   }
-  int nGP(){return gpptp->size();};
   int nJet(){return njet;};
   int nGenJet(){return ngj;};
   int nTrk(){return ntrk;};
-  float gppt(int j) {return gpptp->at(j);}
-  float gpeta(int j) {return gpetap->at(j);}
-  float gpphi(int j) {return gpphip->at(j);}
-  int gpchg(int j) {return gpchgp->at(j);}
-  int gppdgID(int j) {return gppdgIDp->at(j);}
-  int gpIsStable(int j) {return gpStableTag->at(j);}
-  int gpSube(int j){ return gpsube->at(j);}
-  TTree *hltTree, *filterTree, *trkTree, *gpTree, *jetTree=nullptr, *muonTree=nullptr, *muonTriggerTree=nullptr, *muonAnalyzerTree=nullptr, *pfTree=nullptr;
+  float gppt(int j) {return gpptp[j];}
+  float gpeta(int j) {return gpetap[j];}
+  float gpphi(int j) {return gpphip[j];}
+  int gpchg(int j) {return gpchgp[j];}
+  int gppdgID(int j) {return gppdgIDp[j];}
+  //  int gpIsStable(int j) {return gpStableTag->at(j);}
+  //int gpSube(int j){ return gpsube->at(j);}
+  TTree *hltTree, *filterTree, *trkTree, *genParticleTree=nullptr, *recoJetTree=nullptr, *genJetTree=nullptr, *muonTree=nullptr, *muonTriggerTree=nullptr, *muonAnalyzerTree=nullptr, *pfTree=nullptr;
+  TTree *jetEvtTree=nullptr, *muonEvtTree=nullptr, *genParticleEvtTree=nullptr;
   TTree *evtTree;
   TFile *_file = 0;
   std::vector<Int_t> filters;
@@ -74,14 +74,15 @@ public :
   //evt info
   Float_t weight = 0, vz = 0, pthat = 0;
   Int_t hiBin = 0;
-  ULong64_t evtNumber = 0;
-  UInt_t runNumber = 0, lumiSection = 0;
+  Int_t evtNumber = 0;
+  Int_t runNumber = 0, lumiSection = 0;
 
   //gen particle
+  static const int genMax = 9999;
   int ngp = 0;
   bool stableOnly = 1;
-  std::vector<float> *gpptp=0, *gpetap=0, *gpphip=0;
-  std::vector<int>  *gppdgIDp=0, *gpchgp=0, *gpsube=0, *gpStableTag=0;
+  Float_t gpptp[genMax], gpetap[genMax], gpphip[genMax];
+  Int_t  gppdgIDp[genMax], gpchgp[genMax], gpsube[genMax], gpStableTag[genMax];
 
   // pfCandidate info
   std::vector<int> *pfId=0, *pfPt=0, *pfEta=0, *pfPhi=0;
@@ -108,8 +109,8 @@ public :
   static const int muonMax = 9999;
   int nMu=0;
   int nInner = 0;
-  vector <float> *muPt=0, *muEta=0, *muPhi=0, *muChi2NDF=0, *muInnerD0=0, *muInnerDz=0;
-  vector <int> *muIsPF=0, *muIsGlobal=0, *muIsTracker=0, *muMuonHits=0, *muStations=0, *muTrkLayers=0, *muPixelHits=0, *muCharge=0;
+  Float_t muPt[muonMax], muEta[muonMax], muPhi[muonMax], muChi2NDF[muonMax], muInnerD0[muonMax], muInnerDz[muonMax];
+  Int_t muIsPF[muonMax], muIsGlobal[muonMax], muIsTracker[muonMax], muMuonHits[muonMax], muStations[muonMax], muTrkLayers[muonMax], muPixelHits[muonMax], muCharge[muonMax];
   vector <int> *innerNTrkHits=0;
 
   // muon trigger info
@@ -156,7 +157,7 @@ public :
 
 
 void eventMap::init(){
-  evtTree = (TTree*) _file->Get("hiEvtAnalyzer/HiTree");
+  evtTree = (TTree*) _file->Get("evtTree");
   evtTree->SetBranchAddress("vz", &vz);
   evtTree->SetBranchAddress("hiBin", &hiBin);
   evtTree->SetBranchAddress("evt", &evtNumber);
@@ -169,7 +170,7 @@ void eventMap::init(){
 }
 
 void eventMap::regEventFilter(int nfilter, std::string *filtername){
-  filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
+  filterTree = (TTree*) _file->Get("filterTree");
   evtTree->AddFriend(filterTree);
   filters.clear();
   filters.resize(nfilter);
@@ -184,7 +185,7 @@ void eventMap::regEventFilter(int nfilter, std::string *filtername){
 }
 
 void eventMap::regEventFilter(std::vector<std::string> &filtername){
-  filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
+  filterTree = (TTree*) _file->Get("filterTree");
   evtTree->AddFriend(filterTree);
   filters.clear();
   filters.resize(filtername.size());
@@ -218,16 +219,19 @@ void eventMap::loadTrack(){
 }
 
 void eventMap::loadGenParticle(){
-  gpTree = (TTree*) _file->Get("HiGenParticleAna/hi"); // for my forests
-  //gpTree = (TTree*) _file->Get("leptonAna/hi"); // for muJetForest (Matt's) gen particle info
-  evtTree->AddFriend(gpTree);
+  genParticleTree = (TTree*) _file->Get("genParticleTree");
+  genParticleEvtTree = (TTree*) _file->Get("genParticleEvtTree");
+  evtTree->AddFriend(genParticleTree);
+  evtTree->AddFriend(genParticleEvtTree);
   evtTree->SetBranchAddress("pt",  &gpptp);
   evtTree->SetBranchAddress("eta", &gpetap);
   evtTree->SetBranchAddress("phi", &gpphip);
   evtTree->SetBranchAddress("chg", &gpchgp);
   evtTree->SetBranchAddress("pdg", &gppdgIDp);
+  evtTree->SetBranchAddress("n", &ngp);
   if(!AASetup) evtTree->SetBranchAddress("sube",&gpsube);
   if(!stableOnly) evtTree->SetBranchAddress("sta",&gpStableTag);
+  
 }
 
 void eventMap::loadParticleFlowAnalyzer(const char* name){
@@ -244,22 +248,26 @@ void eventMap::unloadGP(){
 }
 
 void eventMap::loadJet(const char* name){
-  jetTree = (TTree*) _file->Get(Form("%s/t", name));
-  evtTree->AddFriend(jetTree);
+  recoJetTree = (TTree*) _file->Get("recoJetTree");
+  genJetTree = (TTree*) _file->Get("genJetTree");
+  jetEvtTree = (TTree*) _file->Get("jetEvtTree");
+  evtTree->AddFriend(recoJetTree);
+  evtTree->AddFriend(genJetTree);
+  evtTree->AddFriend(jetEvtTree);
   evtTree->SetBranchAddress("nref", &njet);
   evtTree->SetBranchAddress("rawpt",&rawpt);
   evtTree->SetBranchAddress("jtpt", &jetpt);
   evtTree->SetBranchAddress("jteta", &jeteta);
   evtTree->SetBranchAddress("jtphi", &jetphi);
+  evtTree->SetBranchAddress("trackMax", &jetTrkMax);
   //evtTree->SetBranchAddress("WTAeta", &jet_wta_eta);
   //evtTree->SetBranchAddress("WTAphi", &jet_wta_phi);
-  evtTree->SetBranchAddress("discr_csvV2", &disc_csvV2);
-  evtTree->SetBranchAddress("trackMax", &jetTrkMax);
-  evtTree->SetBranchAddress("jtPfCHF",&jtPfCHF);
-  evtTree->SetBranchAddress("jtPfNHF",&jtPfNHF);
-  evtTree->SetBranchAddress("jtPfCEF",&jtPfCEF);
-  evtTree->SetBranchAddress("jtPfNEF",&jtPfNEF);
-  evtTree->SetBranchAddress("jtPfMUF",&jtPfMUF);
+  //evtTree->SetBranchAddress("discr_csvV2", &disc_csvV2);
+  //evtTree->SetBranchAddress("jtPfCHF",&jtPfCHF);
+  //evtTree->SetBranchAddress("jtPfNHF",&jtPfNHF);
+  //evtTree->SetBranchAddress("jtPfCEF",&jtPfCEF);
+  //evtTree->SetBranchAddress("jtPfNEF",&jtPfNEF);
+  //evtTree->SetBranchAddress("jtPfMUF",&jtPfMUF);
   if(isMC){
     evtTree->SetBranchAddress("genmatchindex", &genMatchIndex);// for reco jets
     //if(AASetup) evtTree->SetBranchAddress("matchedHadronFlavor", &flavor_forb);// for reco jets
@@ -282,16 +290,18 @@ void eventMap::loadJet(const char* name){
 
 
   }
-  evtTree->SetBranchAddress("muN",&muN);
-  evtTree->SetBranchAddress("mupt",&mupt);
-  evtTree->SetBranchAddress("mueta",&mueta);
-  evtTree->SetBranchAddress("muphi",&muphi);
-  evtTree->SetBranchAddress("muptrel",&muptrel);
+  //evtTree->SetBranchAddress("muN",&muN);
+  //evtTree->SetBranchAddress("mupt",&mupt);
+  //evtTree->SetBranchAddress("mueta",&mueta);
+  //evtTree->SetBranchAddress("muphi",&muphi);
+  //evtTree->SetBranchAddress("muptrel",&muptrel);
 }
 
 void eventMap::loadMuon(const char* name){
-  muonTree = (TTree*) _file->Get(Form("%s/EventTree",name));
+  muonTree = (TTree*) _file->Get("muonTree");
+  muonEvtTree = (TTree*) _file->Get("muonEvtTree");
   evtTree->AddFriend(muonTree);
+  evtTree->AddFriend(muonEvtTree);
   evtTree->SetBranchAddress("muPt",&muPt);
   evtTree->SetBranchAddress("muEta",&muEta);
   evtTree->SetBranchAddress("muPhi",&muPhi);
@@ -320,7 +330,7 @@ void eventMap::loadMuonAnalyzer(const char* name){
 }
 
 void eventMap::loadMuonTrigger(const char* name){
-  muonTriggerTree = (TTree*) _file->Get(Form("%s/HltTree",name));
+  muonTriggerTree = (TTree*) _file->Get("hltTree");
   evtTree->AddFriend(muonTriggerTree);
   evtTree->SetBranchAddress("HLT_HIL3Mu5_v1",&HLT_HIL3Mu5_v1);
   evtTree->SetBranchAddress("HLT_HIL3Mu5_v1_Prescl",&HLT_HIL3Mu5_v1_Prescl);
@@ -368,7 +378,7 @@ void eventMap::loadMuonTrigger(const char* name){
 }
 
 void eventMap::loadBTagger(){
-  if(jetTree ==nullptr) {
+  if(recoJetTree ==nullptr) {
     std::cout<<"Please load the jets by calling loadJet(jetset_name) before load the btagger for that certain jet set."<<std::endl;
     return;
   }
