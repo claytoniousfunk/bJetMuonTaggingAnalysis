@@ -234,254 +234,265 @@ void pp_scan(int group = 1){
   em->regEventFilter(NeventFilters, eventFilters);
 
   
- // event loop
- int evi_frac = 0;
- for(int evi = 0; evi < NEvents; evi++){
+  // event loop
+  int evi_frac = 0;
+  for(int evi = 0; evi < NEvents; evi++){
 
-   if(evi == 0) cout << "Processing events..." << endl;
+    if(evi == 0) cout << "Processing events..." << endl;
 
-   em->getEvent(evi); // load event info from eventMap
+    //em->getEvent(evi); // load event info from eventMap
+    em->muonTriggerTree->GetEntry(evi);
+    em->jetEvtTree->GetEntry(evi);
+    if(em->njet > 0){
+      em->recoJetTree->GetEntry(evi);
+    }
+    em->muonEvtTree->GetEntry(evi);
+    if(em->nMu > 0){
+      em->muonTree->GetEntry(evi);
+    }
 
-   if((100*evi / NEvents) % 5 == 0 && (100*evi / NEvents) > evi_frac){
+    if((100*evi / NEvents) % 5 == 0 && (100*evi / NEvents) > evi_frac){
 
-     cout << "evt frac: " << evi_frac << "%" << endl;
+      cout << "evt frac: " << evi_frac << "%" << endl;
 
-   }
+    }
 
-   evi_frac = 100*evi / NEvents;
+    evi_frac = 100*evi / NEvents;
 
-   // global event cuts
-   if(fabs(em->vz) > 15.0) continue;
-   // event filters
-   //if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
+    // global event cuts
+    if(fabs(em->vz) > 15.0) continue;
 
-   // In data, event weight = 1
-   double w = 1.0;
+    // event filters
+    //if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
+
+    // In data, event weight = 1
+    double w = 1.0;
    
-   int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
+    int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
 
-   int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
+    int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
 
-   bool evtTriggerDecision = false;
+    bool evtTriggerDecision = false;
 
-   int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
-   int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-   // int triggerDecision = em->HLT_HIL3Mu7_v1;
-   // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu7_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-   // int triggerDecision = em->HLT_HIL3Mu12_v1;
-   // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu12_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
-   // skip if the trigger is off or if the prescale is zero
-   if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) evtTriggerDecision = true;
+    // skip if the trigger is off or if the prescale is zero
+    if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) evtTriggerDecision = true;
    
-   // set the weight equal to the "gluing" parameter
+    // set the weight equal to the "gluing" parameter
    
-   // if(triggerDecision_Prescl == 0){ continue;}
-   // else if(triggerDecision_Prescl == 1){
-   //   w = 1.0 ;
-   // }
-   // else if(triggerDecision_Prescl == 3){
-   //   w = 1.0 / 6.04088 ;
-   // }
-   // else if(triggerDecision_Prescl == 5){
-   //   w = 1.0 / 8.68813 ;
-   // }
-   // else{ continue ;}
+    // if(triggerDecision_Prescl == 0){ continue;}
+    // else if(triggerDecision_Prescl == 1){
+    //   w = 1.0 ;
+    // }
+    // else if(triggerDecision_Prescl == 3){
+    //   w = 1.0 / 6.04088 ;
+    // }
+    // else if(triggerDecision_Prescl == 5){
+    //   w = 1.0 / 8.68813 ;
+    // }
+    // else{ continue ;}
 
-   double w_trig = w;
+    double w_trig = w;
 
    
-   bool eventHasGoodJet = false;
-   bool eventHasInclRecoMuonTag = false;
-   bool eventHasInclRecoMuonTagPlusTrigger = false;
-   bool eventHasMatchedRecoMuonTag = false;
-   bool eventHasMatchedRecoMuonTagPlusTrigger = false;
+    bool eventHasGoodJet = false;
+    bool eventHasInclRecoMuonTag = false;
+    bool eventHasInclRecoMuonTagPlusTrigger = false;
+    bool eventHasMatchedRecoMuonTag = false;
+    bool eventHasMatchedRecoMuonTagPlusTrigger = false;
    
-   // RECO MUON LOOP
-   for(int m = 0; m < em->nMu; m++){
+    // RECO MUON LOOP
+    for(int m = 0; m < em->nMu; m++){
 
-       double muPt_m = em->muPt[m];
-       double muEta_m = em->muEta[m];
-       double muPhi_m = em->muPhi[m];
-       // skip if muon has already been matched to a jet in this event
-       // muon kinematic cuts
-       if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
-       // muon quality cuts
-       if(!isQualityMuon_tight(em->muChi2NDF[m],
-			       em->muInnerD0[m],
-			       em->muInnerDz[m],
-			       em->muMuonHits[m],
-			       em->muPixelHits[m],
-			       em->muIsGlobal[m],
-			       em->muIsPF[m],
-			       em->muStations[m],
-			       em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
+      double muPt_m = em->muPt[m];
+      double muEta_m = em->muEta[m];
+      double muPhi_m = em->muPhi[m];
+      // skip if muon has already been matched to a jet in this event
+      // muon kinematic cuts
+      if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
+      // muon quality cuts
+      if(!isQualityMuon_tight(em->muChi2NDF[m],
+			      em->muInnerD0[m],
+			      em->muInnerDz[m],
+			      em->muMuonHits[m],
+			      em->muPixelHits[m],
+			      em->muIsGlobal[m],
+			      em->muIsPF[m],
+			      em->muStations[m],
+			      em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
 
-       h_inclMuPt->Fill(muPt_m,w);
+      h_inclMuPt->Fill(muPt_m,w);
+      
 
-   }
+    }
 
 
-   double leadingRecoJetPt = 0.0;
-   // RECO JET LOOP
-   for(int i = 0; i < em->njet ; i++){
+    double leadingRecoJetPt = 0.0;
+    cout << "event " << evi << endl;
+    // RECO JET LOOP
+    for(int i = 0; i < em->njet ; i++){
 
-     // JET VARIABLES
-		
-     JEC.SetJetPT(em->rawpt[i]);
-     JEC.SetJetEta(em->jeteta[i]);
-     JEC.SetJetPhi(em->jetphi[i]);
+      // JET VARIABLES
+	
+      JEC.SetJetPT(em->rawpt[i]);
+      JEC.SetJetEta(em->jeteta[i]);
+      JEC.SetJetPhi(em->jetphi[i]);
 
-     double x = JEC.GetCorrectedPT();  // use manual JEC
-     //double x = em->jetpt[i]; // use built-in JEC
-     double y = em->jeteta[i]; // recoJetEta
-     double z = em->jetphi[i]; // recoJetPhi
-     double jetTrkMax_i = em->jetTrkMax[i];
+      double x = JEC.GetCorrectedPT();  // use manual JEC
+      //double x = em->jetpt[i]; // use built-in JEC
+      double y = em->jeteta[i]; // recoJetEta
+      double z = em->jetphi[i]; // recoJetPhi
+      double jetTrkMax_i = em->jetTrkMax[i];
 
-     if(doJetTrkMaxFilter){
+      if(doJetTrkMaxFilter){
 	if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
       }
      
-     if(doEtaPhiMask){
-       if(etaPhiMask(y,z)) continue;
-     }
+      if(doEtaPhiMask){
+	if(etaPhiMask(y,z)) continue;
+      }
 
+      //cout << "x" << endl;
      
-     
-     double muPtRel = -1.0;
-     double muPt = -1.0;
-     double muEta = -1.0;
-     double muPhi = -1.0;
+      double muPtRel = -1.0;
+      double muPt = -1.0;
+      double muEta = -1.0;
+      double muPhi = -1.0;
 
-     bool hasInclRecoMuonTag = false;
+      bool hasInclRecoMuonTag = false;
 		
-     // jet kinematic cuts
-     if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
+      // jet kinematic cuts
+      if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
 
-     eventHasGoodJet = true;
-     if(x > leadingRecoJetPt) leadingRecoJetPt = x;
-		        
-     int jetPtIndex = getJetPtBin(x);
+      eventHasGoodJet = true;
+      if(x > leadingRecoJetPt) leadingRecoJetPt = x;
+  
+      int jetPtIndex = getJetPtBin(x);
 
-     // look for recoMuon match to recoJet		
-     for(int m = 0; m < em->nMu; m++){
+      // look for recoMuon match to recoJet		
+      for(int m = 0; m < em->nMu; m++){
 
-       double muPt_m = em->muPt[m];
-       double muEta_m = em->muEta[m];
-       double muPhi_m = em->muPhi[m];
-       // skip if muon has already been matched to a jet in this event
-       if(matchFlagR[m] == 1) continue;
-       // muon kinematic cuts
-       if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
-       // muon quality cuts
-       if(!isQualityMuon_tight(em->muChi2NDF[m],
-			       em->muInnerD0[m],
-			       em->muInnerDz[m],
-			       em->muMuonHits[m],
-			       em->muPixelHits[m],
-			       em->muIsGlobal[m],
-			       em->muIsPF[m],
-			       em->muStations[m],
-			       em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
-
-			
+	double muPt_m = em->muPt[m];
+	double muEta_m = em->muEta[m];
+	double muPhi_m = em->muPhi[m];
+	// skip if muon has already been matched to a jet in this event
+	if(matchFlagR[m] == 1) continue;
+	// muon kinematic cuts
+	if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
+	// muon quality cuts
+	if(!isQualityMuon_tight(em->muChi2NDF[m],
+				em->muInnerD0[m],
+				em->muInnerDz[m],
+				em->muMuonHits[m],
+				em->muPixelHits[m],
+				em->muIsGlobal[m],
+				em->muIsPF[m],
+				em->muStations[m],
+				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
 
 
+	if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 
-       if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	// match to recoJets
+	if(getDr(muEta_m,muPhi_m,y,z) < epsilon_mm){
 
-       // match to recoJets
-       if(getDr(muEta_m,muPhi_m,y,z) < epsilon_mm){
-
-	 matchFlagR[m] = 1;
+	  matchFlagR[m] = 1;
 				
-	 hasInclRecoMuonTag = true;
+	  hasInclRecoMuonTag = true;
 
-	 muPtRel = getPtRel(muPt_m,muEta_m,muPhi_m,x,y,z);
-	 muPt = muPt_m;
-	 muEta = muEta_m;
-	 muPhi = muPhi_m;
+	  muPtRel = getPtRel(muPt_m,muEta_m,muPhi_m,x,y,z);
+	  muPt = muPt_m;
+	  muEta = muEta_m;
+	  muPhi = muPhi_m;
 
-       }
+	}
 
-     }
+      }
 
-     // Fill the jet/event histograms
-     h_inclRecoJetPt->Fill(x,w);
-     h_inclRecoJetEta->Fill(y,w);
-     h_inclRecoJetPhi->Fill(z,w);
-     h_inclRecoJetPt_inclRecoJetEta->Fill(x,y,w);
-     h_inclRecoJetPt_inclRecoJetPhi->Fill(x,z,w);
-     h_inclRecoJetEta_inclRecoJetPhi[0]->Fill(y,z,w);
-     if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi[jetPtIndex]->Fill(y,z,w);
+      cout << "jet(" << i << ") pT = " << x << endl;
      
-     if(hasInclRecoMuonTag){
+      // Fill the jet/event histograms
+      h_inclRecoJetPt->Fill(x,w);
+      h_inclRecoJetEta->Fill(y,w);
+      h_inclRecoJetPhi->Fill(z,w);
+      h_inclRecoJetPt_inclRecoJetEta->Fill(x,y,w);
+      h_inclRecoJetPt_inclRecoJetPhi->Fill(x,z,w);
+      h_inclRecoJetEta_inclRecoJetPhi[0]->Fill(y,z,w);
+      if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi[jetPtIndex]->Fill(y,z,w);
+     
+      if(hasInclRecoMuonTag){
 
-       eventHasInclRecoMuonTag = true;
+	eventHasInclRecoMuonTag = true;
 
-       h_inclRecoJetPt_inclRecoMuonTag->Fill(x,w);
-       h_inclRecoJetEta_inclRecoMuonTag->Fill(y,w);
-       h_inclRecoJetPhi_inclRecoMuonTag->Fill(z,w);
-       h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Fill(x,y,w);
-       h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Fill(x,z,w);
-       h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(y,z,w);
-       if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(y,z,w);
+	h_inclRecoJetPt_inclRecoMuonTag->Fill(x,w);
+	h_inclRecoJetEta_inclRecoMuonTag->Fill(y,w);
+	h_inclRecoJetPhi_inclRecoMuonTag->Fill(z,w);
+	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Fill(x,y,w);
+	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Fill(x,z,w);
+	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(y,z,w);
+	if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(y,z,w);
        
-       if(evtTriggerDecision){
+	if(evtTriggerDecision){
 	 
-	 eventHasInclRecoMuonTagPlusTrigger = true;
+	  eventHasInclRecoMuonTagPlusTrigger = true;
 
-	 h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Fill(x,w_trig);
-	 h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(y,w_trig);
-	 h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(z,w_trig);
-	 h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(x,y,w_trig);
-	 h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(x,z,w_trig);
+	  h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Fill(x,w_trig);
+	  h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(y,w_trig);
+	  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(z,w_trig);
+	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(x,y,w_trig);
+	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(x,z,w_trig);
 	 
-	 h_muptrel_inclRecoMuonTag_triggerOn[0]->Fill(muPtRel,w_trig);
-	 h_mupt_inclRecoMuonTag_triggerOn[0]->Fill(muPt,w_trig);
-	 h_mueta_inclRecoMuonTag_triggerOn[0]->Fill(muEta,w_trig);
-	 h_muphi_inclRecoMuonTag_triggerOn[0]->Fill(muPhi,w_trig);
+	  h_muptrel_inclRecoMuonTag_triggerOn[0]->Fill(muPtRel,w_trig);
+	  h_mupt_inclRecoMuonTag_triggerOn[0]->Fill(muPt,w_trig);
+	  h_mueta_inclRecoMuonTag_triggerOn[0]->Fill(muEta,w_trig);
+	  h_muphi_inclRecoMuonTag_triggerOn[0]->Fill(muPhi,w_trig);
 
-	 h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(y,z,w_trig);
+	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(y,z,w_trig);
 
-	 if(jetPtIndex > 0){
+	  if(jetPtIndex > 0){
 
-	   h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(y,z,w_trig);
+	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(y,z,w_trig);
 	   
-	   h_muptrel_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPtRel,w_trig);
-	   h_mupt_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPt,w_trig);
-	   h_mueta_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muEta,w_trig);
-	   h_muphi_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPhi,w_trig);
-	 }
-       } 
+	    h_muptrel_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPtRel,w_trig);
+	    h_mupt_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPt,w_trig);
+	    h_mueta_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muEta,w_trig);
+	    h_muphi_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPhi,w_trig);
+	  }
+	} 
 
-     }
+      }
 
-   }
-   // END recoJet LOOP
+    }
+    // END recoJet LOOP
 
-   if(eventHasGoodJet && leadingRecoJetPt > 60){
+    if(eventHasGoodJet && leadingRecoJetPt > 60){
 
-     h_vz->Fill(em->vz,w);
-     h_hiBin->Fill(em->hiBin,w);
+      h_vz->Fill(em->vz,w);
+      h_hiBin->Fill(em->hiBin,w);
 
-     if(eventHasInclRecoMuonTag){
+      if(eventHasInclRecoMuonTag){
 
-       h_vz_inclRecoMuonTag->Fill(em->vz,w);
-       h_hiBin_inclRecoMuonTag->Fill(em->hiBin,w);
+	h_vz_inclRecoMuonTag->Fill(em->vz,w);
+	h_hiBin_inclRecoMuonTag->Fill(em->hiBin,w);
 
-       if(eventHasInclRecoMuonTagPlusTrigger){
+	if(eventHasInclRecoMuonTagPlusTrigger){
 
-	 h_vz_inclRecoMuonTag_triggerOn->Fill(em->vz,w_trig);
-	 h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin,w_trig);
+	  h_vz_inclRecoMuonTag_triggerOn->Fill(em->vz,w_trig);
+	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin,w_trig);
 	 
-       }
+	}
        
-     }
+      }
 
-   }
+    }
 
 
    
@@ -490,54 +501,54 @@ void pp_scan(int group = 1){
 
 
  
- delete f;
- // WRITE
- auto wf = TFile::Open(output,"recreate");
+  delete f;
+  // WRITE
+  auto wf = TFile::Open(output,"recreate");
 
- h_hiBin->Write();
- h_hiBin_inclRecoMuonTag->Write();
- h_hiBin_inclRecoMuonTag_triggerOn->Write();
+  h_hiBin->Write();
+  h_hiBin_inclRecoMuonTag->Write();
+  h_hiBin_inclRecoMuonTag_triggerOn->Write();
 
- h_vz->Write();
- h_vz_inclRecoMuonTag->Write();
- h_vz_inclRecoMuonTag_triggerOn->Write();
+  h_vz->Write();
+  h_vz_inclRecoMuonTag->Write();
+  h_vz_inclRecoMuonTag_triggerOn->Write();
    
- h_inclRecoJetPt->Write();
- h_inclRecoJetEta->Write();
- h_inclRecoJetPhi->Write();
- h_inclRecoJetPt_inclRecoJetEta->Write();
- h_inclRecoJetPt_inclRecoJetPhi->Write();
+  h_inclRecoJetPt->Write();
+  h_inclRecoJetEta->Write();
+  h_inclRecoJetPhi->Write();
+  h_inclRecoJetPt_inclRecoJetEta->Write();
+  h_inclRecoJetPt_inclRecoJetPhi->Write();
    
- h_inclRecoJetPt_inclRecoMuonTag->Write();
- h_inclRecoJetEta_inclRecoMuonTag->Write();
- h_inclRecoJetPhi_inclRecoMuonTag->Write();
- h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Write();
- h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Write();
+  h_inclRecoJetPt_inclRecoMuonTag->Write();
+  h_inclRecoJetEta_inclRecoMuonTag->Write();
+  h_inclRecoJetPhi_inclRecoMuonTag->Write();
+  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Write();
+  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Write();
    
- h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Write();
- h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
- h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
- h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
- h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
- h_inclMuPt->Write();
+  h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Write();
+  h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
+  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
+  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
+  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
+  h_inclMuPt->Write();
 
  
- for(int j = 0; j < NJetPtIndices; j++){
+  for(int j = 0; j < NJetPtIndices; j++){
 
-   h_muptrel_inclRecoMuonTag_triggerOn[j]->Write();
-   h_mupt_inclRecoMuonTag_triggerOn[j]->Write();
-   h_mueta_inclRecoMuonTag_triggerOn[j]->Write();
-   h_muphi_inclRecoMuonTag_triggerOn[j]->Write();
-   h_inclRecoJetEta_inclRecoJetPhi[j]->Write();
-   h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[j]->Write();
-   h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[j]->Write();
+    h_muptrel_inclRecoMuonTag_triggerOn[j]->Write();
+    h_mupt_inclRecoMuonTag_triggerOn[j]->Write();
+    h_mueta_inclRecoMuonTag_triggerOn[j]->Write();
+    h_muphi_inclRecoMuonTag_triggerOn[j]->Write();
+    h_inclRecoJetEta_inclRecoJetPhi[j]->Write();
+    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[j]->Write();
+    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[j]->Write();
      
- }
+  }
  
 
 
- wf->Close();
- return;
- // END WRITE
+  wf->Close();
+  return;
+  // END WRITE
 
 }
