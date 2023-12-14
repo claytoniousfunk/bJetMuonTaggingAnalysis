@@ -109,7 +109,7 @@ TH1D *h_muphi_inclRecoMuonTag_triggerOn[NJetPtIndices];
 void pp_scan(int group = 1){
 
   TString input = Form("../../../rootFiles/skimmingOutput/pp/output/pp_skim_output_%i.root",group);
-  TString output = Form("output/PYTHIA_scan_output_%i.root",group);
+  TString output = Form("output/pp_scan_output_%i.root",group);
 
 
 
@@ -382,7 +382,7 @@ void pp_scan(int group = 1){
 			       em->muMuonHits[m],
 			       em->muPixelHits[m],
 			       em->muIsGlobal[m],
-			       em->muIsPF->at(m),
+			       em->muIsPF[m],
 			       em->muStations[m],
 			       em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
 
