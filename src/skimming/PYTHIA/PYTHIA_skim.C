@@ -409,7 +409,8 @@ void PYTHIA_skim(int group = 0,
   my_filter_tree->Write();
   my_evt_tree->Write();
   my_hlt_tree->Write();
-  my_jet_tree->Write();
+  my_reco_jet_tree->Write();
+  my_gen_jet_tree->Write();
   my_jet_evt_tree->Write();
   my_muon_tree->Write();
   my_muon_evt_tree->Write();
