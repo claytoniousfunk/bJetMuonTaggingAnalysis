@@ -31,41 +31,41 @@
 #include <stdlib.h>
 
 // event map
-#include "../../../../eventMap/eventMap.h"
+#include "../../../eventMap/eventMap.h"
 // jet corrector
-#include "../../../../JetEnergyCorrections/JetCorrector.h"
+#include "../../../JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
-#include "../../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p1.h"
 
 // eta-phi mask function
-#include "../../../../headers/functions/etaPhiMask.h"
+#include "../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../../headers/functions/getDr.h"
+#include "../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../../headers/functions/getJetPtBin.h"
+#include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../../headers/functions/getPtRel.h"
+#include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../../headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../../headers/functions/isQualityMuon_tight.h"
+#include "../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../../headers/functions/isWDecayMuon.h"
+#include "../../../headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "../../../../headers/functions/triggerIsOn.h"
+#include "../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // JetTrkMax filter function
-#include "../../../../headers/functions/passesJetTrkMaxFilter.h"
+#include "../../../headers/functions/passesJetTrkMaxFilter.h"
 // print introduction
-#include "../../../../headers/introductions/printIntroduction_pp_scan_V3p7.h"
+#include "../../../headers/introductions/printIntroduction_pp_scan_V3p7.h"
 // analysis config
-#include "../../../../headers/config/config_pp_SingleMuon.h"
+#include "../../../headers/config/config_pp_SingleMuon.h"
 //#include "../../../../headers/config/config_pp_MB.h"
 // read config
-#include "../../../../headers/config/readConfig.h"
+#include "../../../headers/config/readConfig.h"
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // -----------------------------------------events w/ incl. reco jet -------
@@ -106,11 +106,18 @@ TH1D *h_mupt_inclRecoMuonTag_triggerOn[NJetPtIndices];
 TH1D *h_mueta_inclRecoMuonTag_triggerOn[NJetPtIndices];
 TH1D *h_muphi_inclRecoMuonTag_triggerOn[NJetPtIndices];
 ///////////////////////  start the program
-void pp_scan(TString input = "/eos/cms/store/group/phys_heavyions/cbennett/pp_SingleMuon_24Oct23/SingleMuon/crab_pp_SingleMuon_24Oct23/231023_233227/0000/HiForestAOD_1.root", TString output = "out.root"){
+void pp_scan(int group = 1){
+
+  TString input = Form("../../../rootFiles/skimmingOutput/pp/output/pp_skim_output_%i.root",group);
+  TString output = Form("output/PYTHIA_scan_output_%i.root",group);
+
+
+
+  
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("../../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
-  Files.push_back("../../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   JetCorrector JEC(Files);
   /// >>>>>>>>>>>>>>> print out some info
   printIntroduction_pp_scan_V3p7();
@@ -246,7 +253,7 @@ void pp_scan(TString input = "/eos/cms/store/group/phys_heavyions/cbennett/pp_Si
    // global event cuts
    if(fabs(em->vz) > 15.0) continue;
    // event filters
-   if(em->checkEventFilter()) continue;
+   //if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
 
    // In data, event weight = 1
    double w = 1.0;
@@ -295,22 +302,22 @@ void pp_scan(TString input = "/eos/cms/store/group/phys_heavyions/cbennett/pp_Si
    // RECO MUON LOOP
    for(int m = 0; m < em->nMu; m++){
 
-       double muPt_m = em->muPt->at(m);
-       double muEta_m = em->muEta->at(m);
-       double muPhi_m = em->muPhi->at(m);
+       double muPt_m = em->muPt[m];
+       double muEta_m = em->muEta[m];
+       double muPhi_m = em->muPhi[m];
        // skip if muon has already been matched to a jet in this event
        // muon kinematic cuts
        if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
        // muon quality cuts
-       if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-			       em->muInnerD0->at(m),
-			       em->muInnerDz->at(m),
-			       em->muMuonHits->at(m),
-			       em->muPixelHits->at(m),
-			       em->muIsGlobal->at(m),
-			       em->muIsPF->at(m),
-			       em->muStations->at(m),
-			       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+       if(!isQualityMuon_tight(em->muChi2NDF[m],
+			       em->muInnerD0[m],
+			       em->muInnerDz[m],
+			       em->muMuonHits[m],
+			       em->muPixelHits[m],
+			       em->muIsGlobal[m],
+			       em->muIsPF[m],
+			       em->muStations[m],
+			       em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
 
        h_inclMuPt->Fill(muPt_m,w);
 
@@ -361,23 +368,23 @@ void pp_scan(TString input = "/eos/cms/store/group/phys_heavyions/cbennett/pp_Si
      // look for recoMuon match to recoJet		
      for(int m = 0; m < em->nMu; m++){
 
-       double muPt_m = em->muPt->at(m);
-       double muEta_m = em->muEta->at(m);
-       double muPhi_m = em->muPhi->at(m);
+       double muPt_m = em->muPt[m];
+       double muEta_m = em->muEta[m];
+       double muPhi_m = em->muPhi[m];
        // skip if muon has already been matched to a jet in this event
        if(matchFlagR[m] == 1) continue;
        // muon kinematic cuts
        if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
        // muon quality cuts
-       if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-			       em->muInnerD0->at(m),
-			       em->muInnerDz->at(m),
-			       em->muMuonHits->at(m),
-			       em->muPixelHits->at(m),
-			       em->muIsGlobal->at(m),
+       if(!isQualityMuon_tight(em->muChi2NDF[m],
+			       em->muInnerD0[m],
+			       em->muInnerDz[m],
+			       em->muMuonHits[m],
+			       em->muPixelHits[m],
+			       em->muIsGlobal[m],
 			       em->muIsPF->at(m),
-			       em->muStations->at(m),
-			       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+			       em->muStations[m],
+			       em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
 
 			
 
@@ -386,7 +393,7 @@ void pp_scan(TString input = "/eos/cms/store/group/phys_heavyions/cbennett/pp_Si
        if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 
        // match to recoJets
-       if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
+       if(getDr(muEta_m,muPhi_m,y,z) < epsilon_mm){
 
 	 matchFlagR[m] = 1;
 				
