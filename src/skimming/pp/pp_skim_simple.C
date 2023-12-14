@@ -16,13 +16,18 @@ void pp_skim_simple(int group = 1){
   Int_t ifile = 0;
 
   int endfile = 6033;
+
+  TFile *old_file;
   while(instr>>filename && ifile<endfile){
+
+    ifile++;
 
     if(ifile != group) continue;
   
     cout << (100.)*(1.0*ifile / (1.0*endfile)) << " %" << endl;
     
-    TFile *old_file = TFile::Open(filename.c_str());
+    old_file = TFile::Open(filename.c_str());
+  }
     
     TTree *old_jet_tree;
     old_file->GetObject("ak4PFJetAnalyzer/t",old_jet_tree);
@@ -41,8 +46,7 @@ void pp_skim_simple(int group = 1){
     output_file->Write(); 
   
 
-
-  }
+  
 
 
 
