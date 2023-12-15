@@ -6,9 +6,6 @@ void pp_skim_simple(int group = 1){
   output_file_base += Form("output/pp_SingleMuon_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
-  TFile *output_file = TFile::Open((TString) (output_file_base+output_file_extension), "RECREATE");
-
-
 
   std::ifstream instr(in_file_name.c_str(), std::ifstream::in);
   if(!instr.is_open()) cout << "filelist not found!! Exiting..." << endl;
@@ -29,7 +26,10 @@ void pp_skim_simple(int group = 1){
 
     filename_string = filename.c_str();
     
-  }
+  
+
+  cout << "filename is " << filename_string << endl;
+
 
   old_file = TFile::Open(filename.c_str());
   
@@ -43,25 +43,13 @@ void pp_skim_simple(int group = 1){
   old_jet_tree->SetBranchStatus("jtphi",1);
   old_jet_tree->SetBranchStatus("nref",1);
 
+  auto new_file = TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
   auto new_jet_tree = old_jet_tree->CloneTree(0);
 
   new_jet_tree->CopyEntries(old_jet_tree);
 
+  new_file->Write();
 
-  output_file->cd();
-
-  new_jet_tree->Write();
-
-    
-  output_file->Write(); 
-  
-
-  
-
-
-
-
-
-
+  }
 
 }
