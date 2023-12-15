@@ -1,4 +1,6 @@
-void pp_skim_simple(int group = 1){
+void pp_skim_simple(int group = 1,
+		    int startgroup = 0,
+		    int endgroup = 0){
 
   string in_file_name;
   string output_file_base = "./";
@@ -20,7 +22,9 @@ void pp_skim_simple(int group = 1){
 
     ifile++;
 
-    if(ifile != group) continue;
+    //if(ifile != group) continue;
+
+    if(ifile < startgroup || ifile > endgroup) continue;
   
     cout << (100.)*(1.0*ifile / (1.0*endfile)) << " %" << endl;
 
@@ -28,27 +32,27 @@ void pp_skim_simple(int group = 1){
     
   
 
-  cout << "filename is " << filename_string << endl;
+    cout << "filename is " << filename_string << endl;
 
 
-  old_file = TFile::Open(filename.c_str());
+    old_file = TFile::Open(filename.c_str());
   
-  TTree *old_jet_tree;
-  old_file->GetObject("ak4PFJetAnalyzer/t",old_jet_tree);
-  // deactivate all branches                                                                                                                                             
-  old_jet_tree->SetBranchStatus("*",0);
-  // activate only our variables of interest                                                                                                                             
-  old_jet_tree->SetBranchStatus("jtpt",1);
-  old_jet_tree->SetBranchStatus("jteta",1);
-  old_jet_tree->SetBranchStatus("jtphi",1);
-  old_jet_tree->SetBranchStatus("nref",1);
+    TTree *old_jet_tree;
+    old_file->GetObject("ak4PFJetAnalyzer/t",old_jet_tree);
+    // deactivate all branches                                                                                                                                             
+    old_jet_tree->SetBranchStatus("*",0);
+    // activate only our variables of interest                                                                                                                             
+    old_jet_tree->SetBranchStatus("jtpt",1);
+    old_jet_tree->SetBranchStatus("jteta",1);
+    old_jet_tree->SetBranchStatus("jtphi",1);
+    old_jet_tree->SetBranchStatus("nref",1);
 
-  auto new_file = TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
-  auto new_jet_tree = old_jet_tree->CloneTree(0);
+    auto new_file = TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
+    auto new_jet_tree = old_jet_tree->CloneTree(0);
 
-  new_jet_tree->CopyEntries(old_jet_tree);
+    new_jet_tree->CopyEntries(old_jet_tree);
 
-  new_file->Write();
+    new_file->Write();
 
   }
 
