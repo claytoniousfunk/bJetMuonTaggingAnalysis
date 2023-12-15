@@ -8,7 +8,7 @@ for i in {1..6033}
 
 do
     
-    root -l -q "pp_skim.C($i)"
+    root -l -q "pp_skim_simple.C($i)"
 
 done
 
