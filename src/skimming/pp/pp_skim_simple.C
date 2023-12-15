@@ -18,7 +18,7 @@ void pp_skim_simple(int group = 1){
   int endfile = 6033;
 
   TFile *old_file;
-  while(instr>>filename && ifile!=){
+  while(instr>>filename && ifile<endfile){
 
     ifile++;
 
