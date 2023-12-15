@@ -74,8 +74,8 @@ public :
   //evt info
   Float_t weight = 0, vz = 0, pthat = 0;
   Int_t hiBin = 0;
-  Int_t evtNumber = 0;
-  Int_t runNumber = 0, lumiSection = 0;
+  ULong64_t evtNumber = 0;
+  UInt_t runNumber = 0, lumiSection = 0;
 
   //gen particle
   static const int genMax = 9999;
@@ -109,8 +109,8 @@ public :
   static const int muonMax = 9999;
   int nMu=0;
   int nInner = 0;
-  Float_t muPt[muonMax], muEta[muonMax], muPhi[muonMax], muChi2NDF[muonMax], muInnerD0[muonMax], muInnerDz[muonMax];
-  Int_t muIsPF[muonMax], muIsGlobal[muonMax], muIsTracker[muonMax], muMuonHits[muonMax], muStations[muonMax], muTrkLayers[muonMax], muPixelHits[muonMax], muCharge[muonMax];
+  vector<Float_t> *muPt=0, *muEta=0, *muPhi=0, *muChi2NDF=0, *muInnerD0=0, *muInnerDz=0;
+  vector<Int_t> *muIsPF=0, *muIsGlobal=0, *muIsTracker=0, *muMuonHits=0, *muStations=0, *muTrkLayers=0, *muPixelHits=0, *muCharge=0;
   vector <int> *innerNTrkHits=0;
 
   // muon trigger info
@@ -248,7 +248,8 @@ void eventMap::unloadGP(){
 }
 
 void eventMap::loadJet(const char* name){
-  recoJetTree = (TTree*) _file->Get("recoJetTree");
+  recoJetTree = (TTree*) _file->Get(Form("%s",name));
+  //cout << Form("%s",name) << endl;
   genJetTree = (TTree*) _file->Get("genJetTree");
   jetEvtTree = (TTree*) _file->Get("jetEvtTree");
   evtTree->AddFriend(recoJetTree);
