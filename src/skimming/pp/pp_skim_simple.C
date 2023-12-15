@@ -18,6 +18,7 @@ void pp_skim_simple(int group = 1){
   int endfile = 6033;
 
   TFile *old_file;
+  TString filename_string = "";
   while(instr>>filename && ifile<endfile){
 
     ifile++;
@@ -25,31 +26,34 @@ void pp_skim_simple(int group = 1){
     if(ifile != group) continue;
   
     cout << (100.)*(1.0*ifile / (1.0*endfile)) << " %" << endl;
+
+    filename_string = filename.c_str();
     
-    old_file = TFile::Open(filename.c_str());
   }
+
+  old_file = TFile::Open(filename.c_str());
+  
+  TTree *old_jet_tree;
+  old_file->GetObject("ak4PFJetAnalyzer/t",old_jet_tree);
+  // deactivate all branches                                                                                                                                             
+  old_jet_tree->SetBranchStatus("*",0);
+  // activate only our variables of interest                                                                                                                             
+  old_jet_tree->SetBranchStatus("jtpt",1);
+  old_jet_tree->SetBranchStatus("jteta",1);
+  old_jet_tree->SetBranchStatus("jtphi",1);
+  old_jet_tree->SetBranchStatus("nref",1);
+
+  auto new_jet_tree = old_jet_tree->CloneTree(0);
+
+  new_jet_tree->CopyEntries(old_jet_tree);
+
+
+  output_file->cd();
+
+  new_jet_tree->Write();
+
     
-    TTree *old_jet_tree;
-    old_file->GetObject("ak4PFJetAnalyzer/t",old_jet_tree);
-    // deactivate all branches                                                                                                                                             
-    old_jet_tree->SetBranchStatus("*",0);
-    // activate only our variables of interest                                                                                                                             
-    old_jet_tree->SetBranchStatus("jtpt",1);
-    old_jet_tree->SetBranchStatus("jteta",1);
-    old_jet_tree->SetBranchStatus("jtphi",1);
-    old_jet_tree->SetBranchStatus("nref",1);
-
-    auto new_jet_tree = old_jet_tree->CloneTree(0);
-
-    new_jet_tree->CopyEntries(old_jet_tree);
-
-
-    output_file->cd();
-
-    new_jet_tree->Write();
-
-    
-    output_file->Write(); 
+  output_file->Write(); 
   
 
   
