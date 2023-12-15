@@ -1,6 +1,4 @@
-void pp_skim_simple(int group = 1,
-		    int startgroup = 0,
-		    int endgroup = 0){
+void pp_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "./";
@@ -24,9 +22,7 @@ void pp_skim_simple(int group = 1,
 
     ifile++;
 
-    //if(ifile != group) continue;
-
-    if(ifile < startgroup || ifile > endgroup) continue;
+    if(ifile != group) continue;
   
     cout << (100.)*(1.0*ifile / (1.0*endfile)) << " %" << endl;
 
