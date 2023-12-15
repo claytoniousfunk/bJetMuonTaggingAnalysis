@@ -44,7 +44,7 @@ void pp_skim_simple(int group = 1){
     new_jet_tree->CopyEntries(old_jet_tree);
 
 
-    TFile *output_file = new TFile::Open((TString) (output_file_base+output_file_extension), "RECREATE");
+    TFile *output_file = TFile::Open((TString) (output_file_base+output_file_extension), "RECREATE");
     output_file->Write(); 
   
 
