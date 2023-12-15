@@ -18,6 +18,8 @@ void pp_skim_simple(int group = 1,
 
   TFile *old_file;
   TString filename_string = "";
+  TFile *new_file;
+  TTree *new_jet_tree;
   while(instr>>filename && ifile<endfile){
 
     ifile++;
@@ -47,8 +49,8 @@ void pp_skim_simple(int group = 1,
     old_jet_tree->SetBranchStatus("jtphi",1);
     old_jet_tree->SetBranchStatus("nref",1);
 
-    auto new_file = TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
-    auto new_jet_tree = old_jet_tree->CloneTree(0);
+    new_file = (TFile*) TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
+    new_jet_tree = (TTree*) old_jet_tree->CloneTree(0);
 
     new_jet_tree->CopyEntries(old_jet_tree);
 
