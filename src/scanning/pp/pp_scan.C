@@ -108,7 +108,8 @@ TH1D *h_muphi_inclRecoMuonTag_triggerOn[NJetPtIndices];
 ///////////////////////  start the program
 void pp_scan(int group = 1){
 
-  TString input = Form("../../../rootFiles/skimmingOutput/pp/output/pp_skim_output_%i.root",group);
+  //TString input = Form("../../../rootFiles/skimmingOutput/pp/output/pp_skim_output_%i.root",group);
+  TString input = "../../../rootFiles/skimmingOutput/pp/test/testFile.root";
   TString output = Form("output/pp_scan_output_%i.root",group);
 
 
@@ -240,16 +241,16 @@ void pp_scan(int group = 1){
 
     if(evi == 0) cout << "Processing events..." << endl;
 
-    //em->getEvent(evi); // load event info from eventMap
-    em->muonTriggerTree->GetEntry(evi);
-    em->jetEvtTree->GetEntry(evi);
-    if(em->njet > 0){
-      em->recoJetTree->GetEntry(evi);
-    }
-    em->muonEvtTree->GetEntry(evi);
-    if(em->nMu > 0){
-      em->muonTree->GetEntry(evi);
-    }
+    em->getEvent(evi); // load event info from eventMap
+    // em->muonTriggerTree->GetEntry(evi);
+    // em->jetEvtTree->GetEntry(evi);
+    // if(em->njet > 0){
+    //   em->recoJetTree->GetEntry(evi);
+    // }
+    // em->muonEvtTree->GetEntry(evi);
+    // if(em->nMu > 0){
+    //   em->muonTree->GetEntry(evi);
+    // }
 
     if((100*evi / NEvents) % 5 == 0 && (100*evi / NEvents) > evi_frac){
 
@@ -312,22 +313,26 @@ void pp_scan(int group = 1){
     // RECO MUON LOOP
     for(int m = 0; m < em->nMu; m++){
 
-      double muPt_m = em->muPt[m];
-      double muEta_m = em->muEta[m];
-      double muPhi_m = em->muPhi[m];
+      
+
+      double muPt_m = em->muPt->at(m);
+      double muEta_m = em->muEta->at(m);
+      double muPhi_m = em->muPhi->at(m);
+
+      //cout << "muon(" << m << ") pT = " << muPt_m << endl;
       // skip if muon has already been matched to a jet in this event
       // muon kinematic cuts
       if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
       // muon quality cuts
-      if(!isQualityMuon_tight(em->muChi2NDF[m],
-			      em->muInnerD0[m],
-			      em->muInnerDz[m],
-			      em->muMuonHits[m],
-			      em->muPixelHits[m],
-			      em->muIsGlobal[m],
-			      em->muIsPF[m],
-			      em->muStations[m],
-			      em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
+      if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+			      em->muInnerD0->at(m),
+			      em->muInnerDz->at(m),
+			      em->muMuonHits->at(m),
+			      em->muPixelHits->at(m),
+			      em->muIsGlobal->at(m),
+			      em->muIsPF->at(m),
+			      em->muStations->at(m),
+			      em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
       h_inclMuPt->Fill(muPt_m,w);
       
@@ -336,7 +341,7 @@ void pp_scan(int group = 1){
 
 
     double leadingRecoJetPt = 0.0;
-    cout << "event " << evi << endl;
+    //cout << "event " << evi << endl;
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
 
@@ -380,23 +385,23 @@ void pp_scan(int group = 1){
       // look for recoMuon match to recoJet		
       for(int m = 0; m < em->nMu; m++){
 
-	double muPt_m = em->muPt[m];
-	double muEta_m = em->muEta[m];
-	double muPhi_m = em->muPhi[m];
+	double muPt_m = em->muPt->at(m);
+	double muEta_m = em->muEta->at(m);
+	double muPhi_m = em->muPhi->at(m);
 	// skip if muon has already been matched to a jet in this event
 	if(matchFlagR[m] == 1) continue;
 	// muon kinematic cuts
 	if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
 	// muon quality cuts
-	if(!isQualityMuon_tight(em->muChi2NDF[m],
-				em->muInnerD0[m],
-				em->muInnerDz[m],
-				em->muMuonHits[m],
-				em->muPixelHits[m],
-				em->muIsGlobal[m],
-				em->muIsPF[m],
-				em->muStations[m],
-				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				em->muInnerD0->at(m),
+				em->muInnerDz->at(m),
+				em->muMuonHits->at(m),
+				em->muPixelHits->at(m),
+				em->muIsGlobal->at(m),
+				em->muIsPF->at(m),
+				em->muStations->at(m),
+				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
 
 	if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
@@ -416,8 +421,7 @@ void pp_scan(int group = 1){
 	}
 
       }
-
-      cout << "jet(" << i << ") pT = " << x << endl;
+     
      
       // Fill the jet/event histograms
       h_inclRecoJetPt->Fill(x,w);
