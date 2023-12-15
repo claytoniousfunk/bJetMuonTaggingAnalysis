@@ -6,7 +6,7 @@ void pp_skim_simple(int group = 1){
   output_file_base += Form("output/pp_SingleMuon_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
-  
+  TFile *output_file = TFile::Open((TString) (output_file_base+output_file_extension), "RECREATE");
 
 
 
@@ -44,7 +44,11 @@ void pp_skim_simple(int group = 1){
     new_jet_tree->CopyEntries(old_jet_tree);
 
 
-    TFile *output_file = TFile::Open((TString) (output_file_base+output_file_extension), "RECREATE");
+    output_file->cd();
+
+    new_jet_tree->Write();
+
+    
     output_file->Write(); 
   
 
