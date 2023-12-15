@@ -105,6 +105,12 @@ void pp_skim_simple(int group = 1){
     new_jet_tree->CopyEntries(old_jet_tree);
     new_muon_tree->CopyEntries(old_muon_tree);
 
+    new_filter_tree->SetName("filterTree");
+    new_evt_tree->SetName("evtTree");
+    new_hlt_tree->SetName("hltTree");
+    new_jet_tree->SetName("jetTree");
+    new_muon_tree->SetName("muonTree");
+
     new_file->Write();
 
   }
