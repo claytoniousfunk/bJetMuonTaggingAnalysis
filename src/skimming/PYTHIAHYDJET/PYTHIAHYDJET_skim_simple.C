@@ -40,7 +40,7 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     old_file->GetObject("skimanalysis/HltTree",old_filter_tree);
     old_file->GetObject("hiEvtAnalyzer/HiTree",old_evt_tree);
     old_file->GetObject("hltanalysis/HltTree",old_hlt_tree);
-    old_file->GetObject("ak4PFJetAnalyzer/t",old_jet_tree);
+    old_file->GetObject("akCs4PFJetAnalyzer/t",old_jet_tree);
     old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
     old_file->GetObject("HiGenParticleAna/hi",old_gen_tree);
     // deactivate all branches                                                                                   
