@@ -104,12 +104,12 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     old_muon_tree->SetBranchStatus("muCharge",1);
     old_muon_tree->SetBranchStatus("nMu",1);
     // gen
-    gen_particle_tree->SetBranchStatus("pt",1);
-    gen_particle_tree->SetBranchStatus("eta",1);
-    gen_particle_tree->SetBranchStatus("phi",1);
-    gen_particle_tree->SetBranchStatus("chg",1);
-    gen_particle_tree->SetBranchStatus("pdg",1);
-    gen_particle_tree->SetBranchStatus("n",1);
+    old_gen_tree->SetBranchStatus("pt",1);
+    old_gen_tree->SetBranchStatus("eta",1);
+    old_gen_tree->SetBranchStatus("phi",1);
+    old_gen_tree->SetBranchStatus("chg",1);
+    old_gen_tree->SetBranchStatus("pdg",1);
+    old_gen_tree->SetBranchStatus("n",1);
     
 
     new_file = (TFile*) TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
