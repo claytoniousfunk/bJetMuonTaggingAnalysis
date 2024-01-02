@@ -3,7 +3,7 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   string in_file_name;
   string output_file_base = "./";
   in_file_name = "fileNames/fileNames_PYTHIAHYDJET_DiJet_19Sep23.txt";
-  output_file_base += Form("output/PYTHIAHYDJET_skim_output_%i",group);
+  output_file_base += Form("output_DiJet/PYTHIAHYDJET_DiJet_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
