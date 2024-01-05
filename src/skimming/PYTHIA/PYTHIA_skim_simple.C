@@ -62,6 +62,8 @@ void PYTHIA_skim_simple(int group = 1){
     old_evt_tree->SetBranchStatus("lumi",1);
     old_evt_tree->SetBranchStatus("evt",1);
     old_evt_tree->SetBranchStatus("vz",1);
+    old_evt_tree->SetBranchStatus("pthat",1);
+    old_evt_tree->SetBranchStatus("weight",1);
     // hlt
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_NHitQ10_v1",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu7_v1",1);
@@ -76,6 +78,12 @@ void PYTHIA_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("jtphi",1);
     old_jet_tree->SetBranchStatus("trackMax",1);
     old_jet_tree->SetBranchStatus("nref",1);
+    old_jet_tree->SetBranchStatus("jtPartonFlavor",1);
+    old_jet_tree->SetBranchStatus("jtHadronFlavor",1);
+    old_jet_tree->SetBranchStatus("genpt",1);
+    old_jet_tree->SetBranchStatus("geneta",1);
+    old_jet_tree->SetBranchStatus("genphi",1);
+    old_jet_tree->SetBranchStatus("ngen",1);
     // muons
     old_muon_tree->SetBranchStatus("muPt",1);
     old_muon_tree->SetBranchStatus("muEta",1);
@@ -93,12 +101,12 @@ void PYTHIA_skim_simple(int group = 1){
     old_muon_tree->SetBranchStatus("muCharge",1);
     old_muon_tree->SetBranchStatus("nMu",1);
     // gen
-    gen_particle_tree->SetBranchStatus("pt",1);
-    gen_particle_tree->SetBranchStatus("eta",1);
-    gen_particle_tree->SetBranchStatus("phi",1);
-    gen_particle_tree->SetBranchStatus("chg",1);
-    gen_particle_tree->SetBranchStatus("pdg",1);
-    gen_particle_tree->SetBranchStatus("n",1);
+    old_gen_tree->SetBranchStatus("pt",1);
+    old_gen_tree->SetBranchStatus("eta",1);
+    old_gen_tree->SetBranchStatus("phi",1);
+    old_gen_tree->SetBranchStatus("chg",1);
+    old_gen_tree->SetBranchStatus("pdg",1);
+    old_gen_tree->SetBranchStatus("n",1);
     
 
     new_file = (TFile*) TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
