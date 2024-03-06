@@ -1,0 +1,16 @@
+// PYTHIA
+// ---------- vz fit parameters
+// ---------- 3rd order polynomial
+
+int N_vzFitParam = 4;
+
+double vzFitParam_0 = 0.951874;
+double vzFitParam_1 = 0.00295295;
+double vzFitParam_2 = 0.0020088;
+double vzFitParam_3 = -2.49205e-05;
+
+double e_vzFitParam_0 = 0.00913338;
+double e_vzFitParam_1 = 0.00253221;
+double e_vzFitParam_2 = 0.000186903;
+double e_vzFitParam_3 = ;
+

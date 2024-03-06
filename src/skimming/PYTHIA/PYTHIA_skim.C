@@ -304,6 +304,16 @@ void PYTHIA_skim(int group = 0,
       
       int nref_prime = 0; // counter variable for nref
 
+      // initialize for nref=0 entries
+      jtpt           = -999.0;
+      rawpt          = -999.0;
+      jteta          = -999.0;
+      jtphi          = -999.0;
+      trackMax       = -999.0;
+      jtPartonFlavor = -999.0;
+      jtHadronFlavor = -999.0;
+
+      
       // start reco-jet loop
       for(int jeti = 0; jeti < t_nref[0]; jeti++){
 
@@ -326,6 +336,11 @@ void PYTHIA_skim(int group = 0,
 
       int ngen_prime = 0;
 
+      // initialize for ngen=0 entries
+      genpt          = -999.0;
+      geneta         = -999.0;
+      genphi         = -999.0;
+
       // start gen-jet loop
       for(int jetj = 0; jetj < t_ngen[0]; jetj++){
 
@@ -342,6 +357,22 @@ void PYTHIA_skim(int group = 0,
       ngen = ngen_prime;
       
       int nMu_prime = 0;
+
+      // initialize for nMu=0 entries
+      muPt        = -999.0;
+      muEta       = -999.0;
+      muPhi       = -999.0;
+      muChi2NDF   = -999.0;
+      muInnerD0   = -999.0;
+      muInnerDz   = -999.0;
+      muIsPF      = -999.0;
+      muIsGlobal  = -999.0;
+      muIsTracker = -999.0;
+      muMuonHits  = -999.0;
+      muStations  = -999.0;
+      muTrkLayers = -999.0;
+      muPixelHits = -999.0;
+      muCharge    = -999.0;
 
       // start muon loop
       for(int mui = 0; mui < t_nMu[0]; mui++){
@@ -370,6 +401,12 @@ void PYTHIA_skim(int group = 0,
       nMu = nMu_prime;
 
       int n_prime = 0;
+
+      // initialize for n=0 entries
+      pt  = -999.0;
+      eta = -999.0;
+      phi = -999.0;
+      chg = -999.0;
       
       // start gen-particle loop
       for(int geni = 0; geni < t_n[0]; geni++){
@@ -389,9 +426,16 @@ void PYTHIA_skim(int group = 0,
       n = n_prime;
       
       // fill event trees
+      if(nMu == 0) my_muon_tree->Fill();
       my_muon_evt_tree->Fill();
+
+      if(n == 0) my_gen_particle_tree->Fill();
       my_gen_particle_evt_tree->Fill();
+
+      if(nref == 0) my_reco_jet_tree->Fill();
+      if(ngen == 0) my_gen_jet_tree->Fill();
       my_jet_evt_tree->Fill();
+
       my_filter_tree->Fill();
       my_evt_tree->Fill();
       my_hlt_tree->Fill();

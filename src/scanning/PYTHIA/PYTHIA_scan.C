@@ -46,7 +46,18 @@
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // hiBin-fit parameters
-#include "../../../headers/fitParameters/hiBinFitParams.h"
+// pThat > 30
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu7.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu12.h"
+// pThat > 40
+#include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu7.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu12.h"
+// pThat > 50
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu7.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu12.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
@@ -162,9 +173,8 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 
 void PYTHIA_scan(int group = 1){
 
-  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIA/output/PYTHIA_skim_output_%i.root",group);
-  //TString input = "../../../rootFiles/skimmingOutput/PYTHIA/test/testFile.root";
-  TString output = Form("output/PYTHIA_scan_output_%i.root",group);
+  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIA/output_DiJet/PYTHIA_DiJet_skim_output_%i.root",group);
+  TString output = Form("output_DiJet_scan_pThat50_mu5_evtReweight_jetFilter/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -422,11 +432,11 @@ void PYTHIA_scan(int group = 1){
     int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1; 
     int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    //int triggerDecision = em->HLT_HIL3Mu7_v1; 
-    //int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu7_v1; 
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-    //int triggerDecision = em->HLT_HIL3Mu12_v1; 
-    //int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl; 
+    // int triggerDecision = em->HLT_HIL3Mu12_v1; 
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl; 
     
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)){
       evtTriggerDecision = true;
@@ -640,24 +650,24 @@ void PYTHIA_scan(int group = 1){
 
       if(!skipGenParticles){
 	// look for a genMuon match
-	for(int j = 0; j < em->ngp; j++){
+	for(int j = 0; j < em->gpptp->size(); j++){
 
                         
 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
 	  genMuIndex++;
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp[j],x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 		
-	  double a = em->gpptp[j];
+	  double a = em->gpptp->at(j);
 	  double am = -1.0;
-	  double b = em->gpetap[j];
+	  double b = em->gpetap->at(j);
 	  double bm = -1.0;
-	  double c = em->gpphip[j];
+	  double c = em->gpphip->at(j);
 	  double cm = -1.0;
 
 
@@ -665,24 +675,24 @@ void PYTHIA_scan(int group = 1){
 
 	  for(int l = 0; l < em->nMu; l++){
 
-	    if(em->muPt[l] < muPtCut || fabs(em->muEta[l]) > trkEtaMax) continue;
+	    if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > trkEtaMax) continue;
 	 
-	    if(!isQualityMuon_tight(em->muChi2NDF[l],
-				    em->muInnerD0[l],
-				    em->muInnerDz[l],
-				    em->muMuonHits[l],
-				    em->muPixelHits[l],
-				    em->muIsGlobal[l],
-				    em->muIsPF[l],
-				    em->muStations[l],
-				    em->muTrkLayers[l])) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+				    em->muInnerD0->at(l),
+				    em->muInnerDz->at(l),
+				    em->muMuonHits->at(l),
+				    em->muPixelHits->at(l),
+				    em->muIsGlobal->at(l),
+				    em->muIsPF->at(l),
+				    em->muStations->at(l),
+				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 
 
-	    if(isWDecayMuon(em->muPt[l],x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
+	    if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
-	    double aR = em->muPt[l];
-	    double bR = em->muEta[l];
-	    double cR = em->muPhi[l];
+	    double aR = em->muPt->at(l);
+	    double bR = em->muEta->at(l);
+	    double cR = em->muPhi->at(l);
 
 	    if(getDr(b,c,bR,cR) < epsilon){
 				
@@ -714,35 +724,35 @@ void PYTHIA_scan(int group = 1){
 
 	if(matchFlagR[m] == 1) continue;
 
-	if(em->muPt[m] < muPtCut || fabs(em->muEta[m]) > trkEtaMax) continue;
+	if(em->muPt->at(m) < muPtCut || fabs(em->muEta->at(m)) > trkEtaMax) continue;
 			 
-	if(!isQualityMuon_tight(em->muChi2NDF[m],
-				em->muInnerD0[m],
-				em->muInnerDz[m],
-				em->muMuonHits[m],
-				em->muPixelHits[m],
-				em->muIsGlobal[m],
-				em->muIsPF[m],
-				em->muStations[m],
-				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				em->muInnerD0->at(m),
+				em->muInnerDz->at(m),
+				em->muMuonHits->at(m),
+				em->muPixelHits->at(m),
+				em->muIsGlobal->at(m),
+				em->muIsPF->at(m),
+				em->muStations->at(m),
+				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
 
-	if(isWDecayMuon(em->muPt[m],x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	if(isWDecayMuon(em->muPt->at(m),x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 			
 	// match to genMuon
 	bool isMatchedRecoMuon = false;
 
 	if(!skipGenParticles){
-	  for(int j = 0; j < em->ngp; j++){
+	  for(int j = 0; j < em->gpptp->size(); j++){
 
 
 	    //cout << "genID = " << em->gppdgIDp->at(j) << endl;
 			
-	    if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
+	    if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	    if(em->gpptp[j] < muPtCut || fabs(em->gpetap[j]) > trkEtaMax) continue;                        
+	    if(em->gpptp->at(j) < muPtCut || fabs(em->gpetap->at(j)) > trkEtaMax) continue;                        
 		
-	    if(getDr(em->muEta[m],em->muPhi[m],em->gpetap[j],em->gpphip[j]) < epsilon){
+	    if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
 
 	      isMatchedRecoMuon = true;
 			
@@ -751,16 +761,16 @@ void PYTHIA_scan(int group = 1){
 	  }
 	}
 	// match to recoJets
-	if(getDr(em->muEta[m],em->muPhi[m],y,z) < epsilon_mm){
+	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
 
 	  matchFlagR[m] = 1;
 				
 	  hasInclRecoMuonTag = true;
 
-	  muPtRel = getPtRel(em->muPt[m],em->muEta[m],em->muPhi[m],x,y,z);
-	  muPt = em->muPt[m];
-	  muEta = em->muEta[m];
-	  muPhi = em->muPhi[m];
+	  muPtRel = getPtRel(em->muPt->at(m),em->muEta->at(m),em->muPhi->at(m),x,y,z);
+	  muPt = em->muPt->at(m);
+	  muEta = em->muEta->at(m);
+	  muPhi = em->muPhi->at(m);
 	  
 	  if(isMatchedRecoMuon) hasMatchedRecoMuonTag = true;
 
@@ -971,50 +981,50 @@ void PYTHIA_scan(int group = 1){
 
       if(!skipGenParticles){
 	// look for a genMuon match
-	for(int j = 0; j < em->ngp; j++){
+	for(int j = 0; j < em->gpptp->size(); j++){
 
                         
 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
 	  genMuIndex++;
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp[j],x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 		
-	  double a = em->gpptp[j];
+	  double a = em->gpptp->at(j);
 	  double am = -1.0;
-	  double b = em->gpetap[j];
+	  double b = em->gpetap->at(j);
 	  double bm = -1.0;
-	  double c = em->gpphip[j];
+	  double c = em->gpphip->at(j);
 	  double cm = -1.0;
 
 	  if(a < muPtCut || fabs(b) > trkEtaMax) continue;                        
 
 	  for(int l = 0; l < em->nMu; l++){
 
-	    if(em->muPt[l] < muPtCut || fabs(em->muEta[l]) > trkEtaMax) continue;
+	    if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > trkEtaMax) continue;
 	  
-	    if(!isQualityMuon_tight(em->muChi2NDF[l],
-				    em->muInnerD0[l],
-				    em->muInnerDz[l],
-				    em->muMuonHits[l],
-				    em->muPixelHits[l],
-				    em->muIsGlobal[l],
-				    em->muIsPF[l],
-				    em->muStations[l],
-				    em->muTrkLayers[l])) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+				    em->muInnerD0->at(l),
+				    em->muInnerDz->at(l),
+				    em->muMuonHits->at(l),
+				    em->muPixelHits->at(l),
+				    em->muIsGlobal->at(l),
+				    em->muIsPF->at(l),
+				    em->muStations->at(l),
+				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 
 
 	    //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
 
 			
-	    double aR = em->muPt[l];
-	    double bR = em->muEta[l];
-	    double cR = em->muPhi[l];
+	    double aR = em->muPt->at(l);
+	    double bR = em->muEta->at(l);
+	    double cR = em->muPhi->at(l);
 
 			
 
@@ -1049,20 +1059,20 @@ void PYTHIA_scan(int group = 1){
 
 	if(matchFlagR[m] == 1) continue;
 
-	if(em->muPt[m] < muPtCut || fabs(em->muEta[m]) > trkEtaMax) continue;
+	if(em->muPt->at(m) < muPtCut || fabs(em->muEta->at(m)) > trkEtaMax) continue;
 
-	if(!isQualityMuon_tight(em->muChi2NDF[m],
-				em->muInnerD0[m],
-				em->muInnerDz[m],
-				em->muMuonHits[m],
-				em->muPixelHits[m],
-				em->muIsGlobal[m],
-				em->muIsPF[m],
-				em->muStations[m],
-				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				em->muInnerD0->at(m),
+				em->muInnerDz->at(m),
+				em->muMuonHits->at(m),
+				em->muPixelHits->at(m),
+				em->muIsGlobal->at(m),
+				em->muIsPF->at(m),
+				em->muStations->at(m),
+				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
 
-	if(isWDecayMuon(em->muPt[m],x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	if(isWDecayMuon(em->muPt->at(m),x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 			
 			
 	// match to genMuon
@@ -1070,16 +1080,16 @@ void PYTHIA_scan(int group = 1){
 
 	bool isMatchedRecoMuon = false;
 
-	for(int j = 0; j < em->ngp; j++){
+	for(int j = 0; j < em->gpptp->size(); j++){
 
 
 	  //cout << "genID = " << em->gppdgIDp->at(j) << endl;
 			
-	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	  if(em->gpptp[j] < muPtCut || fabs(em->gpetap[j]) > trkEtaMax) continue;                        
+	  if(em->gpptp->at(j) < muPtCut || fabs(em->gpetap->at(j)) > trkEtaMax) continue;                        
 		
-	  if(getDr(em->muEta[m],em->muPhi[m],em->gpetap[j],em->gpphip[j]) < epsilon){
+	  if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
 
 	    isMatchedRecoMuon = true;
 			
@@ -1088,13 +1098,13 @@ void PYTHIA_scan(int group = 1){
 	}
 
 	// match to recoJets
-	if(getDr(em->muEta[m],em->muPhi[m],y,z) < epsilon_mm){
+	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
 
 	  matchFlagR[m] = 1;
 				
 	  hasInclRecoMuonTag = true;
 
-	  muPtRel = getPtRel(em->muPt[m],em->muEta[m],em->muPhi[m],x,y,z);
+	  muPtRel = getPtRel(em->muPt->at(m),em->muEta->at(m),em->muPhi->at(m),x,y,z);
 				
 	  if(isMatchedRecoMuon) hasMatchedRecoMuonTag = true;
 

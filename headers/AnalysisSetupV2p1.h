@@ -51,9 +51,14 @@ const double muPtMax = 100.0;
 
 const double deltaRCut = 0.4;  // muon-matching dR
 
-double muPtCut = 7.0; // mu5 scans
+//double muPtCut = 7.0; // mu5 scans
 //double muPtCut = 9.0; // mu7 scans
-//double muPtCut = 14.0; // mu12 scans
+double muPtCut = 14.0; // mu12 scans
+
+//const double pthatcut = 15.0;
+//const double pthatcut = 30.0;
+//const double pthatcut = 40.0;
+const double pthatcut = 50.0;
 
 const int NMuRelPtBins = 100;
 const double muRelPtMin = 0.0;
@@ -73,17 +78,9 @@ const double jetpt_J5_hi = 500.0;
 
 double jetPtEdges[NJetPtIndices] = {jetpt_J0_lo, jetpt_J0_hi, jetpt_J1_hi, jetpt_J2_hi, jetpt_J3_hi, jetpt_J4_hi, jetpt_J5_hi};
 
-
 const int NVzBins = 60;
 const double vzMin = -15.0;
 const double vzMax = 15.0;
-
-
-const double pthatcut = 15.0;
-//const double pthatcut = 30.0;
-//const double pthatcut = 40.0;
-//const double pthatcut = 40.0;
-
 
 const double epsilon = 0.1;
 const double epsilon_mm = 0.4;

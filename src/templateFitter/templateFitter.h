@@ -86,34 +86,186 @@ double func_temp_2(double *x, double *par){
 
 
 double templateFitter(bool isData = 1,
-		      bool ispp = 0,
-		      bool isC1 = 0,
-		      bool isC2 = 1,
-		      bool isJ1 = 0,
-		      bool isJ2 = 0,
-		      bool isJ3 = 0,
-		      bool isJ4 = 1,
-		      bool isJ5 = 0,
-		      bool isJ6 = 0,
+		      bool isMu5  = 1,
+		      bool isMu7  = 0,
+		      bool isMu12 = 0,
+		      bool ispp   = 0,
+		      bool isC1   = 0,
+		      bool isC2   = 1,
+		      bool isJ1   = 0,
+		      bool isJ2   = 0,
+		      bool isJ3   = 0,
+		      bool isJ4   = 1,
+		      bool isJ5   = 0,
+		      bool isJ6   = 0,
 		      bool mergeCtemplates = true,
 		      bool mergeBtemplates = true,
-		      bool do2templateFit = true,
-		      bool do3templateFit = false,
-		      double low_x = 0.0,
+		      bool do2templateFit  = true,
+		      bool do3templateFit  = false,
+		      double low_x  = 0.0,
 		      double high_x = 4.0,
+		      double c_multiplier = 1.0,
 		      int returnValueIndex = 1
-		    ){
+		      ){
 
   double result[4];
 
+
+  TString input_PYTHIA;
+  TString input_pp;
+  TString input_PYTHIAHYDJET_DiJet;
+  TString input_PYTHIAHYDJET_MuJet;
+  TString input_PYTHIAHYDJET_BJet;
+  TString input_PbPb;
   
+  if(isMu5){
+
+    input_pp   = goldenFile_pp_SingleMuon_mu5;
+    input_PbPb = goldenFile_PbPb_SingleMuon_mu5;
+
+    if(isJ1){
+      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat30;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat30;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat30;
+
+    }
+    else if(isJ2){
+      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat30;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat30;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat30;
+    }
+    else if(isJ3){
+      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat40;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat40;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat40;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat40;
+    }
+    else if(isJ4){
+      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat50;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat50;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat50;
+    }
+    else if(isJ5){
+      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat50;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat50;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat50;
+    }
+    else if(isJ6){
+      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat50;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat50;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat50;
+    }
+    else{};
+  }
+
+  else if(isMu7){
+
+    input_pp   = goldenFile_pp_SingleMuon_mu7;
+    input_PbPb = goldenFile_PbPb_SingleMuon_mu7;
+
+    if(isJ1){
+      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat30;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30;
+
+    }
+    else if(isJ2){
+      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat30;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30;
+    }
+    else if(isJ3){
+      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat40;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat40;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat40;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat40;
+    }
+    else if(isJ4){
+      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat50;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat50;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat50;
+    }
+    else if(isJ5){
+      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat50;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat50;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat50;
+    }
+    else if(isJ6){
+      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat50;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat50;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat50;
+    }
+    else{};
+  }
+
+  else if(isMu12){
+
+    input_pp   = goldenFile_pp_SingleMuon_mu12;
+    input_PbPb = goldenFile_PbPb_SingleMuon_mu12;
+
+    if(isJ1){
+      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat30;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30;
+
+    }
+    else if(isJ2){
+      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat30;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30;
+    }
+    else if(isJ3){
+      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat40;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat40;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat40;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat40;
+    }
+    else if(isJ4){
+      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat50;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat50;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat50;
+    }
+    else if(isJ5){
+      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat50;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat50;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat50;
+    }
+    else if(isJ6){
+      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat50;
+      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50;
+      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat50;
+      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat50;
+    }
+    else{};
+  }
 	
+  else{};
+
+
+  cout << "input_PYTHIA: " << input_PYTHIA << endl;
+  cout << "input_pp: " << input_pp << endl;
+  cout << "input_PYTHIAHYDJET_DiJet: " << input_PYTHIAHYDJET_DiJet << endl;
+  cout << "input_PbPb: " << input_PbPb << endl;
   
   if(ispp){
 	
-    f1 = TFile::Open(goldenFile_PYTHIA);
-    if(!isData) f_data = TFile::Open(goldenFile_PYTHIA);
-    else f_data = TFile::Open(goldenFile_pp_SingleMuon);	
+    f1 = TFile::Open(input_PYTHIA);
+    if(!isData) f_data = TFile::Open(input_PYTHIA);
+    else f_data = TFile::Open(input_pp);	
 
     if(isJ1){
       f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J1",h0);
@@ -145,13 +297,13 @@ double templateFitter(bool isData = 1,
   
   if(!ispp){
 
-    //f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_newPthatFilter_jetTrkMaxFilter);
-    //f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_newPthatFilter);
-    f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
-    f2 = TFile::Open(goldenFile_PYTHIAHYDJET_BJet);
-    f3 = TFile::Open(goldenFile_PYTHIAHYDJET_MuJet);
-    if(!isData) f_data = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
-    else f_data = TFile::Open(goldenFile_PbPb_SingleMuon);
+    f1 = TFile::Open(input_PYTHIAHYDJET_DiJet);
+    f2 = TFile::Open(input_PYTHIAHYDJET_BJet);
+    f3 = TFile::Open(input_PYTHIAHYDJET_MuJet);
+    
+    if(!isData) f_data = TFile::Open(input_PYTHIAHYDJET_DiJet);
+    else f_data = TFile::Open(input_PbPb);
+    
 
     if(isC1){
 
@@ -388,6 +540,12 @@ double templateFitter(bool isData = 1,
   }
 
 
+  TFile *file = TFile::Open("light-template-old.root","recreate");
+  h0_l->Write();
+  file->Close();
+
+
+  
   ////////// Calculate exact count ///////////////
 		
   double b_frac = 0.0;
@@ -449,7 +607,7 @@ double templateFitter(bool isData = 1,
   
   // add cJets to lJets (for 2-template fit)
   if(do2templateFit){
-    h0_c->Scale(c_truth / h0_c->Integral());
+    h0_c->Scale(c_multiplier * c_truth / h0_c->Integral());
     h0_l->Scale(l_truth / h0_l->Integral());
 
     h0_l->Add(h0_c);
@@ -493,17 +651,18 @@ double templateFitter(bool isData = 1,
   THStack *h_stack = new THStack("h_stack","");
   THStack *h_stack2 = new THStack("h_stack2","");
 
-  // const int M = 51;
+  //const int M = 41;
   //const int M = 31;
   //const int M = 17;
   const int M = 16;
+  //const int M = 11;
   //const int M = 8;
   
   //double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0}; // M = 31
-  // double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,
-  // 3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0,4.1,4.2,4.3,4.4,4.5,4.6,4.7,4.8,4.9,5.0}; // M = 51
+  //double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0}; // M = 41
 
   double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.2,1.5,1.8,2.4,4.0}; // M = 16
+  //double muRelPtAxis[M] = {0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.5,1.8,2.4,4.0}; // M = 11
   //double muRelPtAxis[M] = {0.0,0.3,0.6,0.9,1.3,1.8,2.5,4.0}; // M = 8
 		
 
@@ -756,27 +915,38 @@ double templateFitter(bool isData = 1,
 
   //////// Configure histogram fill color /////////////
 	        
-    h0_lR->SetMarkerStyle(20);
-    h0_lR->SetMarkerSize(markerVal);
-    h0_l_drawR->SetMarkerStyle(20);
-    h0_l_drawR->SetMarkerSize(markerVal2);
-    if(do2templateFit){
-      h0_lR->SetMarkerColor(kBlue+2);
-      h0_lR->SetLineColor(kBlue+2);
-      h0_lR->SetFillColorAlpha(kBlue+2,alphaVal);
-      h0_l_drawR->SetMarkerColor(kBlue+2);
-      h0_l_drawR->SetLineColor(kBlue+2);
-      h0_l_drawR->SetFillColorAlpha(kBlue+2,alphaVal);
-    }
-    else{
-      h0_lR->SetMarkerColor(kBlue-4);
-      h0_lR->SetLineColor(kBlue-4);
-      h0_lR->SetFillColorAlpha(kBlue-4,alphaVal);
-      h0_l_drawR->SetMarkerColor(kBlue-4);
-      h0_l_drawR->SetLineColor(kBlue-4);
-      h0_l_drawR->SetFillColorAlpha(kBlue-4,alphaVal);
-    }
+  h0_lR->SetMarkerStyle(20);
+  h0_lR->SetMarkerSize(markerVal);
+  h0_l_drawR->SetMarkerStyle(20);
+  h0_l_drawR->SetMarkerSize(markerVal2);
+  if(do2templateFit){
+    h0_lR->SetMarkerColor(kBlue+2);
+    h0_lR->SetLineColor(kBlue+2);
+    h0_lR->SetFillColorAlpha(kBlue+2,alphaVal);
+    h0_l_drawR->SetMarkerColor(kBlue+2);
+    h0_l_drawR->SetLineColor(kBlue+2);
+    h0_l_drawR->SetFillColorAlpha(kBlue+2,alphaVal);
+  }
+  else{
+    h0_lR->SetMarkerColor(kBlue-4);
+    h0_lR->SetLineColor(kBlue-4);
+    h0_lR->SetFillColorAlpha(kBlue-4,alphaVal);
+    h0_l_drawR->SetMarkerColor(kBlue-4);
+    h0_l_drawR->SetLineColor(kBlue-4);
+    h0_l_drawR->SetFillColorAlpha(kBlue-4,alphaVal);
+  }
 
+  /// ----------- save shapes of templates for later comparison ------------
+  // TFile *save_templates_file = TFile::Open("save_templates_mu12.root","recreate");
+  // h_draw->Write("h_data");
+  // h0_b_drawR->Write("h_b");
+  // h0_c_drawR->Write("h_c");
+  // h0_l_drawR->Write("h_l");
+  // save_templates_file->Close();
+  
+
+    
+    
  
   TH1D *h0_lR2 = (TH1D*) h0_lR->Clone("h0_lR2");
  
@@ -905,62 +1075,85 @@ double templateFitter(bool isData = 1,
   TLatex *t_b_truth = new TLatex();	
   TLatex *t_eb_truth = new TLatex();
 
-  t_title->SetTextFont(42);
-  t_pythia->SetTextFont(42);
+  t_title->SetTextFont(62);
+  t_pythia->SetTextFont(62);
   t_pt->SetTextFont(42);
   t_eta->SetTextFont(42);
   t_HLT->SetTextFont(42);
-  t_b->SetTextFont(42);
+  t_b->SetTextFont(62);
   t_eb->SetTextFont(42);
   t_b_truth->SetTextFont(42);
   t_eb_truth->SetTextFont(42);
 
-  double x_t = 0.5;
-  double y_t1 = 0.85;
-  double y_t2 = 0.78;
-  double y_t3 = 0.71;
-  double y_t4 = 0.64;
-  double y_t5 = 0.64;
-  double y_t6 = 0.57;
+  t_title->SetTextSize(0.055);
+  t_pythia->SetTextSize(0.048);
+  t_pt->SetTextSize(0.045);
+  t_HLT->SetTextSize(0.045);
+  t_b->SetTextSize(0.045);
+
+  double x_t0 = 0.6;
+  double x_t1 = 0.22;
+  double x_t = 0.45;
+  double y_t1 = 0.92;
+  double y_t2 = 0.92;
+  double y_t3 = 0.7;
+  double y_t4 = 0.6;
+  double y_t5 = 0.6;
+  double y_t6 = 0.5;
   double y_t7 = 0.50;
-  double y_t8 = 0.43;
+  double y_t8 = 0.4;
+  double y_t9 = 0.8;
 		
 
-  t_title->DrawLatexNDC(x_t,y_t1,"#scale[0.9]{CMS preliminary}");
+  t_title->DrawLatexNDC(x_t1,y_t1,"CMS #scale[0.8]{#font[52]{Preliminary}}");
   if(isData){
-    if(ispp) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{pp, #sqrt{#font[52]{s}} = 5 TeV}");
+    if(ispp) t_pythia->DrawLatexNDC(x_t0,y_t2,"pp (5.02 TeV)");
 	  
-    if(isC1) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 0-30%, #sqrt{#font[52]{s}} = 5 TeV}");
-    if(isC2) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PbPb 30-90%, #sqrt{#font[52]{s}} = 5 TeV}");
+    if(isC1) t_pythia->DrawLatexNDC(x_t0,y_t2,"PbPb 0-30% (5.02 TeV)");
+    if(isC2) t_pythia->DrawLatexNDC(x_t0,y_t2,"PbPb 30-90% (5.02 TeV)");
   }
             
   if(!isData) {
-    if(ispp) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA, #sqrt{#font[52]{s}} = 5 TeV}");
-    if(isC1) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 0-30%, #sqrt{#font[52]{s}} = 5 TeV}");
-    if(isC2) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 30-90%, #sqrt{#font[52]{s}} = 5 TeV}");
+    if(ispp) t_pythia->DrawLatexNDC(x_t0,y_t2,"PYTHIA (5.02 TeV)");
+    if(isC1) t_pythia->DrawLatexNDC(x_t0,y_t2,"PYTHIA+HYDJET 0-30% (5.02 TeV)");
+    if(isC2) t_pythia->DrawLatexNDC(x_t0,y_t2,"PYTHIA+HYDJET 30-90% (5.02 TeV)");
   }
 
 			
   
-  if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
-  if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{60 < #font[52]{p}_{T}^{jet} < 80 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
-  if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{80 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
-  if(isJ4) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{120 < #font[52]{p}_{T}^{jet} < 200 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
-  if(isJ5) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{200 < #font[52]{p}_{T}^{jet} < 300 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
-  if(isJ6) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{300 < #font[52]{p}_{T}^{jet} < 500 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
+  if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"60 < #font[52]{p}_{T}^{jet} < 80 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"80 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  if(isJ4) t_pt->DrawLatexNDC(x_t,y_t3,"120 < #font[52]{p}_{T}^{jet} < 200 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  if(isJ5) t_pt->DrawLatexNDC(x_t,y_t3,"200 < #font[52]{p}_{T}^{jet} < 300 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  if(isJ6) t_pt->DrawLatexNDC(x_t,y_t3,"300 < #font[52]{p}_{T}^{jet} < 500 GeV, |#font[52]{#eta}^{jet}| < 1.6");
 	
-  t_HLT->DrawLatexNDC(x_t,y_t5,"#scale[0.8]{#font[52]{p}_{T}^{#mu} > 7 GeV, |#font[52]{#eta}^{#mu}| < 2.0}");
-  t_b->DrawLatexNDC(x_t,y_t6,Form("#scale[0.8]{b_{fit} = %.4f #pm}", p0));
-  t_eb->DrawLatexNDC(x_t+0.16,y_t6,Form("#scale[0.8]{%.4f}",ep0));
+  if(isMu5) t_HLT->DrawLatexNDC(x_t,y_t5,"#font[52]{p}_{T}^{#mu} > 7 GeV, |#font[52]{#eta}^{#mu}| < 2.0");
+  else if(isMu7) t_HLT->DrawLatexNDC(x_t,y_t5,"#font[52]{p}_{T}^{#mu} > 9 GeV, |#font[52]{#eta}^{#mu}| < 2.0");
+  else if(isMu12) t_HLT->DrawLatexNDC(x_t,y_t5,"#font[52]{p}_{T}^{#mu} > 14 GeV, |#font[52]{#eta}^{#mu}| < 2.0");
+  else{};
+  
+  t_b->DrawLatexNDC(x_t,y_t6,Form("b_{fit} = %.4f #pm %.4f", p0, ep0));
 
-  if(isData) t_b->DrawLatexNDC(x_t,y_t7,Form("#scale[0.8]{#chi^{2}/ndof = %3.1f, N^{jet} = %i}",chi2/ndof,Njet));
-  else t_b->DrawLatexNDC(x_t,y_t8,Form("#scale[0.8]{#chi^{2}/ndof = %3.1f}",chi2/ndof));
- 
-		
-  if(!isData){
-    t_b_truth->DrawLatexNDC(x_t,y_t7,Form("#scale[0.8]{b_{count} = %.4f #pm}",b_frac));
-    t_eb_truth->DrawLatexNDC(x_t+0.183,y_t7,Form("#scale[0.8]{%.4f}",eb_frac));
+   t_b->SetTextFont(42);
+  if(isData) t_b->DrawLatexNDC(x_t,y_t8,Form("#chi^{2}/ndof = %3.1f, N^{jet} = %i",chi2/ndof,Njet));
+  
+  else{
+   
+    t_b->DrawLatexNDC(x_t,y_t8,Form("#chi^{2}/ndof = %3.1f",chi2/ndof));
   }
+
+
+  if(ispp){
+    t_b->DrawLatexNDC(x_t,y_t9,"Anti-#font[52]{k}_{T} PF jets, tight muon ID");
+  }
+  else{
+    t_b->DrawLatexNDC(x_t,y_t9,"Anti-#font[52]{k}_{T} CsPF jets, tight muon ID");
+  }
+  // if(!isData){
+  //   t_b_truth->DrawLatexNDC(x_t,y_t7,Form("#scale[0.8]{b_{count} = %.4f #pm}",b_frac));
+  //   t_eb_truth->DrawLatexNDC(x_t+0.183,y_t7,Form("#scale[0.8]{%.4f}",eb_frac));
+  // }
 		
   c1->cd();
   pad2->SetBottomMargin(0.4);
@@ -1031,7 +1224,7 @@ double templateFitter(bool isData = 1,
   h0_b_drawR->Draw("same");
   if(do3templateFit) h0_c_drawR->Draw("same");
   
-  TLegend *l2 = new TLegend(0.65,0.25,0.85,0.5);
+  TLegend *l2 = new TLegend(0.65,0.15,0.85,0.4);
 
   /////// configure the legend for template shapes plot
 
@@ -1046,12 +1239,12 @@ double templateFitter(bool isData = 1,
   l2->SetBorderSize(0);
   l2->Draw();
 
-  t_title->DrawLatexNDC(x_t,y_t1,"#scale[0.9]{CMS preliminary}");
+  t_title->DrawLatexNDC(x_t1,y_t1,"CMS #scale[0.8]{#font[52]{Preliminary}}");
 			
-  if(ispp) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA, #sqrt{#font[52]{s}} = 5 TeV}");
+  if(ispp) t_pythia->DrawLatexNDC(x_t0,y_t2,"PYTHIA (5.02 TeV)");
   else {
-    if(isC1) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 0-30%, #sqrt{#font[52]{s}} = 5 TeV}");
-    if(isC2) t_pythia->DrawLatexNDC(x_t,y_t2,"#scale[0.8]{PYTHIA+HYDJET 30-90%, #sqrt{#font[52]{s}} = 5 TeV}");
+    if(isC1) t_pythia->DrawLatexNDC(x_t0,y_t2,"PYTHIA+HYDJET 0-30% (5.02 TeV)");
+    if(isC2) t_pythia->DrawLatexNDC(x_t0,y_t2,"PYTHIA+HYDJET 30-90% (5.02 TeV)");
   }
 			
   //if(isC0C1){
@@ -1061,14 +1254,16 @@ double templateFitter(bool isData = 1,
 			
 			
   
-  if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
-  else if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{60 < #font[52]{p}_{T}^{jet} < 80 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
-  else if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{80 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
-  else if(isJ4) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{120 < #font[52]{p}_{T}^{jet} < 200 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
-  else if(isJ5) t_pt->DrawLatexNDC(x_t,y_t3,"#scale[0.8]{200 < #font[52]{p}_{T}^{jet} < 500 GeV, |#font[52]{#eta}^{jet}| < 1.6}");
+  if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  else if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"60 < #font[52]{p}_{T}^{jet} < 80 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  else if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"80 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  else if(isJ4) t_pt->DrawLatexNDC(x_t,y_t3,"120 < #font[52]{p}_{T}^{jet} < 200 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  else if(isJ5) t_pt->DrawLatexNDC(x_t,y_t3,"200 < #font[52]{p}_{T}^{jet} < 300 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  else if(isJ6) t_pt->DrawLatexNDC(x_t,y_t3,"300 < #font[52]{p}_{T}^{jet} < 500 GeV, |#font[52]{#eta}^{jet}| < 1.6");
   else {};
 	
-  t_pt->DrawLatexNDC(x_t, y_t4,"#scale[0.8]{#font[52]{p}_{T}^{#mu} > 7 GeV, |#font[52]{#eta}^{#mu}| < 2.0, tight muon ID}");
+  t_pt->DrawLatexNDC(x_t, y_t4,"#font[52]{p}_{T}^{#mu} > 7 GeV, |#font[52]{#eta}^{#mu}| < 2.0, tight muon ID");
+  //t_pt->DrawLatexNDC(x_t, y_t4,"#scale[0.8]{#font[52]{p}_{T}^{#mu} > 9 GeV, |#font[52]{#eta}^{#mu}| < 2.0, tight muon ID}");
 			
   //t_HLT->DrawLatexNDC(x_t,y_t5,"#scale[0.8]{HLT_HIL3Mu5_NHitQ10_v1}");
         

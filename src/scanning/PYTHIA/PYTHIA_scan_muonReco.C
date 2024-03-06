@@ -34,50 +34,65 @@
 // User includes
 
 // event map
-#include "../../../../eventMap/eventMap.h"
+#include "../../../eventMap/eventMap.h"
 // jet corrector
-#include "../../../../JetEnergyCorrections/JetCorrector.h"
+#include "../../../JetEnergyCorrections/JetCorrector.h"
 // jet uncertainty
-#include "../../../../JetEnergyCorrections/JetUncertainty.h"
+#include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../../headers/fitParameters/vzFitParams_PYTHIA.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // hiBin-fit parameters
-#include "../../../../headers/fitParameters/hiBinFitParams.h"
+// pThat > 30
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu7.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu12.h"
+// pThat > 40
+#include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu7.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu12.h"
+// pThat > 50
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu7.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu12.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "../../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
+#include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // hiBin-fit function
-#include "../../../../headers/fitFunctions/fitFxn_hiBin.h"
+#include "../../../headers/fitFunctions/fitFxn_hiBin.h"
 
 // eta-phi mask function
-#include "../../../../headers/functions/etaPhiMask.h"
+#include "../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../../headers/functions/getDr.h"
+#include "../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../../headers/functions/getJetPtBin.h"
+#include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../../headers/functions/getPtRel.h"
+#include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../../headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../../headers/functions/isQualityMuon_tight.h"
+#include "../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../../headers/functions/isWDecayMuon.h"
+#include "../../../headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "../../../../headers/functions/triggerIsOn.h"
+#include "../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+// JetTrkMax filter function
+#include "../../../headers/functions/passesJetTrkMaxFilter.h"
 // print introduction
-#include "../../../../headers/introductions/printIntroduction_PYTHIA_scan_V3p7.h"
+#include "../../../headers/introductions/printIntroduction_PYTHIA_scan_V3p7.h"
 // analysis config
-#include "../../../../headers/config/config_PYTHIA.h"
+#include "../../../headers/config/config_PYTHIA.h"
 // read config
-#include "../../../../headers/config/readConfig.h"
+#include "../../../headers/config/readConfig.h"
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TH1D *h_inclGenMuonPt;
@@ -87,8 +102,11 @@ TH1D *h_matchedGenMuonEta;
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonPt;
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonEta;
 
-void PYTHIA_scan_muonReco(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_10Aug22/QCD_pThat-15_Dijet_TuneCP5_5p02TeV_pythia8/crab_PYTHIA_forest_10Aug22/220810_170721/0000/HiForestAOD_100.root", TString output = "out.root"){
+void PYTHIA_scan_muonReco(int group = 1){
 
+  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIA/output_DiJet/PYTHIA_DiJet_skim_output_%i.root",group);
+  TString output = Form("output_DiJet_scan_muonReco_pThat50_mu5_evtReweight_jetFilter/PYTHIA_DiJet_scan_output_%i.root",group);
+  
   readConfig();
 
    // JET ENERGY CORRECTIONS

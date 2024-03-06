@@ -7,7 +7,7 @@ TFile *f1, *f2;
 void correctionFactorsCalculator(bool ispp = 1, bool isC2 = 0, bool isC1 = 0){
 
   if(ispp) f1 = TFile::Open(goldenFile_PYTHIA);
-  else f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet);
+  else f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_pthat15);
   
   TH2D *h0, *h1, *h2, *h3, *h4; // 2d flavor-pt maps
   // CENT BIN 0
@@ -942,13 +942,13 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC2 = 0, bool isC1 = 0){
     corrFactor_3_name = "corrFactor_3_pp";
   }
   else if(isC2){
-    output_filePath = "../../rootFiles/correctionFactors/correctionFactors_C2.root";
+    output_filePath = "../../rootFiles/correctionFactors/correctionFactors_C2_pthat15.root";
     corrFactor_1_name = "corrFactor_1_C2";
     corrFactor_2_name = "corrFactor_2_C2";
     corrFactor_3_name = "corrFactor_3_C2";
   }
   else if(isC1){
-    output_filePath = "../../rootFiles/correctionFactors/correctionFactors_C1.root";
+    output_filePath = "../../rootFiles/correctionFactors/correctionFactors_C1_pthat15.root";
     corrFactor_1_name = "corrFactor_1_C1";
     corrFactor_2_name = "corrFactor_2_C1";
     corrFactor_3_name = "corrFactor_3_C1";

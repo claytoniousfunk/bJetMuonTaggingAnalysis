@@ -1,75 +1,81 @@
 #+title: Analysis workflow
 
-* Abstract
+* Datasets
 
-* Introduction
+MC:
 
-* The CMS Detector
+| System        | Name | DAS |
+|---------------+------+-----|
+| *PYTHIA*        | -    | -   |
+|---------------+------+-----|
+| DiJet         |      |     |
+|---------------+------+-----|
+| *PYTHIA+HYDJET* | -    | -   |
+|---------------+------+-----|
+| DiJet         |      |     |
+| BJet          |      |     |
+| MuJet         |      |     |
+|---------------+------+-----|
+| *HYDJET*        | -    | -   |
+|---------------+------+-----|
+| MinBias       |      |     |
 
-* Trigger, Event Selection, and Centrality Determination
+Data:
 
-** Primary Datasets and Triggers
+| System     | Name | DAS |
+|------------+------+-----|
+| *pp*         | -    | -   |
+|------------+------+-----|
+| SingleMuon |      |     |
+| MinBias    |      |     |
+|------------+------+-----|
+| *PbPb*       | -    | -   |
+|------------+------+-----|
+| SingleMuon |      |     |
+| MinBias    |      |     |
+| DiJet      |      |     |
+|            |      |     |
 
-** Event Selection
 
-** Centrality Determination
+* Forests
 
-* Monte Carlo Simulations
+* Skims
 
-* Jet Reconstruction and Selection
+| System       | Skimming time |
+|--------------+---------------|
+| PYTHIA       | ~ 2 hours     |
+| PYTHIAHYDJET |               |
+| pp           |               |
+| PbPb         |               |
 
-** Jet Reconstruction Algorithm
 
-** Jet Energy Scale Corrections
+| System       | Skim location                                                        |
+|--------------+----------------------------------------------------------------------|
+| PYTHIA       | bJetMuonTaggingAnalysis/rootFiles/skimmingOutput/PYTHIA/output       |
+| PYTHIAHYDJET | bJetMuonTaggingAnalysis/rootFiles/skimmingOutput/PYTHIAHYDJET/output |
+| pp           | bJetMuonTaggingAnalysis/rootFiles/skimmingOutput/pp/output           |
+| PbPb         | bJetMuonTaggingAnalysis/rootFiles/skimmingOutput/PbPb/output         |
+|              |                                                                      |
 
-** Jet Selections and Kinematics
 
-* Muon Reconstruction
+| System       | Size  | N_files |
+|--------------+-------+---------|
+| PYTHIA       | 5.0 G |      60 |
+| PYTHIAHYDJET |       |         |
+| pp           | 7.7 G |     302 |
+| PbPb         | 2.6 G |      72 |
+|              |       |         |
 
-**  Muon Quality Cuts
 
-* b-jet Identification
 
-** Muon pTrel Template Shapes
+* Scans
 
-** Template Enhancement
+| System       | Scanning time |
+|--------------+---------------|
+| PYTHIA       | 12 min.       |
+| PYTHIAHYDJET |               |
+| pp           |               |
+| PbPb         |               |
+|              |               |
 
-** Correction Factors
 
-* Unfolding
-
-* Closure Tests
-
-* Systematic Uncertainties
-
-* Results
-
-* Vz Reweight Plots
-
-* Jet Spectra Plots
-
-* Muon Spectra Plots
-
-* Jet Energy Resolution and Scale Plots
-
-* Muon pTrel Template Shapes
-
-* Template Enhancement Plots
-
-* Response Matrix Plots
-
-* Systematic Uncertainties Plots
-
-** c-fraction Variation
-
-** Fit Lower-bound
-
-** c-jet Template Enhancement
-
-** b-jet Template Enhancement
-
-** Jet Energy Resolution
-
-* Muon pTrel Template Fit Plots
-
-* Plots Used to Derive the pThat-filter Function

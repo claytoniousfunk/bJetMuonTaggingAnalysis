@@ -46,11 +46,11 @@ public :
   int nJet(){return njet;};
   int nGenJet(){return ngj;};
   int nTrk(){return ntrk;};
-  float gppt(int j) {return gpptp[j];}
-  float gpeta(int j) {return gpetap[j];}
-  float gpphi(int j) {return gpphip[j];}
-  int gpchg(int j) {return gpchgp[j];}
-  int gppdgID(int j) {return gppdgIDp[j];}
+  float gppt(int j) {return gpptp->at(j);}
+  float gpeta(int j) {return gpetap->at(j);}
+  float gpphi(int j) {return gpphip->at(j);}
+  int gpchg(int j) {return gpchgp->at(j);}
+  int gppdgID(int j) {return gppdgIDp->at(j);}
   //  int gpIsStable(int j) {return gpStableTag->at(j);}
   //int gpSube(int j){ return gpsube->at(j);}
   TTree *hltTree, *filterTree, *trkTree, *genParticleTree=nullptr, *recoJetTree=nullptr, *genJetTree=nullptr, *muonTree=nullptr, *muonTriggerTree=nullptr, *muonAnalyzerTree=nullptr, *pfTree=nullptr;
@@ -81,8 +81,8 @@ public :
   static const int genMax = 9999;
   int ngp = 0;
   bool stableOnly = 1;
-  Float_t gpptp[genMax], gpetap[genMax], gpphip[genMax];
-  Int_t  gppdgIDp[genMax], gpchgp[genMax], gpsube[genMax], gpStableTag[genMax];
+  vector<Float_t> *gpptp=0, *gpetap=0, *gpphip=0;
+  vector<Int_t>  *gppdgIDp=0, *gpchgp=0, *gpsube=0, *gpStableTag=0;
 
   // pfCandidate info
   std::vector<int> *pfId=0, *pfPt=0, *pfEta=0, *pfPhi=0;
@@ -96,9 +96,9 @@ public :
   Float_t genjetpt[jetMax],genjeteta[jetMax],genjetphi[jetMax],genjet_wta_eta[jetMax],genjet_wta_phi[jetMax];
   Float_t partonFlavor[jetMax], hadronFlavor[jetMax];
   Int_t matchedPartonFlavor[jetMax], matchedHadronFlavor[jetMax];
+  Int_t bHadronNumber[jetMax];
   Int_t refparton_flavorForB[jetMax];
   Int_t refparton_flavor[jetMax];
-  Int_t bHadronNumber[jetMax];
   Int_t genMatchIndex[jetMax]; 
   Float_t disc_csvV2[jetMax];
   Int_t GSP_evt[jetMax];
@@ -220,17 +220,15 @@ void eventMap::loadTrack(){
 
 void eventMap::loadGenParticle(){
   genParticleTree = (TTree*) _file->Get("genParticleTree");
-  genParticleEvtTree = (TTree*) _file->Get("genParticleEvtTree");
   evtTree->AddFriend(genParticleTree);
-  evtTree->AddFriend(genParticleEvtTree);
   evtTree->SetBranchAddress("pt",  &gpptp);
   evtTree->SetBranchAddress("eta", &gpetap);
   evtTree->SetBranchAddress("phi", &gpphip);
   evtTree->SetBranchAddress("chg", &gpchgp);
   evtTree->SetBranchAddress("pdg", &gppdgIDp);
-  evtTree->SetBranchAddress("n", &ngp);
-  if(!AASetup) evtTree->SetBranchAddress("sube",&gpsube);
-  if(!stableOnly) evtTree->SetBranchAddress("sta",&gpStableTag);
+  //evtTree->SetBranchAddress("n", &ngp);
+  //if(!AASetup) evtTree->SetBranchAddress("sube",&gpsube);
+  //if(!stableOnly) evtTree->SetBranchAddress("sta",&gpStableTag);
   
 }
 
@@ -261,8 +259,8 @@ void eventMap::loadJet(const char* name){
   evtTree->SetBranchAddress("jteta", &jeteta);
   evtTree->SetBranchAddress("jtphi", &jetphi);
   evtTree->SetBranchAddress("trackMax", &jetTrkMax);
-  //evtTree->SetBranchAddress("WTAeta", &jet_wta_eta);
-  //evtTree->SetBranchAddress("WTAphi", &jet_wta_phi);
+  evtTree->SetBranchAddress("WTAeta", &jet_wta_eta);
+  evtTree->SetBranchAddress("WTAphi", &jet_wta_phi);
   //evtTree->SetBranchAddress("discr_csvV2", &disc_csvV2);
   //evtTree->SetBranchAddress("jtPfCHF",&jtPfCHF);
   //evtTree->SetBranchAddress("jtPfNHF",&jtPfNHF);
@@ -274,7 +272,7 @@ void eventMap::loadJet(const char* name){
     //if(AASetup) evtTree->SetBranchAddress("matchedHadronFlavor", &flavor_forb);// for reco jets
     //else evtTree->SetBranchAddress("refparton_flavorForB", &flavor_forb);// for reco jets
     evtTree->SetBranchAddress("ngen", &ngj);
-    evtTree->SetBranchAddress("refpt", &ref_jetpt);
+    //evtTree->SetBranchAddress("refpt", &ref_jetpt);
     evtTree->SetBranchAddress("genpt", &genjetpt);
     evtTree->SetBranchAddress("geneta", &genjeteta);
     evtTree->SetBranchAddress("genphi", &genjetphi);
@@ -284,7 +282,7 @@ void eventMap::loadJet(const char* name){
     evtTree->SetBranchAddress("jtHadronFlavor",&hadronFlavor);
     evtTree->SetBranchAddress("refparton_flavorForB",&refparton_flavorForB);
     evtTree->SetBranchAddress("refparton_flavor",&refparton_flavor);
-    //evtTree->SetBranchAddress("bHadronNumber",&bHadronNumber);
+    evtTree->SetBranchAddress("bHadronNumber",&bHadronNumber);
     //evtTree->SetBranchAddress("WTAgeneta", &genjet_wta_eta);
     //evtTree->SetBranchAddress("WTAgenphi", &genjet_wta_phi);
     //evtTree->SetBranchAddress("GSP_evt",&GSP_evt);
@@ -300,7 +298,7 @@ void eventMap::loadJet(const char* name){
 
 void eventMap::loadMuon(const char* name){
   muonTree = (TTree*) _file->Get("muonTree");
-  muonEvtTree = (TTree*) _file->Get("muonEvtTree");
+  //muonEvtTree = (TTree*) _file->Get("muonEvtTree");
   evtTree->AddFriend(muonTree);
   evtTree->AddFriend(muonEvtTree);
   evtTree->SetBranchAddress("muPt",&muPt);
@@ -333,48 +331,48 @@ void eventMap::loadMuonAnalyzer(const char* name){
 void eventMap::loadMuonTrigger(const char* name){
   muonTriggerTree = (TTree*) _file->Get("hltTree");
   evtTree->AddFriend(muonTriggerTree);
-  evtTree->SetBranchAddress("HLT_HIL3Mu5_v1",&HLT_HIL3Mu5_v1);
-  evtTree->SetBranchAddress("HLT_HIL3Mu5_v1_Prescl",&HLT_HIL3Mu5_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIL3Mu3_NHitQ10_v1",&HLT_HIL3Mu3_NHitQ10_v1);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu5_v1",&HLT_HIL3Mu5_v1);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu5_v1_Prescl",&HLT_HIL3Mu5_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu3_NHitQ10_v1",&HLT_HIL3Mu3_NHitQ10_v1);
   evtTree->SetBranchAddress("HLT_HIL3Mu5_NHitQ10_v1",&HLT_HIL3Mu5_NHitQ10_v1);
-  evtTree->SetBranchAddress("HLT_HIL3Mu3_NHitQ10_tagging_v1",&HLT_HIL3Mu3_NHitQ10_tagging_v1);
-  evtTree->SetBranchAddress("HLT_HIL3Mu5_NHitQ10_tagging_v1",&HLT_HIL3Mu5_NHitQ10_tagging_v1);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu3_NHitQ10_tagging_v1",&HLT_HIL3Mu3_NHitQ10_tagging_v1);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu5_NHitQ10_tagging_v1",&HLT_HIL3Mu5_NHitQ10_tagging_v1);
   evtTree->SetBranchAddress("HLT_HIL3Mu7_NHitQ10_v1",&HLT_HIL3Mu7_NHitQ10_v1);
-  evtTree->SetBranchAddress("HLT_HIL3Mu3_NHitQ10_v1_Prescl",&HLT_HIL3Mu3_NHitQ10_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu3_NHitQ10_v1_Prescl",&HLT_HIL3Mu3_NHitQ10_v1_Prescl);
   evtTree->SetBranchAddress("HLT_HIL3Mu5_NHitQ10_v1_Prescl",&HLT_HIL3Mu5_NHitQ10_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIL3Mu3_NHitQ10_tagging_v1_Prescl",&HLT_HIL3Mu3_NHitQ10_tagging_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIL3Mu5_NHitQ10_tagging_v1_Prescl",&HLT_HIL3Mu5_NHitQ10_tagging_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu3_NHitQ10_tagging_v1_Prescl",&HLT_HIL3Mu3_NHitQ10_tagging_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu5_NHitQ10_tagging_v1_Prescl",&HLT_HIL3Mu5_NHitQ10_tagging_v1_Prescl);
   evtTree->SetBranchAddress("HLT_HIL3Mu7_NHitQ10_v1_Prescl",&HLT_HIL3Mu7_NHitQ10_v1_Prescl);
   evtTree->SetBranchAddress("HLT_HIL3Mu7_v1",&HLT_HIL3Mu7_v1);
   evtTree->SetBranchAddress("HLT_HIL3Mu7_v1_Prescl",&HLT_HIL3Mu7_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIL3Mu5_AK4PFJet30_v1",&HLT_HIL3Mu5_AK4PFJet30_v1);
-  evtTree->SetBranchAddress("HLT_HIL3Mu5_AK4PFJet40_v1",&HLT_HIL3Mu5_AK4PFJet40_v1);
-  evtTree->SetBranchAddress("HLT_HIL3Mu5_AK4PFJet60_v1",&HLT_HIL3Mu5_AK4PFJet60_v1);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet15_v1",&HLT_HIAK4PFJet15_v1);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet30_v1",&HLT_HIAK4PFJet30_v1);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet40_v1",&HLT_HIAK4PFJet40_v1);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet40_v1_Prescl",&HLT_HIAK4PFJet40_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet60_v1",&HLT_HIAK4PFJet60_v1);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet60_v1_Prescl",&HLT_HIAK4PFJet60_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet80_v1",&HLT_HIAK4PFJet80_v1);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet80_v1_Prescl",&HLT_HIAK4PFJet80_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet100_v1",&HLT_HIAK4PFJet100_v1);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet100_v1_Prescl",&HLT_HIAK4PFJet100_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIAK4PFJet120_v1",&HLT_HIAK4PFJet120_v1);
-  evtTree->SetBranchAddress("HLT_HIAK4CaloJet80_v1",&HLT_HIAK4CaloJet80_v1);
-  evtTree->SetBranchAddress("HLT_HICsAK4PFJet100Eta1p5_v1",&HLT_HICsAK4PFJet100Eta1p5_v1);
-  evtTree->SetBranchAddress("HLT_HICsAK4PFJet100Eta1p5_v1_Prescl",&HLT_HICsAK4PFJet100Eta1p5_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu5_AK4PFJet30_v1",&HLT_HIL3Mu5_AK4PFJet30_v1);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu5_AK4PFJet40_v1",&HLT_HIL3Mu5_AK4PFJet40_v1);
+  //evtTree->SetBranchAddress("HLT_HIL3Mu5_AK4PFJet60_v1",&HLT_HIL3Mu5_AK4PFJet60_v1);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet15_v1",&HLT_HIAK4PFJet15_v1);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet30_v1",&HLT_HIAK4PFJet30_v1);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet40_v1",&HLT_HIAK4PFJet40_v1);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet40_v1_Prescl",&HLT_HIAK4PFJet40_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet60_v1",&HLT_HIAK4PFJet60_v1);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet60_v1_Prescl",&HLT_HIAK4PFJet60_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet80_v1",&HLT_HIAK4PFJet80_v1);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet80_v1_Prescl",&HLT_HIAK4PFJet80_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet100_v1",&HLT_HIAK4PFJet100_v1);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet100_v1_Prescl",&HLT_HIAK4PFJet100_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIAK4PFJet120_v1",&HLT_HIAK4PFJet120_v1);
+  //evtTree->SetBranchAddress("HLT_HIAK4CaloJet80_v1",&HLT_HIAK4CaloJet80_v1);
+  //evtTree->SetBranchAddress("HLT_HICsAK4PFJet100Eta1p5_v1",&HLT_HICsAK4PFJet100Eta1p5_v1);
+  //evtTree->SetBranchAddress("HLT_HICsAK4PFJet100Eta1p5_v1_Prescl",&HLT_HICsAK4PFJet100Eta1p5_v1_Prescl);
   evtTree->SetBranchAddress("HLT_HIL3Mu12_v1",&HLT_HIL3Mu12_v1);
   evtTree->SetBranchAddress("HLT_HIL3Mu12_v1_Prescl",&HLT_HIL3Mu12_v1_Prescl);
 	
-  evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet40Eta5p1_v1",&HLT_HIPuAK4CaloJet40Eta5p1_v1);
-  evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet40Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet40Eta5p1_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet60Eta5p1_v1",&HLT_HIPuAK4CaloJet60Eta5p1_v1);
-  evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet60Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet60Eta5p1_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet80Eta5p1_v1",&HLT_HIPuAK4CaloJet80Eta5p1_v1);
-  evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet80Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet80Eta5p1_v1_Prescl);
-  evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet100Eta5p1_v1",&HLT_HIPuAK4CaloJet100Eta5p1_v1);
-  evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet100Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet100Eta5p1_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet40Eta5p1_v1",&HLT_HIPuAK4CaloJet40Eta5p1_v1);
+  //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet40Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet40Eta5p1_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet60Eta5p1_v1",&HLT_HIPuAK4CaloJet60Eta5p1_v1);
+  //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet60Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet60Eta5p1_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet80Eta5p1_v1",&HLT_HIPuAK4CaloJet80Eta5p1_v1);
+  //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet80Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet80Eta5p1_v1_Prescl);
+  //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet100Eta5p1_v1",&HLT_HIPuAK4CaloJet100Eta5p1_v1);
+  //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet100Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet100Eta5p1_v1_Prescl);
 
 }
 

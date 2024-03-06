@@ -85,6 +85,7 @@ void pp_skim(int group = 0,
   my_hlt_tree->Branch("HLT_HIL3Mu12_v1_Prescl",&HLT_HIL3Mu12_v1_Prescl);
 
   // ----- jet variables
+  //  static const int jetMax = 9999;
   Float_t jtpt, rawpt, jteta, jtphi, trackMax;
   Int_t nref;
   my_jet_tree->Branch("jtpt",&jtpt);

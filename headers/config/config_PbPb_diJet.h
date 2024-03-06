@@ -1,9 +1,9 @@
 int isMC_status = 0;
 int AASetup_status = 0;
-TString jetTreeString = "akCs4PFJetAnalyzer";
-TString hltString = "hltanalysis";
-TString muonTreeString = "ggHiNtuplizer";
+TString jetTreeString = "jetTree";
+TString hltString = "hltTree";
+TString muonTreeString = "muonTree";
 const int NeventFilters = 3;
 std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter","pphfCoincFilter2Th4","pclusterCompatibilityFilter"};
-bool doJetTrkMaxFilter = true;
+bool doJetTrkMaxFilter = false;
 bool doEtaPhiMask = true;

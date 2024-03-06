@@ -31,43 +31,44 @@
 #include <stdlib.h>
 
 // event map
-#include "../../../../eventMap/eventMap.h"
+#include "../../../eventMap/eventMap.h"
 // jet corrector
-#include "../../../../JetEnergyCorrections/JetCorrector.h"
+#include "../../../JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
-#include "../../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p1.h"
 
 // eta-phi mask function
-#include "../../../../headers/functions/etaPhiMask.h"
+#include "../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../../headers/functions/getDr.h"
+#include "../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../../headers/functions/getJetPtBin.h"
+#include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../../headers/functions/getPtRel.h"
+#include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../../headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../../headers/functions/isQualityMuon_tight.h"
+#include "../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../../headers/functions/isWDecayMuon.h"
+#include "../../../headers/functions/isWDecayMuon.h"
 // isWDecayMuon_raw function (input is rawJetPt)
-#include "../../../../headers/functions/isWDecayMuon_raw.h"
+#include "../../../headers/functions/isWDecayMuon_raw.h"
 // triggerIsOn function
-#include "../../../../headers/functions/triggerIsOn.h"
+#include "../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // JetTrkMax filter function
-#include "../../../../headers/functions/passesJetTrkMaxFilter.h"
+#include "../../../headers/functions/passesJetTrkMaxFilter.h"
 // print introduction
-#include "../../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
+#include "../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-#include "../../../../headers/config/config_PbPb_SingleMuon.h"
-//#include "../../../../headers/config/config_PbPb_MinBias.h"
+//#include "../../../headers/config/config_PbPb_SingleMuon.h"
+#include "../../../headers/config/config_PbPb_MinBias.h"
+//#include "../../../headers/config/config_PbPb_diJet.h"
 // read config
-#include "../../../../headers/config/readConfig.h"
+#include "../../../headers/config/readConfig.h"
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TH1D *h_NEvents;
@@ -116,21 +117,21 @@ TH2D *h_mupt_muptrel[NCentralityIndices][NJetPtIndices];
 TH2D *h_muptrel_jetpt[NCentralityIndices];
 
 ///////////////////////  start the program
-void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/PbPb_SingleMuon_L3Mu5_11Dec22/HISingleMuon/crab_PbPb_SingleMuon_L3Mu5_11Dec22/221211_222201/0000/HiForestAOD_1.root", TString output = "out.root"){
+void PbPb_scan(int group = 1){
 
+  // TString input = Form("../../../rootFiles/skimmingOutput/PbPb/output_HardProbes/PbPb_HardProbes_skim_output_%i.root",group);
+  // TString output = Form("output_HardProbes_mu12/PbPb_HardProbes_scan_output_%i.root",group);
 
-  // Version notes:
-  // 3.5: - Change weight from (1/prescale) to (prescale)
-  //      - Eta/phi, pt/eta, pt/phi maps for jets.
-  // 3.6: - Adding eta-phi mask
-  // 3.7: - Remove prescale weight.  Set w_trig = 1.
+  // TString input = Form("../../../rootFiles/skimmingOutput/PbPb/output_MinBias/PbPb_MinBias_skim_output_%i.root",group);
+  // TString output = Form("output_MinBias_mu12/PbPb_MinBias_scan_output_%i.root",group);
 
-
+  TString input = Form("../../../rootFiles/skimmingOutput/PbPb/output_SingleMuon/PbPb_SingleMuon_skim_output_%i.root",group);
+  TString output = Form("output_SingleMuon_mu5/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("../../../../JetEnergyCorrections/Autumn18_HI_V8_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
-  Files.push_back("../../../../JetEnergyCorrections/Autumn18_HI_V8_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+  Files.push_back("../../../JetEnergyCorrections/Autumn18_HI_V8_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+  Files.push_back("../../../JetEnergyCorrections/Autumn18_HI_V8_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   JetCorrector JEC(Files);
   /// print out some info
   printIntroduction_PbPb_scan_V3p7();
@@ -304,14 +305,12 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
   em->loadMuon(muonTreeString);
   cout << "	Loading muon triggers..." << endl;
   em->loadMuonTrigger(hltString);
-  cout << "	Loading tracks..." << endl;
-  em->loadTrack();
-  cout << "	Loading gen particles..." << endl;
-  em->loadGenParticle();
   cout << "	Variables initilized!" << endl << endl ;
   int NEvents = em->evtTree->GetEntries();
   cout << "	Number of events = " << NEvents << endl;
-
+  //int NJets = em->recoJetTree->GetEntries();
+  int NJets = em->recoJetTree->GetEntries();
+  cout << "     Number of jets = " << NJets << endl;
 
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
@@ -349,7 +348,6 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
     // event filters
     if(em->checkEventFilter()) continue;
 
-
     // In data, event weight = 1
     double w = 1.0;
 
@@ -366,6 +364,11 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
     int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
+    // int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
+
+    // int triggerDecision = em->HLT_HIL3Mu12_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
     
 
     // if(triggerDecision_Prescl == 0) continue;
@@ -424,6 +427,9 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
       double muPt_m = em->muPt->at(m);
       double muEta_m = em->muEta->at(m);
       double muPhi_m = em->muPhi->at(m);
+
+      //cout << "(muPt, muEta, muPhi) = (" << muPt_m << ", " << muEta_m << ", " << muPhi_m << ")" << endl;
+
       // skip if muon has already been matched to a jet in this event
       // muon kinematic cuts
       if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
@@ -477,7 +483,7 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
       }
 
       //cout << "Event " << evi << ", jet " << i << endl;
-      //cout << "../../..~~~  jetPt = " << em->jetpt[i] << ", corrJetPt = " << x << endl;
+      //cout << "~~~~  jetPt = " << em->jetpt[i] << ", corrJetPt = " << x << endl;
 
       double muPtRel = -1.0;
       double muPt = -1.0;
@@ -495,6 +501,8 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
       eventHasGoodJet = true;
 		        
       int jetPtIndex = getJetPtBin(x);
+
+      //cout << "nMu = " << em->nMu << endl;
 
       // look for recoMuon match to recoJet		
       for(int m = 0; m < em->nMu; m++){
@@ -679,10 +687,10 @@ void PbPb_scan(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/P
     }
     // END recoJet LOOP
 
+    h_vz[0]->Fill(em->vz,w);
+    h_vz[CentralityIndex]->Fill(em->vz,w);
+    
     if(eventHasGoodJet && leadingRecoJetPt > 60){
-
-      h_vz[0]->Fill(em->vz,w);
-      h_vz[CentralityIndex]->Fill(em->vz,w);
 
       h_hiBin->Fill(em->hiBin,w);
 

@@ -109,12 +109,16 @@ TH1D *h_muphi_inclRecoMuonTag_triggerOn[NJetPtIndices];
 void pp_scan(int group = 1){
 
   //TString input = Form("../../../rootFiles/skimmingOutput/pp/output/pp_skim_output_%i.root",group);
-  TString input = "../../../rootFiles/skimmingOutput/pp/test/testFile.root";
-  TString output = Form("output/pp_scan_output_%i.root",group);
+  //TString input = "../../../rootFiles/skimmingOutput/pp/test/testFile.root";
 
 
+  // TString input = Form("../../../rootFiles/skimmingOutput/pp/output_MinBias/pp_MinBias_skim_output_%i.root",group);
+  // TString output = Form("output_SingleMuon_mu7/pp_MinBias_scan_output_%i.root",group);
 
-  
+  TString input = Form("../../../rootFiles/skimmingOutput/pp/output_SingleMuon/pp_SingleMuon_skim_output_%i.root",group);
+  TString output = Form("output_SingleMuon_mu12/pp_SingleMuon_scan_output_%i.root",group);
+
+
   // JET ENERGY CORRECTIONS
   vector<string> Files;
   Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
@@ -264,7 +268,7 @@ void pp_scan(int group = 1){
     if(fabs(em->vz) > 15.0) continue;
 
     // event filters
-    //if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
+    if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
 
     // In data, event weight = 1
     double w = 1.0;
@@ -275,14 +279,14 @@ void pp_scan(int group = 1){
 
     bool evtTriggerDecision = false;
 
-    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
     // int triggerDecision = em->HLT_HIL3Mu7_v1;
     // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu12_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     // skip if the trigger is off or if the prescale is zero
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) evtTriggerDecision = true;
@@ -477,10 +481,10 @@ void pp_scan(int group = 1){
     }
     // END recoJet LOOP
 
+    h_hiBin->Fill(em->hiBin,w);
+    h_vz->Fill(em->vz,w);
+    
     if(eventHasGoodJet && leadingRecoJetPt > 60){
-
-      h_vz->Fill(em->vz,w);
-      h_hiBin->Fill(em->hiBin,w);
 
       if(eventHasInclRecoMuonTag){
 

@@ -12,7 +12,7 @@ void loadFitFxn_vz(){
   fitFxn_vz->SetParError(0,e_vzFitParam_0);
   fitFxn_vz->SetParError(1,e_vzFitParam_1);
   fitFxn_vz->SetParError(2,e_vzFitParam_2);
-  fitFxn_vz->SetParError(2,e_vzFitParam_3);
+  fitFxn_vz->SetParError(3,e_vzFitParam_3);
 
   cout << "~~ ... finished!" << endl;
  

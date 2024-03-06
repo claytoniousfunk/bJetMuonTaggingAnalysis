@@ -9,8 +9,11 @@ TH1D *D1, *D2, *D3;
 
 void muonReconstructionEfficiencyCalculator(){
 
-  f1 = TFile::Open(goldenFile_PYTHIA_muonReco_bJets);
-  f2 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_muonReco_bJets);
+  // f1 = TFile::Open(goldenFile_PYTHIA_muonReco_bJets);
+  // f2 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_muonReco_bJets);
+
+  f1 = TFile::Open(goldenFile_PYTHIA_muonReco);
+  f2 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_muonReco);
 
   f1->GetObject("h_matchedGenMuonPt",n1);
   f1->GetObject("h_inclGenMuonPt",d1);
@@ -37,24 +40,42 @@ void muonReconstructionEfficiencyCalculator(){
   double newEtaAxis[NEtaEdges] = {-2,-1.6,-1.2,-0.8,-0.4,0,0.4,0.8,1.2,1.6,2};
 
   // pt histograms
-  TH1D *n1r = (TH1D*) n1->Rebin(NPtEdges-1,"n1r",newPtAxis);
-  TH1D *d1r = (TH1D*) d1->Rebin(NPtEdges-1,"d1r",newPtAxis);
+  // TH1D *n1r = (TH1D*) n1->Rebin(NPtEdges-1,"n1r",newPtAxis);
+  // TH1D *d1r = (TH1D*) d1->Rebin(NPtEdges-1,"d1r",newPtAxis);
 
-  TH1D *n2r = (TH1D*) n2->Rebin(NPtEdges-1,"n2r",newPtAxis);
-  TH1D *d2r = (TH1D*) d2->Rebin(NPtEdges-1,"d2r",newPtAxis);
+  // TH1D *n2r = (TH1D*) n2->Rebin(NPtEdges-1,"n2r",newPtAxis);
+  // TH1D *d2r = (TH1D*) d2->Rebin(NPtEdges-1,"d2r",newPtAxis);
 
-  TH1D *n3r = (TH1D*) n3->Rebin(NPtEdges-1,"n3r",newPtAxis);
-  TH1D *d3r = (TH1D*) d3->Rebin(NPtEdges-1,"d3r",newPtAxis);
+  // TH1D *n3r = (TH1D*) n3->Rebin(NPtEdges-1,"n3r",newPtAxis);
+  // TH1D *d3r = (TH1D*) d3->Rebin(NPtEdges-1,"d3r",newPtAxis);
+
+  TH1D *n1r = (TH1D*) n1->Clone("n1r");
+  TH1D *d1r = (TH1D*) d1->Clone("d1r");
+
+  TH1D *n2r = (TH1D*) n2->Clone("n2r");
+  TH1D *d2r = (TH1D*) d2->Clone("d2r");
+
+  TH1D *n3r = (TH1D*) n3->Clone("n3r");
+  TH1D *d3r = (TH1D*) d3->Clone("d3r");
 
   // eta histograms
-  TH1D *N1r = (TH1D*) N1->Rebin(NEtaEdges-1,"N1r",newEtaAxis);
-  TH1D *D1r = (TH1D*) D1->Rebin(NEtaEdges-1,"D1r",newEtaAxis);
+  // TH1D *N1r = (TH1D*) N1->Rebin(NEtaEdges-1,"N1r",newEtaAxis);
+  // TH1D *D1r = (TH1D*) D1->Rebin(NEtaEdges-1,"D1r",newEtaAxis);
 
-  TH1D *N2r = (TH1D*) N2->Rebin(NEtaEdges-1,"N2r",newEtaAxis);
-  TH1D *D2r = (TH1D*) D2->Rebin(NEtaEdges-1,"D2r",newEtaAxis);
+  // TH1D *N2r = (TH1D*) N2->Rebin(NEtaEdges-1,"N2r",newEtaAxis);
+  // TH1D *D2r = (TH1D*) D2->Rebin(NEtaEdges-1,"D2r",newEtaAxis);
 
-  TH1D *N3r = (TH1D*) N3->Rebin(NEtaEdges-1,"N3r",newEtaAxis);
-  TH1D *D3r = (TH1D*) D3->Rebin(NEtaEdges-1,"D3r",newEtaAxis);
+  // TH1D *N3r = (TH1D*) N3->Rebin(NEtaEdges-1,"N3r",newEtaAxis);
+  // TH1D *D3r = (TH1D*) D3->Rebin(NEtaEdges-1,"D3r",newEtaAxis);
+
+  TH1D *N1r = (TH1D*) N1->Clone("N1r");
+  TH1D *D1r = (TH1D*) D1->Clone("D1r");
+
+  TH1D *N2r = (TH1D*) N2->Clone("N2r");
+  TH1D *D2r = (TH1D*) D2->Clone("D2r");
+
+  TH1D *N3r = (TH1D*) N3->Clone("N3r");
+  TH1D *D3r = (TH1D*) D3->Clone("D3r");
   
   divideByBinwidth(n1r);
   divideByBinwidth(d1r);
@@ -157,7 +178,7 @@ void muonReconstructionEfficiencyCalculator(){
   //la->DrawLatexNDC(0.21,0.9,triggerName);
   la->DrawLatexNDC(0.25,0.5,muonInfo);
   la->DrawLatexNDC(0.25,0.46,"Tight muon ID");
-  la->DrawLatexNDC(0.25,0.42,"Tagged to #font[52]{b}-jets, #font[52]{p}_{T}^{jet} > 60 GeV, |#eta^{jet}| < 1.6");
+  //la->DrawLatexNDC(0.25,0.42,"Tagged to #font[52]{b}-jets, #font[52]{p}_{T}^{jet} > 60 GeV, |#eta^{jet}| < 1.6");
 
   TLegend *leg = new TLegend(0.22,0.25,0.5,0.38);
   leg->SetBorderSize(0);
@@ -192,12 +213,13 @@ void muonReconstructionEfficiencyCalculator(){
   //la->DrawLatexNDC(0.21,0.9,triggerName);
   la->DrawLatexNDC(0.25,0.5,muonInfo);
   la->DrawLatexNDC(0.25,0.46,"Tight muon ID");
-  la->DrawLatexNDC(0.25,0.42,"Tagged to #font[52]{b}-jets, #font[52]{p}_{T}^{jet} > 60 GeV, |#eta^{jet}| < 1.6");
+  //la->DrawLatexNDC(0.25,0.42,"Tagged to #font[52]{b}-jets, #font[52]{p}_{T}^{jet} > 60 GeV, |#eta^{jet}| < 1.6");
+
 
   leg->Draw();
 
-  c_pt->SaveAs("../../figures/muonReconstructionEfficiency/muonPt_bJets.pdf");
-  c_eta->SaveAs("../../figures/muonReconstructionEfficiency/muonEta_bJets.pdf");
+  //c_pt->SaveAs("../../figures/muonReconstructionEfficiency/muonPt_bJets.pdf");
+  //c_eta->SaveAs("../../figures/muonReconstructionEfficiency/muonEta_bJets.pdf");
 
 
   

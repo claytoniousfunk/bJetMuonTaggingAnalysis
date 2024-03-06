@@ -31,60 +31,70 @@
 #include <stdlib.h>
 
 // event map
-#include "../../../../eventMap/eventMap.h"
+#include "../../../eventMap/eventMap.h"
 // jet corrector
-#include "../../../../JetEnergyCorrections/JetCorrector.h"
+#include "../../../JetEnergyCorrections/JetCorrector.h"
 // jet uncertainty
-#include "../../../../JetEnergyCorrections/JetUncertainty.h"
+#include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../../headers/fitParameters/vzFitParams_PH_mu5.h"
-//#include "../../../../headers/fitParameters/vzFitParams_PH_mu7.h"
-//#include "../../../../headers/fitParameters/vzFitParams_PH_mu12.h"
+// #include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
+// #include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
+#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
 // hiBin-fit parameters
-#include "../../../../headers/fitParameters/hiBinFitParams_mu5.h"
-//#include "../../../../headers/fitParameters/hiBinFitParams_mu7.h"
-//#include "../../../../headers/fitParameters/hiBinFitParams_mu12.h"
+// hiBin-fit parameters
+// pThat > 30
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu7.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu12.h"
+// pthat > 40
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu7.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu12.h"
+// pThat > 50
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu7.h"
+#include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu12.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "../../../../headers/fitFunctions/fitFxn_vz_PH_mu5.h"
-//#include "../../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
-//#include "../../../../headers/fitFunctions/fitFxn_vz_PH_mu12.h"
+#include "../../../headers/fitFunctions/fitFxn_vz_PH.h"
+// #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
+// #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu12.h"
 // hiBin-fit function
-#include "../../../../headers/fitFunctions/fitFxn_hiBin_mu5.h"
-//#include "../../../../headers/fitFunctions/fitFxn_hiBin_mu7.h"
-//#include "../../../../headers/fitFunctions/fitFxn_hiBin_mu12.h"
+#include "../../../headers/fitFunctions/fitFxn_hiBin.h"
+// #include "../../../headers/fitFunctions/fitFxn_hiBin_mu7.h"
+// #include "../../../headers/fitFunctions/fitFxn_hiBin_mu12.h"
 
 // eta-phi mask function
-#include "../../../../headers/functions/etaPhiMask.h"
+#include "../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../../headers/functions/getDr.h"
+#include "../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../../headers/functions/getJetPtBin.h"
+#include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../../headers/functions/getPtRel.h"
+#include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../../headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../../headers/functions/isQualityMuon_tight.h"
+#include "../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../../headers/functions/isWDecayMuon.h"
+#include "../../../headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "../../../../headers/functions/triggerIsOn.h"
+#include "../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // JetTrkMax filter function
-#include "../../../../headers/functions/passesJetTrkMaxFilter.h"
+#include "../../../headers/functions/passesJetTrkMaxFilter.h"
 // print introduction
-#include "../../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
+#include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
-#include "../../../../headers/config/config_PYTHIAHYDJET.h"
+#include "../../../headers/config/config_PYTHIAHYDJET.h"
 // read config
-#include "../../../../headers/config/readConfig.h"
+#include "../../../headers/config/readConfig.h"
 
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,33 +193,47 @@ TH2D *h_weight_pthat_xJets_C1J3;
 TH2D *h_weight_pthat_bJets_C1J3;
 TH1D *h_leadingGenJetPt[NCentralityIndices];
 TH1D *h_leadingGenJetPt_xJets_greaterThanPthat[NCentralityIndices];
-
+TH2D *h_delta_muptrel_WTA_nom_flavor;
+TH2D *h_matchedPartonFlavor_bHadronNumber;
 
 
 
 void PYTHIAHYDJET_scan(int group = 1){
 
-  //TString input = Form("../../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output/PYTHIAHYDJET_skim_output_%i.root",group);
-  TString input = "../../../../rootFiles/skimmingOutput/PYTHIAHYDJET/test/testFile.root";
-  TString output = Form("../output/PYTHIAHYDJET_scan_output_%i.root",group);
+  
+  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet_withMoreFlavors/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  TString output = Form("output_DiJet_scan_mu12_pThat50_Raw_jetFilter/PYTHIAHYDJET_scan_output_%i.root",group);
 
+  // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet_withWTA/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  // TString output = Form("output_DiJet_scan_mu5_pThat50_jetFilter_evtReweight_test/PYTHIAHYDJET_scan_output_%i.root",group);
 
+  // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_MuJet/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
+  // TString output = Form("output_MuJet_scan_mu5_pThat30_evtReweight_jetFilter/PYTHIAHYDJET_scan_output_%i.root",group);
+
+  // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_BJet/PYTHIAHYDJET_BJet_skim_output_%i.root",group);
+  // TString output = Form("output_BJet_scan_mu5_pThat50_evtReweight_jetFilter/PYTHIAHYDJET_scan_output_%i.root",group);
+
+  // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet_withGS_withWTA_partial/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  // TString output = Form("output_DiJet_scan_mu5_pThat30_test/PYTHIAHYDJET_scan_output_%i.root",group);
+
+  
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("../../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 
-  JetUncertainty JEU("../../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
 
   
-  printIntroduction_PYTHIAHYDJET_scan_V3p7();
+  // printIntroduction_PYTHIAHYDJET_scan_V3p7();
   readConfig();
   
   // define histograms
   // >> NEvents
   h_NEvents = new TH1D("h_NEvents","Number of events",1000,0,1000);
+  h_delta_muptrel_WTA_nom_flavor = new TH2D("h_delta_muptrel_WTA_nom_flavor","h_delta_muptrel_WTA_nom_flavor",1000,-1,1,27,-5,22);
   // >> hiBin
   h_hiBin = new TH1D("h_hiBin","hiBin, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclGenMuonTag = new TH1D("h_hiBin_inclGenMuonTag","hiBin, events with inclRecoJet-inclGenMuonTag",NhiBinBins,hiBinMin,hiBinMax);
@@ -219,7 +243,9 @@ void PYTHIAHYDJET_scan(int group = 1){
   h_hiBin_matchedRecoMuonTag_triggerOn = new TH1D("h_hiBin_matchedRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-matchedRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
   h_weight_pthat_xJets_C1J3 = new TH2D("h_weight_pthat_xJets_C1J3","pthat vs w_{pthat}, xJets, 80 < p_{T} < 120 GeV, cent. 0-30%",2000,0,0.02,500,0,500);
   h_weight_pthat_bJets_C1J3 = new TH2D("h_weight_pthat_bJets_C1J3","pthat vs w_{pthat}, bJets, 80 < p_{T} < 120 GeV, cent. 0-30%",2000,0,0.02,500,0,500);
+  h_matchedPartonFlavor_bHadronNumber = new TH2D("h_matchedPartonFlavor_bHadronNumber","matchedPartonFlavor vs bHadronNumber",27,-5,22,5,0,5);
 
+  h_delta_muptrel_WTA_nom_flavor->Sumw2();
   h_hiBin->Sumw2();
   h_hiBin_inclGenMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag->Sumw2();
@@ -228,6 +254,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   h_hiBin_matchedRecoMuonTag_triggerOn->Sumw2();
   h_weight_pthat_xJets_C1J3->Sumw2();
   h_weight_pthat_bJets_C1J3->Sumw2();
+  h_matchedPartonFlavor_bHadronNumber->Sumw2();
 
   
   for(int i = 0; i < NCentralityIndices; i++){
@@ -537,14 +564,15 @@ void PYTHIAHYDJET_scan(int group = 1){
   em->loadMuon(muonTreeString);
   cout << "	Loading muon triggers..." << endl;
   em->loadMuonTrigger(hltString);
-  cout << "	Loading tracks..." << endl;
-  em->loadTrack();
+  //cout << "	Loading tracks..." << endl;
+  //em->loadTrack();
   cout << "	Loading gen particles..." << endl;
   em->loadGenParticle();
-  cout << "	Variables initilized!" << endl << endl ;
+  // cout << "	Variables initilized!" << endl << endl ;
   int NEvents = em->evtTree->GetEntries();
   cout << "	Number of events = " << NEvents << endl;
-
+  int NJets = em->recoJetTree->GetEntries();
+  cout << "     Number of jets = " << NJets << endl;
 
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
@@ -587,7 +615,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     // global event cuts
     if(em->pthat <= pthatcut) continue;
     if(fabs(em->vz) > 15.0) continue;
-    //if(em->checkEventFilter()) continue;  // get rid of event filter when doing local skims 
+    if(em->checkEventFilter()) continue;
 
     // calculate event weight
     
@@ -618,14 +646,14 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     bool evtTriggerDecision = false;
 
-    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    //int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
-    //int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
 
-    //int triggerDecision = em->HLT_HIL3Mu12_v1;
-    //int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
       evtTriggerDecision = true;
@@ -739,8 +767,15 @@ void PYTHIAHYDJET_scan(int group = 1){
       double x = JEC.GetCorrectedPT();  // recoJetPt
       double y = em->jeteta[i]; // recoJetEta
       double z = em->jetphi[i]; // recoJetPhi
+      // double y = em->jet_wta_eta[i]; // recoJetEta with WTA axis
+      // double z = em->jet_wta_phi[i]; // recoJetPhi with WTA axis
       double jetTrkMax_i = em->jetTrkMax[i];
 
+      // cout << endl;
+      // cout << "em->jet_wta_eta[i] = " << em->jet_wta_eta[i] << endl;
+      // cout << "em->jeteta[i] = " << em->jeteta[i] << endl;
+      // cout << endl;
+      
       JEU.SetJetPT(x);
       JEU.SetJetEta(y);
       JEU.SetJetPhi(z);
@@ -792,9 +827,9 @@ void PYTHIAHYDJET_scan(int group = 1){
       int matchedPartonFlavor = em->matchedPartonFlavor[i];
       int refPartonFlavorForB = em->refparton_flavorForB[i];
       int hadronFlavorInt = em->matchedHadronFlavor[i];
+      int bHadronNumber = em->bHadronNumber[i];
 
       int jetFlavorInt = matchedPartonFlavor;
-	       	
 		
       // jet kinematic cuts
       if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
@@ -874,24 +909,24 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       if(!skipGenParticles){
 	// look for a genMuon match to recoJet
-	for(int j = 0; j < em->ngp; j++){
+	for(int j = 0; j < em->gpptp->size(); j++){
 
                         
 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
 	  genMuIndex++;
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp[j],x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
-	  double a = em->gpptp[j];
+	  double a = em->gpptp->at(j);
 	  double am = -1.0;
-	  double b = em->gpetap[j];
+	  double b = em->gpetap->at(j);
 	  double bm = -1.0;
-	  double c = em->gpphip[j];
+	  double c = em->gpphip->at(j);
 	  double cm = -1.0;
 
 	  if(a < muPtCut || fabs(b) > trkEtaMax) continue;                        
@@ -900,19 +935,19 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  for(int l = 0; l < em->nMu; l++){
 
 
-	    double aR = em->muPt[l];
-	    double bR = em->muEta[l];
-	    double cR = em->muPhi[l];
+	    double aR = em->muPt->at(l);
+	    double bR = em->muEta->at(l);
+	    double cR = em->muPhi->at(l);
 
-	    if(!isQualityMuon_tight(em->muChi2NDF[l],
-				    em->muInnerD0[l],
-				    em->muInnerDz[l],
-				    em->muMuonHits[l],
-				    em->muPixelHits[l],
-				    em->muIsGlobal[l],
-				    em->muIsPF[l],
-				    em->muStations[l],
-				    em->muTrkLayers[l])) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+				    em->muInnerD0->at(l),
+				    em->muInnerDz->at(l),
+				    em->muMuonHits->at(l),
+				    em->muPixelHits->at(l),
+				    em->muIsGlobal->at(l),
+				    em->muIsPF->at(l),
+				    em->muStations->at(l),
+				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 
 
 
@@ -942,23 +977,23 @@ void PYTHIAHYDJET_scan(int group = 1){
       // look for recoMuon match to recoJet		
       for(int m = 0; m < em->nMu; m++){
 
-	double muPt_m = em->muPt[m];
-	double muEta_m = em->muEta[m];
-	double muPhi_m = em->muPhi[m];
+	double muPt_m = em->muPt->at(m);
+	double muEta_m = em->muEta->at(m);
+	double muPhi_m = em->muPhi->at(m);
 
 	if(matchFlagR[m] == 1) continue;
 	// muon kinematic cuts
 	if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
 	// muon quality cuts
-	if(!isQualityMuon_tight(em->muChi2NDF[m],
-				em->muInnerD0[m],
-				em->muInnerDz[m],
-				em->muMuonHits[m],
-				em->muPixelHits[m],
-				em->muIsGlobal[m],
-				em->muIsPF[m],
-				em->muStations[m],
-				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				em->muInnerD0->at(m),
+				em->muInnerDz->at(m),
+				em->muMuonHits->at(m),
+				em->muPixelHits->at(m),
+				em->muIsGlobal->at(m),
+				em->muIsPF->at(m),
+				em->muStations->at(m),
+				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
 			
 
@@ -972,11 +1007,11 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 	if(!skipGenParticles){
 
-	  for(int j = 0; j < em->ngp; j++){
+	  for(int j = 0; j < em->gpptp->size(); j++){
 			
-	    if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
+	    if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 		
-	    if(getDr(em->muEta[m],em->muPhi[m],em->gpetap[j],em->gpphip[j]) < epsilon){
+	    if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
 
 	      isMatchedRecoMuon = true;
 			
@@ -986,13 +1021,18 @@ void PYTHIAHYDJET_scan(int group = 1){
 	}
 
 	// match to recoJets
-	if(getDr(em->muEta[m],em->muPhi[m],y,z) < epsilon_mm){
+	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
 
 	  matchFlagR[m] = 1;
 				
 	  hasInclRecoMuonTag = true;
 
 	  muPtRel = getPtRel(muPt_m,muEta_m,muPhi_m,x,y,z);
+
+	  double delta = (getPtRel(muPt_m,muEta_m,muPhi_m,x,em->jeteta[i],em->jetphi[i]) - getPtRel(muPt_m,muEta_m,muPhi_m,x,em->jet_wta_eta[i],em->jet_wta_phi[i])) / getPtRel(muPt_m,muEta_m,muPhi_m,x,em->jet_wta_eta[i],em->jet_wta_phi[i]);
+	  
+	  h_delta_muptrel_WTA_nom_flavor->Fill(delta,jetFlavorInt);
+
 	  muPt = muPt_m;
 	  muEta = muEta_m;
 	  muPhi = muPhi_m;
@@ -1022,7 +1062,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       h_refPartonFlavorForB_matchedPartonFlavor[0]->Fill(refPartonFlavorForB,matchedPartonFlavor,w);
       h_refPartonFlavorForB_matchedPartonFlavor[CentralityIndex]->Fill(refPartonFlavorForB,matchedPartonFlavor,w);
 
-
+      h_matchedPartonFlavor_bHadronNumber->Fill(matchedPartonFlavor,bHadronNumber,w);
 
       // histograms by jetPt index
 
@@ -1318,7 +1358,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       // look for a genMuon match
       if(!skipGenParticles){
 
-	for(int j = 0; j < em->ngp; j++){
+	for(int j = 0; j < em->gpptp->size(); j++){
 
 	  //cout << "N_genParticles = " << em->gppdgIDp->size() << endl;
 	  //cout << "pdg of particle " << j <<" = " << em->gppdgIDp->at(j) << endl;
@@ -1326,19 +1366,19 @@ void PYTHIAHYDJET_scan(int group = 1){
                         
 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp[j]) != 13) continue;
+	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
 	  genMuIndex++;
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp[j],x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
-	  double a = em->gpptp[j];
+	  double a = em->gpptp->at(j);
 	  double am = -1.0;
-	  double b = em->gpetap[j];
+	  double b = em->gpetap->at(j);
 	  double bm = -1.0;
-	  double c = em->gpphip[j];
+	  double c = em->gpphip->at(j);
 	  double cm = -1.0;
 
 
@@ -1349,24 +1389,24 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  for(int l = 0; l < em->nMu; l++){
 
 
-	    if(!isQualityMuon_tight(em->muChi2NDF[l],
-				    em->muInnerD0[l],
-				    em->muInnerDz[l],
-				    em->muMuonHits[l],
-				    em->muPixelHits[l],
-				    em->muIsGlobal[l],
-				    em->muIsPF[l],
-				    em->muStations[l],
-				    em->muTrkLayers[l])) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+				    em->muInnerD0->at(l),
+				    em->muInnerDz->at(l),
+				    em->muMuonHits->at(l),
+				    em->muPixelHits->at(l),
+				    em->muIsGlobal->at(l),
+				    em->muIsPF->at(l),
+				    em->muStations->at(l),
+				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 
 
 	    //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
 
 			
-	    double aR = em->muPt[l];
-	    double bR = em->muEta[l];
-	    double cR = em->muPhi[l];
+	    double aR = em->muPt->at(l);
+	    double bR = em->muEta->at(l);
+	    double cR = em->muPhi->at(l);
 
 			
 
@@ -1399,21 +1439,21 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 	if(matchFlagR[m] == 1) continue;
 			 
-	if(!isQualityMuon_tight(em->muChi2NDF[m],
-				em->muInnerD0[m],
-				em->muInnerDz[m],
-				em->muMuonHits[m],
-				em->muPixelHits[m],
-				em->muIsGlobal[m],
-				em->muIsPF[m],
-				em->muStations[m],
-				em->muTrkLayers[m])) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				em->muInnerD0->at(m),
+				em->muInnerDz->at(m),
+				em->muMuonHits->at(m),
+				em->muPixelHits->at(m),
+				em->muIsGlobal->at(m),
+				em->muIsPF->at(m),
+				em->muStations->at(m),
+				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
 			
 
 
 
-	if(isWDecayMuon(em->muPt[m],x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	if(isWDecayMuon(em->muPt->at(m),x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 			
 			
 	// match to genMuon
@@ -1423,15 +1463,15 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 	if(!skipGenParticles){
 
-	  for(int l = 0; l < em->ngp; l++){
+	  for(int l = 0; l < em->gpptp->size(); l++){
 
 	    //cout << "genID = " << em->gppdgIDp->at(j) << endl;
 			
-	    if(TMath::Abs(em->gppdgIDp[l]) != 13) continue;
+	    if(TMath::Abs(em->gppdgIDp->at(l)) != 13) continue;
 
-	    if(em->gpptp[l] < muPtCut || fabs(em->gpetap[l]) > trkEtaMax) continue;                        
+	    if(em->gpptp->at(l) < muPtCut || fabs(em->gpetap->at(l)) > trkEtaMax) continue;                        
 		
-	    if(getDr(em->muEta[m],em->muPhi[m],em->gpetap[l],em->gpphip[l]) < epsilon){
+	    if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(l),em->gpphip->at(l)) < epsilon){
 
 	      isMatchedRecoMuon = true;
 			
@@ -1442,14 +1482,14 @@ void PYTHIAHYDJET_scan(int group = 1){
 	}
 
 	// match to genJets
-	if(getDr(em->muEta[m],em->muPhi[m],y,z) < epsilon_mm){
+	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
 
 	  matchFlagR[m] = 1;
 				
 	  hasInclRecoMuonTag = true;
 
-	  muPtRel = getPtRel(em->muPt[m],em->muEta[m],em->muPhi[m],x,y,z);
-
+	  muPtRel = getPtRel(em->muPt->at(m),em->muEta->at(m),em->muPhi->at(m),x,y,z);
+	  
 	  //cout << "(Event "<< evi << ", Jet " << i << ", Muon " << m << ") muPtRel = " << muPtRel << endl;
 				
 	  if(isMatchedRecoMuon) hasMatchedRecoMuonTag = true;
@@ -1528,7 +1568,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   auto wf = TFile::Open(output,"recreate");
 
   h_NEvents->Write();
-
+  h_delta_muptrel_WTA_nom_flavor->Write();
   h_hiBin->Write();
   h_hiBin_inclGenMuonTag->Write();
   h_hiBin_inclRecoMuonTag->Write();
@@ -1537,7 +1577,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   h_hiBin_matchedRecoMuonTag_triggerOn->Write();
   h_weight_pthat_xJets_C1J3->Write();
   h_weight_pthat_bJets_C1J3->Write();
-
+  h_matchedPartonFlavor_bHadronNumber->Write();
   
   for(int i = 0; i < NCentralityIndices; i++){
 

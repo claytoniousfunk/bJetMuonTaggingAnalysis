@@ -1,0 +1,9 @@
+
+
+void gen_fraction(){
+
+  
+
+
+
+}

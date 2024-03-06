@@ -82,6 +82,8 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("nref",1);
     old_jet_tree->SetBranchStatus("refparton_flavor",1);
     old_jet_tree->SetBranchStatus("refparton_flavorForB",1);
+    old_jet_tree->SetBranchStatus("matchedPartonFlavor",1);
+    old_jet_tree->SetBranchStatus("matchedHadronFlavor",1);
     old_jet_tree->SetBranchStatus("genpt",1);
     old_jet_tree->SetBranchStatus("geneta",1);
     old_jet_tree->SetBranchStatus("genphi",1);

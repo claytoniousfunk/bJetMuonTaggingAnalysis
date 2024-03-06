@@ -31,50 +31,50 @@
 #include <stdlib.h>
 
 // event map
-#include "../../../../eventMap/eventMap.h"
+#include "../../../eventMap/eventMap.h"
 // jet corrector
-#include "../../../../JetEnergyCorrections/JetCorrector.h"
+#include "../../../JetEnergyCorrections/JetCorrector.h"
 // jet uncertainty
-#include "../../../../JetEnergyCorrections/JetUncertainty.h"
+#include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../../headers/fitParameters/vzFitParams_PH.h"
+#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 // hiBin-fit parameters
-#include "../../../../headers/fitParameters/hiBinFitParams.h"
+#include "../../../headers/fitParameters/hiBinFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
-#include "../../../../headers/fitFunctions/fitFxn_vz_PH.h"
+#include "../../../headers/fitFunctions/fitFxn_vz_PH.h"
 // hiBin-fit function
-#include "../../../../headers/fitFunctions/fitFxn_hiBin.h"
+#include "../../../headers/fitFunctions/fitFxn_hiBin.h"
 
 // eta-phi mask function
-#include "../../../../headers/functions/etaPhiMask.h"
+#include "../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../../headers/functions/getDr.h"
+#include "../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../../headers/functions/getJetPtBin.h"
+#include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../../headers/functions/getPtRel.h"
+#include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../../headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../../headers/functions/isQualityMuon_tight.h"
+#include "../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../../headers/functions/isWDecayMuon.h"
+#include "../../../headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "../../../../headers/functions/triggerIsOn.h"
+#include "../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // print introduction
-#include "../../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
+#include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
-#include "../../../../headers/config/config_PYTHIAHYDJET.h"
+#include "../../../headers/config/config_PYTHIAHYDJET.h"
 // read config
-#include "../../../../headers/config/readConfig.h"
+#include "../../../headers/config/readConfig.h"
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TH1D *h_inclGenMuonPt[NCentralityIndices];
@@ -84,16 +84,19 @@ TH1D *h_matchedGenMuonEta[NCentralityIndices];
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[NCentralityIndices];
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[NCentralityIndices];
 
-void PYTHIAHYDJET_scan_muonReco(TString input = "/eos/user/c/cbennett/forests/PYTHIAHYDJET_DiJet_5July22/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_5July22/220705_212159/0000/HiForestAOD_104.root", TString output = "out.root"){
+void PYTHIAHYDJET_scan_muonReco(int group = 1){
 
+  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  TString output = Form("output_DiJet_pThat30_muonReco/PYTHIAHYDJET_scan_output_%i.root",group);
+  
   readConfig();
 
   vector<string> Files;
-  Files.push_back("../../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 
-  JetUncertainty JEU("../../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
 
   for(int c = 0; c < NCentralityIndices; c++){
 
@@ -182,8 +185,8 @@ void PYTHIAHYDJET_scan_muonReco(TString input = "/eos/user/c/cbennett/forests/PY
     if(em->checkEventFilter()) continue;
 
     // calculate event weight
-    double w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-10);
-    //double w_reweight_hiBin = 1.0;
+    //double w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-10);
+    double w_reweight_hiBin = 1.0;
 
     //double w_reweight_vz = fitFxn_vz->Eval(em->vz);
     double w_reweight_vz = 1.0;
