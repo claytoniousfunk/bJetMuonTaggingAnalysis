@@ -203,8 +203,8 @@ TH2D *h_matchedPartonFlavor_bHadronNumber;
 void PYTHIAHYDJET_scan(int group = 1){
 
   
-  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet_withMoreFlavors/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("output_DiJet_scan_test/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_DiJet/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  TString output = Form("eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_DiJet_scan_mu5_pThat30_jetFilter_evtReweight_flavorFix_test/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet_withWTA/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
   // TString output = Form("output_DiJet_scan_mu5_pThat50_jetFilter_evtReweight_test/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -1353,6 +1353,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       for(int k = 0; k < em->njet; k++){
 		
+	if(remove_HYDJET_jet(em->pthat,em->jetpt[k])) continue;
 	double dr = getDr(em->jeteta[k],em->jetphi[k],genJetEta_i,genJetPhi_i);
 
 	if(dr < minDr){ 
@@ -1382,8 +1383,6 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       bool hasInclRecoMuonTag = false;
       bool hasMatchedRecoMuonTag = false;
-
-
 
       // look for a genMuon match
       if(!skipGenParticles){
