@@ -2,7 +2,7 @@
 
 # N = 1193 for PYTHIA DiJet
 
-for i in {401..600}
+for i in {201..300}
 
 do
 

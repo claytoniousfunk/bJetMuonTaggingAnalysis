@@ -1,7 +1,12 @@
 
 #include "../../../headers/goldenFileNames.h"
 
-void tagging_sequence(){
+void tagging_sequence(bool do_pp = 1,
+		      bool do_C2 = 0,
+		      bool do_C1 = 0,
+		      bool do_mu5 = 0,
+		      bool do_mu7 = 1,
+		      bool do_mu12 = 0){
 
   TLine *li = new TLine();
   li->SetLineStyle(7);
@@ -10,15 +15,61 @@ void tagging_sequence(){
   la->SetTextFont(62);
   la->SetTextSize(0.06);
 
-  // DiJet scan file
-  //TFile *f_py = TFile::Open(goldenFile_PYTHIA_mu7);
-  TFile *f_py = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7);
-  // pp MinBias file
-  //TFile *f_mb = TFile::Open(goldenFile_pp_MinBias_mu7);
-  TFile *f_mb = TFile::Open(goldenFile_PbPb_MinBias_mu7);
-  // pp SingleMuon file
-  //TFile *f_sm = TFile::Open(goldenFile_pp_SingleMuon_mu7);
-  TFile *f_sm = TFile::Open(goldenFile_PbPb_SingleMuon_mu7);
+
+  TString input_PYTHIA;
+  TString input_pp_SingleMuon;
+  TString input_pp_MinBias;
+  TString input_PYTHIAHYDJET;
+  TString input_PbPb_SingleMuon;
+  TString input_PbPb_MinBias;
+
+  if(do_mu5){
+
+    input_pp_SingleMuon   = goldenFile_pp_SingleMuon_mu5;
+    input_PbPb_SingleMuon = goldenFile_PbPb_SingleMuon_mu5;
+    input_pp_MinBias   = goldenFile_pp_MinBias_mu5;
+    input_PbPb_MinBias = goldenFile_PbPb_MinBias_mu5;
+    input_PYTHIA = goldenFile_PYTHIA_mu5_pThat30;
+    input_PYTHIAHYDJET = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30;
+
+  }
+  else if(do_mu7){
+
+    input_pp_SingleMuon   = goldenFile_pp_SingleMuon_mu7;
+    input_PbPb_SingleMuon = goldenFile_PbPb_SingleMuon_mu7;
+    input_pp_MinBias   = goldenFile_pp_MinBias_mu7;
+    input_PbPb_MinBias = goldenFile_PbPb_MinBias_mu7;
+    input_PYTHIA = goldenFile_PYTHIA_mu7_pThat30;
+    input_PYTHIAHYDJET = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30;
+
+  }
+  else if(do_mu12){
+
+    input_pp_SingleMuon   = goldenFile_pp_SingleMuon_mu12;
+    input_PbPb_SingleMuon = goldenFile_PbPb_SingleMuon_mu12;
+    input_pp_MinBias   = goldenFile_pp_MinBias_mu12;
+    input_PbPb_MinBias = goldenFile_PbPb_MinBias_mu12;
+    input_PYTHIA = goldenFile_PYTHIA_mu12_pThat30;
+    input_PYTHIAHYDJET = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30;
+
+  }
+  else{};
+  
+
+  TFile *f_py , *f_mb, *f_sm;
+
+  if(do_pp){
+    f_py = TFile::Open(input_PYTHIA);
+    f_mb = TFile::Open(input_pp_MinBias);
+    f_sm = TFile::Open(input_pp_SingleMuon);
+  }
+  else if(do_C1 || do_C2){
+    f_py = TFile::Open(input_PYTHIAHYDJET);
+    f_mb = TFile::Open(input_PbPb_MinBias);
+    f_sm = TFile::Open(input_PbPb_SingleMuon);
+  }
+  else{};
+
   
   // MC histograms
   TH2D *H_inclGen, *H_inclReco, *H_inclMuTag, *H_genMuTag, *H_matchedRecoMuTag, *H_trig;  // 2D histograms
@@ -26,41 +77,27 @@ void tagging_sequence(){
   TH1D *b_inclGen, *b_inclReco, *b_inclMuTag, *b_genMuTag, *b_matchedRecoMuTag, *b_trig;  // b jets
   TH1D *bb_inclGen, *bb_inclReco, *bb_inclMuTag, *bb_genMuTag, *bb_matchedRecoMuTag, *bb_trig;  // b-bar jets
 
-  // f_py->GetObject("h_inclGenJetPt_flavor",H_inclGen);
-  // f_py->GetObject("h_inclRecoJetPt_flavor",H_inclReco);
-  // f_py->GetObject("h_inclRecoJetPt_inclRecoMuonTag_flavor",H_inclMuTag);
-  // f_py->GetObject("h_inclRecoJetPt_inclGenMuonTag_flavor",H_genMuTag);
-  // f_py->GetObject("h_inclRecoJetPt_matchedRecoMuonTag_flavor",H_matchedRecoMuTag);
-  // f_py->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor",H_trig);
 
-  // f_py->GetObject("h_inclGenJetPt_flavor_C2",H_inclGen);
-  // f_py->GetObject("h_inclRecoJetPt_flavor_C2",H_inclReco);
-  // f_py->GetObject("h_inclRecoJetPt_inclRecoMuonTag_flavor_C2",H_inclMuTag);
-  // f_py->GetObject("h_inclRecoJetPt_inclGenMuonTag_flavor_C2",H_genMuTag);
-  // f_py->GetObject("h_inclRecoJetPt_matchedRecoMuonTag_flavor_C2",H_matchedRecoMuTag);
-  // f_py->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C2",H_trig);
-
-  f_py->GetObject("h_inclGenJetPt_flavor_C1",H_inclGen);
-  f_py->GetObject("h_inclRecoJetPt_flavor_C1",H_inclReco);
-  f_py->GetObject("h_inclRecoJetPt_inclRecoMuonTag_flavor_C1",H_inclMuTag);
-  f_py->GetObject("h_inclRecoJetPt_inclGenMuonTag_flavor_C1",H_genMuTag);
-  f_py->GetObject("h_inclRecoJetPt_matchedRecoMuonTag_flavor_C1",H_matchedRecoMuTag);
-  f_py->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C1",H_trig);
+  string centrality_identifier = "";
+  if(do_C1) centrality_identifier = "_C1";
+  else if(do_C2) centrality_identifier = "_C2";
+  else{};
+  
+  
+  f_py->GetObject(Form("h_inclGenJetPt_flavor%s",centrality_identifier.c_str()),H_inclGen);
+  f_py->GetObject(Form("h_inclRecoJetPt_flavor%s",centrality_identifier.c_str()),H_inclReco);
+  f_py->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_flavor%s",centrality_identifier.c_str()),H_inclMuTag);
+  f_py->GetObject(Form("h_inclRecoJetPt_inclGenMuonTag_flavor%s",centrality_identifier.c_str()),H_genMuTag);
+  f_py->GetObject(Form("h_inclRecoJetPt_matchedRecoMuonTag_flavor%s",centrality_identifier.c_str()),H_matchedRecoMuTag);
+  f_py->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor%s",centrality_identifier.c_str()),H_trig);
 
   // data histograms
   TH1D *d_inclReco, *d_inclMuTag, *d_trig;
 
-  // f_sm->GetObject("h_inclRecoJetPt",d_inclReco);
-  // f_sm->GetObject("h_inclRecoJetPt_inclRecoMuonTag",d_inclMuTag);
-  // f_sm->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",d_trig);
 
-  // f_sm->GetObject("h_inclRecoJetPt_C2",d_inclReco);
-  // f_sm->GetObject("h_inclRecoJetPt_inclRecoMuonTag_C2",d_inclMuTag);
-  // f_sm->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C2",d_trig);
-
-  f_sm->GetObject("h_inclRecoJetPt_C1",d_inclReco);
-  f_sm->GetObject("h_inclRecoJetPt_inclRecoMuonTag_C1",d_inclMuTag);
-  f_sm->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C1",d_trig);
+  f_sm->GetObject(Form("h_inclRecoJetPt%s",centrality_identifier.c_str()),d_inclReco);
+  f_sm->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag%s",centrality_identifier.c_str()),d_inclMuTag);
+  f_sm->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_triggerOn%s",centrality_identifier.c_str()),d_trig);
 
   
   h_inclGen = H_inclGen->ProjectionX();
@@ -250,9 +287,10 @@ void tagging_sequence(){
   leg1->Draw();
   la->SetTextFont(62);
   la->SetTextSize(0.06);
-  //la->DrawLatexNDC(0.2,0.92,"PYTHIA #sqrt{s_{NN}} = 5.02 TeV");
-  la->DrawLatexNDC(0.2,0.92,"PYTHIA+HYDJET 0-30% #sqrt{s_{NN}} = 5.02 TeV");
-  //la->DrawLatexNDC(0.2,0.92,"PYTHIA+HYDJET 30-90% #sqrt{s_{NN}} = 5.02 TeV");
+  if(do_pp) la->DrawLatexNDC(0.2,0.92,"PYTHIA 5.02 TeV");
+  else if(do_C1) la->DrawLatexNDC(0.2,0.92,"PYTHIA+HYDJET 0-30% 5.02 TeV");
+  else if(do_C2) la->DrawLatexNDC(0.2,0.92,"PYTHIA+HYDJET 30-90% 5.02 TeV");
+  else{};
   la->SetTextFont(42);
   la->SetTextSize(0.042);
   la->DrawLatexNDC(0.25,0.28,"#hat{#font[52]{p}}_{T} > 30 GeV");
@@ -290,9 +328,10 @@ void tagging_sequence(){
   h_trig->Draw("same");
   leg1->AddEntry(h_trig,"#mu-triggered");
   leg1->Draw();
-  // la->DrawLatexNDC(0.25,0.12,"HLT_HIL3Mu5_NHitQ10");
-  la->DrawLatexNDC(0.25,0.12,"HLT_HIL3Mu7_NHitQ10");
-  // la->DrawLatexNDC(0.25,0.12,"HLT_HIL3Mu12");
+  if(do_mu5) la->DrawLatexNDC(0.25,0.12,"HLT_HIL3Mu5_NHitQ10");
+  else if(do_mu7) la->DrawLatexNDC(0.25,0.12,"HLT_HIL3Mu7_NHitQ10");
+  else if(do_mu12) la->DrawLatexNDC(0.25,0.12,"HLT_HIL3Mu12");
+  else{};
   p_spectra_2->cd();
   r5->Draw("same");
   c_spectra->SaveAs("./trig.png");
@@ -318,8 +357,51 @@ void tagging_sequence(){
    mf->GetYaxis()->SetTitleSize(0.05);
    mf->GetYaxis()->SetTitle("Matching factor");
    mf->Draw();
-   c_factor->SaveAs("./matchingFactor.png");
-   auto wf_mf = TFile::Open("matchingFactors/mf_PbPb_mu7_MCJetTrig.root","recreate");
+   TString mf_png_save_string = "";
+   if(do_pp){
+     if(do_mu5) mf_png_save_string = "./matchingFactor_pp_mu5.png";
+     else if(do_mu7) mf_png_save_string = "./matchingFactor_pp_mu7.png";
+     else if(do_mu12) mf_png_save_string = "./matchingFactor_pp_mu12.png";
+     else{}
+   }
+   else if(do_C2){
+     if(do_mu5) mf_png_save_string = "./matchingFactor_C2_mu5.png";
+     else if(do_mu7) mf_png_save_string = "./matchingFactor_C2_mu7.png";
+     else if(do_mu12) mf_png_save_string = "./matchingFactor_C2_mu12.png";
+     else{}
+   }
+   else if(do_C1){
+     if(do_mu5) mf_png_save_string = "./matchingFactor_C1_mu5.png";
+     else if(do_mu7) mf_png_save_string = "./matchingFactor_C1_mu7.png";
+     else if(do_mu12) mf_png_save_string = "./matchingFactor_C1_mu12.png";
+     else{}
+   }
+   else{};
+   c_factor->SaveAs(mf_png_save_string);
+
+   TString mf_file_save_string = "";
+   if(do_pp){
+     if(do_mu5) mf_file_save_string = "./matchingFactors/matchingFactor_pp_mu5.root";
+     else if(do_mu7) mf_file_save_string = "./matchingFactors/matchingFactor_pp_mu7.root";
+     else if(do_mu12) mf_file_save_string = "./matchingFactors/matchingFactor_pp_mu12.root";
+     else{}
+   }
+   else if(do_C2){
+     if(do_mu5) mf_file_save_string = "./matchingFactors/matchingFactor_C2_mu5.root";
+     else if(do_mu7) mf_file_save_string = "./matchingFactors/matchingFactor_C2_mu7.root";
+     else if(do_mu12) mf_file_save_string = "./matchingFactors/matchingFactor_C2_mu12.root";
+     else{}
+   }
+   else if(do_C1){
+     if(do_mu5) mf_file_save_string = "./matchingFactors/matchingFactor_C1_mu5.root";
+     else if(do_mu7) mf_file_save_string = "./matchingFactors/matchingFactor_C1_mu7.root";
+     else if(do_mu12) mf_file_save_string = "./matchingFactors/matchingFactor_C1_mu12.root";
+     else{}
+   }
+   else{};
+
+   
+   auto wf_mf = TFile::Open(mf_file_save_string,"recreate");
    mf->Write();
    wf_mf->Close();
 
@@ -344,9 +426,29 @@ void tagging_sequence(){
    c_frac->SaveAs("./corr.png");
 
    // b-amplifier file
-   auto wf_ba = TFile::Open("b_amplifiers/ba_PbPb_C1_mu7_MCJetTrig.root","recreate");
+   TString ba_file_save_string = "";
+   if(do_pp){
+     if(do_mu5) ba_file_save_string = "./b_amplifiers/ba_pp_mu5.root";
+     else if(do_mu7) ba_file_save_string = "./b_amplifiers/ba_pp_mu7.root";
+     else if(do_mu12) ba_file_save_string = "./b_amplifiers/ba_pp_mu12.root";
+     else{}
+   }
+   else if(do_C2){
+     if(do_mu5) ba_file_save_string = "./b_amplifiers/ba_C2_mu5.root";
+     else if(do_mu7) ba_file_save_string = "./b_amplifiers/ba_C2_mu7.root";
+     else if(do_mu12) ba_file_save_string = "./b_amplifiers/ba_C2_mu12.root";
+     else{}
+   }
+   else if(do_C1){
+     if(do_mu5) ba_file_save_string = "./b_amplifiers/ba_C1_mu5.root";
+     else if(do_mu7) ba_file_save_string = "./b_amplifiers/ba_C1_mu7.root";
+     else if(do_mu12) ba_file_save_string = "./b_amplifiers/ba_C1_mu12.root";
+     else{}
+   }
+   else{};
+   auto wf_ba = TFile::Open(ba_file_save_string,"recreate");
    r_corr->Write();
    wf_ba->Close();
-   
+  
 }
 

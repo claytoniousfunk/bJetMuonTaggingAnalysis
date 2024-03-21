@@ -48,32 +48,25 @@ void plot_and_reweight_vz(bool isPP   = 0,
 			  bool isPbPb = 1,
 			  bool ismu5  = 0,
 			  bool ismu7  = 0,
-			  bool ismu12 = 1)
-{
-  // PYTHIA
-
-
-
-  TFile *f_data, *f_pythia, *f_pythia_weighted;
-
+			  bool ismu12 = 1){
   
-
+  TFile *f_data, *f_pythia, *f_pythia_weighted;
 
   if(isPP){
     if(ismu5){
       f_data = TFile::Open(goldenFile_pp_SingleMuon_mu5);
       f_pythia = TFile::Open(goldenFile_PYTHIA_mu5_RAW);
-      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_mu5);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_mu5_pThat30);
     }
     else if(ismu7){
       f_data = TFile::Open(goldenFile_pp_SingleMuon_mu7);
       f_pythia = TFile::Open(goldenFile_PYTHIA_mu7_RAW);
-      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_mu7);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_mu7_pThat30);
     }
     else if(ismu12){
       f_data = TFile::Open(goldenFile_pp_SingleMuon_mu12);
       f_pythia = TFile::Open(goldenFile_PYTHIA_mu12_RAW);
-      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_mu12);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_mu12_pThat30);
     }
     else{};
   }
@@ -81,7 +74,7 @@ void plot_and_reweight_vz(bool isPP   = 0,
     if(ismu5){
       f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu5);
       f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30_RAW_jetFilter);
-      f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30);
     }
     else if(ismu7){
       f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu7);
@@ -91,16 +84,10 @@ void plot_and_reweight_vz(bool isPP   = 0,
     else if(ismu12){
       f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu12);
       f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30_RAW_jetFilter);
-      f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30);
     }
     else{};
   }
-
-  
-  // PYTHIA+HYDJET
-  //TFile *f_data = TFile::Open("/home/clayton/Analysis/code/skimming/PYTHIAHYDJET_scan/rootFiles/V3p3/PbPb_SingleMuon_V3p3_19Dec22.root");
-  //TFile *f_pythia = TFile::Open("/home/clayton/Analysis/code/skimming/PYTHIAHYDJET_scan/rootFiles/V3p3/PYTHIAHYDJET_V3p3_noVzWeight_20Dec22.root");
-  //TFile *f_pythia_weighted = TFile::Open("/home/clayton/Analysis/code/skimming/muJetForest_scan/MC/rootFiles/reweightedVz/out.root");
 
   // PYTHIA
   if(isPP){
@@ -122,16 +109,9 @@ void plot_and_reweight_vz(bool isPP   = 0,
   data_vz->Scale(1.0/data_vz->Integral());
 
 
-  const int N = 15;
-  double vz_axis[N] = {-15.0,-10.0,-7.0,-5.0,-3.0,-2.0,-1.0,0.0,1.0,2.0,3.0,5.0,7.0,10.0,15.0}; // N = 15
-  //double vz_axis[N] = {-15.0,-9.9,-6.6,-3.0,-1.8,-0.6,0,0.6,1.8,3.0,6.6,9.9,15.0}; // N = 13
+  const int N = 12;
+  double vz_axis[N] = {-15.0,-10.0,-7.0,-5.0,-3.0,-1.0,1.0,3.0,5.0,7.0,10.0,15.0}; // N = 12
 
-  //const int N = 8;
-  //double vz_axis[N] = {-15,-10,-6,-2,2,6,10,15};
-  
-  
-  
-  
   
   /////////////////////////////////////////    spectrum plot    /////////////////////////////////////////////////
     
@@ -274,16 +254,14 @@ void plot_and_reweight_vz(bool isPP   = 0,
       
 
   auto legend = new TLegend(0.28,0.7,0.5,0.89);
-  //legend->AddEntry(data_vz_xnorm,"Data","p");
-  //legend->AddEntry(pythia_vz_xnorm,"PYTHIA+HYDJET raw","p");
   if(isPP){
     legend->AddEntry(data_vz_xnorm,"pp SingleMuon","p");
-    legend->AddEntry(pythia_vz_xnorm,"PYTHIA raw","p");
+    legend->AddEntry(pythia_vz_xnorm,"PYTHIA w/ jet-filter","p");
     legend->AddEntry(pythia_w_vz_xnorm,"PYTHIA weighted + jet-filter","p");
   }
   if(isPbPb){
     legend->AddEntry(data_vz_xnorm,"PbPb SingleMuon","p");
-    legend->AddEntry(pythia_vz_xnorm,"PYTHIA+HYDJET raw","p");
+    legend->AddEntry(pythia_vz_xnorm,"PYTHIA+HYDJET w/ jet-filter","p");
     legend->AddEntry(pythia_w_vz_xnorm,"PYTHIA+HYDJET weighted + jet-filter","p");
   }
       
@@ -335,15 +313,15 @@ void plot_and_reweight_vz(bool isPP   = 0,
   la->DrawLatexNDC(0.26,0.92,"#font[62]{CMS }#font[52]{#scale[0.8]{Preliminary}}");
   la->SetTextSize(0.065);;
   if(isPP){
-    if(ismu5) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (102 pb^{-1})");
-    else if(ismu7) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (280 pb^{-1})");
-    else if(ismu12) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (307 pb^{-1})");
+    if(ismu5) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (99 pb^{-1})");
+    else if(ismu7) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (274 pb^{-1})");
+    else if(ismu12) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (301 pb^{-1})");
     else{};
   }
   else if(isPbPb){
-    if(ismu5) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (308 #mub^{-1})");
-    else if(ismu7) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (749 #mub^{-1})");
-    else if(ismu12) la->DrawLatexNDC(0.57,0.92,"PbPb 5.02 TeV (1608 #mub^{-1})");
+    if(ismu5) la->DrawLatexNDC(0.56,0.92,"PbPb 5.02 TeV (323 #mub^{-1})");
+    else if(ismu7) la->DrawLatexNDC(0.56,0.92,"PbPb 5.02 TeV (787 #mub^{-1})");
+    else if(ismu12) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (1689 #mub^{-1})");
     else{};
   }
   
@@ -380,7 +358,7 @@ void plot_and_reweight_vz(bool isPP   = 0,
   r->SetTitle("");
   r->GetYaxis()->SetNdivisions(508);
   r->Draw();
-  //r2->Draw("same");
+  r2->Draw("same");
   //func->SetParNames("a_0","a_1","a_2","a_3","a_4");
   //r->Fit("func","MR","N",-15.0,15.0);
   r->GetYaxis()->SetRangeUser(0.3,1.7);
@@ -394,7 +372,7 @@ void plot_and_reweight_vz(bool isPP   = 0,
   l3->SetLineStyle(2);
   l3->Draw();
   //gStyle->SetOptFit(1);
-  r->Fit("pol3");
+  //r->Fit("pol3");
   //r->Fit("expo");
   auto legend2 = new TLegend(0.27,0.12,0.72,0.42);
   legend2->AddEntry(r,"no weight","p");

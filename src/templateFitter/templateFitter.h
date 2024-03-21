@@ -586,17 +586,23 @@ double templateFitter(bool isData = 1,
 	
   // merge templates if desired
   if(!ispp && mergeCtemplates){
-
-    h0_c->Add(g0_c); // merge with muJet sample
+    cout << "merging c-template..." << endl;
+    h0_c->Add(k0_c); // merge with muJet sample
 
   }
   if(!ispp && mergeBtemplates){
-
-    h0_b->Add(g0_b); // merge with muJet samplen
+    cout << "merging b-template..." << endl;
+    h0_b->Add(g0_b); // merge with muJet sample
     h0_b->Add(k0_b); // merge with bJet sample
 
   }
 
+  // low-pT template tests, comment out after completion
+  // make the template just use the muJet sample
+  //h0_b = (TH1D*) k0_b->Clone("h0_b");
+
+
+  
   // merge ghost jets with lights
   //h0_l->Add(h0_x);
 
@@ -604,6 +610,20 @@ double templateFitter(bool isData = 1,
   double c_truth = h0_c->Integral() / (h0_l->Integral() + h0_b->Integral() + h0_c->Integral());
   double l_truth = h0_l->Integral() / (h0_l->Integral() + h0_b->Integral() + h0_c->Integral());
   cout << "c_truth = " << c_truth << ", l_truth = " << l_truth << endl;
+
+
+
+
+
+
+
+
+  cout << "b-jets: N = " << h0_b->GetEntries() << ", I = " << h0_b->Integral() << ", I/N = " << (1.0*h0_b->Integral())/(1.0*h0_b->GetEntries()) << endl;
+  cout << "c-jets: N = " << h0_c->GetEntries() << ", I = " << h0_c->Integral() << ", I/N = " << (1.0*h0_c->Integral())/(1.0*h0_c->GetEntries()) << endl;
+  cout << "l-jets: N = " << h0_l->GetEntries() << ", I = " << h0_l->Integral() << ", I/N = " << (1.0*h0_l->Integral())/(1.0*h0_l->GetEntries()) << endl;
+
+
+
   
   // add cJets to lJets (for 2-template fit)
   if(do2templateFit){
@@ -614,9 +634,7 @@ double templateFitter(bool isData = 1,
   }
 
 
-  cout << "b-jets: N = " << h0_b->GetEntries() << ", I = " << h0_b->Integral() << ", I/N = " << (1.0*h0_b->Integral())/(1.0*h0_b->GetEntries()) << endl;
-  cout << "c-jets: N = " << h0_c->GetEntries() << ", I = " << h0_c->Integral() << ", I/N = " << (1.0*h0_c->Integral())/(1.0*h0_c->GetEntries()) << endl;
-  cout << "l-jets: N = " << h0_l->GetEntries() << ", I = " << h0_l->Integral() << ", I/N = " << (1.0*h0_l->Integral())/(1.0*h0_l->GetEntries()) << endl;
+  
 
 
 
@@ -654,14 +672,14 @@ double templateFitter(bool isData = 1,
   //const int M = 41;
   //const int M = 31;
   //const int M = 17;
-  const int M = 16;
+  const int M = 17;
   //const int M = 11;
   //const int M = 8;
   
   //double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0}; // M = 31
   //double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0}; // M = 41
 
-  double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.2,1.5,1.8,2.4,4.0}; // M = 16
+  double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.2,1.5,1.8,2.4,3.5,5.0}; // M = 16
   //double muRelPtAxis[M] = {0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.5,1.8,2.4,4.0}; // M = 11
   //double muRelPtAxis[M] = {0.0,0.3,0.6,0.9,1.3,1.8,2.5,4.0}; // M = 8
 		

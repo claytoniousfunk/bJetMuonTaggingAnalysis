@@ -1,10 +1,15 @@
 #include "../../../headers/goldenFileNames.h"
 #include "../../../headers/functions/divideByBinwidth.h"
 
-void fraction_calculation(){
+void fraction_calculation(bool do_mu5 = 1,
+			  bool do_mu7 = 0,
+			  bool do_mu12 = 0){
 
   TLatex *la = new TLatex();
 
+
+  
+  
   // DiJet scan file
   TFile *f_py = TFile::Open(goldenFile_PYTHIA_mu5);
   // pp MinBias file

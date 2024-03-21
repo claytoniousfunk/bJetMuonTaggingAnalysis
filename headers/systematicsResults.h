@@ -1,185 +1,291 @@
 // Systematics results
 
-// ------------- c-fraction-variation systematics ------------------
-
-// PYTHIA
-double sys_cFraction_PYTHIA_J2 = 0.00956138;
-double sys_cFraction_PYTHIA_J3 = 0.0282143;
-double sys_cFraction_PYTHIA_J4 = 0.0575053;
-
-// PYTHIA+HYDJET 30-90%
-double sys_cFraction_PYTHIAHYDJET_C2_J2 = 0.00571947;
-double sys_cFraction_PYTHIAHYDJET_C2_J3 = 0.0214228;
-double sys_cFraction_PYTHIAHYDJET_C2_J4 = 0.0384951;
-
-// PYTHIA+HYDJET 0-30%
-double sys_cFraction_PYTHIAHYDJET_C1_J2 = 0.0534973;
-double sys_cFraction_PYTHIAHYDJET_C1_J3 = 0.00102558;
-double sys_cFraction_PYTHIAHYDJET_C1_J4 = 0.0387503;
-
-
 // ------------- fit-lower-bound systematics ------------------
 
 // pp
-double sys_lowerBound_pp_J2 = 0.0104906;
-double sys_lowerBound_pp_J3 = 0.0101662;
-double sys_lowerBound_pp_J4 = 0.00151101;
+// -- mu5 
+double sys_lowerBound_pp_mu5_J2 = 0.0165;
+double sys_lowerBound_pp_mu5_J3 = 0.0049;
+double sys_lowerBound_pp_mu5_J4 = 0.0355;
+// -- mu7
+double sys_lowerBound_pp_mu7_J2 = 0.0162;
+double sys_lowerBound_pp_mu7_J3 = 0.0139;
+double sys_lowerBound_pp_mu7_J4 = 0.0362;
+// -- mu12
+double sys_lowerBound_pp_mu12_J2 = 0.0293;
+double sys_lowerBound_pp_mu12_J3 = 0.0279;
+double sys_lowerBound_pp_mu12_J4 = 0.0306;
 
 // PbPb 30-90%
-double sys_lowerBound_PbPb_C2_J2 = 0.0188855;
-double sys_lowerBound_PbPb_C2_J3 = 0.016958;
-double sys_lowerBound_PbPb_C2_J4 = 0.0991;
+// -- mu5 
+double sys_lowerBound_PbPb_mu5_C2_J2 = 0.0383;
+double sys_lowerBound_PbPb_mu5_C2_J3 = 0.0586;
+double sys_lowerBound_PbPb_mu5_C2_J4 = 0.0919;
+// -- mu7 
+double sys_lowerBound_PbPb_mu7_C2_J2 = 0.0205;
+double sys_lowerBound_PbPb_mu7_C2_J3 = 0.0440;
+double sys_lowerBound_PbPb_mu7_C2_J4 = 0.0457;
+// -- mu12
+double sys_lowerBound_PbPb_mu12_C2_J2 = 0.0286;
+double sys_lowerBound_PbPb_mu12_C2_J3 = 0.0268;
+double sys_lowerBound_PbPb_mu12_C2_J4 = 0.0602;
 
 // PbPb 0-30%
-double sys_lowerBound_PbPb_C1_J2 = 0.0321734;
-double sys_lowerBound_PbPb_C1_J3 = 0.0216787;
-double sys_lowerBound_PbPb_C1_J4 = 0.0693144;
+// -- mu5 
+double sys_lowerBound_PbPb_mu5_C1_J2 = 0.0395;
+double sys_lowerBound_PbPb_mu5_C1_J3 = 0.0865;
+double sys_lowerBound_PbPb_mu5_C1_J4 = 0.0522;
+// -- mu7 
+double sys_lowerBound_PbPb_mu7_C1_J2 = 0.0691;
+double sys_lowerBound_PbPb_mu7_C1_J3 = 0.0560;
+double sys_lowerBound_PbPb_mu7_C1_J4 = 0.0326;
+// -- mu12 
+double sys_lowerBound_PbPb_mu12_C1_J2 = 0.2499;
+double sys_lowerBound_PbPb_mu12_C1_J3 = 0.0752;
+double sys_lowerBound_PbPb_mu12_C1_J4 = 0.0314;
+
+
+// ------------- c-fraction-variation systematics ------------------
+
+// PYTHIA
+// -- mu5
+double sys_cFraction_pp_mu5_J2 = 0.0032;
+double sys_cFraction_pp_mu5_J3 = 0.0094;
+double sys_cFraction_pp_mu5_J4 = 0.0200;
+// -- mu7
+double sys_cFraction_pp_mu7_J2 = 0.0017;
+double sys_cFraction_pp_mu7_J3 = 0.0056;
+double sys_cFraction_pp_mu7_J4 = 0.0145;
+// -- mu12
+double sys_cFraction_pp_mu12_J2 = 0.0001;
+double sys_cFraction_pp_mu12_J3 = 0.0005;
+double sys_cFraction_pp_mu12_J4 = 0.0063;
+
+// PYTHIA+HYDJET 30-90%
+// -- mu5
+double sys_cFraction_PbPb_mu5_C2_J2 = 0.0002;
+double sys_cFraction_PbPb_mu5_C2_J3 = 0.0112;
+double sys_cFraction_PbPb_mu5_C2_J4 = 0.0396;
+// -- mu7
+double sys_cFraction_PbPb_mu7_C2_J2 = 0.0017;
+double sys_cFraction_PbPb_mu7_C2_J3 = 0.0063;
+double sys_cFraction_PbPb_mu7_C2_J4 = 0.0196;
+// -- mu12
+double sys_cFraction_PbPb_mu12_C2_J2 = 0.0021;
+double sys_cFraction_PbPb_mu12_C2_J3 = 0.0009;
+double sys_cFraction_PbPb_mu12_C2_J4 = 0.0116;
+
+// PYTHIA+HYDJET 0-30%
+// -- mu5
+double sys_cFraction_PbPb_mu5_C1_J2 = 0.0272;
+double sys_cFraction_PbPb_mu5_C1_J3 = 0.0082;
+double sys_cFraction_PbPb_mu5_C1_J4 = 0.0263;
+// -- mu7
+double sys_cFraction_PbPb_mu7_C1_J2 = 0.0347;
+double sys_cFraction_PbPb_mu7_C1_J3 = 0.0104;
+double sys_cFraction_PbPb_mu7_C1_J4 = 0.0156;
+// -- mu12
+double sys_cFraction_PbPb_mu12_C1_J2 = 0.0746;
+double sys_cFraction_PbPb_mu12_C1_J3 = 0.0039;
+double sys_cFraction_PbPb_mu12_C1_J4 = 0.0177;
+
+
 
 
 // ------------- b-enhancement systematics ------------------
 
 // PYTHIA
-double sys_bEnhance_PYTHIA_J2 = 0.0;
-double sys_bEnhance_PYTHIA_J3 = 0.0;
-double sys_bEnhance_PYTHIA_J4 = 0.0;
+// -- mu5
+double sys_bEnhance_pp_mu5_J2 = 0.0;
+double sys_bEnhance_pp_mu5_J3 = 0.0;
+double sys_bEnhance_pp_mu5_J4 = 0.0;
+// -- mu7
+double sys_bEnhance_pp_mu7_J2 = 0.0;
+double sys_bEnhance_pp_mu7_J3 = 0.0;
+double sys_bEnhance_pp_mu7_J4 = 0.0;
+// -- mu12
+double sys_bEnhance_pp_mu12_J2 = 0.0;
+double sys_bEnhance_pp_mu12_J3 = 0.0;
+double sys_bEnhance_pp_mu12_J4 = 0.0;
 
-// PYTHIAHYDJET 30-90%
-//double sys_bEnhance_PYTHIAHYDJET_C2_J2 = 0.0443665;
-//double sys_bEnhance_PYTHIAHYDJET_C2_J3 = 0.017151;
+// PbPb 30-90%
+// -- mu5
+double sys_bEnhance_PbPb_mu5_C2_J2 = 0.0289;
+double sys_bEnhance_PbPb_mu5_C2_J3 = 0.0284;
+double sys_bEnhance_PbPb_mu5_C2_J4 = 0.0383;
+// -- mu7
+double sys_bEnhance_PbPb_mu7_C2_J2 = 0.0095;
+double sys_bEnhance_PbPb_mu7_C2_J3 = 0.0306;
+double sys_bEnhance_PbPb_mu7_C2_J4 = 0.0329;
+// -- mu12
+double sys_bEnhance_PbPb_mu12_C2_J2 = 0.0118;
+double sys_bEnhance_PbPb_mu12_C2_J3 = 0.0524;
+double sys_bEnhance_PbPb_mu12_C2_J4 = 0.0429;
 
-double sys_bEnhance_PYTHIAHYDJET_C2_J2 = 0.0516102; // conservative estimate
-double sys_bEnhance_PYTHIAHYDJET_C2_J3 = 0.0516102; // conservative estimate
-double sys_bEnhance_PYTHIAHYDJET_C2_J4 = 0.0516102;
+// PbPb 0-30%
+// -- mu5
+double sys_bEnhance_PbPb_mu5_C1_J2 = 0.2281;
+double sys_bEnhance_PbPb_mu5_C1_J3 = 0.1688;
+double sys_bEnhance_PbPb_mu5_C1_J4 = 0.1059;
+// -- mu7
+double sys_bEnhance_PbPb_mu7_C1_J2 = 0.2301;
+double sys_bEnhance_PbPb_mu7_C1_J3 = 0.1387;
+double sys_bEnhance_PbPb_mu7_C1_J4 = 0.0739;
+// -- mu12
+double sys_bEnhance_PbPb_mu12_C1_J2 = 0.2135;
+double sys_bEnhance_PbPb_mu12_C1_J3 = 0.1614;
+double sys_bEnhance_PbPb_mu12_C1_J4 = 0.0666;
 
-// PYTHIAHYDJET 0-30%
-//double sys_bEnhance_PYTHIAHYDJET_C1_J2 = 0.00810496;
-//double sys_bEnhance_PYTHIAHYDJET_C1_J3 = 0.0218218;
 
-double sys_bEnhance_PYTHIAHYDJET_C1_J2 = 0.0218218; // conservative estimate
-double sys_bEnhance_PYTHIAHYDJET_C1_J3 = 0.0218218; // conservative estimate
-double sys_bEnhance_PYTHIAHYDJET_C1_J4 = 0.0218218;
+
+
 
 // ------------- c-enhancement systematics ------------------
 
 // PYTHIA
-double sys_cEnhance_PYTHIA_J2 = 0.0;
-double sys_cEnhance_PYTHIA_J3 = 0.0;
-double sys_cEnhance_PYTHIA_J4 = 0.0;
+// -- mu5
+double sys_cEnhance_pp_mu5_J2 = 0.0;
+double sys_cEnhance_pp_mu5_J3 = 0.0;
+double sys_cEnhance_pp_mu5_J4 = 0.0;
+// -- mu7
+double sys_cEnhance_pp_mu7_J2 = 0.0;
+double sys_cEnhance_pp_mu7_J3 = 0.0;
+double sys_cEnhance_pp_mu7_J4 = 0.0;
+// -- mu12
+double sys_cEnhance_pp_mu12_J2 = 0.0;
+double sys_cEnhance_pp_mu12_J3 = 0.0;
+double sys_cEnhance_pp_mu12_J4 = 0.0;
 
-// PYTHIAHYDJET 30-90%
-//double sys_cEnhance_PYTHIAHYDJET_C2_J2 = 0.0435187;
-//double sys_cEnhance_PYTHIAHYDJET_C2_J3 = 0.00599605;
+// PbPb 30-90%
+// -- mu5
+double sys_cEnhance_PbPb_mu5_C2_J2 = 0.0008;
+double sys_cEnhance_PbPb_mu5_C2_J3 = 0.0026;
+double sys_cEnhance_PbPb_mu5_C2_J4 = 0.0115;
+// -- mu7
+double sys_cEnhance_PbPb_mu7_C2_J2 = 0.0004;
+double sys_cEnhance_PbPb_mu7_C2_J3 = 0.0026;
+double sys_cEnhance_PbPb_mu7_C2_J4 = 0.0071;
+// -- mu12
+double sys_cEnhance_PbPb_mu12_C2_J2 = 0.0013;
+double sys_cEnhance_PbPb_mu12_C2_J3 = 0.0040;
+double sys_cEnhance_PbPb_mu12_C2_J4 = 0.0054;
 
-double sys_cEnhance_PYTHIAHYDJET_C2_J2 = 0.103233; // conservative estimate
-double sys_cEnhance_PYTHIAHYDJET_C2_J3 = 0.103233; // conservative estimate
-double sys_cEnhance_PYTHIAHYDJET_C2_J4 = 0.103233;
+// PbPb 0-30%
+// -- mu5
+double sys_cEnhance_PbPb_mu5_C1_J2 = 0.0004;
+double sys_cEnhance_PbPb_mu5_C1_J3 = 0.0003;
+double sys_cEnhance_PbPb_mu5_C1_J4 = 0.0036;
+// -- mu7
+double sys_cEnhance_PbPb_mu7_C1_J2 = 0.0000;
+double sys_cEnhance_PbPb_mu7_C1_J3 = 0.0004;
+double sys_cEnhance_PbPb_mu7_C1_J4 = 0.0021;
+// -- mu12
+double sys_cEnhance_PbPb_mu12_C1_J2 = 0.0033;
+double sys_cEnhance_PbPb_mu12_C1_J3 = 0.0003;
+double sys_cEnhance_PbPb_mu12_C1_J4 = 0.0005;
 
-// PYTHIAHYDJET 0-30%
-//double sys_cEnhance_PYTHIAHYDJET_C1_J2 = 0.0041745;
-//double sys_cEnhance_PYTHIAHYDJET_C1_J3 = 0.0120317;
-//double sys_cEnhance_PYTHIAHYDJET_C1_J4 = 0.0585442;
 
-double sys_cEnhance_PYTHIAHYDJET_C1_J2 = 0.0585442; // conservative estimate
-double sys_cEnhance_PYTHIAHYDJET_C1_J3 = 0.0585442; // conservative estimate
-double sys_cEnhance_PYTHIAHYDJET_C1_J4 = 0.0585442;
-
-
-
-// ------------- JER systematics ------------------
+// ------------- JER-smear systematics ------------------
 
 // PYTHIA
-double sys_JER_PYTHIA_J2 = 0.00281898;
-double sys_JER_PYTHIA_J3 = 0.00142284;
-double sys_JER_PYTHIA_J4 = 0.0370289;
+// -- mu5
+double sys_JERsmear_pp_mu5_J2 = 0.0162;
+double sys_JERsmear_pp_mu5_J3 = 0.0098;
+double sys_JERsmear_pp_mu5_J4 = 0.0231;
+// -- mu7
+double sys_JERsmear_pp_mu7_J2 = 0.0068;
+double sys_JERsmear_pp_mu7_J3 = 0.0117;
+double sys_JERsmear_pp_mu7_J4 = 0.0084;
+// -- mu12
+double sys_JERsmear_pp_mu12_J2 = 0.0110;
+double sys_JERsmear_pp_mu12_J3 = 0.0057;
+double sys_JERsmear_pp_mu12_J4 = 0.0112;
 
 // PYTHIAHYDJET 30-90%
-double sys_JER_PYTHIAHYDJET_C2_J2 = 0.0058656;
-double sys_JER_PYTHIAHYDJET_C2_J3 = 0.00519364;
-double sys_JER_PYTHIAHYDJET_C2_J4 = 0.0134687;
+// -- mu5
+double sys_JERsmear_PbPb_mu5_C2_J2 = 0.0284;
+double sys_JERsmear_PbPb_mu5_C2_J3 = 0.0584;
+double sys_JERsmear_PbPb_mu5_C2_J4 = 0.0687;
+// -- mu7
+double sys_JERsmear_PbPb_mu7_C2_J2 = 0.0210;
+double sys_JERsmear_PbPb_mu7_C2_J3 = 0.0312;
+double sys_JERsmear_PbPb_mu7_C2_J4 = 0.0127;
+// -- mu12
+double sys_JERsmear_PbPb_mu12_C2_J2 = 0.0296;
+double sys_JERsmear_PbPb_mu12_C2_J3 = 0.0041;
+double sys_JERsmear_PbPb_mu12_C2_J4 = 0.0064;
 
-// PYTHIAHYDJET 0-30%
-double sys_JER_PYTHIAHYDJET_C1_J2 = 0.0737484;
-double sys_JER_PYTHIAHYDJET_C1_J3 = 0.0395018;
-double sys_JER_PYTHIAHYDJET_C1_J4 = 0.0995807;
+// PbPb 0-30%
+// -- mu5
+double sys_JERsmear_PbPb_mu5_C1_J2 = 0.0531;
+double sys_JERsmear_PbPb_mu5_C1_J3 = 0.0164;
+double sys_JERsmear_PbPb_mu5_C1_J4 = 0.0188;
+// -- mu7
+double sys_JERsmear_PbPb_mu7_C1_J2 = 0.0755;
+double sys_JERsmear_PbPb_mu7_C1_J3 = 0.0050;
+double sys_JERsmear_PbPb_mu7_C1_J4 = 0.0248;
+// -- mu12
+double sys_JERsmear_PbPb_mu12_C1_J2 = 0.0353;
+double sys_JERsmear_PbPb_mu12_C1_J3 = 0.0447;
+double sys_JERsmear_PbPb_mu12_C1_J4 = 0.0172;
 
 
-// ------------ centrality shift (2%) -------------------
+// ------------- centrality-shift systematics ------------------
+
 // PYTHIA
-double sys_centShift_PYTHIA_J2 = 0.0;
-double sys_centShift_PYTHIA_J3 = 0.0;
-double sys_centShift_PYTHIA_J4 = 0.0;
+// -- mu5
+double sys_centShift_pp_mu5_J2 = 0.0;
+double sys_centShift_pp_mu5_J3 = 0.0;
+double sys_centShift_pp_mu5_J4 = 0.0;
+// -- mu7
+double sys_centShift_pp_mu7_J2 = 0.0;
+double sys_centShift_pp_mu7_J3 = 0.0;
+double sys_centShift_pp_mu7_J4 = 0.0;
+// -- mu12
+double sys_centShift_pp_mu12_J2 = 0.0;
+double sys_centShift_pp_mu12_J3 = 0.0;
+double sys_centShift_pp_mu12_J4 = 0.0;
 
 // PYTHIAHYDJET 30-90%
-double sys_centShift_PYTHIAHYDJET_C2_J2 = 0.0325818 ;
-double sys_centShift_PYTHIAHYDJET_C2_J3 = 0.0681032 ;
-double sys_centShift_PYTHIAHYDJET_C2_J4 = 0.021499 ;
+// -- mu5
+double sys_centShift_PbPb_mu5_C2_J2 = 0.0;
+double sys_centShift_PbPb_mu5_C2_J3 = 0.0;
+double sys_centShift_PbPb_mu5_C2_J4 = 0.0;
+// -- mu7
+double sys_centShift_PbPb_mu7_C2_J2 = 0.0;
+double sys_centShift_PbPb_mu7_C2_J3 = 0.0;
+double sys_centShift_PbPb_mu7_C2_J4 = 0.0;
+// -- mu12
+double sys_centShift_PbPb_mu12_C2_J2 = 0.0;
+double sys_centShift_PbPb_mu12_C2_J3 = 0.0;
+double sys_centShift_PbPb_mu12_C2_J4 = 0.0;
 
-// PYTHIAHYDJET 0-30%
-double sys_centShift_PYTHIAHYDJET_C1_J2 = 0.100813 ;
-double sys_centShift_PYTHIAHYDJET_C1_J3 = 0.0478048 ;
-double sys_centShift_PYTHIAHYDJET_C1_J4 = 0.077617 ;
+// PbPb 0-30%
+// -- mu5
+double sys_centShift_PbPb_mu5_C1_J2 = 0.0;
+double sys_centShift_PbPb_mu5_C1_J3 = 0.0;
+double sys_centShift_PbPb_mu5_C1_J4 = 0.0;
+// -- mu7
+double sys_centShift_PbPb_mu7_C1_J2 = 0.0;
+double sys_centShift_PbPb_mu7_C1_J3 = 0.0;
+double sys_centShift_PbPb_mu7_C1_J4 = 0.0;
+// -- mu12
+double sys_centShift_PbPb_mu12_C1_J2 = 0.0;
+double sys_centShift_PbPb_mu12_C1_J3 = 0.0;
+double sys_centShift_PbPb_mu12_C1_J4 = 0.0;
 
-double sys_total_pp_J2 = TMath::Sqrt(sys_cFraction_PYTHIA_J2*sys_cFraction_PYTHIA_J2 +
-				     sys_lowerBound_pp_J2*sys_lowerBound_pp_J2 +
-				     sys_bEnhance_PYTHIA_J2*sys_bEnhance_PYTHIA_J2 +
-				     sys_cEnhance_PYTHIA_J2*sys_cEnhance_PYTHIA_J2 +
-				     sys_JER_PYTHIA_J2*sys_JER_PYTHIA_J2 +
-				     sys_centShift_PYTHIA_J2*sys_centShift_PYTHIA_J2);
 
-double sys_total_pp_J3 = TMath::Sqrt(sys_cFraction_PYTHIA_J3*sys_cFraction_PYTHIA_J3 +
-				     sys_lowerBound_pp_J3*sys_lowerBound_pp_J3 +
-				     sys_bEnhance_PYTHIA_J3*sys_bEnhance_PYTHIA_J3 +
-				     sys_cEnhance_PYTHIA_J3*sys_cEnhance_PYTHIA_J3 +
-				     sys_JER_PYTHIA_J3*sys_JER_PYTHIA_J3 +
-				     sys_centShift_PYTHIA_J3*sys_centShift_PYTHIA_J3);
 
-double sys_total_pp_J4 = TMath::Sqrt(sys_cFraction_PYTHIA_J4*sys_cFraction_PYTHIA_J4 +
-				     sys_lowerBound_pp_J4*sys_lowerBound_pp_J4 +
-				     sys_bEnhance_PYTHIA_J4*sys_bEnhance_PYTHIA_J4 +
-				     sys_cEnhance_PYTHIA_J4*sys_cEnhance_PYTHIA_J4 +
-				     sys_JER_PYTHIA_J4*sys_JER_PYTHIA_J4 +
-				     sys_centShift_PYTHIA_J4*sys_centShift_PYTHIA_J4);
 
-double sys_total_PbPb_C2_J2 = TMath::Sqrt(sys_cFraction_PYTHIAHYDJET_C2_J2*sys_cFraction_PYTHIAHYDJET_C2_J2 +
-					  sys_lowerBound_PbPb_C2_J2*sys_lowerBound_PbPb_C2_J2 +
-					  sys_bEnhance_PYTHIAHYDJET_C2_J2*sys_bEnhance_PYTHIAHYDJET_C2_J2 +
-					  sys_cEnhance_PYTHIAHYDJET_C2_J2*sys_cEnhance_PYTHIAHYDJET_C2_J2 +
-					  sys_JER_PYTHIAHYDJET_C2_J2*sys_JER_PYTHIAHYDJET_C2_J2 +
-					  sys_centShift_PYTHIAHYDJET_C2_J2*sys_centShift_PYTHIAHYDJET_C2_J2);
 
-double sys_total_PbPb_C2_J3 = TMath::Sqrt(sys_cFraction_PYTHIAHYDJET_C2_J3*sys_cFraction_PYTHIAHYDJET_C2_J3 +
-					  sys_lowerBound_PbPb_C2_J3*sys_lowerBound_PbPb_C2_J3 +
-					  sys_bEnhance_PYTHIAHYDJET_C2_J3*sys_bEnhance_PYTHIAHYDJET_C2_J3 +
-					  sys_cEnhance_PYTHIAHYDJET_C2_J3*sys_cEnhance_PYTHIAHYDJET_C2_J3 +
-					  sys_JER_PYTHIAHYDJET_C2_J3*sys_JER_PYTHIAHYDJET_C2_J3 +
-					  sys_centShift_PYTHIAHYDJET_C2_J3*sys_centShift_PYTHIAHYDJET_C2_J3);
 
-double sys_total_PbPb_C2_J4 = TMath::Sqrt(sys_cFraction_PYTHIAHYDJET_C2_J4*sys_cFraction_PYTHIAHYDJET_C2_J4 +
-					  sys_lowerBound_PbPb_C2_J4*sys_lowerBound_PbPb_C2_J4 +
-					  sys_bEnhance_PYTHIAHYDJET_C2_J4*sys_bEnhance_PYTHIAHYDJET_C2_J4 +
-					  sys_cEnhance_PYTHIAHYDJET_C2_J4*sys_cEnhance_PYTHIAHYDJET_C2_J4 +
-					  sys_JER_PYTHIAHYDJET_C2_J4*sys_JER_PYTHIAHYDJET_C2_J4 +
-					  sys_centShift_PYTHIAHYDJET_C2_J4*sys_centShift_PYTHIAHYDJET_C2_J4);
 
-double sys_total_PbPb_C1_J2 = TMath::Sqrt(sys_cFraction_PYTHIAHYDJET_C1_J2*sys_cFraction_PYTHIAHYDJET_C1_J2 +
-					  sys_lowerBound_PbPb_C1_J2*sys_lowerBound_PbPb_C1_J2 +
-					  sys_bEnhance_PYTHIAHYDJET_C1_J2*sys_bEnhance_PYTHIAHYDJET_C1_J2 +
-					  sys_cEnhance_PYTHIAHYDJET_C1_J2*sys_cEnhance_PYTHIAHYDJET_C1_J2 +
-					  sys_JER_PYTHIAHYDJET_C1_J2*sys_JER_PYTHIAHYDJET_C1_J2 +
-					  sys_centShift_PYTHIAHYDJET_C1_J2*sys_centShift_PYTHIAHYDJET_C1_J2);
 
-double sys_total_PbPb_C1_J3 = TMath::Sqrt(sys_cFraction_PYTHIAHYDJET_C1_J3*sys_cFraction_PYTHIAHYDJET_C1_J3 +
-					  sys_lowerBound_PbPb_C1_J3*sys_lowerBound_PbPb_C1_J3 +
-					  sys_bEnhance_PYTHIAHYDJET_C1_J3*sys_bEnhance_PYTHIAHYDJET_C1_J3 +
-					  sys_cEnhance_PYTHIAHYDJET_C1_J3*sys_cEnhance_PYTHIAHYDJET_C1_J3 +
-					  sys_JER_PYTHIAHYDJET_C1_J3*sys_JER_PYTHIAHYDJET_C1_J3 +
-					  sys_centShift_PYTHIAHYDJET_C1_J3*sys_centShift_PYTHIAHYDJET_C1_J3);
 
-double sys_total_PbPb_C1_J4 = TMath::Sqrt(sys_cFraction_PYTHIAHYDJET_C1_J4*sys_cFraction_PYTHIAHYDJET_C1_J4 +
-					  sys_lowerBound_PbPb_C1_J4*sys_lowerBound_PbPb_C1_J4 +
-					  sys_bEnhance_PYTHIAHYDJET_C1_J4*sys_bEnhance_PYTHIAHYDJET_C1_J4 +
-					  sys_cEnhance_PYTHIAHYDJET_C1_J4*sys_cEnhance_PYTHIAHYDJET_C1_J4 +
-					  sys_JER_PYTHIAHYDJET_C1_J4*sys_JER_PYTHIAHYDJET_C1_J4 +
-					  sys_centShift_PYTHIAHYDJET_C2_J4*sys_centShift_PYTHIAHYDJET_C2_J4);
+
+
+
+
+
 
 

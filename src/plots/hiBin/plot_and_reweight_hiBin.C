@@ -54,22 +54,25 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
 
   TFile *f_data, *f_pythia, *f_pythia_weighted;
 
+  
   if(ismu5){
     f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu5);
-    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50_RAW_jetFilter);
-    f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50_evtReweight);
+    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30_RAW_jetFilter);
+    f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30);
   }
   else if(ismu7){
     f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu7);
-    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50_RAW_jetFilter);
-    f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50_evtReweight);
+    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_RAW_jetFilter);
+    f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30);
   }
   else if(ismu12){
     f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu12);
-    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50_RAW_jetFilter);
-    f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50_evtReweight);
+    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30_RAW_jetFilter);
+    f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30);
   }
   else{};
+
+
   
 
   f_pythia->GetObject("h_hiBin_inclRecoMuonTag_triggerOn",pythia_vz);
@@ -242,7 +245,7 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
  
  
   legend->AddEntry(data_vz_xnorm,"PbPb SingleMuon","p");
-  legend->AddEntry(pythia_vz_xnorm,"PYTHIA+HYDJET raw","p");
+  legend->AddEntry(pythia_vz_xnorm,"PYTHIA+HYDJET w/ jet-filter","p");
   legend->AddEntry(pythia_w_vz_xnorm,"PYTHIA+HYDJET weighted + jet-filter","p");
  
       
@@ -294,9 +297,9 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
   la->SetTextSize(0.065);;
 
 
-  if(ismu5) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (308 #mub^{-1})");
-  else if(ismu7) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (749 #mub^{-1})");
-  else if(ismu12) la->DrawLatexNDC(0.57,0.92,"PbPb 5.02 TeV (1608 #mub^{-1})");
+  if(ismu5) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (323 #mub^{-1})");
+  else if(ismu7) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (787 #mub^{-1})");
+  else if(ismu12) la->DrawLatexNDC(0.57,0.92,"PbPb 5.02 TeV (1689 #mub^{-1})");
   else{};
 
   
@@ -347,7 +350,7 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
   l3->SetLineStyle(2);
   //l3->Draw();
   //gStyle->SetOptFit(1);
-  r->Fit("pol4");
+  //r->Fit("pol4");
   //r->Fit("expo");
   auto legend2 = new TLegend(0.27,0.12,0.72,0.42);
   legend2->AddEntry(r,"no weight","p");

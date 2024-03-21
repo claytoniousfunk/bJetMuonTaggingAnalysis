@@ -42,22 +42,22 @@
 // general analysis variables
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
-//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
+// #include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // hiBin-fit parameters
 // pThat > 30
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu5.h"
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu7.h"
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu12.h"
 // pThat > 40
-#include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu5.h"
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu7.h"
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu12.h"
 // pThat > 50
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu5.h"
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu7.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu12.h"
+#include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu12.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
@@ -173,8 +173,8 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 
 void PYTHIA_scan(int group = 1){
 
-  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIA/output_DiJet/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("output_DiJet_scan_pThat50_mu5_evtReweight_jetFilter/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIA/output_PYTHIA/PYTHIA_DiJet_skim_output_%i.root",group);
+  TString output = Form("output_DiJet_scan_mu12_pThat50_evtReweight_jetFilter_JERsmear/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -429,14 +429,14 @@ void PYTHIA_scan(int group = 1){
     bool evtHasGoodMuonTaggedJet = false;
     bool evtHasGoodMuonTaggedJetTriggerOn = false;
     
-    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1; 
-    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1; 
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
     // int triggerDecision = em->HLT_HIL3Mu7_v1; 
     // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu12_v1; 
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl; 
+    int triggerDecision = em->HLT_HIL3Mu12_v1; 
+    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl; 
     
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)){
       evtTriggerDecision = true;
@@ -639,10 +639,9 @@ void PYTHIA_scan(int group = 1){
       if(hasGenJetMatch){
 
 	h_recoGenDr_flavor[0]->Fill(dR_recoGen_min,jetFlavorInt,w);
-	h_recoGenDr_flavor[jetPtIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
-	
+	if(jetPtIndex > 0) h_recoGenDr_flavor[jetPtIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
 	h_recoGenDpt_flavor[0]->Fill(dPt_recoGen_min,jetFlavorInt,w);
-	h_recoGenDpt_flavor[jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
+	if(jetPtIndex > 0) h_recoGenDpt_flavor[jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
 	
 
       }

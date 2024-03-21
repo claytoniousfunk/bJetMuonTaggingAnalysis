@@ -15,9 +15,10 @@ bool skipGenParticles = true; // set TRUE for MuJet and BJet datasets
 bool doHiBinReweight = false;
 bool doVzReweight = false;
 // jet filter
-bool doGenJetPthatFilter = true;
-bool doLeadingXjetDumpFilter = true;
+bool doGenJetPthatFilter = false;
+bool doLeadingXjetDumpFilter = false;
 bool doXdumpReweight = false;
 bool doJetTrkMaxFilter = true;
+bool doRemoveHYDJETjet = true;
 // eta-phi mask
 bool doEtaPhiMask = true;

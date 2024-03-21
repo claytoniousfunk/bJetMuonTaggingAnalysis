@@ -104,8 +104,8 @@ TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonEta;
 
 void PYTHIA_scan_muonReco(int group = 1){
 
-  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIA/output_DiJet/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("output_DiJet_scan_muonReco_pThat50_mu5_evtReweight_jetFilter/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIA/output_PYTHIA/PYTHIA_DiJet_skim_output_%i.root",group);
+  TString output = Form("output_PYTHIA_scan_muonReco_hybridSoft/PYTHIA_DiJet_scan_output_%i.root",group);
   
   readConfig();
 
@@ -210,16 +210,25 @@ void PYTHIA_scan_muonReco(int group = 1){
       
       for(int k = 0; k < em->nMu; k++){
 
-	if(!isQualityMuon_tight(em->muChi2NDF->at(k),
-				em->muInnerD0->at(k),
-				em->muInnerDz->at(k),
-				em->muMuonHits->at(k),
-				em->muPixelHits->at(k),
-				em->muIsGlobal->at(k),
-				em->muIsPF->at(k),
-				em->muStations->at(k),
-				em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	// if(!isQualityMuon_tight(em->muChi2NDF->at(k),
+	// 			em->muInnerD0->at(k),
+	// 			em->muInnerDz->at(k),
+	// 			em->muMuonHits->at(k),
+	// 			em->muPixelHits->at(k),
+	// 			em->muIsGlobal->at(k),
+	// 			em->muIsPF->at(k),
+	// 			em->muStations->at(k),
+	// 			em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
 
+	if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(k),
+				     em->muInnerD0->at(k),
+				     em->muInnerDz->at(k),
+				     em->muPixelHits->at(k),
+				     em->muIsTracker->at(k),
+				     em->muIsGlobal->at(k),
+				     em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts 
+
+	
 	double recoMuPt_k = em->muPt->at(k);
 	double recoMuEta_k = em->muEta->at(k);
 	double recoMuPhi_k = em->muPhi->at(k);
