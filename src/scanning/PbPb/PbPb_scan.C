@@ -434,15 +434,23 @@ void PbPb_scan(int group = 1){
       // muon kinematic cuts
       if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
       // muon quality cuts
-      if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-			      em->muInnerD0->at(m),
-			      em->muInnerDz->at(m),
-			      em->muMuonHits->at(m),
-			      em->muPixelHits->at(m),
-			      em->muIsGlobal->at(m),
-			      em->muIsPF->at(m),
-			      em->muStations->at(m),
-			      em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+      // if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+      // 			      em->muInnerD0->at(m),
+      // 			      em->muInnerDz->at(m),
+      // 			      em->muMuonHits->at(m),
+      // 			      em->muPixelHits->at(m),
+      // 			      em->muIsGlobal->at(m),
+      // 			      em->muIsPF->at(m),
+      // 			      em->muStations->at(m),
+      // 			      em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+
+      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				   em->muInnerD0->at(m),
+				   em->muInnerDz->at(m),
+				   em->muPixelHits->at(m),
+				   em->muIsTracker->at(m),
+				   em->muIsGlobal->at(m),
+				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
       h_inclMuPt->Fill(muPt_m,w);
 
@@ -517,23 +525,23 @@ void PbPb_scan(int group = 1){
 	if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
 	// muon quality cuts
 	// ------ tight muon ID -----
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	// if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+	// 			em->muInnerD0->at(m),
+	// 			em->muInnerDz->at(m),
+	// 			em->muMuonHits->at(m),
+	// 			em->muPixelHits->at(m),
+	// 			em->muIsGlobal->at(m),
+	// 			em->muIsPF->at(m),
+	// 			em->muStations->at(m),
+	// 			em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 	// ------ hybrid-soft muon ID ----
-	//if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	//			    em->muInnerD0->at(m),
-	//			    em->muInnerDz->at(m),
-	//			    em->muPixelHits->at(m),
-	//			    em->muIsTracker->at(m),
-	//			    em->muIsGlobal->at(m),
-	//			    em->muTrkLayers->at(m))) continue; 
+	if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				    em->muInnerD0->at(m),
+				    em->muInnerDz->at(m),
+				    em->muPixelHits->at(m),
+				    em->muIsTracker->at(m),
+				    em->muIsGlobal->at(m),
+				    em->muTrkLayers->at(m))) continue; 
 			
 
 
