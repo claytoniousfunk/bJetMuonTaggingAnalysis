@@ -5,5 +5,5 @@ TString muonTreeString = "muonTree";
 TString hltString = "hltTree";
 const int NeventFilters = 2;
 std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter","pclusterCompatibilityFilter"};
-bool doJetTrkMaxFilter = false;
-bool doEtaPhiMask = true;
+bool doJetTrkMaxFilter = true;
+bool doEtaPhiMask = false;
