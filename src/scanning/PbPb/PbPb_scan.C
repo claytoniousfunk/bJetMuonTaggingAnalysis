@@ -64,8 +64,8 @@
 // print introduction
 #include "../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-//#include "../../../headers/config/config_PbPb_SingleMuon.h"
-#include "../../../headers/config/config_PbPb_MinBias.h"
+#include "../../../headers/config/config_PbPb_SingleMuon.h"
+//#include "../../../headers/config/config_PbPb_MinBias.h"
 //#include "../../../headers/config/config_PbPb_diJet.h"
 // read config
 #include "../../../headers/config/readConfig.h"
@@ -125,8 +125,8 @@ void PbPb_scan(int group = 1){
   // TString input = Form("../../../rootFiles/skimmingOutput/PbPb/output_MinBias/PbPb_MinBias_skim_output_%i.root",group);
   // TString output = Form("output_MinBias_mu12/PbPb_MinBias_scan_output_%i.root",group);
 
-  TString input = Form("../../../rootFiles/skimmingOutput/PbPb/output_SingleMuon/PbPb_SingleMuon_skim_output_%i.root",group);
-  TString output = Form("output_SingleMuon_mu5/PbPb_SingleMuon_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_SingleMuon/PbPb_SingleMuon_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_SingleMuon_mu5/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
