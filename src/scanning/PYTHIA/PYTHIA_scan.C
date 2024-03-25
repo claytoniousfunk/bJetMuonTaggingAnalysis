@@ -42,9 +42,9 @@
 // general analysis variables
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
 // #include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // hiBin-fit parameters
 // pThat > 30
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu5.h"
@@ -57,7 +57,7 @@
 // pThat > 50
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu5.h"
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu7.h"
-#include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu12.h"
+//#include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu12.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
@@ -175,7 +175,7 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 void PYTHIA_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_DiJet_scan_mu5_pThat15_removeHYDJETjets_rawEvts/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_scan_mu5_pThat15_removeHYDJETjets_rawEvts/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
