@@ -58,7 +58,7 @@
 // pthat filter function
 #include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // JetTrkMax filter function
-#include "../../../headers/functions/passesJetTrkMaxFilter.h"
+#include "../../../headers/functions/jet_filter/passesJetTrkMaxFilter.h"
 // print introduction
 #include "../../../headers/introductions/printIntroduction_pp_scan_V3p7.h"
 // analysis config
