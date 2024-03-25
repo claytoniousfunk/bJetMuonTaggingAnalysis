@@ -279,14 +279,14 @@ void pp_scan(int group = 1){
 
     bool evtTriggerDecision = false;
 
-    // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
     // int triggerDecision = em->HLT_HIL3Mu7_v1;
     // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-    int triggerDecision = em->HLT_HIL3Mu12_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu12_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     // skip if the trigger is off or if the prescale is zero
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) evtTriggerDecision = true;
