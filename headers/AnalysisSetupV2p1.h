@@ -55,8 +55,8 @@ double muPtCut = 7.0; // mu5 scans
 //double muPtCut = 9.0; // mu7 scans
 //double muPtCut = 14.0; // mu12 scans
 
-//const double pthatcut = 15.0;
-const double pthatcut = 30.0;
+const double pthatcut = 15.0;
+//const double pthatcut = 30.0;
 //const double pthatcut = 40.0;
 //const double pthatcut = 50.0;
 
