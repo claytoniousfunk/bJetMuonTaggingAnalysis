@@ -63,7 +63,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // hiBin-fit function
-#include "../../../headers/fitFunctions/fitFxn_hiBin.h"
+// #include "../../../headers/fitFunctions/fitFxn_hiBin.h"
 
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
