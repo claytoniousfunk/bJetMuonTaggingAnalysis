@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-for i in {1..7203}
+for i in {4001..5000}
 
 do
     
