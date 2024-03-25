@@ -6,4 +6,4 @@ TString hltString = "hltTree";
 const int NeventFilters = 3;
 std::string eventFilters[NeventFilters] = {"pPAprimaryVertexFilter","HBHENoiseFilterResultRun2Loose","pBeamScrapingFilter"};
 bool doJetTrkMaxFilter = true;
-bool doEtaPhiMask = true;
+bool doEtaPhiMask = false;
