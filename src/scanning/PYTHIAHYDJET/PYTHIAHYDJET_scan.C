@@ -43,19 +43,10 @@
 // #include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
 // hiBin-fit parameters
-// hiBin-fit parameters
-// pThat > 30
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu5.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu7.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu12.h"
-// pthat > 40
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu5.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu7.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu12.h"
-// pThat > 50
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu5.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu7.h"
-//#include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu12.h"
+#include "../../../headers/fitParameters/hiBinFitParams_mu5.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_mu7.h"
+// #include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
+
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
@@ -204,7 +195,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_DiJet/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_DiJet_scan_mu5_pThat30_jetFilter_evtReweight_flavorFix_test/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet_withWTA/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
   // TString output = Form("output_DiJet_scan_mu5_pThat50_jetFilter_evtReweight_test/PYTHIAHYDJET_scan_output_%i.root",group);
