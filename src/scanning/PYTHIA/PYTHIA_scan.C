@@ -922,7 +922,7 @@ void PYTHIA_scan(int group = 1){
 		
       if(TMath::Abs(genJetEta_i) > 1.6 || genJetPt_i < jetPtCut) continue;
 
-      if(x > leadingGenJetPt) leadingGenJetPt = genJetPt_i;
+      if(genJetPt_i > leadingGenJetPt) leadingGenJetPt = genJetPt_i;
 
       ////// get flavor from reco match
       bool hasRecoJetMatch = false;
