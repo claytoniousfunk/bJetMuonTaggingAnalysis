@@ -93,7 +93,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 #include "../../../headers/config/config_PYTHIA.h"
 // read config
 #include "../../../headers/config/readConfig.h"
-
+// remove HYDJET jets function
+#include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
 
 
 
