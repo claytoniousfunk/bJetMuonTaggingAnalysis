@@ -652,7 +652,7 @@ void PYTHIA_scan(int group = 1){
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp->at(j),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
 		
 	  double genMuonPt_j = em->gpptp->at(j);
 	  double genMuonPt_matched_j = -1.0;
@@ -767,13 +767,13 @@ void PYTHIA_scan(int group = 1){
 	  }
 	}
 	// match to recoJets
-	if(getDr(em->muEta->at(m),em->muPhi->at(m),y,z) < epsilon_mm){
+	if(getDr(em->muEta->at(m),em->muPhi->at(m),recoJetEta_i,recoJetPhi_i) < epsilon_mm){
 
 	  matchFlagR[m] = 1;
 				
 	  hasInclRecoMuonTag = true;
 
-	  muPtRel_i = getPtRel(em->muPt->at(m),em->muEta->at(m),em->muPhi->at(m),x,y,z);
+	  muPtRel_i = getPtRel(em->muPt->at(m),em->muEta->at(m),em->muPhi->at(m),recoJetPt_i,recoJetEta_i,recoJetPhi_i);
 	  muPt_i = em->muPt->at(m);
 	  muEta_i = em->muEta->at(m);
 	  muPhi_i = em->muPhi->at(m);
@@ -922,7 +922,7 @@ void PYTHIA_scan(int group = 1){
 		
       if(TMath::Abs(genJetEta_i) > 1.6 || genJetPt_i < jetPtCut) continue;
 
-      if(x > leadingGenJetPt) leadingGenJetPt = x;
+      if(x > leadingGenJetPt) leadingGenJetPt = genJetPt_i;
 
       ////// get flavor from reco match
       bool hasRecoJetMatch = false;
@@ -933,7 +933,7 @@ void PYTHIA_scan(int group = 1){
       
       for(int k = 0; k < em->njet; k++){
 		
-	double dr = getDr(em->jeteta[k],em->jetphi[k],y,z);
+	double dr = getDr(em->jeteta[k],em->jetphi[k],genJetEta_i,genJetPhi_i);
 
 	if(dr < minDr){ 
 
@@ -981,7 +981,7 @@ void PYTHIA_scan(int group = 1){
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(isWDecayMuon(em->gpptp->at(j),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
 		
 	  double genMuonPt_j = em->gpptp->at(j);
 	  double genMuonPt_matched_j = -1.0;
@@ -1077,7 +1077,7 @@ void PYTHIA_scan(int group = 1){
 				     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
 
-	if(isWDecayMuon(em->muPt->at(m),x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	if(isWDecayMuon(em->muPt->at(m),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 			
 			
 	// match to genMuon
