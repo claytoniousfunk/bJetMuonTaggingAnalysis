@@ -11,7 +11,7 @@ bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
-bool skipGenParticles = true; // set TRUE for MuJet and BJet datasets
+bool skipGenParticles = false; // set TRUE for MuJet and BJet datasets
 bool doHiBinReweight = false;
 bool doVzReweight = false;
 // jet filter
@@ -21,4 +21,4 @@ bool doXdumpReweight = false;
 bool doJetTrkMaxFilter = true;
 bool doRemoveHYDJETjet = true;
 // eta-phi mask
-bool doEtaPhiMask = true;
+bool doEtaPhiMask = false;
