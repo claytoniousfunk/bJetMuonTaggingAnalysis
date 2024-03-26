@@ -43,8 +43,8 @@
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // hiBin-fit parameters
 // pThat > 30
 // #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu5.h"
@@ -175,7 +175,7 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 void PYTHIA_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_scan_mu7_pThat15_removeHYDJETjets_vzReweight_JERsmear/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_scan_mu12_pThat15_removeHYDJETjets_vzReweight_JERsmear/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -433,11 +433,11 @@ void PYTHIA_scan(int group = 1){
     // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1; 
     // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    int triggerDecision = em->HLT_HIL3Mu7_v1; 
-    int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu7_v1; 
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu12_v1; 
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl; 
+    int triggerDecision = em->HLT_HIL3Mu12_v1; 
+    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl; 
     
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)){
       evtTriggerDecision = true;
