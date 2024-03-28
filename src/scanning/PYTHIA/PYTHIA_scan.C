@@ -593,8 +593,12 @@ void PYTHIA_scan(int group = 1){
 
       if(recoJetPt_i > leadingRecoJetPt) leadingRecoJetPt = recoJetPt_i;
 
-      int jetFlavorInt = em->partonFlavor[i];
-      int hadronFlavorInt = em->hadronFlavor[i];
+      int partonFlavor = em->partonFlavor[i];
+      int hadronFlavor = em->hadronFlavor[i];
+      int jetFlavorInt = partonFlavor;
+      int bHadronNumber = em->bHadronNumber[i];
+
+      if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting 
 
       int genMuIndex = -1;
       bool hasInclGenMuonTag = false;
