@@ -1,7 +1,7 @@
 void PYTHIA_skim_simple(int group = 1){
 
   string in_file_name;
-  string output_file_base = "./";
+  string output_file_base = "";
   in_file_name = "../../../fileNames/fileNames_PYTHIA_DiJet_withGS.txt";
   output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i",group);
   string output_file_extension = "";
