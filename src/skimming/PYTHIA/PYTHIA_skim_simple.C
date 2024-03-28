@@ -12,7 +12,7 @@ void PYTHIA_skim_simple(int group = 1){
   std::string filename;
   Int_t ifile = 0;
 
-  int endfile = ;
+  int endfile = 1443; // PYTHIA_withGS forest
 
   TFile *old_file;
   TString filename_string = "";
