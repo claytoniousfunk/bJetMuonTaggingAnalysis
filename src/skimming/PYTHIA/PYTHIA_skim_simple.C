@@ -80,6 +80,7 @@ void PYTHIA_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("nref",1);
     old_jet_tree->SetBranchStatus("jtPartonFlavor",1);
     old_jet_tree->SetBranchStatus("jtHadronFlavor",1);
+    old_jet_tree->SetBranchStatus("bHadronNumber",1);
     old_jet_tree->SetBranchStatus("genpt",1);
     old_jet_tree->SetBranchStatus("geneta",1);
     old_jet_tree->SetBranchStatus("genphi",1);
