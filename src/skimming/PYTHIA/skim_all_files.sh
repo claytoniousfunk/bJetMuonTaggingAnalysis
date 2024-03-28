@@ -1,29 +1,10 @@
 #!/bin/bash
 
-STARTGROUP=0
-ENDGROUP=0
-j=0
-
-for i in {1..60}
+for i in {1..1443}
 
 do
     
-    let j=$i-1
-
-    if [ $i -eq 1 ] ; then
-	let STARTGROUP=0
-	let ENDGROUP=20
-
-    elif [ $i -ne 60 ] ; then
-	let STARTGROUP=20*$j+1
-	let ENDGROUP=20*i
-    
-    elif [ $i -eq 60 ] ; then
-	let STARTGROUP=20*$j+1
-	let ENDGROUP=1193
-    fi
-
-    root -l -q "PYTHIA_skim.C($i,$STARTGROUP,$ENDGROUP)"
+    root -l -q "PYTHIAHYDJET_skim_simple.C($i)"
 
 done
 
