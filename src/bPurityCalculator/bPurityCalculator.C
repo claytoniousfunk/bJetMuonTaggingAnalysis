@@ -24,7 +24,7 @@ void bPurityCalculator(){
 
 
   // templateFitter(isData,  inMu5, isMu7, isMu12, ispp,isC1,isC2,  isJ1,isJ2,isJ3,isJ4,isJ5,isJ6,  mergeC,mergeB,
-  //                               2tempFit,3tempFit,  low_x,high_x,  c_multiplier, return)
+  //                               2tempFit,3tempFit,  low_x,high_x,  c_multiplier, bGS_multiplier, return)
 
   //templateFitter(1,  0,0,1,  0,1,0,0,0,0,  0,0,  0,1,  0.0,4.0,  1);
 
@@ -47,62 +47,63 @@ void bPurityCalculator(){
   double pTrel_fit_high = 5.0;
 
   double c_multiplier = 1.0;
+  double bGS_multiplier = 1.2;
 
   int do_JER_smear = 1;
 
-  string output_file_string = Form("../../rootFiles/bPurityResults/bPurityResults_DATA-%i_mu5-%i_mu7-%i_mu12-%i_mergeB-%i_mergeC-%i_pTrel-%1.1f-%1.1f_cMult-%1.1f-JERsmear-%i.root",do_data,do_mu5,do_mu7,do_mu12,do_mergeB,do_mergeC,pTrel_fit_low,pTrel_fit_high,c_multiplier,do_JER_smear);
+  string output_file_string = Form("../../rootFiles/bPurityResults/bPurityResults_DATA-%i_mu5-%i_mu7-%i_mu12-%i_mergeB-%i_mergeC-%i_pTrel-%1.1f-%1.1f_cMult-%1.1f_bMult-%1.1f-JERsmear-%i.root",do_data,do_mu5,do_mu7,do_mu12,do_mergeB,do_mergeC,pTrel_fit_low,pTrel_fit_high,c_multiplier,bGS_multiplier,do_JER_smear);
 
   cout << output_file_string.c_str() << endl;
 
 
   
-  results_pp[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,  1,0,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, 1);
-  err_results_pp[0] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
+  results_pp[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,  1,0,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier, 1);
+  err_results_pp[0] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_pp[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_pp[1] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
+  results_pp[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_pp[1] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_pp[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_pp[2] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
+  results_pp[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_pp[2] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_pp[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_pp[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
+  results_pp[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_pp[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_pp[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_pp[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
-
-
-
-  results_C1[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C1[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
-
-  results_C1[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C1[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
-
-  results_C1[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C1[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
-
-  results_C1[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C1[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
-
-  results_C1[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C1[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
+  results_pp[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_pp[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
 
-  results_C2[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C2[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
 
-  results_C2[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C2[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
+  results_C1[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_C2[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C2[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
+  results_C1[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_C2[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C2[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
+  results_C1[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_C2[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  1);
-  err_results_C2[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier,  2);
+  results_C1[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C1[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+
+  results_C2[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C2[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C2[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C2[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C2[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
 
 
