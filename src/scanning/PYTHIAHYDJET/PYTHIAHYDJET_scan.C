@@ -195,7 +195,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_DiJet_withGS_withWTA/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet_withWTA/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
   // TString output = Form("output_DiJet_scan_mu5_pThat50_jetFilter_evtReweight_test/PYTHIAHYDJET_scan_output_%i.root",group);
