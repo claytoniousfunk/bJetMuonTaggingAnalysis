@@ -2,8 +2,8 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "";
-  in_file_name = "fileNames/fileNames_PYTHIAHYDJET_DiJet_withGS_withWTA.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_DiJet_withGS_withWTA/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  in_file_name = "../../../fileNames/fileNames_PYTHIAHYDJET_MuJet_withGS_withWTA.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_MuJet_withGS_withWTA/PYTHIAHYDJET_MuJet_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
