@@ -39,13 +39,13 @@
 // general analysis variables
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-//#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
+#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
-#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
 // hiBin-fit parameters
-//#include "../../../headers/fitParameters/hiBinFitParams_mu5.h"
+#include "../../../headers/fitParameters/hiBinFitParams_mu5.h"
 //#include "../../../headers/fitParameters/hiBinFitParams_mu7.h"
-#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
+//#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
 
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
@@ -194,20 +194,14 @@ TH2D *h_matchedPartonFlavor_bHadronNumber;
 void PYTHIAHYDJET_scan(int group = 1){
 
   
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_DiJet_withGS_withWTA/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear/PYTHIAHYDJET_scan_output_%i.root",group);
+  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_DiJet_withGS_withWTA/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear/PYTHIAHYDJET_scan_output_%i.root",group);
 
-  // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet_withWTA/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  // TString output = Form("output_DiJet_scan_mu5_pThat50_jetFilter_evtReweight_test/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_MuJet_withGS_withWTA/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight/PYTHIAHYDJET_scan_output_%i.root",group);
 
-  // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_MuJet/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
-  // TString output = Form("output_MuJet_scan_mu5_pThat30_evtReweight_jetFilter/PYTHIAHYDJET_scan_output_%i.root",group);
-
-  // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_BJet/PYTHIAHYDJET_BJet_skim_output_%i.root",group);
-  // TString output = Form("output_BJet_scan_mu5_pThat50_evtReweight_jetFilter/PYTHIAHYDJET_scan_output_%i.root",group);
-
-  // TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet_withGS_withWTA_partial/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  // TString output = Form("output_DiJet_scan_mu5_pThat30_test/PYTHIAHYDJET_scan_output_%i.root",group);
+  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_BJet_withGS_withWTA/PYTHIAHYDJET_BJet_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_BJet_withGS_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight/PYTHIAHYDJET_scan_output_%i.root",group);
 
   
   
@@ -639,14 +633,14 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     bool evtTriggerDecision = false;
 
-    // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
     // int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
     // int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
 
-    int triggerDecision = em->HLT_HIL3Mu12_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu12_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
       evtTriggerDecision = true;
