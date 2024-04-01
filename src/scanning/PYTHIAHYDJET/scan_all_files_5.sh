@@ -3,9 +3,9 @@
 # N = 7202 for PH DiJet
 # N = 3472 for PH DiJet w/ WTA
 # N = 4257 for PH BJet
-# N = 888 for PH MuJet
+# N = 2923 for PH MuJet
 
-for i in {2001..2500}
+for i in {801..1000}
 
 do
 

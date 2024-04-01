@@ -1,8 +1,11 @@
 #!/bin/bash
 
 # N = 7202 for PH DiJet
+# N = 3472 for PH DiJet w/ WTA
+# N = 4257 for PH BJet
+# N = 2923 for PH MuJet
 
-for i in {7001..7202}
+for i in {2801..2923}
 
 do
 
