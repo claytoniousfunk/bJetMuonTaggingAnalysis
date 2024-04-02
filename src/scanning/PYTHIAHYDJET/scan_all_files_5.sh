@@ -5,11 +5,11 @@
 # N = 4257 for PH BJet
 # N = 2923 for PH MuJet
 
-for i in {801..1000}
+for i in {2001..2500}
 
 do
 
-    root -l -q "PYTHIAHYDJET_scan.C($i)"
+    root -l  -b -q "PYTHIAHYDJET_scan.C($i)"
     #root -l -q "PYTHIAHYDJET_scan_muonReco.C($i)"
 
 done
