@@ -1334,6 +1334,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       int recoJetFlavorFlag = 0;
       double minDr = 100.0;
       int jetFlavorInt = 19;
+      int bHadronNumber = 0;
 	
       double matchedRecoJetPt_i = -1.0;
 		
@@ -1360,6 +1361,8 @@ void PYTHIAHYDJET_scan(int group = 1){
      
       if(hasRecoJetMatch) {
 	jetFlavorInt = em->matchedPartonFlavor[recoJetFlavorFlag];
+	bHadronNumber = em->bHadronNumber[recoJetFlavorFlag];
+	if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17;
 	matchedRecoJetPt_i = em->jetpt[recoJetFlavorFlag];
 	//cout << "genJet flavor match: (event#" << evi << ", genJet#" << i << ", recoJet#" << recoJetFlavorFlag << ") = " << jetFlavorInt << endl;
       }
