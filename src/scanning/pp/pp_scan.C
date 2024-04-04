@@ -116,7 +116,7 @@ void pp_scan(int group = 1){
   // TString output = Form("output_SingleMuon_mu7/pp_MinBias_scan_output_%i.root",group);
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_pp_SingleMuon/pp_SingleMuon_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_SingleMuon_mu7_tight/pp_SingleMuon_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_SingleMuon_mu12_tight/pp_SingleMuon_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -282,11 +282,11 @@ void pp_scan(int group = 1){
     // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    int triggerDecision = em->HLT_HIL3Mu7_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu7_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu12_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     // skip if the trigger is off or if the prescale is zero
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) evtTriggerDecision = true;
