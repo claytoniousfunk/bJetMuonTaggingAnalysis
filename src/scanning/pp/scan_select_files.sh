@@ -7,7 +7,7 @@ echo "Enter ending file number:"
 read FILE_NUMBER_END
 
 
-for i in {FILE_NUMBER_START..FILE_NUMBER_END}
+for((i=FILE_NUMBER_START; i <= FILE_NUMBER_END; i++)) ; do
 
 do
 
