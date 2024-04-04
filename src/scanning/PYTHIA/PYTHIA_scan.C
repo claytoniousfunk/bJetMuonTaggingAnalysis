@@ -920,6 +920,7 @@ void PYTHIA_scan(int group = 1){
       int recoJetFlavorFlag = 0;
       double minDr = 100.0;
       int jetFlavorInt = 19;
+      int bHadronNumber = 0;
 
       
       for(int k = 0; k < em->njet; k++){
@@ -943,6 +944,8 @@ void PYTHIA_scan(int group = 1){
      
       if(hasRecoJetMatch) {
 	jetFlavorInt = em->partonFlavor[recoJetFlavorFlag];
+	bHadronNumber = em->bHadronNumber[recoJetFlavorFlag];
+	if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17;
 	//cout << "jetFlavorInt = " << jetFlavorInt << endl;
       }
 
