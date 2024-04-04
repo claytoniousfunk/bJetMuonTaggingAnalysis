@@ -125,7 +125,7 @@ void PbPb_scan(int group = 1){
   // TString input = Form("../../../rootFiles/skimmingOutput/PbPb/output_MinBias/PbPb_MinBias_skim_output_%i.root",group);
   // TString output = Form("output_MinBias_mu12/PbPb_MinBias_scan_output_%i.root",group);
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_SingleMuon/PbPb_SingleMuon_skim_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PbPb_SingleMuon/PbPb_SingleMuon_skim_output_%i.root",group);
   TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_SingleMuon_scan_mu5_tight/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
