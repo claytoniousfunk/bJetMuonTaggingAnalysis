@@ -279,18 +279,36 @@ void pp_scan(int group = 1){
 
     bool evtTriggerDecision = false;
 
-    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    int triggerDecision_mu5 = em->HLT_HIL3Mu5_NHitQ10_v1;
+    int triggerDecision_mu5_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu7_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+    int triggerDecision_mu7 = em->HLT_HIL3Mu7_v1;
+    int triggerDecision_mu7_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu12_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    int triggerDecision_mu12 = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_mu12_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
-    // skip if the trigger is off or if the prescale is zero
-    if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) evtTriggerDecision = true;
+
+    // ******************************************
+    // -------- mu5 configuration ---------------
+    if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl) &&
+       !triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
+       !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // ******************************************
+    
+    // ******************************************
+    // -------- mu7 configuration ---------------
+    // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
+    //    !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // ******************************************
+    
+    // ******************************************
+    // -------- mu12 configuration ---------------
+    // if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // ******************************************
    
+
+
     // set the weight equal to the "gluing" parameter
    
     // if(triggerDecision_Prescl == 0){ continue;}
