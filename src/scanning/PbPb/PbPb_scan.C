@@ -126,7 +126,7 @@ void PbPb_scan(int group = 1){
   // TString output = Form("output_MinBias_mu12/PbPb_MinBias_scan_output_%i.root",group);
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PbPb_SingleMuon/PbPb_SingleMuon_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_SingleMuon_scan_mu5_tight/PbPb_SingleMuon_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_SingleMuon_scan_mu5_tight_updatedTriggerLogic/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -361,14 +361,36 @@ void PbPb_scan(int group = 1){
 
     bool evtTriggerDecision = false;
 
-    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    int triggerDecision_mu5 = em->HLT_HIL3Mu5_NHitQ10_v1;
+    int triggerDecision_mu5_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
+    int triggerDecision_mu7 = em->HLT_HIL3Mu7_NHitQ10_v1;
+    int triggerDecision_mu7_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu12_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    int triggerDecision_mu12 = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_mu12_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+
+
+    // ******************************************
+    // -------- mu5 configuration ---------------
+    if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl) &&
+       !triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
+       !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // ******************************************
+    
+    // ******************************************
+    // -------- mu7 configuration ---------------
+    // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
+    //    !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // ******************************************
+    
+    // ******************************************
+    // -------- mu12 configuration ---------------
+    // if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // ******************************************
+
+
+
     
 
     // if(triggerDecision_Prescl == 0) continue;
