@@ -3,7 +3,7 @@
 # N = 7176 for PbPb SingleMuon
 # N = 1476 for PbPb HardProbes
 
-for i in {2001..3000}
+for i in {1001..1500}
 
 do
 
