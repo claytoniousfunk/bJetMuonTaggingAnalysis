@@ -375,18 +375,27 @@ void PbPb_scan(int group = 1){
     // -------- mu5 configuration ---------------
     if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl) &&
        !triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
-       !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+       !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+      evtTriggerDecision = true;
+      eventCounter++;
+    }
     // ******************************************
     
     // ******************************************
     // -------- mu7 configuration ---------------
     // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
-    //    !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    //    !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+    //   evtTriggerDecision = true;
+    //   eventCounter++;
+    // }
     // ******************************************
     
     // ******************************************
     // -------- mu12 configuration ---------------
-    // if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+    //   evtTriggerDecision = true;
+    //   eventCounter++;
+    // }
     // ******************************************
 
 
@@ -431,10 +440,9 @@ void PbPb_scan(int group = 1){
     //double w_trig = 1.0; // don't scale by prescales for templates
     
     // skip if the trigger is off or if the prescale is zero
-    if(triggerIsOn(triggerDecision,triggerDecision_Prescl)){
-      evtTriggerDecision = true;
-      eventCounter++;
-    }
+   
+    
+    
    
     bool eventHasGoodJet = false;
     bool eventHasInclRecoMuonTag = false;
