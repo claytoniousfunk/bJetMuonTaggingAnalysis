@@ -42,9 +42,9 @@
 // general analysis variables
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
@@ -162,7 +162,7 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 void PYTHIA_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzReweight_JERsmear/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_scan_mu5_pThat15_removeHYDJETjets_updatedTriggerLogic/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -417,19 +417,36 @@ void PYTHIA_scan(int group = 1){
     bool evtHasGoodMuonTaggedJet = false;
     bool evtHasGoodMuonTaggedJetTriggerOn = false;
     
-    // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1; 
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    int triggerDecision_mu5 = em->HLT_HIL3Mu5_NHitQ10_v1;
+    int triggerDecision_mu5_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu7_v1; 
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+    int triggerDecision_mu7 = em->HLT_HIL3Mu7_v1;
+    int triggerDecision_mu7_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-    int triggerDecision = em->HLT_HIL3Mu12_v1; 
-    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl; 
+    int triggerDecision_mu12 = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_mu12_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+
+
+    // ******************************************
+    // -------- mu5 configuration ---------------
+    if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl) &&
+       !triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
+       !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // ******************************************
     
-    if(triggerIsOn(triggerDecision,triggerDecision_Prescl)){
-      evtTriggerDecision = true;
-      //w = w / (triggerDecision_Prescl * 1.0) ; // set weight to 1/prescl for triggered events 
-    }
+    // ******************************************
+    // -------- mu7 configuration ---------------
+    // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
+    //    !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // ******************************************
+    
+    // ******************************************
+    // -------- mu12 configuration ---------------
+    // if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    // ******************************************
+
+
+    
     double leadingRecoJetPt = -1.0;
     double leadingGenJetPt = -1.0;
 
