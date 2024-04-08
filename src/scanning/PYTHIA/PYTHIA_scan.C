@@ -45,12 +45,15 @@
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
 #include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
-
-TF1 *fitFxn_hiBin, *fitFxn_vz;
+// jetPt-fit parameters
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
-// hiBin-fit function
-// #include "../../../headers/fitFunctions/fitFxn_hiBin.h"
+// jetPt-fit function
+#include "../../../headers/fitFunctions/fitFxn_jetPt.h"
 
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
@@ -162,7 +165,7 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 void PYTHIA_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_updatedTriggerLogic/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_updatedTriggerLogic_vzReweight_jetPtReweight/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -378,6 +381,7 @@ void PYTHIA_scan(int group = 1){
   JER_fxn->SetParameter(2,3.67352e-04);
 
   loadFitFxn_vz();
+  loadFitFxn_jetPt();
 
   // event loop
   int evi_frac = 0;
@@ -543,6 +547,8 @@ void PYTHIA_scan(int group = 1){
       double recoJetEta_i = em->jeteta[i]; // recoJetEta
       double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
       double jetTrkMax_i = em->jetTrkMax[i];
+
+      double w_reweight_jetPt = 1.0; // jetPt-weight
       
       JEU.SetJetPT(recoJetPt_i);
       JEU.SetJetEta(recoJetEta_i);
@@ -581,6 +587,11 @@ void PYTHIA_scan(int group = 1){
 
       if(doRemoveHYDJETjet){
 	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
+      }
+      if(doJetPtReweight){
+	w = w_pthat * w_reweight_vz;
+	w_reweight_jetPt = fitFxn_jetPt->Eval(recoJetPt_i);
+	w = w * w_reweight_jetPt ;
       }
 
       // in-jet muon variables
