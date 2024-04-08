@@ -4,13 +4,13 @@
 
 int N_vzFitParam = 4;
 
-double vzFitParam_0 = 0.930031;
-double vzFitParam_1 = 0.00110104;
-double vzFitParam_2 = 0.002336;
-double vzFitParam_3 = -2.40566e-06;
+double vzFitParam_0 = 0.991457;
+double vzFitParam_1 = -0.00435125;
+double vzFitParam_2 = 0.00108075;
+double vzFitParam_3 = 1.93358e-06;
 
-double e_vzFitParam_0 = 0.00775442;
-double e_vzFitParam_1 = 0.00205736;
-double e_vzFitParam_2 = 0.000174126;
-double e_vzFitParam_3 = 2.30904e-05;
+double e_vzFitParam_0 = 0.0584854;
+double e_vzFitParam_1 = 0.0154312;
+double e_vzFitParam_2 = 0.00103673;
+double e_vzFitParam_3 = 0.000142441;
 
