@@ -1,4 +1,3 @@
-V
 // general ROOT/C includes
 #include <iostream>
 #include "TFile.h"
