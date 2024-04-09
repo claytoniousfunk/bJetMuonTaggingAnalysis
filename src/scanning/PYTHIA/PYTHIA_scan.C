@@ -493,6 +493,27 @@ void PYTHIA_scan(int group = 1){
     double leadingRecoJetPhi_i = 0.0;
     int leadingRecoJetFlavor_i = -100;
 
+    // find leadingRecoJet
+    for(int j = 0; j < em->njet ; j++){
+
+      JEC.SetJetPT(em->rawpt[j]);
+      JEC.SetJetEta(em->jeteta[j]);
+      JEC.SetJetPhi(em->jetphi[j]);
+      
+      double testJetPt_j = JEC.GetCorrectedPT();
+      double testJetEta_j = em->jeteta[j];
+      double testJetPhi_j = em->jetphi[j];
+      int testJetFlavor_j = em->matchedPartonFlavor[j];
+
+      if(fabs(testJetEta_j) > etaMax) continue;
+      
+      if(testJetPt_j > leadingRecoJetPt_i){
+	leadingRecoJetPt_i = testJetPt_j;
+	leadingRecoJetFlavor_i = testJetFlavor_j;
+      }
+
+    }
+
     bool leadingXjetDump = false;
     double xDumpPthatScalar = 1.0;
 
@@ -528,26 +549,7 @@ void PYTHIA_scan(int group = 1){
     // reweight if we didn't dump the event.
 
 
-    // find leadingRecoJet
-    for(int j = 0; j < em->njet ; j++){
-
-      JEC.SetJetPT(em->rawpt[j]);
-      JEC.SetJetEta(em->jeteta[j]);
-      JEC.SetJetPhi(em->jetphi[j]);
-      
-      double testJetPt_j = JEC.GetCorrectedPT();
-      double testJetEta_j = em->jeteta[j];
-      double testJetPhi_j = em->jetphi[j];
-      int testJetFlavor_j = em->matchedPartonFlavor[j];
-
-      if(fabs(testJetEta_j) > etaMax) continue;
-      
-      if(testJetPt_j > leadingRecoJetPt_i){
-	leadingRecoJetPt_i = testJetPt_j;
-	leadingRecoJetFlavor_i = testJetFlavor_j;
-      }
-
-    }
+    
 
     
 
@@ -951,7 +953,7 @@ void PYTHIA_scan(int group = 1){
 	if(evtHasGoodMuonTaggedJetTriggerOn){
 
 	  h_vz_inclRecoMuonTag_triggerOn->Fill(em->vz,w);
-	  h_leadingRecoJetPt_inclRecoMuonTag_triggerOn_flavor->Fill(leadingRecoJetPt,jetFlavorInt,w);
+	  h_leadingRecoJetPt_inclRecoMuonTag_triggerOn_flavor->Fill(leadingRecoJetPt_i,leadingRecoJetFlavor_i,w);
 
 	}
 
