@@ -920,7 +920,7 @@ void PYTHIA_scan(int group = 1){
 
 	if(evtHasGoodMuonTaggedJetTriggerOn){
 
-	  h_vz_inclRecoMuonTag_triggerOn->Fill(em->vz,w_template);
+	  h_vz_inclRecoMuonTag_triggerOn->Fill(em->vz,w);
 
 	}
 
