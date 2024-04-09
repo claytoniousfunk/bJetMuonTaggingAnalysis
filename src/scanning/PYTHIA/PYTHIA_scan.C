@@ -165,7 +165,7 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 void PYTHIA_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_updatedTriggerLogic_vzReweight_jetPtReweight_JERsmear/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_updatedTriggerLogic_vzReweight_jetPtReweight_JEUshiftUp/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
