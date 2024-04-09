@@ -136,7 +136,7 @@ TH2D *h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn;
 TH2D *h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn;
 TH2D *h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[NJetPtIndices];
 // ----- leading reco jets tagged to matched reco muon by flavor, trigger on ----
-TH2D *h_leadingRecoJetPt_matchedRecoMuonTag_triggerOn_flavor;
+TH2D *h_leadingRecoJetPt_inclRecoMuonTag_triggerOn_flavor;
 // ------------------------------- in-jet reco muons by flavor, trigger on ----
 TH2D *h_muptrel_inclRecoMuonTag_triggerOn_flavor[NJetPtIndices];
 TH2D *h_mupt_inclRecoMuonTag_triggerOn_flavor[NJetPtIndices];
@@ -224,7 +224,7 @@ void PYTHIA_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn = new TH2D("h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn","incl. reco p_{T}^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, trigger ON",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
   h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn = new TH2D("h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn","incl. reco p_{T}^{jet} vs. incl. reco #phi^{jet}, tagged with matched reco muon, trigger ON",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
   
-  h_leadingRecoJetPt_matchedRecoMuonTag_triggerOn_flavor = new TH2D("h_leadingRecoJetPt_matchedRecoMuonTag_triggerOn_flavor","JetFlavorID vs leading reco p_{T}^{jet}, tagged with matched reco muon, trigger ON",NPtBins,ptMin,ptMax,27,-5,22);
+  h_leadingRecoJetPt_inclRecoMuonTag_triggerOn_flavor = new TH2D("h_leadingRecoJetPt_inclRecoMuonTag_triggerOn_flavor","JetFlavorID vs leading reco p_{T}^{jet}, tagged with incl. reco muon, trigger ON",NPtBins,ptMin,ptMax,27,-5,22);
   
   
   h_inclGenJetPt_flavor = new TH2D("h_inclGenJetPt_flavor","JetFlavorID vs incl. gen p_{T}^{jet}",NPtBins,ptMin,ptMax,27,-5,22);
@@ -279,7 +279,7 @@ void PYTHIA_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn->Sumw2();
   h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn->Sumw2();
 
-  h_leadingRecoJetPt_matchedRecoMuonTag_triggerOn_flavor->Sumw2();
+  h_leadingRecoJetPt_inclRecoMuonTag_triggerOn_flavor->Sumw2();
 
   h_inclGenJetPt_flavor->Sumw2();
   h_inclGenJetPt_inclGenMuonTag_flavor->Sumw2();
