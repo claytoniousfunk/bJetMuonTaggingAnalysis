@@ -1269,7 +1269,7 @@ void PYTHIA_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn->Write();
   h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn->Write();
 
-  h_leadingRecoJetPt_matchedRecoMuonTag_triggerOn_flavor->Write();
+  h_leadingRecoJetPt_inclRecoMuonTag_triggerOn_flavor->Write();
 
   h_inclGenJetPt_flavor->Write();
   h_inclGenJetPt_inclGenMuonTag_flavor->Write();
