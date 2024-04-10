@@ -344,7 +344,7 @@ void pp_scan(int group = 1){
       //cout << "muon(" << m << ") pT = " << muPt_m << endl;
       // skip if muon has already been matched to a jet in this event
       // muon kinematic cuts
-      if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
+      if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
       // muon quality cuts
       if(!isQualityMuon_tight(em->muChi2NDF->at(m),
 			      em->muInnerD0->at(m),
@@ -421,7 +421,7 @@ void pp_scan(int group = 1){
 	// skip if muon has already been matched to a jet in this event
 	if(matchFlagR[m] == 1) continue;
 	// muon kinematic cuts
-	if(muPt_m < muPtCut || fabs(muEta_m) > trkEtaMax) continue;
+	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
 	// muon quality cuts
 	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
 				em->muInnerD0->at(m),

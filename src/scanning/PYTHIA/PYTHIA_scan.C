@@ -770,7 +770,7 @@ void PYTHIA_scan(int group = 1){
 
 	if(matchFlagR[m] == 1) continue;
 
-	if(em->muPt->at(m) < muPtCut || fabs(em->muEta->at(m)) > 2.0) continue;
+	if(em->muPt->at(m) < muPtCut || em->muPt->at(m) > muPtMaxCut  || fabs(em->muEta->at(m)) > 2.0) continue;
 			 
 	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
 				em->muInnerD0->at(m),
@@ -1050,7 +1050,7 @@ void PYTHIA_scan(int group = 1){
 
 	  for(int l = 0; l < em->nMu; l++){
 
-	    if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > 2.0) continue;
+	    if(em->muPt->at(l) < muPtCut || em->muPt->at(l) > muPtMaxCut || fabs(em->muEta->at(l)) > 2.0) continue;
 	  
 	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
 				    em->muInnerD0->at(l),
@@ -1112,7 +1112,7 @@ void PYTHIA_scan(int group = 1){
 
 	if(matchFlagR[m] == 1) continue;
 
-	if(em->muPt->at(m) < muPtCut || fabs(em->muEta->at(m)) > 2.0) continue;
+	if(em->muPt->at(m) < muPtCut || em->muPt->at(m) > muPtMaxCut || fabs(em->muEta->at(m)) > 2.0) continue;
 
 	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
 				em->muInnerD0->at(m),
