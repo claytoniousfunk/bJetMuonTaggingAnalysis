@@ -383,19 +383,18 @@ void PbPb_scan(int group = 1){
     
     // ******************************************
     // -------- mu7 configuration ---------------
-    // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
-    //    !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
-    //   evtTriggerDecision = true;
-    //   eventCounter++;
-    // }
+    if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
+      evtTriggerDecision = true;
+      eventCounter++;
+    }
     // ******************************************
     
     // ******************************************
     // -------- mu12 configuration ---------------
-    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
-      evtTriggerDecision = true;
-      eventCounter++;
-    }
+    // if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+    //   evtTriggerDecision = true;
+    //   eventCounter++;
+    // }
     // ******************************************
 
 
