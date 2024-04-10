@@ -10,7 +10,7 @@ void readConfig(){
   cout << "           |jet eta| < " << etaMax << endl;
   cout << "                   R = " << epsilon_mm << endl; 
   cout << "    mouns:" << endl;
-  cout << "             muon pt > " << muPtCut << endl;
+  cout << "             " << muPtCut < " muon pT < " << muPtMaxCut << endl;
   cout << "          |muon eta| < " << trkEtaMax << endl << endl;
   cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< " << endl << endl;
 
