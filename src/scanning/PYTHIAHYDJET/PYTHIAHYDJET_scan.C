@@ -52,7 +52,7 @@
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 
 
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn;
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PH.h"
 // #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
