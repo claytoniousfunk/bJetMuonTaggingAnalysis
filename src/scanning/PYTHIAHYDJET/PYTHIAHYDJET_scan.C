@@ -52,7 +52,7 @@
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 
 
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PH.h"
 // #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
@@ -839,7 +839,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       // jet kinematic cuts
       if(TMath::Abs(recoJetEta_i) > etaMax || recoJetPt_i < jetPtCut) continue;
      
-      eventHasGoodJet = true;
+      if(recoJetPt_i > 60) eventHasGoodJet = true;
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
