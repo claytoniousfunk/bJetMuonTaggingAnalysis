@@ -42,12 +42,12 @@
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
-#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
-//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
@@ -841,6 +841,11 @@ void PYTHIA_scan(int group = 1){
       h_inclRecoJetPt_inclRecoJetPhi->Fill(recoJetPt_i,recoJetPhi_i,w);
       h_inclRecoJetEta_inclRecoJetPhi[0]->Fill(recoJetEta_i,recoJetPhi_i,w);
       if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
+
+      double w_template = w;
+      if(doJetPtReweight){
+	w_template = w_pthat * w_reweight_vz * fitFxn_jetPt->Eval(recoJetPt_i);
+      }
 		
       // FACTORIZATION CONFIG #1
 
@@ -869,10 +874,7 @@ void PYTHIA_scan(int group = 1){
 	if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
 
 
-	double w_template = w;
-	if(doJetPtReweight){
-	  w_template = w * fitFxn_jetPt->Eval(recoJetPt_i);
-	}
+	
 	
 	if(evtTriggerDecision){
 
