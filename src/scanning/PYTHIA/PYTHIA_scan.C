@@ -832,32 +832,36 @@ void PYTHIA_scan(int group = 1){
 
       }
 
+      double w_jet = w;
+      if(doJetPtReweight){
+	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * fitFxn_jetPt->Eval(recoJetPt_i);
+      }
+
+
+
       // Fill the jet histograms
       evtHasGoodJet = true;
-      h_inclRecoJetPt_flavor->Fill(recoJetPt_i,jetFlavorInt,w);
-      h_inclRecoJetEta_flavor->Fill(recoJetEta_i,jetFlavorInt,w);
-      h_inclRecoJetPhi_flavor->Fill(recoJetPhi_i,jetFlavorInt,w);
-      h_inclRecoJetPt_inclRecoJetEta->Fill(recoJetPt_i,recoJetEta_i,w);
-      h_inclRecoJetPt_inclRecoJetPhi->Fill(recoJetPt_i,recoJetPhi_i,w);
-      h_inclRecoJetEta_inclRecoJetPhi[0]->Fill(recoJetEta_i,recoJetPhi_i,w);
-      if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
+      h_inclRecoJetPt_flavor->Fill(recoJetPt_i,jetFlavorInt,w_jet);
+      h_inclRecoJetEta_flavor->Fill(recoJetEta_i,jetFlavorInt,w_jet);
+      h_inclRecoJetPhi_flavor->Fill(recoJetPhi_i,jetFlavorInt,w_jet);
+      h_inclRecoJetPt_inclRecoJetEta->Fill(recoJetPt_i,recoJetEta_i,w_jet);
+      h_inclRecoJetPt_inclRecoJetPhi->Fill(recoJetPt_i,recoJetPhi_i,w_jet);
+      h_inclRecoJetEta_inclRecoJetPhi[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
+      if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
-      double w_template = w;
-      if(doJetPtReweight){
-	w_template = w_pthat * w_reweight_vz * fitFxn_jetPt->Eval(recoJetPt_i);
-      }
+      
 		
       // FACTORIZATION CONFIG #1
 
       if(hasInclGenMuonTag){
 		
-	h_inclRecoJetPt_inclGenMuonTag_flavor->Fill(recoJetPt_i,jetFlavorInt,w);
-	h_inclRecoJetEta_inclGenMuonTag_flavor->Fill(recoJetEta_i,jetFlavorInt,w);
-	h_inclRecoJetPhi_inclGenMuonTag_flavor->Fill(recoJetPhi_i,jetFlavorInt,w);
-	h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag->Fill(recoJetPt_i,recoJetEta_i,w);
-	h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag->Fill(recoJetPt_i,recoJetPhi_i,w);
-	h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w);
-	if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
+	h_inclRecoJetPt_inclGenMuonTag_flavor->Fill(recoJetPt_i,jetFlavorInt,w_jet);
+	h_inclRecoJetEta_inclGenMuonTag_flavor->Fill(recoJetEta_i,jetFlavorInt,w_jet);
+	h_inclRecoJetPhi_inclGenMuonTag_flavor->Fill(recoJetPhi_i,jetFlavorInt,w_jet);
+	h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag->Fill(recoJetPt_i,recoJetEta_i,w_jet);
+	h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag->Fill(recoJetPt_i,recoJetPhi_i,w_jet);
+	h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
+	if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
       } 
 
@@ -865,13 +869,13 @@ void PYTHIA_scan(int group = 1){
 
 	evtHasGoodMuonTaggedJet = true;
 
-	h_inclRecoJetPt_inclRecoMuonTag_flavor->Fill(recoJetPt_i,jetFlavorInt,w);
-	h_inclRecoJetEta_inclRecoMuonTag_flavor->Fill(recoJetEta_i,jetFlavorInt,w);
-	h_inclRecoJetPhi_inclRecoMuonTag_flavor->Fill(recoJetPhi_i,jetFlavorInt,w);
-	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Fill(recoJetPt_i,recoJetEta_i,w);
-	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Fill(recoJetPt_i,recoJetPhi_i,w);
-	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w);
-	if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
+	h_inclRecoJetPt_inclRecoMuonTag_flavor->Fill(recoJetPt_i,jetFlavorInt,w_jet);
+	h_inclRecoJetEta_inclRecoMuonTag_flavor->Fill(recoJetEta_i,jetFlavorInt,w_jet);
+	h_inclRecoJetPhi_inclRecoMuonTag_flavor->Fill(recoJetPhi_i,jetFlavorInt,w_jet);
+	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Fill(recoJetPt_i,recoJetEta_i,w_jet);
+	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Fill(recoJetPt_i,recoJetPhi_i,w_jet);
+	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
+	if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
 
 	
@@ -880,27 +884,27 @@ void PYTHIA_scan(int group = 1){
 
 	  evtHasGoodMuonTaggedJetTriggerOn = true;
 	  
-	  h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor->Fill(recoJetPt_i,jetFlavorInt,w_template);
-	  h_inclRecoJetEta_inclRecoMuonTag_triggerOn_flavor->Fill(recoJetEta_i,jetFlavorInt,w_template);
-	  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn_flavor->Fill(recoJetPhi_i,jetFlavorInt,w_template);
-	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetEta_i,w_template);
-	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetPhi_i,w_template);
+	  h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor->Fill(recoJetPt_i,jetFlavorInt,w_jet);
+	  h_inclRecoJetEta_inclRecoMuonTag_triggerOn_flavor->Fill(recoJetEta_i,jetFlavorInt,w_jet);
+	  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn_flavor->Fill(recoJetPhi_i,jetFlavorInt,w_jet);
+	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetEta_i,w_jet);
+	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetPhi_i,w_jet);
 
-	  h_muptrel_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muPtRel_i,jetFlavorInt,w_template);
-	  h_mupt_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muPt_i,jetFlavorInt,w_template);
-	  h_mueta_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muEta_i,jetFlavorInt,w_template);
-	  h_muphi_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muPhi_i,jetFlavorInt,w_template);
+	  h_muptrel_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muPtRel_i,jetFlavorInt,w_jet);
+	  h_mupt_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muPt_i,jetFlavorInt,w_jet);
+	  h_mueta_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muEta_i,jetFlavorInt,w_jet);
+	  h_muphi_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muPhi_i,jetFlavorInt,w_jet);
 
-	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w_template);
+	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 	  
 	  if(jetPtIndex > 0) {
 
-	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_template);
+	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
-	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPtRel_i,jetFlavorInt,w_template);
-	    h_mupt_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPt_i,jetFlavorInt,w_template);
-	    h_mueta_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muEta_i,jetFlavorInt,w_template);
-	    h_muphi_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPhi_i,jetFlavorInt,w_template);
+	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPtRel_i,jetFlavorInt,w_jet);
+	    h_mupt_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPt_i,jetFlavorInt,w_jet);
+	    h_mueta_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muEta_i,jetFlavorInt,w_jet);
+	    h_muphi_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPhi_i,jetFlavorInt,w_jet);
 	    
 	  }
 	    
@@ -908,24 +912,24 @@ void PYTHIA_scan(int group = 1){
 
 	if(hasMatchedRecoMuonTag){
 
-	  h_inclRecoJetPt_matchedRecoMuonTag_flavor->Fill(recoJetPt_i,jetFlavorInt,w);
-	  h_inclRecoJetEta_matchedRecoMuonTag_flavor->Fill(recoJetEta_i,jetFlavorInt,w);
-	  h_inclRecoJetPhi_matchedRecoMuonTag_flavor->Fill(recoJetPhi_i,jetFlavorInt,w);
-	  h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag->Fill(recoJetPt_i,recoJetEta_i,w);
-	  h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag->Fill(recoJetPt_i,recoJetPhi_i,w);
+	  h_inclRecoJetPt_matchedRecoMuonTag_flavor->Fill(recoJetPt_i,jetFlavorInt,w_jet);
+	  h_inclRecoJetEta_matchedRecoMuonTag_flavor->Fill(recoJetEta_i,jetFlavorInt,w_jet);
+	  h_inclRecoJetPhi_matchedRecoMuonTag_flavor->Fill(recoJetPhi_i,jetFlavorInt,w_jet);
+	  h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag->Fill(recoJetPt_i,recoJetEta_i,w_jet);
+	  h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag->Fill(recoJetPt_i,recoJetPhi_i,w_jet);
 
-	  h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w);
-	  if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
+	  h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
+	  if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
 	  if(evtTriggerDecision) {
 
-	    h_inclRecoJetPt_matchedRecoMuonTag_triggerOn_flavor->Fill(recoJetPt_i,jetFlavorInt,w_template);
-	    h_inclRecoJetEta_matchedRecoMuonTag_triggerOn_flavor->Fill(recoJetEta_i,jetFlavorInt,w_template);
-	    h_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_flavor->Fill(recoJetPhi_i,jetFlavorInt,w_template);
-	    h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetEta_i,w_template);
-	    h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetPhi_i,w_template);
-	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[0]->Fill(recoJetEta_i,recoJetPhi_i,w_template);
-	    if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_template);
+	    h_inclRecoJetPt_matchedRecoMuonTag_triggerOn_flavor->Fill(recoJetPt_i,jetFlavorInt,w_jet);
+	    h_inclRecoJetEta_matchedRecoMuonTag_triggerOn_flavor->Fill(recoJetEta_i,jetFlavorInt,w_jet);
+	    h_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_flavor->Fill(recoJetPhi_i,jetFlavorInt,w_jet);
+	    h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetEta_i,w_jet);
+	    h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetPhi_i,w_jet);
+	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
+	    if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
 	  }
 
