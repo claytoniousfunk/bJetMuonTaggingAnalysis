@@ -13,12 +13,12 @@ bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
 bool skipGenParticles = false; // set TRUE for MuJet and BJet datasets
 // reweighting functions
-bool doHiBinReweight = true;
-bool doVzReweight = true;
+bool doHiBinReweight = false;
+bool doVzReweight = false;
 bool doJetPtReweight = true;
 // jet-based filters
 bool doGenJetPthatFilter = false;
-bool doLeadingXjetDumpFilter = false;
+bool doLeadingXjetDumpFilter = true;
 bool doXdumpReweight = false;
 bool doJetTrkMaxFilter = true;
 bool doRemoveHYDJETjet = true;
