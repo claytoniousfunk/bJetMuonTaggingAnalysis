@@ -13,11 +13,11 @@ bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
 bool skipGenParticles = false;
 // reweighting functions
-bool doVzReweight = true;
-bool doJetPtReweight = true;
+bool doVzReweight = false;
+bool doJetPtReweight = false;
 // jet-based filers
 bool doGenJetPthatFilter = false;
-bool doLeadingXjetDumpFilter = false;
+bool doLeadingXjetDumpFilter = true;
 bool doXdumpReweight = false;
 bool doJetTrkMaxFilter = true;
 bool doRemoveHYDJETjet = true;
