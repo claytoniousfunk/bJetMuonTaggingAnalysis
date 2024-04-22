@@ -8,8 +8,8 @@ const int NeventFilters = 2;
 std::string eventFilters[NeventFilters] = {"pPAprimaryVertexFilter", "HBHENoiseFilterResultRun2Loose"};
 // options for systematic studies
 bool apply_JER_smear = false;
-bool apply_JEU_shift_up = true;
-bool apply_JEU_shift_down = false;
+bool apply_JEU_shift_up = false;
+bool apply_JEU_shift_down = true;
 // options to skip genParticle loops (for forests with no genParticle info)
 bool skipGenParticles = false;
 // reweighting functions
