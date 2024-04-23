@@ -4,12 +4,12 @@
 
 int N_jetPtFitParam = 3;
 
-double jetPtFitParam_0 = 1.18793;
-double jetPtFitParam_1 = -0.310975;
-double jetPtFitParam_2 = -0.0076222;
+double jetPtFitParam_0 = 1.16402;
+double jetPtFitParam_1 = -0.308455;
+double jetPtFitParam_2 = -0.007902;
 
-double e_jetPtFitParam_0 = 0.051405;
-double e_jetPtFitParam_1 = 0.0400062;
-double e_jetPtFitParam_2 = 0.00351582;
+double e_jetPtFitParam_0 = 0.0499901;
+double e_jetPtFitParam_1 = 0.0435884;
+double e_jetPtFitParam_2 = 0.00383702;
 
 
