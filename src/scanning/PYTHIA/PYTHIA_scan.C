@@ -708,7 +708,7 @@ void PYTHIA_scan(int group = 1){
 	  double genMuonPhi_matched_j = -1.0;
 
 
-	  if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;                        
+	  if(genMuonPt_j < muPtCut || genMuonPt_j > muPtMaxCut || fabs(genMuonEta_j) > 2.0) continue;                        
 
 	  for(int l = 0; l < em->nMu; l++){
 
