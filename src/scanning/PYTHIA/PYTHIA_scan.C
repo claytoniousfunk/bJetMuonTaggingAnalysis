@@ -802,7 +802,7 @@ void PYTHIA_scan(int group = 1){
 			
 	    if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	    if(em->gpptp->at(j) < muPtCut || fabs(em->gpetap->at(j)) > trkEtaMax) continue;                    
+	    if(em->gpptp->at(j) < muPtCut || em->gpptp->at(j) > muPtMaxCut || fabs(em->gpetap->at(j)) > trkEtaMax) continue;                    
 		
 	    if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
 
