@@ -42,12 +42,12 @@
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
-#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
-//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
@@ -166,7 +166,7 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 void PYTHIA_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_JEUShiftDown/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -445,12 +445,12 @@ void PYTHIA_scan(int group = 1){
     
     // ******************************************
     // -------- mu7 configuration ---------------
-    if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)) evtTriggerDecision = true;
+    //if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)) evtTriggerDecision = true;
     // ******************************************
     
     // ******************************************
     // -------- mu12 configuration ---------------
-    //if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
     // ******************************************
 
 
