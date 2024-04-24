@@ -5,7 +5,7 @@
 # N = 4257 for PH BJet
 # N = 2923 for PH MuJet
 
-for i in {1201..1350}
+for i in {801..900}
 
 do
 
