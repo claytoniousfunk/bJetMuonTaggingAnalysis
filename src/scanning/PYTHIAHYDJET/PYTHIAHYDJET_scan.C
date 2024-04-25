@@ -204,69 +204,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   //TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftDown/PYTHIAHYDJET_scan_output_%i.root",group);
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_MuJet_withGS_withWTA/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftUp/PYTHIAHYDJET_scan_output_%i.root",group);
-
-  //TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_BJet_withGS_withWTA/PYTHIAHYDJET_BJet_skim_output_%i.root",group);
-  //TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftDown/PYTHIAHYDJET_scan_output_%i.root",group);
-
-  
-  
-  // JET ENERGY CORRECTIONS
-  vector<string> Files;
-  Files.push_back("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
-
-  JetCorrector JEC(Files);
-
-  JetUncertainty JEU("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
-
-  
-  // printIntroduction_PYTHIAHYDJET_scan_V3p7();
-  readConfig();
-  
-  // define histograms
-  // >> NEvents
-  h_NEvents = new TH1D("h_NEvents","Number of events",1000,0,1000);
-  h_delta_muptrel_WTA_nom_flavor = new TH2D("h_delta_muptrel_WTA_nom_flavor","h_delta_muptrel_WTA_nom_flavor",1000,-1,1,27,-5,22);
-  // >> hiBin
-  h_hiBin = new TH1D("h_hiBin","hiBin, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_inclGenMuonTag = new TH1D("h_hiBin_inclGenMuonTag","hiBin, events with inclRecoJet-inclGenMuonTag",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_matchedRecoMuonTag = new TH1D("h_hiBin_matchedRecoMuonTag","hiBin, events with inclRecoJet-matchedRecoMuonTag",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_matchedRecoMuonTag_triggerOn = new TH1D("h_hiBin_matchedRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-matchedRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
-  h_weight_pthat_xJets_C1J3 = new TH2D("h_weight_pthat_xJets_C1J3","pthat vs w_{pthat}, xJets, 80 < p_{T} < 120 GeV, cent. 0-30%",2000,0,0.02,500,0,500);
-  h_weight_pthat_bJets_C1J3 = new TH2D("h_weight_pthat_bJets_C1J3","pthat vs w_{pthat}, bJets, 80 < p_{T} < 120 GeV, cent. 0-30%",2000,0,0.02,500,0,500);
-  h_matchedPartonFlavor_bHadronNumber = new TH2D("h_matchedPartonFlavor_bHadronNumber","matchedPartonFlavor vs bHadronNumber",27,-5,22,5,0,5);
-
-  h_delta_muptrel_WTA_nom_flavor->Sumw2();
-  h_hiBin->Sumw2();
-  h_hiBin_inclGenMuonTag->Sumw2();
-  h_hiBin_inclRecoMuonTag->Sumw2();
-  h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
-  h_hiBin_matchedRecoMuonTag->Sumw2();
-  h_hiBin_matchedRecoMuonTag_triggerOn->Sumw2();
-  h_weight_pthat_xJets_C1J3->Sumw2();
-  h_weight_pthat_bJets_C1J3->Sumw2();
-  h_matchedPartonFlavor_bHadronNumber->Sumw2();
-
-  
-  for(int i = 0; i < NCentralityIndices; i++){
-	
-	
-    if(i==0){
-      // ----------------------------------------- event histograms -----------------
-      // >> vz
-      h_vz[i] = new TH1D(Form("h_vz_C%i",i),Form("vz, events with inclRecoJet, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
-      h_vz_inclGenMuonTag[i] = new TH1D(Form("h_vz_inclGenMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclGenMuonTag, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
-      h_vz_inclRecoMuonTag[i] = new TH1D(Form("h_vz_inclRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
-      h_vz_matchedRecoMuonTag[i] = new TH1D(Form("h_vz_matchedRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-matchedRecoMuonTag, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
-      h_vz_inclRecoMuonTag_triggerOn[i] = new TH1D(Form("h_vz_inclRecoMuonTag_triggerOn_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag-triggerOn, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
-      h_vz_matchedRecoMuonTag_triggerOn[i] = new TH1D(Form("h_vz_matchedRecoMuonTag_triggerOn_C%i",i),Form("vz, events with inclRecoJet-matchedRecoMuonTag-triggerOn, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
-      // ------------------------------- incl. reco jets per flavor -----------------
-      h_inclRecoJetPt_flavor[i] = new TH2D(Form("h_inclRecoJetPt_flavor_C%i",i),Form("JetFlavorID vs incl. reco p_{T}^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,27,-5,22);
-      h_inclRecoJetEta_flavor[i] = new TH2D(Form("h_inclRecoJetEta_flavor_C%i",i),Form("JetFlavorID vs incl. reco #eta^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NEtaBins,etaMin,etaMax,27,-5,22);
-      h_inclRecoJetPhi_flavor[i] = new TH2D(Form("h_inclRecoJetPhi_flavor_C%i",i),Form("JetFlavorID vs incl. reco #phi^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPhiBins,phiMin,phiMax,27,-5,22);
-      h_inclRecoJetPt_inclRecoJetEta[i] = new TH2D(Form("h_inclRecoJetPt_inclRecoJetEta_C%i",i),Form("incl. reco #eta^{jet} vs. incl reco p_{T}^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftDownNEtaBins,etaMin,etaMax);
       h_inclRecoJetPt_inclRecoJetPhi[i] = new TH2D(Form("h_inclRecoJetPt_inclRecoJetPhi_C%i",i),Form("incl. reco #phi^{jet} vs. incl reco p_{T}^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
       // ------------------- incl. reco jets tagged to gen muon by flavor -----------
       h_inclRecoJetPt_inclGenMuonTag_flavor[i] = new TH2D(Form("h_inclRecoJetPt_inclGenMuonTag_flavor_C%i",i),Form("JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. gen muon, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,27,-5,22);
