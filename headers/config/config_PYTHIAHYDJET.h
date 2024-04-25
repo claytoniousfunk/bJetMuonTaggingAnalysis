@@ -9,9 +9,9 @@ std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter", "HBHENoiseFil
 // options for systematic studies
 bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
-bool apply_JEU_shift_down = true;
+bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
-bool skipGenParticles = true; // set TRUE for MuJet and BJet datasets
+bool skipGenParticles = false; // set TRUE for MuJet and BJet datasets
 // reweighting functions
 bool doHiBinReweight = true;
 bool doVzReweight = true;
