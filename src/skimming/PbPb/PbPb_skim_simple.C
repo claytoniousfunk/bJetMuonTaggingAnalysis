@@ -2,7 +2,7 @@ void PbPb_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "./";
-  in_file_name = "fileNames/fileNames_PbPb_SingleMuon_3Oct23.txt";
+  in_file_name = "fileNames/fileNames_PbPb_SingleMuon_withWTA_7Feb24.txt";
   output_file_base += Form("output/PbPb_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
