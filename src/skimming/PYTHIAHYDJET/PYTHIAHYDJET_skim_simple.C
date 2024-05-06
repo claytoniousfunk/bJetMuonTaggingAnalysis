@@ -12,7 +12,7 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   std::string filename;
   Int_t ifile = 0;
 
-  int endfile = 4257;
+  int endfile = 6884;
 
   TFile *old_file;
   TString filename_string = "";
