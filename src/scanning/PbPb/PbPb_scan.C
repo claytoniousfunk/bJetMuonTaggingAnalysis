@@ -347,6 +347,8 @@ void PbPb_scan(int group = 1){
     if(fabs(em->vz) > 15.0) continue;
     // event filters
     if(em->checkEventFilter()) continue;
+    // hiHF cut
+    if(em->HF > 6000) continue;
 
     // In data, event weight = 1
     double w = 1.0;
