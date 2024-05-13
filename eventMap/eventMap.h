@@ -74,6 +74,7 @@ public :
   //evt info
   Float_t weight = 0, vz = 0, pthat = 0;
   Int_t hiBin = 0;
+  Int_t hiHF = 0;
   ULong64_t evtNumber = 0;
   UInt_t runNumber = 0, lumiSection = 0;
 
@@ -160,6 +161,7 @@ void eventMap::init(){
   evtTree = (TTree*) _file->Get("evtTree");
   evtTree->SetBranchAddress("vz", &vz);
   evtTree->SetBranchAddress("hiBin", &hiBin);
+  evtTree->SetBranchAddress("hiHF", &hiHF);
   evtTree->SetBranchAddress("evt", &evtNumber);
   evtTree->SetBranchAddress("run", &runNumber);
   evtTree->SetBranchAddress("lumi", &lumiSection);
