@@ -74,7 +74,7 @@ public :
   //evt info
   Float_t weight = 0, vz = 0, pthat = 0;
   Int_t hiBin = 0;
-  Int_t hiHF = 0;
+  Float_t hiHF = 0;
   ULong64_t evtNumber = 0;
   UInt_t runNumber = 0, lumiSection = 0;
 
