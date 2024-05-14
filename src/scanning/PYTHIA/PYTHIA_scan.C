@@ -450,12 +450,12 @@ void PYTHIA_scan(int group = 1){
     
     // ******************************************
     // -------- mu7 configuration ---------------
-    if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)) evtTriggerDecision = true;
+    // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)) evtTriggerDecision = true;
     // ******************************************
     
     // ******************************************
     // -------- mu12 configuration ---------------
-    // if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
     // ******************************************
 
 
