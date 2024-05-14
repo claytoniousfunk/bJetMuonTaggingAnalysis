@@ -50,7 +50,7 @@
 #include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 // JESb fit params
 #include "../../../headers/fitParameters/JESbFitParams_PYTHIA.h"
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // jetPt-fit function
