@@ -608,7 +608,11 @@ void PYTHIAHYDJET_scan(int group = 1){
     // global event cuts
     if(em->pthat <= pthatcut) continue;
     if(fabs(em->vz) > 15.0) continue;
+    // event filters
     if(em->checkEventFilter()) continue;
+    // hiHF cut
+    if(em->hiHF > 6000) continue;
+    
 
     // calculate event weight
     
