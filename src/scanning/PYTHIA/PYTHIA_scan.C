@@ -48,11 +48,15 @@
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
 #include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+// JESb fit params
+#include "../../../headers/fitParameters/JESbFitParams_PYTHIA.h"
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // jetPt-fit function
 #include "../../../headers/fitFunctions/fitFxn_jetPt.h"
+// JESb-fit function
+#include "../../../headers/fitFunctions/fitFxn_PYTHIA_JESb.h"
 
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
@@ -387,6 +391,7 @@ void PYTHIA_scan(int group = 1){
 
   loadFitFxn_vz();
   loadFitFxn_jetPt();
+  loadFitFxn_PYTHIA_JESb();
 
   // event loop
   int evi_frac = 0;
@@ -619,6 +624,7 @@ void PYTHIA_scan(int group = 1){
       if(doRemoveHYDJETjet){
 	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
       }
+     
 
 
       // in-jet muon variables
@@ -640,7 +646,11 @@ void PYTHIA_scan(int group = 1){
       int jetFlavorInt = partonFlavor;
       int bHadronNumber = em->bHadronNumber[i];
 
-      if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting 
+      if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting
+
+      if(doBJetEnergyShift){
+	recoJetPt_i = recoJetPt_i * (1.0 / fitFxn_PYTHIA_JESb->Eval(recoJetPt_i));
+      }
 
       int genMuIndex = -1;
       bool hasInclGenMuonTag = false;
