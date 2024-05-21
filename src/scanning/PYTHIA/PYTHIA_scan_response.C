@@ -304,8 +304,8 @@ void PYTHIA_scan_response(int group = 1){
 	    JEC.SetJetEta(em->jeteta[k]);
 	    JEC.SetJetPhi(em->jetphi[k]);
 
-	    matchedRecoJetPt = JEC.GetCorrectedPT();
-	    //matchedRecoJetPt = em->jetpt[k];
+	    //matchedRecoJetPt = JEC.GetCorrectedPT();
+	    matchedRecoJetPt = em->jetpt[k];
 	    matchedRawJetPt = em->rawpt[k];
 
 	    JEU.SetJetPT(matchedRecoJetPt);
