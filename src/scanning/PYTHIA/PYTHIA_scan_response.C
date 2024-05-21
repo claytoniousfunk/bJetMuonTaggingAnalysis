@@ -348,7 +348,7 @@ void PYTHIA_scan_response(int group = 1){
       // fill response matrix
       if(hasRecoJetMatch && hasRecoJetMuon) {
 
-	cout << "matchedRecoJetPt = " << matchedRecoJetPt << endl;
+	//cout << "matchedRecoJetPt = " << matchedRecoJetPt << endl;
 	
 	h_matchedRecoJetPt_genJetPt->Fill(matchedRecoJetPt,x,w);
 	
