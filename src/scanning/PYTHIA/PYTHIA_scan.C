@@ -49,7 +49,7 @@
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
 #include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 // JESb fit params
-#include "../../../headers/fitParameters/JESbFitParams_PYTHIA.h"
+#include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu12.h"
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
@@ -646,14 +646,8 @@ void PYTHIA_scan(int group = 1){
       int jetFlavorInt = partonFlavor;
       int bHadronNumber = em->bHadronNumber[i];
 
-
-      if(doBJetEnergyShift){
-	if(fabs(jetFlavorInt) == 5) recoJetPt_i = recoJetPt_i * (1.0 / fitFxn_PYTHIA_JESb->Eval(recoJetPt_i));
-      }
-
       if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting
-
-      
+  
 
       int genMuIndex = -1;
       bool hasInclGenMuonTag = false;
@@ -800,11 +794,14 @@ void PYTHIA_scan(int group = 1){
 	// 			     em->muPixelHits->at(m),
 	// 			     em->muIsTracker->at(m),
 	// 			     em->muIsGlobal->at(m),
-	// 			     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	// 			     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
 
+	if(doBJetEnergyShift){
+	  recoJetPt_i = recoJetPt_i * (1.0 / fitFxn_PYTHIA_JESb->Eval(recoJetPt_i));
+	}
+	
+	if(isWDecayMuon(em->muPt->at(m),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
-	if(isWDecayMuon(em->muPt->at(m),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt) 
-			
 	// match to genMuon
 	bool isMatchedRecoMuon = false;
 
