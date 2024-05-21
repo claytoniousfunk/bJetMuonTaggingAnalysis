@@ -47,7 +47,8 @@
 #include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 // JESb fit params
-#include "../../../headers/fitParameters/JESbFitParams_PYTHIA.h"
+#include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu7.h"
+//#include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu7.h"
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
@@ -91,7 +92,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 void PYTHIA_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_noRecoJetPtCut/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu7_response/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu7_response_doBJetEnergyShift/PYTHIA_DiJet_scan_output_%i.root",group);
 
   
   //printIntroduction();
@@ -213,6 +214,7 @@ void PYTHIA_scan_response(int group = 1){
 
 
   loadFitFxn_vz();
+  loadFitFxn_PYTHIA_JESb();
 
   // event loop
   int evi_frac = 0;
@@ -300,6 +302,7 @@ void PYTHIA_scan_response(int group = 1){
 
 	    //if(em->mupt[k] > 14.0) hasRecoJetMuon = true;
 	    if(em->mupt[k] > 7.0 && em->mupt[k] < 14.0) hasRecoJetMuon = true;
+	    
 
 	    JEC.SetJetPT(em->rawpt[k]);
 	    JEC.SetJetEta(em->jeteta[k]);
@@ -313,11 +316,12 @@ void PYTHIA_scan_response(int group = 1){
 	    JEU.SetJetEta(em->jeteta[k]);
 	    JEU.SetJetPhi(em->jetphi[k]);
 
+	       
 	    // initialize
 	    double correctedPt_down = 1.0;
 	    double correctedPt_up = 1.0;
 
-    if(apply_JEU_shift_up){
+	    if(apply_JEU_shift_up){
 	      correctedPt_up = matchedRecoJetPt * (1 + JEU.GetUncertainty().second);
 	      matchedRecoJetPt = correctedPt_up;
 	    }
@@ -335,6 +339,11 @@ void PYTHIA_scan_response(int group = 1){
 	      smear = randomGenerator->Gaus(mu,sigma);
 	      matchedRecoJetPt = matchedRecoJetPt * smear;
 	    }
+
+	    if(doBJetEnergyShift){
+	      matchedRecoJetPt = matchedRecoJetPt * (1.0 / fitFxn_PYTHIA_JESb->Eval(matchedRecoJetPt));
+	    }
+	    
 
 	  }	
 	}
