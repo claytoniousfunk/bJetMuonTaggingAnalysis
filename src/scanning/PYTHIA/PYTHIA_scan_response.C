@@ -40,12 +40,12 @@
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
-//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
-//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
-#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 // JESb fit params
 #include "../../../headers/fitParameters/JESbFitParams_PYTHIA.h"
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
@@ -91,7 +91,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 void PYTHIA_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_noRecoJetPtCut/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu7_response/PYTHIA_DiJet_scan_output_%i.root",group);
 
   
   //printIntroduction();
@@ -244,11 +244,11 @@ void PYTHIA_scan_response(int group = 1){
     // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu7_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu7_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
 
-    int triggerDecision = em->HLT_HIL3Mu12_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu12_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     //cout << "triggerDecision = " << triggerDecision << endl;
 
@@ -298,7 +298,8 @@ void PYTHIA_scan_response(int group = 1){
 	    hasRecoJetMatch = true;
 	    recoJetFlavorFlag = k;
 
-	    if(em->mupt[k] > 14.0) hasRecoJetMuon = true;
+	    //if(em->mupt[k] > 14.0) hasRecoJetMuon = true;
+	    if(em->mupt[k] > 7.0 && em->mupt[k] < 14.0) hasRecoJetMuon = true;
 
 	    JEC.SetJetPT(em->rawpt[k]);
 	    JEC.SetJetEta(em->jeteta[k]);
@@ -316,7 +317,7 @@ void PYTHIA_scan_response(int group = 1){
 	    double correctedPt_down = 1.0;
 	    double correctedPt_up = 1.0;
 
-	    if(apply_JEU_shift_up){
+    if(apply_JEU_shift_up){
 	      correctedPt_up = matchedRecoJetPt * (1 + JEU.GetUncertainty().second);
 	      matchedRecoJetPt = correctedPt_up;
 	    }
