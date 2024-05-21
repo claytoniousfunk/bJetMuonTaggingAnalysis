@@ -292,10 +292,10 @@ void eventMap::loadJet(const char* name){
 
   }
   //evtTree->SetBranchAddress("muN",&muN);
-  //evtTree->SetBranchAddress("mupt",&mupt);
-  //evtTree->SetBranchAddress("mueta",&mueta);
-  //evtTree->SetBranchAddress("muphi",&muphi);
-  //evtTree->SetBranchAddress("muptrel",&muptrel);
+  evtTree->SetBranchAddress("mupt",&mupt);
+  evtTree->SetBranchAddress("mueta",&mueta);
+  evtTree->SetBranchAddress("muphi",&muphi);
+  evtTree->SetBranchAddress("muptrel",&muptrel);
 }
 
 void eventMap::loadMuon(const char* name){
