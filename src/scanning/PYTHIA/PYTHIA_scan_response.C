@@ -100,11 +100,11 @@ void PYTHIA_scan_response(int group = 1){
   // JET ENERGY CORRECTIONS
   vector<string> Files;
   
-  Files.push_back("../../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 
-  JetUncertainty JEU("../../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
 
   // WEIGHT FUNCTIONS
 
@@ -304,8 +304,8 @@ void PYTHIA_scan_response(int group = 1){
 	    JEC.SetJetEta(em->jeteta[k]);
 	    JEC.SetJetPhi(em->jetphi[k]);
 
-	    //matchedRecoJetPt = JEC.GetCorrectedPT();
-	    matchedRecoJetPt = em->jetpt[k];
+	    matchedRecoJetPt = JEC.GetCorrectedPT();
+	    //matchedRecoJetPt = em->jetpt[k];
 	    matchedRawJetPt = em->rawpt[k];
 
 	    JEU.SetJetPT(matchedRecoJetPt);
