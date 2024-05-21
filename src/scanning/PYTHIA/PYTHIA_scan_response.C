@@ -31,53 +31,67 @@
 #include <stdlib.h>
 
 // event map
-#include "../../../../eventMap/eventMap.h"
+#include "../../../eventMap/eventMap.h"
 // jet corrector
-#include "../../../../JetEnergyCorrections/JetCorrector.h"
+#include "../../../JetEnergyCorrections/JetCorrector.h"
 // jet uncertainty
-#include "../../../../JetEnergyCorrections/JetUncertainty.h"
+#include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
-#include "../../../../headers/fitParameters/vzFitParams_PYTHIA.h"
-// hiBin-fit parameters
-#include "../../../../headers/fitParameters/hiBinFitParams.h"
-
-TF1 *fitFxn_hiBin, *fitFxn_vz;
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+// jetPt-fit parameters
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+// JESb fit params
+#include "../../../headers/fitParameters/JESbFitParams_PYTHIA.h"
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 // vz-fit function
-#include "../../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
-// hiBin-fit function
-#include "../../../../headers/fitFunctions/fitFxn_hiBin.h"
+#include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
+// jetPt-fit function
+#include "../../../headers/fitFunctions/fitFxn_jetPt.h"
+// JESb-fit function
+#include "../../../headers/fitFunctions/fitFxn_PYTHIA_JESb.h"
 
 // eta-phi mask function
-#include "../../../../headers/functions/etaPhiMask.h"
+#include "../../../headers/functions/etaPhiMask.h"
 // getDr function
-#include "../../../../headers/functions/getDr.h"
+#include "../../../headers/functions/getDr.h"
 // getJetPtBin function
-#include "../../../../headers/functions/getJetPtBin.h"
+#include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin_v2.h"
 // getPtRel function
-#include "../../../../headers/functions/getPtRel.h"
+#include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
-#include "../../../../headers/functions/isQualityMuon_hybridSoft.h"
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
 // isQualityMuon_tight function
-#include "../../../../headers/functions/isQualityMuon_tight.h"
+#include "../../../headers/functions/isQualityMuon_tight.h"
 // isWDecayMuon function
-#include "../../../../headers/functions/isWDecayMuon.h"
+#include "../../../headers/functions/isWDecayMuon.h"
 // triggerIsOn function
-#include "../../../../headers/functions/triggerIsOn.h"
+#include "../../../headers/functions/triggerIsOn.h"
 // pthat filter function
-#include "../../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+// JetTrkMax filter function
+#include "../../../headers/functions/jet_filter/passesJetTrkMaxFilter.h"
 // print introduction
-#include "../../../../headers/introductions/printIntroduction_PYTHIAHYDJET_response_v2.h"
+#include "../../../headers/introductions/printIntroduction_PYTHIA_scan_V3p7.h"
 // analysis config
-#include "../../../../headers/config/config_PYTHIA.h"
+#include "../../../headers/config/config_PYTHIA.h"
 // read config
-#include "../../../../headers/config/readConfig.h"
+#include "../../../headers/config/readConfig.h"
+// remove HYDJET jets function
+#include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
 
 
-void PYTHIA_scan_response(TString input = "/eos/user/c/cbennett/forests/PYTHIA_forest_noRecoJetPtCut_10Aug22/QCD_pThat-15_Dijet_TuneCP5_5p02TeV_pythia8/crab_PYTHIA_forest_noRecoJetPtCut_10Aug22/220810_175022/0000/HiForestAOD_100.root", TString output = "out.root"){
+void PYTHIA_scan_response(int group = 1){
+
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_noRecoJetPtCut/PYTHIA_DiJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response/PYTHIA_DiJet_scan_output_%i.root",group);
 
   
   printIntroduction();
@@ -218,26 +232,38 @@ void PYTHIA_scan_response(TString input = "/eos/user/c/cbennett/forests/PYTHIA_f
     if(em->checkEventFilter()) continue;
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
 
+
+    double w_reweight_vz = 1.0;
+    if(doVzReweight){
+      w_reweight_vz = fitFxn_vz->Eval(em->vz);
+    }
+
+
+    
     // apply HLT
-    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+
+    // int triggerDecision = em->HLT_HIL3Mu7_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+
+    int triggerDecision = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     //cout << "triggerDecision = " << triggerDecision << endl;
 
     
-    //if(!triggerIsOn(triggerDecision,triggerDecision_Prescl)) continue;
+    if(!triggerIsOn(triggerDecision,triggerDecision_Prescl)) continue;
 
     //cout << "lets go!" << endl;
 
     // RECO VARIABLES
 	
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
-
     
-    double w_reweight_vz = fitFxn_vz->Eval(em->vz);
-	
+    double w_pthat = em->weight;
 
-    double w = em->weight * w_reweight_vz ;
+    double w = w_pthat * w_reweight_vz;
 
     // GEN JET LOOP
     for(int i = 0; i < em->ngj ; i++){
@@ -272,7 +298,7 @@ void PYTHIA_scan_response(TString input = "/eos/user/c/cbennett/forests/PYTHIA_f
 	    hasRecoJetMatch = true;
 	    recoJetFlavorFlag = k;
 
-	    if(em->mupt[k] > 7.0) hasRecoJetMuon = true;
+	    if(em->mupt[k] > 14.0) hasRecoJetMuon = true;
 
 	    JEC.SetJetPT(em->rawpt[k]);
 	    JEC.SetJetEta(em->jeteta[k]);
