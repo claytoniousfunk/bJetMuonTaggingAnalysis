@@ -94,7 +94,7 @@ void PYTHIA_scan_response(int group = 1){
   TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response/PYTHIA_DiJet_scan_output_%i.root",group);
 
   
-  printIntroduction();
+  //printIntroduction();
   readConfig();
 
   // JET ENERGY CORRECTIONS
