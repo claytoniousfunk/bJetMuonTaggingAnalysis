@@ -115,7 +115,7 @@ void PYTHIA_scan_response(int group = 1){
   //  initialize histograms
   // JETS
 
-  TH2D *h_matchedRecoJetPt_genJetPt;
+  TH2D *h_matchedRecoJetPt_genJetPt[7];
   TH2D *h_matchedRecoJetPt_genJetPt_var;
   TH2D *h_matchedRecoJetPtOverGenJetPt_genJetPt[7];
   TH2D *h_matchedRecoJetPtOverGenJetPt_recoJetPt[7];
@@ -133,9 +133,22 @@ void PYTHIA_scan_response(int group = 1){
 
   
 
-  h_matchedRecoJetPt_genJetPt = new TH2D("h_matchedRecoJetPt_genJetPt","genJetPt vs. matchedRecoJetPt",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
-    
-  h_matchedRecoJetPt_genJetPt->Sumw2(); 
+  h_matchedRecoJetPt_genJetPt[0] = new TH2D("h_matchedRecoJetPt_genJetPt_allJets","genJetPt vs. matchedRecoJetPt, allJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genJetPt[1] = new TH2D("h_matchedRecoJetPt_genJetPt_bJets","genJetPt vs. matchedRecoJetPt, bJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genJetPt[2] = new TH2D("h_matchedRecoJetPt_genJetPt_cJets","genJetPt vs. matchedRecoJetPt, cJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genJetPt[3] = new TH2D("h_matchedRecoJetPt_genJetPt_udJets","genJetPt vs. matchedRecoJetPt, udJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genJetPt[4] = new TH2D("h_matchedRecoJetPt_genJetPt_sJets","genJetPt vs. matchedRecoJetPt, sJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genJetPt[5] = new TH2D("h_matchedRecoJetPt_genJetPt_gJets","genJetPt vs. matchedRecoJetPt, gJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genJetPt[6] = new TH2D("h_matchedRecoJetPt_genJetPt_xJets","genJetPt vs. matchedRecoJetPt, xJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+
+  
+  h_matchedRecoJetPt_genJetPt[0]->Sumw2();
+  h_matchedRecoJetPt_genJetPt[1]->Sumw2();
+  h_matchedRecoJetPt_genJetPt[2]->Sumw2();
+  h_matchedRecoJetPt_genJetPt[3]->Sumw2();
+  h_matchedRecoJetPt_genJetPt[4]->Sumw2();
+  h_matchedRecoJetPt_genJetPt[5]->Sumw2();
+  h_matchedRecoJetPt_genJetPt[6]->Sumw2();
 
   h_matchedRecoJetPt_genJetPt_var = new TH2D("h_matchedRecoJetPt_genJetPt_var","genJetPt vs. matchedRecoJetPt, var bins",N1-1,ptAxis1,N2-1,ptAxis2);
     
@@ -378,7 +391,7 @@ void PYTHIA_scan_response(int group = 1){
 
 	//cout << "matchedRecoJetPt = " << matchedRecoJetPt << endl;
 	
-	h_matchedRecoJetPt_genJetPt->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[0]->Fill(matchedRecoJetPt,x,w);
 	
 
 	h_matchedRecoJetPt_genJetPt_var->Fill(matchedRecoJetPt,x,w);
@@ -394,6 +407,7 @@ void PYTHIA_scan_response(int group = 1){
 
 
 	if(fabs(jetFlavorInt) == 5){
+	  h_matchedRecoJetPt_genJetPt[1]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_genJetPt[1]->Fill(matchedRecoJetPt/x,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_recoJetPt[1]->Fill(matchedRecoJetPt/x,matchedRecoJetPt,w);
 	  				
@@ -403,6 +417,7 @@ void PYTHIA_scan_response(int group = 1){
 	  }
 	} 
 	if(fabs(jetFlavorInt) == 4){
+	  h_matchedRecoJetPt_genJetPt[2]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_genJetPt[2]->Fill(matchedRecoJetPt/x,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_recoJetPt[2]->Fill(matchedRecoJetPt/x,matchedRecoJetPt,w);
 
@@ -413,6 +428,7 @@ void PYTHIA_scan_response(int group = 1){
 
 	} 
 	if(fabs(jetFlavorInt) == 1 || fabs(jetFlavorInt) == 2){
+	  h_matchedRecoJetPt_genJetPt[3]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_genJetPt[3]->Fill(matchedRecoJetPt/x,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_recoJetPt[3]->Fill(matchedRecoJetPt/x,matchedRecoJetPt,w);
 	  
@@ -422,6 +438,7 @@ void PYTHIA_scan_response(int group = 1){
 	  }
 	} 
 	if(fabs(jetFlavorInt) == 3){
+	  h_matchedRecoJetPt_genJetPt[4]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_genJetPt[4]->Fill(matchedRecoJetPt/x,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_recoJetPt[4]->Fill(matchedRecoJetPt/x,matchedRecoJetPt,w);
 
@@ -432,6 +449,7 @@ void PYTHIA_scan_response(int group = 1){
 
 	}  
 	if(jetFlavorInt == 21){
+	  h_matchedRecoJetPt_genJetPt[5]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_genJetPt[5]->Fill(matchedRecoJetPt/x,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_recoJetPt[5]->Fill(matchedRecoJetPt/x,matchedRecoJetPt,w);
 
@@ -442,6 +460,7 @@ void PYTHIA_scan_response(int group = 1){
 
 	}  
 	if(jetFlavorInt == 0){
+	  h_matchedRecoJetPt_genJetPt[6]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_genJetPt[6]->Fill(matchedRecoJetPt/x,x,w);
 	  h_matchedRecoJetPtOverGenJetPt_recoJetPt[6]->Fill(matchedRecoJetPt/x,matchedRecoJetPt,w);
 	  
@@ -475,7 +494,14 @@ void PYTHIA_scan_response(int group = 1){
 
   
     
-  h_matchedRecoJetPt_genJetPt->Write();
+  h_matchedRecoJetPt_genJetPt[0]->Write();
+  h_matchedRecoJetPt_genJetPt[1]->Write();
+  h_matchedRecoJetPt_genJetPt[2]->Write();
+  h_matchedRecoJetPt_genJetPt[3]->Write();
+  h_matchedRecoJetPt_genJetPt[4]->Write();
+  h_matchedRecoJetPt_genJetPt[5]->Write();
+  h_matchedRecoJetPt_genJetPt[6]->Write();
+
   h_matchedRecoJetPt_genJetPt_var->Write();
     
   h_matchedRecoJetPtOverGenJetPt_genJetPt[0]->Write();
