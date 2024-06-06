@@ -12,13 +12,17 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i",group);
 
   // MuJet, N = 4257
-  in_file_name = "../../../fileNames/fileNames_PYTHIAHYDJET_BJet_withGS_withWTA.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_BJet_withGS_withWTA_2/PYTHIAHYDJET_BJet_skim_output_%i",group);
+  // in_file_name = "../../../fileNames/fileNames_PYTHIAHYDJET_BJet_withGS_withWTA.txt";
+  // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_BJet_withGS_withWTA_2/PYTHIAHYDJET_BJet_skim_output_%i",group);
+
+  // DiJet additional, N = 384
+  in_file_name = "../../../fileNames/fileNames_forest_PYTHIAHYDJET_DiJet_additionalMC.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIAHYDJET_DiJet_additionalMC/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
 
 
 
-  int endfile = 4257;
+  int endfile = 384;
 
 
 
