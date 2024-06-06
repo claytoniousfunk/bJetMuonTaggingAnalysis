@@ -2,7 +2,7 @@
 
 # N = 7202 for PH DiJet
 
-for i in {1..7202}
+for i in {1..384}
 
 do
 
