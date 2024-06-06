@@ -2,8 +2,8 @@ void PYTHIA_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "";
-  in_file_name = "../../../fileNames/fileNames_PYTHIA_DiJet_noRecoJetPtCut.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_noRecoJetPtCut/PYTHIA_DiJet_skim_output_%i",group);
+  in_file_name = "../../../fileNames/fileNames_forest_PYTHIAHYDJET_DiJet_additionalMC.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIAHYDJET_DiJet_additionalMC/PYTHIA_DiJet_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
@@ -12,7 +12,7 @@ void PYTHIA_skim_simple(int group = 1){
   std::string filename;
   Int_t ifile = 0;
 
-  int endfile = 1443; // PYTHIA_withGS forest
+  int endfile = 384; // PYTHIA_withGS forest
 
   TFile *old_file;
   TString filename_string = "";
