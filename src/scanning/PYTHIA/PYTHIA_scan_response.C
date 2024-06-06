@@ -92,7 +92,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 void PYTHIA_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_noRecoJetPtCut/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_withReco_allJets/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_withReco_muTaggedJets_moreFlavors/PYTHIA_DiJet_scan_output_%i.root",group);
 
   
   //printIntroduction();
@@ -386,8 +386,8 @@ void PYTHIA_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      if(hasRecoJetMatch) {
-      //if(hasRecoJetMatch && hasRecoJetMuon) {
+      //if(hasRecoJetMatch) {
+      if(hasRecoJetMatch && hasRecoJetMuon) {
 
 	//cout << "matchedRecoJetPt = " << matchedRecoJetPt << endl;
 	
