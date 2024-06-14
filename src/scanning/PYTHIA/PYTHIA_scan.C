@@ -203,14 +203,14 @@ void PYTHIA_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetPhi = new TH2D("h_inclRecoJetPt_inclRecoJetPhi","incl. reco p_{T}^{jet} vs. incl. reco #phi^{jet}",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
 
   h_inclRecoJetPt_inclGenMuonTag_flavor = new TH2D("h_inclRecoJetPt_inclGenMuonTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,27,-5,22);
-  h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor = new TH2D("h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. gen muon & gen neutrino",,NPtBins,ptMin,ptMax,27,-5,22);
+  h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor = new TH2D("h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. gen muon & gen neutrino",NPtBins,ptMin,ptMax,27,-5,22);
   h_inclRecoJetEta_inclGenMuonTag_flavor = new TH2D("h_inclRecoJetEta_inclGenMuonTag_flavor","JetFlavorID vs incl. reco #eta^{jet}, tagged with incl. gen muon",NEtaBins,etaMin,etaMax,27,-5,22);
   h_inclRecoJetPhi_inclGenMuonTag_flavor = new TH2D("h_inclRecoJetPhi_inclGenMuonTag_flavor","JetFlavorID vs incl. reco #phi^{jet}, tagged with incl. gen muon",NPhiBins,phiMin,phiMax,27,-5,22);
   h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag","incl. reco p_{T}^{jet} vs. incl. reco #eta^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
   h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag","incl. reco p_{T}^{jet} vs. incl. reco #phi^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
   
   h_inclRecoJetPt_inclRecoMuonTag_flavor = new TH2D("h_inclRecoJetPt_inclRecoMuonTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,27,-5,22);
-  h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor = new TH2D("h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. reco muon & gen neutrino",,NPtBins,ptMin,ptMax,27,-5,22);
+  h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor = new TH2D("h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. reco muon & gen neutrino",NPtBins,ptMin,ptMax,27,-5,22);
   h_inclRecoJetEta_inclRecoMuonTag_flavor = new TH2D("h_inclRecoJetEta_inclRecoMuonTag_flavor","JetFlavorID vs incl. reco #eta^{jet}, tagged with incl. reco muon",NEtaBins,etaMin,etaMax,27,-5,22);
   h_inclRecoJetPhi_inclRecoMuonTag_flavor = new TH2D("h_inclRecoJetPhi_inclRecoMuonTag_flavor","JetFlavorID vs incl. reco #phi^{jet}, tagged with incl. reco muon",NPhiBins,phiMin,phiMax,27,-5,22);
   h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag","incl. reco p_{T}^{jet} vs. incl. reco #eta^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
