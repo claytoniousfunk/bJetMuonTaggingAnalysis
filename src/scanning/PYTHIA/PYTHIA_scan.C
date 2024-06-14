@@ -108,19 +108,21 @@ TH2D *h_inclRecoJetPt_inclRecoJetPhi;
 TH2D *h_inclRecoJetEta_inclRecoJetPhi[NJetPtIndices];
 // ------------------- incl. reco jets tagged to gen muon by flavor -----------
 TH2D *h_inclRecoJetPt_inclGenMuonTag_flavor;
+TH2D *h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor;
 TH2D *h_inclRecoJetEta_inclGenMuonTag_flavor;
 TH2D *h_inclRecoJetPhi_inclGenMuonTag_flavor;
 TH2D *h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag;
 TH2D *h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag;
 TH2D *h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[NJetPtIndices];
-// ------------------- incl. reco jets tagged to incl. gen muon by flavor -----
+// ------------------- incl. reco jets tagged to incl. reco muon by flavor -----
 TH2D *h_inclRecoJetPt_inclRecoMuonTag_flavor;
+TH2D *h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor;
 TH2D *h_inclRecoJetEta_inclRecoMuonTag_flavor;
 TH2D *h_inclRecoJetPhi_inclRecoMuonTag_flavor;
 TH2D *h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag;
 TH2D *h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag;
 TH2D *h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[NJetPtIndices];
-// ------------------- incl. reco jets tagged to incl. reco muon by flavor ----
+// ------------------- incl. reco jets tagged to incl. reco muon w/ trigger by flavor ----
 TH2D *h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor;
 TH2D *h_inclRecoJetEta_inclRecoMuonTag_triggerOn_flavor;
 TH2D *h_inclRecoJetPhi_inclRecoMuonTag_triggerOn_flavor;
@@ -171,8 +173,8 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 
 void PYTHIA_scan(int group = 1){
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_bJetEnergyShift_muTaggedBOverInclusiveJESCorrection_useMax/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_withNeutrinos_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_bJetEnergyShift_muTaggedBOverInclusiveJESCorrection_useMax/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -201,12 +203,14 @@ void PYTHIA_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetPhi = new TH2D("h_inclRecoJetPt_inclRecoJetPhi","incl. reco p_{T}^{jet} vs. incl. reco #phi^{jet}",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
 
   h_inclRecoJetPt_inclGenMuonTag_flavor = new TH2D("h_inclRecoJetPt_inclGenMuonTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,27,-5,22);
+  h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor = new TH2D("h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. gen muon & gen neutrino",,NPtBins,ptMin,ptMax,27,-5,22);
   h_inclRecoJetEta_inclGenMuonTag_flavor = new TH2D("h_inclRecoJetEta_inclGenMuonTag_flavor","JetFlavorID vs incl. reco #eta^{jet}, tagged with incl. gen muon",NEtaBins,etaMin,etaMax,27,-5,22);
   h_inclRecoJetPhi_inclGenMuonTag_flavor = new TH2D("h_inclRecoJetPhi_inclGenMuonTag_flavor","JetFlavorID vs incl. reco #phi^{jet}, tagged with incl. gen muon",NPhiBins,phiMin,phiMax,27,-5,22);
   h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag","incl. reco p_{T}^{jet} vs. incl. reco #eta^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
   h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag","incl. reco p_{T}^{jet} vs. incl. reco #phi^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
   
   h_inclRecoJetPt_inclRecoMuonTag_flavor = new TH2D("h_inclRecoJetPt_inclRecoMuonTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,27,-5,22);
+  h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor = new TH2D("h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor","JetFlavorID vs incl. reco p_{T}^{jet}, tagged with incl. reco muon & gen neutrino",,NPtBins,ptMin,ptMax,27,-5,22);
   h_inclRecoJetEta_inclRecoMuonTag_flavor = new TH2D("h_inclRecoJetEta_inclRecoMuonTag_flavor","JetFlavorID vs incl. reco #eta^{jet}, tagged with incl. reco muon",NEtaBins,etaMin,etaMax,27,-5,22);
   h_inclRecoJetPhi_inclRecoMuonTag_flavor = new TH2D("h_inclRecoJetPhi_inclRecoMuonTag_flavor","JetFlavorID vs incl. reco #phi^{jet}, tagged with incl. reco muon",NPhiBins,phiMin,phiMax,27,-5,22);
   h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag","incl. reco p_{T}^{jet} vs. incl. reco #eta^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
@@ -256,12 +260,14 @@ void PYTHIA_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetPhi->Sumw2();
 
   h_inclRecoJetPt_inclGenMuonTag_flavor->Sumw2();
+  h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor->Sumw2();
   h_inclRecoJetEta_inclGenMuonTag_flavor->Sumw2();
   h_inclRecoJetPhi_inclGenMuonTag_flavor->Sumw2();
   h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag->Sumw2();
   h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag->Sumw2();
   
   h_inclRecoJetPt_inclRecoMuonTag_flavor->Sumw2();
+  h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor->Sumw2();
   h_inclRecoJetEta_inclRecoMuonTag_flavor->Sumw2();
   h_inclRecoJetPhi_inclRecoMuonTag_flavor->Sumw2();
   h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Sumw2();
@@ -425,6 +431,7 @@ void PYTHIA_scan(int group = 1){
 
 	
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
+    int matchFlag_nu[10] = {0,0,0,0,0,0,0,0,0,0};
 
     int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
 
@@ -652,8 +659,10 @@ void PYTHIA_scan(int group = 1){
   
 
       int genMuIndex = -1;
+      int genNuIndex = -1;
       bool hasInclGenMuonTag = false;
       bool hasMatchedGenMuonTag = false;
+      bool hasGenNeutrinoTag = false;
 
       bool hasInclRecoMuonTag = false;
       bool hasMatchedRecoMuonTag = false;
@@ -696,6 +705,30 @@ void PYTHIA_scan(int group = 1){
 
 
       if(!skipGenParticles){
+	// look for a genNeutrino match
+	for(int j = 0; j < em->gpptp->size(); j++){
+
+	  if(TMath::Abs(em->gppdgIDp->at(j)) != 12 && TMath::Abs(em->gppdgIDp->at(j)) != 14 && TMath::Abs(em->gppdgIDp->at(j)) != 16 && TMath::Abs(em->gppdgIDp->at(j)) != 18) continue;
+
+	  genNuIndex++;
+
+	  if(matchFlag_nu[genNuIndex] == 1) continue; // skip if neutrino has been matched to a jet already
+
+	  double genNeutrinoPt_j = em->gpptp->at(j);
+	  double genNeutrinoEta_j = em->gpetap->at(j);
+	  double genNeutrinoPhi_j = em->gpphip->at(j);
+	  
+	  if(genNeutrinoPt_j < nuPtCut || genNeutrinoPt_j > nuPtMaxCut || fabs(genNeutrinoEta_j) > 2.0) continue;  
+
+	  if(getDr(genNeutrinoEta_j,genNeutrinoPhi_j,recoJetEta_i,recoJetPhi_i) < deltaRCut){
+				
+	    matchFlag_nu[genNuIndex] = 1;
+	    hasGenNeutrinoTag = true;
+
+	  } 
+
+	} // end gen neutrino loop
+	
 	// look for a genMuon match
 	for(int j = 0; j < em->gpptp->size(); j++){
                         
@@ -875,6 +908,10 @@ void PYTHIA_scan(int group = 1){
 	h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 	if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
+	if(hasGenNeutrinoTag){
+	  h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor->Fill(recoJetPt_i,jetFlavorInt,w_jet);
+	}
+
       } 
 
       if(hasInclRecoMuonTag){
@@ -889,7 +926,9 @@ void PYTHIA_scan(int group = 1){
 	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 	if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
-
+	if(hasGenNeutrinoTag){
+	  h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor->Fill(recoJetPt_i,jetFlavorInt,w_jet);
+	}
 	
 	
 	if(evtTriggerDecision){
@@ -1257,12 +1296,14 @@ void PYTHIA_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetPhi->Write();
 
   h_inclRecoJetPt_inclGenMuonTag_flavor->Write();
+  h_inclRecoJetPt_inclGenMuonTag_genNeutrinoTag_flavor->Write();
   h_inclRecoJetEta_inclGenMuonTag_flavor->Write();
   h_inclRecoJetPhi_inclGenMuonTag_flavor->Write();
   h_inclRecoJetPt_inclRecoJetEta_inclGenMuonTag->Write();
   h_inclRecoJetPt_inclRecoJetPhi_inclGenMuonTag->Write();
 
   h_inclRecoJetPt_inclRecoMuonTag_flavor->Write();
+  h_inclRecoJetPt_inclRecoMuonTag_genNeutrinoTag_flavor->Write();
   h_inclRecoJetEta_inclRecoMuonTag_flavor->Write();
   h_inclRecoJetPhi_inclRecoMuonTag_flavor->Write();
   h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Write();
