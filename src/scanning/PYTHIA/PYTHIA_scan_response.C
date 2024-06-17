@@ -446,7 +446,7 @@ void PYTHIA_scan_response(int group = 1){
       }
 
       jetFlavorInt = em->partonFlavor[recoJetFlavorFlag];
-      if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting
+      //if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting
 
 			
 			
