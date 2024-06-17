@@ -7,8 +7,8 @@ for i in {401..600}
 
 do
 
-    root -l -q "PYTHIA_scan.C($i)"
-    #root -l -q "PYTHIA_scan_response.C($i)"
+    #root -l -q "PYTHIA_scan.C($i)"
+    root -l -q "PYTHIA_scan_response.C($i)"
 
 done
 
