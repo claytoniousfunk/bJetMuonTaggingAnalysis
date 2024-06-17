@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in {1001..1443}
+for i in {401..600}
 
 do
     
