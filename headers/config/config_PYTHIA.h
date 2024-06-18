@@ -23,6 +23,7 @@ bool doJetTrkMaxFilter = true;
 bool doRemoveHYDJETjet = true;
 bool doEtaPhiMask = false;
 bool doBJetEnergyShift = false;
+bool doBJetNeutrinoEnergyShift = false;
 
 
 
