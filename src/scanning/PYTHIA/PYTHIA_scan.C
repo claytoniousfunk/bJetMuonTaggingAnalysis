@@ -52,7 +52,10 @@
 //#include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu7.h"
 //#include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu12.h"
 #include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu12_useMax.h"
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
+// bJetNeutrinoEnergy fit params
+#include "../../../headers/fitParameters/bJetNeutrinoEnergyFitParams_PYTHIA_mu12.h"
+
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_bJetNeutrinoEnergy;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // jetPt-fit function
@@ -176,7 +179,7 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 void PYTHIA_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_withNeutrinos_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_withNeutrinos_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_bJetNeutrinoEnergyShift/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -406,6 +409,7 @@ void PYTHIA_scan(int group = 1){
   loadFitFxn_vz();
   loadFitFxn_jetPt();
   loadFitFxn_PYTHIA_JESb();
+  loadFitFxn_PYTHIA_bJetNeutrinoEnergy();
 
   // event loop
   int evi_frac = 0;
@@ -847,6 +851,9 @@ void PYTHIA_scan(int group = 1){
 
 	if(doBJetEnergyShift){
 	  recoJetPt_i = recoJetPt_i * (1.0 / fitFxn_PYTHIA_JESb->Eval(recoJetPt_i));
+	}
+	if(doBJetNeutrinoEnergyShift){
+	  recoJetPt_i = recoJetPt_i * (1. + fitFxn_PYTHIA_bJetNeutrinoEnergy->Eval(recoJetPt_i));
 	}
 	
 	if(isWDecayMuon(em->muPt->at(m),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
