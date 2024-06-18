@@ -62,7 +62,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 #include "../../../headers/fitFunctions/fitFxn_jetPt.h"
 // JESb-fit function
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_JESb.h"
-
+// bJetNeutrinoEnergy-fit function
+#include "../../../headers/fitFunctions/fitFxn_PYTHIA_bJetNeutrinoEnergy.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
