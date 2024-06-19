@@ -9,6 +9,8 @@
 
 # ignore all root files
 *.root
+#except neutrino-energy map
+!src/maps/neutrino_energy_fraction_map/neutrino_energy_fraction_map.root
 
 # ignore all pdf files
 *.pdf
