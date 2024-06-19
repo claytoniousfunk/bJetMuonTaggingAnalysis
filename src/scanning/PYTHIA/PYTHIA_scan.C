@@ -177,9 +177,7 @@ TH2D *h_genJetPt_pthat;
 TH2D *h_recoGenDr_flavor[NJetPtIndices];
 TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 
-TFile *f_neutrino_energy_fraction_map;
-TH2D *neutrino_energy_fraction_map;
-TH1D *neutrino_energy_fraction_map_proj;
+
 
 void PYTHIA_scan(int group = 1){
 
@@ -419,7 +417,11 @@ void PYTHIA_scan(int group = 1){
   loadFitFxn_PYTHIA_JESb();
   loadFitFxn_PYTHIA_bJetNeutrinoEnergy();
 
-  f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
+
+
+  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
+  TH2D *neutrino_energy_fraction_map;
+  TH1D *neutrino_energy_fraction_map_proj;
   f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
   f_neutrino_energy_fraction_map->Close();
 
