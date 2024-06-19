@@ -619,7 +619,8 @@ void PYTHIA_scan(int group = 1){
       double recoJetEta_i = em->jeteta[i]; // recoJetEta
       double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
       double jetTrkMax_i = em->jetTrkMax[i];
-
+      double nuPtShift_i = 0.0;
+      
       double w_jetPt = 1.0;
       
       JEU.SetJetPT(recoJetPt_i);
@@ -871,7 +872,9 @@ void PYTHIA_scan(int group = 1){
 	}
 	if(doBJetNeutrinoEnergyShift){
 	  neutrino_energy_fraction_map_proj = (TH1D*) neutrino_energy_fraction_map->ProjectionX("neutrino_energy_fraction_map_proj", neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i)+1);
-	  //cout << "pT-pre-nu-smear = " << recoJetPt_i << endl;
+	  nuPtShift_i = neutrino_energy_fraction_map_proj->GetRandom();
+	  cout << "pT-nu-fraction = " << nuPtShift_i << endl;
+	  cout << "pT-nu-smear = " << recoJetPt_i * nuPtShift_i << endl;
 	  recoJetPt_i = recoJetPt_i * (1. + neutrino_energy_fraction_map_proj->GetRandom());
 	  //cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
 	}
