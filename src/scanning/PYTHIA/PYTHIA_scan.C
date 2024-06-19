@@ -412,6 +412,11 @@ void PYTHIA_scan(int group = 1){
   loadFitFxn_PYTHIA_JESb();
   loadFitFxn_PYTHIA_bJetNeutrinoEnergy();
 
+  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
+  TH2D *neutrino_energy_fraction_map;
+  TH1D *neutrino_energy_fraction_map_proj;
+  f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
+
   // event loop
   int evi_frac = 0;
   for(int evi = 0; evi < NEvents ; evi++){
@@ -854,7 +859,10 @@ void PYTHIA_scan(int group = 1){
 	  recoJetPt_i = recoJetPt_i * (1.0 / fitFxn_PYTHIA_JESb->Eval(recoJetPt_i));
 	}
 	if(doBJetNeutrinoEnergyShift){
-	  recoJetPt_i = recoJetPt_i * (1. + fitFxn_PYTHIA_bJetNeutrinoEnergy->Eval(recoJetPt_i));
+	  neutrino_energy_fraction_map_proj = (TH1D*) neutrino_energy_fraction_map->ProjectionX("neutrino_energy_fraction_map_proj", neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i)+1);
+	  cout << "pT-pre-nu-smear = " << recoJetPt_i << endl;
+	  recoJetPt_i = recoJetPt_i * (1. + neutrino_energy_fraction_map_proj->GetRandom());
+	  cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
 	}
 	
 	if(isWDecayMuon(em->muPt->at(m),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
