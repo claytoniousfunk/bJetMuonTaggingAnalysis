@@ -871,9 +871,9 @@ void PYTHIA_scan(int group = 1){
 	}
 	if(doBJetNeutrinoEnergyShift){
 	  neutrino_energy_fraction_map_proj = (TH1D*) neutrino_energy_fraction_map->ProjectionX("neutrino_energy_fraction_map_proj", neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i)+1);
-	  cout << "pT-pre-nu-smear = " << recoJetPt_i << endl;
+	  //cout << "pT-pre-nu-smear = " << recoJetPt_i << endl;
 	  recoJetPt_i = recoJetPt_i * (1. + neutrino_energy_fraction_map_proj->GetRandom());
-	  cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
+	  //cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
 	}
 	
 	if(isWDecayMuon(em->muPt->at(m),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
