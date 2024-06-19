@@ -423,7 +423,7 @@ void PYTHIA_scan(int group = 1){
   TH2D *neutrino_energy_fraction_map;
   TH1D *neutrino_energy_fraction_map_proj;
   f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
-  f_neutrino_energy_fraction_map->Close();
+  //f_neutrino_energy_fraction_map->Close();
 
   cout << "map entries = " << neutrino_energy_fraction_map->GetEntries() << endl;
 
