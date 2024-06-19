@@ -184,8 +184,6 @@ TH1D *neutrino_energy_fraction_map_proj;
 void PYTHIA_scan(int group = 1){
 
   f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
-  neutrino_energy_fraction_map;
-  neutrino_energy_fraction_map_proj;
   f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
   f_neutrino_energy_fraction_map->Close();
 
