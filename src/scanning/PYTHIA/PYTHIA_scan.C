@@ -371,6 +371,12 @@ void PYTHIA_scan(int group = 1){
   }
 
 
+  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
+  TH2D *neutrino_energy_fraction_map;
+  TH1D *neutrino_energy_fraction_map_proj;
+  f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
+  f_neutrino_energy_fraction_map->Close();
+  
 
   TFile *f = TFile::Open(input);
   cout << "File opened!" << endl;
@@ -412,11 +418,7 @@ void PYTHIA_scan(int group = 1){
   loadFitFxn_PYTHIA_JESb();
   loadFitFxn_PYTHIA_bJetNeutrinoEnergy();
 
-  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
-  TH2D *neutrino_energy_fraction_map;
-  TH1D *neutrino_energy_fraction_map_proj;
-  f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
-  f_neutrino_energy_fraction_map->Close();
+
 
   // event loop
   int evi_frac = 0;
