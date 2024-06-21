@@ -16,7 +16,7 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_BJet_withGS_withWTA_2/PYTHIAHYDJET_BJet_skim_output_%i",group);
 
   // DiJet additional, N = 6184
-  in_file_name = "../../../fileNames/fileNames_forest_PYTHIAHYDJET_DiJet_additionalMC.txt";
+  in_file_name = "../../../fileNames/fileNames_forest_PYTHIAHYDJET_DiJet_additionalMC_fullStats.txt";
   output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIAHYDJET_DiJet_additionalMC_fullStats/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
 
