@@ -3,7 +3,7 @@
 # N = 1443 for PYTHIA DiJet
 # N = 1262 for PYTHIA DiJet response (noRecoJetPtCut)
 
-for i in {1001..1443}
+for i in {201..300}
 
 do
 
