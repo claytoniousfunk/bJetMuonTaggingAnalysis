@@ -183,7 +183,7 @@ void PYTHIA_scan(int group = 1){
 
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_bJetNeutrinoEnergyShift/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_bJetNeutrinoEnergyShift_newMethod/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -875,7 +875,7 @@ void PYTHIA_scan(int group = 1){
 	  nuPtShift_i = neutrino_energy_fraction_map_proj->GetRandom();
 	  cout << "pT-nu-fraction = " << nuPtShift_i << endl;
 	  cout << "pT-nu-smear = " << recoJetPt_i * nuPtShift_i << endl;
-	  recoJetPt_i = recoJetPt_i * (1. + neutrino_energy_fraction_map_proj->GetRandom());
+	  recoJetPt_i = recoJetPt_i * (1. + nuPtShift_i);
 	  //cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
 	}
 	
