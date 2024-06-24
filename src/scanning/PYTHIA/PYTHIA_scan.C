@@ -183,7 +183,7 @@ void PYTHIA_scan(int group = 1){
 
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_bJetNeutrinoEnergyShift_newMethod/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_bJetNeutrinoEnergyShift_direcEnergyAddition/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -423,6 +423,12 @@ void PYTHIA_scan(int group = 1){
   TH2D *neutrino_energy_fraction_map;
   TH1D *neutrino_energy_fraction_map_proj;
   f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
+
+  TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
+  TH2D *neutrino_energy_map;
+  TH1D *neutrino_energy_map_proj;
+  f_neutrino_energy_map->GetObject("neutrino_energy_map",neutrino_energy_map);
+  
   //f_neutrino_energy_fraction_map->Close();
 
   cout << "map entries = " << neutrino_energy_fraction_map->GetEntries() << endl;
@@ -871,11 +877,11 @@ void PYTHIA_scan(int group = 1){
 	  recoJetPt_i = recoJetPt_i * (1.0 / fitFxn_PYTHIA_JESb->Eval(recoJetPt_i));
 	}
 	if(doBJetNeutrinoEnergyShift){
-	  neutrino_energy_fraction_map_proj = (TH1D*) neutrino_energy_fraction_map->ProjectionX("neutrino_energy_fraction_map_proj", neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i)+1);
-	  nuPtShift_i = neutrino_energy_fraction_map_proj->GetRandom();
+	  neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i)+1);
+	  nuPtShift_i = neutrino_energy_map_proj->GetRandom();
 	  //cout << "pT-nu-fraction = " << nuPtShift_i << endl;
 	  //cout << "pT-nu-smear = " << recoJetPt_i * nuPtShift_i << endl;
-	  recoJetPt_i = recoJetPt_i * (1. + nuPtShift_i);
+	  recoJetPt_i = recoJetPt_i + nuPtShift_i);
 	  //cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
 	}
 	
