@@ -879,7 +879,7 @@ void PYTHIA_scan(int group = 1){
 	if(doBJetNeutrinoEnergyShift){
 	  neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i)+1);
 	  nuPtShift_i = neutrino_energy_map_proj->GetRandom();
-	  cout << "pT-nu = " << nuPtShift_i << endl;
+	  //cout << "pT-nu = " << nuPtShift_i << endl;
 	  //cout << "pT-nu-smear = " << recoJetPt_i * nuPtShift_i << endl;
 	  recoJetPt_i = recoJetPt_i + nuPtShift_i;
 	  //cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
