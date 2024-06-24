@@ -92,7 +92,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 void PYTHIA_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_inclJets_noNeutrino/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_inclJets_withNeutrino/PYTHIA_DiJet_scan_output_%i.root",group);
 
   
   //printIntroduction();
@@ -507,7 +507,8 @@ void PYTHIA_scan_response(int group = 1){
       // fill response matrix
       //if(hasRecoJetMatch) {
       //if(hasRecoJetMatch && hasRecoJetMuon && hasRecoJetNeutrino) {
-      if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
+      //if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
+      if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-full jets
 
 	//cout << "matchedRecoJetPt = " << matchedRecoJetPt << endl;
 	
