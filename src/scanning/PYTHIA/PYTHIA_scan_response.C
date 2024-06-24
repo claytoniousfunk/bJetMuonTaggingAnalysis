@@ -146,7 +146,7 @@ void PYTHIA_scan_response(int group = 1){
   h_matchedRecoJetPt_genJetPt[4] = new TH2D("h_matchedRecoJetPt_genJetPt_sJets","genJetPt vs. matchedRecoJetPt, sJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
   h_matchedRecoJetPt_genJetPt[5] = new TH2D("h_matchedRecoJetPt_genJetPt_gJets","genJetPt vs. matchedRecoJetPt, gJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
   h_matchedRecoJetPt_genJetPt[6] = new TH2D("h_matchedRecoJetPt_genJetPt_xJets","genJetPt vs. matchedRecoJetPt, xJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
-  h_matchedNeutrinoPt_recoJetPt
+
   h_matchedNeutrinoPt_recoJetPt[0] = new TH2D("h_matchedNeutrinoPt_recoJetPt_allJets","neutrino pT vs. recoJet pT, allJets",100,0,100,NPtBins,ptMin,ptMax);
   h_matchedNeutrinoPt_recoJetPt[1] = new TH2D("h_matchedNeutrinoPt_recoJetPt_bJets","neutrino pT vs. recoJet pT, bJets",100,0,100,NPtBins,ptMin,ptMax);
   h_matchedNeutrinoPt_recoJetPt[2] = new TH2D("h_matchedNeutrinoPt_recoJetPt_cJets","neutrino pT vs. recoJet pT, cJets",100,0,100,NPtBins,ptMin,ptMax);
