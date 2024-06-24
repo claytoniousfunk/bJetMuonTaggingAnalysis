@@ -508,7 +508,7 @@ void PYTHIA_scan_response(int group = 1){
       //if(hasRecoJetMatch) {
       //if(hasRecoJetMatch && hasRecoJetMuon && hasRecoJetNeutrino) {
       //if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
-      if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-full jets
+      if(hasRecoJetMatch && hasRecoJetNeutrino) {   // keep only neutrino-full jets
 
 	//cout << "matchedRecoJetPt = " << matchedRecoJetPt << endl;
 	
