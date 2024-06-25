@@ -772,6 +772,7 @@ void PYTHIA_scan(int group = 1){
 	} // end gen neutrino loop
 
 	if(doNeutrinoEnergyAddition){
+	  cout << "oi!" << endl;
 	  if(hasGenNeutrinoTag){
 	    cout << "old pT = " << recoJetPt_i << endl;
 	    recoJetPt_i += nuPt_i; // add neutrino energy directly
