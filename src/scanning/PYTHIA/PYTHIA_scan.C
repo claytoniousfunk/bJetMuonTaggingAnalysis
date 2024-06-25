@@ -184,7 +184,7 @@ void PYTHIA_scan(int group = 1){
 
   //TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_neutrinoEnergyAddition/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_withNeutrinos_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_neutrinoEnergyAddition/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -762,7 +762,6 @@ void PYTHIA_scan(int group = 1){
 
 	  if(getDr(genNeutrinoEta_j,genNeutrinoPhi_j,recoJetEta_i,recoJetPhi_i) < deltaRCut){
 
-	    cout << "oi!" << endl;
 	    matchFlag_nu[genNuIndex] = 1;
 	    hasGenNeutrinoTag = true;
 	    nuPt_i = genNeutrinoPt_j;
@@ -775,9 +774,9 @@ void PYTHIA_scan(int group = 1){
 
 	if(doNeutrinoEnergyAddition){
 	  if(hasGenNeutrinoTag){
-	    cout << "old pT = " << recoJetPt_i << endl;
+	    //cout << "old pT = " << recoJetPt_i << endl;
 	    recoJetPt_i += nuPt_i; // add neutrino energy directly
-	    cout << "new pT = " << recoJetPt_i << endl;
+	    //cout << "new pT = " << recoJetPt_i << endl;
 	  }
 	}
 	
