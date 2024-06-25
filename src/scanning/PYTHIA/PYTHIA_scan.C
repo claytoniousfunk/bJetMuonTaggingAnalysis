@@ -760,7 +760,8 @@ void PYTHIA_scan(int group = 1){
 	  if(genNeutrinoPt_j < nuPtCut || genNeutrinoPt_j > nuPtMaxCut || fabs(genNeutrinoEta_j) > 2.0) continue;  
 
 	  if(getDr(genNeutrinoEta_j,genNeutrinoPhi_j,recoJetEta_i,recoJetPhi_i) < deltaRCut){
-				
+
+	    cout << "oi!" << endl;
 	    matchFlag_nu[genNuIndex] = 1;
 	    hasGenNeutrinoTag = true;
 	    nuPt_i = genNeutrinoPt_j;
@@ -772,7 +773,6 @@ void PYTHIA_scan(int group = 1){
 	} // end gen neutrino loop
 
 	if(doNeutrinoEnergyAddition){
-	  cout << "oi!" << endl;
 	  if(hasGenNeutrinoTag){
 	    cout << "old pT = " << recoJetPt_i << endl;
 	    recoJetPt_i += nuPt_i; // add neutrino energy directly
