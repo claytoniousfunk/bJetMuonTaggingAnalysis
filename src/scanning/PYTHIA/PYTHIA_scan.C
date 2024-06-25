@@ -772,7 +772,11 @@ void PYTHIA_scan(int group = 1){
 	} // end gen neutrino loop
 
 	if(doNeutrinoEnergyAddition){
-	  if(hasGenNeutrinoTag) recoJetPt_i += nuPt_i; // add neutrino energy directly
+	  if(hasGenNeutrinoTag){
+	    cout << "old pT = " << recoJetPt_i << endl;
+	    recoJetPt_i += nuPt_i; // add neutrino energy directly
+	    cout << "new pT = " << recoJetPt_i << endl;
+	  }
 	}
 	
 	// look for a genMuon match
