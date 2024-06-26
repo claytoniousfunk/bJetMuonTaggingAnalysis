@@ -22,7 +22,7 @@ bool doXdumpReweight = false;
 bool doJetTrkMaxFilter = true;
 bool doRemoveHYDJETjet = true;
 bool doEtaPhiMask = false;
-bool doBJetEnergyShift = false;
+bool doBJetEnergyShift = true;
 bool doBJetNeutrinoEnergyShift = false;
 bool doNeutrinoEnergyAddition = false;
 
