@@ -1094,16 +1094,7 @@ void PYTHIA_scan(int group = 1){
       double muPtRel_i = -1.0;
 
 
-      // apply gen-pT smear
-      double mu = 1.0;
-      double sigma = 0.2;
-      double smear = 0.0;
-
-      if(apply_genJetPt_smear){
-	sigma = 0.663*JER_fxn->Eval(genJetPt_i); // apply a 20% smear
-	smear = randomGenerator->Gaus(mu,sigma);
-	genJetPt_i = genJetPt_i * smear;
-      }
+      
 
       
       if(TMath::Abs(genJetEta_i) > 1.6 || genJetPt_i < jetPtCut) continue;
@@ -1236,6 +1227,17 @@ void PYTHIA_scan(int group = 1){
 	  } 
 
 	} // end genMuon loop
+      }
+
+      // apply gen-pT smear
+      double mu = 1.0;
+      double sigma = 0.2;
+      double smear = 0.0;
+
+      if(apply_genJetPt_smear && hasInclGenMuonTag){
+	sigma = 0.663*JER_fxn->Eval(genJetPt_i); // apply a 20% smear
+	smear = randomGenerator->Gaus(mu,sigma);
+	genJetPt_i = genJetPt_i * smear;
       }
 	
 
