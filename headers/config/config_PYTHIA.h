@@ -25,6 +25,10 @@ bool doEtaPhiMask = false;
 bool doBJetEnergyShift = true;
 bool doBJetNeutrinoEnergyShift = false;
 bool doNeutrinoEnergyAddition = false;
+bool apply_genJetPt_smear = true;
+
+
+
 
 
 
