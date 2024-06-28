@@ -1098,7 +1098,7 @@ void PYTHIA_scan(int group = 1){
       double sigma = 0.2;
       double smear = 0.0;
 
-      if(apply_genJetPt_smear && hasInclRecoMuonTag){
+      if(apply_genJetPt_smear){
 	sigma = 0.663*JER_fxn->Eval(genJetPt_i); // apply a 20% smear
 	smear = randomGenerator->Gaus(mu,sigma);
 	cout << "pre-smear-pT = " << genJetPt_i << endl;
