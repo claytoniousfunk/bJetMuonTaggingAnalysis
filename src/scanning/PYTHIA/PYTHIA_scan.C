@@ -185,7 +185,7 @@ void PYTHIA_scan(int group = 1){
 
   //TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_genJetPtSmear_smearOnlyGenMuonTaggedJets/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_genJetPtSmear_smearOnlyRecoMuonTaggedJets/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -1229,16 +1229,7 @@ void PYTHIA_scan(int group = 1){
 	} // end genMuon loop
       }
 
-      // apply gen-pT smear
-      double mu = 1.0;
-      double sigma = 0.2;
-      double smear = 0.0;
-
-      if(apply_genJetPt_smear && hasInclGenMuonTag){
-	sigma = 0.663*JER_fxn->Eval(genJetPt_i); // apply a 20% smear
-	smear = randomGenerator->Gaus(mu,sigma);
-	genJetPt_i = genJetPt_i * smear;
-      }
+      
 	
 
       // look for recoMuon match		
@@ -1310,6 +1301,18 @@ void PYTHIA_scan(int group = 1){
 
       }
 
+
+      // apply gen-pT smear
+      double mu = 1.0;
+      double sigma = 0.2;
+      double smear = 0.0;
+
+      if(apply_genJetPt_smear && hasInclRecoMuonTag){
+	sigma = 0.663*JER_fxn->Eval(genJetPt_i); // apply a 20% smear
+	smear = randomGenerator->Gaus(mu,sigma);
+	genJetPt_i = genJetPt_i * smear;
+      }
+      
       // Fill the jet histograms
 
       h_inclGenJetPt_flavor->Fill(genJetPt_i,jetFlavorInt,w);
