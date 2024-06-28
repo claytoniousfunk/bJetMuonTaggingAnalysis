@@ -1100,7 +1100,7 @@ void PYTHIA_scan(int group = 1){
       double smear = 0.0;
 
       if(apply_genJetPt_smear){
-	sigma = 0.663*JER_fxn->Eval(); // apply a 20% smear
+	sigma = 0.663*JER_fxn->Eval(genJetPt_i); // apply a 20% smear
 	smear = randomGenerator->Gaus(mu,sigma);
 	genJetPt_i = genJetPt_i * smear;
       }
