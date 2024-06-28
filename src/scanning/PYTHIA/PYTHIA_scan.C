@@ -1143,9 +1143,9 @@ void PYTHIA_scan(int group = 1){
       if(apply_genJetPt_smear && (fabs(jetFlavorInt) == 5 || fabs(jetFlavorInt) == 17)){
 	sigma = 0.663*JER_fxn->Eval(genJetPt_i); // apply a 20% smear
 	smear = randomGenerator->Gaus(mu,sigma);
-	cout << "pre-smear-pT = " << genJetPt_i << endl;
+	//cout << "pre-smear-pT = " << genJetPt_i << endl;
 	genJetPt_i = genJetPt_i * smear;
-	cout << "post-smear-pT = " << genJetPt_i << endl;
+	//cout << "post-smear-pT = " << genJetPt_i << endl;
       }
 
 		        
