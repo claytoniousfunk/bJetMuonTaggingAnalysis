@@ -1093,7 +1093,18 @@ void PYTHIA_scan(int group = 1){
 
       double muPtRel_i = -1.0;
 
+      // apply gen-pT smear
+      double mu = 1.0;
+      double sigma = 0.2;
+      double smear = 0.0;
 
+      if(apply_genJetPt_smear && hasInclRecoMuonTag){
+	sigma = 0.663*JER_fxn->Eval(genJetPt_i); // apply a 20% smear
+	smear = randomGenerator->Gaus(mu,sigma);
+	cout << "pre-smear-pT = " << genJetPt_i << endl;
+	genJetPt_i = genJetPt_i * smear;
+	cout << "post-smear-pT = " << genJetPt_i << endl;
+      }
       
 
       
@@ -1302,16 +1313,7 @@ void PYTHIA_scan(int group = 1){
       }
 
 
-      // apply gen-pT smear
-      double mu = 1.0;
-      double sigma = 0.2;
-      double smear = 0.0;
-
-      if(apply_genJetPt_smear && hasInclRecoMuonTag){
-	sigma = 0.663*JER_fxn->Eval(genJetPt_i); // apply a 20% smear
-	smear = randomGenerator->Gaus(mu,sigma);
-	genJetPt_i = genJetPt_i * smear;
-      }
+      
       
       // Fill the jet histograms
 
