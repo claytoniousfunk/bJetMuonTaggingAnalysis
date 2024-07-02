@@ -92,7 +92,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 void PYTHIA_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_muTaggedJets/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_muTaggedJets_doNeutrinoEnergyAddition/PYTHIA_DiJet_scan_output_%i.root",group);
 
   
   //printIntroduction();
@@ -116,6 +116,7 @@ void PYTHIA_scan_response(int group = 1){
   // JETS
 
   TH2D *h_matchedRecoJetPt_genJetPt[7];
+  TH2D *h_matchedRecoJetPt_genNeutrinoTag_genJetPt[7];
   TH2D *h_matchedNeutrinoPt_recoJetPt[7];
   TH2D *h_matchedNeutrinoPt_genJetPt[7];
   TH2D *h_matchedRecoJetPt_genJetPt_var;
@@ -147,6 +148,14 @@ void PYTHIA_scan_response(int group = 1){
   h_matchedRecoJetPt_genJetPt[5] = new TH2D("h_matchedRecoJetPt_genJetPt_gJets","genJetPt vs. matchedRecoJetPt, gJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
   h_matchedRecoJetPt_genJetPt[6] = new TH2D("h_matchedRecoJetPt_genJetPt_xJets","genJetPt vs. matchedRecoJetPt, xJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
 
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[0] = new TH2D("h_matchedRecoJetPt_genNeutrinoTag_genJetPt_allJets","genJetPt vs. matchedRecoJetPt, #nu-tagged jets, allJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[1] = new TH2D("h_matchedRecoJetPt_genNeutrinoTag_genJetPt_bJets","genJetPt vs. matchedRecoJetPt, #nu-tagged jets, bJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[2] = new TH2D("h_matchedRecoJetPt_genNeutrinoTag_genJetPt_cJets","genJetPt vs. matchedRecoJetPt, #nu-tagged jets, cJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[3] = new TH2D("h_matchedRecoJetPt_genNeutrinoTag_genJetPt_udJets","genJetPt vs. matchedRecoJetPt, #nu-tagged jets, udJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[4] = new TH2D("h_matchedRecoJetPt_genNeutrinoTag_genJetPt_sJets","genJetPt vs. matchedRecoJetPt, #nu-tagged jets, sJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[5] = new TH2D("h_matchedRecoJetPt_genNeutrinoTag_genJetPt_gJets","genJetPt vs. matchedRecoJetPt, #nu-tagged jets, gJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[6] = new TH2D("h_matchedRecoJetPt_genNeutrinoTag_genJetPt_xJets","genJetPt vs. matchedRecoJetPt, #nu-tagged jets, xJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+
   h_matchedNeutrinoPt_recoJetPt[0] = new TH2D("h_matchedNeutrinoPt_recoJetPt_allJets","neutrino pT vs. recoJet pT, allJets",100,0,100,NPtBins,ptMin,ptMax);
   h_matchedNeutrinoPt_recoJetPt[1] = new TH2D("h_matchedNeutrinoPt_recoJetPt_bJets","neutrino pT vs. recoJet pT, bJets",100,0,100,NPtBins,ptMin,ptMax);
   h_matchedNeutrinoPt_recoJetPt[2] = new TH2D("h_matchedNeutrinoPt_recoJetPt_cJets","neutrino pT vs. recoJet pT, cJets",100,0,100,NPtBins,ptMin,ptMax);
@@ -171,6 +180,14 @@ void PYTHIA_scan_response(int group = 1){
   h_matchedRecoJetPt_genJetPt[4]->Sumw2();
   h_matchedRecoJetPt_genJetPt[5]->Sumw2();
   h_matchedRecoJetPt_genJetPt[6]->Sumw2();
+
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[0]->Sumw2();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[1]->Sumw2();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[2]->Sumw2();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[3]->Sumw2();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[4]->Sumw2();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[5]->Sumw2();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[6]->Sumw2();
 
   h_matchedNeutrinoPt_recoJetPt[0]->Sumw2();
   h_matchedNeutrinoPt_recoJetPt[1]->Sumw2();
@@ -492,11 +509,11 @@ void PYTHIA_scan_response(int group = 1){
 
 	    }
 
-
-
+	    if(doNeutrinoEnergyAddition && hasRecoJetNeutrino){
+	      matchedRecoJetPt += matchedNeutrinoPt;
+	    }
 	  }	
 	}
-
       }
 
       jetFlavorInt = em->partonFlavor[recoJetFlavorFlag];
@@ -665,6 +682,15 @@ void PYTHIA_scan_response(int group = 1){
   h_matchedRecoJetPt_genJetPt[5]->Write();
   h_matchedRecoJetPt_genJetPt[6]->Write();
 
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[0]->Write();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[1]->Write();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[2]->Write();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[3]->Write();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[4]->Write();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[5]->Write();
+  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[6]->Write();
+
+  
   h_matchedNeutrinoPt_recoJetPt[0]->Write();
   h_matchedNeutrinoPt_recoJetPt[1]->Write();
   h_matchedNeutrinoPt_recoJetPt[2]->Write();
