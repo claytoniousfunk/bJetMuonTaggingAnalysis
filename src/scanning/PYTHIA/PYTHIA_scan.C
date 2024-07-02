@@ -794,9 +794,9 @@ void PYTHIA_scan(int group = 1){
 	  if(skipInclNeutrinoEnergySubtraction_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(recoJetPt_i))) continue;
 	  neutrino_energy_fraction_map_proj = (TH1D*) neutrino_energy_fraction_map->ProjectionX("neutrino_energy_fraction_map_proj", neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i)+1);
 	  smear_InclNeutrinoEnergySubtraction = recoJetPt_i * neutrino_energy_fraction_map_proj->GetRandom();
-	  cout << "pT-pre-smear = " << recoJetPt_i << endl;
+	  //cout << "pT-pre-smear = " << recoJetPt_i << endl;
 	  recoJetPt_i -= smear_InclNeutrinoEnergySubtraction;
-	  cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
+	  //cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
 	  
 	}
 	
