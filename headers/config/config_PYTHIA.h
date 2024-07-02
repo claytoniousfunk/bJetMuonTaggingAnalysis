@@ -25,8 +25,8 @@ bool doEtaPhiMask = false;
 // jet-energy alterations
 bool doBJetEnergyShift = false;
 bool doBJetNeutrinoEnergyShift = false;
-bool doNeutrinoEnergyAddition = false;
-bool doInclNeutrinoEnergySubtraction = true;
+bool doNeutrinoEnergyAddition = true;
+bool doInclNeutrinoEnergySubtraction = false;
 bool apply_genJetPt_smear = false;
 
 
