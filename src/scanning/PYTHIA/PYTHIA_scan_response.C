@@ -527,8 +527,8 @@ void PYTHIA_scan_response(int group = 1){
 	    double smear_doBJetNeutrinoEnergyShift = 0.0;
 	    if(doBJetNeutrinoEnergyShift){
 	      skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
-	      if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(recoJetPt_i))) continue;
-	      neutrino_energy_fraction_map_proj = (TH1D*) neutrino_energy_fraction_map->ProjectionX("neutrino_energy_fraction_map_proj", neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i)+1);
+	      if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(matchedRecoJetPt))) continue;
+	      neutrino_energy_fraction_map_proj = (TH1D*) neutrino_energy_fraction_map->ProjectionX("neutrino_energy_fraction_map_proj", neutrino_energy_fraction_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_fraction_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
 	      smear_doBJetNeutrinoEnergyShift = matchedRecoJetPt * neutrino_energy_fraction_map_proj->GetRandom();
 	      matchedRecoJetPt += smear_doBJetNeutrinoEnergyShift;
 	    }
