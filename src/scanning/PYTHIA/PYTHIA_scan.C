@@ -185,7 +185,7 @@ void PYTHIA_scan(int group = 1){
 
   //TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_genBJetPtSmear/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_doInclNeutrinoEnergySubtraction/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -430,6 +430,10 @@ void PYTHIA_scan(int group = 1){
   TH2D *neutrino_energy_map;
   TH1D *neutrino_energy_map_proj;
   f_neutrino_energy_map->GetObject("neutrino_energy_map",neutrino_energy_map);
+
+  TFile *f_neutrino_tag_fraction = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_tag_fraction.root");
+  TH1D *neutrino_tag_fraction;
+  f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
   
   //f_neutrino_energy_fraction_map->Close();
 
@@ -773,12 +777,27 @@ void PYTHIA_scan(int group = 1){
 
 	} // end gen neutrino loop
 
+	// NEUTRINO DIRECT ENERGY ADDITION CORRECTION 
 	if(doNeutrinoEnergyAddition){
 	  if(hasGenNeutrinoTag){
 	    //cout << "old pT = " << recoJetPt_i << endl;
 	    recoJetPt_i += nuPt_i; // add neutrino energy directly
 	    //cout << "new pT = " << recoJetPt_i << endl;
 	  }
+	}
+
+	// // OLGAS SUGGESTED METHOD
+	double skipInclNeutrinoEnergySubtraction_diceRoll = 0.0;
+	double smear_InclNeutrinoEnergySubtraction = 0.0;
+	if(doInclNeutrinoEnergySubtraction){
+	  skipInclNeutrinoEnergySubtraction_diceRoll = randomGenerator->Rndm(); // roll the dice to see if we alter the energy or not
+	  if(skipInclNeutrinoEnergySubtraction_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(recoJetPt_i))) continue;
+	  neutrino_energy_fraction_map_proj = (TH1D*) neutrino_energy_fraction_map->ProjectionX("neutrino_energy_fraction_map_proj", neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_fraction_map->GetYaxis()->FindBin(recoJetPt_i)+1);
+	  smear_InclNeutrinoEnergySubtraction = recoJetPt_i * neutrino_energy_fraction_map_proj->GetRandom();
+	  cout << "pT-pre-smear = " << recoJetPt_i << endl;
+	  recoJetPt_i -= smear_InclNeutrinoEnergySubtraction;
+	  cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
+	  
 	}
 	
 	// look for a genMuon match
