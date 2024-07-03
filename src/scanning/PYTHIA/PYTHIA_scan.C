@@ -906,13 +906,17 @@ void PYTHIA_scan(int group = 1){
 	  recoJetPt_i = recoJetPt_i * (1.0 / fitFxn_PYTHIA_JESb->Eval(recoJetPt_i));
 	}
 	
+	double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
 	if(doBJetNeutrinoEnergyShift){
-	  neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i)+1);
-	  nuPtShift_i = neutrino_energy_map_proj->GetRandom();
-	  //cout << "pT-nu = " << nuPtShift_i << endl;
-	  //cout << "pT-nu-smear = " << recoJetPt_i * nuPtShift_i << endl;
-	  recoJetPt_i = recoJetPt_i + nuPtShift_i;
-	  //cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
+          skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm(); // roll the dice to see if we alter the energy or not
+          //cout << "dice roll = " << skipDoBJetNeutrinoEnergyShift_diceRoll << " | " << neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(recoJetPt_i)) << endl;
+          if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(recoJetPt_i))) continue;
+          neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i)+1);
+          nuPtShift_i = neutrino_energy_map_proj->GetRandom();
+          //cout << "pT-nu = " << nuPtShift_i << endl;
+          //cout << "pT-nu-smear = " << recoJetPt_i * nuPtShift_i << endl;
+          recoJetPt_i = recoJetPt_i + nuPtShift_i;
+          //cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
 	}
 	
 	
