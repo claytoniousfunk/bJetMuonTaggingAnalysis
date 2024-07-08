@@ -92,17 +92,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 void PYTHIA_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_muTaggedJets_doBJetNeutrinoEnergyShift/PYTHIA_DiJet_scan_output_%i.root",group);
-
-
-  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
-  TH2D *neutrino_energy_fraction_map;
-  TH1D *neutrino_energy_fraction_map_proj;
-  f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
-
-  TFile *f_neutrino_tag_fraction = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_tag_fraction.root");
-  TH1D *neutrino_tag_fraction;
-  f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_muTaggedJets_doBJetNeutrinoEnergyShift_recoBasedDiceRoll/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   
@@ -377,6 +367,26 @@ void PYTHIA_scan_response(int group = 1){
   loadFitFxn_vz();
   loadFitFxn_PYTHIA_JESb();
 
+  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
+  TH2D *neutrino_energy_fraction_map;
+  TH1D *neutrino_energy_fraction_map_proj;
+  f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
+
+  TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
+  TH2D *neutrino_energy_map;
+  TH1D *neutrino_energy_map_proj;
+  f_neutrino_energy_map->GetObject("neutrino_energy_map",neutrino_energy_map);
+
+  TFile *f_neutrino_tag_fraction = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_tag_fraction.root");
+  TH1D *neutrino_tag_fraction;
+  f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
+
+
+
+
+
+
+  
   // event loop
   int evi_frac = 0;
   for(int evi = 0; evi < NEvents ; evi++){
@@ -523,13 +533,15 @@ void PYTHIA_scan_response(int group = 1){
 	    if(doNeutrinoEnergyAddition && hasRecoJetNeutrino){
 	      matchedRecoJetPt += matchedNeutrinoPt;
 	    }
+
+
 	    double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
 	    double smear_doBJetNeutrinoEnergyShift = 0.0;
 	    if(doBJetNeutrinoEnergyShift){
 	      skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
 	      if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(matchedRecoJetPt))) continue;
-	      neutrino_energy_fraction_map_proj = (TH1D*) neutrino_energy_fraction_map->ProjectionX("neutrino_energy_fraction_map_proj", neutrino_energy_fraction_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_fraction_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
-	      smear_doBJetNeutrinoEnergyShift = matchedRecoJetPt * neutrino_energy_fraction_map_proj->GetRandom();
+	      neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
+	      smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
 	      matchedRecoJetPt += smear_doBJetNeutrinoEnergyShift;
 	    }
 	    
@@ -547,7 +559,7 @@ void PYTHIA_scan_response(int group = 1){
       //if(hasRecoJetMatch && hasRecoJetMuon && hasRecoJetNeutrino) {
       //if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
       //if(hasRecoJetMatch && hasRecoJetNeutrino) {   // keep only neutrino-full jets
-      if(hasRecoJetMatch && hasRecoJetMuon) {   // keep only neutrino-full jets
+      if(hasRecoJetMatch && hasRecoJetMuon) {   // keep only muon-tagged jets
 
 	//cout << "matchedRecoJetPt = " << matchedRecoJetPt << endl;
 	
