@@ -40,16 +40,16 @@
 #include "../../../headers/AnalysisSetupV2p1.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
-#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
-//#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
+#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
 // hiBin-fit parameters
 //#include "../../../headers/fitParameters/hiBinFitParams_mu5.h"
-#include "../../../headers/fitParameters/hiBinFitParams_mu7.h"
-//#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
+//#include "../../../headers/fitParameters/hiBinFitParams_mu7.h"
+#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
-#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
-//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 
 
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
