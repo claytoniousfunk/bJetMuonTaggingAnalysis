@@ -104,7 +104,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   
   
-  printIntroduction();
+
   readConfig();
 
   // JET ENERGY CORRECTIONS
