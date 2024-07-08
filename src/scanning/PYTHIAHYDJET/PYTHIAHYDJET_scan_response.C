@@ -1,4 +1,3 @@
-
 // general ROOT/C includes
 #include <iostream>
 #include "TFile.h"
@@ -30,6 +29,72 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+// event map
+#include "../../../eventMap/eventMap.h"
+// jet corrector
+#include "../../../JetEnergyCorrections/JetCorrector.h"
+// jet uncertainty
+#include "../../../JetEnergyCorrections/JetUncertainty.h"
+// general analysis variables
+#include "../../../headers/AnalysisSetupV2p1.h"
+// vz-fit parameters
+//#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
+//#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
+#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
+// hiBin-fit parameters
+//#include "../../../headers/fitParameters/hiBinFitParams_mu5.h"
+//#include "../../../headers/fitParameters/hiBinFitParams_mu7.h"
+#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
+// jetPt-fit parameters
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+
+
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
+// vz-fit function
+#include "../../../headers/fitFunctions/fitFxn_vz_PH.h"
+// #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
+// #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu12.h"
+// hiBin-fit function
+#include "../../../headers/fitFunctions/fitFxn_hiBin.h"
+// #include "../../../headers/fitFunctions/fitFxn_hiBin_mu7.h"
+// #include "../../../headers/fitFunctions/fitFxn_hiBin_mu12.h"
+// jetPt-fit function
+#include "../../../headers/fitFunctions/fitFxn_jetPt.h"
+
+// eta-phi mask function
+#include "../../../headers/functions/etaPhiMask.h"
+// getDr function
+#include "../../../headers/functions/getDr.h"
+// getJetPtBin function
+#include "../../../headers/functions/getJetPtBin.h"
+// getCentBin function
+#include "../../../headers/functions/getCentBin_v2.h"
+// getPtRel function
+#include "../../../headers/functions/getPtRel.h"
+// isQualityMuon_hybridSoft function
+#include "../../../headers/functions/isQualityMuon_hybridSoft.h"
+// isQualityMuon_tight function
+#include "../../../headers/functions/isQualityMuon_tight.h"
+// isWDecayMuon function
+#include "../../../headers/functions/isWDecayMuon.h"
+// triggerIsOn function
+#include "../../../headers/functions/triggerIsOn.h"
+// pthat filter function
+#include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
+// JetTrkMax filter function
+#include "../../../headers/functions/jet_filter/passesJetTrkMaxFilter.h"
+// print introduction
+#include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
+// analysis config
+#include "../../../headers/config/config_PYTHIAHYDJET.h"
+// read config
+#include "../../../headers/config/readConfig.h"
+// remove HYDJET jets function
+#include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
+
 
 // event map
 #include "../../../../eventMap/eventMap.h"
@@ -78,8 +143,12 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 #include "../../../../headers/config/readConfig.h"
 
 
-void PYTHIAHYDJET_scan_response(TString input = "root://cmsxrootd.fnal.gov//store/user/cbennett/PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/230606_054515/0000/HiForestAOD_1.root", TString output = "out.root"){
+void PYTHIAHYDJET_scan_response(int group = 1){
 
+  TString input = Form("root://cmsxrootd.fnal.gov//store/user/cbennett/PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/230606_054515/0000/HiForestAOD_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_response_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix/PYTHIAHYDJET_scan_output_%i.root",group);
+
+  
   
   printIntroduction();
   readConfig();
@@ -87,11 +156,11 @@ void PYTHIAHYDJET_scan_response(TString input = "root://cmsxrootd.fnal.gov//stor
   // JET ENERGY CORRECTIONS
   vector<string> Files;
   
-  Files.push_back("../../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
+  Files.push_back("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_L2Relative_AK4PF.txt"); // LXPLUS
 
   JetCorrector JEC(Files);
 
-  JetUncertainty JEU("../../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
+  JetUncertainty JEU("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
 
 
 
@@ -243,8 +312,8 @@ void PYTHIAHYDJET_scan_response(TString input = "root://cmsxrootd.fnal.gov//stor
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
 
     // apply HLT
-    int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
     //if(!triggerIsOn(triggerDecision,triggerDecision_Prescl)) continue;
 
     // RECO VARIABLES
@@ -299,7 +368,7 @@ void PYTHIAHYDJET_scan_response(TString input = "root://cmsxrootd.fnal.gov//stor
 	    hasRecoJetMatch = true;
 	    recoJetFlavorFlag = k;
 
-	    if(em->mupt[k] > 7.0) hasRecoJetMuon = true;
+	    if(em->mupt[k] > 14.0) hasRecoJetMuon = true;
 
 	    JEC.SetJetPT(em->rawpt[k]);
 	    JEC.SetJetEta(em->jeteta[k]);
