@@ -24,7 +24,7 @@ bool doRemoveHYDJETjet = true;
 bool doEtaPhiMask = false;
 // jet-energy alterations
 bool doBJetEnergyShift = false;
-bool doBJetNeutrinoEnergyShift = false;
+bool doBJetNeutrinoEnergyShift = true;
 bool doNeutrinoEnergyAddition = false;
 bool doInclNeutrinoEnergySubtraction = false;
 bool apply_genJetPt_smear = false;
