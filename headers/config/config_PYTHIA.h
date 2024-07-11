@@ -7,7 +7,7 @@ TString hltString = "hltTree";
 const int NeventFilters = 3;
 std::string eventFilters[NeventFilters] = {"pPAprimaryVertexFilter","HBHENoiseFilterResultRun2Loose","pBeamScrapingFilter"};
 // options for systematic studies
-bool apply_JER_smear = true;
+bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
