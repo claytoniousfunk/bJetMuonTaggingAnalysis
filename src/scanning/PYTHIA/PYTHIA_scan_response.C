@@ -92,7 +92,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 void PYTHIA_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_pThat-15_inclJets/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_pThat-15_inclJets_JERsmear/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   
@@ -426,7 +426,7 @@ void PYTHIA_scan_response(int group = 1){
     //cout << "triggerDecision = " << triggerDecision << endl;
 
     
-    if(!triggerIsOn(triggerDecision,triggerDecision_Prescl)) continue;
+    //if(!triggerIsOn(triggerDecision,triggerDecision_Prescl)) continue;
 
     //cout << "lets go!" << endl;
 
@@ -538,6 +538,7 @@ void PYTHIA_scan_response(int group = 1){
 	    double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
 	    double smear_doBJetNeutrinoEnergyShift = 0.0;
 	    if(doBJetNeutrinoEnergyShift){
+	    //if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
 	      skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
 	      if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(matchedRecoJetPt))) continue;
 	      neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
