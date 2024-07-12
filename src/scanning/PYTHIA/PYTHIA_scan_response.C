@@ -426,7 +426,7 @@ void PYTHIA_scan_response(int group = 1){
     //cout << "triggerDecision = " << triggerDecision << endl;
 
     
-    if(!triggerIsOn(triggerDecision,triggerDecision_Prescl)) continue;
+    //if(!triggerIsOn(triggerDecision,triggerDecision_Prescl)) continue;
 
     //cout << "lets go!" << endl;
 
