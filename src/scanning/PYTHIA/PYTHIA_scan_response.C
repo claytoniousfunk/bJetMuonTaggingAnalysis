@@ -92,7 +92,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 void PYTHIA_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_pThat-15_inclJets_doNeutrinoEnergyAddition/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_pThat-15_inclJets_30PercentJERsmear/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   
@@ -507,7 +507,8 @@ void PYTHIA_scan_response(int group = 1){
 	    double smear = 0.0;
 
 	    if(apply_JER_smear){
-	      sigma = 0.663*JER_fxn->Eval(matchedRecoJetPt); // apply a 20% smear
+	      //sigma = 0.663*JER_fxn->Eval(matchedRecoJetPt); // apply a 20% smear
+	      sigma = 0.83066239*JER_fxn->Eval(matchedRecoJetPt); // apply a 30% smear
 	      smear = randomGenerator->Gaus(mu,sigma);
 	      matchedRecoJetPt = matchedRecoJetPt * smear;
 	    }
