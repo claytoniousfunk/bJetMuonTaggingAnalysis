@@ -523,7 +523,8 @@ void PYTHIA_scan_response(int group = 1){
 	    if(doJERCorrection){
 	      k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
 	      sigma_JERCorrection = k_JERCorrection*JER_fxn->Eval(matchedRecoJetPt);
-	      matchedRecoJetPt = matchedRecoJetPt * sigma_JERCorrection;
+	      smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
+	      matchedRecoJetPt = matchedRecoJetPt * smear_JERCorrection;
 	    }
 
 	    if(doBJetEnergyShift){
