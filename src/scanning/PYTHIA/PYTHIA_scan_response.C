@@ -49,7 +49,9 @@
 // JESb fit params
 //#include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu7.h"
 #include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu12.h"
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
+// JERCorrection params
+#include "../../../headers/fitParameters/JERCorrectionParams_PYTHIA_mu12.h"
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_JERCorrection;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // jetPt-fit function
@@ -92,7 +94,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb;
 void PYTHIA_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_pThat-15_inclJets_30PercentJERsmear/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_pThat-15_inclJets_doJERCorrection/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   
@@ -366,6 +368,7 @@ void PYTHIA_scan_response(int group = 1){
 
   loadFitFxn_vz();
   loadFitFxn_PYTHIA_JESb();
+  loadFitFxn_PYTHIA_JERCorrection();
 
   TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
   TH2D *neutrino_energy_fraction_map;
@@ -507,10 +510,20 @@ void PYTHIA_scan_response(int group = 1){
 	    double smear = 0.0;
 
 	    if(apply_JER_smear){
-	      //sigma = 0.663*JER_fxn->Eval(matchedRecoJetPt); // apply a 20% smear
-	      sigma = 0.83066239*JER_fxn->Eval(matchedRecoJetPt); // apply a 30% smear
+	      sigma = 0.663*JER_fxn->Eval(matchedRecoJetPt); // apply a 20% smear
+	      //sigma = 0.83066239*JER_fxn->Eval(matchedRecoJetPt); // apply a 30% smear
 	      smear = randomGenerator->Gaus(mu,sigma);
 	      matchedRecoJetPt = matchedRecoJetPt * smear;
+	    }
+
+	    double mu_JERCorrection = 1.0;
+	    double sigma_JERCorrection = 0.2;
+	    double smear_JERCorrection = 0.0; // smeared pT
+	    double k_JERCorrection = 0.0; // smearing parameter
+	    if(doJERCorrection){
+	      k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
+	      sigma_JERCorrection = k_JERCorrection*JER_fxn->Eval(matchedRecoJetPt);
+	      matchedRecoJetPt = matchedRecoJetPt * sigma_JERCorrection;
 	    }
 
 	    if(doBJetEnergyShift){
@@ -534,6 +547,8 @@ void PYTHIA_scan_response(int group = 1){
 	    if(doNeutrinoEnergyAddition && hasRecoJetNeutrino){
 	      matchedRecoJetPt += matchedNeutrinoPt;
 	    }
+
+
 
 
 	    double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
