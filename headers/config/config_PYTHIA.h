@@ -28,7 +28,7 @@ bool doBJetNeutrinoEnergyShift = false;
 bool doNeutrinoEnergyAddition = false;
 bool doInclNeutrinoEnergySubtraction = false;
 bool apply_genJetPt_smear = false;
-bool doJERCorrection = true;
+bool doJERCorrection = false;
 
 
 
