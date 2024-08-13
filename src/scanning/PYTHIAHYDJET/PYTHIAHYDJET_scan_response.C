@@ -100,7 +100,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 void PYTHIAHYDJET_scan_response(int group = 1){
 
   TString input = Form("root://cmsxrootd.fnal.gov//store/user/cbennett/PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8/crab_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut_5Jun23/230606_054515/0000/HiForestAOD_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_response_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_response_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_inclJets_fineCentBins/PYTHIAHYDJET_scan_output_%i.root",group);
 
   
   
@@ -360,7 +360,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      if(hasRecoJetMatch && hasRecoJetMuon) {
+      //if(hasRecoJetMatch && hasRecoJetMuon) {
+      if(hasRecoJetMatch) {
 	h_matchedRecoJetPt_genJetPt[0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedRecoJetPt_genJetPt[CentralityIndex]->Fill(matchedRecoJetPt,x,w);
 
