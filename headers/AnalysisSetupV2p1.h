@@ -1,5 +1,5 @@
 
-const int NCentralityIndices = 3;
+const int NCentralityIndices = 5;
 const int NJetPtIndices = 7;
 const int NJetFlavorIndices = 7;
 
@@ -17,10 +17,12 @@ int isXJet = 7;
 
 
 const int hiBin_C0_lo = 0;
-const int hiBin_C0_hi = 60;
-const int hiBin_C1_hi = 180;
+const int hiBin_C0_hi = 20;
+const int hiBin_C1_hi = 60;
+const int hiBin_C2_hi = 100;
+const int hiBin_C3_hi = 180;
 
-int centEdges[NCentralityIndices] = {hiBin_C0_lo, hiBin_C0_hi, hiBin_C1_hi};
+int centEdges[NCentralityIndices] = {hiBin_C0_lo, hiBin_C0_hi, hiBin_C1_hi, hiBin_C2_hi, hiBin_C3_hi};
 
 
 // for PbPb Data scans
@@ -62,9 +64,9 @@ double muPtMaxCut = 1000.0; // mu12 scans
 double nuPtCut = 0.0;
 double nuPtMaxCut = 1000.0;
 
-//const double pthatcut = 15.0;
+const double pthatcut = 15.0;
 //const double pthatcut = 25.0;
-const double pthatcut = 30.0;
+//const double pthatcut = 30.0;
 //const double pthatcut = 40.0;
 //const double pthatcut = 50.0;
 
