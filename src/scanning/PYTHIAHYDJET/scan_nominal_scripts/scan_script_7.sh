@@ -6,7 +6,7 @@
 # N = 2923 for PH MuJet
 # N = 6190 for PH DiJet additionalMC
 
-for i in {6001..7000}
+for i in {3001..3500}
 
 do
 
