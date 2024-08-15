@@ -37,7 +37,7 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p2.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
@@ -71,8 +71,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // getJetPtBin function
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-//#include "../../../headers/functions/getCentBin_v2.h"
-#include "../../../headers/functions/getCentBin.h"
+#include "../../../headers/functions/getCentBin_v2.h"
+//#include "../../../headers/functions/getCentBin.h"
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
@@ -202,7 +202,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_fineCentBins/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut/PYTHIAHYDJET_scan_output_%i.root",group);
