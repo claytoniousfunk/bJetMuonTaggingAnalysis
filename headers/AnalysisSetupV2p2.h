@@ -4,6 +4,7 @@ const int NJetPtIndices = 7;
 const int NJetFlavorIndices = 7;
 
 //flavors
+
 int isUJet = 1;
 int isDJet = 2;
 int isSJet = 3;
@@ -12,10 +13,19 @@ int isBJet = 5;
 int isGJet = 6;
 int isXJet = 7;
 
+
+
+
+//const int hiBin_C0_lo = 0;
+//const int hiBin_C0_hi = 20;
+//const int hiBin_C1_hi = 60;
+//const int hiBin_C2_hi = 100;
+//const int hiBin_C3_hi = 180;
+int centEdges[NCentralityIndices] = {hiBin_C0_lo, hiBin_C0_hi, hiBin_C1_hi, hiBin_C2_hi, hiBin_C3_hi};
+
 const int hiBin_C0_lo = 0;
 const int hiBin_C0_hi = 60;
 const int hiBin_C1_hi = 180;
-
 int centEdges[NCentralityIndices] = {hiBin_C0_lo, hiBin_C0_hi, hiBin_C1_hi};
 
 
@@ -32,9 +42,9 @@ const int NTrkEtaBins = 200;
 const double trkEtaMin = -2.0;
 const double trkEtaMax = 2.0;
 
-const int NPtBins = 100;
-const double jetPtCut = 50.0; // cut on muon jets
-const double ptMin = 0.0;
+const int NPtBins = 96;
+const double jetPtCut = 5.0; // cut on muon jets
+const double ptMin = 20.0;
 const double ptMax = 500.0;
 
 const int NTrkPtBins = 100;
@@ -47,8 +57,22 @@ const double muPtMax = 100.0;
 
 const double deltaRCut = 0.4;  // muon-matching dR
 
-double muPtCut = 7.0;
-double muPtCutMax = 30.0;
+//double muPtCut = 7.0; // mu5 scans
+//double muPtCut = 9.0; // mu7 scans
+double muPtCut = 14.0; // mu12 scans
+
+//double muPtMaxCut = 9.0; // mu5 scans
+//double muPtMaxCut = 14.0; // mu7 scans
+double muPtMaxCut = 1000.0; // mu12 scans
+
+double nuPtCut = 0.0;
+double nuPtMaxCut = 1000.0;
+
+const double pthatcut = 15.0;
+//const double pthatcut = 25.0;
+//const double pthatcut = 30.0;
+//const double pthatcut = 40.0;
+//const double pthatcut = 50.0;
 
 const int NMuRelPtBins = 100;
 const double muRelPtMin = 0.0;
@@ -58,29 +82,21 @@ const int NhiBinBins = 200;
 const int hiBinMin = 0;
 const int hiBinMax = 200;
 
-const double jetpt_J0_lo = 50.0;
-const double jetpt_J0_hi = 60.0;
-const double jetpt_J1_hi = 80.0;
-const double jetpt_J2_hi = 120.0;
-const double jetpt_J3_hi = 200.0;
-const double jetpt_J4_hi = 300.0;
+const double jetpt_J0_lo = 100.0;
+const double jetpt_J0_hi = 115.0;
+const double jetpt_J1_hi = 130.0;
+const double jetpt_J2_hi = 150.0;
+const double jetpt_J3_hi = 175.0;
+const double jetpt_J4_hi = 210.0;
 const double jetpt_J5_hi = 500.0;
 
 double jetPtEdges[NJetPtIndices] = {jetpt_J0_lo, jetpt_J0_hi, jetpt_J1_hi, jetpt_J2_hi, jetpt_J3_hi, jetpt_J4_hi, jetpt_J5_hi};
-
 
 const int NVzBins = 60;
 const double vzMin = -15.0;
 const double vzMax = 15.0;
 
-
-const double pthatcut = 15.0;
-//const double pthatcut = 30.0;
-//const double pthatcut = 40.0;
-
-
-
-const double epsilon = 0.03;
+const double epsilon = 0.1;
 const double epsilon_mm = 0.4;
 
 const double d0cut = 0.002;

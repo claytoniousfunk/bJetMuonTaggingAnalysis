@@ -35,7 +35,7 @@
 // jet corrector
 #include "../../../JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p2.h"
 
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
@@ -126,7 +126,7 @@ void PbPb_scan(int group = 1){
   // TString output = Form("output_MinBias_mu12/PbPb_MinBias_scan_output_%i.root",group);
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu7_tight_pTmu-9to14_evtFilterFix_hiHFcut/PbPb_SingleMuon_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -385,18 +385,18 @@ void PbPb_scan(int group = 1){
     
     // ******************************************
     // -------- mu7 configuration ---------------
-    if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
-     evtTriggerDecision = true;
-     eventCounter++;
-    }
+    // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
+    //  evtTriggerDecision = true;
+    //  eventCounter++;
+    // }
     // ******************************************
     
     // ******************************************
     // -------- mu12 configuration ---------------
-    // if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
-    //   evtTriggerDecision = true;
-    //   eventCounter++;
-    // }
+    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+      evtTriggerDecision = true;
+      eventCounter++;
+    }
     // ******************************************
 
 
