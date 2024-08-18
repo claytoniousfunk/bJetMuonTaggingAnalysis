@@ -82,12 +82,12 @@ const int NhiBinBins = 200;
 const int hiBinMin = 0;
 const int hiBinMax = 200;
 
-const double jetpt_J0_lo = 100.0;
-const double jetpt_J0_hi = 115.0;
-const double jetpt_J1_hi = 130.0;
+const double jetpt_J0_lo = 80.0;
+const double jetpt_J0_hi = 100.0;
+const double jetpt_J1_hi = 120.0;
 const double jetpt_J2_hi = 150.0;
-const double jetpt_J3_hi = 175.0;
-const double jetpt_J4_hi = 210.0;
+const double jetpt_J3_hi = 200.0;
+const double jetpt_J4_hi = 300.0;
 const double jetpt_J5_hi = 500.0;
 
 double jetPtEdges[NJetPtIndices] = {jetpt_J0_lo, jetpt_J0_hi, jetpt_J1_hi, jetpt_J2_hi, jetpt_J3_hi, jetpt_J4_hi, jetpt_J5_hi};
