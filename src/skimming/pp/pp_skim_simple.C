@@ -51,7 +51,8 @@ void pp_skim_simple(int group = 1){
     // old_muon_tree->SetBranchStatus("*",0);
     // activate only our variables of interest
     // filters
-    old_filter_tree->SetBranchStatus("pPAprimaryVertexFilter",1);
+    old_filter_tree->SetBranchStatus("pprimaryVertexFilter",1);
+    // old_filter_tree->SetBranchStatus("pPAprimaryVertexFilter",1);
     // old_filter_tree->SetBranchStatus("HBHENoiseFilterResultRun2Loose",1);
     // old_filter_tree->SetBranchStatus("pBeamScrapingFilter",1);
     // evt
@@ -73,7 +74,7 @@ void pp_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("rawpt",1);
     old_jet_tree->SetBranchStatus("jteta",1);
     old_jet_tree->SetBranchStatus("jtphi",1);
-    old_jet_tree->SetBranchStatus("trackMax",1);
+    //old_jet_tree->SetBranchStatus("trackMax",1);
     old_jet_tree->SetBranchStatus("nref",1);
     // muons
     // old_muon_tree->SetBranchStatus("muPt",1);
