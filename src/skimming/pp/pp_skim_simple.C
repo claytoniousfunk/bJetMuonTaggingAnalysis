@@ -2,8 +2,8 @@ void pp_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "./";
-  in_file_name = "fileNames/fileNames_pp_SingleMuon_24Oct23.txt";
-  output_file_base += Form("output/pp_SingleMuon_skim_output_%i",group);
+  in_file_name = "../../../fileNames/fileNames_forest_pp_HIZeroBias1.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skims_pp_HIZeroBias1/pp_MinBias_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
@@ -12,7 +12,8 @@ void pp_skim_simple(int group = 1){
   std::string filename;
   Int_t ifile = 0;
 
-  int endfile = 6033;
+  //int endfile = 6033;
+  int endfile = 767;
 
   TFile *old_file;
   TString filename_string = "";
