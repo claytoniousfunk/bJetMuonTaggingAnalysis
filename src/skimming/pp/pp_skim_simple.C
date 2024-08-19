@@ -52,8 +52,8 @@ void pp_skim_simple(int group = 1){
     // activate only our variables of interest
     // filters
     old_filter_tree->SetBranchStatus("pPAprimaryVertexFilter",1);
-    old_filter_tree->SetBranchStatus("HBHENoiseFilterResultRun2Loose",1);
-    old_filter_tree->SetBranchStatus("pBeamScrapingFilter",1);
+    // old_filter_tree->SetBranchStatus("HBHENoiseFilterResultRun2Loose",1);
+    // old_filter_tree->SetBranchStatus("pBeamScrapingFilter",1);
     // evt
     old_evt_tree->SetBranchStatus("hiBin",1);
     old_evt_tree->SetBranchStatus("hiHF",1);
