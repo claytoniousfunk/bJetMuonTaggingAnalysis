@@ -3,8 +3,8 @@ int AASetup_status = 0;
 TString jetTreeString = "ak4PFJetAnalyzer";
 TString muonTreeString = "ggHiNtuplizerGED";
 TString hltString = "hltanalysis";
-const int NeventFilters = 3;
-std::string eventFilters[NeventFilters] = {"pPAprimaryVertexFilter","HBHENoiseFilterResultRun2Loose","pBeamScrapingFilter"};
+const int NeventFilters = 1;
+std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter"};
 bool doJetTrkMaxFilter = false;
 bool doEtaPhiMask = true;
 
