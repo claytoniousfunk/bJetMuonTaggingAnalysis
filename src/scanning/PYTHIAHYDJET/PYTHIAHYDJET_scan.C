@@ -911,14 +911,14 @@ void PYTHIAHYDJET_scan(int group = 1){
       if(hasGenJetMatch){
 
 	h_recoGenDr_flavor[0][0]->Fill(dR_recoGen_min,jetFlavorInt,w);
-	h_recoGenDr_flavor[0][jetPtIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
+	if(jetPtIndex > 0) h_recoGenDr_flavor[0][jetPtIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
 	h_recoGenDr_flavor[CentralityIndex][0]->Fill(dR_recoGen_min,jetFlavorInt,w);
-	h_recoGenDr_flavor[CentralityIndex][jetPtIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
+	if(jetPtIndex > 0) h_recoGenDr_flavor[CentralityIndex][jetPtIndex]->Fill(dR_recoGen_min,jetFlavorInt,w);
 
 	h_recoGenDpt_flavor[0][0]->Fill(dPt_recoGen_min,jetFlavorInt,w);
-	h_recoGenDpt_flavor[0][jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
+	if(jetPtIndex > 0) h_recoGenDpt_flavor[0][jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
 	h_recoGenDpt_flavor[CentralityIndex][0]->Fill(dPt_recoGen_min,jetFlavorInt,w);
-	h_recoGenDpt_flavor[CentralityIndex][jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
+	if(jetPtIndex > 0) h_recoGenDpt_flavor[CentralityIndex][jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
 
       }
 
