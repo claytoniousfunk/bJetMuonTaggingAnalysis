@@ -854,7 +854,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
-      if(jetPtIndex < 0) continue;
+      //if(jetPtIndex < 0) continue;
       
       // fill genJetPt vs pthat
       h_recoJetPt_pthat[0]->Fill(recoJetPt_i,em->pthat,w);
@@ -877,7 +877,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       for(int j = 0; j < em->ngj ; j++){
 
 
-	if(recoJetPt_i < 50) continue;	
+	//if(recoJetPt_i < 50) continue;	
 
 	double genJetPt_j = em->genjetpt[j];  // genJetPt
 	double genJetEta_j = em->genjeteta[j]; // genJetEta
