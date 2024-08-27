@@ -849,7 +849,8 @@ void PYTHIAHYDJET_scan(int group = 1){
 		
       // jet kinematic cuts
       if(TMath::Abs(recoJetEta_i) > etaMax || recoJetPt_i < jetPtCut) continue;
-     
+      if(recoJetPt_i < 20) continue;
+      
       if(recoJetPt_i > 60) eventHasGoodJet = true;
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
@@ -877,7 +878,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       for(int j = 0; j < em->ngj ; j++){
 
 
-	//if(recoJetPt_i < 50) continue;	
+	if(recoJetPt_i < 20) continue;	
 
 	double genJetPt_j = em->genjetpt[j];  // genJetPt
 	double genJetEta_j = em->genjeteta[j]; // genJetEta
