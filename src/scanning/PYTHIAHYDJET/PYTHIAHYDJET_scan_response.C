@@ -50,9 +50,10 @@
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
 #include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+// JERCorrection params
+#include "../../../headers/fitParameters/JERCorrectionParams_PYTHIA_mu12.h"
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_JERCorrection;
 
-
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PH.h"
 // #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
@@ -63,6 +64,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // #include "../../../headers/fitFunctions/fitFxn_hiBin_mu12.h"
 // jetPt-fit function
 #include "../../../headers/fitFunctions/fitFxn_jetPt.h"
+
 
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
@@ -135,7 +137,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   // Define histograms
   const int N1 = 7;
-  double ptAxis1[N1] = {50,60,80,120,200,300,500};
+  double ptAxis1[N1] = {80,100,120,150,200,300,500};
   const int N2 = 32;
   double ptAxis2[N2] = {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,500};
 
@@ -349,6 +351,17 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	      sigma = 0.663*JER_fxn->Eval(matchedRecoJetPt); // apply a 20% smear
 	      smear = randomGenerator->Gaus(mu,sigma);
 	      matchedRecoJetPt = matchedRecoJetPt * smear;
+	    }
+
+	    double mu_JERCorrection = 1.0;
+	    double sigma_JERCorrection = 0.2;
+	    double smear_JERCorrection = 0.0; // smeared pT
+	    double k_JERCorrection = 0.0; // smearing parameter
+	    if(doJERCorrection){
+	      k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
+	      sigma_JERCorrection = k_JERCorrection*JER_fxn->Eval(matchedRecoJetPt);
+	      smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
+	      matchedRecoJetPt = matchedRecoJetPt * smear_JERCorrection;
 	    }
 	    
 	  }	
