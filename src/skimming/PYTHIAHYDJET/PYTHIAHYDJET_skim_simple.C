@@ -25,7 +25,7 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
 
   // DiJet, incl, pTjet-5, N = 7117
   in_file_name = "../../../fileNames/fileNames_PH_DiJet_pTjet-5.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_DiJet_X/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_DiJet_PH_DiJet_pTjet-5/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
 
 
