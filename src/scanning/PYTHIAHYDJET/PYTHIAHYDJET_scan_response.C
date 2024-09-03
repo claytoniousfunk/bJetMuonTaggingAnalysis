@@ -216,7 +216,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   cout << "	Initializing variables ... " << endl;
   em->init();
   cout << "	Loading jet..." << endl;
-  em->loadJet("akCs4PFJetAnalyzer");
+  em->loadJet(jetTreeString);
   cout << "	Variables initilized!" << endl << endl ;
   int NEvents = em->evtTree->GetEntries();
   cout << "	Number of events = " << NEvents << endl;
