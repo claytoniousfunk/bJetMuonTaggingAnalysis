@@ -292,7 +292,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       double matchedRecoJetPt = 0.0;
       double matchedRawJetPt = 0.0;
 			
-      if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
+      if(TMath::Abs(y) > etaMax) continue;
 	
       // GET FLAVOR FROM RECO MATCH
       bool hasRecoJetMatch = false;
