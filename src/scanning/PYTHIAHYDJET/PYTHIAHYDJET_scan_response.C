@@ -237,6 +237,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   loadFitFxn_vz();
 
   loadFitFxn_hiBin();
+
+  // load JER correction fit fxn
+  loadFitFxn_PYTHIA_JERCorrection();
   
   // event loop
   int evi_frac = 0;
