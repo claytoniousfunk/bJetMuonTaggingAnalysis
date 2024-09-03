@@ -64,7 +64,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 // #include "../../../headers/fitFunctions/fitFxn_hiBin_mu12.h"
 // jetPt-fit function
 #include "../../../headers/fitFunctions/fitFxn_jetPt.h"
-JER-correction function
+// JER-correction function
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_JERCorrection.h"
 
 // eta-phi mask function
