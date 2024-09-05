@@ -103,7 +103,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 void PYTHIAHYDJET_scan_response(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PH_DiJet_pTjet-5/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_pTjet-5_pThat-15_response/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_pTjet-5_pThat-15_response_doJERCorrection/PYTHIAHYDJET_scan_output_%i.root",group);
   
 
   readConfig();

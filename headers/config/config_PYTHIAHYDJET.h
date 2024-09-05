@@ -24,4 +24,4 @@ bool doJetTrkMaxFilter = true;
 bool doRemoveHYDJETjet = true;
 bool doEtaPhiMask = false;
 bool doBJetEnergyShift = false;
-bool doJERCorrection = false;
+bool doJERCorrection = true;
