@@ -109,6 +109,7 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("rawpt",1);
     old_jet_tree->SetBranchStatus("jteta",1);
     old_jet_tree->SetBranchStatus("jtphi",1);
+    old_jet_tree->SetBranchStatus("mupt",1);
     old_jet_tree->SetBranchStatus("WTAeta",1);
     old_jet_tree->SetBranchStatus("WTAphi",1);
     old_jet_tree->SetBranchStatus("trackMax",1);
