@@ -74,7 +74,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 // getJetPtBin function
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin.h" // fine cent bins
+//#include "../../../headers/functions/getCentBin_v2.h" // course cent bins
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
