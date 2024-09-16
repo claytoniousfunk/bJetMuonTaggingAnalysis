@@ -56,6 +56,7 @@ void PbPb_skim_simple(int group = 1){
     old_filter_tree->SetBranchStatus("collisionEventSelectionAODv2",1);
     old_filter_tree->SetBranchStatus("phfCoincFilter3Th4",1);
     old_filter_tree->SetBranchStatus("phfCoincFilter2Th4",1);
+    old_filter_tree->SetBranchStatus("pphfCoincFilter2Th4",1);
     old_filter_tree->SetBranchStatus("pclusterCompatibilityFilter",1);
     // evt
     old_evt_tree->SetBranchStatus("hiBin",1);
