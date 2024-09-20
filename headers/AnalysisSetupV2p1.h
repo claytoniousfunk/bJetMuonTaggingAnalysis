@@ -39,7 +39,7 @@ const double trkEtaMin = -2.0;
 const double trkEtaMax = 2.0;
 
 const int NPtBins = 96;
-const double jetPtCut = 5.0; // cut on muon jets
+const double jetPtCut = 30.0; // cut on muon jets
 const double ptMin = 20.0;
 const double ptMax = 500.0;
 
