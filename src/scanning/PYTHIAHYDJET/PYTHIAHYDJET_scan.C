@@ -71,8 +71,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // getJetPtBin function
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../headers/functions/getCentBin_v2.h"
-//#include "../../../headers/functions/getCentBin.h"
+//#include "../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin.h"
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
