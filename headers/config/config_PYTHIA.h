@@ -29,8 +29,8 @@ bool doNeutrinoEnergyAddition = false;
 bool doInclNeutrinoEnergySubtraction = false;
 bool apply_genJetPt_smear = false;
 bool doJERCorrection = false;
-
-
+// muptrel reweight
+bool doMuPtRelReweight = true;
 
 
 
