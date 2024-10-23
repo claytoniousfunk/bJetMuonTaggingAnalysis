@@ -213,7 +213,7 @@ void PYTHIA_scan(int group = 1){
 
   //TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_muPtRelReweight_newJetBins/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_muPtRelReweightC2_newJetBins/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -1012,12 +1012,12 @@ void PYTHIA_scan(int group = 1){
       if(doMuPtRelReweight){
 	if(hasInclRecoMuonTag && evtTriggerDecision && jetPtIndex > 0){
 
-	  if(jetPtIndex == 1) w_muptrel = w_jet * fitFxn_muptrel_C1J1->Eval(muPtRel_i);
-	  else if(jetPtIndex == 2) w_muptrel = w_jet * fitFxn_muptrel_C1J2->Eval(muPtRel_i);
-	  else if(jetPtIndex == 3) w_muptrel = w_jet * fitFxn_muptrel_C1J3->Eval(muPtRel_i);
-	  else if(jetPtIndex == 4) w_muptrel = w_jet * fitFxn_muptrel_C1J4->Eval(muPtRel_i);
-	  else if(jetPtIndex == 5) w_muptrel = w_jet * fitFxn_muptrel_C1J5->Eval(muPtRel_i);
-	  else if(jetPtIndex == 6) w_muptrel = w_jet * fitFxn_muptrel_C1J6->Eval(muPtRel_i);
+	  if(jetPtIndex == 1) w_muptrel = w_jet * fitFxn_muptrel_C2J1->Eval(muPtRel_i);
+	  else if(jetPtIndex == 2) w_muptrel = w_jet * fitFxn_muptrel_C2J2->Eval(muPtRel_i);
+	  else if(jetPtIndex == 3) w_muptrel = w_jet * fitFxn_muptrel_C2J3->Eval(muPtRel_i);
+	  else if(jetPtIndex == 4) w_muptrel = w_jet * fitFxn_muptrel_C2J4->Eval(muPtRel_i);
+	  else if(jetPtIndex == 5) w_muptrel = w_jet * fitFxn_muptrel_C2J5->Eval(muPtRel_i);
+	  else if(jetPtIndex == 6) w_muptrel = w_jet * fitFxn_muptrel_C2J6->Eval(muPtRel_i);
 	  else{};
 
 	}
