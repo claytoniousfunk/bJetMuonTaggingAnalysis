@@ -55,8 +55,36 @@
 #include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu12_newFitMethod.h"
 // bJetNeutrinoEnergy fit params
 #include "../../../headers/fitParameters/bJetNeutrinoEnergyFitParams_PYTHIA_mu12.h"
+// muptrel fit parameters
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C1J1.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C1J2.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C1J3.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C1J4.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C1J5.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C1J6.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J1.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J2.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J3.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J4.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J5.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J6.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_bJetNeutrinoEnergy;
+TF1 *fitFxn_muptrel_C1J1, *fitFxn_muptrel_C1J2, *fitFxn_muptrel_C1J3, *fitFxn_muptrel_C1J4, *fitFxn_muptrel_C1J5, *fitFxn_muptrel_C1J6;
+TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_muptrel_C2J4, *fitFxn_muptrel_C2J5, *fitFxn_muptrel_C2J6;
+// muptrel fit functions
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J1.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J2.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J3.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J4.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J5.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J6.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C2J1.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C2J2.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C2J3.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C2J4.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C2J5.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C2J6.h"
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // jetPt-fit function
@@ -185,7 +213,7 @@ void PYTHIA_scan(int group = 1){
 
   //TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_newJetBins_JEUShiftDown/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_muPtRelReweight_newJetBins/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -418,8 +446,19 @@ void PYTHIA_scan(int group = 1){
   loadFitFxn_jetPt();
   loadFitFxn_PYTHIA_JESb();
   loadFitFxn_PYTHIA_bJetNeutrinoEnergy();
-
-
+  // load muptrel fix fxns
+  loadFitFxn_muptrel_C1J1();
+  loadFitFxn_muptrel_C1J2();
+  loadFitFxn_muptrel_C1J3();
+  loadFitFxn_muptrel_C1J4();
+  loadFitFxn_muptrel_C1J5();
+  loadFitFxn_muptrel_C1J6();
+  loadFitFxn_muptrel_C2J1();
+  loadFitFxn_muptrel_C2J2();
+  loadFitFxn_muptrel_C2J3();
+  loadFitFxn_muptrel_C2J4();
+  loadFitFxn_muptrel_C2J5();
+  loadFitFxn_muptrel_C2J6();  
 
   TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
   TH2D *neutrino_energy_fraction_map;
@@ -968,8 +1007,21 @@ void PYTHIA_scan(int group = 1){
       if(doJetPtReweight){
 	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * fitFxn_jetPt->Eval(recoJetPt_i);
       }
+      
+      double w_muptrel = w_jet;
+      if(doMuPtRelReweight){
+	if(hasInclRecoMuonTag && evtTriggerDecision && jetPtIndex > 0){
 
+	  if(jetPtIndex == 1) w_muptrel = w_jet * fitFxn_muptrel_C1J1->Eval(muPtRel_i);
+	  else if(jetPtIndex == 2) w_muptrel = w_jet * fitFxn_muptrel_C1J2->Eval(muPtRel_i);
+	  else if(jetPtIndex == 3) w_muptrel = w_jet * fitFxn_muptrel_C1J3->Eval(muPtRel_i);
+	  else if(jetPtIndex == 4) w_muptrel = w_jet * fitFxn_muptrel_C1J4->Eval(muPtRel_i);
+	  else if(jetPtIndex == 5) w_muptrel = w_jet * fitFxn_muptrel_C1J5->Eval(muPtRel_i);
+	  else if(jetPtIndex == 6) w_muptrel = w_jet * fitFxn_muptrel_C1J6->Eval(muPtRel_i);
+	  else{};
 
+	}
+      }
 
       // Fill the jet histograms
       evtHasGoodJet = true;
@@ -1041,7 +1093,7 @@ void PYTHIA_scan(int group = 1){
 
 	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
-	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPtRel_i,jetFlavorInt,w_jet);
+	    h_muptrel_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPtRel_i,jetFlavorInt,w_muptrel);
 	    h_mupt_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPt_i,jetFlavorInt,w_jet);
 	    h_mueta_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muEta_i,jetFlavorInt,w_jet);
 	    h_muphi_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPhi_i,jetFlavorInt,w_jet);
