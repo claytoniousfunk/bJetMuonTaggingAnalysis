@@ -1061,6 +1061,7 @@ void PYTHIA_scan(int group = 1){
 
       if(hasMatchedGenMuonTag && hasGenJetMatch){
 	h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
 	if(jetPtIndex > 0){
 	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[jetPtIndex]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
 	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[jetPtIndex]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
