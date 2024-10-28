@@ -205,6 +205,7 @@ TH2D *h_genJetPt_pthat;
 // ---------------------------- Analysis histograms ---------------------------
 TH2D *h_recoGenDr_flavor[NJetPtIndices];
 TH2D *h_recoGenDpt_flavor[NJetPtIndices];
+TH2D *h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[NJetPtIndices];
 
 
 
@@ -362,7 +363,8 @@ void PYTHIA_scan(int group = 1){
       h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_J%i",j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
       h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_J%i",j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, trigger ON, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
       h_recoGenDr_flavor[j] = new TH2D(Form("h_recoGenDr_J%i",j),Form("JetFlavorID vs #Delta r(recoJet,genJet), p_{T}^{jet} %3.0f - %3.0f ",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1,27,-5,22); 
-      h_recoGenDpt_flavor[j] = new TH2D(Form("h_recoGenDpt_J%i",j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,5,27,-5,22); 
+      h_recoGenDpt_flavor[j] = new TH2D(Form("h_recoGenDpt_J%i",j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,5,27,-5,22);
+      h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[j] = new TH2D(Form("h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon_J%i",j),Form("muon pTrel (genJet,genMuon) vs. muon pTrel(recoJet,matchedRecoMuon), p_{T}^{jet} %3.0f - %3.0f", p_{T}^{jet} %3.0f - %3.0f,jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NMuRelPtBins,muRelPtMin,muRelPtMax);
     }
     else {
       h_muptrel_inclRecoMuonTag_triggerOn_flavor[j] = new TH2D(Form("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J%i",j),Form("JetFlavorID vs. p_{T}^{rel}, p_{T}^{jet} %3.0f - %3.0f", jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -376,7 +378,8 @@ void PYTHIA_scan(int group = 1){
       h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_J%i",j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
       h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_J%i",j),Form("incl. reco #phi^{jet} vs. incl. reco #eta^{jet}, tagged with matched reco muon, trigger ON, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
       h_recoGenDr_flavor[j] = new TH2D(Form("h_recoGenDr_J%i",j),Form("JetFlavorID vs #Delta r(recoJet,genJet), p_{T}^{jet} %3.0f - %3.0f ",jetPtEdges[j-1],jetPtEdges[j]),100,0,1,27,-5,22); 
-      h_recoGenDpt_flavor[j] = new TH2D(Form("h_recoGenDpt_J%i",j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,5,27,-5,22); 
+      h_recoGenDpt_flavor[j] = new TH2D(Form("h_recoGenDpt_J%i",j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,5,27,-5,22);
+      h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[j] = new TH2D(Form("h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon_J%i",j),Form("muon pTrel (genJet,genMuon) vs. muon pTrel(recoJet,matchedRecoMuon), p_{T}^{jet} %3.0f - %3.0f", p_{T}^{jet} %3.0f - %3.0f,jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NMuRelPtBins,muRelPtMin,muRelPtMax);
       }
 
     h_muptrel_inclRecoMuonTag_triggerOn_flavor[j]->Sumw2();
@@ -391,6 +394,7 @@ void PYTHIA_scan(int group = 1){
     h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[j]->Sumw2();
     h_recoGenDr_flavor[j]->Sumw2();
     h_recoGenDpt_flavor[j]->Sumw2();
+    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[j]->Sumw2();
     
     if(j==0){
       h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[j] = new TH2D(Form("h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor_J%i",j),Form("JetFlavorID vs. p_{T}^{rel} (w.r.t. genJet), p_{T}^{jet} %3.0f - %3.0f", jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -671,6 +675,13 @@ void PYTHIA_scan(int group = 1){
       double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
       double jetTrkMax_i = em->jetTrkMax[i];
       double nuPtShift_i = 0.0;
+
+      double matchedGenJetPt_i = -999.0;
+      double matchedGenJetEta_i = -999.0;
+      double matchedGenJetPhi_i = -999.0;
+
+      double recoJetRecoMuonPtRel_i = -999.0;
+      double genJetGenMuonPtRel_i = -999.0;
       
       double w_jetPt = 1.0;
       
@@ -769,7 +780,10 @@ void PYTHIA_scan(int group = 1){
 			
 	if(dR_j < dR_recoGen_min){
 				
-	  hasGenJetMatch = true;		
+	  hasGenJetMatch = true;
+	  matchedGenJetPt_i = genJetPt_j;
+	  matchedGenJetEta_i = genJetEta_j;
+	  matchedGenJetPhi_i = genJetPhi_j;
 	  dR_recoGen_min = dR_j;
 	  dPt_recoGen_min = dPt_j;
 
@@ -858,6 +872,8 @@ void PYTHIA_scan(int group = 1){
 	  double genMuonEta_matched_j = -1.0;
 	  double genMuonPhi_j = em->gpphip->at(j);
 	  double genMuonPhi_matched_j = -1.0;
+	  double genMuonPtRel_j = -999.0;
+	  double genMuonPtRel_matched_j = -999.0;
 
 
 	  if(genMuonPt_j < muPtCut || genMuonPt_j > muPtMaxCut || fabs(genMuonEta_j) > 2.0) continue;                        
@@ -906,7 +922,15 @@ void PYTHIA_scan(int group = 1){
 				
 	    matchFlag[genMuIndex] = 1;
 	    hasInclGenMuonTag = true;
-	    if(isMatchedGenMuon) hasMatchedGenMuonTag = true;
+	    
+	    if(isMatchedGenMuon){
+	      hasMatchedGenMuonTag = true;
+	      if(hasGenJetMatch){
+		recoJetRecoMuonPtRel_i = getPtRel(genMuonPt_matched_j,genMuonEta_matched_j,genMuonPhi_matched_j,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
+		genJetGenMuonPtRel_i   = getPtRel(genMuonPt_j,genMuonEta_j,genMuonPhi_j,matchedGenJetPt_i,matchedGenJetEta_i,matchedGenJetPhi_i);
+	      }
+	    }
+	    
 
 	  } 
 
@@ -1031,6 +1055,13 @@ void PYTHIA_scan(int group = 1){
 	}
       }
 
+      if(hasMatchedGenMuonTag && hasGenJetMatch){
+	h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	if(jetPtIndex > 0){
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[jetPtIndex]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	}
+      }
+
       // Fill the jet histograms
       evtHasGoodJet = true;
       h_inclRecoJetPt_flavor->Fill(recoJetPt_i,jetFlavorInt,w_jet);
@@ -1129,7 +1160,9 @@ void PYTHIA_scan(int group = 1){
 	    h_inclRecoJetPt_inclRecoJetEta_matchedRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetEta_i,w_jet);
 	    h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn->Fill(recoJetPt_i,recoJetPhi_i,w_jet);
 	    h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
-	    if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
+	    if(jetPtIndex > 0) {
+	      h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
+	    }
 
 	  }
 
@@ -1528,7 +1561,8 @@ void PYTHIA_scan(int group = 1){
 
     h_recoGenDr_flavor[j]->Write();
     h_recoGenDpt_flavor[j]->Write();
-    
+
+    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[j]->Write();
   }
 
 
