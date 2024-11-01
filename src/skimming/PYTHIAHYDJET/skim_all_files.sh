@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-for i in {1..2923}
+for i in {1..1411}
 
 do
     
