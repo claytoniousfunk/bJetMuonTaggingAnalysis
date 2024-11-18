@@ -121,9 +121,9 @@ void pp_scan_trigger(int group = 1){
   h_mu7_jetpt_80 = new TH1D("h_mu7_jetpt_80","jet pT, mu7 events", NPtBins, ptMin, ptMax);
   h_mu12_jetpt_80 = new TH1D("h_mu12_jetpt_80","jet pT, mu12 events", NPtBins, ptMin, ptMax);
 
-  h_mu5_muptrel = new TH1D("h_mu5_muptrel", "muon pTrel, mu5 events", NMuPtRelBins, muPtRelMin, muPtRelMax);
-  h_mu7_muptrel = new TH1D("h_mu7_muptrel", "muon pTrel, mu7 events", NMuPtRelBins, muPtRelMin, muPtRelMax);
-  h_mu12_muptrel = new TH1D("h_mu12_muptrel", "muon pTrel, mu12 events", NMuPtRelBins, muPtRelMin, muPtRelMax);
+  h_mu5_muptrel = new TH1D("h_mu5_muptrel", "muon pTrel, mu5 events", NMuRelPtBins, muRelPtMin, muRelPtMax);
+  h_mu7_muptrel = new TH1D("h_mu7_muptrel", "muon pTrel, mu7 events", NMuRelPtBins, muRelPtMin, muRelPtMax);
+  h_mu12_muptrel = new TH1D("h_mu12_muptrel", "muon pTrel, mu12 events", NMuRelPtBins, muRelPtMin, muRelPtMax);
 
   // Sumw2 commands
   h_mu5->Sumw2();
