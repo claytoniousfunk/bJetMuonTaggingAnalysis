@@ -100,7 +100,7 @@ void PbPb_scan_trigger(int group = 1){
   readConfig();
   // define histograms
 
-    h_mu5 = new TH1D("h_mu5","mu5 trig",2,0,2);
+  h_mu5 = new TH1D("h_mu5","mu5 trig",2,0,2);
   h_mu7 = new TH1D("h_mu7","mu7 trig",2,0,2);
   h_mu12 = new TH1D("h_mu12","mu12 trig",2,0,2);
   
@@ -415,7 +415,7 @@ void PbPb_scan_trigger(int group = 1){
 	// skip if muon has already been matched to a jet in this event
 	if(matchFlagR[m] == 1) continue;
 	// muon kinematic cuts
-	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
+	if(muPt_m < 7. || muPt_m > 1000. || fabs(muEta_m) > 2.0) continue;
 	// muon quality cuts
 	// // ------ tight muon ID -----
 	// if(!isQualityMuon_tight(em->muChi2NDF->at(m),
