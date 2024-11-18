@@ -87,7 +87,7 @@ void PbPb_scan_trigger(int group = 1){
   // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins/PbPb_MinBias_scan_output_%i.root",group);
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
   TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_triggerScan/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
