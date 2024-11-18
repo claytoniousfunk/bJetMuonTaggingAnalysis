@@ -74,7 +74,7 @@ TH1D *h_mu5, *h_mu7, *h_mu12;
 TH1D *h_mu5_prescales, *h_mu7_prescales, *h_mu12_prescales;
 TH1D *h_mu5_mupt_7to9, *h_mu7_mupt_9to14, *h_mu12_mupt_14;
 TH1D *h_mu5_jetpt_80, *h_mu7_jetpt_80, *h_mu12_jetpt_80;
-TH1D *h_mu5_muptrel, *h_mu7_mutprel, *h_mu12_muptrel;
+TH1D *h_mu5_muptrel, *h_mu7_muptrel, *h_mu12_muptrel;
 
 
 ///////////////////////  start the program
@@ -278,7 +278,7 @@ void pp_scan_trigger(int group = 1){
 
       if(muPt_m > 7. && muPt_m < 9. && triggerDecision_mu5==1) h_mu5_mupt_7to9->Fill(muPt_m);
       if(muPt_m > 9. && muPt_m < 14. && triggerDecision_mu7==1) h_mu7_mupt_9to14->Fill(muPt_m);
-      if(muPt_m > 14. && triggerDecision_mu12==1) h_mu5_mupt_9to14->Fill(muPt_m);
+      if(muPt_m > 14. && triggerDecision_mu12==1) h_mu12_mupt_14->Fill(muPt_m);
 
       
      
