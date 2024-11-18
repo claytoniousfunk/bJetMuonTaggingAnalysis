@@ -117,9 +117,9 @@ void pp_scan_trigger(int group = 1){
   h_mu7_mupt_9to14 = new TH1D("h_mu7_mupt_9to14","muon pT, mu7 events", NMuPtBins, muPtMin, muPtMax);
   h_mu12_mupt_14 = new TH1D("h_mu12_mupt_14","muon pT, mu12 events", NMuPtBins, muPtMin, muPtMax);
 
-  h_mu5_jetpt_80 = new TH1D("h_mu5_jetpt_80","jet pT, mu5 events", NJetPtBins, jetPtMin, jetPtMax);
-  h_mu7_jetpt_80 = new TH1D("h_mu7_jetpt_80","jet pT, mu7 events", NJetPtBins, jetPtMin, jetPtMax);
-  h_mu12_jetpt_80 = new TH1D("h_mu12_jetpt_80","jet pT, mu12 events", NJetPtBins, jetPtMin, jetPtMax);
+  h_mu5_jetpt_80 = new TH1D("h_mu5_jetpt_80","jet pT, mu5 events", NPtBins, ptMin, ptMax);
+  h_mu7_jetpt_80 = new TH1D("h_mu7_jetpt_80","jet pT, mu7 events", NPtBins, ptMin, ptMax);
+  h_mu12_jetpt_80 = new TH1D("h_mu12_jetpt_80","jet pT, mu12 events", NPtBins, ptMin, ptMax);
 
   // Sumw2 commands
   h_mu5->Sumw2();
@@ -269,7 +269,7 @@ void pp_scan_trigger(int group = 1){
 
 
       if(muPt_m > 7. && muPt_m < 9. && triggerDecision_mu5==1) h_mu5_mupt_7to9->Fill(muPt_m);
-      if(muPt_m > 9. && muPt_m < 14. && triggerDecision_mu7==1) h_mu5_mupt_9to14->Fill(muPt_m);
+      if(muPt_m > 9. && muPt_m < 14. && triggerDecision_mu7==1) h_mu7_mupt_9to14->Fill(muPt_m);
       if(muPt_m > 14. && triggerDecision_mu12==1) h_mu5_mupt_9to14->Fill(muPt_m);
 
       
