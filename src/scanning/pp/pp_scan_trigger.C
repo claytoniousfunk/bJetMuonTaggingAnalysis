@@ -105,9 +105,9 @@ void pp_scan_trigger(int group = 1){
   // >>>>>>>>>>>>>>>> define histograms
   // ---------------------- event histograms --------------------------------
 
-  h_mu5 = new TH1D("h_mu5","mu5 trig",100,0,100);
-  h_mu7 = new TH1D("h_mu7","mu7 trig",100,0,100);
-  h_mu12 = new TH1D("h_mu12","mu12 trig",100,0,100);
+  h_mu5 = new TH1D("h_mu5","mu5 trig",2,0,2);
+  h_mu7 = new TH1D("h_mu7","mu7 trig",2,0,2);
+  h_mu12 = new TH1D("h_mu12","mu12 trig",2,0,2);
   
   h_mu5_prescales = new TH1D("h_mu5_prescales","mu5 prescales",100,0,100);
   h_mu7_prescales = new TH1D("h_mu7_prescales","mu7 prescales",100,0,100);
