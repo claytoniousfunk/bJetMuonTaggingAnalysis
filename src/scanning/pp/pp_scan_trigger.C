@@ -121,6 +121,10 @@ void pp_scan_trigger(int group = 1){
   h_mu7_jetpt_80 = new TH1D("h_mu7_jetpt_80","jet pT, mu7 events", NPtBins, ptMin, ptMax);
   h_mu12_jetpt_80 = new TH1D("h_mu12_jetpt_80","jet pT, mu12 events", NPtBins, ptMin, ptMax);
 
+  h_mu5_muptrel = new TH1D("h_mu5_muptrel", "muon pTrel, mu5 events", NMuPtRelBins, muPtRelMin, muPtRelMax);
+  h_mu7_muptrel = new TH1D("h_mu7_muptrel", "muon pTrel, mu7 events", NMuPtRelBins, muPtRelMin, muPtRelMax);
+  h_mu12_muptrel = new TH1D("h_mu12_muptrel", "muon pTrel, mu12 events", NMuPtRelBins, muPtRelMin, muPtRelMax);
+
   // Sumw2 commands
   h_mu5->Sumw2();
   h_mu7->Sumw2();
@@ -137,6 +141,10 @@ void pp_scan_trigger(int group = 1){
   h_mu5_jetpt_80->Sumw2();
   h_mu7_jetpt_80->Sumw2();
   h_mu12_jetpt_80->Sumw2();
+
+  h_mu5_muptrel->Sumw2();
+  h_mu7_muptrel->Sumw2();
+  h_mu12_muptrel->Sumw2();
 
 
 
@@ -420,7 +428,10 @@ void pp_scan_trigger(int group = 1){
   h_mu7_jetpt_80->Write();
   h_mu12_jetpt_80->Write(); 
 
-
+  h_mu5_muptrel->Write();
+  h_mu7_muptrel->Write();
+  h_mu12_muptrel->Write();
+  
   wf->Close();
   return;
   // END WRITE
