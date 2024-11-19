@@ -461,21 +461,21 @@ void PbPb_scan_trigger(int group = 1){
 
       // Fill the jet/event histograms
       // Fill the jet/event histograms
-      if(triggerDecision_mu5==1){
+      if(triggerDecision_mu5==1 && x>80.){
 	h_mu5_jetpt_80->Fill(x);
 	if(hasInclRecoMuonTag && muPt > 7. && muPt < 9.){
 	  h_mu5_muptrel->Fill(muPtRel);
 	}
       }
 
-      if(triggerDecision_mu7==1){
+      if(triggerDecision_mu7==1 && x>80.){
 	h_mu7_jetpt_80->Fill(x);
 	if(hasInclRecoMuonTag && muPt > 9. && muPt < 14.){
 	  h_mu7_muptrel->Fill(muPtRel);
 	}
       }
 
-      if(triggerDecision_mu12==1){
+      if(triggerDecision_mu12==1 && x>80.){
 	h_mu12_jetpt_80->Fill(x);
 	if(hasInclRecoMuonTag && muPt > 14.){
 	  h_mu12_muptrel->Fill(muPtRel);
