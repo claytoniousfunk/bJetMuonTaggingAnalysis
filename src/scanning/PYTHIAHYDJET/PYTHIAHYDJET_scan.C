@@ -201,8 +201,8 @@ TH2D *h_matchedPartonFlavor_bHadronNumber;
 void PYTHIAHYDJET_scan(int group = 1){
 
   
-  //TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  //TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu7_hybridSoft_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JERsmear/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -219,8 +219,8 @@ void PYTHIAHYDJET_scan(int group = 1){
   // TString input = Form("/eos/user/c/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch1/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_batch1_scan_mu12_tight_pTmu-14_pThat-50_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins/PYTHIAHYDJET_scan_output_%i.root",group);
 
-  TString input = Form("/eos/user/c/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch13/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_batch13_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins/PYTHIAHYDJET_scan_output_%i.root",group);
+  // TString input = Form("/eos/user/c/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch13/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_batch13_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins/PYTHIAHYDJET_scan_output_%i.root",group);
 
   
   
@@ -659,11 +659,11 @@ void PYTHIAHYDJET_scan(int group = 1){
     // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
 
-    int triggerDecision = em->HLT_HIL3Mu12_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu12_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
       evtTriggerDecision = true;
@@ -962,23 +962,23 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    double recoMuonEta_l = em->muEta->at(l);
 	    double recoMuonPhi_l = em->muPhi->at(l);
 
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				    em->muInnerD0->at(l),
-				    em->muInnerDz->at(l),
-				    em->muMuonHits->at(l),
-				    em->muPixelHits->at(l),
-				    em->muIsGlobal->at(l),
-				    em->muIsPF->at(l),
-				    em->muStations->at(l),
-				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+	    // if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+	    // 			    em->muInnerD0->at(l),
+	    // 			    em->muInnerDz->at(l),
+	    // 			    em->muMuonHits->at(l),
+	    // 			    em->muPixelHits->at(l),
+	    // 			    em->muIsGlobal->at(l),
+	    // 			    em->muIsPF->at(l),
+	    // 			    em->muStations->at(l),
+	    // 			    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
 
-	    // if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
-	    // 				 em->muInnerD0->at(l),
-	    // 				 em->muInnerDz->at(l),
-	    // 				 em->muPixelHits->at(l),
-	    // 				 em->muIsTracker->at(l),
-	    // 				 em->muIsGlobal->at(l),
-	    // 				 em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
+					 em->muInnerD0->at(l),
+					 em->muInnerDz->at(l),
+					 em->muPixelHits->at(l),
+					 em->muIsTracker->at(l),
+					 em->muIsGlobal->at(l),
+					 em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 
 
 
@@ -1017,23 +1017,23 @@ void PYTHIAHYDJET_scan(int group = 1){
 	// muon kinematic cuts
 	if(recoMuonPt_m < muPtCut || recoMuonPt_m > muPtMaxCut || fabs(recoMuonEta_m) > 2.0) continue;
 	// muon quality cuts
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	// if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+	// 			em->muInnerD0->at(m),
+	// 			em->muInnerDz->at(m),
+	// 			em->muMuonHits->at(m),
+	// 			em->muPixelHits->at(m),
+	// 			em->muIsGlobal->at(m),
+	// 			em->muIsPF->at(m),
+	// 			em->muStations->at(m),
+	// 			em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
 
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 			     em->muInnerD0->at(m),
-	// 			     em->muInnerDz->at(m),
-	// 			     em->muPixelHits->at(m),
-	// 			     em->muIsTracker->at(m),
-	// 			     em->muIsGlobal->at(m),
-	// 			     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				     em->muInnerD0->at(m),
+				     em->muInnerDz->at(m),
+				     em->muPixelHits->at(m),
+				     em->muIsTracker->at(m),
+				     em->muIsGlobal->at(m),
+				     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
 			
 
@@ -1435,23 +1435,23 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  for(int l = 0; l < em->nMu; l++){
 
 
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				    em->muInnerD0->at(l),
-				    em->muInnerDz->at(l),
-				    em->muMuonHits->at(l),
-				    em->muPixelHits->at(l),
-				    em->muIsGlobal->at(l),
-				    em->muIsPF->at(l),
-				    em->muStations->at(l),
-				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+	    // if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+	    // 			    em->muInnerD0->at(l),
+	    // 			    em->muInnerDz->at(l),
+	    // 			    em->muMuonHits->at(l),
+	    // 			    em->muPixelHits->at(l),
+	    // 			    em->muIsGlobal->at(l),
+	    // 			    em->muIsPF->at(l),
+	    // 			    em->muStations->at(l),
+	    // 			    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
 
-	    // if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
-	    // 				 em->muInnerD0->at(l),
-	    // 				 em->muInnerDz->at(l),
-	    // 				 em->muPixelHits->at(l),
-	    // 				 em->muIsTracker->at(l),
-	    // 				 em->muIsGlobal->at(l),
-	    // 				 em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
+					 em->muInnerD0->at(l),
+					 em->muInnerDz->at(l),
+					 em->muPixelHits->at(l),
+					 em->muIsTracker->at(l),
+					 em->muIsGlobal->at(l),
+					 em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 	    
 	    //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
@@ -1490,23 +1490,23 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 	if(matchFlagR[m] == 1) continue;
 			 
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	// if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+	// 			em->muInnerD0->at(m),
+	// 			em->muInnerDz->at(m),
+	// 			em->muMuonHits->at(m),
+	// 			em->muPixelHits->at(m),
+	// 			em->muIsGlobal->at(m),
+	// 			em->muIsPF->at(m),
+	// 			em->muStations->at(m),
+	// 			em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
 
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 			     em->muInnerD0->at(m),
-	// 			     em->muInnerDz->at(m),
-	// 			     em->muPixelHits->at(m),
-	// 			     em->muIsTracker->at(m),
-	// 			     em->muIsGlobal->at(m),
-	// 			     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				     em->muInnerD0->at(m),
+				     em->muInnerDz->at(m),
+				     em->muPixelHits->at(m),
+				     em->muIsTracker->at(m),
+				     em->muIsGlobal->at(m),
+				     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
 	if(isWDecayMuon(em->muPt->at(m),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 	
