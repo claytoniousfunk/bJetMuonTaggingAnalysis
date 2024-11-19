@@ -88,7 +88,7 @@ void PbPb_scan_trigger(int group = 1){
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins/PbPb_MinBias_scan_output_%i.root",group);
 
   TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_triggerScan_tight/PbPb_SingleMuon_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_triggerScan_hybridSoft/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -324,23 +324,23 @@ void PbPb_scan_trigger(int group = 1){
       // muon kinematic cuts
       if(muPt_m < 7. || muPt_m > 1000. || fabs(muEta_m) > 2.0) continue;
       // muon quality cuts
-      if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-			      em->muInnerD0->at(m),
-			      em->muInnerDz->at(m),
-			      em->muMuonHits->at(m),
-			      em->muPixelHits->at(m),
-			      em->muIsGlobal->at(m),
-			      em->muIsPF->at(m),
-			      em->muStations->at(m),
-			      em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+      // if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+      // 			      em->muInnerD0->at(m),
+      // 			      em->muInnerDz->at(m),
+      // 			      em->muMuonHits->at(m),
+      // 			      em->muPixelHits->at(m),
+      // 			      em->muIsGlobal->at(m),
+      // 			      em->muIsPF->at(m),
+      // 			      em->muStations->at(m),
+      // 			      em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
 
-      // if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-      // 				   em->muInnerD0->at(m),
-      // 				   em->muInnerDz->at(m),
-      // 				   em->muPixelHits->at(m),
-      // 				   em->muIsTracker->at(m),
-      // 				   em->muIsGlobal->at(m),
-      // 				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				   em->muInnerD0->at(m),
+				   em->muInnerDz->at(m),
+				   em->muPixelHits->at(m),
+				   em->muIsTracker->at(m),
+				   em->muIsGlobal->at(m),
+				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
       if(muPt_m > 7. && muPt_m < 9. && triggerDecision_mu5==1) h_mu5_mupt_7to9->Fill(muPt_m);
       if(muPt_m > 9. && muPt_m < 14. && triggerDecision_mu7==1) h_mu7_mupt_9to14->Fill(muPt_m);
@@ -418,23 +418,23 @@ void PbPb_scan_trigger(int group = 1){
 	if(muPt_m < 7. || muPt_m > 1000. || fabs(muEta_m) > 2.0) continue;
 	// muon quality cuts
 	// // ------ tight muon ID -----
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	// if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+	// 			em->muInnerD0->at(m),
+	// 			em->muInnerDz->at(m),
+	// 			em->muMuonHits->at(m),
+	// 			em->muPixelHits->at(m),
+	// 			em->muIsGlobal->at(m),
+	// 			em->muIsPF->at(m),
+	// 			em->muStations->at(m),
+	// 			em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 	// ------ hybrid-soft muon ID ----
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 			    em->muInnerD0->at(m),
-	// 			    em->muInnerDz->at(m),
-	// 			    em->muPixelHits->at(m),
-	// 			    em->muIsTracker->at(m),
-	// 			    em->muIsGlobal->at(m),
-	// 			    em->muTrkLayers->at(m))) continue; 
+	if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				    em->muInnerD0->at(m),
+				    em->muInnerDz->at(m),
+				    em->muPixelHits->at(m),
+				    em->muIsTracker->at(m),
+				    em->muIsGlobal->at(m),
+				    em->muTrkLayers->at(m))) continue; 
 			
 
 
