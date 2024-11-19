@@ -65,9 +65,9 @@
 // print introduction
 #include "../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-//#include "../../../headers/config/config_PbPb_SingleMuon.h"
+#include "../../../headers/config/config_PbPb_SingleMuon.h"
 //#include "../../../headers/config/config_PbPb_MinBias.h"
-#include "../../../headers/config/config_PbPb_diJet.h"
+//#include "../../../headers/config/config_PbPb_diJet.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 // initialize histograms
@@ -120,14 +120,14 @@ TH2D *h_muptrel_jetpt[NCentralityIndices];
 ///////////////////////  start the program
 void PbPb_scan(int group = 1){
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skims_PbPb_HardProbes/PbPb_HardProbes_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins/PbPb_HardProbes_scan_output_%i.root",group);
+  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skims_PbPb_HardProbes/PbPb_HardProbes_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins/PbPb_HardProbes_scan_output_%i.root",group);
 
   // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins/PbPb_MinBias_scan_output_%i.root",group);
 
-  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins/PbPb_SingleMuon_scan_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu7_hybridSoft_pTmu-9to14_evtFilterFix_hiHFcut_newJetBins/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -386,18 +386,18 @@ void PbPb_scan(int group = 1){
     
     // ******************************************
     // -------- mu7 configuration ---------------
-    // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
-    //  evtTriggerDecision = true;
-    //  eventCounter++;
-    // }
+    if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
+     evtTriggerDecision = true;
+     eventCounter++;
+    }
     // ******************************************
     
     // ******************************************
     // -------- mu12 configuration ---------------
-    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
-      evtTriggerDecision = true;
-      eventCounter++;
-    }
+    // if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+    //   evtTriggerDecision = true;
+    //   eventCounter++;
+    // }
     // ******************************************
 
 
@@ -466,23 +466,23 @@ void PbPb_scan(int group = 1){
       // muon kinematic cuts
       if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
       // muon quality cuts
-      if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-			      em->muInnerD0->at(m),
-			      em->muInnerDz->at(m),
-			      em->muMuonHits->at(m),
-			      em->muPixelHits->at(m),
-			      em->muIsGlobal->at(m),
-			      em->muIsPF->at(m),
-			      em->muStations->at(m),
-			      em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+      // if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+      // 			      em->muInnerD0->at(m),
+      // 			      em->muInnerDz->at(m),
+      // 			      em->muMuonHits->at(m),
+      // 			      em->muPixelHits->at(m),
+      // 			      em->muIsGlobal->at(m),
+      // 			      em->muIsPF->at(m),
+      // 			      em->muStations->at(m),
+      // 			      em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
 
-      // if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-      // 				   em->muInnerD0->at(m),
-      // 				   em->muInnerDz->at(m),
-      // 				   em->muPixelHits->at(m),
-      // 				   em->muIsTracker->at(m),
-      // 				   em->muIsGlobal->at(m),
-      // 				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				   em->muInnerD0->at(m),
+				   em->muInnerDz->at(m),
+				   em->muPixelHits->at(m),
+				   em->muIsTracker->at(m),
+				   em->muIsGlobal->at(m),
+				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
       h_inclMuPt->Fill(muPt_m,w);
 
@@ -557,23 +557,23 @@ void PbPb_scan(int group = 1){
 	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
 	// muon quality cuts
 	// ------ tight muon ID -----
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	// if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+	// 			em->muInnerD0->at(m),
+	// 			em->muInnerDz->at(m),
+	// 			em->muMuonHits->at(m),
+	// 			em->muPixelHits->at(m),
+	// 			em->muIsGlobal->at(m),
+	// 			em->muIsPF->at(m),
+	// 			em->muStations->at(m),
+	// 			em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 	// ------ hybrid-soft muon ID ----
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 			    em->muInnerD0->at(m),
-	// 			    em->muInnerDz->at(m),
-	// 			    em->muPixelHits->at(m),
-	// 			    em->muIsTracker->at(m),
-	// 			    em->muIsGlobal->at(m),
-	// 			    em->muTrkLayers->at(m))) continue; 
+	if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				    em->muInnerD0->at(m),
+				    em->muInnerDz->at(m),
+				    em->muPixelHits->at(m),
+				    em->muIsTracker->at(m),
+				    em->muIsGlobal->at(m),
+				    em->muTrkLayers->at(m))) continue; 
 			
 
 
