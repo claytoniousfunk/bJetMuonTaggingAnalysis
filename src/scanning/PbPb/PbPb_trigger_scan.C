@@ -116,7 +116,7 @@ TH1D *muMuonHits_all[5];
 void PbPb_trigger_scan(int group = 1){
   
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
   TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_triggerEffScan_mu12_tight/PbPb_SingleMuon_scan_output_%i.root",group);
 
 
