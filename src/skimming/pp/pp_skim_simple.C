@@ -13,7 +13,8 @@ void pp_skim_simple(int group = 1){
   Int_t ifile = 0;
 
   //int endfile = 6033;
-  int endfile = 767;
+  //int endfile = 767;
+  int endfile = 242;  
 
   TFile *old_file;
   TString filename_string = "";
