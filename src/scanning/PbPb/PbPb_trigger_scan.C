@@ -64,7 +64,7 @@
 #include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
 //#include "../../../headers/config/config_PbPb_MinBias.h"
-#include "../../../headers/config/config_PbPb_DiJet.h"
+#include "../../../headers/config/config_PbPb_diJet.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 
