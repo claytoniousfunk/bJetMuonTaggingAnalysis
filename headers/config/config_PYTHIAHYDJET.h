@@ -18,7 +18,7 @@ bool doVzReweight = false;
 bool doJetPtReweight = false;
 // jet-based filters
 bool doGenJetPthatFilter = false;
-bool doLeadingXjetDumpFilter = false;
+bool doLeadingXjetDumpFilter = true;
 bool doXdumpReweight = false;
 bool doJetTrkMaxFilter = false;
 bool doRemoveHYDJETjet = false;
