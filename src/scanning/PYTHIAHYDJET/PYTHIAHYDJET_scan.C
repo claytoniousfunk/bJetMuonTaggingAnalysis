@@ -659,11 +659,11 @@ void PYTHIAHYDJET_scan(int group = 1){
     // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu12_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     if(triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
       evtTriggerDecision = true;
