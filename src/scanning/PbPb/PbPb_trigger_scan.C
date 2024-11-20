@@ -116,8 +116,8 @@ TH1D *muMuonHits_all[5];
 void PbPb_trigger_scan(int group = 1){
   
 
-  TString input = Form("../../../rootFiles/skimmingOutput/PbPb/output_MinBias/PbPb_MinBias_skim_output_%i.root",group);
-  TString output = Form("output_PbPb_MinBias_scan_mu7/PbPb_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_triggerEffScan_mu12_tight/PbPb_SingleMuon_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -368,7 +368,7 @@ void PbPb_trigger_scan(int group = 1){
   muMuonHits_all[4] = new TH1D("muMuonHits_all_C4","muMuonHits_all, cent. 50-90%; muMuonHits; Entries",30,0,30);	
 	
 	
-  double muonPtCutoff_qualityCuts = 7.0;
+  double muonPtCutoff_qualityCuts = 14.0;
   
   // printIntroduction_PYTHIAHYDJET_scan_V3p7();
   readConfig();
@@ -427,11 +427,11 @@ void PbPb_trigger_scan(int group = 1){
     // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
     // int triggerDecision_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
 
-    int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
-    int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
+    // int triggerDecision = em->HLT_HIL3Mu7_NHitQ10_v1;
+    // int triggerDecision_Prescl = em->HLT_HIL3Mu7_NHitQ10_v1_Prescl;
 
-    // int triggerDecision = em->HLT_HIL3Mu12_v1;
-    // int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+    int triggerDecision = em->HLT_HIL3Mu12_v1;
+    int triggerDecision_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
     double w = 1.0;
     double w_trig = 1.0 * triggerDecision_Prescl;
