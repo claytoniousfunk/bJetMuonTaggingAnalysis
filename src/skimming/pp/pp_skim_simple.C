@@ -63,10 +63,10 @@ void pp_skim_simple(int group = 1){
     old_evt_tree->SetBranchStatus("evt",1);
     old_evt_tree->SetBranchStatus("vz",1);
     // hlt
-    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_NHitQ10_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_v1",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu7_v1",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu12_v1",1);
-    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_NHitQ10_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_v1_Prescl",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu7_v1_Prescl",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu12_v1_Prescl",1);
     // jets
