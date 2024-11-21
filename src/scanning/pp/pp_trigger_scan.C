@@ -116,7 +116,7 @@ TH1D *muMuonHits_all[5];
 void pp_trigger_scan(int group = 1){
   
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1/pp_MinBias_skim_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1_alt/pp_MinBias_skim_output_%i.root",group);
   TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_ZeroBias_triggerEffScan_mu12_tight/pp_ZeroBias_scan_output_%i.root",group);
 
 
