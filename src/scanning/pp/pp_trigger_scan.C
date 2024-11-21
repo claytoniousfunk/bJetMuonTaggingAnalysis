@@ -63,7 +63,8 @@
 // print introduction
 #include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
-#include "../../../headers/config/config_pp_MB.h"
+//#include "../../../headers/config/config_pp_MB.h"
+#include "../../../headers/config/config_pp_SingleMuon.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 
