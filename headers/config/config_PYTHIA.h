@@ -20,7 +20,7 @@ bool doGenJetPthatFilter = false;
 bool doLeadingXjetDumpFilter = true;
 bool doXdumpReweight = false;
 bool doJetTrkMaxFilter = false;
-bool doRemoveHYDJETjet = false;
+bool doRemoveHYDJETjet = true;
 bool doEtaPhiMask = false;
 // jet-energy alterations
 bool doBJetEnergyShift = false;
