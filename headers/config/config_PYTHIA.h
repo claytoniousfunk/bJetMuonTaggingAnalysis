@@ -14,7 +14,7 @@ bool apply_JEU_shift_down = false;
 bool skipGenParticles = false;
 // reweighting functions
 bool doVzReweight = true;
-bool doJetPtReweight = true;
+bool doJetPtReweight = false;
 // jet-based filers
 bool doGenJetPthatFilter = false;
 bool doLeadingXjetDumpFilter = false;
