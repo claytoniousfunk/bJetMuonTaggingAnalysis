@@ -207,6 +207,7 @@ TH2D *h_recoGenDr_flavor[NJetPtIndices];
 TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 TH2D *h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[NJetPtIndices][7];
 TH2D *h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[NJetPtIndices][7];
+TH2D *h_muJetDr_flavor[NJetPtIndices];
 
 
 
@@ -381,6 +382,7 @@ void PYTHIA_scan(int group = 1){
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][4] = new TH2D(Form("h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon_sJets_J%i",j),Form("sJets, muon pTrel(recoJet,matchedRecoMuon) / muon pTrel (genJet,genMuon) vs. muon pTrel (genJet,genMuon), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,5,NMuRelPtBins,muRelPtMin,muRelPtMax);
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][5] = new TH2D(Form("h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon_gJets_J%i",j),Form("gJets, muon pTrel(recoJet,matchedRecoMuon) / muon pTrel (genJet,genMuon) vs. muon pTrel (genJet,genMuon), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,5,NMuRelPtBins,muRelPtMin,muRelPtMax);
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][6] = new TH2D(Form("h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon_xJets_J%i",j),Form("xJets, muon pTrel(recoJet,matchedRecoMuon) / muon pTrel (genJet,genMuon) vs. muon pTrel (genJet,genMuon), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,5,NMuRelPtBins,muRelPtMin,muRelPtMax);
+      h_muJetDr_flavor[j] = new TH2D(Form("h_muJetDr_flavor_J%i",j),Form("dR(muon,jet), %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1,27,-5,22);
 
     }
     else {
@@ -412,6 +414,7 @@ void PYTHIA_scan(int group = 1){
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][4] = new TH2D(Form("h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon_sJets_J%i",j),Form("sJets, muon pTrel(recoJet,matchedRecoMuon) / muon pTrel (genJet,genMuon) vs. muon pTrel (genJet,genMuon), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,5,NMuRelPtBins,muRelPtMin,muRelPtMax);
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][5] = new TH2D(Form("h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon_gJets_J%i",j),Form("gJets, muon pTrel(recoJet,matchedRecoMuon) / muon pTrel (genJet,genMuon) vs. muon pTrel (genJet,genMuon), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,5,NMuRelPtBins,muRelPtMin,muRelPtMax);
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][6] = new TH2D(Form("h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon_xJets_J%i",j),Form("xJets, muon pTrel(recoJet,matchedRecoMuon) / muon pTrel (genJet,genMuon) vs. muon pTrel (genJet,genMuon), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,5,NMuRelPtBins,muRelPtMin,muRelPtMax);
+      h_muJetDr_flavor[j] = new TH2D(Form("h_muJetDr_flavor_J%i",j),Form("dR(muon,jet), %3.0f < pTjet < %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,1,27,-5,22);
       
       }
 
@@ -431,6 +434,8 @@ void PYTHIA_scan(int group = 1){
       h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[j][k]->Sumw2();
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][k]->Sumw2();
     }
+    h_muJetDr_flavor[j]->Sumw2();
+
     
     if(j==0){
       h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[j] = new TH2D(Form("h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor_J%i",j),Form("JetFlavorID vs. p_{T}^{rel} (w.r.t. genJet), p_{T}^{jet} %3.0f - %3.0f", jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -765,8 +770,9 @@ void PYTHIA_scan(int group = 1){
       // in-jet muon variables
       double muPtRel_i = -1.0;
       double muPt_i = -1.0;
-      double muEta_i = -1.0;
-      double muPhi_i = -1.0;
+      double muEta_i = -99.0;
+      double muPhi_i = -99.0;
+      double muJetDr_i = -1.0;
 
       // in-jet neutrino variables
       double nuPt_i = 0.0;
@@ -800,6 +806,7 @@ void PYTHIA_scan(int group = 1){
 
       double dR_recoGen_min = 100.0;
       double dPt_recoGen_min = 100.0;
+      double dR_min;
 
       // look for a genJet match
 
@@ -1054,6 +1061,7 @@ void PYTHIA_scan(int group = 1){
 	  muPt_i = em->muPt->at(m);
 	  muEta_i = em->muEta->at(m);
 	  muPhi_i = em->muPhi->at(m);
+	  muJetDr_i = getDr(em->muEta->at(m),em->muPhi->at(m),recoJetEta_i,recoJetPhi_i);
 	  
 	  if(isMatchedRecoMuon) hasMatchedRecoMuonTag = true;
 
@@ -1219,6 +1227,7 @@ void PYTHIA_scan(int group = 1){
 	  h_mupt_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muPt_i,jetFlavorInt,w_jet);
 	  h_mueta_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muEta_i,jetFlavorInt,w_jet);
 	  h_muphi_inclRecoMuonTag_triggerOn_flavor[0]->Fill(muPhi_i,jetFlavorInt,w_jet);
+	  h_muJetDr_flavor[0]->Fill(muJetDr_i,jetFlavorInt,w_jet);
 
 	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 	  
@@ -1230,6 +1239,7 @@ void PYTHIA_scan(int group = 1){
 	    h_mupt_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPt_i,jetFlavorInt,w_jet);
 	    h_mueta_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muEta_i,jetFlavorInt,w_jet);
 	    h_muphi_inclRecoMuonTag_triggerOn_flavor[jetPtIndex]->Fill(muPhi_i,jetFlavorInt,w_jet);
+	    h_muJetDr_flavor[jetPtIndex]->Fill(muJetDr_i,jetFlavorInt,w_jet);
 	    
 	  }
 	    
@@ -1660,6 +1670,8 @@ void PYTHIA_scan(int group = 1){
       h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[j][k]->Write();
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][k]->Write();
     }
+
+    h_muJetDr_flavor[j]->Write();
     
   }
 
