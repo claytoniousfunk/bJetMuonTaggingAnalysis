@@ -105,7 +105,7 @@ TH1D *h_muptrel_inclRecoMuonTag_triggerOn[NJetPtIndices];
 TH1D *h_mupt_inclRecoMuonTag_triggerOn[NJetPtIndices];
 TH1D *h_mueta_inclRecoMuonTag_triggerOn[NJetPtIndices];
 TH1D *h_muphi_inclRecoMuonTag_triggerOn[NJetPtIndices];
-TH1D *h_muJetDr[NJetPtIndices]
+TH1D *h_muJetDr[NJetPtIndices];
 
 
 
