@@ -395,6 +395,7 @@ void pp_scan(int group = 1){
       double y = em->jeteta[i]; // recoJetEta
       double z = em->jetphi[i]; // recoJetPhi
       double jetTrkMax_i = em->jetTrkMax[i];
+      double muJetDr_i = -99.0;
 
       if(doJetTrkMaxFilter){
 	if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
@@ -408,8 +409,9 @@ void pp_scan(int group = 1){
      
       double muPtRel = -1.0;
       double muPt = -1.0;
-      double muEta = -1.0;
-      double muPhi = -1.0;
+      double muEta = -99.0;
+      double muPhi = -99.0;
+      double muDr = -99.0;
 
       bool hasInclRecoMuonTag = false;
 		
@@ -464,6 +466,7 @@ void pp_scan(int group = 1){
 	  muPt = muPt_m;
 	  muEta = muEta_m;
 	  muPhi = muPhi_m;
+	  muJetDr_i = getDr(muEta_m,muPhi_m,y,z);
 
 	}
 
@@ -505,6 +508,7 @@ void pp_scan(int group = 1){
 	  h_mupt_inclRecoMuonTag_triggerOn[0]->Fill(muPt,w_trig);
 	  h_mueta_inclRecoMuonTag_triggerOn[0]->Fill(muEta,w_trig);
 	  h_muphi_inclRecoMuonTag_triggerOn[0]->Fill(muPhi,w_trig);
+	  h_muJetDr[0]->Fill(muJetDr_i,w_trig);
 
 	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(y,z,w_trig);
 
@@ -516,6 +520,7 @@ void pp_scan(int group = 1){
 	    h_mupt_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPt,w_trig);
 	    h_mueta_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muEta,w_trig);
 	    h_muphi_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPhi,w_trig);
+	    h_muJetDr[jetPtIndex]->Fill(muJetDr_i,w_trig);
 	  }
 	} 
 
