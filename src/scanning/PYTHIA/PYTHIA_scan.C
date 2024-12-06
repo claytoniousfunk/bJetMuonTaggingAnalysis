@@ -1,7 +1,6 @@
 // general ROOT/C includes
 #include <iostream>
 #include "TFile.h"
-#include "TRandom.h"
 #include "TTree.h"
 #include "TH1F.h"
 #include "TH1D.h"
@@ -68,10 +67,13 @@
 #include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J4.h"
 #include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J5.h"
 #include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J6.h"
-
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_bJetNeutrinoEnergy;
+// dR fit parameters
+#include "../../../headers/fitParameters/muptrelFitParams/dRFitParams/dRFitParams.h"
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_bJetNeutrinoEnergy, *fitFxn_dR;
 TF1 *fitFxn_muptrel_C1J1, *fitFxn_muptrel_C1J2, *fitFxn_muptrel_C1J3, *fitFxn_muptrel_C1J4, *fitFxn_muptrel_C1J5, *fitFxn_muptrel_C1J6;
 TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_muptrel_C2J4, *fitFxn_muptrel_C2J5, *fitFxn_muptrel_C2J6;
+// dR fit function
+#include "../../../headers/fitFunctions/fitFxn_dR.h"
 // muptrel fit functions
 #include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J1.h"
 #include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J2.h"
@@ -216,7 +218,7 @@ void PYTHIA_scan(int group = 1){
 
   //TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_newJetBins_newHistograms/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_dRReweight_newJetBins_newHistograms/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -491,6 +493,7 @@ void PYTHIA_scan(int group = 1){
   loadFitFxn_jetPt();
   loadFitFxn_PYTHIA_JESb();
   loadFitFxn_PYTHIA_bJetNeutrinoEnergy();
+  loadFitFxn_dR();
   // load muptrel fix fxns
   loadFitFxn_muptrel_C1J1();
   loadFitFxn_muptrel_C1J2();
@@ -1074,6 +1077,10 @@ void PYTHIA_scan(int group = 1){
       double w_jet = w;
       if(doJetPtReweight){
 	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * fitFxn_jetPt->Eval(recoJetPt_i);
+      }
+
+      if(doDRReweight){
+	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * fitFxn_jetPt->Eval(recoJetPt_i) * fitFxn_dR->Eval(muJetDr_i);
       }
       
       double w_muptrel = w_jet;
