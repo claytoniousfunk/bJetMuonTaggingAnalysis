@@ -32,6 +32,6 @@ bool doJERCorrection = false;
 // muptrel reweight
 bool doMuPtRelReweight = false;
 // dR reweight
-bool doDRReweight = true;
+bool doDRReweight = false;
 
 
