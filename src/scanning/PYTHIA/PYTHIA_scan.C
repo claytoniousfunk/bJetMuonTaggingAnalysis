@@ -38,8 +38,8 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-//#include "../../../headers/AnalysisSetupV2p2.h"
-#include "../../../headers/AnalysisSetupV2p3.h"
+#include "../../../headers/AnalysisSetupV2p2.h"
+//#include "../../../headers/AnalysisSetupV2p3.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
@@ -70,11 +70,16 @@
 #include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C2J6.h"
 // dR fit parameters
 #include "../../../headers/fitParameters/dRFitParams/dRFitParams.h"
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_bJetNeutrinoEnergy, *fitFxn_dR;
+// hadronPtRel parameters
+#include "../../../headers/fitParameters/hadronPtRelFitParams.h"
+
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_bJetNeutrinoEnergy, *fitFxn_dR, *fitFxn_hadronPtRel;
 TF1 *fitFxn_muptrel_C1J1, *fitFxn_muptrel_C1J2, *fitFxn_muptrel_C1J3, *fitFxn_muptrel_C1J4, *fitFxn_muptrel_C1J5, *fitFxn_muptrel_C1J6;
 TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_muptrel_C2J4, *fitFxn_muptrel_C2J5, *fitFxn_muptrel_C2J6;
 // dR fit function
 #include "../../../headers/fitFunctions/fitFxn_dR.h"
+// hadronPtRel parameters
+#include "../../../headers/fitFunctions/fitFxn_hadronPtRel.h"
 // muptrel fit functions
 #include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J1.h"
 #include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J2.h"
@@ -219,7 +224,7 @@ void PYTHIA_scan(int group = 1){
 
   //TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_newJetBins_shiftedFirstJetBin/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_hadronPtRelReweight_newJetBins/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();
@@ -495,6 +500,7 @@ void PYTHIA_scan(int group = 1){
   loadFitFxn_PYTHIA_JESb();
   loadFitFxn_PYTHIA_bJetNeutrinoEnergy();
   loadFitFxn_dR();
+  loadFitFxn_hadronPtRel();
   // load muptrel fix fxns
   loadFitFxn_muptrel_C1J1();
   loadFitFxn_muptrel_C1J2();
@@ -1082,6 +1088,10 @@ void PYTHIA_scan(int group = 1){
 
       if(doDRReweight){
 	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * fitFxn_jetPt->Eval(recoJetPt_i) * fitFxn_dR->Eval(muJetDr_i);
+      }
+
+      if(doHadronPtRelReweight){
+	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * fitFxn_jetPt->Eval(recoJetPt_i) * fitFxn_hadronPtRel->Eval(muPtRel_i);
       }
       
       double w_muptrel = w_jet;
