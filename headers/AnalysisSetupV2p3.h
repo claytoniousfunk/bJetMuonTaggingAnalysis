@@ -82,7 +82,7 @@ const int NhiBinBins = 200;
 const int hiBinMin = 0;
 const int hiBinMax = 200;
 
-const double jetpt_J0_lo = 65.0;
+const double jetpt_J0_lo = 70.0;
 const double jetpt_J0_hi = 100.0;
 const double jetpt_J1_hi = 120.0;
 const double jetpt_J2_hi = 150.0;
