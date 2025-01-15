@@ -1255,9 +1255,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    h_mupt_muptrel[CentralityIndex][jetPtIndex]->Fill(muPt_i,muPtRel_i,w_jet);
 
 	    if(fabs(jetFlavorInt)!=4 && fabs(jetFlavorInt)!=5){
-	      h_templateWeight_lJets[0][0]->Fill(weight,1);
-	      h_templateWeight_lJets[0][jetPtIndex]->Fill(weight,1);
-	      h_templateWeight_lJets[CentralityIndex][jetPtIndex]->Fill(weight,1);
+	      h_templateWeight_lJets[0][0]->Fill(w_jet,1);
+	      h_templateWeight_lJets[0][jetPtIndex]->Fill(w_jet,1);
+	      h_templateWeight_lJets[CentralityIndex][jetPtIndex]->Fill(w_jet,1);
 	    }
 	    
 	  }
