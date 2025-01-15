@@ -30,8 +30,8 @@ int centEdges[NCentralityIndices] = {hiBin_C0_lo, hiBin_C0_hi, hiBin_C1_hi, hiBi
 
 // for PbPb Data scans
 const int NPhiBins = 100;
-double phiMin = -TMath::Pi();
-double phiMax = TMath::Pi();
+const double phiMin = -TMath::Pi();
+const double phiMax = TMath::Pi();
 
 const int NEtaBins = 160;
 const double etaMin = -1.6;
@@ -144,9 +144,15 @@ const int NinclParentMassBins = 500;
 const double parentMassMin = 0.0;
 const double parentMassMax = 50.0;
 
-
-
-
 const double massMuon = 0.1056; // mass of muon in GeV
+
+/// weight distributions
+const double weightInputLow = 0.0;
+const double weightInputHigh = 0.1;
+const int NWeightBins = 2000;
+
+
+
+
 
 
