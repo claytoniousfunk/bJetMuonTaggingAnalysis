@@ -190,6 +190,7 @@ TH2D *h_mupt_muptrel[NCentralityIndices][NJetPtIndices];
 TH2D *h_mupt_jetpt[NCentralityIndices];
 TH2D *h_muptrel_jetpt[NCentralityIndices];
 TH1D *h_templateWeight_lJets[NCentralityIndices][NJetPtIndices];
+TH2D *h_templateWeight_muptrel_lJets[NCentralityIndices][NJetPtIndices];
 TH2D *h_weight_pthat_xJets_C1J3;
 TH2D *h_weight_pthat_bJets_C1J3;
 TH1D *h_leadingGenJetPt[NCentralityIndices];
@@ -203,7 +204,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
   
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_fineCentBins_JEUShiftDown/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -497,6 +498,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	h_recoGenDr_flavor[i][j] = new TH2D(Form("h_recoGenDr_C%iJ%i",i,j),Form("JetFlavorID vs #Delta r(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f ",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1,27,-5,22); 
 	h_recoGenDpt_flavor[i][j] = new TH2D(Form("h_recoGenDpt_C%iJ%i",i,j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,5,27,-5,22);
 	h_templateWeight_lJets[i][j] = new TH1D(Form("h_templateWeight_lJets_C%iJ%i",i,j),Form("Template-entry weight, light jets, %i < hiBin < %i ,%3.0f < p_{T}^{jet} (GeV) < %3.0f",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NWeightBins,weightInputLow,weightInputHigh);
+	h_templateWeight_muptrel_lJets[i][j] = new TH2D(Form("h_templateWeight_pthat_lJets_C%iJ%i",i,j),Form("Template-entry weight v muuon ptrel, %i < hiBin < %i, %3.0f < p_{T}^{jet} < %3.0f",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NWeightBins,weightInputLow,weightInputHigh,NMuRelPtBins,muRelPtMin,muRelPtMax);
       }
       else if(i==0){
 	h_muptrel_inclRecoMuonTag_triggerOn_flavor[i][j] = new TH2D(Form("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C%iJ%i",i,j),Form("JetFlavorID vs. p_{T}^{rel}, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -513,6 +515,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	h_recoGenDr_flavor[i][j] = new TH2D(Form("h_recoGenDr_C%iJ%i",i,j),Form("JetFlavorID vs #Delta r(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f ",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),100,0,1,27,-5,22); 
 	h_recoGenDpt_flavor[i][j] = new TH2D(Form("h_recoGenDpt_C%iJ%i",i,j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),100,0,5,27,-5,22);
 	h_templateWeight_lJets[i][j] = new TH1D(Form("h_templateWeight_lJets_C%iJ%i",i,j),Form("Template-entry weight, light jets, %i < hiBin < %i ,%3.0f < p_{T}^{jet} (GeV) < %3.0f",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NWeightBins,weightInputLow,weightInputHigh);
+	h_templateWeight_muptrel_lJets[i][j] = new TH2D(Form("h_templateWeight_pthat_lJets_C%iJ%i",i,j),Form("Template-entry weight v muuon ptrel, %i < hiBin < %i, %3.0f < p_{T}^{jet} < %3.0f",centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NWeightBins,weightInputLow,weightInputHigh,NMuRelPtBins,muRelPtMin,muRelPtMax);
       }
       else if(j==0){
 	h_muptrel_inclRecoMuonTag_triggerOn_flavor[i][j] = new TH2D(Form("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C%iJ%i",i,j),Form("JetFlavorID vs. p_{T}^{rel}, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -529,6 +532,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	h_recoGenDr_flavor[i][j] = new TH2D(Form("h_recoGenDr_C%iJ%i",i,j),Form("JetFlavorID vs #Delta r(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f ",centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1,27,-5,22); 
 	h_recoGenDpt_flavor[i][j] = new TH2D(Form("h_recoGenDpt_C%iJ%i",i,j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f",centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,5,27,-5,22);
 	h_templateWeight_lJets[i][j] = new TH1D(Form("h_templateWeight_lJets_C%iJ%i",i,j),Form("Template-entry weight, light jets, %i < hiBin < %i ,%3.0f < p_{T}^{jet} (GeV) < %3.0f",centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NWeightBins,weightInputLow,weightInputHigh);
+	h_templateWeight_muptrel_lJets[i][j] = new TH2D(Form("h_templateWeight_pthat_lJets_C%iJ%i",i,j),Form("Template-entry weight v muuon ptrel, %i < hiBin < %i, %3.0f < p_{T}^{jet} < %3.0f",centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NWeightBins,weightInputLow,weightInputHigh,NMuRelPtBins,muRelPtMin,muRelPtMax);
       }
       else{
 	h_muptrel_inclRecoMuonTag_triggerOn_flavor[i][j] = new TH2D(Form("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C%iJ%i",i,j),Form("JetFlavorID vs. p_{T}^{rel}, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -545,6 +549,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	h_recoGenDr_flavor[i][j] = new TH2D(Form("h_recoGenDr_C%iJ%i",i,j),Form("JetFlavorID vs #Delta r(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f ",centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),100,0,1,27,-5,22); 
 	h_recoGenDpt_flavor[i][j] = new TH2D(Form("h_recoGenDpt_C%iJ%i",i,j),Form("JetFlavorID vs #Delta p_{T}/p_{T}(recoJet,genJet), hiBin %i - hiBin %i, p_{T}^{jet} %3.0f - %3.0f",centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),100,0,5,27,-5,22);
 	h_templateWeight_lJets[i][j] = new TH1D(Form("h_templateWeight_lJets_C%iJ%i",i,j),Form("Template-entry weight, light jets, %i < hiBin < %i ,%3.0f < p_{T}^{jet} (GeV) < %3.0f",centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NWeightBins,weightInputLow,weightInputHigh);
+	h_templateWeight_muptrel_lJets[i][j] = new TH2D(Form("h_templateWeight_pthat_lJets_C%iJ%i",i,j),Form("Template-entry weight v muuon ptrel, %i < hiBin < %i, %3.0f < p_{T}^{jet} < %3.0f",centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NWeightBins,weightInputLow,weightInputHigh,NMuRelPtBins,muRelPtMin,muRelPtMax);
       }
 
       h_muptrel_inclRecoMuonTag_triggerOn_flavor[i][j]->Sumw2();
@@ -561,6 +566,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       h_recoGenDr_flavor[i][j]->Sumw2();
       h_recoGenDpt_flavor[i][j]->Sumw2();
       h_templateWeight_lJets[i][j]->Sumw2();
+      h_templateWeight_muptrel_lJets[i][j]->Sumw2();
       
       if(i==0 && j==0){
 	h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[i][j] = new TH2D(Form("h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor_C%iJ%i",i,j),Form("JetFlavorID vs. p_{T}^{rel} (w.r.t. genJet), hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,27,-5,22);
@@ -1255,10 +1261,16 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    h_mupt_muptrel[CentralityIndex][0]->Fill(muPt_i,muPtRel_i,w_jet);
 	    h_mupt_muptrel[CentralityIndex][jetPtIndex]->Fill(muPt_i,muPtRel_i,w_jet);
 
-	    if(fabs(jetFlavorInt)!=4 && fabs(jetFlavorInt)!=5){
+	    // light-jets only
+	    if(fabs(jetFlavorInt)< 4 || jetFlavorInt == 21){
 	      h_templateWeight_lJets[0][0]->Fill(w_jet,1);
+	      h_templateWeight_lJets[CentralityIndex][0]->Fill(w_jet,1);
 	      h_templateWeight_lJets[0][jetPtIndex]->Fill(w_jet,1);
 	      h_templateWeight_lJets[CentralityIndex][jetPtIndex]->Fill(w_jet,1);
+	      h_templateWeight_muptrel_lJets[0][0]->Fill(w_jet,muPtRel_i,w_jet);
+	      h_templateWeight_muptrel_lJets[CentralityIndex][0]->Fill(w_jet,muPtRel_i,w_jet);
+	      h_templateWeight_muptrel_lJets[0][jetPtIndex]->Fill(w_jet,muPtRel_i,w_jet);
+	      h_templateWeight_muptrel_lJets[CentralityIndex][jetPtIndex]->Fill(w_jet,muPtRel_i,w_jet);
 	    }
 	    
 	  }
@@ -1747,6 +1759,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       h_recoGenDr_flavor[i][j]->Write();
       h_recoGenDpt_flavor[i][j]->Write();
       h_templateWeight_lJets[i][j]->Write();
+      h_templateWeight_muptrel_lJets[i][j]->Write();
     }
   }
 
