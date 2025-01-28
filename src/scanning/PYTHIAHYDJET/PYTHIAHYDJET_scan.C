@@ -53,7 +53,7 @@
 // hadronPtRel parameters
 #include "../../../headers/fitParameters/hadronPtRelFitParams.h"
 
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fixFxn_hadronPtRel;
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel;
 // hadronPtRel parameters
 #include "../../../headers/fitFunctions/fitFxn_hadronPtRel.h"
 // vz-fit function
