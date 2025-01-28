@@ -204,7 +204,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
   
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_fineCentBins_JEUShiftDown/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -1153,7 +1153,19 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 
       // skip enties with large weight
-      //if(w_jet > weightCut) continue;
+      if(w_jet > weightCut) {
+	if(jetPtIndex > 0 && hasInclRecoMuonTag && evtTriggerDecision){
+	  cout << "!!! anomalously high weight! !!! printing event info..." << endl;
+	  cout << "   weight = " << w_jet << endl;
+	  cout << "   pthat = " << em->pthat << endl;
+	  cout << "   jet flavor = " <<  jetFlavorInt << endl;
+	  cout << "   jet pt = " << recoJetPt_i << endl;
+	  cout << "   jet eta = " << recoJetEta_i << endl;
+	  cout << "   jet phi = " << recoJetPhi_i << endl;
+
+	}
+	continue;
+      }
 		
       if(hasInclGenMuonTag){
 
