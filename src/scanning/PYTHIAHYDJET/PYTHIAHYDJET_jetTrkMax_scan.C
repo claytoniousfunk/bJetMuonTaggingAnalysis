@@ -115,7 +115,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002_SKELETON/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -150,14 +150,40 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
       if(i==0 && j==0){
 	
+	h_jetTrkMaxPt[i][j] = new TH1D(Form("h_jetTrkMaxPt_C%iJ%i",i,j),Form("jetTrkMaxPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),500,0,500);
+	h_jetTrkMaxPtOverJetPt[i][j] = new TH1D(Form("h_jetTrkMaxPtOverJetPt_C%iJ%i",i,j),Form("jetTrkMaxPt / jetPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1);
+	h_jetTrkMaxEta[i][j] = new TH1D(Form("h_jetTrkMaxEta_C%iJ%i",i,j),Form("jetTrkMaxEta, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+	h_jetTrkMaxPhi[i][j] = new TH1D(Form("h_jetTrkMaxPhi_C%iJ%i",i,j),Form("jetTrkMaxPhi, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NPhiBins,phiMin,phiMax);
+	h_jetTrkMaxDR[i][j] = new TH1D(Form("h_jetTrkMaxDR_C%iJ%i",i,j),Form("jetTrkMaxDR, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NdRBins,dRBinMin,dRBinMax);
+
+	
       }
       else if(i==0){
+
+	h_jetTrkMaxPt[i][j] = new TH1D(Form("h_jetTrkMaxPt_C%iJ%i",i,j),Form("jetTrkMaxPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),500,0,500);
+	h_jetTrkMaxPtOverJetPt[i][j] = new TH1D(Form("h_jetTrkMaxPtOverJetPt_C%iJ%i",i,j),Form("jetTrkMaxPt / jetPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),100,0,1);
+	h_jetTrkMaxEta[i][j] = new TH1D(Form("h_jetTrkMaxEta_C%iJ%i",i,j),Form("jetTrkMaxEta, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+	h_jetTrkMaxPhi[i][j] = new TH1D(Form("h_jetTrkMaxPhi_C%iJ%i",i,j),Form("jetTrkMaxPhi, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NPhiBins,phiMin,phiMax);
+	h_jetTrkMaxDR[i][j] = new TH1D(Form("h_jetTrkMaxDR_C%iJ%i",i,j),Form("jetTrkMaxDR, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NdRBins,dRBinMin,dRBinMax);
+
 
       }
       else if(j==0){
 
+	h_jetTrkMaxPt[i][j] = new TH1D(Form("h_jetTrkMaxPt_C%iJ%i",i,j),Form("jetTrkMaxPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),500,0,500);
+	h_jetTrkMaxPtOverJetPt[i][j] = new TH1D(Form("h_jetTrkMaxPtOverJetPt_C%iJ%i",i,j),Form("jetTrkMaxPt / jetPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1);
+	h_jetTrkMaxEta[i][j] = new TH1D(Form("h_jetTrkMaxEta_C%iJ%i",i,j),Form("jetTrkMaxEta, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+	h_jetTrkMaxPhi[i][j] = new TH1D(Form("h_jetTrkMaxPhi_C%iJ%i",i,j),Form("jetTrkMaxPhi, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NPhiBins,phiMin,phiMax);
+	h_jetTrkMaxDR[i][j] = new TH1D(Form("h_jetTrkMaxDR_C%iJ%i",i,j),Form("jetTrkMaxDR, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NdRBins,dRBinMin,dRBinMax);
+
       }
       else{
+
+	h_jetTrkMaxPt[i][j] = new TH1D(Form("h_jetTrkMaxPt_C%iJ%i",i,j),Form("jetTrkMaxPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),500,0,500);
+	h_jetTrkMaxPtOverJetPt[i][j] = new TH1D(Form("h_jetTrkMaxPtOverJetPt_C%iJ%i",i,j),Form("jetTrkMaxPt / jetPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),100,0,1);
+	h_jetTrkMaxEta[i][j] = new TH1D(Form("h_jetTrkMaxEta_C%iJ%i",i,j),Form("jetTrkMaxEta, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+	h_jetTrkMaxPhi[i][j] = new TH1D(Form("h_jetTrkMaxPhi_C%iJ%i",i,j),Form("jetTrkMaxPhi, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NPhiBins,phiMin,phiMax);
+	h_jetTrkMaxDR[i][j] = new TH1D(Form("h_jetTrkMaxDR_C%iJ%i",i,j),Form("jetTrkMaxDR, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NdRBins,dRBinMin,dRBinMax);
 
       }
       
@@ -249,6 +275,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     double w = w_pthat * w_reweight_hiBin * w_reweight_vz;
     
     if(w <= 0.0) continue;
+    if(w > 0.005) continue;
    
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
 
@@ -273,6 +300,9 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       // double y = em->jet_wta_eta[i]; // recoJetEta with WTA axis
       // double z = em->jet_wta_phi[i]; // recoJetPhi with WTA axis
       double jetTrkMax_i = em->jetTrkMax[i];
+      double jetTrkMaxEta_i = em->jetTrkMaxEta[i];
+      double jetTrkMaxPhi_i = em->jetTrkMaxPhi[i];
+      double jetTrkMaxDR_i = em->jetTrkMaxDR[i];
 
       // cout << endl;
       // cout << "em->jet_wta_eta[i] = " << em->jet_wta_eta[i] << endl;
@@ -311,21 +341,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
       }
 
-      // in-jet muon variables
-      double muPtRel_i = -1.0;
-      double muPt_i = -1.0;
-      double muEta_i = -1.0;
-      double muPhi_i = -1.0;
-		
-      int genMuIndex = -1;
-      bool hasInclGenMuonTag = false;
-      bool hasMatchedGenMuonTag = false;
-
-      bool hasInclRecoMuonTag = false;
-      bool hasMatchedRecoMuonTag = false;
-		
-      bool hasGenJetMatch = false;
-		     		
+          		
       int matchedPartonFlavor = em->matchedPartonFlavor[i];
       int refPartonFlavorForB = em->refparton_flavorForB[i];
       int hadronFlavorInt = em->matchedHadronFlavor[i];
@@ -336,117 +352,36 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting 
 		
       // jet kinematic cuts
-      if(TMath::Abs(recoJetEta_i) > etaMax || recoJetPt_i < jetPtCut) continue;
+      if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80) continue;
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
-      if(jetPtIndex < 0) continue;
+      h_jetTrkMaxPt[0][0]->Fill(jetTrkMax_i,w);
+      h_jetTrkMaxPtOverJetPt[0][0]->Fill(jetTrkMax_i/recoJetPt_i,w);
+      h_jetTrkMaxEta[0][0]->Fill(jetTrkMaxEta_i,w);
+      h_jetTrkMaxPhi[0][0]->Fill(jetTrkMaxPhi_i,w);
+      h_jetTrkMaxDR[0][0]->Fill(jetTrkMaxDR_i,w);
+
+      h_jetTrkMaxPt[CentralityIndex][0]->Fill(jetTrkMax_i,w);
+      h_jetTrkMaxPtOverJetPt[CentralityIndex][0]->Fill(jetTrkMax_i/recoJetPt_i,w);
+      h_jetTrkMaxEta[CentralityIndex][0]->Fill(jetTrkMaxEta_i,w);
+      h_jetTrkMaxPhi[CentralityIndex][0]->Fill(jetTrkMaxPhi_i,w);
+      h_jetTrkMaxDR[CentralityIndex][0]->Fill(jetTrkMaxDR_i,w);
+
+      h_jetTrkMaxPt[0][jetPtIndex]->Fill(jetTrkMax_i,w);
+      h_jetTrkMaxPtOverJetPt[0][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w);
+      h_jetTrkMaxEta[0][jetPtIndex]->Fill(jetTrkMaxEta_i,w);
+      h_jetTrkMaxPhi[0][jetPtIndex]->Fill(jetTrkMaxPhi_i,w);
+      h_jetTrkMaxDR[0][jetPtIndex]->Fill(jetTrkMaxDR_i,w);
+
+      h_jetTrkMaxPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i,w);
+      h_jetTrkMaxPtOverJetPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w);
+      h_jetTrkMaxEta[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxEta_i,w);
+      h_jetTrkMaxPhi[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPhi_i,w);
+      h_jetTrkMaxDR[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxDR_i,w);
 
       
-      double dR_recoGen_min = 100.0;
-      double dPt_recoGen_min = 100.0;
-
-      // look for a genJet match
-
-      for(int j = 0; j < em->ngj ; j++){
-
-
-	if(recoJetPt_i < 20) continue;	
-
-	double genJetPt_j = em->genjetpt[j];  // genJetPt
-	double genJetEta_j = em->genjeteta[j]; // genJetEta
-	double genJetPhi_j = em->genjetphi[j]; // genJetPhi
-
-	double dR_j = getDr(genJetEta_j,genJetPhi_j,recoJetEta_i,recoJetPhi_i);
-	double dPt_j = recoJetPt_i/genJetPt_j;
-			
-	if(dR_j < dR_recoGen_min){
-				
-	  hasGenJetMatch = true;		
-	  dR_recoGen_min = dR_j;
-	  dPt_recoGen_min = dPt_j;
-
-	}	
-
-      }
-
-      // look for recoMuon match to recoJet
       
-      for(int m = 0; m < em->nMu; m++){
-
-	double recoMuonPt_m = em->muPt->at(m);
-	double recoMuonEta_m = em->muEta->at(m);
-	double recoMuonPhi_m = em->muPhi->at(m);
-
-	if(matchFlagR[m] == 1) continue;
-	// muon kinematic cuts
-	if(recoMuonPt_m < muPtCut || recoMuonPt_m > muPtMaxCut || fabs(recoMuonEta_m) > 2.0) continue;
-	// muon quality cuts
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
-
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 			     em->muInnerD0->at(m),
-	// 			     em->muInnerDz->at(m),
-	// 			     em->muPixelHits->at(m),
-	// 			     em->muIsTracker->at(m),
-	// 			     em->muIsGlobal->at(m),
-	// 			     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
-
-			
-
-
-
-	if(isWDecayMuon(recoMuonPt_m,recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt) 
-			
-
-	// match to genMuon
-	bool isMatchedRecoMuon = false;
-
-	if(!skipGenParticles){
-
-	  for(int j = 0; j < em->gpptp->size(); j++){
-			
-	    if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
-		
-	    if(getDr(recoMuonEta_m,recoMuonPhi_m,em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
-
-	      isMatchedRecoMuon = true;
-			
-	    }
-
-	  }
-	}
-
-	// match to recoJets
-	if(getDr(recoMuonEta_m,recoMuonPhi_m,recoJetEta_i,recoJetPhi_i) < epsilon_mm){
-
-	  matchFlagR[m] = 1;
-				
-	  hasInclRecoMuonTag = true;
-
-	  muPtRel_i = getPtRel(recoMuonPt_m,recoMuonEta_m,recoMuonPhi_m,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
-
-	  double delta = (getPtRel(recoMuonPt_m,recoMuonEta_m,recoMuonPhi_m,recoJetPt_i,recoJetEta_i,recoJetPhi_i) - getPtRel(recoMuonPt_m,recoMuonEta_m,recoMuonPhi_m,recoJetPt_i,em->jet_wta_eta[i],em->jet_wta_phi[i])) / getPtRel(recoMuonPt_m,recoMuonEta_m,recoMuonPhi_m,recoJetPt_i,em->jet_wta_eta[i],em->jet_wta_phi[i]);
-	  
-
-
-	  muPt_i = recoMuonPt_m;
-	  muEta_i = recoMuonEta_m;
-	  muPhi_i = recoMuonPhi_m;
-				
-	  if(isMatchedRecoMuon) hasMatchedRecoMuonTag = true;
-
-	}
-
-      }
 
     }
     // END recoJet LOOP
@@ -471,7 +406,19 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   */
 
+  for(int i = 0; i < NCentralityIndices; i++){
 
+    for(int j = 0; j < NJetPtIndices; j++){
+
+      h_jetTrkMaxPt[i][j]->Write();
+      h_jetTrkMaxPtOverJetPt[i][j]->Write();
+      h_jetTrkMaxEta[i][j]->Write();
+      h_jetTrkMaxPhi[i][j]->Write();
+      h_jetTrkMaxDR[i][j]->Write();
+      
+    }
+
+  }
 
 
   wf->Close();
