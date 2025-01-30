@@ -163,6 +163,12 @@ void PYTHIAHYDJET_skeleton(int group = 1){
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
 
+  // load fit functions
+  loadFitFxn_vz();
+  loadFitFxn_hiBin();
+  loadFitFxn_jetPt();
+
+  // define a random-generator 
   TRandom *randomGenerator = new TRandom2();
  
   // event loop
