@@ -359,12 +359,6 @@ void PYTHIAHYDJET_skeleton(int group = 1){
       double sigma = 0.2;
       double smear = 0.0;
 
-      if(apply_JER_smear){
-	sigma = 0.663*JER_fxn->Eval(recoJetPt_i); // apply a 20% smear
-	smear = randomGenerator->Gaus(mu,sigma);
-	recoJetPt_i = recoJetPt_i * smear;
-      }
-
       if(doJetTrkMaxFilter){
 	if(!passesJetTrkMaxFilter(jetTrkMax_i,recoJetPt_i)) continue;
       }
