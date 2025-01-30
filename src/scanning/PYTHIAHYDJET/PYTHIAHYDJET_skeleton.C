@@ -297,9 +297,6 @@ void PYTHIAHYDJET_skeleton(int group = 1){
 		
       // jet kinematic cuts
       if(TMath::Abs(recoJetEta_i) > etaMax || recoJetPt_i < jetPtCut) continue;
-      if(recoJetPt_i < 20) continue;
-      
-      if(recoJetPt_i > 60) eventHasGoodJet = true;
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
