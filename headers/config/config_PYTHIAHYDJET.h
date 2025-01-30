@@ -11,7 +11,7 @@ bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
-bool skipGenParticles = true; // set TRUE for MuJet and BJet datasets
+bool skipGenParticles = false; // set TRUE for MuJet and BJet datasets
 // reweighting functions
 bool doHiBinReweight = true;
 bool doVzReweight = true;
@@ -26,4 +26,4 @@ bool doEtaPhiMask = false;
 bool doBJetEnergyShift = false;
 bool doJERCorrection = false;
 // ptrel reweight
-bool doHadronPtRelReweight = true;
+bool doHadronPtRelReweight = false;
