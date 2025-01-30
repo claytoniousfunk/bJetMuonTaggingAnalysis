@@ -75,12 +75,15 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch9.txt";
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch9/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
-  // BATCH 10: DiJet, additional MC, incl, pTjet-15, N = 4473
-  in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch10.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch10/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  // // BATCH 10: DiJet, additional MC, incl, pTjet-15, N = 4473
+  // in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch10.txt";
+  // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch10/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
+  // PH forest with jetTrkMax information (eta, phi, dR), N = 2182
+  in_file_name = "../../../fileNames/fileNames_PH_DiJet_onlyJets_withTrackMaxInfo_partial.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_withJetTrkMaxInfo_partial/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
-  int endfile = 4473;
+  int endfile = 2182;
 
 
   string output_file_extension = "";
@@ -172,6 +175,9 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("geneta",1);
     old_jet_tree->SetBranchStatus("genphi",1);
     old_jet_tree->SetBranchStatus("ngen",1);
+    old_jet_tree->SetBranchStatus("trackMaxEta",1);
+    old_jet_tree->SetBranchStatus("trackMaxPhi",1);
+    old_jet_tree->SetBranchStatus("trackMaxDR",1);
     // muons
     old_muon_tree->SetBranchStatus("muPt",1);
     old_muon_tree->SetBranchStatus("muEta",1);
