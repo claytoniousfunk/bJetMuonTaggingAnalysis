@@ -93,7 +93,7 @@ public :
   int njet=0, ngj = 0;
   Float_t jetpt[jetMax],jeteta[jetMax],jetphi[jetMax],jet_wta_eta[jetMax],jet_wta_phi[jetMax], ref_jetpt[jetMax], rawpt[jetMax];
   Float_t mupt[jetMax], mueta[jetMax], muphi[jetMax], muptrel[jetMax];
-  Float_t jetTrkMax[jetMax];
+  Float_t jetTrkMax[jetMax], jetTrkMaxEta[jetMax], jetTrkMaxPhi[jetMax], jetTrkMaxDR[jetMax];
   Float_t genjetpt[jetMax],genjeteta[jetMax],genjetphi[jetMax],genjet_wta_eta[jetMax],genjet_wta_phi[jetMax];
   Float_t partonFlavor[jetMax], hadronFlavor[jetMax];
   Int_t matchedPartonFlavor[jetMax], matchedHadronFlavor[jetMax];
@@ -261,6 +261,9 @@ void eventMap::loadJet(const char* name){
   evtTree->SetBranchAddress("jteta", &jeteta);
   evtTree->SetBranchAddress("jtphi", &jetphi);
   evtTree->SetBranchAddress("trackMax", &jetTrkMax);
+  evtTree->SetBranchAddress("trackMaxEta", &jetTrkMaxEta);
+  evtTree->SetBranchAddress("trackMaxPhi", &jetTrkMaxPhi);
+  evtTree->SetBranchAddress("trackMaxDR", &jetTrkMaxDR);
   evtTree->SetBranchAddress("WTAeta", &jet_wta_eta);
   evtTree->SetBranchAddress("WTAphi", &jet_wta_phi);
   //evtTree->SetBranchAddress("discr_csvV2", &disc_csvV2);
