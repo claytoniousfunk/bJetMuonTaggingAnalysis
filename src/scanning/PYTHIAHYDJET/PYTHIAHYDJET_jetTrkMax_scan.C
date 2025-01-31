@@ -372,24 +372,28 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxEta[0][0]->Fill(jetTrkMaxEta_i,w);
       h_jetTrkMaxPhi[0][0]->Fill(jetTrkMaxPhi_i,w);
       h_jetTrkMaxDR[0][0]->Fill(jetTrkMaxDR_i,w);
+      h_jetTrkMaxPtRel[0][0]->Fill(jetTrkMaxPtRel_i,w);
 
       h_jetTrkMaxPt[CentralityIndex][0]->Fill(jetTrkMax_i,w);
       h_jetTrkMaxPtOverJetPt[CentralityIndex][0]->Fill(jetTrkMax_i/recoJetPt_i,w);
       h_jetTrkMaxEta[CentralityIndex][0]->Fill(jetTrkMaxEta_i,w);
       h_jetTrkMaxPhi[CentralityIndex][0]->Fill(jetTrkMaxPhi_i,w);
       h_jetTrkMaxDR[CentralityIndex][0]->Fill(jetTrkMaxDR_i,w);
+      h_jetTrkMaxPtRel[CentralityIndex][0]->Fill(jetTrkMaxPtRel_i,w);
 
       h_jetTrkMaxPt[0][jetPtIndex]->Fill(jetTrkMax_i,w);
       h_jetTrkMaxPtOverJetPt[0][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w);
       h_jetTrkMaxEta[0][jetPtIndex]->Fill(jetTrkMaxEta_i,w);
       h_jetTrkMaxPhi[0][jetPtIndex]->Fill(jetTrkMaxPhi_i,w);
       h_jetTrkMaxDR[0][jetPtIndex]->Fill(jetTrkMaxDR_i,w);
+      h_jetTrkMaxPtRel[0][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w);
 
       h_jetTrkMaxPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i,w);
       h_jetTrkMaxPtOverJetPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w);
       h_jetTrkMaxEta[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxEta_i,w);
       h_jetTrkMaxPhi[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPhi_i,w);
       h_jetTrkMaxDR[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxDR_i,w);
+      h_jetTrkMaxPtRel[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w);
 
       
       
