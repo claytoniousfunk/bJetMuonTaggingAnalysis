@@ -114,7 +114,7 @@ TH1D *h_jetTrkMaxDR[NCentralityIndices][NJetPtIndices];
 void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
-  TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_100Files_partial/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
   TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
@@ -212,14 +212,14 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   em->init();
   cout << "	Loading jet..." << endl;
   em->loadJet(jetTreeString);
-  cout << "	Loading muon..." << endl;
-  em->loadMuon(muonTreeString);
-  cout << "	Loading muon triggers..." << endl;
-  em->loadMuonTrigger(hltString);
+  // cout << "	Loading muon..." << endl;
+  // em->loadMuon(muonTreeString);
+  // cout << "	Loading muon triggers..." << endl;
+  // em->loadMuonTrigger(hltString);
   //cout << "	Loading tracks..." << endl;
   //em->loadTrack();
-  cout << "	Loading gen particles..." << endl;
-  em->loadGenParticle();
+  // cout << "	Loading gen particles..." << endl;
+  // em->loadGenParticle();
   // cout << "	Variables initilized!" << endl << endl ;
   int NEvents = em->evtTree->GetEntries();
   cout << "	Number of events = " << NEvents << endl;
@@ -283,13 +283,10 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     if(w <= 0.0) continue;
     if(w > 0.005) continue;
    
-    int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
-
-    int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
-	
-    int CentralityIndex = getCentBin(em->hiBin-10);
+    // int CentralityIndex = getCentBin(em->hiBin-10);
+    int CentralityIndex = 1;
+    
     if(CentralityIndex < 0) continue;
-
    
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
