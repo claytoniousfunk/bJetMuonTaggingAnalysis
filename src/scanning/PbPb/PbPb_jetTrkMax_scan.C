@@ -44,8 +44,8 @@
 // getJetPtBin function
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-//#include "../../../headers/functions/getCentBin_v2.h"
-#include "../../../headers/functions/getCentBin.h"
+#include "../../../headers/functions/getCentBin_v2.h"
+//#include "../../../headers/functions/getCentBin.h"
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
@@ -237,7 +237,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
            
       //x = x*smear;
       if(doJetTrkMaxFilter){
-	if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
+	if(!passesJetTrkMaxFilter(jetTrkMax_i,recoJetPt_i)) continue;
       }      
 
       //cout << "rawPt = " << em->rawpt[i] << "  |  jetPt = " << em->jetpt[i] << "  |  corrPt = " << x << endl;
@@ -250,11 +250,11 @@ void PbPb_jetTrkMax_scan(int group = 1){
 
 		
       // jet kinematic cuts
-      if(TMath::Abs(y) > 1.6 || x < 80.) continue;
+      if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
 
-      if(x > leadingRecoJetPt) leadingRecoJetPt = x;
+      if(recoJetPt_i > leadingRecoJetPt) leadingRecoJetPt = recoJetPt_i;
     		        
-      int jetPtIndex = getJetPtBin(x);
+      int jetPtIndex = getJetPtBin(recoJetPt_i);
 
       // Fill the jet/event histograms
 
