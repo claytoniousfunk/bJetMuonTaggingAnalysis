@@ -163,7 +163,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
   em->isMC = isMC_status;
   em->AASetup = AASetup_status;
   cout << "	Initializing variables ... " << endl;
-  em->init();
+  //em->init();
   cout << "	Loading jet..." << endl;
   em->loadJet(jetTreeString);
   // cout << "	Loading muon..." << endl;
