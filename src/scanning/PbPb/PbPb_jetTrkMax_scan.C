@@ -203,11 +203,11 @@ void PbPb_jetTrkMax_scan(int group = 1){
     evi_frac = 100*evi / NEvents;
 
     // global event cuts
-    if(fabs(em->vz) > 15.0) continue;
+    //if(fabs(em->vz) > 15.0) continue;
     // event filters
     if(em->checkEventFilter()) continue;
     // hiHF cut
-    if(em->hiHF > 6000) continue;
+    //if(em->hiHF > 6000) continue;
 
     // In data, event weight = 1
     double w = 1.0;
