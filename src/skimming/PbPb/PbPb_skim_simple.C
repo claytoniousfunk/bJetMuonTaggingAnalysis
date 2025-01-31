@@ -38,14 +38,14 @@ void PbPb_skim_simple(int group = 1){
     old_file = TFile::Open(filename.c_str());
   
     old_file->GetObject("skimanalysis/HltTree",old_filter_tree);
-    //old_file->GetObject("hiEvtAnalyzer/HiTree",old_evt_tree);
+    old_file->GetObject("hiEvtAnalyzer/HiTree",old_evt_tree);
     old_file->GetObject("hltanalysis/HltTree",old_hlt_tree);
     old_file->GetObject("akCs4PFJetAnalyzer/t",old_jet_tree);
     //old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
     //old_file->GetObject("ggHiNtuplizer/EventTree",old_muon_tree);
     // deactivate all branches                                                                                   
     old_filter_tree->SetBranchStatus("*",0);
-    //old_evt_tree->SetBranchStatus("*",0);
+    old_evt_tree->SetBranchStatus("*",0);
     old_hlt_tree->SetBranchStatus("*",0);
     old_jet_tree->SetBranchStatus("*",0);
     //old_muon_tree->SetBranchStatus("*",0);
@@ -59,12 +59,12 @@ void PbPb_skim_simple(int group = 1){
     old_filter_tree->SetBranchStatus("phfCoincFilter2Th4",1);
     old_filter_tree->SetBranchStatus("pclusterCompatibilityFilter",1);
     // evt
-    // old_evt_tree->SetBranchStatus("hiBin",1);
-    // old_evt_tree->SetBranchStatus("hiHF",1);
-    // old_evt_tree->SetBranchStatus("run",1);
-    // old_evt_tree->SetBranchStatus("lumi",1);
-    // old_evt_tree->SetBranchStatus("evt",1);
-    // old_evt_tree->SetBranchStatus("vz",1);
+    old_evt_tree->SetBranchStatus("hiBin",1);
+    old_evt_tree->SetBranchStatus("hiHF",1);
+    old_evt_tree->SetBranchStatus("run",1);
+    old_evt_tree->SetBranchStatus("lumi",1);
+    old_evt_tree->SetBranchStatus("evt",1);
+    old_evt_tree->SetBranchStatus("vz",1);
     // hlt
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_NHitQ10_v1",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu7_NHitQ10_v1",1);
@@ -102,19 +102,19 @@ void PbPb_skim_simple(int group = 1){
     new_file = (TFile*) TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
     
     new_filter_tree = (TTree*) old_filter_tree->CloneTree(0);
-    // new_evt_tree = (TTree*) old_evt_tree->CloneTree(0);
+    new_evt_tree = (TTree*) old_evt_tree->CloneTree(0);
     new_hlt_tree = (TTree*) old_hlt_tree->CloneTree(0);
     new_jet_tree = (TTree*) old_jet_tree->CloneTree(0);
     // new_muon_tree = (TTree*) old_muon_tree->CloneTree(0);
 
     new_filter_tree->CopyEntries(old_filter_tree);
-    // new_evt_tree->CopyEntries(old_evt_tree);
+    new_evt_tree->CopyEntries(old_evt_tree);
     new_hlt_tree->CopyEntries(old_hlt_tree);
     new_jet_tree->CopyEntries(old_jet_tree);
     // new_muon_tree->CopyEntries(old_muon_tree);
 
     new_filter_tree->SetName("filterTree");
-    // new_evt_tree->SetName("evtTree");
+    new_evt_tree->SetName("evtTree");
     new_hlt_tree->SetName("hltTree");
     new_jet_tree->SetName("jetTree");
     // new_muon_tree->SetName("muonTree");
