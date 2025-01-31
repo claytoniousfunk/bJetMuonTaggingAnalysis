@@ -158,7 +158,8 @@ public :
 
 
 void eventMap::init(){
-  evtTree = (TTree*) _file->Get("evtTree");
+  evtTree = (TTree*) _file->Get("jetTree");
+  //evtTree = (TTree*) _file->Get("evtTree");
   // evtTree->SetBranchAddress("vz", &vz);
   // evtTree->SetBranchAddress("hiBin", &hiBin);
   // evtTree->SetBranchAddress("hiHF", &hiHF);
