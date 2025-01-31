@@ -426,7 +426,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxEta[i][j]->Write();
       h_jetTrkMaxPhi[i][j]->Write();
       h_jetTrkMaxDR[i][j]->Write();
-      h_jetTrkMaxPtRel[i][j]->Sumw2();
+      h_jetTrkMaxPtRel[i][j]->Write();
       
     }
 
