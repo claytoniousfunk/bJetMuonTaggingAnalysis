@@ -283,8 +283,8 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     if(w <= 0.0) continue;
     if(w > 0.005) continue;
    
-    // int CentralityIndex = getCentBin(em->hiBin-10);
-    int CentralityIndex = 1;
+    int CentralityIndex = getCentBin(em->hiBin-10);
+    // int CentralityIndex = 1;
     
     if(CentralityIndex < 0) continue;
    
@@ -358,6 +358,8 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
+
+      if(jetPtIndex < 0) continue;
 
       h_jetTrkMaxPt[0][0]->Fill(jetTrkMax_i,w);
       h_jetTrkMaxPtOverJetPt[0][0]->Fill(jetTrkMax_i/recoJetPt_i,w);
