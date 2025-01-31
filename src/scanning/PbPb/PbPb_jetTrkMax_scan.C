@@ -242,7 +242,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 
       //cout << "rawPt = " << em->rawpt[i] << "  |  jetPt = " << em->jetpt[i] << "  |  corrPt = " << x << endl;
       if(doEtaPhiMask){
-	if(etaPhiMask(y,z)) continue;
+	if(etaPhiMask(recoJetEta_i,recoJetPhi_i)) continue;
       }
 
       //cout << "Event " << evi << ", jet " << i << endl;
