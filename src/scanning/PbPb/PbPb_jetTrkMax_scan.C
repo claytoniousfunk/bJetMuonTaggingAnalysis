@@ -212,7 +212,10 @@ void PbPb_jetTrkMax_scan(int group = 1){
     // In data, event weight = 1
     double w = 1.0;
 	
-    int CentralityIndex = getCentBin(em->hiBin);
+    //int CentralityIndex = getCentBin(em->hiBin);
+
+    CentralityIndex = 1; // temporarily bypass the call to hiBin.  Need to get that branch from a reforest.  Skip for now and just use 0-100$
+    
     if(CentralityIndex < 0) continue;
   
     double leadingRecoJetPt = 0.0;
