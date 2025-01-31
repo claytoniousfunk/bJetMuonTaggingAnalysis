@@ -78,6 +78,9 @@ void PbPb_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("jteta",1);
     old_jet_tree->SetBranchStatus("jtphi",1);
     old_jet_tree->SetBranchStatus("trackMax",1);
+    old_jet_tree->SetBranchStatus("trackMaxEta",1);
+    old_jet_tree->SetBranchStatus("trackMaxPhi",1);
+    old_jet_tree->SetBranchStatus("trackMaxDR",1);
     old_jet_tree->SetBranchStatus("nref",1);
     // muons
     // old_muon_tree->SetBranchStatus("muPt",1);
