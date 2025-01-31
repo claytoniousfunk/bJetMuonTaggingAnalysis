@@ -186,6 +186,12 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 	h_jetTrkMaxDR[i][j] = new TH1D(Form("h_jetTrkMaxDR_C%iJ%i",i,j),Form("jetTrkMaxDR, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NdRBins,dRBinMin,dRBinMax);
 
       }
+
+      h_jetTrkMaxPt[i][j]->Sumw2();
+      h_jetTrkMaxPtOverJetPt[i][j]->Sumw2();
+      h_jetTrkMaxEta[i][j]->Sumw2();
+      h_jetTrkMaxPhi[i][j]->Sumw2();
+      h_jetTrkMaxDR[i][j]->Sumw2();
       
     }
 
@@ -352,7 +358,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting 
 		
       // jet kinematic cuts
-      if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80) continue;
+      if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
