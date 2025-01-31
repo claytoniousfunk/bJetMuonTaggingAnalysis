@@ -79,6 +79,7 @@ TH1D *h_jetTrkMaxPtOverJetPt[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxEta[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxPhi[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxDR[NCentralityIndices][NJetPtIndices];
+TH1D *h_jetTrkMaxPtRel[NCentralityIndices][NJetPtIndices];
 
 
 ///////////////////////  start the program
@@ -113,6 +114,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 	h_jetTrkMaxEta[i][j] = new TH1D(Form("h_jetTrkMaxEta_C%iJ%i",i,j),Form("jetTrkMaxEta, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
 	h_jetTrkMaxPhi[i][j] = new TH1D(Form("h_jetTrkMaxPhi_C%iJ%i",i,j),Form("jetTrkMaxPhi, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NPhiBins,phiMin,phiMax);
 	h_jetTrkMaxDR[i][j] = new TH1D(Form("h_jetTrkMaxDR_C%iJ%i",i,j),Form("jetTrkMaxDR, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NdRBins,dRBinMin,dRBinMax);
+	h_jetTrkMaxPtRel[i][j] = new TH1D(Form("h_jetTrkMaxPtRel_C%iJ%i",i,j),Form("jetTrkMaxPtRel, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax);
 
 	
       }
@@ -123,7 +125,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 	h_jetTrkMaxEta[i][j] = new TH1D(Form("h_jetTrkMaxEta_C%iJ%i",i,j),Form("jetTrkMaxEta, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NTrkEtaBins,trkEtaMin,trkEtaMax);
 	h_jetTrkMaxPhi[i][j] = new TH1D(Form("h_jetTrkMaxPhi_C%iJ%i",i,j),Form("jetTrkMaxPhi, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NPhiBins,phiMin,phiMax);
 	h_jetTrkMaxDR[i][j] = new TH1D(Form("h_jetTrkMaxDR_C%iJ%i",i,j),Form("jetTrkMaxDR, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NdRBins,dRBinMin,dRBinMax);
-
+	h_jetTrkMaxPtRel[i][j] = new TH1D(Form("h_jetTrkMaxPtRel_C%iJ%i",i,j),Form("jetTrkMaxPtRel, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax);
 
       }
       else if(j==0){
@@ -133,6 +135,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 	h_jetTrkMaxEta[i][j] = new TH1D(Form("h_jetTrkMaxEta_C%iJ%i",i,j),Form("jetTrkMaxEta, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
 	h_jetTrkMaxPhi[i][j] = new TH1D(Form("h_jetTrkMaxPhi_C%iJ%i",i,j),Form("jetTrkMaxPhi, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NPhiBins,phiMin,phiMax);
 	h_jetTrkMaxDR[i][j] = new TH1D(Form("h_jetTrkMaxDR_C%iJ%i",i,j),Form("jetTrkMaxDR, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NdRBins,dRBinMin,dRBinMax);
+	h_jetTrkMaxPtRel[i][j] = new TH1D(Form("h_jetTrkMaxPtRel_C%iJ%i",i,j),Form("jetTrkMaxPtRel, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax);
 
       }
       else{
@@ -142,6 +145,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 	h_jetTrkMaxEta[i][j] = new TH1D(Form("h_jetTrkMaxEta_C%iJ%i",i,j),Form("jetTrkMaxEta, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NTrkEtaBins,trkEtaMin,trkEtaMax);
 	h_jetTrkMaxPhi[i][j] = new TH1D(Form("h_jetTrkMaxPhi_C%iJ%i",i,j),Form("jetTrkMaxPhi, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NPhiBins,phiMin,phiMax);
 	h_jetTrkMaxDR[i][j] = new TH1D(Form("h_jetTrkMaxDR_C%iJ%i",i,j),Form("jetTrkMaxDR, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NdRBins,dRBinMin,dRBinMax);
+	h_jetTrkMaxPtRel[i][j] = new TH1D(Form("h_jetTrkMaxPtRel_C%iJ%i",i,j),Form("jetTrkMaxPtRel, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[i-1],centEdges[i],jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax);
 
       }
 
@@ -150,6 +154,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxEta[i][j]->Sumw2();
       h_jetTrkMaxPhi[i][j]->Sumw2();
       h_jetTrkMaxDR[i][j]->Sumw2();
+      h_jetTrkMaxPtRel[i][j]->Sumw2();
       
     }
 
@@ -235,7 +240,9 @@ void PbPb_jetTrkMax_scan(int group = 1){
       double jetTrkMax_i = em->jetTrkMax[i];
       double jetTrkMaxEta_i = em->jetTrkMaxEta[i];
       double jetTrkMaxPhi_i = em->jetTrkMaxPhi[i];
-      double jetTrkMaxDR_i = em->jetTrkMaxDR[i]; 
+      double jetTrkMaxDR_i = em->jetTrkMaxDR[i];
+
+      double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
 
            
       //x = x*smear;
@@ -266,24 +273,28 @@ void PbPb_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxEta[0][0]->Fill(jetTrkMaxEta_i,w);
       h_jetTrkMaxPhi[0][0]->Fill(jetTrkMaxPhi_i,w);
       h_jetTrkMaxDR[0][0]->Fill(jetTrkMaxDR_i,w);
+      h_jetTrkMaxPtRel[0][0]->Fill(jetTrkMaxPtRel_i,w);
 
       h_jetTrkMaxPt[CentralityIndex][0]->Fill(jetTrkMax_i,w);
       h_jetTrkMaxPtOverJetPt[CentralityIndex][0]->Fill(jetTrkMax_i/recoJetPt_i,w);
       h_jetTrkMaxEta[CentralityIndex][0]->Fill(jetTrkMaxEta_i,w);
       h_jetTrkMaxPhi[CentralityIndex][0]->Fill(jetTrkMaxPhi_i,w);
       h_jetTrkMaxDR[CentralityIndex][0]->Fill(jetTrkMaxDR_i,w);
+      h_jetTrkMaxPtRel[CentralityIndex][0]->Fill(jetTrkMaxPtRel_i,w);
 
       h_jetTrkMaxPt[0][jetPtIndex]->Fill(jetTrkMax_i,w);
       h_jetTrkMaxPtOverJetPt[0][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w);
       h_jetTrkMaxEta[0][jetPtIndex]->Fill(jetTrkMaxEta_i,w);
       h_jetTrkMaxPhi[0][jetPtIndex]->Fill(jetTrkMaxPhi_i,w);
       h_jetTrkMaxDR[0][jetPtIndex]->Fill(jetTrkMaxDR_i,w);
+      h_jetTrkMaxPtRel[0][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w);
 
       h_jetTrkMaxPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i,w);
       h_jetTrkMaxPtOverJetPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w);
       h_jetTrkMaxEta[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxEta_i,w);
       h_jetTrkMaxPhi[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPhi_i,w);
       h_jetTrkMaxDR[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxDR_i,w);
+      h_jetTrkMaxPtRel[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w);
 
     }
     // END recoJet LOOP
@@ -307,6 +318,7 @@ for(int i = 0; i < NCentralityIndices; i++){
       h_jetTrkMaxEta[i][j]->Write();
       h_jetTrkMaxPhi[i][j]->Write();
       h_jetTrkMaxDR[i][j]->Write();
+      h_jetTrkMaxPtRel[i][j]->Write();
       
     }
 
