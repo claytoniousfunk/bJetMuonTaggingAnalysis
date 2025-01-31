@@ -1,0 +1,9 @@
+int isMC_status = 0;
+int AASetup_status = 0;
+TString jetTreeString = "jetTree";
+TString hltString = "hltTree";
+TString muonTreeString = "muonTree";
+const int NeventFilters = 3;
+std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter","phfCoincFilter2Th4","pclusterCompatibilityFilter"};
+bool doJetTrkMaxFilter = false;
+bool doEtaPhiMask = true;
