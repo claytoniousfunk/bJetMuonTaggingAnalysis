@@ -261,6 +261,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 		
       // jet kinematic cuts
       if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
+      if(jetTrkMax_i < 5.) continue;
         
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
