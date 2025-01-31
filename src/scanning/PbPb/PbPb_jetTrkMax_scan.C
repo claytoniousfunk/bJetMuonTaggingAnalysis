@@ -203,18 +203,18 @@ void PbPb_jetTrkMax_scan(int group = 1){
     evi_frac = 100*evi / NEvents;
 
     // global event cuts
-    //if(fabs(em->vz) > 15.0) continue;
+    if(fabs(em->vz) > 15.0) continue;
     // event filters
     if(em->checkEventFilter()) continue;
     // hiHF cut
-    //if(em->hiHF > 6000) continue;
+    if(em->hiHF > 6000) continue;
 
     // In data, event weight = 1
     double w = 1.0;
 	
-    //int CentralityIndex = getCentBin(em->hiBin);
+    int CentralityIndex = getCentBin(em->hiBin);
 
-    int CentralityIndex = 1; // temporarily bypass the call to hiBin.  Need to get that branch from a reforest.  Skip for now and just use 0-100$
+    // int CentralityIndex = 1; // temporarily bypass the call to hiBin.  Need to get that branch from a reforest.  Skip for now and just use 0-100$
     
     if(CentralityIndex < 0) continue;
   
