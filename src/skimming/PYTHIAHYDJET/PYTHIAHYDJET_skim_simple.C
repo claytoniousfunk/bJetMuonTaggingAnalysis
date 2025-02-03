@@ -79,11 +79,11 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch10.txt";
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch10/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
-  // PH forest with jetTrkMax information (eta, phi, dR), N = 79
-  in_file_name = "../../../fileNames/fileNames_PH_DiJet_onlyJets_withTrackMaxInfo_100Files_partial.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_100Files_partial/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  // PH forest with jetTrkMax information (eta, phi, dR), N = 6621
+  in_file_name = "../../../fileNames/fileNames_PH_DiJet_onlyJets_withTrackMaxInfo_allFiles_partial.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_allFiles_partial/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
-  int endfile = 79;
+  int endfile = 6621;
 
 
   string output_file_extension = "";
