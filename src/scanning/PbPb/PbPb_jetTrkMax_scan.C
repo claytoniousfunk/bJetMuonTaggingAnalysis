@@ -74,6 +74,7 @@
   initialize histograms
 */
 
+TH1D *h_jetPt[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxPt[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxPtOverJetPt[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxEta[NCentralityIndices][NJetPtIndices];
@@ -105,10 +106,13 @@ void PbPb_jetTrkMax_scan(int group = 1){
 
   for(int i = 0; i < NCentralityIndices; i++){
 
+    if(i==0) h_jetPt[i][j] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+    else h_jetPt[i][j] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+    
     for(int j = 0; j < NJetPtIndices; j++){
-
-      if(i==0 && j==0){
 	
+      if(i==0 && j==0){
+
 	h_jetTrkMaxPt[i][j] = new TH1D(Form("h_jetTrkMaxPt_C%iJ%i",i,j),Form("jetTrkMaxPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),500,0,500);
 	h_jetTrkMaxPtOverJetPt[i][j] = new TH1D(Form("h_jetTrkMaxPtOverJetPt_C%iJ%i",i,j),Form("jetTrkMaxPt / jetPt, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1);
 	h_jetTrkMaxEta[i][j] = new TH1D(Form("h_jetTrkMaxEta_C%iJ%i",i,j),Form("jetTrkMaxEta, hiBin %i - %i, p_{T}^{jet} %3.0f - %3.0f", centEdges[0],centEdges[NCentralityIndices-1],jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
@@ -158,6 +162,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
       
     }
 
+    h_jetPt[i]->Sumw2();
     
   }
 
@@ -269,6 +274,10 @@ void PbPb_jetTrkMax_scan(int group = 1){
 
       // Fill the jet/event histograms
 
+      h_jetPt[0]->Fill(recoJetPt_i,w);
+      h_jetPt[CentralityIndex]->Fill(recoJetPt_i,w);
+
+	
       h_jetTrkMaxPt[0][0]->Fill(jetTrkMax_i,w);
       h_jetTrkMaxPtOverJetPt[0][0]->Fill(jetTrkMax_i/recoJetPt_i,w);
       h_jetTrkMaxEta[0][0]->Fill(jetTrkMaxEta_i,w);
@@ -312,20 +321,22 @@ void PbPb_jetTrkMax_scan(int group = 1){
   
 for(int i = 0; i < NCentralityIndices; i++){
 
-    for(int j = 0; j < NJetPtIndices; j++){
+  h_jetPt[i]->Write();
+  
+  for(int j = 0; j < NJetPtIndices; j++){
 
-      h_jetTrkMaxPt[i][j]->Write();
-      h_jetTrkMaxPtOverJetPt[i][j]->Write();
-      h_jetTrkMaxEta[i][j]->Write();
-      h_jetTrkMaxPhi[i][j]->Write();
-      h_jetTrkMaxDR[i][j]->Write();
-      h_jetTrkMaxPtRel[i][j]->Write();
+    h_jetTrkMaxPt[i][j]->Write();
+    h_jetTrkMaxPtOverJetPt[i][j]->Write();
+    h_jetTrkMaxEta[i][j]->Write();
+    h_jetTrkMaxPhi[i][j]->Write();
+    h_jetTrkMaxDR[i][j]->Write();
+    h_jetTrkMaxPtRel[i][j]->Write();
       
-    }
-
   }
-  wf->Close();
-  return;
+
+ }
+ wf->Close();
+ return;
   // END WRITE
 
 }
