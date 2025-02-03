@@ -86,8 +86,8 @@ TH1D *h_jetTrkMaxPtRel[NCentralityIndices][NJetPtIndices];
 void PbPb_jetTrkMax_scan(int group = 1){
 
   
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_DiJet_onlyJets_withTrackMaxInfo_fineCentBins_partial/PbPb_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax/PbPb_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial/PbPb_DiJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_fineCentBins/PbPb_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
