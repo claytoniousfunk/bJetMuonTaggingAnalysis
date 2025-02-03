@@ -74,7 +74,7 @@
   initialize histograms
 */
 
-TH1D *h_jetPt[NCentralityIndices][NJetPtIndices];
+TH1D *h_jetPt[NCentralityIndices];
 TH1D *h_jetTrkMaxPt[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxPtOverJetPt[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxEta[NCentralityIndices][NJetPtIndices];

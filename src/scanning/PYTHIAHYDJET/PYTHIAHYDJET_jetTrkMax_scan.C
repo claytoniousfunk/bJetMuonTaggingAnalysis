@@ -105,6 +105,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel;
   initialize your histograms here!
 */
 
+TH1D *h_jetPt[NCentralityIndices];
 TH1D *h_jetTrkMaxPt[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxPtOverJetPt[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxEta[NCentralityIndices][NJetPtIndices];
@@ -145,7 +146,11 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     Define all your histograms here!!
   */
 
-    for(int i = 0; i < NCentralityIndices; i++){
+  for(int i = 0; i < NCentralityIndices; i++){
+
+    if(i==0) h_jetPt[i][j] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+    else h_jetPt[i][j] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+
 
     for(int j = 0; j < NJetPtIndices; j++){
 
@@ -200,6 +205,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       
     }
 
+    h_jetPt[i]->Sumw2();
     
   }
 
@@ -368,6 +374,9 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
       if(jetPtIndex < 0) continue;
 
+      h_jetPt[0]->Fill(recoJetPt_i,w);
+      h_jetPt[CentralityIndex]->Fill(recoJetPt_i,w);
+
       h_jetTrkMaxPt[0][0]->Fill(jetTrkMax_i,w);
       h_jetTrkMaxPtOverJetPt[0][0]->Fill(jetTrkMax_i/recoJetPt_i,w);
       h_jetTrkMaxEta[0][0]->Fill(jetTrkMaxEta_i,w);
@@ -424,6 +433,8 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   for(int i = 0; i < NCentralityIndices; i++){
 
+    h_jetPt[i]->Write();
+    
     for(int j = 0; j < NJetPtIndices; j++){
 
       h_jetTrkMaxPt[i][j]->Write();
