@@ -148,8 +148,8 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   for(int i = 0; i < NCentralityIndices; i++){
 
-    if(i==0) h_jetPt[i][j] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
-    else h_jetPt[i][j] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+    if(i==0) h_jetPt[i] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+    else h_jetPt[i] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
 
 
     for(int j = 0; j < NJetPtIndices; j++){
