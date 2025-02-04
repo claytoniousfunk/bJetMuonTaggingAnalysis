@@ -52,7 +52,7 @@ void pp_skim_simple(int group = 1){
     //old_muon_tree->SetBranchStatus("*",0);
     // activate only our variables of interest
     // filters
-    old_filter_tree->SetBranchStatus("pprimaryVertexFilter",1);
+    //old_filter_tree->SetBranchStatus("pprimaryVertexFilter",1);
     old_filter_tree->SetBranchStatus("pPAprimaryVertexFilter",1);
     old_filter_tree->SetBranchStatus("HBHENoiseFilterResultRun2Loose",1);
     old_filter_tree->SetBranchStatus("pBeamScrapingFilter",1);
@@ -70,6 +70,12 @@ void pp_skim_simple(int group = 1){
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_v1_Prescl",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu7_v1_Prescl",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu12_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet60_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet60_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet80_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet80_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet100_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet100_v1_Prescl",1);
     // jets
     old_jet_tree->SetBranchStatus("jtpt",1);
     old_jet_tree->SetBranchStatus("rawpt",1);
