@@ -1,0 +1,7 @@
+/eos/cms/store/group/phys_heavyions/cbennett/forest_pp_HighEGJet_withTrackMaxInfo_manual_2025-02-04/HiForestAOD_0025905B8572.root
+/eos/cms/store/group/phys_heavyions/cbennett/forest_pp_HighEGJet_withTrackMaxInfo_manual_2025-02-04/HiForestAOD_002590E1E9B8.root
+/eos/cms/store/group/phys_heavyions/cbennett/forest_pp_HighEGJet_withTrackMaxInfo_manual_2025-02-04/HiForestAOD_0CC47A13D2A4.root
+/eos/cms/store/group/phys_heavyions/cbennett/forest_pp_HighEGJet_withTrackMaxInfo_manual_2025-02-04/HiForestAOD_0CC47A78A446.root
+/eos/cms/store/group/phys_heavyions/cbennett/forest_pp_HighEGJet_withTrackMaxInfo_manual_2025-02-04/HiForestAOD_0CC47AD98C86.root
+/eos/cms/store/group/phys_heavyions/cbennett/forest_pp_HighEGJet_withTrackMaxInfo_manual_2025-02-04/HiForestAOD_1866DA7F98BC.root
+/eos/cms/store/group/phys_heavyions/cbennett/forest_pp_HighEGJet_withTrackMaxInfo_manual_2025-02-04/HiForestAOD_D4AE5264D511.root
