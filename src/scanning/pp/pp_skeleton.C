@@ -174,7 +174,7 @@ void pp_skeleton(int group = 1){
      
      		
       // jet kinematic cuts
-      if(TMath::Abs(recoJetEta_i) > etaMax || x < jetPtCut) continue;
+      if(TMath::Abs(recoJetEta_i) > etaMax || recoJetPt_i < jetPtCut) continue;
 
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
