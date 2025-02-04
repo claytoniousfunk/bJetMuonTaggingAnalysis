@@ -246,13 +246,6 @@ void PYTHIA_skeleton(int group = 1){
 
     double w = w_pthat * w_reweight_vz;
 
-    
-    // pthat filter cut
-    if(doGenJetPthatFilter){
-      if(!passesLeadingGenJetPthatFilter(leadingGenJetPt_i,em->pthat)) continue;
-    }
-
-
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
 
@@ -326,8 +319,6 @@ void PYTHIA_skeleton(int group = 1){
       if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < jetPtCut) continue;
 		
       int jetPtIndex = getJetPtBin(recoJetPt_i);
-
-      if(recoJetPt_i > leadingRecoJetPt) leadingRecoJetPt = recoJetPt_i;
 
       int partonFlavor = em->partonFlavor[i];
       int hadronFlavor = em->hadronFlavor[i];
