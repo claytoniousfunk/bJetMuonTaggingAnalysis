@@ -357,12 +357,12 @@ void eventMap::loadMuonTrigger(const char* name){
   //evtTree->SetBranchAddress("HLT_HIAK4PFJet30_v1",&HLT_HIAK4PFJet30_v1);
   //evtTree->SetBranchAddress("HLT_HIAK4PFJet40_v1",&HLT_HIAK4PFJet40_v1);
   //evtTree->SetBranchAddress("HLT_HIAK4PFJet40_v1_Prescl",&HLT_HIAK4PFJet40_v1_Prescl);
-  //evtTree->SetBranchAddress("HLT_HIAK4PFJet60_v1",&HLT_HIAK4PFJet60_v1);
-  //evtTree->SetBranchAddress("HLT_HIAK4PFJet60_v1_Prescl",&HLT_HIAK4PFJet60_v1_Prescl);
-  //evtTree->SetBranchAddress("HLT_HIAK4PFJet80_v1",&HLT_HIAK4PFJet80_v1);
-  //evtTree->SetBranchAddress("HLT_HIAK4PFJet80_v1_Prescl",&HLT_HIAK4PFJet80_v1_Prescl);
-  //evtTree->SetBranchAddress("HLT_HIAK4PFJet100_v1",&HLT_HIAK4PFJet100_v1);
-  //evtTree->SetBranchAddress("HLT_HIAK4PFJet100_v1_Prescl",&HLT_HIAK4PFJet100_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIAK4PFJet60_v1",&HLT_HIAK4PFJet60_v1);
+  evtTree->SetBranchAddress("HLT_HIAK4PFJet60_v1_Prescl",&HLT_HIAK4PFJet60_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIAK4PFJet80_v1",&HLT_HIAK4PFJet80_v1);
+  evtTree->SetBranchAddress("HLT_HIAK4PFJet80_v1_Prescl",&HLT_HIAK4PFJet80_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIAK4PFJet100_v1",&HLT_HIAK4PFJet100_v1);
+  evtTree->SetBranchAddress("HLT_HIAK4PFJet100_v1_Prescl",&HLT_HIAK4PFJet100_v1_Prescl);
   //evtTree->SetBranchAddress("HLT_HIAK4PFJet120_v1",&HLT_HIAK4PFJet120_v1);
   //evtTree->SetBranchAddress("HLT_HIAK4CaloJet80_v1",&HLT_HIAK4CaloJet80_v1);
   //evtTree->SetBranchAddress("HLT_HICsAK4PFJet100Eta1p5_v1",&HLT_HICsAK4PFJet100Eta1p5_v1);
