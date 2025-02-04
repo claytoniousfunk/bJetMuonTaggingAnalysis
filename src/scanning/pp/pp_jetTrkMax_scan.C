@@ -157,7 +157,7 @@ void pp_jetTrkMax_scan(int group = 1){
   em->regEventFilter(NeventFilters, eventFilters);
 
   // apply HLT
-  if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+
 
 
   
@@ -191,6 +191,8 @@ void pp_jetTrkMax_scan(int group = 1){
 
     // event filters
     if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
+
+    if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
 
     // In data, event weight = 1
     double w = 1.0;
