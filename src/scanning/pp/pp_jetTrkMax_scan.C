@@ -80,7 +80,7 @@ TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
 void pp_jetTrkMax_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_withTrackMaxInfo_manual/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_jetTrkMax/pp_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_jetTrkMax_jet60/pp_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -155,6 +155,10 @@ void pp_jetTrkMax_scan(int group = 1){
 
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
+
+  // apply HLT
+  if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+
 
   
   // event loop
