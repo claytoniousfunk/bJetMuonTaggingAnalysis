@@ -167,46 +167,42 @@ void pp_skeleton(int group = 1){
       }
      
       if(doEtaPhiMask){
-	if(etaPhiMask(y,z)) continue;
+	if(etaPhiMask(recoJetEta_i,recoJetPhi_i)) continue;
       }
 
       //cout << "x" << endl;
      
      		
       // jet kinematic cuts
-      if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
+      if(TMath::Abs(recoJetEta_i) > etaMax || x < jetPtCut) continue;
 
-      int jetPtIndex = getJetPtBin(x);
+      int jetPtIndex = getJetPtBin(recoJetPt_i);
 
-
-    }
-     
-     
   
+    }
+    // END recoJet LOOP
+
+ 
+
+  } // end event loop
+
+
+ 
+  delete f;
+  // WRITE
+  auto wf = TFile::Open(output,"recreate");
+
+  // >>>>> write histograms
+ 
+ 
+  for(int j = 0; j < NJetPtIndices; j++){
+
   }
-  // END recoJet LOOP
-
- 
-
-} // end event loop
-
-
- 
-delete f;
-// WRITE
-auto wf = TFile::Open(output,"recreate");
-
-// >>>>> write histograms
- 
- 
-for(int j = 0; j < NJetPtIndices; j++){
-
- }
  
 
 
-wf->Close();
-return;
-// END WRITE
+  wf->Close();
+  return;
+  // END WRITE
 
 }
