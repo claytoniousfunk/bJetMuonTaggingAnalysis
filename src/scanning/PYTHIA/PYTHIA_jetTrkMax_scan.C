@@ -173,7 +173,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     if(j==0){
       
       h_jetTrkMaxPt[j] = new TH1D(Form("h_jetTrkMaxPt_J%i",j),Form("jetTrkMaxPt, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),500,0,500);
-      h_jetTrkMaxPtOverJetPt[j] = new TH1D(Form("h_jetTrkMaxPtOverJetPt_J%i",i,j),Form("jetTrkMaxPt / jetPt, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1);
+      h_jetTrkMaxPtOverJetPt[j] = new TH1D(Form("h_jetTrkMaxPtOverJetPt_J%i",j),Form("jetTrkMaxPt / jetPt, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1);
       h_jetTrkMaxEta[j] = new TH1D(Form("h_jetTrkMaxEta_J%i",j),Form("jetTrkMaxEta, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
       h_jetTrkMaxPhi[j] = new TH1D(Form("h_jetTrkMaxPhi_J%i",j),Form("jetTrkMaxPhi, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NPhiBins,phiMin,phiMax);
       h_jetTrkMaxDR[j] = new TH1D(Form("h_jetTrkMaxDR_J%i",j),Form("jetTrkMaxDR, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NdRBins,dRBinMin,dRBinMax);
@@ -184,7 +184,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     else{
 
       h_jetTrkMaxPt[j] = new TH1D(Form("h_jetTrkMaxPt_J%i",j),Form("jetTrkMaxPt, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),500,0,500);
-      h_jetTrkMaxPtOverJetPt[j] = new TH1D(Form("h_jetTrkMaxPtOverJetPt_J%i",i,j),Form("jetTrkMaxPt / jetPt, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,1);
+      h_jetTrkMaxPtOverJetPt[j] = new TH1D(Form("h_jetTrkMaxPtOverJetPt_J%i",j),Form("jetTrkMaxPt / jetPt, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,1);
       h_jetTrkMaxEta[j] = new TH1D(Form("h_jetTrkMaxEta_J%i",j),Form("jetTrkMaxEta, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NTrkEtaBins,trkEtaMin,trkEtaMax);
       h_jetTrkMaxPhi[j] = new TH1D(Form("h_jetTrkMaxPhi_J%i",j),Form("jetTrkMaxPhi, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NPhiBins,phiMin,phiMax);
       h_jetTrkMaxDR[j] = new TH1D(Form("h_jetTrkMaxDR_J%i",j),Form("jetTrkMaxDR, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NdRBins,dRBinMin,dRBinMax);
