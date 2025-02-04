@@ -92,6 +92,10 @@ void PYTHIA_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("muphi",1);
     old_jet_tree->SetBranchStatus("muptrel",1);
     old_jet_tree->SetBranchStatus("mudr",1);
+    old_jet_tree->SetBranchStatus("trackMaxEta",1);
+    old_jet_tree->SetBranchStatus("trackMaxPhi",1);
+    old_jet_tree->SetBranchStatus("trackMaxDR",1);
+
     // muons
     // old_muon_tree->SetBranchStatus("muPt",1);
     // old_muon_tree->SetBranchStatus("muEta",1);
