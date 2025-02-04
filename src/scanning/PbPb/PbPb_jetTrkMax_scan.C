@@ -88,7 +88,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial/PbPb_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_fineCentBins/PbPb_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_fineCentBins_jet60/PbPb_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -218,6 +218,10 @@ void PbPb_jetTrkMax_scan(int group = 1){
     if(em->checkEventFilter()) continue;
     // hiHF cut
     if(em->hiHF > 6000) continue;
+
+    // apply HLT
+    if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+
 
     // In data, event weight = 1
     double w = 1.0;
