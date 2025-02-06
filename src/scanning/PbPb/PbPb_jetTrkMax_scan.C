@@ -88,7 +88,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial/PbPb_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_fineCentBins_jet60/PbPb_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_fineCentBins_jet80/PbPb_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -178,8 +178,8 @@ void PbPb_jetTrkMax_scan(int group = 1){
   em->loadJet(jetTreeString);
   // cout << "	Loading muon..." << endl;
   // em->loadMuon(muonTreeString);
-  // cout << "	Loading muon triggers..." << endl;
-  // em->loadMuonTrigger(hltString);
+  cout << "	Loading muon triggers..." << endl;
+  em->loadMuonTrigger(hltString);
   cout << "	Variables initilized!" << endl << endl ;
   int NEvents = em->evtTree->GetEntries();
   cout << "	Number of events = " << NEvents << endl;
@@ -190,10 +190,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
   
-  
-  
   TRandom *randomGenerator = new TRandom2();
-
   
   // event loop
   int eventCounter = 0;
@@ -220,7 +217,8 @@ void PbPb_jetTrkMax_scan(int group = 1){
     if(em->hiHF > 6000) continue;
 
     // apply HLT
-    if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    //if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
 
 
     // In data, event weight = 1
