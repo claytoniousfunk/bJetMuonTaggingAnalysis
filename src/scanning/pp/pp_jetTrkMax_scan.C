@@ -79,8 +79,8 @@ TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
 ///////////////////////  start the program
 void pp_jetTrkMax_scan(int group = 1){
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_withTrackMaxInfo_manual/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_jetTrkMax_jet100/pp_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_withTrackMaxInfo/pp_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_jetTrkMax_jet60/pp_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -188,9 +188,9 @@ void pp_jetTrkMax_scan(int group = 1){
     // event filters
     if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
 
-    //if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+    if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
     //if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
-    if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
+    //if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
 
     // In data, event weight = 1
     double w = 1.0;
