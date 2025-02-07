@@ -2,8 +2,8 @@ void pp_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "";
-  in_file_name = "../../../fileNames/fileNames_pp_HighEGJet_withTrackMaxInfo_manual.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_withTrackMaxInfo_manual/pp_skim_output_%i",group);
+  in_file_name = "../../../fileNames/fileNames_pp_HighEGJet_withTrackMaxInfo.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_withTrackMaxInfo/pp_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
