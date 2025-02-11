@@ -51,7 +51,7 @@
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
 #include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 // hadronPtRel parameters
-#include "../../../headers/fitParameters/hadronPtRelFitParams.h"
+#include "../../../headers/fitParameters/hadronPtRelFitParams_PbPb.h"
 // dR parameters
 #include "../../../headers/fitParameters/dRFitParams/dRFitParams_PbPb.h"
 
@@ -211,7 +211,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
   
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005_dRReweightJ1/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005_hadronPtRelReweightJ1/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002_hadronPtRelReweight/PYTHIAHYDJET_scan_output_%i.root",group);
