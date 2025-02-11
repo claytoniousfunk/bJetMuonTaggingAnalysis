@@ -52,11 +52,15 @@
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
 #include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 // hadronPtRel parameters
-#include "../../../headers/fitParameters/hadronPtRelFitParams.h"
+#include "../../../headers/fitParameters/hadronPtRelFitParams_PbPb.h"
+// dR parameters
+#include "../../../headers/fitParameters/dRFitParams/dRFitParams_PbPb.h"
 
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel;
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR;
 // hadronPtRel parameters
 #include "../../../headers/fitFunctions/fitFxn_hadronPtRel.h"
+// dR function
+#include "../../../headers/fitFunctions/fitFxn_dR_PbPb.h"
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PH.h"
 // #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
@@ -117,7 +121,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_allFiles_partial/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_dRReweightJ1/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -244,6 +248,8 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   loadFitFxn_vz();
   loadFitFxn_hiBin();
   loadFitFxn_jetPt();
+  loadFitFxn_hadronPtRel();
+  loadFitFxn_dR();
 
   // define a random-generator 
   TRandom *randomGenerator = new TRandom2();
@@ -356,6 +362,12 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
       }
 
+
+
+      // apply dR reweight
+      double w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
+
+      
           		
       int matchedPartonFlavor = em->matchedPartonFlavor[i];
       int refPartonFlavorForB = em->refparton_flavorForB[i];
@@ -374,36 +386,36 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
       if(jetPtIndex < 0) continue;
 
-      h_jetPt[0]->Fill(recoJetPt_i,w);
-      h_jetPt[CentralityIndex]->Fill(recoJetPt_i,w);
+      h_jetPt[0]->Fill(recoJetPt_i,w_jet);
+      h_jetPt[CentralityIndex]->Fill(recoJetPt_i,w_jet);
 
-      h_jetTrkMaxPt[0][0]->Fill(jetTrkMax_i,w);
-      h_jetTrkMaxPtOverJetPt[0][0]->Fill(jetTrkMax_i/recoJetPt_i,w);
-      h_jetTrkMaxEta[0][0]->Fill(jetTrkMaxEta_i,w);
-      h_jetTrkMaxPhi[0][0]->Fill(jetTrkMaxPhi_i,w);
-      h_jetTrkMaxDR[0][0]->Fill(jetTrkMaxDR_i,w);
-      h_jetTrkMaxPtRel[0][0]->Fill(jetTrkMaxPtRel_i,w);
+      h_jetTrkMaxPt[0][0]->Fill(jetTrkMax_i,w_jet);
+      h_jetTrkMaxPtOverJetPt[0][0]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
+      h_jetTrkMaxEta[0][0]->Fill(jetTrkMaxEta_i,w_jet);
+      h_jetTrkMaxPhi[0][0]->Fill(jetTrkMaxPhi_i,w_jet);
+      h_jetTrkMaxDR[0][0]->Fill(jetTrkMaxDR_i,w_jet);
+      h_jetTrkMaxPtRel[0][0]->Fill(jetTrkMaxPtRel_i,w_jet);
 
-      h_jetTrkMaxPt[CentralityIndex][0]->Fill(jetTrkMax_i,w);
-      h_jetTrkMaxPtOverJetPt[CentralityIndex][0]->Fill(jetTrkMax_i/recoJetPt_i,w);
-      h_jetTrkMaxEta[CentralityIndex][0]->Fill(jetTrkMaxEta_i,w);
-      h_jetTrkMaxPhi[CentralityIndex][0]->Fill(jetTrkMaxPhi_i,w);
-      h_jetTrkMaxDR[CentralityIndex][0]->Fill(jetTrkMaxDR_i,w);
-      h_jetTrkMaxPtRel[CentralityIndex][0]->Fill(jetTrkMaxPtRel_i,w);
+      h_jetTrkMaxPt[CentralityIndex][0]->Fill(jetTrkMax_i,w_jet);
+      h_jetTrkMaxPtOverJetPt[CentralityIndex][0]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
+      h_jetTrkMaxEta[CentralityIndex][0]->Fill(jetTrkMaxEta_i,w_jet);
+      h_jetTrkMaxPhi[CentralityIndex][0]->Fill(jetTrkMaxPhi_i,w_jet);
+      h_jetTrkMaxDR[CentralityIndex][0]->Fill(jetTrkMaxDR_i,w_jet);
+      h_jetTrkMaxPtRel[CentralityIndex][0]->Fill(jetTrkMaxPtRel_i,w_jet);
 
-      h_jetTrkMaxPt[0][jetPtIndex]->Fill(jetTrkMax_i,w);
-      h_jetTrkMaxPtOverJetPt[0][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w);
-      h_jetTrkMaxEta[0][jetPtIndex]->Fill(jetTrkMaxEta_i,w);
-      h_jetTrkMaxPhi[0][jetPtIndex]->Fill(jetTrkMaxPhi_i,w);
-      h_jetTrkMaxDR[0][jetPtIndex]->Fill(jetTrkMaxDR_i,w);
-      h_jetTrkMaxPtRel[0][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w);
+      h_jetTrkMaxPt[0][jetPtIndex]->Fill(jetTrkMax_i,w_jet);
+      h_jetTrkMaxPtOverJetPt[0][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
+      h_jetTrkMaxEta[0][jetPtIndex]->Fill(jetTrkMaxEta_i,w_jet);
+      h_jetTrkMaxPhi[0][jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
+      h_jetTrkMaxDR[0][jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
+      h_jetTrkMaxPtRel[0][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
 
-      h_jetTrkMaxPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i,w);
-      h_jetTrkMaxPtOverJetPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w);
-      h_jetTrkMaxEta[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxEta_i,w);
-      h_jetTrkMaxPhi[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPhi_i,w);
-      h_jetTrkMaxDR[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxDR_i,w);
-      h_jetTrkMaxPtRel[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w);
+      h_jetTrkMaxPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i,w_jet);
+      h_jetTrkMaxPtOverJetPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
+      h_jetTrkMaxEta[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxEta_i,w_jet);
+      h_jetTrkMaxPhi[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
+      h_jetTrkMaxDR[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
+      h_jetTrkMaxPtRel[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
 
       
       
