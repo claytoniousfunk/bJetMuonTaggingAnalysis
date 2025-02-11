@@ -31,7 +31,7 @@ bool apply_genJetPt_smear = false;
 bool doJERCorrection = false;
 // muptrel reweight
 bool doMuPtRelReweight = false;
-bool doHadronPtRelReweight = true;
+bool doHadronPtRelReweight = false;
 // dR reweight
 bool doDRReweight = false;
 
