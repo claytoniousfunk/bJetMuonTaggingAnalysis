@@ -73,6 +73,12 @@ void PYTHIA_skim_simple(int group = 1){
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_NHitQ10_v1_Prescl",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu7_v1_Prescl",1);
     old_hlt_tree->SetBranchStatus("HLT_HIL3Mu12_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet60_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet60_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet80_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet80_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet100_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet100_v1_Prescl",1);
     // jets
     old_jet_tree->SetBranchStatus("jtpt",1);
     old_jet_tree->SetBranchStatus("rawpt",1);
