@@ -121,7 +121,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_allFiles_partial/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_dRReweightJ1/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_hadronPtRelReweightJ1/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -365,7 +365,10 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
 
       // apply dR reweight
-      double w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
+      // double w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
+
+      // apply hadronPtRel reweight
+      double w_jet = w * fitFxn_hadronPtRel->Eval(jetTrkMaxPtRel_i);
 
       
           		
