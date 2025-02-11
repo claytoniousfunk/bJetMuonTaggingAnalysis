@@ -1,5 +1,5 @@
-double dRFitParam_0 = 0.924277;
-double dRFitParam_1 = 1.63102;
+double dRFitParam_0 = 0.894827;
+double dRFitParam_1 = 2.09253;
 
-double e_dRFitParam_0 = 0.0130313;
-double e_dRFitParam_1 = 0.250231;
+double e_dRFitParam_0 = 0.0110407;
+double e_dRFitParam_1 = 0.193145;
