@@ -53,7 +53,7 @@
 // hadronPtRel parameters
 #include "../../../headers/fitParameters/hadronPtRelFitParams.h"
 // dR parameters
-#include "../../../headers/fitParameters/dRFitParams_PbPb.h"
+#include "../../../headers/fitParameters/dRFitParams/dRFitParams_PbPb.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR;
 // hadronPtRel function
