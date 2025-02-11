@@ -26,4 +26,6 @@ bool doEtaPhiMask = false;
 bool doBJetEnergyShift = false;
 bool doJERCorrection = false;
 // ptrel reweight
-bool doHadronPtRelReweight = true;
+bool doHadronPtRelReweight = false;
+// dR reweight
+bool doDRReweight = true;
