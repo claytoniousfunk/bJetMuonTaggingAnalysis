@@ -371,9 +371,9 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       // double w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
 
       // apply hadronPtRel reweight
-      double w_jet = w * fitFxn_hadronPtRel->Eval(jetTrkMaxPtRel_i);
+      // double w_jet = w * fitFxn_hadronPtRel->Eval(jetTrkMaxPtRel_i);
 
-      
+      double w_jet = w;
           		
       int matchedPartonFlavor = em->matchedPartonFlavor[i];
       int refPartonFlavorForB = em->refparton_flavorForB[i];
