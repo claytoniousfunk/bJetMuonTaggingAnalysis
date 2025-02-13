@@ -229,8 +229,8 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   em->loadJet(jetTreeString);
   // cout << "	Loading muon..." << endl;
   // em->loadMuon(muonTreeString);
-  // cout << "	Loading muon triggers..." << endl;
-  // em->loadMuonTrigger(hltString);
+  cout << "	Loading triggers..." << endl;
+  em->loadMuonTrigger(hltString);
   //cout << "	Loading tracks..." << endl;
   //em->loadTrack();
   // cout << "	Loading gen particles..." << endl;
