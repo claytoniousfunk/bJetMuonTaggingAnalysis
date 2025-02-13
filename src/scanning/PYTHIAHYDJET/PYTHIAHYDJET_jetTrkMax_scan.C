@@ -281,6 +281,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     
     // apply HLT
     if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    if(em->HLT_HICsAK4PFJet60Eta1p5_v1_Prescl < 0) continue;
     
     // calculate event weight
     
