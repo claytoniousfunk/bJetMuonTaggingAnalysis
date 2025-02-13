@@ -120,8 +120,8 @@ TH1D *h_jetTrkMaxPtRel[NCentralityIndices][NJetPtIndices];
 void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_allFiles_partial/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_hadronPtRelReweightJ1/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_pThat-50/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -279,7 +279,9 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     // hiHF cut
     if(em->hiHF > 6000) continue;
     
-
+    // apply HLT
+    if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    
     // calculate event weight
     
     double w_reweight_hiBin = 1.0;
