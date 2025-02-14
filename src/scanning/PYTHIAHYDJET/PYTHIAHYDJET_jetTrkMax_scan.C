@@ -123,7 +123,7 @@ TH1D *h_dPhi_trk_wta;
 void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_testForest_PH_DiJet/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
   TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_jet60_pThat-15_testForest/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
