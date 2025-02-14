@@ -124,6 +124,7 @@ TH1D *h_dEta_trk_wta;
 TH1D *h_dPhi_trk_wta;
 TH1D *h_dR_trk_wta;
 
+
 void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
@@ -159,14 +160,17 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   h_dEta_trk_wta = new TH1D("h_dEta_trk_wta","#it{#Delta}#it{#eta}(leading-track,WTA-axis); #it{#Delta}#it{#eta}; Entries",100,-0.8,0.8);
   h_dPhi_trk_wta = new TH1D("h_dPhi_trk_wta","#it{#Delta}#it{#phi}(leading-track,WTA-axis); #it{#Delta}#it{#phi}; Entries",50,-0.8,0.8);
+  h_dR_trk_wta = new TH1D("h_dR_trk_wta","#it{#Delta}#it{r}(leading-track,WTA-axis); #it{#Delta}#it{r}; Entries",100,0,0.4);
   h_dEta_trk_wta->Sumw2();
   h_dPhi_trk_wta->Sumw2();
+  h_dR_trk_wta->Sumw2();  
 
   h_dEta_jet_wta = new TH1D("h_dEta_jet_wta","#it{#Delta}#it{#eta}(E-scheme,WTA-axis); #it{#Delta}#it{#eta}; Entries",100,-0.8,0.8);
   h_dPhi_jet_wta = new TH1D("h_dPhi_jet_wta","#it{#Delta}#it{#phi}(E-scheme,WTA-axis); #it{#Delta}#it{#phi}; Entries",50,-0.8,0.8);
+  h_dR_jet_wta = new TH1D("h_dR_jet_wta","#it{#Delta}#it{r}(E-scheme,WTA-axis); #it{#Delta}#it{r}; Entries",100,0,0.4);
   h_dEta_jet_wta->Sumw2();
   h_dPhi_jet_wta->Sumw2();
-  
+  h_dR_jet_wta->Sumw2();  
 
   for(int i = 0; i < NCentralityIndices; i++){
 
@@ -348,9 +352,11 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
       double dEta_trk_wta_i = jetTrkMaxEta_i - recoJetEtaWTA_i;
       double dPhi_trk_wta_i = acos(cos(jetTrkMaxPhi_i - recoJetPhiWTA_i));
+      double dR_trk_wta_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEtaWTA_i,recoJetPhiWTA_i);
 
       double dEta_jet_wta_i = recoJetEta_i - recoJetEtaWTA_i;
       double dPhi_jet_wta_i = acos(cos(recoJetPhi_i - recoJetPhiWTA_i));
+      double dR_jet_wta_i = getDr(recoJetEta_i,recoJetPhi_i,recoJetEtaWTA_i,recoJetPhiWTA_i);      
 
       // cout << endl;
       // cout << "em->jet_wta_eta[i] = " << em->jet_wta_eta[i] << endl;
@@ -416,9 +422,11 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
       h_dEta_trk_wta->Fill(dEta_trk_wta_i, w_jet);
       h_dPhi_trk_wta->Fill(dPhi_trk_wta_i, w_jet);
+      h_dR_trk_wta->Fill(dR_trk_wta_i, w_jet);
 
       h_dEta_jet_wta->Fill(dEta_jet_wta_i, w_jet);
       h_dPhi_jet_wta->Fill(dPhi_jet_wta_i, w_jet);
+      h_dR_jet_wta->Fill(dR_jet_wta_i, w_jet);
 
       h_jetPt[0]->Fill(recoJetPt_i,w_jet);
       h_jetPt[CentralityIndex]->Fill(recoJetPt_i,w_jet);
@@ -479,9 +487,11 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   h_dEta_trk_wta->Write();
   h_dPhi_trk_wta->Write();
+  h_dR_trk_wta->Write();  
 
   h_dEta_jet_wta->Write();
   h_dPhi_jet_wta->Write();
+  h_dR_jet_wta->Write();
 
   for(int i = 0; i < NCentralityIndices; i++){
 
