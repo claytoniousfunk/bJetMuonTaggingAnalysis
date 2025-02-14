@@ -81,7 +81,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR;
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
 //#include "../../../headers/functions/getCentBin_v2.h" // course centrality binning
-#include "../../../headers/functions/getCentBin.h" // fine centrality binning 
+//#include "../../../headers/functions/getCentBin.h" // fine centrality binning
+#include "../../../headers/functions/getCentBin_v3.h" // ultra-fine centrality binning 
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
