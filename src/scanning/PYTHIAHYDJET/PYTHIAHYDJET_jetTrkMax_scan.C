@@ -117,12 +117,14 @@ TH1D *h_jetTrkMaxEta[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxPhi[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxDR[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxPtRel[NCentralityIndices][NJetPtIndices];
+TH1D *h_dEta_trk_wta;
+TH1D *h_dPhi_trk_wta;
 
 void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_ultraFineCentBins_jet60_pThat-15/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_jet60_pThat-15/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -150,6 +152,12 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   /*
     Define all your histograms here!!
   */
+
+  h_dEta_trk_wta = new TH1D("h_dEta_trk_wta",100,-4,4);
+  h_dPhi_trk_wta = new TH1D("h_dPhi_trk_wta",100,-TMath::Pi(),TMath::Pi());
+  h_dEta_trk_wta->Sumw2();
+  h_dPhi_trk_wta->Sumw2();
+  
 
   for(int i = 0; i < NCentralityIndices; i++){
 
@@ -321,13 +329,16 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       double recoJetPt_i = JEC.GetCorrectedPT();  // recoJetPt
       double recoJetEta_i = em->jeteta[i]; // recoJetEta
       double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
-      // double y = em->jet_wta_eta[i]; // recoJetEta with WTA axis
-      // double z = em->jet_wta_phi[i]; // recoJetPhi with WTA axis
+      double recoJetEtaWTA_i = em->jet_wta_eta[i]; // recoJetEta with WTA axis
+      double recoJetPhiWTA_i = em->jet_wta_phi[i]; // recoJetPhi with WTA axis
       double jetTrkMax_i = em->jetTrkMax[i];
       double jetTrkMaxEta_i = em->jetTrkMaxEta[i];
       double jetTrkMaxPhi_i = em->jetTrkMaxPhi[i];
       double jetTrkMaxDR_i = em->jetTrkMaxDR[i];
       double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
+
+      double dEta_trk_wta_i = jetTrkMaxEta_i - recoJetEtaWTA_i;
+      double dPhi_trk_wta_i = acos(cos(jetTrkMaxPhi_i - recoJetPhiWTA_i));
 
       // cout << endl;
       // cout << "em->jet_wta_eta[i] = " << em->jet_wta_eta[i] << endl;
@@ -366,8 +377,6 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
       }
 
-
-
       // apply dR reweight
       // double w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
 
@@ -392,6 +401,9 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
       if(jetPtIndex < 0) continue;
+
+      h_dEta_trk_wta->Fill(dEta_trk_wta_i, w_jet);
+      h_dPhi_trk_wta->Fill(dPhi_trk_wta_i, w_jet);
 
       h_jetPt[0]->Fill(recoJetPt_i,w_jet);
       h_jetPt[CentralityIndex]->Fill(recoJetPt_i,w_jet);
@@ -449,6 +461,9 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     histogram->Write("name");
 
   */
+
+  h_dEta_trk_wta->Write();
+  h_dPhi_trk_wta->Write();
 
   for(int i = 0; i < NCentralityIndices; i++){
 
