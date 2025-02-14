@@ -83,15 +83,16 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // in_file_name = "../../../fileNames/fileNames_PH_DiJet_onlyJets_withTrackMaxInfo_allFiles_partial.txt";
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_allFiles_partial/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
+  // // PH forest with jetTrkMax information (eta, phi, dR), N = 7202
+  // in_file_name = "../../../fileNames/fileNames_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT.txt";
+  // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
-
-  // PH forest with jetTrkMax information (eta, phi, dR), N = 7202
-  in_file_name = "../../../fileNames/fileNames_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT.txt";
+  // PH forest with jetTrkMax information (eta, phi, dR), N = 1
+  in_file_name = "../../../fileNames/fileNames_testForest_PH_DiJet.txt";
   output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i",group);
-
-
   
-  int endfile = 7202;
+  int endfile = 1;
+
 
 
   string output_file_extension = "";
@@ -101,8 +102,7 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   if(!instr.is_open()) cout << "filelist not found!! Exiting..." << endl;
   std::string filename;
   Int_t ifile = 0;
-
-  
+ 
 
   TFile *old_file;
   TString filename_string = "";
