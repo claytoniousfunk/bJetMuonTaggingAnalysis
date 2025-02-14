@@ -142,8 +142,12 @@ TH1D *h_jetTrkMaxEta[NJetPtIndices];
 TH1D *h_jetTrkMaxPhi[NJetPtIndices];
 TH1D *h_jetTrkMaxDR[NJetPtIndices];
 TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
-
-
+TH1D *h_dEta_jet_wta;
+TH1D *h_dPhi_jet_wta;
+TH1D *h_dR_jet_wta;
+TH1D *h_dEta_trk_wta;
+TH1D *h_dPhi_trk_wta;
+TH1D *h_dR_trk_wta;
 
 void PYTHIA_jetTrkMax_scan(int group = 1){
 
@@ -164,8 +168,17 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
   /////////////  Define histograms
   h_jetPt = new TH1D("h_jetPt","jetPt",NPtBins,ptMin,ptMax);
-
   h_jetPt->Sumw2();
+  
+  h_dEta_trk_wta = new TH1D("h_dEta_trk_wta","#it{#Delta}#it{#eta}(leading-track,WTA-axis); #it{#Delta}#it{#eta}; Entries",100,-0.8,0.8);
+  h_dPhi_trk_wta = new TH1D("h_dPhi_trk_wta","#it{#Delta}#it{#phi}(leading-track,WTA-axis); #it{#Delta}#it{#phi}; Entries",50,-0.8,0.8);
+  h_dEta_trk_wta->Sumw2();
+  h_dPhi_trk_wta->Sumw2();
+
+  h_dEta_jet_wta = new TH1D("h_dEta_jet_wta","#it{#Delta}#it{#eta}(E-scheme,WTA-axis); #it{#Delta}#it{#eta}; Entries",100,-0.8,0.8);
+  h_dPhi_jet_wta = new TH1D("h_dPhi_jet_wta","#it{#Delta}#it{#phi}(E-scheme,WTA-axis); #it{#Delta}#it{#phi}; Entries",50,-0.8,0.8);
+  h_dEta_jet_wta->Sumw2();
+  h_dPhi_jet_wta->Sumw2();
 
   // loop through jet pT indices
   for(int j = 0; j < NJetPtIndices; j++){
@@ -299,11 +312,21 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       double recoJetPt_i = JEC.GetCorrectedPT();  // apply manual JEC
       double recoJetEta_i = em->jeteta[i]; // recoJetEta
       double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
+      double recoJetEtaWTA_i = em->jet_wta_eta[i]; // recoJetEta with WTA axis
+      double recoJetPhiWTA_i = em->jet_wta_phi[i]; // recoJetPhi with WTA axis
       double jetTrkMax_i = em->jetTrkMax[i];
       double jetTrkMaxEta_i = em->jetTrkMaxEta[i];
       double jetTrkMaxPhi_i = em->jetTrkMaxPhi[i];
       double jetTrkMaxDR_i = em->jetTrkMaxDR[i];
       double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
+
+      double dEta_trk_wta_i = jetTrkMaxEta_i - recoJetEtaWTA_i;
+      double dPhi_trk_wta_i = acos(cos(jetTrkMaxPhi_i - recoJetPhiWTA_i));
+      double dR_trk_wta_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEtaWTA_i,recoJetPhiWTA_i);
+
+      double dEta_jet_wta_i = recoJetEta_i - recoJetEtaWTA_i;
+      double dPhi_jet_wta_i = acos(cos(recoJetPhi_i - recoJetPhiWTA_i));
+      double dR_jet_wta_i = getDr(recoJetEta_i,recoJetPhi_i,recoJetEtaWTA_i,recoJetPhiWTA_i);
       
       double w_jetPt = 1.0;
 
@@ -370,6 +393,14 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
       if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting
 
+      h_dEta_trk_wta->Fill(dEta_trk_wta_i, w_jet);
+      h_dPhi_trk_wta->Fill(dPhi_trk_wta_i, w_jet);
+      h_dR_trk_wta->Fill(dR_trk_wta_i, w_jet);
+
+      h_dEta_jet_wta->Fill(dEta_jet_wta_i, w_jet);
+      h_dPhi_jet_wta->Fill(dPhi_jet_wta_i, w_jet);
+      h_dR_jet_wta->Fill(dR_jet_wta_i, w_jet);
+      
       h_jetPt->Fill(recoJetPt_i,w_jet);
       
       h_jetTrkMaxPt[0]->Fill(jetTrkMax_i,w_jet);
@@ -399,7 +430,11 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   // >>>>>>>>>> write histograms
 
   h_jetPt->Write();
-
+  h_dEta_trk_wta->Write();
+  h_dPhi_trk_wta->Write();
+  h_dEta_jet_wta->Write();
+  h_dPhi_jet_wta->Write();
+  
   for(int j = 0; j < NJetPtIndices; j++){
 
     h_jetTrkMaxPt[j]->Write();
