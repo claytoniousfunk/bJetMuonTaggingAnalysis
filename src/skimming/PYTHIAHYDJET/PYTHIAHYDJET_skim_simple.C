@@ -89,7 +89,7 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
 
   // PH forest with jetTrkMax information (eta, phi, dR), N = 1
   in_file_name = "../../../fileNames/fileNames_testForest_PH_DiJet.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_testForest_PH_DiJet/PYTHIAHYDJET_DiJet_skim_output_%i",group);
   
   int endfile = 1;
 
