@@ -160,14 +160,14 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   h_dEta_trk_wta = new TH1D("h_dEta_trk_wta","#it{#Delta}#it{#eta}(leading-track,WTA-axis); #it{#Delta}#it{#eta}; Entries",100,-0.8,0.8);
   h_dPhi_trk_wta = new TH1D("h_dPhi_trk_wta","#it{#Delta}#it{#phi}(leading-track,WTA-axis); #it{#Delta}#it{#phi}; Entries",50,-0.8,0.8);
-  h_dR_trk_wta = new TH1D("h_dR_trk_wta","#it{#Delta}#it{r}(leading-track,WTA-axis); #it{#Delta}#it{r}; Entries",100,0,0.4);
+  h_dR_trk_wta = new TH1D("h_dR_trk_wta","#it{#Delta}#it{r}(leading-track,WTA-axis); #it{#Delta}#it{r}; Entries",400,0,0.4);
   h_dEta_trk_wta->Sumw2();
   h_dPhi_trk_wta->Sumw2();
   h_dR_trk_wta->Sumw2();  
 
   h_dEta_jet_wta = new TH1D("h_dEta_jet_wta","#it{#Delta}#it{#eta}(E-scheme,WTA-axis); #it{#Delta}#it{#eta}; Entries",100,-0.8,0.8);
   h_dPhi_jet_wta = new TH1D("h_dPhi_jet_wta","#it{#Delta}#it{#phi}(E-scheme,WTA-axis); #it{#Delta}#it{#phi}; Entries",50,-0.8,0.8);
-  h_dR_jet_wta = new TH1D("h_dR_jet_wta","#it{#Delta}#it{r}(E-scheme,WTA-axis); #it{#Delta}#it{r}; Entries",100,0,0.4);
+  h_dR_jet_wta = new TH1D("h_dR_jet_wta","#it{#Delta}#it{r}(E-scheme,WTA-axis); #it{#Delta}#it{r}; Entries",400,0,0.4);
   h_dEta_jet_wta->Sumw2();
   h_dPhi_jet_wta->Sumw2();
   h_dR_jet_wta->Sumw2();  
