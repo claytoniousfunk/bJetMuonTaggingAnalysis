@@ -153,8 +153,8 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     Define all your histograms here!!
   */
 
-  h_dEta_trk_wta = new TH1D("h_dEta_trk_wta",100,-4,4);
-  h_dPhi_trk_wta = new TH1D("h_dPhi_trk_wta",100,-TMath::Pi(),TMath::Pi());
+  h_dEta_trk_wta = new TH1D("h_dEta_trk_wta","#it{#Delta}#it{#eta}(leading-track,WTA-axis); #it{#Delta}#it{#eta}; Entries",100,-4,4);
+  h_dPhi_trk_wta = new TH1D("h_dPhi_trk_wta","#it{#Delta}#it{#phi}(leading-track,WTA-axis); #it{#Delta}#it{#phi}; Entries",100,-TMath::Pi(),TMath::Pi());
   h_dEta_trk_wta->Sumw2();
   h_dPhi_trk_wta->Sumw2();
   
