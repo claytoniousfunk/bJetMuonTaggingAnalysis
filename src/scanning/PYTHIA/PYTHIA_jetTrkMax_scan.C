@@ -152,9 +152,9 @@ TH1D *h_dR_trk_wta;
 void PYTHIA_jetTrkMax_scan(int group = 1){
 
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_testForest_PYTHIA_DiJet/PYTHIA_DiJet_skim_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PYTHIA_DiJet_withJetTrackMaxInfo/PYTHIA_DiJet_skim_output_%i.root",group);
 
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_testForest_PYTHIA_DiJet/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_jetTrkMax_jet80_pThat-15/PYTHIA_DiJet_scan_output_%i.root",group);
 
   printIntroduction_PYTHIA_scan_V3p7();
   readConfig();
@@ -290,8 +290,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     if(em->checkEventFilter()) continue;
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
 
-    if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
-    //if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
+    //if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+    if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
     //if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
     
     double w_reweight_vz = 1.0;
