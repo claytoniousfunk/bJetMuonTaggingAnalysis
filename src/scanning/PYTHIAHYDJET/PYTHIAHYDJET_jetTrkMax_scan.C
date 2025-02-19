@@ -130,7 +130,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_ultraFineCentBins_jet80_pThat-15/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_ultraFineCentBins_jet60_pThat-15_doubleDRBins/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -303,11 +303,11 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     if(em->hiHF > 6000) continue;
     
     // apply HLT
-    // if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
-    // if(em->HLT_HICsAK4PFJet60Eta1p5_v1_Prescl < 0) continue;
+    if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    if(em->HLT_HICsAK4PFJet60Eta1p5_v1_Prescl < 0) continue;
 
-    if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
-    if(em->HLT_HICsAK4PFJet80Eta1p5_v1_Prescl < 0) continue;
+    // if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
+    // if(em->HLT_HICsAK4PFJet80Eta1p5_v1_Prescl < 0) continue;
 
     
     // calculate event weight
