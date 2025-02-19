@@ -118,7 +118,7 @@ const int NpartMin = 0;
 const int NpartMax = 200;
 
 // for jets
-const int NdRBins = 100;
+const int NdRBins = 200;
 const double dRBinMin = 0.0;
 const double dRBinMax = 0.5; 
 
