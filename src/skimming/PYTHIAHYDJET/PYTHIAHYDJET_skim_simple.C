@@ -91,11 +91,15 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // in_file_name = "../../../fileNames/fileNames_testForest_PH_DiJet.txt";
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_testForest_PH_DiJet/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
-  // BATCH 11: DiJet, additional MC, incl, pTjet-15, N = 2683
-  in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch11.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch11/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  // // BATCH 11: DiJet, additional MC, incl, pTjet-15, N = 2683
+  // in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch11.txt";
+  // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch11/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+
+  // BATCH 11: DiJet, additional MC, incl, pTjet-15, N = 4628
+  in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch12.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch12/PYTHIAHYDJET_DiJet_skim_output_%i",group);
   
-  int endfile = 2683;
+  int endfile = 4628;
 
 
 
