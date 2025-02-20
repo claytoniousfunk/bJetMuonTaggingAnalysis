@@ -35,8 +35,7 @@
 // jet corrector
 #include "../../../JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p2.h"
-
+#include "../../../headers/AnalysisSetupV2p3.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -98,14 +97,14 @@ TH1D *h_inclRecoJetEta_inclRecoMuonTag_triggerOn;
 TH1D *h_inclRecoJetPhi_inclRecoMuonTag_triggerOn;
 TH2D *h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn;
 TH2D *h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn;
-TH2D *h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[NJetPtIndices];
+//TH2D *h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[NJetPtIndices];
 // ~~~~~~~~~ muon variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TH1D *h_inclMuPt;
-TH1D *h_muptrel_inclRecoMuonTag_triggerOn[NJetPtIndices];
-TH1D *h_mupt_inclRecoMuonTag_triggerOn[NJetPtIndices];
-TH1D *h_mueta_inclRecoMuonTag_triggerOn[NJetPtIndices];
-TH1D *h_muphi_inclRecoMuonTag_triggerOn[NJetPtIndices];
-TH1D *h_muJetDr[NJetPtIndices];
+TH2D *h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn;
+TH2D *h_mupt_recoJetPt_inclRecoMuonTag_triggerOn;
+TH2D *h_mueta_recoJetPt_inclRecoMuonTag_triggerOn;
+TH2D *h_muphi_recoJetPt_inclRecoMuonTag_triggerOn;
+TH2D *h_muJetDr_recoJetPt[NJetPtIndices];
 
 
 
@@ -119,11 +118,11 @@ void pp_scan(int group = 1){
   // TString input = Form("../../../rootFiles/skimmingOutput/pp/output_MinBias/pp_MinBias_skim_output_%i.root",group);
   // TString output = Form("output_SingleMuon_mu7/pp_MinBias_scan_output_%i.root",group);
 
-  //TString input = Form("/eos/user/c/cbennett/skims/output_pp_SingleMuon/pp_SingleMuon_skim_output_%i.root",group);
-  //TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_SingleMuon_mu12_tight_pTmu-14_newJetBins_newHistograms/pp_SingleMuon_scan_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_pp_SingleMuon/pp_SingleMuon_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_SingleMuon_mu12_tight_pTmu-14_projectableTemplates/pp_SingleMuon_scan_output_%i.root",group);
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1_alt/pp_MinBias_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_evtFilterFix_newJetBins/pp_MinBias_scan_output_%i.root",group);
+  // TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1_alt/pp_MinBias_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_evtFilterFix_newJetBins/pp_MinBias_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -164,6 +163,15 @@ void pp_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn = new TH2D("h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn","incl. reco #phi^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
   h_inclMuPt = new TH1D("h_inclMuPt","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
 
+
+  // muon-based 2d histograms
+  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{p}_{T}^{rel} vs jet #it{p}_{T}",NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{p}_{T} vs jet #it{p}_{T}",NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{#eta} vs jet #it{p}_{T}",NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{#phi} vs jet #it{p}_{T}",NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+  h_muJetDr_recoJetPt = new TH2D("h_muJetDr_recoJetPt","#it{#Delta r}(muon,jet) vs jet #it{p}_{T}",NdRBins,dRBinMin,dRBinMax);
+  
+
   // Sumw2 commands
   h_hiBin->Sumw2();
   h_hiBin_inclRecoMuonTag->Sumw2();
@@ -190,38 +198,18 @@ void pp_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Sumw2();
   h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Sumw2();
   h_inclMuPt->Sumw2();
-  
-  // loop through jet pt indices
-  for(int j = 0; j < NJetPtIndices; j++){
-    if(j == 0){
-      h_muptrel_inclRecoMuonTag_triggerOn[j] = new TH1D(Form("h_muptrel_inclRecoMuonTag_triggerOn_J%i",j),Form("muon p_{T}^{rel}, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax);
-      h_mupt_inclRecoMuonTag_triggerOn[j] = new TH1D(Form("h_mupt_inclRecoMuonTag_triggerOn_J%i",j),Form("muon p_{T}, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuPtBins,muPtMin,muPtMax);
-      h_mueta_inclRecoMuonTag_triggerOn[j] = new TH1D(Form("h_mueta_inclRecoMuonTag_triggerOn_J%i",j),Form("muon #eta, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
-      h_muphi_inclRecoMuonTag_triggerOn[j] = new TH1D(Form("h_muphi_inclRecoMuonTag_triggerOn_J%i",j),Form("muon #phi, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NPhiBins,phiMin,phiMax);
-      h_inclRecoJetEta_inclRecoJetPhi[j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_J%i",j),Form("incl. reco #phi^{jet} vs incl. reco #eta^{jet}, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
-      h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[j] = new TH2D(Form("h_inclRecoJetEta_inclRecobJetPhi_inclRecoMuonTag_J%i",j),Form("incl. reco #phi^{jet} vs incl. reco #eta^{jet}, tagged with incl. reco muon, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
-      h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[j] = new TH2D(Form("h_inclRecoJetEta_inclRecobJetPhi_inclRecoMuonTag_triggerOn_J%i",j),Form("incl. reco #phi^{jet} vs incl. reco #eta^{jet}, tagged with incl. reco muon, trigger ON, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
-      h_muJetDr[j] = new TH1D(Form("h_muJetDr_J%i",j),Form("dR(muon,jet), %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),100,0,1);
-    }
-    else{
-      h_muptrel_inclRecoMuonTag_triggerOn[j] = new TH1D(Form("h_muptrel_inclRecoMuonTag_triggerOn_J%i",j),Form("muon p_{T}^{rel}, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax);
-      h_mupt_inclRecoMuonTag_triggerOn[j] = new TH1D(Form("h_mupt_inclRecoMuonTag_triggerOn_J%i",j),Form("muon p_{T}, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NMuPtBins,muPtMin,muPtMax);
-      h_mueta_inclRecoMuonTag_triggerOn[j] = new TH1D(Form("h_mueta_inclRecoMuonTag_triggerOn_J%i",j),Form("muon #eta, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NTrkEtaBins,trkEtaMin,trkEtaMax);
-      h_muphi_inclRecoMuonTag_triggerOn[j] = new TH1D(Form("h_muphi_inclRecoMuonTag_triggerOn_J%i",j),Form("muon #phi, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NPhiBins,phiMin,phiMax);
-      h_inclRecoJetEta_inclRecoJetPhi[j] = new TH2D(Form("h_inclRecoJetEta_inclRecoJetPhi_J%i",j),Form("incl. reco #phi^{jet} vs incl. reco #eta^{jet}, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
-      h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[j] = new TH2D(Form("h_inclRecoJetEta_inclRecobJetPhi_inclRecoMuonTag_J%i",j),Form("incl. reco #phi^{jet} vs incl. reco #eta^{jet}, tagged with incl. reco muon, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
-      h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[j] = new TH2D(Form("h_inclRecoJetEta_inclRecobJetPhi_inclRecoMuonTag_triggerOn_J%i",j),Form("incl. reco #phi^{jet} vs incl. reco #eta^{jet}, tagged with incl. reco muon, trigger ON, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NEtaBins,etaMin,etaMax,NPhiBins,phiMin,phiMax);
-      h_muJetDr[j] = new TH1D(Form("h_muJetDr_J%i",j),Form("dR(muon,jet), %3.0f < pTjet < %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,1);
-    }
-    h_muptrel_inclRecoMuonTag_triggerOn[j]->Sumw2();
-    h_mupt_inclRecoMuonTag_triggerOn[j]->Sumw2();
-    h_mueta_inclRecoMuonTag_triggerOn[j]->Sumw2();
-    h_muphi_inclRecoMuonTag_triggerOn[j]->Sumw2();
-    h_inclRecoJetEta_inclRecoJetPhi[j]->Sumw2();
-    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[j]->Sumw2();
-    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[j]->Sumw2();
-    h_muJetDr[j]->Sumw2();
-  }
+
+  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
+  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
+  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
+  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
+  h_muJetDr_recoJetPt->Sumw2();
+				 
+				 
+
+
+
+
 
   TFile *f = TFile::Open(input);
   cout << "	File opened!" << endl;
@@ -479,8 +467,6 @@ void pp_scan(int group = 1){
       h_inclRecoJetPhi->Fill(z,w);
       h_inclRecoJetPt_inclRecoJetEta->Fill(x,y,w);
       h_inclRecoJetPt_inclRecoJetPhi->Fill(x,z,w);
-      h_inclRecoJetEta_inclRecoJetPhi[0]->Fill(y,z,w);
-      if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi[jetPtIndex]->Fill(y,z,w);
      
       if(hasInclRecoMuonTag){
 
@@ -504,24 +490,13 @@ void pp_scan(int group = 1){
 	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(x,y,w_trig);
 	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(x,z,w_trig);
 	 
-	  h_muptrel_inclRecoMuonTag_triggerOn[0]->Fill(muPtRel,w_trig);
-	  h_mupt_inclRecoMuonTag_triggerOn[0]->Fill(muPt,w_trig);
-	  h_mueta_inclRecoMuonTag_triggerOn[0]->Fill(muEta,w_trig);
-	  h_muphi_inclRecoMuonTag_triggerOn[0]->Fill(muPhi,w_trig);
-	  h_muJetDr[0]->Fill(muJetDr_i,w_trig);
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muPtRel,x,w_trig);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muPt,x,w_trig);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muEta,x,w_trig);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muPhi,x,w_trig);
+	  h_muJetDr_recoJetPt->Fill(muJetDr_i,x,w_trig);
 
-	  h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(y,z,w_trig);
-
-	  if(jetPtIndex > 0){
-
-	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(y,z,w_trig);
-	   
-	    h_muptrel_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPtRel,w_trig);
-	    h_mupt_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPt,w_trig);
-	    h_mueta_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muEta,w_trig);
-	    h_muphi_inclRecoMuonTag_triggerOn[jetPtIndex]->Fill(muPhi,w_trig);
-	    h_muJetDr[jetPtIndex]->Fill(muJetDr_i,w_trig);
-	  }
+	  
 	} 
 
       }
@@ -588,21 +563,11 @@ void pp_scan(int group = 1){
   h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
   h_inclMuPt->Write();
 
- 
-  for(int j = 0; j < NJetPtIndices; j++){
-
-    h_muptrel_inclRecoMuonTag_triggerOn[j]->Write();
-    h_mupt_inclRecoMuonTag_triggerOn[j]->Write();
-    h_mueta_inclRecoMuonTag_triggerOn[j]->Write();
-    h_muphi_inclRecoMuonTag_triggerOn[j]->Write();
-    h_inclRecoJetEta_inclRecoJetPhi[j]->Write();
-    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[j]->Write();
-    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[j]->Write();
-    h_muJetDr[j]->Write();
-     
-  }
- 
-
+  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn->Write();
+  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn->Write();
+  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn->Write();
+  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn->Write();
+  h_muJetDr_recoJetPt->Write();
 
   wf->Close();
   return;
