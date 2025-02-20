@@ -273,7 +273,7 @@ TH2D *h_muJetDr_flavor[NJetPtIndices];
 void PYTHIA_scan(int group = 1){
 
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
   // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_testForest_PYTHIA_DiJet/PYTHIA_DiJet_skim_output_%i.root",group);
   TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_projectableTemplates/PYTHIA_DiJet_scan_output_%i.root",group);
 
