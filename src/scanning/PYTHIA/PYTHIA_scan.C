@@ -1941,7 +1941,6 @@ void PYTHIA_scan(int group = 1){
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][k]->Write();
     }
 
-    h_muJetDr_flavor[j]->Write();
     
   }
 
