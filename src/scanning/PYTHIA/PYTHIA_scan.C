@@ -218,7 +218,7 @@ TH2D *h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets;
 TH2D *h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets;
 TH2D *h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets;
 TH2D *h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets;
-TH2D *h_muJetDr_recoJetPt_gJets;
+TH2D *h_muJetDr_recoJetPt_cJets;
 // b/bbar jets
 TH2D *h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets;
 TH2D *h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets;
