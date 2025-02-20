@@ -1930,11 +1930,6 @@ void PYTHIA_scan(int group = 1){
     h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[j]->Write();
     h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[j]->Write();
     h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[j]->Write();
-
-    h_muptrel_inclRecoMuonTag_triggerOn_flavor[j]->Write();
-    h_mupt_inclRecoMuonTag_triggerOn_flavor[j]->Write();
-    h_mueta_inclRecoMuonTag_triggerOn_flavor[j]->Write();
-    h_muphi_inclRecoMuonTag_triggerOn_flavor[j]->Write();
     
     h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[j]->Write();
 
