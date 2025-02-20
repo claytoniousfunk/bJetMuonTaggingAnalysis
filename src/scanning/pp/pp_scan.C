@@ -477,8 +477,7 @@ void pp_scan(int group = 1){
 	h_inclRecoJetPhi_inclRecoMuonTag->Fill(z,w);
 	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Fill(x,y,w);
 	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Fill(x,z,w);
-	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(y,z,w);
-	if(jetPtIndex > 0) h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(y,z,w);
+
        
 	if(evtTriggerDecision){
 	 
