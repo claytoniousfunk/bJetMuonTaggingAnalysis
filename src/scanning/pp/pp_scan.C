@@ -169,7 +169,7 @@ void pp_scan(int group = 1){
   h_mupt_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{p}_{T} vs jet #it{p}_{T}",NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
   h_mueta_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{#eta} vs jet #it{p}_{T}",NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
   h_muphi_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{#phi} vs jet #it{p}_{T}",NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-  h_muJetDr_recoJetPt = new TH2D("h_muJetDr_recoJetPt","#it{#Delta r}(muon,jet) vs jet #it{p}_{T}",NdRBins,dRBinMin,dRBinMax);
+  h_muJetDr_recoJetPt = new TH2D("h_muJetDr_recoJetPt","#it{#Delta r}(muon,jet) vs jet #it{p}_{T}",NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
   
 
   // Sumw2 commands
