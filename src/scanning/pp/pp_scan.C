@@ -104,7 +104,7 @@ TH2D *h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn;
 TH2D *h_mupt_recoJetPt_inclRecoMuonTag_triggerOn;
 TH2D *h_mueta_recoJetPt_inclRecoMuonTag_triggerOn;
 TH2D *h_muphi_recoJetPt_inclRecoMuonTag_triggerOn;
-TH2D *h_muJetDr_recoJetPt[NJetPtIndices];
+TH2D *h_muJetDr_recoJetPt;
 
 
 
