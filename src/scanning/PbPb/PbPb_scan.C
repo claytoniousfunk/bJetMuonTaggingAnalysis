@@ -676,13 +676,13 @@ void PbPb_scan(int group = 1){
 	  
 	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn[0]->Fill(muPtRel,x,w_trig);
 	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn[0]->Fill(muPt,x,w_trig);
-	  h_mueta_recoJetPt_recoJetPt_inclRecoMuonTag_triggerOn[0]->Fill(muEta,x,w_trig);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn[0]->Fill(muEta,x,w_trig);
 	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[0]->Fill(muPhi,x,w_trig);
 	  h_muJetDr_recoJetPt[0]->Fill(muJetDr,x,w_trig);
 
 	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(muPtRel,x,w_trig);
 	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(muPt,x,w_trig);
-	  h_mueta_recoJetPt_recoJetPt_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(muEta,x,w_trig);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(muEta,x,w_trig);
 	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(muPhi,x,w_trig);
 	  h_muJetDr_recoJetPt[CentralityIndex]->Fill(muJetDr,x,w_trig);
 
