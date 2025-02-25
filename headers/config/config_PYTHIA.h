@@ -33,6 +33,6 @@ bool doJERCorrection = false;
 bool doMuPtRelReweight = false;
 bool doHadronPtRelReweight = false;
 // dR reweight
-bool doDRReweight = false;
+bool doDRReweight = true;
 
 
