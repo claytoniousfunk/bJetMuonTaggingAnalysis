@@ -28,4 +28,4 @@ bool doJERCorrection = false;
 // ptrel reweight
 bool doHadronPtRelReweight = false;
 // dR reweight
-bool doDRReweight = false;
+bool doDRReweight = true;
