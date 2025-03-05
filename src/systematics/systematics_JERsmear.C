@@ -1,8 +1,8 @@
 #include "../templateFitter/templateFitter.h"
 
-void systematics_JERsmear(bool do_mu5 = 1,
+void systematics_JERsmear(bool do_mu5 = 0,
 			  bool do_mu7 = 0,
-			  bool do_mu12 = 0){
+			  bool do_mu12 = 1){
 
 
   TLine *li = new TLine();
@@ -12,22 +12,22 @@ void systematics_JERsmear(bool do_mu5 = 1,
   
   
   cout << endl;
-  cout << "#######  SYSTEMATICS -- B-ENHANCEMENT  #########" << endl;
+  cout << "#######  SYSTEMATICS -- JER-smear  #########" << endl;
   cout << endl;
 
   TFile *file_b_noSmear, *file_b_smear;
 
   if(do_mu5){
-    file_b_noSmear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-1_mu7-0_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0-JERsmear-0.root");
-    file_b_smear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-1_mu7-0_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0-JERsmear-1.root");
+    file_b_noSmear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-1_mu7-0_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0_bMult-1.2-JERsmear-0.root");
+    file_b_smear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-1_mu7-0_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0_bMult-1.2-JERsmear-1.root");
   }
   else if(do_mu7){
-    file_b_noSmear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-0_mu7-1_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0-JERsmear-0.root");
-    file_b_smear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-0_mu7-1_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0-JERsmear-1.root");
+    file_b_noSmear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-1_mu12-0_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0.root");
+    file_b_smear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-1_mu12-0_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-1_JEUShiftUp-0_JEUShiftDown-0.root");
   }
   else if(do_mu12){
-    file_b_noSmear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0-JERsmear-0.root");
-    file_b_smear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0-JERsmear-1.root");
+    file_b_noSmear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0_bJetEnergyShift-0.root");
+    file_b_smear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-1_JEUShiftUp-0_JEUShiftDown-0_bJetEnergyShift-0.root");
   }
   else{};
   
@@ -83,7 +83,7 @@ void systematics_JERsmear(bool do_mu5 = 1,
   r_C2->GetYaxis()->SetTitle("#it{b}-purity deviation from nominal");
   r_C2->GetXaxis()->SetTitle("#it{p}_{T}^{recoJet} [GeV]");
   r_C2->SetTitle("");
-  r_C2->GetXaxis()->SetRangeUser(60,200);
+  r_C2->GetXaxis()->SetRangeUser(80,500);
   r_C2->GetYaxis()->SetRangeUser(0.4,1.6);
   r_C2->SetStats(0);
   r_C2->Draw();
@@ -103,38 +103,61 @@ void systematics_JERsmear(bool do_mu5 = 1,
   la->SetTextSize(0.036);
   TString pp_data_info_string = "";
   TString pp_trigger_info_string = "";
-  // if(do_mu5 == 1){
-  //   pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}       #font[42]{PbPb 5.02 TeV (323 #mub^{-1})}";
-  //   pp_trigger_info_string = "#font[42]{#scale[0.8]{mu5 trigger}}";
-  // }
-  // else if(do_mu7 == 1){
-  //   pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}       #font[42]{PbPb 5.02 TeV (787 #mub^{-1})}";
-  //   pp_trigger_info_string = "#font[42]{#scale[0.8]{mu7 trigger}}";
-  // }
-  // else if(do_mu12 == 1){
-  //   pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}       #font[42]{PbPb 5.02 TeV (1689 #mub^{-1})}";
-  //   pp_trigger_info_string = "#font[42]{#scale[0.8]{mu12 trigger}}";
-  // }
-  // la->DrawLatexNDC(0.22,0.92,pp_data_info_string);
-  // la->DrawLatexNDC(0.25,0.83,pp_trigger_info_string);
+  if(do_mu5 == 1){
+    pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}";
+    pp_trigger_info_string = "#font[42]{#scale[0.8]{mu5 trigger}}";
+  }
+  else if(do_mu7 == 1){
+    pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}";
+    pp_trigger_info_string = "#font[42]{#scale[0.8]{mu7 trigger}}";
+  }
+  else if(do_mu12 == 1){
+    pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}";
+    pp_trigger_info_string = "#font[42]{#scale[0.8]{mu12 trigger}}";
+  }
+  la->DrawLatexNDC(0.22,0.92,pp_data_info_string);
+  la->DrawLatexNDC(0.25,0.83,pp_trigger_info_string);
   TString pp_canv_save_string = "";
   if(do_mu5 == 1) pp_canv_save_string = "/home/clayton/Analysis/ANDraft/figures/systematics/JER-smear/pp_mu5.pdf";
-  else if(do_mu7 == 1) pp_canv_save_string = "/home/clayton/Analysis/ANDraft/figures/systematics/JER-smear/pp_mu7.pdf";
-  else if(do_mu12 == 1) pp_canv_save_string = "/home/clayton/Analysis/ANDraft/figures/systematics/JER-smear/pp_mu12.pdf";
+  else if(do_mu7 == 1){
+    pp_canv_save_string = "/home/clayton/Analysis/ANDraft/figures/systematics/JER-smear/pp_mu7.pdf";
+  }
+  else if(do_mu12 == 1){
+    pp_canv_save_string = "/home/clayton/Analysis/ANDraft/figures/systematics/JER-smear/pp_mu12.pdf";
+  }
   else{};
 
   // error values to print out on screen
-  double err_pp_J2 = TMath::Abs(1.0 - r_pp->GetBinContent(1));
-  double err_pp_J3 = TMath::Abs(1.0 - r_pp->GetBinContent(2));
-  double err_pp_J4 = TMath::Abs(1.0 - r_pp->GetBinContent(3));
-  double err_C2_J2 = TMath::Abs(1.0 - r_C2->GetBinContent(1));
-  double err_C2_J3 = TMath::Abs(1.0 - r_C2->GetBinContent(2));
-  double err_C2_J4 = TMath::Abs(1.0 - r_C2->GetBinContent(3));
-  double err_C1_J2 = TMath::Abs(1.0 - r_C1->GetBinContent(1));
-  double err_C1_J3 = TMath::Abs(1.0 - r_C1->GetBinContent(2));
-  double err_C1_J4 = TMath::Abs(1.0 - r_C1->GetBinContent(3));
+  double err_pp_J1 = TMath::Abs(1.0 - r_pp->GetBinContent(1));
+  double err_pp_J2 = TMath::Abs(1.0 - r_pp->GetBinContent(2));
+  double err_pp_J3 = TMath::Abs(1.0 - r_pp->GetBinContent(3));
+  double err_pp_J4 = TMath::Abs(1.0 - r_pp->GetBinContent(4));
+  double err_pp_J5 = TMath::Abs(1.0 - r_pp->GetBinContent(5));
+  double err_pp_J6 = TMath::Abs(1.0 - r_pp->GetBinContent(6));
+
+  double err_C2_J1 = TMath::Abs(1.0 - r_C2->GetBinContent(1));
+  double err_C2_J2 = TMath::Abs(1.0 - r_C2->GetBinContent(2));
+  double err_C2_J3 = TMath::Abs(1.0 - r_C2->GetBinContent(3));
+  double err_C2_J4 = TMath::Abs(1.0 - r_C2->GetBinContent(4));
+  double err_C2_J5 = TMath::Abs(1.0 - r_C2->GetBinContent(5));
+  double err_C2_J6 = TMath::Abs(1.0 - r_C2->GetBinContent(6));
+
+  double err_C1_J1 = TMath::Abs(1.0 - r_C1->GetBinContent(1));
+  double err_C1_J2 = TMath::Abs(1.0 - r_C1->GetBinContent(2));
+  double err_C1_J3 = TMath::Abs(1.0 - r_C1->GetBinContent(3));
+  double err_C1_J4 = TMath::Abs(1.0 - r_C1->GetBinContent(4));
+  double err_C1_J5 = TMath::Abs(1.0 - r_C1->GetBinContent(5));
+  double err_C1_J6 = TMath::Abs(1.0 - r_C1->GetBinContent(6));
 
   
+  la->SetTextSize(0.026);
+  la->SetTextColor(kGreen+2);
+  la->DrawLatexNDC(0.11,0.35,Form("%3.2f percent",100*err_pp_J1));
+  la->SetTextColor(kRed-4);
+  la->DrawLatexNDC(0.11,0.32,Form("%3.2f percent",100*err_C2_J1));
+  la->SetTextColor(kBlue-4);
+  la->DrawLatexNDC(0.11,0.29,Form("%3.2f percent",100*err_C1_J1));
+
   la->SetTextSize(0.026);
   la->SetTextColor(kGreen+2);
   la->DrawLatexNDC(0.21,0.35,Form("%3.2f percent",100*err_pp_J2));
@@ -156,6 +179,20 @@ void systematics_JERsmear(bool do_mu5 = 1,
   la->DrawLatexNDC(0.62,0.29,Form("%3.2f percent",100*err_C2_J4));
   la->SetTextColor(kBlue-4);
   la->DrawLatexNDC(0.62,0.26,Form("%3.2f percent",100*err_C1_J4));
+
+  la->SetTextColor(kGreen+2);
+  la->DrawLatexNDC(0.72,0.32,Form("%3.2f percent",100*err_pp_J5));
+  la->SetTextColor(kRed-4);
+  la->DrawLatexNDC(0.72,0.29,Form("%3.2f percent",100*err_C2_J5));
+  la->SetTextColor(kBlue-4);
+  la->DrawLatexNDC(0.72,0.26,Form("%3.2f percent",100*err_C1_J5));
+
+  la->SetTextColor(kGreen+2);
+  la->DrawLatexNDC(0.82,0.32,Form("%3.2f percent",100*err_pp_J6));
+  la->SetTextColor(kRed-4);
+  la->DrawLatexNDC(0.82,0.29,Form("%3.2f percent",100*err_C2_J6));
+  la->SetTextColor(kBlue-4);
+  la->DrawLatexNDC(0.82,0.26,Form("%3.2f percent",100*err_C1_J6));
 
 
   // la->SetTextSize(0.032);

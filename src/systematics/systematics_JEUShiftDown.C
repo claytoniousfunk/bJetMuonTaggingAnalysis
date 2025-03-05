@@ -124,16 +124,34 @@ void systematics_JEUShiftDown(bool do_mu5 = 0,
   else{};
 
   // error values to print out on screen
-  double err_pp_J2 = TMath::Abs(1.0 - r_pp->GetBinContent(1));
-  double err_pp_J3 = TMath::Abs(1.0 - r_pp->GetBinContent(2));
-  double err_pp_J4 = TMath::Abs(1.0 - r_pp->GetBinContent(3));
-  double err_C2_J2 = TMath::Abs(1.0 - r_C2->GetBinContent(1));
-  double err_C2_J3 = TMath::Abs(1.0 - r_C2->GetBinContent(2));
-  double err_C2_J4 = TMath::Abs(1.0 - r_C2->GetBinContent(3));
-  double err_C1_J2 = TMath::Abs(1.0 - r_C1->GetBinContent(1));
-  double err_C1_J3 = TMath::Abs(1.0 - r_C1->GetBinContent(2));
-  double err_C1_J4 = TMath::Abs(1.0 - r_C1->GetBinContent(3));
+  double err_pp_J1 = TMath::Abs(1.0 - r_pp->GetBinContent(1));
+  double err_pp_J2 = TMath::Abs(1.0 - r_pp->GetBinContent(2));
+  double err_pp_J3 = TMath::Abs(1.0 - r_pp->GetBinContent(3));
+  double err_pp_J4 = TMath::Abs(1.0 - r_pp->GetBinContent(4));
+  double err_pp_J5 = TMath::Abs(1.0 - r_pp->GetBinContent(5));
+  double err_pp_J6 = TMath::Abs(1.0 - r_pp->GetBinContent(6));
+  
+  double err_C2_J1 = TMath::Abs(1.0 - r_C2->GetBinContent(1));
+  double err_C2_J2 = TMath::Abs(1.0 - r_C2->GetBinContent(2));
+  double err_C2_J3 = TMath::Abs(1.0 - r_C2->GetBinContent(3));
+  double err_C2_J4 = TMath::Abs(1.0 - r_C2->GetBinContent(4));
+  double err_C2_J5 = TMath::Abs(1.0 - r_C2->GetBinContent(5));
+  double err_C2_J6 = TMath::Abs(1.0 - r_C2->GetBinContent(6));
 
+  double err_C1_J1 = TMath::Abs(1.0 - r_C1->GetBinContent(1));
+  double err_C1_J2 = TMath::Abs(1.0 - r_C1->GetBinContent(2));
+  double err_C1_J3 = TMath::Abs(1.0 - r_C1->GetBinContent(3));
+  double err_C1_J4 = TMath::Abs(1.0 - r_C1->GetBinContent(4));
+  double err_C1_J5 = TMath::Abs(1.0 - r_C1->GetBinContent(5));
+  double err_C1_J6 = TMath::Abs(1.0 - r_C1->GetBinContent(6));
+
+  la->SetTextSize(0.026);
+  la->SetTextColor(kGreen+2);
+  la->DrawLatexNDC(0.11,0.35,Form("%3.2f percent",100*err_pp_J1));
+  la->SetTextColor(kRed-4);
+  la->DrawLatexNDC(0.11,0.32,Form("%3.2f percent",100*err_C2_J1));
+  la->SetTextColor(kBlue-4);
+  la->DrawLatexNDC(0.11,0.29,Form("%3.2f percent",100*err_C1_J1));
   
   la->SetTextSize(0.026);
   la->SetTextColor(kGreen+2);
@@ -157,6 +175,20 @@ void systematics_JEUShiftDown(bool do_mu5 = 0,
   la->SetTextColor(kBlue-4);
   la->DrawLatexNDC(0.62,0.26,Form("%3.2f percent",100*err_C1_J4));
 
+
+  la->SetTextColor(kGreen+2);
+  la->DrawLatexNDC(0.72,0.32,Form("%3.2f percent",100*err_pp_J5));
+  la->SetTextColor(kRed-4);
+  la->DrawLatexNDC(0.72,0.29,Form("%3.2f percent",100*err_C2_J5));
+  la->SetTextColor(kBlue-4);
+  la->DrawLatexNDC(0.72,0.26,Form("%3.2f percent",100*err_C1_J5));
+
+  la->SetTextColor(kGreen+2);
+  la->DrawLatexNDC(0.82,0.32,Form("%3.2f percent",100*err_pp_J6));
+  la->SetTextColor(kRed-4);
+  la->DrawLatexNDC(0.82,0.29,Form("%3.2f percent",100*err_C2_J6));
+  la->SetTextColor(kBlue-4);
+  la->DrawLatexNDC(0.82,0.26,Form("%3.2f percent",100*err_C1_J6));
 
   // la->SetTextSize(0.032);
   // la->SetTextColor(kBlue-4);

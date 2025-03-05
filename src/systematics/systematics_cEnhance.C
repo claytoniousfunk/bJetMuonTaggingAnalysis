@@ -1,8 +1,8 @@
 #include "../templateFitter/templateFitter.h"
 
-void systematics_cEnhance(bool do_mu5 = 1,
+void systematics_cEnhance(bool do_mu5 = 0,
 			  bool do_mu7 = 0,
-			  bool do_mu12 = 0){
+			  bool do_mu12 = 1){
 
 
   TLine *li = new TLine();
@@ -12,22 +12,22 @@ void systematics_cEnhance(bool do_mu5 = 1,
   
   
   cout << endl;
-  cout << "#######  SYSTEMATICS -- B-ENHANCEMENT  #########" << endl;
+  cout << "#######  SYSTEMATICS -- C-ENHANCEMENT  #########" << endl;
   cout << endl;
 
   TFile *file_b_noEnhance, *file_b_cEnhance;
 
   if(do_mu5){
-    file_b_noEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-1_mu7-0_mu12-0_mergeB-1_mergeC-0_pTrel-0.0-5.0_cMult-1.0-JERsmear-0.root");
-    file_b_cEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-1_mu7-0_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0-JERsmear-0.root");
+    file_b_noEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-1_mu7-0_mu12-0_mergeB-1_mergeC-0_pTrel-0.0-5.0_cMult-1.0_bMult-1.2-JERsmear-0.root");
+    file_b_cEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-1_mu7-0_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0_bMult-1.2-JERsmear-0.root");
   }
   else if(do_mu7){
-    file_b_noEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-0_mu7-1_mu12-0_mergeB-1_mergeC-0_pTrel-0.0-5.0_cMult-1.0-JERsmear-0.root");
-    file_b_cEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-0_mu7-1_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0-JERsmear-0.root");
+    file_b_noEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-1_mu12-0_mergeB-1_mergeC-0_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0.root");
+    file_b_cEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-1_mu12-0_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0.root");
   }
   else if(do_mu12){
-    file_b_noEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-0_pTrel-0.0-5.0_cMult-1.0-JERsmear-0.root");
-    file_b_cEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0-JERsmear-0.root");
+    file_b_noEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-0_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0.root");
+    file_b_cEnhance = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0.root");
   }
   else{};
   
@@ -102,15 +102,15 @@ void systematics_cEnhance(bool do_mu5 = 1,
   TString pp_data_info_string = "";
   TString pp_trigger_info_string = "";
   if(do_mu5 == 1){
-    pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}       #font[42]{PbPb 5.02 TeV (323 #mub^{-1})}";
+    pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}";
     pp_trigger_info_string = "#font[42]{#scale[0.8]{mu5 trigger}}";
   }
   else if(do_mu7 == 1){
-    pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}       #font[42]{PbPb 5.02 TeV (787 #mub^{-1})}";
+    pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}";
     pp_trigger_info_string = "#font[42]{#scale[0.8]{mu7 trigger}}";
   }
   else if(do_mu12 == 1){
-    pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}       #font[42]{PbPb 5.02 TeV (1689 #mub^{-1})}";
+    pp_data_info_string = "#font[62]{CMS }#font[52]{#scale[0.8]{Premilinary}}";
     pp_trigger_info_string = "#font[42]{#scale[0.8]{mu12 trigger}}";
   }
   la->DrawLatexNDC(0.22,0.92,pp_data_info_string);

@@ -26,8 +26,8 @@ void systematics_JEUShiftUp(bool do_mu5 = 0,
     file_b_smear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-1_mu12-0_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-1_JEUShiftDown-0.root");
   }
   else if(do_mu12){
-    file_b_noSmear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0.root");
-    file_b_smear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-1_JEUShiftDown-0.root");
+    file_b_noSmear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0_bJetEnergyShift-0.root");
+    file_b_smear = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/bPurityResults/golden/bPurityResults_DATA-1_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-1_JEUShiftDown-0_bJetEnergyShift-0.root");
   }
   else{};
   
@@ -124,17 +124,35 @@ void systematics_JEUShiftUp(bool do_mu5 = 0,
   else{};
 
   // error values to print out on screen
-  double err_pp_J2 = TMath::Abs(1.0 - r_pp->GetBinContent(1));
-  double err_pp_J3 = TMath::Abs(1.0 - r_pp->GetBinContent(2));
-  double err_pp_J4 = TMath::Abs(1.0 - r_pp->GetBinContent(3));
-  double err_C2_J2 = TMath::Abs(1.0 - r_C2->GetBinContent(1));
-  double err_C2_J3 = TMath::Abs(1.0 - r_C2->GetBinContent(2));
-  double err_C2_J4 = TMath::Abs(1.0 - r_C2->GetBinContent(3));
-  double err_C1_J2 = TMath::Abs(1.0 - r_C1->GetBinContent(1));
-  double err_C1_J3 = TMath::Abs(1.0 - r_C1->GetBinContent(2));
-  double err_C1_J4 = TMath::Abs(1.0 - r_C1->GetBinContent(3));
-
+  double err_pp_J1 = TMath::Abs(1.0 - r_pp->GetBinContent(1));
+  double err_pp_J2 = TMath::Abs(1.0 - r_pp->GetBinContent(2));
+  double err_pp_J3 = TMath::Abs(1.0 - r_pp->GetBinContent(3));
+  double err_pp_J4 = TMath::Abs(1.0 - r_pp->GetBinContent(4));
+  double err_pp_J5 = TMath::Abs(1.0 - r_pp->GetBinContent(5));
+  double err_pp_J6 = TMath::Abs(1.0 - r_pp->GetBinContent(6));
   
+  double err_C2_J1 = TMath::Abs(1.0 - r_C2->GetBinContent(1));
+  double err_C2_J2 = TMath::Abs(1.0 - r_C2->GetBinContent(2));
+  double err_C2_J3 = TMath::Abs(1.0 - r_C2->GetBinContent(3));
+  double err_C2_J4 = TMath::Abs(1.0 - r_C2->GetBinContent(4));
+  double err_C2_J5 = TMath::Abs(1.0 - r_C2->GetBinContent(5));
+  double err_C2_J6 = TMath::Abs(1.0 - r_C2->GetBinContent(6));
+
+  double err_C1_J1 = TMath::Abs(1.0 - r_C1->GetBinContent(1));
+  double err_C1_J2 = TMath::Abs(1.0 - r_C1->GetBinContent(2));
+  double err_C1_J3 = TMath::Abs(1.0 - r_C1->GetBinContent(3));
+  double err_C1_J4 = TMath::Abs(1.0 - r_C1->GetBinContent(4));
+  double err_C1_J5 = TMath::Abs(1.0 - r_C1->GetBinContent(5));
+  double err_C1_J6 = TMath::Abs(1.0 - r_C1->GetBinContent(6));
+  
+  la->SetTextSize(0.026);
+  la->SetTextColor(kGreen+2);
+  la->DrawLatexNDC(0.11,0.35,Form("%3.2f percent",100*err_pp_J1));
+  la->SetTextColor(kRed-4);
+  la->DrawLatexNDC(0.11,0.32,Form("%3.2f percent",100*err_C2_J1));
+  la->SetTextColor(kBlue-4);
+  la->DrawLatexNDC(0.11,0.29,Form("%3.2f percent",100*err_C1_J1));
+
   la->SetTextSize(0.026);
   la->SetTextColor(kGreen+2);
   la->DrawLatexNDC(0.21,0.35,Form("%3.2f percent",100*err_pp_J2));
@@ -156,6 +174,20 @@ void systematics_JEUShiftUp(bool do_mu5 = 0,
   la->DrawLatexNDC(0.62,0.29,Form("%3.2f percent",100*err_C2_J4));
   la->SetTextColor(kBlue-4);
   la->DrawLatexNDC(0.62,0.26,Form("%3.2f percent",100*err_C1_J4));
+
+  la->SetTextColor(kGreen+2);
+  la->DrawLatexNDC(0.72,0.32,Form("%3.2f percent",100*err_pp_J5));
+  la->SetTextColor(kRed-4);
+  la->DrawLatexNDC(0.72,0.29,Form("%3.2f percent",100*err_C2_J5));
+  la->SetTextColor(kBlue-4);
+  la->DrawLatexNDC(0.72,0.26,Form("%3.2f percent",100*err_C1_J5));
+
+  la->SetTextColor(kGreen+2);
+  la->DrawLatexNDC(0.82,0.32,Form("%3.2f percent",100*err_pp_J6));
+  la->SetTextColor(kRed-4);
+  la->DrawLatexNDC(0.82,0.29,Form("%3.2f percent",100*err_C2_J6));
+  la->SetTextColor(kBlue-4);
+  la->DrawLatexNDC(0.82,0.26,Form("%3.2f percent",100*err_C1_J6));  
 
 
   // la->SetTextSize(0.032);
