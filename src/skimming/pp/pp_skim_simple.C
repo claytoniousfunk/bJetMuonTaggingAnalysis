@@ -2,8 +2,8 @@ void pp_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "";
-  in_file_name = "../../../fileNames/fileNames_pp_HighEGJet_withJetTrackMaxInfo.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_withJetTrackMaxInfo/pp_skim_output_%i",group);
+  in_file_name = "../../../fileNames/fileNames_pp_HighEGJet.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
@@ -14,7 +14,8 @@ void pp_skim_simple(int group = 1){
 
   //int endfile = 6033;
   //int endfile = 767;
-  int endfile = 242;  
+  //int endfile = 242;
+  int endfile = 6227;  
 
   TFile *old_file;
   TString filename_string = "";
@@ -43,13 +44,13 @@ void pp_skim_simple(int group = 1){
     old_file->GetObject("hiEvtAnalyzer/HiTree",old_evt_tree);
     old_file->GetObject("hltanalysis/HltTree",old_hlt_tree);
     old_file->GetObject("ak4PFJetAnalyzer/t",old_jet_tree);
-    //old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
+    old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
     // deactivate all branches                                                                                   
     old_filter_tree->SetBranchStatus("*",0);
     old_evt_tree->SetBranchStatus("*",0);
     old_hlt_tree->SetBranchStatus("*",0);
     old_jet_tree->SetBranchStatus("*",0);
-    //old_muon_tree->SetBranchStatus("*",0);
+    old_muon_tree->SetBranchStatus("*",0);
     // activate only our variables of interest
     // filters
     //old_filter_tree->SetBranchStatus("pprimaryVertexFilter",1);
@@ -87,21 +88,21 @@ void pp_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("trackMaxDR",1);
     old_jet_tree->SetBranchStatus("nref",1);
     // muons
-    // old_muon_tree->SetBranchStatus("muPt",1);
-    // old_muon_tree->SetBranchStatus("muEta",1);
-    // old_muon_tree->SetBranchStatus("muPhi",1);
-    // old_muon_tree->SetBranchStatus("muChi2NDF",1);
-    // old_muon_tree->SetBranchStatus("muInnerD0",1);
-    // old_muon_tree->SetBranchStatus("muInnerDz",1);
-    // old_muon_tree->SetBranchStatus("muIsPF",1);
-    // old_muon_tree->SetBranchStatus("muIsGlobal",1);
-    // old_muon_tree->SetBranchStatus("muIsTracker",1);
-    // old_muon_tree->SetBranchStatus("muMuonHits",1);
-    // old_muon_tree->SetBranchStatus("muStations",1);
-    // old_muon_tree->SetBranchStatus("muTrkLayers",1);
-    // old_muon_tree->SetBranchStatus("muPixelHits",1);
-    // old_muon_tree->SetBranchStatus("muCharge",1);
-    // old_muon_tree->SetBranchStatus("nMu",1);
+    old_muon_tree->SetBranchStatus("muPt",1);
+    old_muon_tree->SetBranchStatus("muEta",1);
+    old_muon_tree->SetBranchStatus("muPhi",1);
+    old_muon_tree->SetBranchStatus("muChi2NDF",1);
+    old_muon_tree->SetBranchStatus("muInnerD0",1);
+    old_muon_tree->SetBranchStatus("muInnerDz",1);
+    old_muon_tree->SetBranchStatus("muIsPF",1);
+    old_muon_tree->SetBranchStatus("muIsGlobal",1);
+    old_muon_tree->SetBranchStatus("muIsTracker",1);
+    old_muon_tree->SetBranchStatus("muMuonHits",1);
+    old_muon_tree->SetBranchStatus("muStations",1);
+    old_muon_tree->SetBranchStatus("muTrkLayers",1);
+    old_muon_tree->SetBranchStatus("muPixelHits",1);
+    old_muon_tree->SetBranchStatus("muCharge",1);
+    old_muon_tree->SetBranchStatus("nMu",1);
 
     new_file = (TFile*) TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
     
@@ -109,19 +110,19 @@ void pp_skim_simple(int group = 1){
     new_evt_tree = (TTree*) old_evt_tree->CloneTree(0);
     new_hlt_tree = (TTree*) old_hlt_tree->CloneTree(0);
     new_jet_tree = (TTree*) old_jet_tree->CloneTree(0);
-    // new_muon_tree = (TTree*) old_muon_tree->CloneTree(0);
+    new_muon_tree = (TTree*) old_muon_tree->CloneTree(0);
 
     new_filter_tree->CopyEntries(old_filter_tree);
     new_evt_tree->CopyEntries(old_evt_tree);
     new_hlt_tree->CopyEntries(old_hlt_tree);
     new_jet_tree->CopyEntries(old_jet_tree);
-    // new_muon_tree->CopyEntries(old_muon_tree);
+    new_muon_tree->CopyEntries(old_muon_tree);
 
     new_filter_tree->SetName("filterTree");
     new_evt_tree->SetName("evtTree");
     new_hlt_tree->SetName("hltTree");    
     new_jet_tree->SetName("jetTree");
-    // new_muon_tree->SetName("muonTree");
+    new_muon_tree->SetName("muonTree");
 
     new_file->Write();
 
