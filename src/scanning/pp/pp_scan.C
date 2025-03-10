@@ -125,7 +125,7 @@ void pp_scan(int group = 1){
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_evtFilterFix_newJetBins/pp_MinBias_scan_output_%i.root",group);
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_mu12_tight_pTmu-14_projectableTemplates/pp_HighEGJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_jet60_mu12_tight_pTmu-14_projectableTemplates/pp_HighEGJet_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -271,6 +271,15 @@ void pp_scan(int group = 1){
     // event filters
     if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
 
+    // apply jet-trigger if activated in config
+    if(applyJet60Trigger){
+      if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+    }
+    if(applyJet80Trigger){
+      if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
+    }
+
+    
     // In data, event weight = 1
     double w = 1.0;
    
@@ -322,7 +331,7 @@ void pp_scan(int group = 1){
     //   w = 1.0 / 8.68813 ;
     // }
     // else{ continue ;}
-
+ 
     double w_trig = w;
 
    
