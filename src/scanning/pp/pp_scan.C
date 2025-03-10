@@ -61,8 +61,8 @@
 // print introduction
 #include "../../../headers/introductions/printIntroduction_pp_scan_V3p7.h"
 // analysis config
-#include "../../../headers/config/config_pp_SingleMuon.h"
-//#include "../../../headers/config/config_pp_MB.h"
+//#include "../../../headers/config/config_pp_SingleMuon.h"
+#include "../../../headers/config/config_pp_MB.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 // initialize histograms
