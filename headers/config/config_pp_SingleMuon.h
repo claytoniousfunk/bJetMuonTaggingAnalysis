@@ -8,4 +8,4 @@ std::string eventFilters[NeventFilters] = {"pPAprimaryVertexFilter","HBHENoiseFi
 bool doJetTrkMaxFilter = true;
 bool doEtaPhiMask = false;
 bool applyJet60Trigger = false;
-bool applyJet80Trigger = true;
+bool applyJet80Trigger = false;
