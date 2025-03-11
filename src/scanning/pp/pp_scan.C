@@ -515,11 +515,12 @@ void pp_scan(int group = 1){
     }
     // END recoJet LOOP
 
-    h_hiBin->Fill(em->hiBin,w);
     h_vz->Fill(em->vz,w);
     
     if(eventHasGoodJet && leadingRecoJetPt > 80){
 
+      h_hiBin->Fill(em->hiBin,w);
+      
       if(eventHasInclRecoMuonTag){
 
 	h_vz_inclRecoMuonTag->Fill(em->vz,w);
