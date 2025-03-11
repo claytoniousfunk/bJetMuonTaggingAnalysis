@@ -344,6 +344,14 @@ void PbPb_scan(int group = 1){
     // hiHF cut
     if(em->hiHF > 6000) continue;
 
+    // apply jet-trigger if activated in config
+    if(applyJet60Trigger){
+      if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    }
+    if(applyJet80Trigger){
+      if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
+    }
+
     // In data, event weight = 1
     double w = 1.0;
 
