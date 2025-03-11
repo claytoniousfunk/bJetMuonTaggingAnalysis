@@ -518,7 +518,7 @@ void pp_scan(int group = 1){
     h_hiBin->Fill(em->hiBin,w);
     h_vz->Fill(em->vz,w);
     
-    if(eventHasGoodJet && leadingRecoJetPt > 60){
+    if(eventHasGoodJet && leadingRecoJetPt > 80){
 
       if(eventHasInclRecoMuonTag){
 
