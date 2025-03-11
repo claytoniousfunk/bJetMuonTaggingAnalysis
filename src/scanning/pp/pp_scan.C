@@ -61,8 +61,8 @@
 // print introduction
 #include "../../../headers/introductions/printIntroduction_pp_scan_V3p7.h"
 // analysis config
-//#include "../../../headers/config/config_pp_SingleMuon.h"
-#include "../../../headers/config/config_pp_MB.h"
+#include "../../../headers/config/config_pp_SingleMuon.h"
+//#include "../../../headers/config/config_pp_MB.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 // initialize histograms
@@ -121,11 +121,11 @@ void pp_scan(int group = 1){
   // TString input = Form("/eos/user/c/cbennett/skims/output_pp_SingleMuon/pp_SingleMuon_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_SingleMuon_mu12_tight_pTmu-14_projectableTemplates/pp_SingleMuon_scan_output_%i.root",group);
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1/pp_MinBias_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_projectableTemplates/pp_MinBias_scan_output_%i.root",group);
+  // TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1/pp_MinBias_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_projectableTemplates/pp_MinBias_scan_output_%i.root",group);
 
-  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_jet80_mu12_tight_pTmu-14_projectableTemplates/pp_HighEGJet_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_jet60_mu12_tight_pTmu-14_projectableTemplates/pp_HighEGJet_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
