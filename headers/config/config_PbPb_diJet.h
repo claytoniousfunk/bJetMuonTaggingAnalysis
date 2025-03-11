@@ -7,5 +7,5 @@ const int NeventFilters = 3;
 std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter","pphfCoincFilter2Th4","pclusterCompatibilityFilter"};
 bool doJetTrkMaxFilter = false;
 bool doEtaPhiMask = false;
-bool applyJet60Trigger = false;
+bool applyJet60Trigger = true;
 bool applyJet80Trigger = false;
