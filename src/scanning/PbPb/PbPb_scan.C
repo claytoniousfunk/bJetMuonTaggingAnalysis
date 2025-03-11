@@ -717,7 +717,7 @@ void PbPb_scan(int group = 1){
     h_vz[0]->Fill(em->vz,w);
     h_vz[CentralityIndex]->Fill(em->vz,w);
     
-    if(eventHasGoodJet && leadingRecoJetPt > 60){
+    if(eventHasGoodJet && leadingRecoJetPt > 80){
 
       h_hiBin->Fill(em->hiBin,w);
 
