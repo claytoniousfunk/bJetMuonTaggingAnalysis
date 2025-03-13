@@ -2,8 +2,6 @@
 // ---------- jetPt fit parameters
 // ---------- 1st order polynomial
 
-int N_jetPtFitParam = 2;
-
 double jetPtFitParam_C1_0 = 197.669;
 double jetPtFitParam_C1_1 = 0.0605858;
 
