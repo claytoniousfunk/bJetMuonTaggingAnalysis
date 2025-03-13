@@ -50,7 +50,10 @@
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
-#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
+#include "../../../headers/fitParameters/jetPtFitParams_C4_mu12.h
+#include "../../../headers/fitParameters/jetPtFitParams_C3_mu12.h"
+#include "../../../headers/fitParameters/jetPtFitParams_C2_mu12.h"
+#include "../../../headers/fitParameters/jetPtFitParams_C1_mu12.h"
 // hadronPtRel parameters
 #include "../../../headers/fitParameters/hadronPtRelFitParams_PbPb.h"
 // dR parameters
@@ -70,7 +73,10 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR;
 // #include "../../../headers/fitFunctions/fitFxn_hiBin_mu7.h"
 // #include "../../../headers/fitFunctions/fitFxn_hiBin_mu12.h"
 // jetPt-fit function
-#include "../../../headers/fitFunctions/fitFxn_jetPt.h"
+#include "../../../headers/fitFunctions/fitFxn_jetPt_C1.h"
+#include "../../../headers/fitFunctions/fitFxn_jetPt_C2.h"
+#include "../../../headers/fitFunctions/fitFxn_jetPt_C3.h"
+#include "../../../headers/fitFunctions/fitFxn_jetPt_C4.h"
 
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
@@ -261,8 +267,8 @@ TH2D *h_matchedPartonFlavor_bHadronNumber;
 void PYTHIAHYDJET_scan(int group = 1){
 
   
-  // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_jetPtReweight_weightCut0p005_fineCentBins_projectableTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -270,8 +276,8 @@ void PYTHIAHYDJET_scan(int group = 1){
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_BJet_withGS_withWTA_2/PYTHIAHYDJET_BJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates/PYTHIAHYDJET_scan_output_%i.root",group);  
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch13/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_batch13_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
+  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch13/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_batch13_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
 
   
   
@@ -807,7 +813,10 @@ void PYTHIAHYDJET_scan(int group = 1){
   // define vz , hiBin, & jetPt reweighting functions
   loadFitFxn_vz();
   loadFitFxn_hiBin();
-  loadFitFxn_jetPt();
+  loadFitFxn_jetPt_C1();
+  loadFitFxn_jetPt_C2();
+  loadFitFxn_jetPt_C3();
+  loadFitFxn_jetPt_C4();
   loadFitFxn_hadronPtRel();
   loadFitFxn_dR();
 
@@ -1334,7 +1343,14 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       double w_jet = w;
       if(doJetPtReweight){
-	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt->Eval(recoJetPt_i);
+	// reweight by centrality index
+	if(hasInclRecoMuonTag && evtTriggerDecision){
+	  if(CentralityIndex == 1) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C1->Eval(recoJetPt_i);
+	  else if(CentralityIndex == 2) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C2->Eval(recoJetPt_i);
+	  else if(CentralityIndex == 3) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C3->Eval(recoJetPt_i);
+	  else if(CentralityIndex == 4) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C4->Eval(recoJetPt_i);
+	  else{};
+	}
       }
 
       if(doDRReweight){
