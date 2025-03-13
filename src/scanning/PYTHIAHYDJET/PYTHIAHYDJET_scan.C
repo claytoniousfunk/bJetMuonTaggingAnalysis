@@ -50,7 +50,7 @@
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
-#include "../../../headers/fitParameters/jetPtFitParams_C4_mu12.h
+#include "../../../headers/fitParameters/jetPtFitParams_C4_mu12.h"
 #include "../../../headers/fitParameters/jetPtFitParams_C3_mu12.h"
 #include "../../../headers/fitParameters/jetPtFitParams_C2_mu12.h"
 #include "../../../headers/fitParameters/jetPtFitParams_C1_mu12.h"
@@ -60,6 +60,7 @@
 #include "../../../headers/fitParameters/dRFitParams/dRFitParams_PbPb.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR;
+TF1 *fitFxn_jetPt_C1, *fitFxn_jetPt_C2, *fitFxn_jetPt_C3, *fitFxn_jetPt_C4;
 // hadronPtRel function
 #include "../../../headers/fitFunctions/fitFxn_hadronPtRel.h"
 // dR function
