@@ -871,6 +871,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     
     if(w <= 0.0) continue;
+    if(doWeightCut){
+      if(w < weightCut) continue;
+    }
    
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
 
@@ -1340,8 +1343,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	h_inclRecoJetEta_inclRecoJetPhi[CentralityIndex][jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
       }
 
-
-
+   
       double w_jet = w;
       if(doJetPtReweight){
 	// reweight by centrality index
