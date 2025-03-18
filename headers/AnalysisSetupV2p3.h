@@ -154,7 +154,7 @@ const double weightCut = 0.005;
 
 // templates
 const int NTemplateIndices = 4;
-const string templateIndexNames[NTemplateIndices] = ["nom","JERSmear","JEUShiftUp","JEUShiftDown"];
+string templateIndexNames[NTemplateIndices] = ["","JERSmear","JEUShiftUp","JEUShiftDown"];
 
 
 
