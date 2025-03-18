@@ -152,7 +152,9 @@ const double weightInputHigh = 0.1;
 const int NWeightBins = 2000;
 const double weightCut = 0.005;
 
-
+// templates
+const int NTemplateIndices = 4;
+const string templateIndexNames[NTemplateIndices] = ["","JERSmear","JEUShiftUp","JEUShiftDown"];
 
 
 
