@@ -25,7 +25,6 @@ bool doRemoveHYDJETjet = true;
 bool doEtaPhiMask = false;
 bool doBJetEnergyShift = false;
 bool doJERCorrection = false;
-// ptrel reweight
 bool doHadronPtRelReweight = false;
-// dR reweight
 bool doDRReweight = false;
+bool doWeightCut = false;
