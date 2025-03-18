@@ -27,4 +27,4 @@ bool doBJetEnergyShift = false;
 bool doJERCorrection = false;
 bool doHadronPtRelReweight = false;
 bool doDRReweight = false;
-bool doWeightCut = false;
+bool doWeightCut = true;
