@@ -1058,7 +1058,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       double jetPtArray[NTemplateIndices] = {recoJetPt_i,recoJetPt_JERSmear_i,recoJetPt_JEUShiftUp_i,recoJetPt_JEUShiftDown_i};
 
-      cout << "jetPtArry : " << jetPtArray[0] << " , " << jetPtArray[1] << " , " << jetPtArray[2] << " , " << jetPtArray[3] << endl;
+      //cout << "jetPtArry : " << jetPtArray[0] << " , " << jetPtArray[1] << " , " << jetPtArray[2] << " , " << jetPtArray[3] << endl;
 
       if(doJetTrkMaxFilter){
 	if(!passesJetTrkMaxFilter(jetTrkMax_i,recoJetPt_i)) continue;
