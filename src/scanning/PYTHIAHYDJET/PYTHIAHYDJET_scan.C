@@ -883,7 +883,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     
     if(w <= 0.0) continue;
     if(doWeightCut){
-      if(w < weightCut) continue;
+      if(w > weightCut) continue;
     }
    
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
