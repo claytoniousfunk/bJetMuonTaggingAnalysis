@@ -47,7 +47,7 @@
 #include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
-o//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
 #include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
@@ -75,7 +75,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // pthat filter function
 #include "../../../headers/functions/passesLeadingGenJetPthatFilter.h"
 // JetTrkMax filter function
-#include "../../../headers/functions/passesJetTrkMaxFilter.h"
+#include "../../../headers/functions/jet_filter/passesJetTrkMaxFilter.h"
 // print introduction
 #include "../../../headers/introductions/printIntroduction_PYTHIA_scan_V3p7.h"
 // analysis config
