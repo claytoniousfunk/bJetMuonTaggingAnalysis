@@ -40,26 +40,17 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p3.h"
 // vz-fit parameters
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
-// hiBin-fit parameters
-// pThat > 30
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu5.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu7.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat30_mu12.h"
-// pThat > 40
-#include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu5.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu7.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat40_mu12.h"
-// pThat > 50
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu5.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu7.h"
-// #include "../../../headers/fitParameters/hiBinFitParams_pThat50_mu12.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+// jetPt-fit parameters
+//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
+o//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 
-TF1 *fitFxn_hiBin, *fitFxn_vz;
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt;
 // vz-fit function
 #include "../../../headers/fitFunctions/fitFxn_vz_PYTHIA.h"
 // hiBin-fit function
@@ -93,19 +84,26 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 #include "../../../headers/config/config_PYTHIA.h"
 // read config
 #include "../../../headers/config/readConfig.h"
+// remove HYDJET jets function
+#include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TH1D *h_inclGenMuonPt;
 TH1D *h_inclGenMuonEta;
 TH1D *h_matchedGenMuonPt;
 TH1D *h_matchedGenMuonEta;
+TH1D *h_matchedRecoMuonPt;
+TH1D *h_matchedRecoMuonEta;
+TH1D *h_tightRecoMuonPt;
+TH1D *h_tightRecoMuonEta;
+
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonPt;
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonEta;
 
 void PYTHIA_scan_muonReco(int group = 1){
 
   TString input = Form("../../../rootFiles/skimmingOutput/PYTHIA/output_PYTHIA/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("output_PYTHIA_scan_muonReco_hybridSoft/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("output_PYTHIA_scan_muonReco_mu12_tight/PYTHIA_DiJet_scan_output_%i.root",group);
   
   readConfig();
 
@@ -120,8 +118,13 @@ void PYTHIA_scan_muonReco(int group = 1){
   // Define histograms
   h_inclGenMuonPt = new TH1D("h_inclGenMuonPt","gen muon p_{T}",NMuPtBins,muPtMin,muPtMax);
   h_inclGenMuonEta = new TH1D("h_inclGenMuonEta","gen muon #eta",NTrkEtaBins,trkEtaMin,trkEtaMax);
-  h_matchedGenMuonPt = new TH1D("h_matchedGenMuonPt","gen muon p_{T}",NMuPtBins,muPtMin,muPtMax);
-  h_matchedGenMuonEta = new TH1D("h_matchedGenMuonEta","gen muon #eta",NTrkEtaBins,trkEtaMin,trkEtaMax);
+  h_matchedGenMuonPt = new TH1D("h_matchedGenMuonPt","matched-gen muon p_{T}",NMuPtBins,muPtMin,muPtMax);
+  h_matchedGenMuonEta = new TH1D("h_matchedGenMuonEta","matched-gen muon #eta",NTrkEtaBins,trkEtaMin,trkEtaMax);
+  h_matchedRecoMuonPt = new TH1D("h_matchedRecoMuonPt","matched-reco muon p_{T}",NMuPtBins,muPtMin,muPtMax);
+  h_matchedRecoMuonEta = new TH1D("h_matchedRecoMuonEta","matched-reco muon #eta",NTrkEtaBins,trkEtaMin,trkEtaMax);
+  h_tightRecoMuonPt = new TH1D("h_tightRecoMuonPt","tight-matched-reco muon p_{T}",NMuPtBins,muPtMin,muPtMax);
+  h_tightRecoMuonEta = new TH1D("h_tightRecoMuonEta","tight-matched-reco muon #eta",NTrkEtaBins,trkEtaMin,trkEtaMax);
+  
    
   h_matchedRecoMuonPtOverGenMuonPt_genMuonPt = new TH2D("h_matchedRecoMuonPtOverGenMuonPt_genMuonPt","p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. p_{T}^{gen,#mu}",500,0,5,NMuPtBins,muPtMin,muPtMax);
   h_matchedRecoMuonPtOverGenMuonPt_genMuonEta = new TH2D("h_matchedRecoMuonPtOverGenMuonPt_genMuonEta","p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}",500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
@@ -130,6 +133,10 @@ void PYTHIA_scan_muonReco(int group = 1){
   h_inclGenMuonEta->Sumw2();
   h_matchedGenMuonPt->Sumw2();
   h_matchedGenMuonEta->Sumw2();
+  h_matchedRecoMuonPt->Sumw2();
+  h_matchedRecoMuonEta->Sumw2();
+  h_tightRecoMuonPt->Sumw2();
+  h_tightRecoMuonEta->Sumw2();
 
   h_matchedRecoMuonPtOverGenMuonPt_genMuonPt->Sumw2();
   h_matchedRecoMuonPtOverGenMuonPt_genMuonEta->Sumw2();
@@ -186,6 +193,7 @@ void PYTHIA_scan_muonReco(int group = 1){
     for(int j = 0; j < em->gppdgIDp->size(); j++){
 
       bool isMatchedGenMuon = false;
+      bool matchedRecoMuonIsTight = false;
 
       if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
@@ -193,46 +201,32 @@ void PYTHIA_scan_muonReco(int group = 1){
       double genMuEta_j = em->gpetap->at(j);
       double genMuPhi_j = em->gpphip->at(j);
 
-      if(fabs(genMuEta_j) > trkEtaMax) continue;
+      if(fabs(genMuEta_j) > 2.0) continue;
 
       h_inclGenMuonPt->Fill(genMuPt_j,w);
-      h_inclGenMuonEta->Fill(genMuEta_j,w);
+      if(genMuPt_j > muPtCut) h_inclGenMuonEta->Fill(genMuEta_j,w);
 
 
       // declare matched variables
       double matchedRecoMuPt_j = -99.0;
       double matchedRecoMuEta_j = -99.0;
       double matchedRecoMuPhi_j = -99.0;
+
+      double tightRecoMuPt_j = -99.0;
+      double tightRecoMuEta_j = -99.0;
+      double tightRecoMuPhi_j = -99.0;
       
-      //reco muon loop
+      
       double dR_min = 10.0;
       double dR_jk = 10.0;
-      
+
+      //reco muon loop
       for(int k = 0; k < em->nMu; k++){
 
-	// if(!isQualityMuon_tight(em->muChi2NDF->at(k),
-	// 			em->muInnerD0->at(k),
-	// 			em->muInnerDz->at(k),
-	// 			em->muMuonHits->at(k),
-	// 			em->muPixelHits->at(k),
-	// 			em->muIsGlobal->at(k),
-	// 			em->muIsPF->at(k),
-	// 			em->muStations->at(k),
-	// 			em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
-
-	if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(k),
-				     em->muInnerD0->at(k),
-				     em->muInnerDz->at(k),
-				     em->muPixelHits->at(k),
-				     em->muIsTracker->at(k),
-				     em->muIsGlobal->at(k),
-				     em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts 
-
-	
 	double recoMuPt_k = em->muPt->at(k);
 	double recoMuEta_k = em->muEta->at(k);
 	double recoMuPhi_k = em->muPhi->at(k);
-	
+		
 	dR_jk = getDr(genMuEta_j, genMuPhi_j, recoMuEta_k, recoMuPhi_k);
 
 	if(dR_jk > dR_min) continue;
@@ -244,7 +238,23 @@ void PYTHIA_scan_muonReco(int group = 1){
 	  isMatchedGenMuon = true;
 	  matchedRecoMuPt_j = recoMuPt_k;
 	  matchedRecoMuEta_j = recoMuEta_k;
-	  matchedRecoMuPhi_j = recoMuPhi_k; 
+	  matchedRecoMuPhi_j = recoMuPhi_k;
+
+	  if(isQualityMuon_tight(em->muChi2NDF->at(k),
+				 em->muInnerD0->at(k),
+				 em->muInnerDz->at(k),
+				 em->muMuonHits->at(k),
+				 em->muPixelHits->at(k),
+				 em->muIsGlobal->at(k),
+				 em->muIsPF->at(k),
+				 em->muStations->at(k),
+				 em->muTrkLayers->at(k))){
+	  
+	    matchedRecoMuonIsTight = true; // skip if muon doesnt pass quality cuts
+	    tightRecoMuPt_j = recoMuPt_k;
+	    tightRecoMuEta_j = recoMuEta_k;
+	    tightRecoMuPhi_j = recoMuPhi_k;
+	  }
 
 	}
 
@@ -253,10 +263,21 @@ void PYTHIA_scan_muonReco(int group = 1){
       if(isMatchedGenMuon){
 
 	h_matchedGenMuonPt->Fill(genMuPt_j,w);
-	h_matchedGenMuonEta->Fill(genMuEta_j,w);
+	h_matchedRecoMuonPt->Fill(matchedRecoMuPt_j,w);
+	if(genMuPt_j > muPtCut) h_matchedGenMuonEta->Fill(genMuEta_j,w);
+	if(matchedRecoMuPt_j > muPtCut) h_matchedRecoMuonEta->Fill(matchedRecoMuEta_j,w);
+	
+	if(matchedRecoMuonIsTight){
+	  h_tightRecoMuonPt->Fill(tightRecoMuPt_j,w);
+	  if(tightRecoMuPt_j > muPtCut) h_tightRecoMuonEta->Fill(tightRecoMuEta_j,w);
+	}
+
+	
 
 	h_matchedRecoMuonPtOverGenMuonPt_genMuonPt->Fill(matchedRecoMuPt_j / genMuPt_j, genMuPt_j, w);
-	h_matchedRecoMuonPtOverGenMuonPt_genMuonEta->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
+	if(matchedRecoMuPt_j > muPtCut && matchedRecoMuPt_j < muPtMaxCut){
+	  h_matchedRecoMuonPtOverGenMuonPt_genMuonEta->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
+	}
 
       }
 
@@ -272,7 +293,11 @@ void PYTHIA_scan_muonReco(int group = 1){
   h_inclGenMuonEta->Write();
   h_matchedGenMuonPt->Write();
   h_matchedGenMuonEta->Write();
-
+  h_matchedRecoMuonPt->Write();
+  h_matchedRecoMuonEta->Write();
+  h_tightRecoMuonPt->Write();
+  h_tightRecoMuonEta->Write();
+  
   h_matchedRecoMuonPtOverGenMuonPt_genMuonPt->Write();
   h_matchedRecoMuonPtOverGenMuonPt_genMuonEta->Write();
 
