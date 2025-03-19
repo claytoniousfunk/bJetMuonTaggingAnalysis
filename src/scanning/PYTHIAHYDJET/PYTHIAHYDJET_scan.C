@@ -1467,8 +1467,12 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 
 	  // fill templates
+	  std::cout << "Filling templates...\n";
 	  for(int t = 0; t < NTemplateIndices; t++){
-	  
+
+	    std::cout << "jetPtArray values: " << jetPtArray[t] << "\n";
+	    
+	    
 	    // allJets
 	    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[0][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
