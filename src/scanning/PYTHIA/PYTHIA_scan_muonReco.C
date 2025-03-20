@@ -248,7 +248,7 @@ void PYTHIA_scan_muonReco(int group = 1){
 				 em->muStations->at(k),
 				 em->muTrkLayers->at(k))){
 	  
-	    matchedRecoMuonIsTight = true; // skip if muon doesnt pass quality cuts
+	    matchedRecoMuonIsTight = true; 
 	    tightRecoMuPt_j = recoMuPt_k;
 	    tightRecoMuEta_j = recoMuEta_k;
 	    tightRecoMuPhi_j = recoMuPhi_k;
