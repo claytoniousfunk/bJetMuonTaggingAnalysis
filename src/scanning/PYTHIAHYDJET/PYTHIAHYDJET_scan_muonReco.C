@@ -120,7 +120,7 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
       
    
       h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[c] = new TH2D(Form("h_matchedRecoMuonPtOverGenMuonPt_genMuonPt_C%i",c),Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. p_{T}^{gen,#mu}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,NMuPtBins,muPtMin,muPtMax);
-      h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c] = new TH2D("h_matchedRecoMuonPtOverGenMuonPt_genMuonEta",Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
+      h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c] = new TH2D(Form("h_matchedRecoMuonPtOverGenMuonPt_genMuonEta_C%i",c),Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
 
     }
 
