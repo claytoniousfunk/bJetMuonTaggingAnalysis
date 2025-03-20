@@ -46,7 +46,7 @@
 #include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
-//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
+o//#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
 #include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu12.h"
 // JESb fit params
 //#include "../../../headers/fitParameters/JESbFitParams_PYTHIA_mu7.h"
@@ -1504,10 +1504,11 @@ void PYTHIA_scan(int group = 1){
     }
     // END recoJet LOOP
 
+    h_vz->Fill(em->vz,w);
+    
     // fill reco-based event histograms
-    if(evtHasGoodJet && leadingRecoJetPt > 60){
+    if(evtHasGoodJet && leadingRecoJetPt > 80){
 
-      h_vz->Fill(em->vz,w);
 
       if(evtHasGoodMuonTaggedJet){
 
