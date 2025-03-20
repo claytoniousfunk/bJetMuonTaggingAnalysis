@@ -981,15 +981,20 @@ void PYTHIA_scan(int group = 1){
 
 	double dR_j = getDr(genJetEta_j,genJetPhi_j,recoJetEta_i,recoJetPhi_i);
 	double dPt_j = recoJetPt_i/genJetPt_j;
-			
+
+		
 	if(dR_j < dR_recoGen_min){
-				
-	  hasGenJetMatch = true;
-	  matchedGenJetPt_i = genJetPt_j;
-	  matchedGenJetEta_i = genJetEta_j;
-	  matchedGenJetPhi_i = genJetPhi_j;
+
+	  
 	  dR_recoGen_min = dR_j;
 	  dPt_recoGen_min = dPt_j;
+
+	  if(dR_recoGen_min < epsilon_mm){
+	    hasGenJetMatch = true;
+	    matchedGenJetPt_i = genJetPt_j;
+	    matchedGenJetEta_i = genJetEta_j;
+	    matchedGenJetPhi_i = genJetPhi_j;
+	  }
 
 	}	
 
