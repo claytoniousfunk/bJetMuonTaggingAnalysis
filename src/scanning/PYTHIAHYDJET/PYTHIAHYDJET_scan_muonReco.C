@@ -317,11 +317,9 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
 	  }
 	}
 
-
-	h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[0]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuPt_j, w);
-	h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[0]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
-
 	if(genMuPt_j > muPtCut){
+	  h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[0]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuPt_j, w);
+	  h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[0]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
 	  h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[CentralityIndex]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuPt_j, w);
 	  h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[CentralityIndex]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
 	}
