@@ -256,7 +256,7 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
       
       for(int k = 0; k < em->nMu; k++){
 
-	
+	if(isMatchedGenMuon) continue; // skip if already matched
 
 	double recoMuPt_k = em->muPt->at(k);
 	double recoMuEta_k = em->muEta->at(k);
