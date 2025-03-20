@@ -1138,6 +1138,12 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       double jetPtArray[NTemplateIndices] = {recoJetPt_i,recoJetPt_JERSmear_i,recoJetPt_JEUShiftUp_i,recoJetPt_JEUShiftDown_i};
 
+      double matchedGenJetPt_i = -999.0;
+      double matchedGenJetEta_i = -999.0;
+      double matchedGenJetPhi_i = -999.0;
+      double recoJetRecoMuonPtRel_i = -999.0;
+      double genJetGenMuonPtRel_i = -999.0;
+
       //cout << "jetPtArry : " << jetPtArray[0] << " , " << jetPtArray[1] << " , " << jetPtArray[2] << " , " << jetPtArray[3] << endl;
 
       if(doJetTrkMaxFilter){
@@ -1181,7 +1187,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       if(TMath::Abs(recoJetEta_i) > etaMax || recoJetPt_i < jetPtCut) continue;
       if(recoJetPt_i < 20) continue;
       
-      if(recoJetPt_i > 60) eventHasGoodJet = true;
+      if(recoJetPt_i > 80.) eventHasGoodJet = true;
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
@@ -1202,6 +1208,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       
       double dR_recoGen_min = 100.0;
       double dPt_recoGen_min = 100.0;
+      double dR_min;
 
       // look for a genJet match
 
@@ -1219,9 +1226,21 @@ void PYTHIAHYDJET_scan(int group = 1){
 			
 	if(dR_j < dR_recoGen_min){
 				
-	  hasGenJetMatch = true;		
 	  dR_recoGen_min = dR_j;
 	  dPt_recoGen_min = dPt_j;
+	  
+	  if(dR_recoGen_min < epsilon_mm){
+	    hasGenJetMatch = true;
+	    matchedGenJetPt_i = genJetPt_j;
+	    matchedGenJetEta_i = genJetEta_j;
+	    matchedGenJetPhi_i = genJetPhi_j;
+	  }
+
+	}	
+
+      }
+
+
 
 	}	
 
@@ -1275,6 +1294,8 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  double genMuonEta_matched_j = -1.0;
 	  double genMuonPhi_j = em->gpphip->at(j);
 	  double genMuonPhi_matched_j = -1.0;
+	  double genMuonPtRel_j = -999.0;
+	  double genMuonPtRel_matched_j = -999.0;
 
 	  if(genMuonPt_j < muPtCut || genMuonPt_j > muPtMaxCut || fabs(genMuonEta_j) > 2.0) continue;                        
 
@@ -1282,9 +1303,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  for(int l = 0; l < em->nMu; l++){
 
 
-	    double recoMuonPt_l = em->muPt->at(l);
-	    double recoMuonEta_l = em->muEta->at(l);
-	    double recoMuonPhi_l = em->muPhi->at(l);
+	    
 
 	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
 				    em->muInnerD0->at(l),
@@ -1304,7 +1323,11 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    // 				 em->muIsGlobal->at(l),
 	    // 				 em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 
+	    if(isWDecayMuon(em->muPt->at(l),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
+	    double recoMuonPt_l = em->muPt->at(l);
+	    double recoMuonEta_l = em->muEta->at(l);
+	    double recoMuonPhi_l = em->muPhi->at(l);
 
 	    if(getDr(genMuonEta_j,genMuonPhi_j,recoMuonEta_l,recoMuonPhi_l) < epsilon){
 				
@@ -1321,7 +1344,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 				
 	    matchFlag[genMuIndex] = 1;
 	    hasInclGenMuonTag = true;
-	    if(isMatchedGenMuon) hasMatchedGenMuonTag = true;
+	    if(isMatchedGenMuon) {
+	      hasMatchedGenMuonTag = true;
+	      if(hasGenJetMatch){
+		recoJetRecoMuonPtRel_i = getPtRel(genMuonPt_matched_j,genMuonEta_matched_j,genMuonPhi_matched_j,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
+		genJetGenMuonPtRel_i   = getPtRel(genMuonPt_j,genMuonEta_j,genMuonPhi_j,matchedGenJetPt_i,matchedGenJetEta_i,matchedGenJetPhi_i);
+	      }
+	    }
 
 	  } 
 
@@ -1408,6 +1437,99 @@ void PYTHIAHYDJET_scan(int group = 1){
 						
 
 
+      }
+
+      if(hasMatchedGenMuonTag && hasGenJetMatch){
+	h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][0][0]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][0][0]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][0][0]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][0][0]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	// fill by flavor
+	if(fabs(jetFlavorInt) == 5 || jetFlavorInt == 17){
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][0][1]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][0][1]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][0][1]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][0][1]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	}
+	else if(fabs(jetFlavorInt) == 4){
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][0][2]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][0][2]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][0][2]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][0][2]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	}
+	else if(fabs(jetFlavorInt) == 3){
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][0][3]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][0][3]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][0][3]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][0][3]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	}
+	else if(fabs(jetFlavorInt) == 1 || fabs(jetFlavorInt) == 2){
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][0][4]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][0][4]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][0][4]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][0][4]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	}
+	else if(jetFlavorInt == 21){
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][0][5]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][0][5]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][0][5]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][0][5]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	}
+	else if(jetFlavorInt == 0){
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][0][6]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][0][6]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][0][6]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][0][6]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	}
+	else{};
+	
+	if(jetPtIndex > 0){
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][jetPtIndex][0]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][jetPtIndex][0]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][jetPtIndex][0]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	  h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][jetPtIndex][0]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+
+	  // fill by flavor
+	  if(fabs(jetFlavorInt) == 5 || jetFlavorInt == 17){
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][jetPtIndex][1]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][jetPtIndex][1]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][jetPtIndex][1]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][jetPtIndex][1]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  }
+	  else if(fabs(jetFlavorInt) == 4){
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][jetPtIndex][2]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][jetPtIndex][2]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][jetPtIndex][2]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][jetPtIndex][2]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  }
+	  else if(fabs(jetFlavorInt) == 3){
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][jetPtIndex][3]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][jetPtIndex][3]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][jetPtIndex][3]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][jetPtIndex][3]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  }
+	  else if(fabs(jetFlavorInt) == 1 || fabs(jetFlavorInt) == 2){
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][jetPtIndex][4]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][jetPtIndex][4]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][jetPtIndex][4]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][jetPtIndex][4]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  }
+	  else if(jetFlavorInt == 21){
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][jetPtIndex][5]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][jetPtIndex][5]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][jetPtIndex][5]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][jetPtIndex][5]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  }
+	  else if(jetFlavorInt == 0){
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][jetPtIndex][6]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][jetPtIndex][6]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	    h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[CentralityIndex][jetPtIndex][6]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
+	    h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[CentralityIndex][jetPtIndex][6]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
+	  }
+	  else{};
+
+	  
+	}
       }
 
       // Fill the jet/event histograms
