@@ -495,64 +495,64 @@ void PYTHIAHYDJET_scan(int group = 1){
       h_muptrel_jetpt[i] = new TH2D(Form("h_muptrel_jetpt_C%i",i),Form("jetPt vs. muRelPt, hiBin %i - %i", centEdges[i-1], centEdges[i]),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
       h_leadingGenJetPt[i] = new TH1D(Form("h_leadingGenJetPt_C%i",i),Form("leadingGenJetPt, hiBin %i - %i",centEdges[i-1], centEdges[i]),500,0,500);
       h_leadingGenJetPt_xJets_greaterThanPthat[i] = new TH1D(Form("h_leadingGenJetPt_xJets_greaterThanPthat_C%i",i),Form("leadingGenJetPt, xJets, pT > pThat, hiBin %i - %i",centEdges[i-1], centEdges[i]),500,0,500);
-            // fill templates
+      g      // fill templates
 
-      for(int t = 0; t < NTemplateIndices; t++){
-	// allJets
-	h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, allJets, %i < hiBin < %i, %s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-	h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, allJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-	h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, allJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-	h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, allJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-	h_muJetDr_recoJetPt_allJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_allJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, allJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-	// dJets
-	h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-	h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-	h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-	h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-	h_muJetDr_recoJetPt_dJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_dJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-	// uJets
-	h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-	h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-	h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-	h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-	h_muJetDr_recoJetPt_uJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_uJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-	// sJets
-	h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-	h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-	h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-	h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-	h_muJetDr_recoJetPt_sJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_sJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-	// cJets
-	h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-	h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-	h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-	h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-	h_muJetDr_recoJetPt_cJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_cJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-	// bJets
-	h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-	h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-	h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-	h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-	h_muJetDr_recoJetPt_bJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_bJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-	// bGSJets
-	h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-	h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-	h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-	h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-	h_muJetDr_recoJetPt_bGSJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_bGSJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-	// gJets
-	h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-	h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-	h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-	h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-	h_muJetDr_recoJetPt_gJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_gJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-	// xJets
-	h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_xJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-	h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-	h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-	h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-	h_muJetDr_recoJetPt_xJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_xJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-      }
+	for(int t = 0; t < NTemplateIndices; t++){
+	  // allJets
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, allJets, %i < hiBin < %i, %s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, allJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, allJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, allJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+	  h_muJetDr_recoJetPt_allJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_allJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, allJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+	  // dJets
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+	  h_muJetDr_recoJetPt_dJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_dJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, dJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+	  // uJets
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+	  h_muJetDr_recoJetPt_uJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_uJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, uJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+	  // sJets
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+	  h_muJetDr_recoJetPt_sJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_sJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, sJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+	  // cJets
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+	  h_muJetDr_recoJetPt_cJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_cJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, cJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+	  // bJets
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+	  h_muJetDr_recoJetPt_bJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_bJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, bJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+	  // bGSJets
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+	  h_muJetDr_recoJetPt_bGSJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_bGSJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, bGSJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+	  // gJets
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+	  h_muJetDr_recoJetPt_gJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_gJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, gJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+	  // xJets
+	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t] = new TH2D(Form("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_xJets_C%iT%i",i,t),Form("muon #it{p}_{T}^{rel} vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t] = new TH2D(Form("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets_C%iT%i",i,t),Form("muon #it{p}_{T} vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets_C%iT%i",i,t),Form("muon #it{#eta} vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets_C%iT%i",i,t),Form("muon #it{#phi} vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+	  h_muJetDr_recoJetPt_xJets[i][t] = new TH2D(Form("h_muJetDr_recoJetPt_xJets_C%iT%i",i,t),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, xJets, %i < hiBin < %i,%s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+	}
     }
 
     h_vz[i]->Sumw2();
@@ -1240,12 +1240,6 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       }
 
-
-
-	}	
-
-      }
-
       // if(jetFlavorInt == 0 && dR_recoGen_min > 0.5 && x > 100.){
       // 	cout << "EVENT #" << evi << ", xJet, dR_min(Reco,Gen) =" << dR_recoGen_min << endl;
       // 	cout << "--- Reco Jets ---" << evi << endl;
@@ -1439,6 +1433,73 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       }
 
+
+
+      // Fill the jet/event histograms
+     
+
+      h_inclRecoJetPt_flavor[0]->Fill(recoJetPt_i,jetFlavorInt,w);
+      h_inclRecoJetPt_flavor[CentralityIndex]->Fill(recoJetPt_i,jetFlavorInt,w);
+      h_inclRecoJetEta_flavor[0]->Fill(recoJetEta_i,jetFlavorInt,w);
+      h_inclRecoJetEta_flavor[CentralityIndex]->Fill(recoJetEta_i,jetFlavorInt,w);
+      h_inclRecoJetPhi_flavor[0]->Fill(recoJetPhi_i,jetFlavorInt,w);
+      h_inclRecoJetPhi_flavor[CentralityIndex]->Fill(recoJetPhi_i,jetFlavorInt,w);
+      h_inclRecoJetPt_inclRecoJetEta[0]->Fill(recoJetPt_i,recoJetEta_i,w);
+      h_inclRecoJetPt_inclRecoJetEta[CentralityIndex]->Fill(recoJetPt_i,recoJetEta_i,w);
+      h_inclRecoJetPt_inclRecoJetPhi[0]->Fill(recoJetPt_i,recoJetPhi_i,w);
+      h_inclRecoJetPt_inclRecoJetPhi[CentralityIndex]->Fill(recoJetPt_i,recoJetPhi_i,w);
+      
+      h_refPartonFlavorForB_matchedPartonFlavor[0]->Fill(refPartonFlavorForB,matchedPartonFlavor,w);
+      h_refPartonFlavorForB_matchedPartonFlavor[CentralityIndex]->Fill(refPartonFlavorForB,matchedPartonFlavor,w);
+
+      h_matchedPartonFlavor_bHadronNumber->Fill(matchedPartonFlavor,bHadronNumber,w);
+
+      // histograms by jetPt index
+
+      h_inclRecoJetEta_inclRecoJetPhi[0][0]->Fill(recoJetEta_i,recoJetPhi_i,w);
+      h_inclRecoJetEta_inclRecoJetPhi[CentralityIndex][0]->Fill(recoJetEta_i,recoJetPhi_i,w);
+      if(jetPtIndex > 0){
+	h_inclRecoJetEta_inclRecoJetPhi[0][jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
+	h_inclRecoJetEta_inclRecoJetPhi[CentralityIndex][jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
+      }
+
+   
+      double w_jet = w;
+      if(doJetPtReweight){
+	// reweight by centrality index
+	if(hasInclRecoMuonTag && evtTriggerDecision){
+	  if(CentralityIndex == 1) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C1->Eval(recoJetPt_i);
+	  else if(CentralityIndex == 2) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C2->Eval(recoJetPt_i);
+	  else if(CentralityIndex == 3) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C3->Eval(recoJetPt_i);
+	  else if(CentralityIndex == 4) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C4->Eval(recoJetPt_i);
+	  else{};
+	}
+      }
+
+      if(doDRReweight){
+	// only reweight by dR for 0-30% centrality
+	if(hasInclRecoMuonTag && evtTriggerDecision && CentralityIndex == 1) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_dR->Eval(muDR_i);
+      }
+	
+      if(doHadronPtRelReweight){
+	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_hadronPtRel->Eval(muPtRel_i);
+      }
+
+
+      // skip enties with large weight
+      // if(w_jet > weightCut) {
+      // 	if(jetPtIndex > 0 && hasInclRecoMuonTag && evtTriggerDecision){
+      // 	  cout << "!!! anomalously high weight! !!! printing event info..." << endl;
+      // 	  cout << "   weight = " << w_jet << endl;
+      // 	  cout << "   pthat = " << em->pthat << endl;
+      // 	  cout << "   jet flavor = " <<  jetFlavorInt << endl;
+      // 	  cout << "   jet pt = " << recoJetPt_i << endl;
+      // 	  cout << "   jet eta = " << recoJetEta_i << endl;
+      // 	  cout << "   jet phi = " << recoJetPhi_i << endl;
+
+      // 	}
+      // 	continue;
+      // }
       if(hasMatchedGenMuonTag && hasGenJetMatch){
 	h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[0][0][0]->Fill(genJetGenMuonPtRel_i,recoJetRecoMuonPtRel_i,w_jet);
 	h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[0][0][0]->Fill(recoJetRecoMuonPtRel_i/genJetGenMuonPtRel_i,genJetGenMuonPtRel_i,w_jet);
@@ -1531,72 +1592,6 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  
 	}
       }
-
-      // Fill the jet/event histograms
-     
-
-      h_inclRecoJetPt_flavor[0]->Fill(recoJetPt_i,jetFlavorInt,w);
-      h_inclRecoJetPt_flavor[CentralityIndex]->Fill(recoJetPt_i,jetFlavorInt,w);
-      h_inclRecoJetEta_flavor[0]->Fill(recoJetEta_i,jetFlavorInt,w);
-      h_inclRecoJetEta_flavor[CentralityIndex]->Fill(recoJetEta_i,jetFlavorInt,w);
-      h_inclRecoJetPhi_flavor[0]->Fill(recoJetPhi_i,jetFlavorInt,w);
-      h_inclRecoJetPhi_flavor[CentralityIndex]->Fill(recoJetPhi_i,jetFlavorInt,w);
-      h_inclRecoJetPt_inclRecoJetEta[0]->Fill(recoJetPt_i,recoJetEta_i,w);
-      h_inclRecoJetPt_inclRecoJetEta[CentralityIndex]->Fill(recoJetPt_i,recoJetEta_i,w);
-      h_inclRecoJetPt_inclRecoJetPhi[0]->Fill(recoJetPt_i,recoJetPhi_i,w);
-      h_inclRecoJetPt_inclRecoJetPhi[CentralityIndex]->Fill(recoJetPt_i,recoJetPhi_i,w);
-      
-      h_refPartonFlavorForB_matchedPartonFlavor[0]->Fill(refPartonFlavorForB,matchedPartonFlavor,w);
-      h_refPartonFlavorForB_matchedPartonFlavor[CentralityIndex]->Fill(refPartonFlavorForB,matchedPartonFlavor,w);
-
-      h_matchedPartonFlavor_bHadronNumber->Fill(matchedPartonFlavor,bHadronNumber,w);
-
-      // histograms by jetPt index
-
-      h_inclRecoJetEta_inclRecoJetPhi[0][0]->Fill(recoJetEta_i,recoJetPhi_i,w);
-      h_inclRecoJetEta_inclRecoJetPhi[CentralityIndex][0]->Fill(recoJetEta_i,recoJetPhi_i,w);
-      if(jetPtIndex > 0){
-	h_inclRecoJetEta_inclRecoJetPhi[0][jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
-	h_inclRecoJetEta_inclRecoJetPhi[CentralityIndex][jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w);
-      }
-
-   
-      double w_jet = w;
-      if(doJetPtReweight){
-	// reweight by centrality index
-	if(hasInclRecoMuonTag && evtTriggerDecision){
-	  if(CentralityIndex == 1) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C1->Eval(recoJetPt_i);
-	  else if(CentralityIndex == 2) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C2->Eval(recoJetPt_i);
-	  else if(CentralityIndex == 3) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C3->Eval(recoJetPt_i);
-	  else if(CentralityIndex == 4) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_jetPt_C4->Eval(recoJetPt_i);
-	  else{};
-	}
-      }
-
-      if(doDRReweight){
-	// only reweight by dR for 0-30% centrality
-	if(hasInclRecoMuonTag && evtTriggerDecision && CentralityIndex == 1) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_dR->Eval(muDR_i);
-      }
-	
-      if(doHadronPtRelReweight){
-	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_hadronPtRel->Eval(muPtRel_i);
-      }
-
-
-      // skip enties with large weight
-      // if(w_jet > weightCut) {
-      // 	if(jetPtIndex > 0 && hasInclRecoMuonTag && evtTriggerDecision){
-      // 	  cout << "!!! anomalously high weight! !!! printing event info..." << endl;
-      // 	  cout << "   weight = " << w_jet << endl;
-      // 	  cout << "   pthat = " << em->pthat << endl;
-      // 	  cout << "   jet flavor = " <<  jetFlavorInt << endl;
-      // 	  cout << "   jet pt = " << recoJetPt_i << endl;
-      // 	  cout << "   jet eta = " << recoJetEta_i << endl;
-      // 	  cout << "   jet phi = " << recoJetPhi_i << endl;
-
-      // 	}
-      // 	continue;
-      // }
 		
       if(hasInclGenMuonTag){
 
