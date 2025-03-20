@@ -233,7 +233,7 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
       double genMuPhi_j = em->gpphip->at(j);
 
       if(fabs(genMuEta_j) > trkEtaMax) continue;
-      if(etaPhiMask(genMuEta_j,genMuPhi_j)) continue;
+      //if(etaPhiMask(genMuEta_j,genMuPhi_j)) continue;
 
       h_inclGenMuonPt[0]->Fill(genMuPt_j,w);
       h_inclGenMuonPt[CentralityIndex]->Fill(genMuPt_j,w);
