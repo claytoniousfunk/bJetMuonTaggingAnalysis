@@ -221,6 +221,8 @@ void PYTHIA_scan_muonReco(int group = 1){
       //reco muon loop
       for(int k = 0; k < em->nMu; k++){
 
+	if(isMatchedGenMuon) continue;
+
 	double recoMuPt_k = em->muPt->at(k);
 	double recoMuEta_k = em->muEta->at(k);
 	double recoMuPhi_k = em->muPhi->at(k);
@@ -273,7 +275,7 @@ void PYTHIA_scan_muonReco(int group = 1){
 	
 
 	h_matchedRecoMuonPtOverGenMuonPt_genMuonPt->Fill(matchedRecoMuPt_j / genMuPt_j, genMuPt_j, w);
-	if(matchedRecoMuPt_j > muPtCut && matchedRecoMuPt_j < muPtMaxCut){
+	if(genMuPt_j > muPtCut){
 	  h_matchedRecoMuonPtOverGenMuonPt_genMuonEta->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
 	}
 
