@@ -236,11 +236,11 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
       if(etaPhiMask(genMuEta_j,genMuPhi_j)) continue;
 
       h_inclGenMuonPt[0]->Fill(genMuPt_j,w);
-      h_inclGenMuonEta[0]->Fill(genMuEta_j,w);
-
       h_inclGenMuonPt[CentralityIndex]->Fill(genMuPt_j,w);
-      h_inclGenMuonEta[CentralityIndex]->Fill(genMuEta_j,w);
-
+      if(genMuPt_j > muPtCut){
+	h_inclGenMuonEta[0]->Fill(genMuEta_j,w);
+	h_inclGenMuonEta[CentralityIndex]->Fill(genMuEta_j,w);
+      }
       // declare matched variables
       double matchedRecoMuPt_j = -99.0;
       double matchedRecoMuEta_j = -99.0;
