@@ -299,16 +299,32 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
       if(isMatchedGenMuon){
 
 	h_matchedGenMuonPt[0]->Fill(genMuPt_j,w);
-	h_matchedGenMuonEta[0]->Fill(genMuEta_j,w);
+	h_matchedRecoMuonPt[0]->Fill(matchedRecoMuPt_j,w);
+	if(genMuPt_j > muPtCut) h_matchedGenMuonEta[0]->Fill(genMuEta_j,w);
+	if(matchedRecoMuPt_j > muPtCut) h_matchedRecoMuonEta[0]->Fill(matchedRecoMuEta_j,w);
 
 	h_matchedGenMuonPt[CentralityIndex]->Fill(genMuPt_j,w);
-	h_matchedGenMuonEta[CentralityIndex]->Fill(genMuEta_j,w);
+	h_matchedRecoMuonPt[CentralityIndex]->Fill(matchedRecoMuPt_j,w);
+	if(genMuPt_j > muPtCut) h_matchedGenMuonEta[CentralityIndex]->Fill(genMuEta_j,w);
+	if(matchedRecoMuPt_j > muPtCut) h_matchedRecoMuonEta[CentralityIndex]->Fill(matchedRecoMuEta_j,w);
+
+	if(matchedRecoMuonIsTight){
+	  h_tightRecoMuonPt[0]->Fill(tightRecoMuPt_j,w);
+	  h_tightRecoMuonPt[CentralityIndex]->Fill(tightRecoMuPt_j,w);
+	  if(tightRecoMuPt_j > muPtCut){
+	    h_tightRecoMuonEta[0]->Fill(tightRecoMuEta_j,w);
+	    h_tightRecoMuonEta[CentralityIndex]->Fill(tightRecoMuEta_j,w);
+	  }
+	}
+
 
 	h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[0]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuPt_j, w);
 	h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[0]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
 
-	h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[CentralityIndex]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuPt_j, w);
-	h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[CentralityIndex]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
+	if(genMuPt_j > muPtCut){
+	  h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[CentralityIndex]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuPt_j, w);
+	  h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[CentralityIndex]->Fill(matchedRecoMuPt_j / genMuPt_j, genMuEta_j, w);
+	}
 
       }
 
