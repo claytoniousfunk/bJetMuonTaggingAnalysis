@@ -37,11 +37,12 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p1.h"
+//#include "../../../headers/AnalysisSetupV2p2.h" // coarse centrality bins
+#include "../../../headers/AnalysisSetupV2p3.h" // fine centrality bins
 // vz-fit parameters
-#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
+#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
 // hiBin-fit parameters
-#include "../../../headers/fitParameters/hiBinFitParams.h"
+#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz;
 // vz-fit function
@@ -56,7 +57,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz;
 // getJetPtBin function
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../headers/functions/getCentBin_v2.h"
+//#include "../../../headers/functions/getCentBin_v2.h" // course centrality binning
+#include "../../../headers/functions/getCentBin.h" // fine centrality binning
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
@@ -81,6 +83,11 @@ TH1D *h_inclGenMuonPt[NCentralityIndices];
 TH1D *h_inclGenMuonEta[NCentralityIndices];
 TH1D *h_matchedGenMuonPt[NCentralityIndices];
 TH1D *h_matchedGenMuonEta[NCentralityIndices];
+TH1D *h_matchedRecoMuonPt[NCentralityIndices];
+TH1D *h_matchedRecoMuonEta[NCentralityIndices];
+TH1D *h_tightRecoMuonPt[NCentralityIndices];
+TH1D *h_tightRecoMuonEta[NCentralityIndices];
+
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[NCentralityIndices];
 TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[NCentralityIndices];
 
@@ -106,6 +113,11 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
       h_inclGenMuonEta[c] = new TH1D(Form("h_inclGenMuonEta_C%i",c),Form("gen muon #eta, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
       h_matchedGenMuonPt[c] = new TH1D(Form("h_matchedGenMuonPt_C%i",c),Form("matched-gen muon p_{T}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NMuPtBins,muPtMin,muPtMax);
       h_matchedGenMuonEta[c] = new TH1D(Form("h_matchedGenMuonEta_C%i",c),Form("matched-gen muon #eta, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+       h_matchedRecoMuonPt[c] = new TH1D(Form("h_matchedRecoMuonPt_C%i",c),Form("matched-gen muon p_{T}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NMuPtBins,muPtMin,muPtMax);
+      h_matchedRecoMuonEta[c] = new TH1D(Form("h_matchedRecoMuonEta_C%i",c),Form("matched-gen muon #eta, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+      h_tightRecoMuonPt[c] = new TH1D(Form("h_tightRecoMuonPt_C%i",c),Form("matched-gen muon p_{T}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NMuPtBins,muPtMin,muPtMax);
+      h_tightRecoMuonEta[c] = new TH1D(Form("h_tightRecoMuonEta_C%i",c),Form("matched-gen muon #eta, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+      
    
       h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[c] = new TH2D(Form("h_matchedRecoMuonPtOverGenMuonPt_genMuonPt_C%i",c),Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. p_{T}^{gen,#mu}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,NMuPtBins,muPtMin,muPtMax);
       h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c] = new TH2D("h_matchedRecoMuonPtOverGenMuonPt_genMuonEta",Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
@@ -118,7 +130,12 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
       h_inclGenMuonEta[c] = new TH1D(Form("h_inclGenMuonEta_C%i",c),Form("gen muon #eta, hiBin %i - %i",centEdges[c-1],centEdges[c]),NTrkEtaBins,trkEtaMin,trkEtaMax);
       h_matchedGenMuonPt[c] = new TH1D(Form("h_matchedGenMuonPt_C%i",c),Form("matched-gen muon p_{T}, hiBin %i - %i",centEdges[c-1],centEdges[c]),NMuPtBins,muPtMin,muPtMax);
       h_matchedGenMuonEta[c] = new TH1D(Form("h_matchedGenMuonEta_C%i",c),Form("matched-gen muon #eta, hiBin %i - %i",centEdges[c-1],centEdges[c]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+      h_matchedRecoMuonPt[c] = new TH1D(Form("h_matchedRecoMuonPt_C%i",c),Form("matched-gen muon p_{T}, hiBin %i - %i",centEdges[c-1],centEdges[c]),NMuPtBins,muPtMin,muPtMax);
+      h_matchedRecoMuonEta[c] = new TH1D(Form("h_matchedRecoMuonEta_C%i",c),Form("matched-gen muon #eta, hiBin %i - %i",centEdges[c-1],centEdges[c]),NTrkEtaBins,trkEtaMin,trkEtaMax);
+      h_tightRecoMuonPt[c] = new TH1D(Form("h_tightRecoMuonPt_C%i",c),Form("matched-gen muon p_{T}, hiBin %i - %i",centEdges[c-1],centEdges[c]),NMuPtBins,muPtMin,muPtMax);
+      h_tightRecoMuonEta[c] = new TH1D(Form("h_tightRecoMuonEta_C%i",c),Form("matched-gen muon #eta, hiBin %i - %i",centEdges[c-1],centEdges[c]),NTrkEtaBins,trkEtaMin,trkEtaMax);
    
+      
       h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[c] = new TH2D(Form("h_matchedRecoMuonPtOverGenMuonPt_genMuonPt_C%i",c),Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. p_{T}^{gen,#mu}, hiBin %i - %i",centEdges[c-1],centEdges[c]),500,0,5,NMuPtBins,muPtMin,muPtMax);
       h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c] = new TH2D(Form("h_matchedRecoMuonPtOverGenMuonPt_genMuonEta_C%i",c),Form("p_{T}^{reco,#mu} / p_{T}^{gen,#mu} vs. #eta^{gen,#mu}, hiBin %i - %i",centEdges[c-1],centEdges[c]),500,0,5,NTrkEtaBins,trkEtaMin,trkEtaMax);
 
@@ -128,6 +145,10 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
     h_inclGenMuonEta[c]->Sumw2();
     h_matchedGenMuonPt[c]->Sumw2();
     h_matchedGenMuonEta[c]->Sumw2();
+    h_matchedRecoMuonPt[c]->Sumw2();
+    h_matchedRecoMuonEta[c]->Sumw2();
+    h_tightRecoMuonPt[c]->Sumw2();
+    h_tightRecoMuonEta[c]->Sumw2();
 
     h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[c]->Sumw2();
     h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c]->Sumw2();
@@ -203,7 +224,8 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
     for(int j = 0; j < em->gppdgIDp->size(); j++){
 
       bool isMatchedGenMuon = false;
-
+      bool matchedRecoMuonIsTight = false;
+      
       if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
       double genMuPt_j = em->gpptp->at(j);
@@ -223,6 +245,10 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
       double matchedRecoMuPt_j = -99.0;
       double matchedRecoMuEta_j = -99.0;
       double matchedRecoMuPhi_j = -99.0;
+
+      double tightRecoMuPt_j = -99.0;
+      double tightRecoMuEta_j = -99.0;
+      double tightRecoMuPhi_j = -99.0;
       
       //reco muon loop
       double dR_min = 10.0;
@@ -230,15 +256,7 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
       
       for(int k = 0; k < em->nMu; k++){
 
-	if(!isQualityMuon_tight(em->muChi2NDF->at(k),
-				em->muInnerD0->at(k),
-				em->muInnerDz->at(k),
-				em->muMuonHits->at(k),
-				em->muPixelHits->at(k),
-				em->muIsGlobal->at(k),
-				em->muIsPF->at(k),
-				em->muStations->at(k),
-				em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	
 
 	double recoMuPt_k = em->muPt->at(k);
 	double recoMuEta_k = em->muEta->at(k);
@@ -255,7 +273,24 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
 	  isMatchedGenMuon = true;
 	  matchedRecoMuPt_j = recoMuPt_k;
 	  matchedRecoMuEta_j = recoMuEta_k;
-	  matchedRecoMuPhi_j = recoMuPhi_k; 
+	  matchedRecoMuPhi_j = recoMuPhi_k;
+
+	  if(isQualityMuon_tight(em->muChi2NDF->at(k),
+				 em->muInnerD0->at(k),
+				 em->muInnerDz->at(k),
+				 em->muMuonHits->at(k),
+				 em->muPixelHits->at(k),
+				 em->muIsGlobal->at(k),
+				 em->muIsPF->at(k),
+				 em->muStations->at(k),
+				 em->muTrkLayers->at(k))){
+
+	    matchedRecoMuonIsTight = true; 
+	    tightRecoMuPt_j = recoMuPt_k;
+	    tightRecoMuEta_j = recoMuEta_k;
+	    tightRecoMuPhi_j = recoMuPhi_k;
+
+	  }
 
 	}
 
@@ -293,6 +328,10 @@ void PYTHIAHYDJET_scan_muonReco(int group = 1){
     h_inclGenMuonEta[c]->Write();
     h_matchedGenMuonPt[c]->Write();
     h_matchedGenMuonEta[c]->Write();
+    h_matchedRecoMuonPt[c]->Write();
+    h_matchedRecoMuonEta[c]->Write();
+    h_tightRecoMuonPt[c]->Write();
+    h_tightRecoMuonEta[c]->Write();
 
     h_matchedRecoMuonPtOverGenMuonPt_genMuonPt[c]->Write();
     h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[c]->Write();
