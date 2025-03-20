@@ -93,8 +93,8 @@ TH2D *h_matchedRecoMuonPtOverGenMuonPt_genMuonEta[NCentralityIndices];
 
 void PYTHIAHYDJET_scan_muonReco(int group = 1){
 
-  TString input = Form("../../../rootFiles/skimmingOutput/PYTHIAHYDJET/output_DiJet/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("output_DiJet_pThat30_muonReco/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_scan_muonReco_mu12_tight/PYTHIAHYDJET_scan_output_%i.root",group);
   
   readConfig();
 
