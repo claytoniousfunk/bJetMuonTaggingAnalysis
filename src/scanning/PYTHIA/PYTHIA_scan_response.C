@@ -180,6 +180,8 @@ void PYTHIA_scan_response(int group = 1){
 
   h_inclGenJetPt_flavor = new TH2D("h_inclGenJetPt_flavor","JetFlavorID vs incl. gen p_{T}^{jet}",NPtBins,ptMin,ptMax,27,-5,22);
   h_inclGenJetPt_inclGenMuonTag_flavor = new TH2D("h_inclGenJetPt_inclGenMuonTag_flavor","JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,27,-5,22);
+
+
   h_inclGenJetPt_flavor->Sumw2();
   h_inclGenJetPt_inclGenMuonTag_flavor->Sumw2();
 
@@ -473,7 +475,7 @@ void PYTHIA_scan_response(int group = 1){
       double minDr = 100.0;
       int recoJetFlavorFlag = 0;
       int jetFlavorInt = 19;
-	
+      // begin recoJet loop
       for(int k = 0; k < em->njet; k++){
 		
 	double dr = getDr(em->jeteta[k],em->jetphi[k],y,z);
@@ -576,11 +578,37 @@ void PYTHIA_scan_response(int group = 1){
 	    
 	  }	
 	}
-      }
+      } // end recoJet loop
 
       jetFlavorInt = em->partonFlavor[recoJetFlavorFlag];
       //if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting
 
+
+      h_inclGenJetPt_flavor->Fill(x,jetFlavorInt,w);
+
+      // begin gen-muon loop
+      
+      bool hasGenMuon = false;
+      for(int j = 0; j < em->gpptp->size(); j++){
+
+	if(hasGenMuon) continue;
+
+	if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+
+	if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+
+	double genMuonPt_j = em->gpptp->at(j);
+	double genMuonEta_j = em->gpetap->at(j);
+	double genMuonPhi_j = em->gpphip->at(j);
+
+	if(getDr(genMuonEta_j,genMuonPhi_j,y,z) < deltaRCut){
+	  hasGenMuon = true;
+	  h_inclGenJetPt_inclGenMuonTag_flavor->Fill(x,jetFlavorInt,w);	  
+	}
+	
+      }
+
+      
 			
 			
       // fill response matrix
