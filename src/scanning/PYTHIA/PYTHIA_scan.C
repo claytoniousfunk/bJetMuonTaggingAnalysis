@@ -1884,53 +1884,6 @@ void PYTHIA_scan(int group = 1){
   h_inclGenJetPt_matchedRecoMuonTag_flavor->Write();
   h_inclGenJetPt_matchedRecoMuonTag_triggerOn_flavor->Write();
 
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets->Write();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets->Write();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets->Write();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets->Write();
-  h_muJetDr_recoJetPt_allJets->Write();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets->Write();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets->Write();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets->Write();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets->Write();
-  h_muJetDr_recoJetPt_uJets->Write();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets->Write();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets->Write();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets->Write();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets->Write();
-  h_muJetDr_recoJetPt_dJets->Write();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets->Write();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets->Write();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets->Write();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets->Write();
-  h_muJetDr_recoJetPt_sJets->Write();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets->Write();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets->Write();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets->Write();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets->Write();
-  h_muJetDr_recoJetPt_cJets->Write();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets->Write();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets->Write();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets->Write();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets->Write();
-  h_muJetDr_recoJetPt_bJets->Write();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets->Write();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets->Write();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets->Write();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets->Write();
-  h_muJetDr_recoJetPt_bGSJets->Write();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets->Write();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets->Write();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets->Write();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets->Write();
-  h_muJetDr_recoJetPt_gJets->Write();
 
   for(int t = 0; t < NTemplateIndices; t++){
     h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[t]->Write();
@@ -1938,8 +1891,57 @@ void PYTHIA_scan(int group = 1){
     h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets[t]->Write();
     h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets[t]->Write();
     h_muJetDr_recoJetPt_allJets[t]->Write();
-  }  
 
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets[t]->Write();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets[t]->Write();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[t]->Write();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets[t]->Write();
+    h_muJetDr_recoJetPt_uJets[t]->Write();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets[t]->Write();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets[t]->Write();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[t]->Write();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets[t]->Write();
+    h_muJetDr_recoJetPt_dJets[t]->Write();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets[t]->Write();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets[t]->Write();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets[t]->Write();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets[t]->Write();
+    h_muJetDr_recoJetPt_sJets[t]->Write();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets[t]->Write();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets[t]->Write();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets[t]->Write();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets[t]->Write();
+    h_muJetDr_recoJetPt_cJets[t]->Write();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets[t]->Write();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets[t]->Write();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets[t]->Write();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets[t]->Write();
+    h_muJetDr_recoJetPt_bJets[t]->Write();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[t]->Write();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[t]->Write();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[t]->Write();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[t]->Write();
+    h_muJetDr_recoJetPt_bGSJets[t]->Write();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets[t]->Write();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets[t]->Write();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets[t]->Write();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets[t]->Write();
+    h_muJetDr_recoJetPt_gJets[t]->Write();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_xJets[t]->Write();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets[t]->Write();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets[t]->Write();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets[t]->Write();
+    h_muJetDr_recoJetPt_xJets[t]->Write();
+
+  }
+  
   for(int j = 0; j < NJetPtIndices; j++){
 
     h_inclRecoJetEta_inclRecoJetPhi[j]->Write();
