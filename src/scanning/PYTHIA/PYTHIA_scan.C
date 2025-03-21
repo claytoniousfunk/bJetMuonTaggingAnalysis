@@ -472,55 +472,56 @@ void PYTHIA_scan(int group = 1){
     h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets[t]->Sumw2();
     h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets[t]->Sumw2();
     h_muJetDr_recoJetPt_allJets[t]->Sumw2();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets[t]->Sumw2();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets[t]->Sumw2();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[t]->Sumw2();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets[t]->Sumw2();
+    h_muJetDr_recoJetPt_uJets[t]->Sumw2();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets[t]->Sumw2();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets[t]->Sumw2();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[t]->Sumw2();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets[t]->Sumw2();
+    h_muJetDr_recoJetPt_dJets[t]->Sumw2();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets[t]->Sumw2();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets[t]->Sumw2();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets[t]->Sumw2();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets[t]->Sumw2();
+    h_muJetDr_recoJetPt_sJets[t]->Sumw2();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets[t]->Sumw2();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets[t]->Sumw2();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets[t]->Sumw2();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets[t]->Sumw2();
+    h_muJetDr_recoJetPt_cJets[t]->Sumw2();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets[t]->Sumw2();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets[t]->Sumw2();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets[t]->Sumw2();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets[t]->Sumw2();
+    h_muJetDr_recoJetPt_bJets[t]->Sumw2();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[t]->Sumw2();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[t]->Sumw2();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[t]->Sumw2();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[t]->Sumw2();
+    h_muJetDr_recoJetPt_bGSJets[t]->Sumw2();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets[t]->Sumw2();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets[t]->Sumw2();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets[t]->Sumw2();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets[t]->Sumw2();
+    h_muJetDr_recoJetPt_gJets[t]->Sumw2();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_xJets[t]->Sumw2();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets[t]->Sumw2();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets[t]->Sumw2();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets[t]->Sumw2();
+    h_muJetDr_recoJetPt_xJets[t]->Sumw2();
+
   }
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets->Sumw2();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets->Sumw2();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets->Sumw2();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets->Sumw2();
-  h_muJetDr_recoJetPt_uJets->Sumw2();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets->Sumw2();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets->Sumw2();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets->Sumw2();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets->Sumw2();
-  h_muJetDr_recoJetPt_dJets->Sumw2();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets->Sumw2();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets->Sumw2();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets->Sumw2();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets->Sumw2();
-  h_muJetDr_recoJetPt_sJets->Sumw2();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets->Sumw2();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets->Sumw2();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets->Sumw2();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets->Sumw2();
-  h_muJetDr_recoJetPt_cJets->Sumw2();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets->Sumw2();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets->Sumw2();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets->Sumw2();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets->Sumw2();
-  h_muJetDr_recoJetPt_bJets->Sumw2();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets->Sumw2();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets->Sumw2();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets->Sumw2();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets->Sumw2();
-  h_muJetDr_recoJetPt_bGSJets->Sumw2();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets->Sumw2();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets->Sumw2();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets->Sumw2();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets->Sumw2();
-  h_muJetDr_recoJetPt_gJets->Sumw2();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_xJets->Sumw2();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets->Sumw2();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets->Sumw2();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets->Sumw2();
-  h_muJetDr_recoJetPt_xJets->Sumw2();
   
   for(int j = 0; j < NJetPtIndices; j++){
 	
