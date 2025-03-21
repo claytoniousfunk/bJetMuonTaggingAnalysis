@@ -542,8 +542,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   for(int j = 0; j < NCentralityIndices; j++){
 
-    h_inclGenJetPt_flavor[i]->Write();
-    h_inclGenJetPt_inclGenMuonTag_flavor[i]->Write();
+    h_inclGenJetPt_flavor[j]->Write();
+    h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
     
     h_matchedRecoJetPt_genJetPt[j][0]->Write();
     h_matchedRecoJetPt_genJetPt[j][1]->Write();
