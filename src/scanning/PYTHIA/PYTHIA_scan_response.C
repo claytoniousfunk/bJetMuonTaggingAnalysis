@@ -37,7 +37,7 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p3.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
@@ -95,8 +95,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 
 void PYTHIA_scan_response(int group = 1){
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_mu12_response_pThat-15_inclJets_doJERCorrection/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_response_pThat-15_inclJets/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   
@@ -136,8 +136,8 @@ void PYTHIA_scan_response(int group = 1){
 
 
   // Define histograms
-  const int N1 = 7;
-  double ptAxis1[N1] = {50,60,80,120,200,300,500};
+  const int N1 = 9;
+  double ptAxis1[N1] = {50,60,80,100,120,150,200,300,500};
   const int N2 = 32;
   double ptAxis2[N2] = {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,500};
 
