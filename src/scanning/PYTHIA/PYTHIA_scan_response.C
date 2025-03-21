@@ -132,7 +132,8 @@ void PYTHIA_scan_response(int group = 1){
   TH2D *h_matchedNeutrinoPtOverGenJetPt_genJetPt[7];
   TH2D *h_matchedNeutrinoPtOverGenJetPt_recoJetPt[7];
   TH2D *h_matchedNeutrinoPtOverRecoJetPt_genJetPt[7];
-
+  TH2D *h_inclGenJetPt_flavor;
+  TH2D *h_inclGenJetPt_inclGenMuonTag_flavor;
 
 
   // Define histograms
@@ -176,7 +177,13 @@ void PYTHIA_scan_response(int group = 1){
   h_matchedNeutrinoPt_genJetPt[4] = new TH2D("h_matchedNeutrinoPt_genJetPt_sJets","neutrino pT vs. genJet pT, sJets",100,0,100,NPtBins,ptMin,ptMax);
   h_matchedNeutrinoPt_genJetPt[5] = new TH2D("h_matchedNeutrinoPt_genJetPt_gJets","neutrino pT vs. genJet pT, gJets",100,0,100,NPtBins,ptMin,ptMax);
   h_matchedNeutrinoPt_genJetPt[6] = new TH2D("h_matchedNeutrinoPt_genJetPt_xJets","neutrino pT vs. genJet pT, xJets",100,0,100,NPtBins,ptMin,ptMax);
-  
+
+  h_inclGenJetPt_flavor = new TH2D("h_inclGenJetPt_flavor","JetFlavorID vs incl. gen p_{T}^{jet}",NPtBins,ptMin,ptMax,27,-5,22);
+  h_inclGenJetPt_inclGenMuonTag_flavor = new TH2D("h_inclGenJetPt_inclGenMuonTag_flavor","JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,27,-5,22);
+  h_inclGenJetPt_flavor->Sumw2();
+  h_inclGenJetPt_inclGenMuonTag_flavor->Sumw2();
+
+
   
   h_matchedRecoJetPt_genJetPt[0]->Sumw2();
   h_matchedRecoJetPt_genJetPt[1]->Sumw2();
@@ -210,6 +217,8 @@ void PYTHIA_scan_response(int group = 1){
   h_matchedNeutrinoPt_genJetPt[4]->Sumw2();
   h_matchedNeutrinoPt_genJetPt[5]->Sumw2();
   h_matchedNeutrinoPt_genJetPt[6]->Sumw2();
+
+  
 
   
   h_matchedRecoJetPt_genJetPt_var = new TH2D("h_matchedRecoJetPt_genJetPt_var","genJetPt vs. matchedRecoJetPt, var bins",N1-1,ptAxis1,N2-1,ptAxis2);
@@ -484,7 +493,7 @@ void PYTHIA_scan_response(int group = 1){
 	    JEC.SetJetPT(em->rawpt[k]);
 	    JEC.SetJetEta(em->jeteta[k]);
 	    JEC.SetJetPhi(em->jetphi[k]);
-
+	    
 	    matchedRecoJetPt = JEC.GetCorrectedPT();
 	    //matchedRecoJetPt = em->jetpt[k];
 	    matchedRawJetPt = em->rawpt[k];
