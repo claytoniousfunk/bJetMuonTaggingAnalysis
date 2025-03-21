@@ -176,7 +176,7 @@ TH2D *h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[NCentralityIn
 // ------------------------------- in-jet reco muons by flavor, trigger on ----
 // all jets
 TH2D *h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[NCentralityIndices][NTemplateIndices];
-TH2D *h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets[NCentralityIndices][NTemplateIndices];
+TH2D *h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets[NCentralityIndices][NTemplateIndicesp];
 TH2D *h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets[NCentralityIndices][NTemplateIndices];
 TH2D *h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets[NCentralityIndices][NTemplateIndices];
 TH2D *h_muJetDr_recoJetPt_allJets[NCentralityIndices][NTemplateIndices];
