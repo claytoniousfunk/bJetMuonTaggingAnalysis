@@ -763,7 +763,8 @@ void PYTHIA_scan_response(int group = 1){
   // WRITE
   auto wf = TFile::Open(output,"recreate");
 
-  
+  h_inclGenJetPt_flavor->Write();
+  h_inclGenJetPt_inclGenMuonTag_flavor->Write();
     
   h_matchedRecoJetPt_genJetPt[0]->Write();
   h_matchedRecoJetPt_genJetPt[1]->Write();
