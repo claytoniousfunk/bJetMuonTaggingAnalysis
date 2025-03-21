@@ -601,6 +601,8 @@ void PYTHIA_scan_response(int group = 1){
 	double genMuonEta_j = em->gpetap->at(j);
 	double genMuonPhi_j = em->gpphip->at(j);
 
+	if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;
+
 	if(getDr(genMuonEta_j,genMuonPhi_j,y,z) < deltaRCut){
 	  hasGenMuon = true;
 	  h_inclGenJetPt_inclGenMuonTag_flavor->Fill(x,jetFlavorInt,w);	  
