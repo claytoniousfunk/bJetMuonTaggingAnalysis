@@ -186,7 +186,7 @@ void PYTHIA_scan_response(int group = 1){
 
   h_inclGenJetPt_flavor->Sumw2();
   h_inclGenJetPt_inclGenMuonTag_flavor->Sumw2();
-  h_inclGenJetPt_inclGenMuonTag_flavor->Write();
+  h_inclGenJetPt_inclRecoMuonTag_flavor->Sumw2();
 
   
   h_matchedRecoJetPt_genJetPt[0]->Sumw2();
@@ -747,7 +747,7 @@ void PYTHIA_scan_response(int group = 1){
 	}
 
 	if(hasRecoJetMuon){
-	  h_inclGenJetPt_inclGenMuonTag_flavor->Fill(x,jetFlavorInt,w);
+	  h_inclGenJetPt_inclRecoMuonTag_flavor->Fill(x,jetFlavorInt,w);
 	}
       }
 			
