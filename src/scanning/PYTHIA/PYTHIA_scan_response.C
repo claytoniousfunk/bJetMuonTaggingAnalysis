@@ -491,7 +491,7 @@ void PYTHIA_scan_response(int group = 1){
 	    hasRecoJetMatch = true;
 	    recoJetFlavorFlag = k;
 
-	    if(em->mupt[k] > 14.0 && em->mueta[k] < 2.) hasRecoJetMuon = true;
+	    if(em->mupt[k] > 14.0 && fabs(em->mueta[k]) < 2.) hasRecoJetMuon = true;
 	    //if(em->mupt[k] > 7.0 && em->mupt[k] < 14.0) hasRecoJetMuon = true;
 
 	    JEC.SetJetPT(em->rawpt[k]);
