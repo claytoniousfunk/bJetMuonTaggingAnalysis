@@ -134,6 +134,7 @@ void PYTHIA_scan_response(int group = 1){
   TH2D *h_matchedNeutrinoPtOverRecoJetPt_genJetPt[7];
   TH2D *h_inclGenJetPt_flavor;
   TH2D *h_inclGenJetPt_inclGenMuonTag_flavor;
+  TH2D *h_inclGenJetPt_inclRecoMuonTag_flavor;
 
 
   // Define histograms
@@ -180,11 +181,12 @@ void PYTHIA_scan_response(int group = 1){
 
   h_inclGenJetPt_flavor = new TH2D("h_inclGenJetPt_flavor","JetFlavorID vs incl. gen p_{T}^{jet}",NPtBins,ptMin,ptMax,27,-5,22);
   h_inclGenJetPt_inclGenMuonTag_flavor = new TH2D("h_inclGenJetPt_inclGenMuonTag_flavor","JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,27,-5,22);
+  h_inclGenJetPt_inclRecoMuonTag_flavor = new TH2D("h_inclGenJetPt_inclRecoMuonTag_flavor","JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,27,-5,22);
 
 
   h_inclGenJetPt_flavor->Sumw2();
   h_inclGenJetPt_inclGenMuonTag_flavor->Sumw2();
-
+  h_inclGenJetPt_inclGenMuonTag_flavor->Write();
 
   
   h_matchedRecoJetPt_genJetPt[0]->Sumw2();
@@ -489,7 +491,7 @@ void PYTHIA_scan_response(int group = 1){
 	    hasRecoJetMatch = true;
 	    recoJetFlavorFlag = k;
 
-	    if(em->mupt[k] > 14.0) hasRecoJetMuon = true;
+	    if(em->mupt[k] > 14.0 && em->mueta[k] < 2.) hasRecoJetMuon = true;
 	    //if(em->mupt[k] > 7.0 && em->mupt[k] < 14.0) hasRecoJetMuon = true;
 
 	    JEC.SetJetPT(em->rawpt[k]);
@@ -743,6 +745,10 @@ void PYTHIA_scan_response(int group = 1){
 	  }
 
 	}
+
+	if(hasRecoJetMuon){
+	  h_inclGenJetPt_inclGenMuonTag_flavor->Fill(x,jetFlavorInt,w);
+	}
       }
 			
 
@@ -767,6 +773,7 @@ void PYTHIA_scan_response(int group = 1){
 
   h_inclGenJetPt_flavor->Write();
   h_inclGenJetPt_inclGenMuonTag_flavor->Write();
+  h_inclGenJetPt_inclRecoMuonTag_flavor->Write();
     
   h_matchedRecoJetPt_genJetPt[0]->Write();
   h_matchedRecoJetPt_genJetPt[1]->Write();
