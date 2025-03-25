@@ -332,6 +332,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       double matchedRecoJetPt = 0.0;
       double matchedRawJetPt = 0.0;
       double recoMuonPt = 0.0;
+      double recoMuonEta = 0.0;
 			
       if(TMath::Abs(y) > etaMax) continue;
 	
@@ -564,7 +565,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
     h_inclGenJetPt_flavor[j]->Write();
     h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
-    h_inclGenJetPt_inclRecoMuonTag_flavor[i]->Write();
+    h_inclGenJetPt_inclRecoMuonTag_flavor[j]->Write();
     
     h_matchedRecoJetPt_genJetPt[j][0]->Write();
     h_matchedRecoJetPt_genJetPt[j][1]->Write();
