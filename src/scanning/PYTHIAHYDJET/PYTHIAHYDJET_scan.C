@@ -1092,6 +1092,9 @@ void PYTHIAHYDJET_scan(int group = 1){
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
 
+      if(onlyOneMuonTaggedJetPerEvent){
+	if(eventHasInclRecoMuonTag) continue;
+      }
       // JET VARIABLES
 				
       JEC.SetJetPT(em->rawpt[i]);
