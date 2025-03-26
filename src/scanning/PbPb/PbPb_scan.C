@@ -126,7 +126,7 @@ void PbPb_scan(int group = 1){
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates/PbPb_MinBias_scan_output_%i.root",group);
 
   TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates/PbPb_SingleMuon_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates_onlyOneMuonTaggedJetPerEvent/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -493,6 +493,10 @@ void PbPb_scan(int group = 1){
     // RECO JET LOOP
     for(int i = 0; i < em->njet ; i++){
 
+      if(onlyOneMuonTaggedJetPerEvent){
+	if(eventHasInclRecoMuonTag) continue;
+      }
+      
       // JET VARIABLES
 		
       JEC.SetJetPT(em->rawpt[i]);
