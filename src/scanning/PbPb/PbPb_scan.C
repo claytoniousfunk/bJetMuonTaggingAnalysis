@@ -115,6 +115,9 @@ TH1D *h_muPtOverJetPt[NCentralityIndices][NJetPtIndices];
 TH2D *h_mupt_jetpt[NCentralityIndices];
 TH2D *h_mupt_muptrel[NCentralityIndices][NJetPtIndices];
 TH2D *h_muptrel_jetpt[NCentralityIndices];
+TH1D *h_NJetPerEvent[NCentralityIndices];
+TH1D *h_NMuTaggedJetPerEvent[NCentralityIndices];
+
 
 ///////////////////////  start the program
 void PbPb_scan(int group = 1){
@@ -157,6 +160,8 @@ void PbPb_scan(int group = 1){
       h_vz[i] = new TH1D(Form("h_vz_C%i",i),Form("vz, events with inclRecoJet, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag[i] = new TH1D(Form("h_vz_inclRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag_triggerOn[i] = new TH1D(Form("h_vz_inclRecoMuonTag_triggerOn_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag-triggerOn, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_NJetPerEvent[i] = new TH1D(Form("h_NJetPerEvent_C%i",i),Form("Number of incl. jets per event, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),100,0,100);
+      h_NMuTaggedJetPerEvent[i] = new TH1D(Form("h_NMuTaggedJetPerEvent_C%i",i),Form("Number of #it{#mu}-tagged jets per event, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),100,0,100);
       // ----------------------------------------- incl. reco jets --------------   
       h_inclRecoJetPt[i] = new TH1D(Form("h_inclRecoJetPt_C%i",i),Form("incl. reco p_{T}^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
       h_inclRecoJetEta[i] = new TH1D(Form("h_inclRecoJetEta_C%i",i),Form("incl. reco #eta^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NEtaBins,etaMin,etaMax);
@@ -190,6 +195,8 @@ void PbPb_scan(int group = 1){
       h_vz[i] = new TH1D(Form("h_vz_C%i",i),Form("vz, events with inclRecoJet, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag[i] = new TH1D(Form("h_vz_inclRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag_triggerOn[i] = new TH1D(Form("h_vz_inclRecoMuonTag_triggerOn_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag-triggerOn, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_NJetPerEvent[i] = new TH1D(Form("h_NJetPerEvent_C%i",i),Form("Number of incl. jets per event, hiBin %i - %i",centEdges[i-1],centEdges[i]),100,0,100);
+      h_NMuTaggedJetPerEvent[i] = new TH1D(Form("h_NMuTaggedJetPerEvent_C%i",i),Form("Number of #it{#mu}-tagged jets per event, hiBin %i - %i",centEdges[i-1],centEdges[i]),100,0,100);
       // ----------------------------------------- incl. reco jets --------------   
       h_inclRecoJetPt[i] = new TH1D(Form("h_inclRecoJetPt_C%i",i),Form("incl. reco p_{T}^{jet}, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
       h_inclRecoJetEta[i] = new TH1D(Form("h_inclRecoJetEta_C%i",i),Form("incl. reco #eta^{jet}, hiBin %i - %i",centEdges[i-1],centEdges[i]),NEtaBins,etaMin,etaMax);
@@ -219,6 +226,8 @@ void PbPb_scan(int group = 1){
       h_muJetDr_recoJetPt[i] = new TH2D(Form("h_muJetDr_recoJetPt_C%i",i),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
     }
     // sumw2 commands
+    h_NJetPerEvent[i]->Sumw2();
+    h_NMuTaggedJetPerEvent[i]->Sumw2();
     h_vz[i]->Sumw2();
     h_vz_inclRecoMuonTag[i]->Sumw2();
     h_vz_inclRecoMuonTag_triggerOn[i]->Sumw2();
@@ -452,6 +461,8 @@ void PbPb_scan(int group = 1){
     bool eventHasInclRecoMuonTagPlusTrigger = false;
     bool eventHasMatchedRecoMuonTag = false;
     bool eventHasMatchedRecoMuonTagPlusTrigger = false;
+    int inclJetCounter = 0;
+    int muTaggedJetCounter = 0;
 
     
     // RECO MUON LOOP
@@ -604,6 +615,8 @@ void PbPb_scan(int group = 1){
       }
 
       // Fill the jet/event histograms
+
+      inclJetCounter++;
       h_inclRecoJetPt[0]->Fill(x,w);
       h_inclRecoJetPt[CentralityIndex]->Fill(x,w);
 
@@ -629,7 +642,8 @@ void PbPb_scan(int group = 1){
       if(hasInclRecoMuonTag){
 
 	eventHasInclRecoMuonTag = true;
-
+	muTaggedJetCounter++;
+	
 	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[0][0]->Fill(y,z,w);
 	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[CentralityIndex][0]->Fill(y,z,w);
 	if(jetPtIndex > 0){
@@ -718,6 +732,12 @@ void PbPb_scan(int group = 1){
     }
     // END recoJet LOOP
 
+    h_NJetPerEvent[0]->Fill(inclJetCounter);
+    h_NJetPerEvent[CentralityIndex]->Fill(inclJetCounter);
+
+    h_NMuTaggedJetPerEvent[0]->Fill(muTaggedJetCounter);
+    h_NMuTaggedJetPerEvent[CentralityIndex]->Fill(muTaggedJetCounter);
+
     h_vz[0]->Fill(em->vz,w);
     h_vz[CentralityIndex]->Fill(em->vz,w);
     
@@ -763,6 +783,9 @@ void PbPb_scan(int group = 1){
 
   for(int i = 0; i < NCentralityIndices; i++){
 
+    h_NJetPerEvent[i]->Write();
+    h_NMuTaggedJetPerEvent[i]->Write();
+    
     h_vz[i]->Write();
     h_vz_inclRecoMuonTag[i]->Write();
     h_vz_inclRecoMuonTag_triggerOn[i]->Write();
