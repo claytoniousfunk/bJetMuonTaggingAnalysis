@@ -29,4 +29,4 @@ bool doHadronPtRelReweight = false;
 bool doDRReweight = false;
 bool doWeightCut = true;
 // experimental filters
-bool onlyOneMuonTaggedJetPerEvent = true;
+bool onlyOneMuonTaggedJetPerEvent = false;

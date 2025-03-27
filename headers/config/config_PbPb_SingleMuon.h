@@ -10,5 +10,5 @@ bool doEtaPhiMask = false;
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
 // experimental filters
-bool onlyOneMuonTaggedJetPerEvent = true;
+bool onlyOneMuonTaggedJetPerEvent = false;
 
