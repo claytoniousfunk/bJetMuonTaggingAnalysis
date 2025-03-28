@@ -248,6 +248,7 @@ TH2D *h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[NCentralityIndices][NJetP
 TH2D *h_recoGenDr_flavor[NCentralityIndices][NJetPtIndices];
 TH2D *h_recoGenDpt_flavor[NCentralityIndices][NJetPtIndices];
 TH2D *h_recoJetPt_pthat[NCentralityIndices];
+TH2D *h_muTaggedRecoJetPt_pthat[NCentralityIndices];
 TH2D *h_genJetPt_pthat[NCentralityIndices];
 TH2D *h_refPartonFlavorForB_matchedPartonFlavor[NCentralityIndices];
 TH2D *h_matchedRecoJetPt_genJetPt[NCentralityIndices];
@@ -378,6 +379,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i] = new TH2D(Form("h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_C%i",i),Form("incl. reco #phi^{jet} vs. incl reco p_{T}^{jet}, tagged with matched reco muon, trigger ON, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
       // ------------------------------------- analysis histograms ------------------
       h_recoJetPt_pthat[i] = new TH2D(Form("h_recoJetPt_pthat_C%i",i),Form("reco p_{T}^{jet} vs. #hat{p}_{T}, hiBin %i - hiBin %i; reco p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+      h_muTaggedRecoJetPt_pthat[i] = new TH2D(Form("h_muTaggedRecoJetPt_pthat_C%i",i),Form("mu-tagged reco p_{T}^{jet} vs. #hat{p}_{T}, hiBin %i - hiBin %i; reco p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_genJetPt_pthat[i] = new TH2D(Form("h_genJetPt_pthat_C%i",i),Form("gen p_{T}^{jet} vs. #hat{p}_{T}, hiBin %i - hiBin %i; gen p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_refPartonFlavorForB_matchedPartonFlavor[i] = new TH2D(Form("h_refPartonFlavorForB_matchedPartonFlavor_C%i",i),Form("refPartonFlavorForB vs matchedPartonFlavor, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),27,-5,22,27,-5,22);
       h_matchedRecoJetPt_genJetPt[i] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_C%i",i),Form("matchedRecoJetPt vs genJetPt, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
@@ -496,6 +498,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i] = new TH2D(Form("h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn_C%i",i),Form("incl. reco #phi^{jet} vs. incl reco p_{T}^{jet}, tagged with matched reco muon, trigger ON, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
       // ------------------------------------- analysis histograms ------------------
       h_recoJetPt_pthat[i] = new TH2D(Form("h_recoJetPt_pthat_C%i",i),Form("reco p_{T}^{jet} vs. #hat{p}_{T}, hiBin %i - hiBin %i; reco p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
+      h_muTaggedRecoJetPt_pthat[i] = new TH2D(Form("h_muTaggedRecoJetPt_pthat_C%i",i),Form("mu-tagged reco p_{T}^{jet} vs. #hat{p}_{T}, hiBin %i - hiBin %i; reco p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_genJetPt_pthat[i] = new TH2D(Form("h_genJetPt_pthat_C%i",i),Form("gen p_{T}^{jet} vs. #hat{p}_{T}, hiBin %i - hiBin %i; gen p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_refPartonFlavorForB_matchedPartonFlavor[i] = new TH2D(Form("h_refPartonFlavorForB_matchedPartonFlavor_C%i",i),Form("refPartonFlavorForB vs matchedPartonFlavor, hiBin %i - %i",centEdges[i-1],centEdges[i]),27,-5,22,27,-5,22);
       h_matchedRecoJetPt_genJetPt[i] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_C%i",i),Form("matchedRecoJetPt vs genJetPt, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
@@ -613,6 +616,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     h_inclRecoJetPt_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i]->Sumw2();
 
     h_recoJetPt_pthat[i]->Sumw2();
+    h_muTaggedRecoJetPt_pthat[i]->Sumw2();
     h_genJetPt_pthat[i]->Sumw2();
     h_refPartonFlavorForB_matchedPartonFlavor[i]->Sumw2();
     h_matchedRecoJetPt_genJetPt[i]->Sumw2();
@@ -1651,6 +1655,8 @@ void PYTHIAHYDJET_scan(int group = 1){
 	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag[CentralityIndex]->Fill(recoJetPt_i,recoJetEta_i,w_jet);
 	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag[0]->Fill(recoJetPt_i,recoJetPhi_i,w_jet);
 	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag[CentralityIndex]->Fill(recoJetPt_i,recoJetPhi_i,w_jet);
+	h_muTaggedRecoJetPt_pthat[0]->Fill(recoJetPt_i,em->pthat,w);
+	h_muTaggedRecoJetPt_pthat[CentralityIndex]->Fill(recoJetPt_i,em->pthat,w);
 
 	
 	if(evtTriggerDecision){
@@ -2276,6 +2282,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     
     h_recoJetPt_pthat[i]->Write();
+    h_muTaggedRecoJetPt_pthat[i]->Write();
     h_genJetPt_pthat[i]->Write();
 
     h_refPartonFlavorForB_matchedPartonFlavor[i]->Write();
