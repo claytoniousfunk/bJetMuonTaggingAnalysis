@@ -27,6 +27,6 @@ bool doBJetEnergyShift = false;
 bool doJERCorrection = false;
 bool doHadronPtRelReweight = false;
 bool doDRReweight = false;
-bool doWeightCut = true;
+bool doWeightCut = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
