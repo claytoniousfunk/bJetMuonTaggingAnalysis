@@ -31,7 +31,8 @@
 
 #include "../../headers/goldenFileNames.h"
 
-TFile *f1, *f2, *f3, *f_data;
+TFile *f1, *f2, *f3, *f4, *f_data;
+TFile *f_py_C2smear, *f_py_C1smear;
 
 // There are 3 classes of histograms, labeled "h", "g", and "k"
 // - h class: either PYTHIA or DiJet PYTHIA+HYDJET MC
@@ -39,7 +40,7 @@ TFile *f1, *f2, *f3, *f_data;
 // - k class: BJet PYTHIA+HYDJET MC
 
 
-TH2D *h0, *g0, *k0;
+TH2D *h0, *g0, *k0, *l0;
 
 TH1D *h0_incl;
 TH1D *h0_b, *h0_c, *h0_d, *h0_g, *h0_s, *h0_u, *h0_x, *h0_y, *h0_l, *h0_bGS;
@@ -59,10 +60,24 @@ TH1D *k0_b, *k0_c, *k0_d, *k0_g, *k0_s, *k0_u, *k0_x, *k0_y, *k0_l, *k0_bGS;
 // k0_l = light jets combined together
 TH1D *k0_bbar, *k0_cbar, *k0_dbar, *k0_sbar, *k0_ubar;
 
+TH1D *l0_incl;
+TH1D *l0_b, *l0_c, *l0_d, *l0_g, *l0_s, *l0_u, *l0_x, *l0_y, *l0_l, *l0_bGS;
+// l0_x = ghost jets, l0_y = undefined flavor (gen jets with inaccessible recoJet pair)
+// l0_l = light jets combined together
+TH1D *l0_bbar, *l0_cbar, *l0_dbar, *l0_sbar, *l0_ubar;
+
 
 // histograms for rebinning
 TH1D *h0_inclR, *h0_lR, *h0_bR, *h0_cR, *h0_xR;
 
+// function for smearing
+TF1 *f_smear;
+
+// test histo
+TH2D *hh;
+TH1D *xx_c, *xx_u, *xx_d, *xx_s, *xx_g, *xx_ubar, *xx_dbar, *xx_sbar, *xx_l;  // to get c and light truth values
+
+double cFixVal = 0.0;
 
 
 double func_temp_1(double *x, double *par){
@@ -82,6 +97,40 @@ double func_temp_2(double *x, double *par){
   double e = (1-par[0]-par[1])*h0_lR->GetBinContent(bin);
   return b+e+c;
 }
+
+double func_temp_cFix(double *x, double *par){
+  double xx = x[0];
+  int bin = h0_bR->FindBin(xx);
+  double b = (par[0])*h0_bR->GetBinContent(bin);
+  double c = cFixVal*h0_cR->GetBinContent(bin);
+  double e = (1 - par[0] - cFixVal)*h0_lR->GetBinContent(bin);
+}
+
+
+TH1D *binByBinSmear(TH1D *h){
+
+  TF1 *f = new TF1("f","1.13 - 0.14957*x",0,5);
+
+  for(int k = 0; k < h->GetSize(); k++){
+
+    double originalBinValue = h->GetBinContent(k);
+    double binCenter = h->GetBinCenter(k);
+    double binLowEdge = h->GetBinLowEdge(k);
+    //double smearValue = f->Eval(binCenter);
+    double smearValue = f->Eval(binLowEdge);
+    double newBinValue = originalBinValue * smearValue;
+
+    cout << "binLowEdge = " << binLowEdge << endl;
+    cout << "smearValue = " << smearValue << endl;
+    
+    h->SetBinContent(k,newBinValue);
+
+  }
+
+  return h;
+
+}
+
 
 
 
@@ -103,7 +152,7 @@ double templateFitter(bool isData = 1,
 		      bool do2templateFit  = true,
 		      bool do3templateFit  = false,
 		      double low_x  = 0.0,
-		      double high_x = 4.0,
+		      double high_x = 5.0,
 		      double c_multiplier = 1.0,
 		      double bGS_multiplier = 1.0,
 		      int returnValueIndex = 1
@@ -115,143 +164,68 @@ double templateFitter(bool isData = 1,
   TString input_PYTHIA;
   TString input_pp;
   TString input_PYTHIAHYDJET_DiJet;
+  TString input_PYTHIAHYDJET_DiJet_additionalMC;
   TString input_PYTHIAHYDJET_MuJet;
   TString input_PYTHIAHYDJET_BJet;
   TString input_PbPb;
+  TString input_PYTHIA_C2smear, input_PYTHIA_C1smear;
   
   if(isMu5){
 
     input_pp   = goldenFile_pp_SingleMuon_mu5;
     input_PbPb = goldenFile_PbPb_SingleMuon_mu5;
 
-    if(isJ1){
-      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat30;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat30;
+    
+    input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat15;
+    input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat15;
+    input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat15;
+    input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat15;
 
-    }
-    else if(isJ2){
-      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat30;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat30;
-    }
-    else if(isJ3){
-      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat40;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat40;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat40;
-    }
-    else if(isJ4){
-      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat50;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat50;
-    }
-    else if(isJ5){
-      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat50;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat50;
-    }
-    else if(isJ6){
-      input_PYTHIA             = goldenFile_PYTHIA_mu5_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat50;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu5_pThat50;
-    }
-    else{};
   }
 
   else if(isMu7){
 
-    input_pp   = goldenFile_pp_SingleMuon_mu7;
-    input_PbPb = goldenFile_PbPb_SingleMuon_mu7;
+    input_pp   = goldenFile_pp_SingleMuon_mu7_newJetBins;
+    input_PbPb = goldenFile_PbPb_SingleMuon_mu7_newJetBins;
 
-    if(isJ1){
-      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30;
+    input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat30_newJetBins;
+    input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_newJetBins;
+    input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30_newJetBins;
+    input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30_newJetBins;
+    input_PYTHIAHYDJET_DiJet_additionalMC = goldenFile_PYTHIAHYDJET_DiJet_additionalMC_mu12_pThat30;
 
-    }
-    else if(isJ2){
-      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30;
-    }
-    else if(isJ3){
-      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat40;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat40;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat40;
-    }
-    else if(isJ4){
-      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat50;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat50;
-    }
-    else if(isJ5){
-      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat50;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat50;
-    }
-    else if(isJ6){
-      input_PYTHIA             = goldenFile_PYTHIA_mu7_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat50;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu7_pThat50;
-    }
-    else{};
+    
+    
   }
 
   else if(isMu12){
 
-    input_pp   = goldenFile_pp_SingleMuon_mu12;
-    input_PbPb = goldenFile_PbPb_SingleMuon_mu12;
+    input_pp   = goldenFile_pp_SingleMuon_mu12_newJetBins;
+    input_PbPb = goldenFile_PbPb_SingleMuon_mu12_newJetBins;
 
-    if(isJ1){
-      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30;
+    input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat15_newJetBins;
+    //input_PYTHIA             = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_newJetBins_JERsmear.root";
+    //input_PYTHIA             = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_newJetBins.root";
+    //input_PYTHIA             = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_dRReweight_newJetBins_newHistograms.root";
+    //input_PYTHIA             = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_newJetBins_shiftedFirstJetBin.root";
+    //input_PYTHIA             = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_hadronPtRelReweight_newJetBins.root";
+    //input_PYTHIA             = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/shiftedFirstBin/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_hadronPtRelReweight_newJetBins_J1JetPTCut65.root";
 
-    }
-    else if(isJ2){
-      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30;
-    }
-    else if(isJ3){
-      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat40;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat40;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat40;
-    }
-    else if(isJ4){
-      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat50;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat50;
-    }
-    else if(isJ5){
-      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat50;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat50;
-    }
-    else if(isJ6){
-      input_PYTHIA             = goldenFile_PYTHIA_mu12_pThat15;
-      input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50;
-      input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat50;
-      input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat50;
-    }
-    else{};
+    input_PYTHIAHYDJET_DiJet = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins;
+    input_PYTHIAHYDJET_DiJet_additionalMC = goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat45_newJetBins_additionalMC;
+    input_PYTHIAHYDJET_MuJet = goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins;
+    input_PYTHIAHYDJET_BJet  = goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins;
+
+
+    // input_PYTHIAHYDJET_DiJet = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins.root";
+    // input_PYTHIAHYDJET_DiJet_additionalMC = goldenFile_PYTHIAHYDJET_DiJet_additionalMC_mu12_pThat30;
+    // input_PYTHIAHYDJET_MuJet = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins.root";
+    // input_PYTHIAHYDJET_BJet  = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins.root";
+
+    
+    input_PYTHIA_C2smear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/platinum/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_muPtRelReweightC2_newJetBins.root";
+    input_PYTHIA_C1smear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/platinum/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_muPtRelReweightC1_newJetBins.root";
+   
   }
 	
   else{};
@@ -260,6 +234,7 @@ double templateFitter(bool isData = 1,
   cout << "input_PYTHIA: " << input_PYTHIA << endl;
   cout << "input_pp: " << input_pp << endl;
   cout << "input_PYTHIAHYDJET_DiJet: " << input_PYTHIAHYDJET_DiJet << endl;
+  cout << "input_PYTHIAHYDJET_DiJet_additionalMC: " << input_PYTHIAHYDJET_DiJet_additionalMC << endl;
   cout << "input_PbPb: " << input_PbPb << endl;
   
   if(ispp){
@@ -267,7 +242,6 @@ double templateFitter(bool isData = 1,
     f1 = TFile::Open(input_PYTHIA);
     if(!isData) f_data = TFile::Open(input_PYTHIA);
     else f_data = TFile::Open(input_pp);	
-
     if(isJ1){
       f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J1",h0);
       if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_J1",h0_incl);		
@@ -301,6 +275,9 @@ double templateFitter(bool isData = 1,
     f1 = TFile::Open(input_PYTHIAHYDJET_DiJet);
     f2 = TFile::Open(input_PYTHIAHYDJET_BJet);
     f3 = TFile::Open(input_PYTHIAHYDJET_MuJet);
+    f4 = TFile::Open(input_PYTHIAHYDJET_DiJet_additionalMC);
+    f_py_C1smear = TFile::Open(input_PYTHIA_C1smear);
+    f_py_C2smear = TFile::Open(input_PYTHIA_C2smear);
     
     if(!isData) f_data = TFile::Open(input_PYTHIAHYDJET_DiJet);
     else f_data = TFile::Open(input_PbPb);
@@ -310,43 +287,61 @@ double templateFitter(bool isData = 1,
 
       if(isJ1){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J1",h0);
+	//f_py_C1smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J1",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J1",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J1",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J1",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J1",l0);
 	//if(isData) f_data->GetObject("h_muPtRel_C1J1",h0_incl);
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C1J1",h0_incl);
       }
       if(isJ2){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J2",h0);
+	//f_py_C1smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J2",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J2",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J2",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J2",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J2",l0);
 	//if(isData) f_data->GetObject("h_muPtRel_C1J2",h0_incl);
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C1J2",h0_incl);
       }
       if(isJ3){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J3",h0);
+	//f_py_C1smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J3",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J3",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J3",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J3",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J3",l0);
 	//if(isData) f_data->GetObject("h_muPtRel_C1J3",h0_incl);		
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C1J3",h0_incl);
       }
       if(isJ4){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J4",h0);
+	//f_py_C1smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J4",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J4",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J4",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J4",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J4",l0);
 	//if(isData) f_data->GetObject("h_muPtRel_C1J4",h0_incl);
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C1J4",h0_incl);
       }
       if(isJ5){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J5",h0);
+	//f_py_C1smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J5",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J5",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J5",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J5",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J5",l0);
 	//if(isData) f_data->GetObject("h_muPtRel_C1J5",h0_incl);
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C1J5",h0_incl);
       }
       if(isJ6){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J6",h0);
+	//f_py_C1smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J6",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J6",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J6",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J6",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J6",l0);
 	//if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C1J6",h0_incl);
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C1J6",h0_incl);
       }
@@ -357,43 +352,61 @@ double templateFitter(bool isData = 1,
 
       if(isJ1){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J1",h0);
+	//f_py_C2smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J1",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J1",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J1",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J1",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J1",l0);
 	//if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J1",h0_incl);
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C2J1",h0_incl);
       }
       if(isJ2){
-	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J2",h0);	
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J2",h0);
+	//f_py_C2smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J2",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J2",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J2",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J2",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J2",l0);	
 	//if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J2",h0_incl);
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C2J2",h0_incl);
       }
       if(isJ3){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J3",h0);
+	//f_py_C2smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J3",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J3",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J3",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J3",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J3",l0);
 	//if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J3",h0_incl);
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C2J3",h0_incl);
       }
       if(isJ4){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J4",h0);
+	//f_py_C2smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J4",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J4",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J4",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J4",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J4",l0);
 	//if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J4",h0_incl);		
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C2J4",h0_incl);
       }
       if(isJ5){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J5",h0);
+	//f_py_C2smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J5",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J5",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J5",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J5",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J5",l0);	
 	//if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J5",h0_incl);
 	if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C2J5",h0_incl);
       }
       if(isJ6){
 	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J6",h0);
+	//f_py_C2smear->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_J6",hh);
+	f1->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J6",hh);
 	f2->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J6",g0);
 	f3->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J6",k0);
+	f4->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J6",l0);	
 	//if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_flavor_C2J6",h0_incl);
         if(isData) f_data->GetObject("h_muptrel_inclRecoMuonTag_triggerOn_C2J6",h0_incl);
       }
@@ -438,30 +451,56 @@ double templateFitter(bool isData = 1,
     h0_s->Add(h0_sbar);
     h0_u->Add(h0_ubar);
 
-
+   
     h0_l = (TH1D*) h0_u->Clone("h0_l");
     h0_l->Add(h0_d);
     h0_l->Add(h0_s);
     h0_l->Add(h0_g);
+
+    xx_l = (TH1D*) h0_l->Clone("xx_l");
 
 
   }
 
   if(!ispp){
 	  
-    if(!isData) h0_incl = (TH1D*) h0->ProjectionX("h0_incl",binFinder->FindBin(-5+smallShift),binFinder->FindBin(22-smallShift));
+    if(!isData) h0_incl = (TH1D*) hh->ProjectionX("h0_incl",binFinder->FindBin(-5+smallShift),binFinder->FindBin(22-smallShift));
 
     h0_b = (TH1D*) h0->ProjectionX("h0_b",binFinder->FindBin(5+smallShift),binFinder->FindBin(6-smallShift));
     h0_c = (TH1D*) h0->ProjectionX("h0_c",binFinder->FindBin(4+smallShift),binFinder->FindBin(5-smallShift));
-    h0_d = (TH1D*) h0->ProjectionX("h0_d",binFinder->FindBin(1+smallShift),binFinder->FindBin(2-smallShift));
-    h0_g = (TH1D*) h0->ProjectionX("h0_g",binFinder->FindBin(21+smallShift),binFinder->FindBin(22-smallShift));
-    h0_s = (TH1D*) h0->ProjectionX("h0_s",binFinder->FindBin(3+smallShift),binFinder->FindBin(4-smallShift));
-    h0_u = (TH1D*) h0->ProjectionX("h0_u",binFinder->FindBin(2+smallShift),binFinder->FindBin(3-smallShift));
+
+    xx_d = (TH1D*) h0->ProjectionX("xx_d",binFinder->FindBin(1+smallShift),binFinder->FindBin(2-smallShift));
+    xx_g = (TH1D*) h0->ProjectionX("xx_g",binFinder->FindBin(21+smallShift),binFinder->FindBin(22-smallShift));
+    xx_s = (TH1D*) h0->ProjectionX("xx_s",binFinder->FindBin(3+smallShift),binFinder->FindBin(4-smallShift));
+    xx_u = (TH1D*) h0->ProjectionX("xx_u",binFinder->FindBin(2+smallShift),binFinder->FindBin(3-smallShift));
+
+    
+    // h0_d = (TH1D*) h0->ProjectionX("h0_d",binFinder->FindBin(1+smallShift),binFinder->FindBin(2-smallShift));
+    // h0_g = (TH1D*) h0->ProjectionX("h0_g",binFinder->FindBin(21+smallShift),binFinder->FindBin(22-smallShift));
+    // h0_s = (TH1D*) h0->ProjectionX("h0_s",binFinder->FindBin(3+smallShift),binFinder->FindBin(4-smallShift));
+    // h0_u = (TH1D*) h0->ProjectionX("h0_u",binFinder->FindBin(2+smallShift),binFinder->FindBin(3-smallShift));
+
+    h0_d = (TH1D*) hh->ProjectionX("h0_d",binFinder->FindBin(1+smallShift),binFinder->FindBin(2-smallShift));
+    h0_g = (TH1D*) hh->ProjectionX("h0_g",binFinder->FindBin(21+smallShift),binFinder->FindBin(22-smallShift));
+    h0_s = (TH1D*) hh->ProjectionX("h0_s",binFinder->FindBin(3+smallShift),binFinder->FindBin(4-smallShift));
+    h0_u = (TH1D*) hh->ProjectionX("h0_u",binFinder->FindBin(2+smallShift),binFinder->FindBin(3-smallShift));
+
+    
     h0_bbar = (TH1D*) h0->ProjectionX("h0_bbar",binFinder->FindBin(-5+smallShift),binFinder->FindBin(-4-smallShift));
     h0_cbar = (TH1D*) h0->ProjectionX("h0_cbar",binFinder->FindBin(-4+smallShift),binFinder->FindBin(-3-smallShift));
-    h0_dbar = (TH1D*) h0->ProjectionX("h0_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
-    h0_sbar = (TH1D*) h0->ProjectionX("h0_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
-    h0_ubar = (TH1D*) h0->ProjectionX("h0_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
+
+    xx_dbar = (TH1D*) h0->ProjectionX("xx_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
+    xx_sbar = (TH1D*) h0->ProjectionX("xx_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
+    xx_ubar = (TH1D*) h0->ProjectionX("xx_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
+    
+    // h0_dbar = (TH1D*) h0->ProjectionX("h0_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
+    // h0_sbar = (TH1D*) h0->ProjectionX("h0_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
+    // h0_ubar = (TH1D*) h0->ProjectionX("h0_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
+    
+    h0_dbar = (TH1D*) hh->ProjectionX("h0_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
+    h0_sbar = (TH1D*) hh->ProjectionX("h0_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
+    h0_ubar = (TH1D*) hh->ProjectionX("h0_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
+    
     h0_x = (TH1D*) h0->ProjectionX("h0_x",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
     h0_y = (TH1D*) h0->ProjectionX("h0_y",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
     h0_bGS = (TH1D*) h0->ProjectionX("h0_bGS",binFinder->FindBin(17+smallShift),binFinder->FindBin(18-smallShift));
@@ -472,11 +511,20 @@ double templateFitter(bool isData = 1,
     h0_s->Add(h0_sbar);
     h0_u->Add(h0_ubar);
 
+    xx_d->Add(xx_dbar);
+    xx_s->Add(xx_sbar);
+    xx_u->Add(xx_ubar);
+
 
     h0_l = (TH1D*) h0_u->Clone("h0_l");
     h0_l->Add(h0_d);
     h0_l->Add(h0_s);
     h0_l->Add(h0_g);
+
+    xx_l = (TH1D*) xx_u->Clone("xx_l");
+    xx_l->Add(xx_d);
+    xx_l->Add(xx_s);
+    xx_l->Add(xx_g);
 
     /////////////////////////////
 
@@ -535,17 +583,54 @@ double templateFitter(bool isData = 1,
     k0_l->Add(k0_d);
     k0_l->Add(k0_s);
     k0_l->Add(k0_g);
+      
+    l0_b = (TH1D*) l0->ProjectionX("l0_b",binFinder->FindBin(5+smallShift),binFinder->FindBin(6-smallShift));
+    l0_c = (TH1D*) l0->ProjectionX("l0_c",binFinder->FindBin(4+smallShift),binFinder->FindBin(5-smallShift));
+    l0_d = (TH1D*) l0->ProjectionX("l0_d",binFinder->FindBin(1+smallShift),binFinder->FindBin(2-smallShift));
+    l0_g = (TH1D*) l0->ProjectionX("l0_g",binFinder->FindBin(21+smallShift),binFinder->FindBin(22-smallShift));
+    l0_s = (TH1D*) l0->ProjectionX("l0_s",binFinder->FindBin(3+smallShift),binFinder->FindBin(4-smallShift));
+    l0_u = (TH1D*) l0->ProjectionX("l0_u",binFinder->FindBin(2+smallShift),binFinder->FindBin(3-smallShift));
+    l0_bbar = (TH1D*) l0->ProjectionX("l0_bbar",binFinder->FindBin(-5+smallShift),binFinder->FindBin(-4-smallShift));
+    l0_cbar = (TH1D*) l0->ProjectionX("l0_cbar",binFinder->FindBin(-4+smallShift),binFinder->FindBin(-3-smallShift));
+    l0_dbar = (TH1D*) l0->ProjectionX("l0_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
+    l0_sbar = (TH1D*) l0->ProjectionX("l0_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
+    l0_ubar = (TH1D*) l0->ProjectionX("l0_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
+    l0_x = (TH1D*) l0->ProjectionX("l0_x",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
+    l0_y = (TH1D*) l0->ProjectionX("l0_y",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
+    l0_bGS = (TH1D*) l0->ProjectionX("l0_bGS",binFinder->FindBin(17+smallShift),binFinder->FindBin(18-smallShift));
+
+    l0_b->Add(l0_bbar);
+    l0_c->Add(l0_cbar);
+    l0_d->Add(l0_dbar);
+    l0_s->Add(l0_sbar);
+    l0_u->Add(l0_ubar);
+
+    l0_l = (TH1D*) l0_u->Clone("l0_l");
+    l0_l->Add(l0_d);
+    l0_l->Add(l0_s);
+    l0_l->Add(l0_g);
 
 
+    // merge with the additional MC
+
+    // h0_b->Add(l0_b);
+    // h0_bGS->Add(l0_bGS);
+    // h0_c->Add(l0_c);
+    // h0_l->Add(l0_l);
 
   }
 
 
-  TFile *file = TFile::Open("light-template-old.root","recreate");
-  h0_l->Write();
-  file->Close();
+  // TFile *file = TFile::Open("light-template-old.root","recreate");
+  // h0_l->Write();
+  // file->Close();
 
 
+  
+
+
+
+  
   
   ////////// Calculate exact count ///////////////
 		
@@ -561,8 +646,14 @@ double templateFitter(bool isData = 1,
     double en_tot;
     double n_tot = h_sum->IntegralAndError(h0_incl->FindBin(low_x+eps),h0_incl->FindBin(high_x-eps),en_tot,"");
     cout << "n_tot = " << n_tot << " pm " << en_tot << endl;
-    double en_b;
+    double en_b, en_bGS;
     double n_b = h0_b->IntegralAndError(h0_b->FindBin(low_x+eps),h0_b->FindBin(high_x-eps),en_b,"");
+    double n_bGS = h0_bGS->IntegralAndError(h0_bGS->FindBin(low_x+eps),h0_bGS->FindBin(high_x-eps),en_bGS,"");
+    en_b = (n_b + n_bGS) * TMath::Sqrt((en_b/n_b)*(en_b/n_b) + (en_bGS/n_bGS)*(en_bGS/n_bGS)  );
+    n_b += n_bGS;
+    
+
+    
     cout << "n_b = " << n_b << " pm " << en_b << endl;
     b_frac = n_b / n_tot;
     eb_frac = b_frac*(TMath::Sqrt(TMath::Power(en_b/n_b,2)+TMath::Power(en_tot/n_tot,2)));
@@ -580,22 +671,27 @@ double templateFitter(bool isData = 1,
     result[1] = -1.0;
   }
 
+
+  // scaling before merging the c-template.
+  double c_truth = h0_c->Integral() / (xx_l->Integral() + h0_b->Integral() + h0_c->Integral() + h0_bGS->Integral());
+  double l_truth = xx_l->Integral() / (xx_l->Integral() + h0_b->Integral() + h0_c->Integral() + h0_bGS->Integral());
+  cout << "c_truth = " << c_truth << ", l_truth = " << l_truth << endl;
+
+  cFixVal = c_multiplier*c_truth;
+
   ///////////// end calculate exact count ///////////////////////
 
 
   /////////////  Configure/merge templates ///////////////////////
   // bGS multiplier
-  h0_bGS->Scale(bGS_multiplier);
-  if(!ispp){
-    k0_bGS->Scale(bGS_multiplier);
-    g0_bGS->Scale(bGS_multiplier);
-  }
+  // h0_bGS->Scale(bGS_multiplier);
+  // if(!ispp){
+  //   k0_bGS->Scale(bGS_multiplier);
+  //   g0_bGS->Scale(bGS_multiplier);
+  // }
   // add scaled bGS templates to b templates
-  h0_b->Add(h0_bGS);
-  if(!ispp){
-    k0_b->Add(k0_bGS);
-    g0_b->Add(g0_bGS);
-  }
+  // first, get integral from both
+  
 	
   // merge templates if desired
   if(!ispp && mergeCtemplates){
@@ -606,37 +702,90 @@ double templateFitter(bool isData = 1,
   if(!ispp && mergeBtemplates){
     cout << "merging b-template..." << endl;
     h0_b->Add(g0_b); // merge with muJet sample
-    h0_b->Add(k0_b); // merge with bJet sample
-
+    h0_b->Add(k0_b);
+    h0_bGS->Add(g0_bGS); // merge with bJet sample
+    h0_bGS->Add(k0_bGS);
   }
 
+  
   // low-pT template tests, comment out after completion
   // make the template just use the muJet sample
   //h0_b = (TH1D*) k0_b->Clone("h0_b");
 
 
+
+
+  
+  
+  double N_h0_b = h0_b->Integral();
+  double N_h0_bGS = h0_bGS->Integral();
+  double N_h0_bTot = N_h0_b + N_h0_bGS;
+
+  double N_g0_b = h0_b->Integral();
+  double N_g0_bGS = h0_bGS->Integral();
+  double N_g0_bTot = N_h0_b + N_h0_bGS;
+  
+  double f_b_truth = N_h0_b / N_h0_bTot;
+  double f_bGS_truth = N_h0_bGS / N_h0_bTot; // by construction, f_b_truth + f_bGS_truth = 1
+  double GS_enhancement_shift = bGS_multiplier - 1.; // GS_enhancement_shift = percent to increase the GS jets by
+  double GS_enhancement_factor = 1. + (GS_enhancement_shift / f_bGS_truth); // multiply this by the current GS fraction and it will result in an increase given by GS_enhancement_shift;
+  
+  h0_b->Scale(f_b_truth / h0_b->Integral());
+  h0_bGS->Scale(GS_enhancement_factor * f_bGS_truth / h0_bGS->Integral());
+  
+  h0_b->Add(h0_bGS);
+
   
   // merge ghost jets with lights
   //h0_l->Add(h0_x);
 
-  // scaling before merging the c-template.
-  double c_truth = h0_c->Integral() / (h0_l->Integral() + h0_b->Integral() + h0_c->Integral());
-  double l_truth = h0_l->Integral() / (h0_l->Integral() + h0_b->Integral() + h0_c->Integral());
-  cout << "c_truth = " << c_truth << ", l_truth = " << l_truth << endl;
-
-
-
-
-
-
+  
 
 
   cout << "b-jets: N = " << h0_b->GetEntries() << ", I = " << h0_b->Integral() << ", I/N = " << (1.0*h0_b->Integral())/(1.0*h0_b->GetEntries()) << endl;
   cout << "c-jets: N = " << h0_c->GetEntries() << ", I = " << h0_c->Integral() << ", I/N = " << (1.0*h0_c->Integral())/(1.0*h0_c->GetEntries()) << endl;
   cout << "l-jets: N = " << h0_l->GetEntries() << ", I = " << h0_l->Integral() << ", I/N = " << (1.0*h0_l->Integral())/(1.0*h0_l->GetEntries()) << endl;
 
+  cout << "x" << endl;
 
+  // //scale the merged light templates properly
+  double light_nom_scale = 1.0; // final correction
+  double light_nom_scale_prime = 1.0; // integral entry
+  double light_nom_scale_pprime = 1.0; // error entry
+  double light_add_scale = 1.0; // final correction
+  double light_add_scale_prime = 1.0; // integral entry
+  double light_add_scale_pprime = 1.0; // error entry
+  if(!ispp && isJ1){
+    light_nom_scale_prime = h0_l->IntegralAndError(h0_l->FindBin(0.0),h0_l->FindBin(10.0),light_nom_scale_pprime);
+    light_add_scale_prime = l0_l->IntegralAndError(l0_l->FindBin(0.0),l0_l->FindBin(10.0),light_add_scale_pprime);
+    light_nom_scale = light_nom_scale_pprime / light_nom_scale_prime;
+    light_add_scale = light_add_scale_pprime / light_add_scale_prime;
+    h0_l->Scale(light_nom_scale / h0_l->Integral());
+    l0_l->Scale(light_add_scale / l0_l->Integral());
+    //h0_l->Add(l0_l);
+  }
 
+  // if(!ispp && isJ2){
+  //   h0_l = (TH1D*) l0_l->Clone("h0_l"); // swap light template for privately-generated sample
+  // }
+
+  cout << "x" << endl;
+
+  
+  cout << "x" << endl;
+
+  // START -- EXPERIMENTAL
+  
+  // if(!ispp){
+  //   cout << "experimental light-jet merge:" << endl;
+  //   cout << "  h0_l->GetEntries() = " << h0_l->GetEntries() << endl;
+  //   cout << "  k0_l->GetEntries() = " << k0_l->GetEntries() << endl;
+  //   cout << " adding..." << endl;
+  //   h0_l->Add(k0_l);
+  //   //h0_l->Add(l0_l);
+  // }
+  
+  // END -- EXPERIMENTAL
   
   // add cJets to lJets (for 2-template fit)
   if(do2templateFit){
@@ -646,9 +795,12 @@ double templateFitter(bool isData = 1,
     h0_l->Add(h0_c);
   }
 
+  //// bin-by-bin smearing (experimental)
 
+  // binByBinSmear(h0_b);
+  // binByBinSmear(h0_c);
+  // binByBinSmear(h0_l);
   
-
 
 
  
@@ -685,17 +837,21 @@ double templateFitter(bool isData = 1,
   //const int M = 41;
   //const int M = 31;
   //const int M = 17;
-  const int M = 17;
-  //const int M = 11;
+  //const int M = 20;
+  // const int M = 19;
+  //const int M = 12;
   //const int M = 8;
+  const int M = 13;
   
   //double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0}; // M = 31
   //double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2,3.3,3.4,3.5,3.6,3.7,3.8,3.9,4.0}; // M = 41
 
-  double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.2,1.5,1.8,2.4,3.5,5.0}; // M = 16
-  //double muRelPtAxis[M] = {0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.5,1.8,2.4,4.0}; // M = 11
+  //double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.2,1.4,1.7,2.1,2.5,3.0,3.8,5.0,10.0}; // M = 20
+  //double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.2,1.4,1.7,2.1,2.5,3.0,3.8,5.0}; // M = 19
+  //double muRelPtAxis[M] = {0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.2,1.4,1.7,2.1,2.5,3.0}; // M = 17
+  //double muRelPtAxis[M] = {0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.5,1.8,2.4,3.5,5.0}; // M = 12
   //double muRelPtAxis[M] = {0.0,0.3,0.6,0.9,1.3,1.8,2.5,4.0}; // M = 8
-		
+  double muRelPtAxis[M] = {0.0,0.2,0.4,0.6,0.8,1.0,1.2,1.5,1.8,2.4,3.5,5.0,10}; // M = 13
 
   h0_inclR = (TH1D*) h0_incl->Rebin(M-1,"h0_inclR",muRelPtAxis);
   h0_lR = (TH1D*) h0_l->Rebin(M-1,"h0_lR",muRelPtAxis);
@@ -840,37 +996,43 @@ double templateFitter(bool isData = 1,
 
   /////////////////////// Configure the fit function /////////////////////
 
+  cout << ":::::  outside do3templateFit :::::: " << endl; 
+  
   if(do2templateFit){
     func = new TF1("func",func_temp_1,low_x,high_x,1);
   }
   else if(do3templateFit){
     func = new TF1("func",func_temp_2,low_x,high_x,2);
+   
+    //func->FixParameter(1,cFixVal);
+    //func = new TF1("func",func_temp_cFix,low_x,high_x,1);
+    cout << ":::::  inside do3templateFit :::::: " << endl; 
   }
   
   ////////////////////  End configure fit function ///////////////////////////
 
   ///////// initialize parameters to diJet MC truth values
   func->SetParameter(0,0.4);
-  func->SetParameter(1,0.3);
+  func->SetParameter(1,cFixVal);
 
-  if(ispp){
-    if(isJ2) func->SetParameter(0,0.3715);
-    else if(isJ3) func->SetParameter(0,0.3535);
-    else if(isJ4) func->SetParameter(0,0.3241);
-    else {};
-  }
-  else if(isC2){
-    if(isJ2) func->SetParameter(0,0.3991);
-    else if(isJ3) func->SetParameter(0,0.3554);
-    else if(isJ4) func->SetParameter(0,0.3466);
-    else{} ;
-  }
-  else if(isC1){
-    if(isJ2) func->SetParameter(0,0.3606);
-    else if(isJ3) func->SetParameter(0,3723);
-    else if(isJ4) func->SetParameter(0,0.3652);
-    else{} ;
-  }
+  // if(ispp){
+  //   if(isJ2) func->SetParameter(0,0.3715);
+  //   else if(isJ3) func->SetParameter(0,0.3535);
+  //   else if(isJ4) func->SetParameter(0,0.3241);
+  //   else {};
+  // }
+  // else if(isC2){
+  //   if(isJ2) func->SetParameter(0,0.3991);
+  //   else if(isJ3) func->SetParameter(0,0.3554);
+  //   else if(isJ4) func->SetParameter(0,0.3466);
+  //   else{} ;
+  // }
+  // else if(isC1){
+  //   if(isJ2) func->SetParameter(0,0.3606);
+  //   else if(isJ3) func->SetParameter(0,3723);
+  //   else if(isJ4) func->SetParameter(0,0.3652);
+  //   else{} ;
+  // }
 
 	
   if(do2templateFit){
@@ -887,7 +1049,9 @@ double templateFitter(bool isData = 1,
 
   TH1D *h_draw = (TH1D*) h0_inclR->Clone("h_draw");
 
-  h0_inclR->Fit(func,"M R","N",low_x,high_x);
+  h0_inclR->Fit(func,"","N",low_x,high_x);
+  //h0_inclR->Fit(func,"M R","N",low_x,high_x);
+  //h0_inclR->Fit(func,"WL M R","N",low_x,high_x);
 
   gStyle->SetOptFit(0);
   h0_inclR->SetTitle("");
@@ -1008,6 +1172,9 @@ double templateFitter(bool isData = 1,
 
   cout << "chi2 from fit = " << chi2 << endl;
 
+  
+
+
   result[2] = p0;
   result[3] = ep0;
 
@@ -1051,13 +1218,17 @@ double templateFitter(bool isData = 1,
 		
 
   //////////////// configure stacked histogram
-  
-  h_stack->Add(h_muRelPt_l_scaled);
-  if(do3templateFit) h_stack->Add(h_muRelPt_c_scaled);
   h_stack->Add(h_muRelPt_b_scaled);
-  h_stack2->Add(h_muRelPt_l_scaled2);
+  if(do3templateFit) h_stack->Add(h_muRelPt_c_scaled);
+  h_stack->Add(h_muRelPt_l_scaled);
+
+  h_stack2->Add(h_muRelPt_b_scaled2);  
   if(do3templateFit) h_stack2->Add(h_muRelPt_c_scaled2);
-  h_stack2->Add(h_muRelPt_b_scaled2);
+  h_stack2->Add(h_muRelPt_l_scaled2);
+
+  TH1D *stack_histo_rep = (TH1D*) h_muRelPt_b_scaled->Clone("stack_histo_rep");
+  if(do3templateFit) stack_histo_rep->Add(h_muRelPt_c_scaled);
+  stack_histo_rep->Add(h_muRelPt_l_scaled);
 
   ////////////// end configure stacked histogram
 
@@ -1074,8 +1245,8 @@ double templateFitter(bool isData = 1,
   h_stack2->Draw("same");
   h_draw->Draw("ep same");
   h_stack->SetMinimum(0.0);
-  h_stack->SetMaximum(1.5);
-  auto legend = new TLegend(0.65,0.13,0.85,0.38);
+  h_stack->SetMaximum(1.6);
+  auto legend = new TLegend(0.68,0.65,0.88,0.87);
 
   // configure fit legend
   if(isData){
@@ -1107,7 +1278,7 @@ double templateFitter(bool isData = 1,
   TLatex *t_eb_truth = new TLatex();
 
   t_title->SetTextFont(62);
-  t_pythia->SetTextFont(62);
+  t_pythia->SetTextFont(42);
   t_pt->SetTextFont(42);
   t_eta->SetTextFont(42);
   t_HLT->SetTextFont(42);
@@ -1117,12 +1288,12 @@ double templateFitter(bool isData = 1,
   t_eb_truth->SetTextFont(42);
 
   t_title->SetTextSize(0.055);
-  t_pythia->SetTextSize(0.048);
+  t_pythia->SetTextSize(0.047);
   t_pt->SetTextSize(0.045);
   t_HLT->SetTextSize(0.045);
   t_b->SetTextSize(0.045);
 
-  double x_t0 = 0.6;
+  double x_t0 = 0.5;
   double x_t1 = 0.22;
   double x_t = 0.45;
   double y_t1 = 0.92;
@@ -1136,12 +1307,26 @@ double templateFitter(bool isData = 1,
   double y_t9 = 0.8;
 		
 
+
+  
   t_title->DrawLatexNDC(x_t1,y_t1,"CMS #scale[0.8]{#font[52]{Preliminary}}");
   if(isData){
-    if(ispp) t_pythia->DrawLatexNDC(x_t0,y_t2,"pp (5.02 TeV)");
+    if(ispp){
+      if(isMu7) t_pythia->DrawLatexNDC(x_t0,y_t2,"#font[42]{pp 5.02 TeV (274 pb^{-1})}");
+      else if(isMu12) t_pythia->DrawLatexNDC(x_t0,y_t2,"#font[42]{pp 5.02 TeV (301 pb^{-1})}");
+      else{};
+    }
 	  
-    if(isC1) t_pythia->DrawLatexNDC(x_t0,y_t2,"PbPb 0-30% (5.02 TeV)");
-    if(isC2) t_pythia->DrawLatexNDC(x_t0,y_t2,"PbPb 30-90% (5.02 TeV)");
+    if(isC1){
+      if(isMu7) t_pythia->DrawLatexNDC(x_t0,y_t2,"PbPb 0-30% 5.02 TeV (787 #mub^{-1})");
+      else if(isMu12) t_pythia->DrawLatexNDC(x_t0,y_t2,"PbPb 0-30% 5.02 TeV (1689 #mub^{-1})");
+      else{};
+    }
+    if(isC2){
+      if(isMu7) t_pythia->DrawLatexNDC(x_t0,y_t2,"PbPb 30-90% 5.02 TeV (787 #mub^{-1})");
+      else if(isMu12) t_pythia->DrawLatexNDC(x_t0,y_t2,"PbPb 30-90% 5.02 TeV (1689 #mub^{-1})");
+      else{};
+    }
   }
             
   if(!isData) {
@@ -1152,40 +1337,42 @@ double templateFitter(bool isData = 1,
 
 			
   
-  if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6");
-  if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"60 < #font[52]{p}_{T}^{jet} < 80 GeV, |#font[52]{#eta}^{jet}| < 1.6");
-  if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"80 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6");
-  if(isJ4) t_pt->DrawLatexNDC(x_t,y_t3,"120 < #font[52]{p}_{T}^{jet} < 200 GeV, |#font[52]{#eta}^{jet}| < 1.6");
-  if(isJ5) t_pt->DrawLatexNDC(x_t,y_t3,"200 < #font[52]{p}_{T}^{jet} < 300 GeV, |#font[52]{#eta}^{jet}| < 1.6");
-  if(isJ6) t_pt->DrawLatexNDC(x_t,y_t3,"300 < #font[52]{p}_{T}^{jet} < 500 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  if(isJ1) t_pt->DrawLatexNDC(0.23,0.71,"80 < #font[52]{p}_{T}^{jet} < 100 GeV, |#it{#eta}^{jet}| < 1.6");
+  if(isJ2) t_pt->DrawLatexNDC(0.23,0.71,"100 < #font[52]{p}_{T}^{jet} < 120 GeV, |#it{#eta}^{jet}| < 1.6");
+  if(isJ3) t_pt->DrawLatexNDC(0.23,0.71,"120 < #font[52]{p}_{T}^{jet} < 150 GeV, |#it{#eta}^{jet}| < 1.6");
+  if(isJ4) t_pt->DrawLatexNDC(0.23,0.71,"150 < #font[52]{p}_{T}^{jet} < 200 GeV, |#it{#eta}^{jet}| < 1.6");
+  if(isJ5) t_pt->DrawLatexNDC(0.23,0.71,"200 < #font[52]{p}_{T}^{jet} < 300 GeV, |#it{#eta}^{jet}| < 1.6");
+  if(isJ6) t_pt->DrawLatexNDC(0.23,0.71,"300 < #font[52]{p}_{T}^{jet} < 500 GeV, |#it{#eta}^{jet}| < 1.6");
 	
-  if(isMu5) t_HLT->DrawLatexNDC(x_t,y_t5,"#font[52]{p}_{T}^{#mu} > 7 GeV, |#font[52]{#eta}^{#mu}| < 2.0");
-  else if(isMu7) t_HLT->DrawLatexNDC(x_t,y_t5,"#font[52]{p}_{T}^{#mu} > 9 GeV, |#font[52]{#eta}^{#mu}| < 2.0");
-  else if(isMu12) t_HLT->DrawLatexNDC(x_t,y_t5,"#font[52]{p}_{T}^{#mu} > 14 GeV, |#font[52]{#eta}^{#mu}| < 2.0");
+  if(isMu5) t_HLT->DrawLatexNDC(0.23,0.65,"#font[52]{p}_{T}^{#mu} > 7 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
+  else if(isMu7) t_HLT->DrawLatexNDC(0.23,0.65,"9 < #font[52]{p}_{T}^{#mu} < 14 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
+  else if(isMu12) t_HLT->DrawLatexNDC(0.23,0.65,"#font[52]{p}_{T}^{#mu} > 14 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
   else{};
   
-  t_b->DrawLatexNDC(x_t,y_t6,Form("b_{fit} = %.4f #pm %.4f", p0, ep0));
+  t_b->DrawLatexNDC(0.48,0.52,Form("#it{f}_{#it{b}}^{#it{#mu}-tagged,#it{#mu}-trig} = %.4f #pm %.4f", p0, ep0));
+  if(!isData) t_b->DrawLatexNDC(0.48,0.45,Form("#it{f}_{#it{b}}^{true} = %.4f #pm %.4f", b_frac, eb_frac));
 
-   t_b->SetTextFont(42);
-  if(isData) t_b->DrawLatexNDC(x_t,y_t8,Form("#chi^{2}/ndof = %3.1f, N^{jet} = %i",chi2/ndof,Njet));
-  
-  else{
-   
-    t_b->DrawLatexNDC(x_t,y_t8,Form("#chi^{2}/ndof = %3.1f",chi2/ndof));
-  }
+  t_b->SetTextFont(42);
 
 
   if(ispp){
-    t_b->DrawLatexNDC(x_t,y_t9,"Anti-#font[52]{k}_{T} PF jets, tight muon ID");
+    t_b->DrawLatexNDC(0.23,0.83,"Anti-#font[52]{k}_{T} PF jets, tight muon ID");
+    if(isMu7) t_b->DrawLatexNDC(0.23,0.77,"#font[82]{HLT_HIL3Mu7_v1}");
+    else if(isMu12) t_b->DrawLatexNDC(0.23,0.77,"#font[82]{HLT_HIL3Mu12_v1}");
+    else{};
   }
   else{
-    t_b->DrawLatexNDC(x_t,y_t9,"Anti-#font[52]{k}_{T} CsPF jets, tight muon ID");
+    t_b->DrawLatexNDC(0.23,0.83,"Anti-#font[52]{k}_{T} CsPF jets, tight muon ID");
+    if(isMu7) t_b->DrawLatexNDC(0.23,0.77,"#font[82]{HLT_HIL3Mu7_NHitQ10_v1}");
+    else if(isMu12) t_b->DrawLatexNDC(0.23,0.77,"#font[82]{HLT_HIL3Mu12_v1}");
+    else{};
   }
   // if(!isData){
   //   t_b_truth->DrawLatexNDC(x_t,y_t7,Form("#scale[0.8]{b_{count} = %.4f #pm}",b_frac));
   //   t_eb_truth->DrawLatexNDC(x_t+0.183,y_t7,Form("#scale[0.8]{%.4f}",eb_frac));
   // }
-		
+
+  
   c1->cd();
   pad2->SetBottomMargin(0.4);
   pad2->SetLeftMargin(0.2);
@@ -1193,7 +1380,8 @@ double templateFitter(bool isData = 1,
   pad2->Draw();
   pad2->cd();
 				
-  fitRatio->Divide(func);
+  //fitRatio->Divide(func);
+  fitRatio->Divide(fitRatio,stack_histo_rep,1,1,"");
   fitRatio->SetStats(0);
   fitRatio->SetTitle("");
   fitRatio->SetMarkerStyle(8);
@@ -1222,8 +1410,49 @@ double templateFitter(bool isData = 1,
   TLine *line3 = new TLine(muRelPtAxis[0],0.8,muRelPtAxis[M-1],0.8);
   line3->SetLineStyle(2);
   line3->Draw();
-        
 
+    //// calculate chi2 by hand
+  double chi2prime = 0.0;
+  double chi2primeOverNDOF = 0.0;
+  double observed_i = 0.0;
+  double expected_i = 1.0;
+  double weight_i = 0.0;
+
+  for(int i = 1; i < M; i++){
+   
+    //observed_i = h0_inclR->GetBinContent(i);
+    //expected_i = stack_histo_rep->GetBinContent(i);
+    observed_i = fitRatio->GetBinContent(i);
+    weight_i = fitRatio->GetBinError(i);
+    cout << "observed(i) = " << observed_i << endl;
+    //chi2prime += (observed_i - expected_i)*(observed_i - expected_i) / (expected_i * expected_i);
+    chi2prime += (observed_i - expected_i)*(observed_i - expected_i) / (weight_i * weight_i);
+    
+  }
+
+  chi2primeOverNDOF = chi2prime / (1. * (M-1));
+    
+  cout << "chi2-prime = " << chi2prime << endl;
+  cout << "chi2-prime / ndof = " << chi2primeOverNDOF << endl;     
+
+  pad1->cd();
+
+  if(isData) {
+    t_b->DrawLatexNDC(0.48,0.45,Form("#chi^{2}/ndof = %3.1f",chi2primeOverNDOF));
+    //t_b->DrawLatexNDC(0.48,0.45,Form("#chi^{2}/ndof = %3.1f",chi2/ndof));
+    t_b->DrawLatexNDC(0.48,0.38,Form("#it{N}^{jet} = %i",Njet));
+    //t_b->DrawLatexNDC(0.53,0.31,"#it{g}#rightarrow#it{b}#bar{#it{b}} jets increased by 20%");
+    //t_b->DrawLatexNDC(0.53,0.24,"JER in MC smeared by 20%");
+  }
+  
+  else{
+   
+    t_b->DrawLatexNDC(0.48,0.38,Form("#chi^{2}/ndof = %3.1f",chi2primeOverNDOF));
+    //t_b->DrawLatexNDC(0.53,0.31,"#it{g}#rightarrow#it{b}#bar{#it{b}} jets increased by 20%");
+  }
+
+
+  
 
   ////////////////////////////  template shapes plot
 
@@ -1285,15 +1514,20 @@ double templateFitter(bool isData = 1,
 			
 			
   
-  if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"50 < #font[52]{p}_{T}^{jet} < 60 GeV, |#font[52]{#eta}^{jet}| < 1.6");
-  else if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"60 < #font[52]{p}_{T}^{jet} < 80 GeV, |#font[52]{#eta}^{jet}| < 1.6");
-  else if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"80 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6");
-  else if(isJ4) t_pt->DrawLatexNDC(x_t,y_t3,"120 < #font[52]{p}_{T}^{jet} < 200 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  if(isJ1) t_pt->DrawLatexNDC(x_t,y_t3,"80 < #font[52]{p}_{T}^{jet} < 100 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  else if(isJ2) t_pt->DrawLatexNDC(x_t,y_t3,"100 < #font[52]{p}_{T}^{jet} < 120 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  else if(isJ3) t_pt->DrawLatexNDC(x_t,y_t3,"120 < #font[52]{p}_{T}^{jet} < 150 GeV, |#font[52]{#eta}^{jet}| < 1.6");
+  else if(isJ4) t_pt->DrawLatexNDC(x_t,y_t3,"150 < #font[52]{p}_{T}^{jet} < 200 GeV, |#font[52]{#eta}^{jet}| < 1.6");
   else if(isJ5) t_pt->DrawLatexNDC(x_t,y_t3,"200 < #font[52]{p}_{T}^{jet} < 300 GeV, |#font[52]{#eta}^{jet}| < 1.6");
   else if(isJ6) t_pt->DrawLatexNDC(x_t,y_t3,"300 < #font[52]{p}_{T}^{jet} < 500 GeV, |#font[52]{#eta}^{jet}| < 1.6");
   else {};
 	
-  t_pt->DrawLatexNDC(x_t, y_t4,"#font[52]{p}_{T}^{#mu} > 7 GeV, |#font[52]{#eta}^{#mu}| < 2.0, tight muon ID");
+  if(isMu7){
+    t_pt->DrawLatexNDC(x_t, y_t4,"9 < #font[52]{p}_{T}^{#mu} < 14 GeV, |#font[52]{#eta}^{#mu}| < 2.0, tight muon ID");
+  }
+  else if(isMu12){
+    t_pt->DrawLatexNDC(x_t, y_t4,"#font[52]{p}_{T}^{#mu} > 14 GeV, |#font[52]{#eta}^{#mu}| < 2.0, tight muon ID");
+  }
   //t_pt->DrawLatexNDC(x_t, y_t4,"#scale[0.8]{#font[52]{p}_{T}^{#mu} > 9 GeV, |#font[52]{#eta}^{#mu}| < 2.0, tight muon ID}");
 			
   //t_HLT->DrawLatexNDC(x_t,y_t5,"#scale[0.8]{HLT_HIL3Mu5_NHitQ10_v1}");
@@ -1302,19 +1536,21 @@ double templateFitter(bool isData = 1,
   pad4->SetLeftMargin(0.2);
   pad4->SetBottomMargin(0.4);
 
-  TH1D *r1 = (TH1D*) h0_b_drawR->Clone("r1");
+  TH1D *r1 = (TH1D*) h0_l_drawR->Clone("r1");
   TH1D *r2 = (TH1D*) h0_c_drawR->Clone("r2");
-  r1->Divide(h0_lR);
-  r2->Divide(h0_lR);
+  r1->Divide(h0_bR);
+  r2->Divide(h0_bR);
+  // r1->Divide(h0_b_drawR);
+  // r2->Divide(h0_b_drawR);
   //r1->SetMarkerColor(kBlack);
   //r1->SetMarkerStyle(24);
   r1->GetXaxis()->SetTitle("muon #font[52]{p}_{T}^{rel} [GeV]");
   r1->GetXaxis()->SetLabelSize(0.10);
   r1->GetXaxis()->SetTitleSize(0.13);
-  r1->GetYaxis()->SetTitle("Ratio");
+  r1->GetYaxis()->SetTitle("Ratio to #it{b}");
   r1->GetYaxis()->SetLabelSize(0.10);
   r1->GetYaxis()->SetTitleSize(0.11);
-  r1->GetYaxis()->SetRangeUser(0.0,4.0);
+  r1->GetYaxis()->SetRangeUser(0.0,2.0);
   r1->SetTitle("");
   r1->SetStats(0);
   r1->GetXaxis()->SetRangeUser(muRelPtAxis[0],muRelPtAxis[M-1]);
@@ -1530,7 +1766,7 @@ double templateFitter(bool isData = 1,
 
   if(returnValueIndex == 1) return p0;
   if(returnValueIndex == 2) return ep0;
-
+  if(returnValueIndex == 3) return chi2primeOverNDOF;
 
 
   
