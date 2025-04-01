@@ -7,7 +7,8 @@ bool remove_HYDJET_jet(double pThat, double pTjet){
   
   bool result = false;
 
-  if(pThat < 0.35 * pTjet) result = true;
+  //if(pThat < 0.35 * pTjet) result = true;
+  if(pThat < 0.4 * pTjet) result = true;
 
   return result;
 
