@@ -6,4 +6,4 @@ TString muonTreeString = "muonTree";
 const int NeventFilters = 3;
 std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter","phfCoincFilter2Th4","pclusterCompatibilityFilter"};
 bool doJetTrkMaxFilter = false;
-bool doEtaPhiMask = true;
+bool doEtaPhiMask = false;
