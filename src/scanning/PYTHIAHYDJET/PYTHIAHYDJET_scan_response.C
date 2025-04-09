@@ -104,7 +104,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 void PYTHIAHYDJET_scan_response(int group = 1){
 
   TString input = Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_reskim/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_pTjet-5_pThat-15_response_fineCentBins/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_pTjet-5_pThat-25_removeHYDJETjet0p45_response_fineCentBins/PYTHIAHYDJET_scan_output_%i.root",group);
   
 
   readConfig();
@@ -335,6 +335,10 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       double recoMuonEta = 0.0;
 			
       if(TMath::Abs(y) > etaMax) continue;
+
+      if(doRemoveHYDJETjet){
+	if(remove_HYDJET_jet(em->pthat, x)) continue;
+      }
 	
       // GET FLAVOR FROM RECO MATCH
       bool hasRecoJetMatch = false;
@@ -370,7 +374,10 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	    recoMuonEta = em->mueta[k];
 
 	    if(recoMuonPt > 14. && fabs(recoMuonEta) < 2.) hasRecoMuon = true;
-	    
+
+	    if(doRemoveHYDJETjet){
+	      if(remove_HYDJET_jet(em->pthat, matchedRecoJetPt)) continue;
+	    }
 
 	    JEU.SetJetPT(matchedRecoJetPt);
 	    JEU.SetJetEta(em->jeteta[k]);
