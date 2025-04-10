@@ -336,9 +336,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 			
       if(TMath::Abs(y) > etaMax) continue;
 
-      if(doRemoveHYDJETjet){
-	if(remove_HYDJET_jet(em->pthat, x)) continue;
-      }
+      // if(doRemoveHYDJETjet){
+      // 	if(remove_HYDJET_jet(em->pthat, x)) continue;
+      // }
 	
       // GET FLAVOR FROM RECO MATCH
       bool hasRecoJetMatch = false;
