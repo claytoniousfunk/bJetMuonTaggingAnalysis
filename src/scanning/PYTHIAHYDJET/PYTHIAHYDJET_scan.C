@@ -275,7 +275,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
   //TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_tester/PYTHIAHYDJET_scan_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCutOnLightJetTemplate0p002_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_fineCentBins_projectableTemplates_allTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCutOnLightJetTemplate0p002_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -1702,7 +1702,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
 
 	    // dJets
-	    if(fabs(jetFlavorInt) == 1 && w_jet < weightCut){
+	    if(fabs(jetFlavorInt) == 1){
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets[0][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
@@ -1713,7 +1713,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
 	    }
-	    else if(fabs(jetFlavorInt) == 2 && w_jet < weightCut){
+	    else if(fabs(jetFlavorInt) == 2){
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets[0][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
@@ -1724,7 +1724,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
 	    }
-	    else if(fabs(jetFlavorInt) == 3 && w_jet < weightCut){
+	    else if(fabs(jetFlavorInt) == 3){
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets[0][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
@@ -1768,7 +1768,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
 	    }
-	    else if(jetFlavorInt == 21 && w_jet < weightCut){
+	    else if(jetFlavorInt == 21){
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets[0][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
