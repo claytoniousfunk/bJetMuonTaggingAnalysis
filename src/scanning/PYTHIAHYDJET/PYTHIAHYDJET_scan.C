@@ -1453,6 +1453,8 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 
       // Fill the jet/event histograms
+
+      if(!hasGenJetMatch) continue; // only take jets with genJet matches
      
       inclJetCounter++;
       h_inclRecoJetPt_flavor[0]->Fill(recoJetPt_i,jetFlavorInt,w);
