@@ -30,7 +30,7 @@ bool doInclNeutrinoEnergySubtraction = false;
 bool apply_genJetPt_smear = false;
 bool doJERCorrection = false;
 // muptrel reweight
-bool doMuPtRelReweight = false;
+bool doMuPtRelReweight = true;
 bool doHadronPtRelReweight = false;
 bool doHadronPtRelReweightToMuon = true;
 bool doDRReweight = true;
