@@ -56,6 +56,12 @@
 // bJetNeutrinoEnergy fit params
 #include "../../../headers/fitParameters/bJetNeutrinoEnergyFitParams_PYTHIA_mu12.h"
 // muptrel fit parameters
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C0J1.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C0J2.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C0J3.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C0J4.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C0J5.h"
+#include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C0J6.h"
 #include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C1J1.h"
 #include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C1J2.h"
 #include "../../../headers/fitParameters/muptrelFitParams/muptrelFitParams_C1J3.h"
