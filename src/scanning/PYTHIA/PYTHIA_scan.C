@@ -74,6 +74,7 @@
 #include "../../../headers/fitParameters/hadronPtRelFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_bJetNeutrinoEnergy, *fitFxn_dR, *fitFxn_hadronPtRel;
+TF1 *fitFxn_muptrel_C0J1, *fitFxn_muptrel_C0J2, *fitFxn_muptrel_C0J3, *fitFxn_muptrel_C0J4, *fitFxn_muptrel_C0J5, *fitFxn_muptrel_C0J6;
 TF1 *fitFxn_muptrel_C1J1, *fitFxn_muptrel_C1J2, *fitFxn_muptrel_C1J3, *fitFxn_muptrel_C1J4, *fitFxn_muptrel_C1J5, *fitFxn_muptrel_C1J6;
 TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_muptrel_C2J4, *fitFxn_muptrel_C2J5, *fitFxn_muptrel_C2J6;
 // dR fit function
@@ -81,6 +82,12 @@ TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_mu
 // hadronPtRel parameters
 #include "../../../headers/fitFunctions/fitFxn_hadronPtRel.h"
 // muptrel fit functions
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C0J1.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C0J2.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C0J3.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C0J4.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C0J5.h"
+#include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C0J6.h"
 #include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J1.h"
 #include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J2.h"
 #include "../../../headers/fitFunctions/fitFxn_muptrel/fitFxn_muptrel_C1J3.h"
@@ -657,6 +664,12 @@ void PYTHIA_scan(int group = 1){
   loadFitFxn_dR();
   loadFitFxn_hadronPtRel();
   // load muptrel fix fxns
+  loadFitFxn_muptrel_C0J1();
+  loadFitFxn_muptrel_C0J2();
+  loadFitFxn_muptrel_C0J3();
+  loadFitFxn_muptrel_C0J4();
+  loadFitFxn_muptrel_C0J5();
+  loadFitFxn_muptrel_C0J6();
   loadFitFxn_muptrel_C1J1();
   loadFitFxn_muptrel_C1J2();
   loadFitFxn_muptrel_C1J3();
@@ -1260,13 +1273,21 @@ void PYTHIA_scan(int group = 1){
       if(doMuPtRelReweight){
 	if(hasInclRecoMuonTag && evtTriggerDecision && jetPtIndex > 0){
 
-	  if(jetPtIndex == 1) w_muptrel = w_jet * fitFxn_muptrel_C1J1->Eval(muPtRel_i);
-	  else if(jetPtIndex == 2) w_muptrel = w_jet * fitFxn_muptrel_C1J2->Eval(muPtRel_i);
-	  else if(jetPtIndex == 3) w_muptrel = w_jet * fitFxn_muptrel_C1J3->Eval(muPtRel_i);
-	  else if(jetPtIndex == 4) w_muptrel = w_jet * fitFxn_muptrel_C1J4->Eval(muPtRel_i);
-	  else if(jetPtIndex == 5) w_muptrel = w_jet * fitFxn_muptrel_C1J5->Eval(muPtRel_i);
-	  else if(jetPtIndex == 6) w_muptrel = w_jet * fitFxn_muptrel_C1J6->Eval(muPtRel_i);
+	  if(jetPtIndex == 1) w_muptrel = w_jet * fitFxn_muptrel_C0J1->Eval(muPtRel_i);
+	  else if(jetPtIndex == 2) w_muptrel = w_jet * fitFxn_muptrel_C0J2->Eval(muPtRel_i);
+	  else if(jetPtIndex == 3) w_muptrel = w_jet * fitFxn_muptrel_C0J3->Eval(muPtRel_i);
+	  else if(jetPtIndex == 4) w_muptrel = w_jet * fitFxn_muptrel_C0J4->Eval(muPtRel_i);
+	  else if(jetPtIndex == 5) w_muptrel = w_jet * fitFxn_muptrel_C0J5->Eval(muPtRel_i);
+	  else if(jetPtIndex == 6) w_muptrel = w_jet * fitFxn_muptrel_C0J6->Eval(muPtRel_i);
 	  else{};
+	  
+	  // if(jetPtIndex == 1) w_muptrel = w_jet * fitFxn_muptrel_C1J1->Eval(muPtRel_i);
+	  // else if(jetPtIndex == 2) w_muptrel = w_jet * fitFxn_muptrel_C1J2->Eval(muPtRel_i);
+	  // else if(jetPtIndex == 3) w_muptrel = w_jet * fitFxn_muptrel_C1J3->Eval(muPtRel_i);
+	  // else if(jetPtIndex == 4) w_muptrel = w_jet * fitFxn_muptrel_C1J4->Eval(muPtRel_i);
+	  // else if(jetPtIndex == 5) w_muptrel = w_jet * fitFxn_muptrel_C1J5->Eval(muPtRel_i);
+	  // else if(jetPtIndex == 6) w_muptrel = w_jet * fitFxn_muptrel_C1J6->Eval(muPtRel_i);
+	  // else{};
 
 	  // if(jetPtIndex == 1) w_muptrel = w_jet * fitFxn_muptrel_C2J1->Eval(muPtRel_i);
 	  // else if(jetPtIndex == 2) w_muptrel = w_jet * fitFxn_muptrel_C2J2->Eval(muPtRel_i);
