@@ -275,7 +275,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
   //TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_tester/PYTHIAHYDJET_scan_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_onlyMatchedRecoJets_fineCentBins_projectableTemplates_allTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCutOnLightJetTemplate0p002_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates/PYTHIAHYDJET_scan_output_%i.root",group);
@@ -965,7 +965,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     
     double w_reweight_hiBin = 1.0;
     if(doHiBinReweight){
-      w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-10);
+      w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin+10);
     }
 
     double w_reweight_vz = 1.0;
@@ -988,7 +988,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
 	
-    int CentralityIndex = getCentBin(em->hiBin-10);
+    int CentralityIndex = getCentBin(em->hiBin+10);
     if(CentralityIndex < 0) continue;
 
     bool evtTriggerDecision = false;
@@ -1453,9 +1453,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 
       // Fill the jet/event histograms
-
-      if(!hasGenJetMatch) continue; // only take jets with genJet matches
-     
+           
       inclJetCounter++;
       h_inclRecoJetPt_flavor[0]->Fill(recoJetPt_i,jetFlavorInt,w);
       h_inclRecoJetPt_flavor[CentralityIndex]->Fill(recoJetPt_i,jetFlavorInt,w);
@@ -1890,19 +1888,19 @@ void PYTHIAHYDJET_scan(int group = 1){
     
     if(eventHasGoodJet){
 
-      h_hiBin->Fill(em->hiBin-10,w);
+      h_hiBin->Fill(em->hiBin+10,w);
       h_vz[0]->Fill(em->vz,w);
       h_vz[CentralityIndex]->Fill(em->vz,w);
 
       if(eventHasInclRecoMuonTag){
 
-	h_hiBin_inclRecoMuonTag->Fill(em->hiBin-10,w);
+	h_hiBin_inclRecoMuonTag->Fill(em->hiBin+10,w);
 	h_vz_inclRecoMuonTag[0]->Fill(em->vz,w);
 	h_vz_inclRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
 
 	if(eventHasInclRecoMuonTagPlusTrigger){
 
-	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin-10,w);
+	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin+10,w);
 	  h_vz_inclRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
 	  h_vz_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
 
@@ -1913,13 +1911,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       if(eventHasMatchedRecoMuonTag){
 
-	h_hiBin_matchedRecoMuonTag->Fill(em->hiBin-10,w);
+	h_hiBin_matchedRecoMuonTag->Fill(em->hiBin+10,w);
 	h_vz_matchedRecoMuonTag[0]->Fill(em->vz,w);
 	h_vz_matchedRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
 
 	if(eventHasMatchedRecoMuonTagPlusTrigger){
 
-	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(em->hiBin-10,w);
+	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(em->hiBin+10,w);
 	  h_vz_matchedRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
 	  h_vz_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
 
