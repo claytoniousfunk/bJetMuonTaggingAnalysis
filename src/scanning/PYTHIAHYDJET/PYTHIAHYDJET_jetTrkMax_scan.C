@@ -130,7 +130,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/user/c/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_jet60_pThat-15_trkpT-14_correctHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);   
+  TString output = Form("/eos/user/c/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_pThat-15_trkpT-14_correctHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);   
   
   
   // JET ENERGY CORRECTIONS
@@ -292,8 +292,8 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     if(em->hiHF > 6000) continue;
     
     // apply HLT
-    if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
-    if(em->HLT_HICsAK4PFJet60Eta1p5_v1_Prescl < 0) continue;
+    // if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    // if(em->HLT_HICsAK4PFJet60Eta1p5_v1_Prescl < 0) continue;
 
     // if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
     // if(em->HLT_HICsAK4PFJet80Eta1p5_v1_Prescl < 0) continue;
