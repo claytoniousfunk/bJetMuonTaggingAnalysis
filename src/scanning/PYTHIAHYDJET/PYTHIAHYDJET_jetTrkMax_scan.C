@@ -38,8 +38,8 @@
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
 //#include "../../../headers/AnalysisSetupV2p2.h"
-//#include "../../../headers/AnalysisSetupV2p3.h"
-#include "../../../headers/AnalysisSetupV2p4.h"
+#include "../../../headers/AnalysisSetupV2p3.h"
+//#include "../../../headers/AnalysisSetupV2p4.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
@@ -81,8 +81,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR;
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
 //#include "../../../headers/functions/getCentBin_v2.h" // course centrality binning
-//#include "../../../headers/functions/getCentBin.h" // fine centrality binning
-#include "../../../headers/functions/getCentBin_v3.h" // ultra-fine centrality binning 
+#include "../../../headers/functions/getCentBin.h" // fine centrality binning
+//#include "../../../headers/functions/getCentBin_v3.h" // ultra-fine centrality binning 
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
@@ -130,18 +130,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_ultraFineCentBins_jet60_pThat-15_doubleDRBins/PYTHIAHYDJET_scan_output_%i.root",group);
-
-  // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002/PYTHIAHYDJET_scan_output_%i.root",group);
-
-  // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_BJet_withGS_withWTA_2/PYTHIAHYDJET_BJet_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002/PYTHIAHYDJET_scan_output_%i.root",group);
-
-
-  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch8/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_batch8_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_fineCentBins/PYTHIAHYDJET_scan_output_%i.root",group);      
-
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_jet60_pThat-15_correctHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);   
   
   
   // JET ENERGY CORRECTIONS
@@ -314,7 +303,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     
     double w_reweight_hiBin = 1.0;
     if(doHiBinReweight){
-      w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-10);
+      w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin+10);
     }
 
     double w_reweight_vz = 1.0;
@@ -330,7 +319,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     if(w <= 0.0) continue;
     if(w > 0.005) continue;
    
-    int CentralityIndex = getCentBin(em->hiBin-10);
+    int CentralityIndex = getCentBin(em->hiBin+10);
     // int CentralityIndex = 1;
     
     if(CentralityIndex < 0) continue;
