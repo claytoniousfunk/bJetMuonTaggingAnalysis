@@ -302,15 +302,8 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     // calculate event weight
     
     double w_reweight_hiBin = 1.0;
-    if(doHiBinReweight){
-      w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin+10);
-    }
 
     double w_reweight_vz = 1.0;
-    if(doVzReweight){
-      w_reweight_vz = fitFxn_vz->Eval(em->vz);
-    }
-    
 
     double w_pthat = em->weight;
     
