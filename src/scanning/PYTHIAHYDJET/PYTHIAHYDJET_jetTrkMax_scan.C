@@ -130,7 +130,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/user/c/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_jet60_pThat-15_correctHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);   
+  TString output = Form("/eos/user/c/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_jet60_pThat-15_trkpT-14_correctHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);   
   
   
   // JET ENERGY CORRECTIONS
@@ -408,7 +408,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 		
       // jet kinematic cuts
       if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
-      if(jetTrkMax_i < 5.) continue;
+      if(jetTrkMax_i < 14.) continue;
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
