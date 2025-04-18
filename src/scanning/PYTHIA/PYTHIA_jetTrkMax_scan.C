@@ -342,6 +342,9 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       double w_jet = w * w_jetPt;
       if(doHadronPtRelReweightToMuon) w_jet *= fitFxn_hadronPtRel->Eval(jetTrkMaxPtRel_i);
       
+      if(doDRReweight){
+	w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
+      }
       
       JEU.SetJetPT(recoJetPt_i);
       JEU.SetJetEta(recoJetEta_i);
