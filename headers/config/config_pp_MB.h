@@ -9,4 +9,5 @@ bool doJetTrkMaxFilter = false;
 bool doEtaPhiMask = true;
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
+bool doJESCorrection = true;
 
