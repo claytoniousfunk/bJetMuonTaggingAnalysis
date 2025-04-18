@@ -142,6 +142,7 @@ TH1D *h_jetTrkMaxEta[NJetPtIndices];
 TH1D *h_jetTrkMaxPhi[NJetPtIndices];
 TH1D *h_jetTrkMaxDR[NJetPtIndices];
 TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
+TH2D *h_jetTrkMaxPtRel_recoJetPt;
 TH1D *h_dEta_jet_wta;
 TH1D *h_dPhi_jet_wta;
 TH1D *h_dR_jet_wta;
@@ -154,7 +155,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PYTHIA_DiJet_withJetTrackMaxInfo/PYTHIA_DiJet_skim_output_%i.root",group);
 
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_jetTrkMax_jet80_pThat-15_doubleDRBins/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_jetTrkMax_pThat-15_trkpT-14/PYTHIA_DiJet_scan_output_%i.root",group);
 
   printIntroduction_PYTHIA_scan_V3p7();
   readConfig();
@@ -183,6 +184,9 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   h_dEta_jet_wta->Sumw2();
   h_dPhi_jet_wta->Sumw2();
   h_dR_jet_wta->Sumw2();
+
+  h_jetTrkMaxPtRel_recoJetPt = new TH2D("h_jetTrkMaxPtRel_recoJetPt","jet pt vs jetTrkMax ptrel",NMuRelPtBins,muRelPtMin,muRelPtMax,500,0,500);
+  h_jetTrkMaxPtRel_recoJetPt->Sumw2();
 
   // loop through jet pT indices
   for(int j = 0; j < NJetPtIndices; j++){
@@ -291,7 +295,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
 
     //if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
-    if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
+    //if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
     //if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
     
     double w_reweight_vz = 1.0;
@@ -335,7 +339,9 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       double w_jetPt = 1.0;
 
       //double w_jet = w * w_jetPt * fitFxn_dR->Eval(jetTrkMaxDR_i);
-      double w_jet = w * w_jetPt * fitFxn_hadronPtRel->Eval(jetTrkMaxPtRel_i);
+      double w_jet = w * w_jetPt;
+      if(doHadronPtRelReweightToMuon) w_jet *= fitFxn_hadronPtRel->Eval(jetTrkMaxPtRel_i);
+      
       
       JEU.SetJetPT(recoJetPt_i);
       JEU.SetJetEta(recoJetEta_i);
@@ -384,7 +390,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       bool hasGenJetMatch = false;
       
       if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
-      if(jetTrkMax_i < 5.) continue;
+      if(jetTrkMax_i < 14.) continue;
 		
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
@@ -420,6 +426,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxPhi[jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
       h_jetTrkMaxDR[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
       h_jetTrkMaxPtRel[jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
+
+      h_jetTrkMaxPtRel_recoJetPt->Fill(jetTrkMaxPtRel_i,recoJetPt_i,w_jet);
       
 
     }
