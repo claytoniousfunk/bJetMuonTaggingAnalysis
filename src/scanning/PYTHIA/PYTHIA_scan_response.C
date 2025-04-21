@@ -399,11 +399,9 @@ void PYTHIA_scan_response(int group = 1){
   TH1D *neutrino_tag_fraction;
   f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
 
-
-
-
-
-
+  TF1 *fxn_JES_Corr = new TF1("fxn_JES_Corr","[0] + [1]*x",80,500);
+  fxn_JES_Corr->SetParameter(0,0.907383);
+  fxn_JES_Corr->SetParameter(1,0.000114088);
   
   // event loop
   int evi_frac = 0;
@@ -564,7 +562,9 @@ void PYTHIA_scan_response(int group = 1){
 	      matchedRecoJetPt += matchedNeutrinoPt;
 	    }
 
-
+	    if(doJESCorrection){
+	      matchedRecoJetPt = matchedRecoJetPt * fxn_JES_Corr->Eval(matchedRecoJetPt);
+	    }
 
 
 	    double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;

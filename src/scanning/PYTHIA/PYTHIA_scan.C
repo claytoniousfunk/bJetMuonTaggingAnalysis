@@ -707,6 +707,9 @@ void PYTHIA_scan(int group = 1){
 
   cout << "map entries = " << neutrino_energy_fraction_map->GetEntries() << endl;
 
+  TF1 *fxn_JES_Corr = new TF1("fxn_JES_Corr","[0] + [1]*x",80,500);
+  fxn_JES_Corr->SetParameter(0,0.907383);
+  fxn_JES_Corr->SetParameter(1,0.000114088);
 
   // event loop
   int evi_frac = 0;
@@ -950,7 +953,10 @@ void PYTHIA_scan(int group = 1){
       if(doRemoveHYDJETjet){
 	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
       }
-     
+
+      if(doJESCorrection){
+	recoJetPt_i = recoJetPt_i * fxn_JES_Corr->Eval(recoJetPt_i);
+      }
 
 
       // in-jet muon variables
