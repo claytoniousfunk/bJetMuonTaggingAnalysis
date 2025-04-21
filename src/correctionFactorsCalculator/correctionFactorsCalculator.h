@@ -6,8 +6,11 @@ TFile *f1, *f2;
 
 void correctionFactorsCalculator(bool ispp = 1, bool isC2 = 0, bool isC1 = 0){
 
-  if(ispp) f1 = TFile::Open(goldenFile_PYTHIA);
-  else f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_pthat15);
+  /* if(ispp) f1 = TFile::Open(goldenFile_PYTHIA_mu12_pThat15_newJetBins); */
+  /* else f1 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins); */
+
+  if(ispp) f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/final/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_dRReweight_projectableTemplates.root");
+  else f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_projectableTemplates.root");
   
   TH2D *h0, *h1, *h2, *h3, *h4; // 2d flavor-pt maps
   // CENT BIN 0
@@ -16,9 +19,6 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC2 = 0, bool isC1 = 0){
   TH1D *h0_bbar, *h0_cbar, *h0_dbar, *h0_sbar, *h0_ubar; // projections of each antiquark flavor
   TH1D *h0_ghost;
   TH1D *h0_noFlavor;
-	
-
-
 
 
   TH2D *j0, *j1, *j2, *j3, *j4; // 2d flavor-eta maps
@@ -269,14 +269,13 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC2 = 0, bool isC1 = 0){
   //const int N_jetPtBins = 14;
   //double jetPtAxis[N_jetPtBins] = {50,60,70,80,90,100,120,140,160,200,250,320,400,500};
 
-  const int N_jetPtBins = 4;
-  double jetPtAxis[N_jetPtBins] = {60,80,120,200};
-    
-    
+  const int N_jetPtBins = 6;
+  double jetPtAxis[N_jetPtBins] = {80,90,100,120,150,200};
+
+   
     
   const int N_jetEtaBins = 33;
-  double jetEtaAxis[N_jetEtaBins] = {-1.6,-1.5,-1.4,-1.3,-1.2,-1.1,-1.0,-0.9,-0.8,-0.7,-0.6,-0.5,-0.4,-0.3,-0.2,-0.1,
-    0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6};
+  double jetEtaAxis[N_jetEtaBins] = {-1.6,-1.5,-1.4,-1.3,-1.2,-1.1,-1.0,-0.9,-0.8,-0.7,-0.6,-0.5,-0.4,-0.3,-0.2,-0.1, 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.3,1.4,1.5,1.6};
 
 
   // PT
@@ -942,13 +941,13 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC2 = 0, bool isC1 = 0){
     corrFactor_3_name = "corrFactor_3_pp";
   }
   else if(isC2){
-    output_filePath = "../../rootFiles/correctionFactors/correctionFactors_C2_pthat15.root";
+    output_filePath = "../../rootFiles/correctionFactors/correctionFactors_C2.root";
     corrFactor_1_name = "corrFactor_1_C2";
     corrFactor_2_name = "corrFactor_2_C2";
     corrFactor_3_name = "corrFactor_3_C2";
   }
   else if(isC1){
-    output_filePath = "../../rootFiles/correctionFactors/correctionFactors_C1_pthat15.root";
+    output_filePath = "../../rootFiles/correctionFactors/correctionFactors_C1.root";
     corrFactor_1_name = "corrFactor_1_C1";
     corrFactor_2_name = "corrFactor_2_C1";
     corrFactor_3_name = "corrFactor_3_C1";

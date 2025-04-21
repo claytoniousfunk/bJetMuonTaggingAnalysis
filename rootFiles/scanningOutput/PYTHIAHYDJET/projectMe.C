@@ -1,13 +1,13 @@
 void projectMe(){
 
-  TFile *f1 = TFile::Open("localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat40_jetFilter_evtReweight.root");
+  TFile *f1 = TFile::Open("spring2024scans/PYTHIAHYDJET_DiJet_scan_mu5_pThat15_removeHYDJETjets_rawEvts.root");
 
   TH2D *H;
 
   f1->GetObject("h_recoJetPt_pthat_C0",H);
 
-  double jet_pt_low = 195.0;
-  double jet_pt_high = 200.0;
+  double jet_pt_low = 60.0;
+  double jet_pt_high = 80.0;
 
   TH1D *h = (TH1D*) H->ProjectionY("h",H->ProjectionX()->FindBin(jet_pt_low),H->ProjectionX()->FindBin(jet_pt_high));
 
@@ -41,7 +41,7 @@ void projectMe(){
   H->GetYaxis()->SetTitle("#hat{#font[52]{p}}_{T} [GeV]");
   H->SetStats(0);
   H->Draw("colz");
-  canv_1->SaveAs("/home/clayton/Documents/nuclear/GroupMeeting/figures/2024-03-19/pThat_pTjet.pdf");
+  //canv_1->SaveAs("/home/clayton/Documents/nuclear/GroupMeeting/figures/2024-03-19/pThat_pTjet.pdf");
 
   TCanvas *canv_2 = new TCanvas("canv_2","canv_2",700,700);
   canv_2->cd();
@@ -52,12 +52,12 @@ void projectMe(){
   pad_2->SetTopMargin(margin_offset);
   pad_2->Draw();
   pad_2->cd();
-  h->SetTitle("#hat{#font[52]{p}}_{T} for 195 < #font[52]{p}_{T}^{recoJet} < 200 GeV");
+  h->SetTitle(Form("#hat{#font[52]{p}}_{T} for %3.0f < #font[52]{p}_{T}^{recoJet} < %3.0f GeV",jet_pt_low,jet_pt_high));
   h->GetXaxis()->SetTitle("#hat{#font[52]{p}}_{T} [GeV]");
   h->GetYaxis()->SetTitle("Entries");
   h->SetStats(0);
   h->Draw();
-  canv_2->SaveAs(Form("/home/clayton/Documents/nuclear/GroupMeeting/figures/2024-03-19/pThat_pTjet_%3.0f_%3.0f.pdf",jet_pt_low,jet_pt_high));
+  //canv_2->SaveAs(Form("/home/clayton/Documents/nuclear/GroupMeeting/figures/2024-03-19/pThat_pTjet_%3.0f_%3.0f.pdf",jet_pt_low,jet_pt_high));
 
   
   

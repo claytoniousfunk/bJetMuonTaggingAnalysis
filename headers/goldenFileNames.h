@@ -5,47 +5,62 @@
 
 // nominal & raw samples
 TString goldenFile_PYTHIA_mu5 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu5_pThat30_evtReweight_jetFilter.root";
-TString goldenFile_PYTHIA_mu5_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu5_pThat30_Raw.root";
+TString goldenFile_PYTHIA_mu5_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/spring2024scans/PYTHIA_DiJet_withGS_scan_mu5_pThat15_removeHYDJETjets_updatedTriggerLogic.root";
 TString goldenFile_PYTHIA_mu5_evtReweight = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu5_pThat30_evtReweight.root";
 
 TString goldenFile_PYTHIA_mu7 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu7_pThat30_evtReweight_jetFilter.root";
-TString goldenFile_PYTHIA_mu7_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu7_pThat30_Raw.root";
+TString goldenFile_PYTHIA_mu7_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/golden/PYTHIA_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump.root";
 TString goldenFile_PYTHIA_mu7_evtReweight = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu7_pThat30_evtReweight.root";
 
 TString goldenFile_PYTHIA_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu12_pThat30_evtReweight_jetFilter.root";
-TString goldenFile_PYTHIA_mu12_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu12_pThat30_Raw.root";
+TString goldenFile_PYTHIA_mu12_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/golden/PYTHIA_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump.root";
 TString goldenFile_PYTHIA_mu12_evtReweight = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu12_pThat30_evtReweight.root";
 
 // pThat samples, for fits
 // ---- mu5
+TString goldenFile_PYTHIA_mu5_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/spring2024scans/PYTHIA_DiJet_withGS_scan_mu5_pThat15_removeHYDJETjets_updatedTriggerLogic_vzReweight_jetPtReweight.root";
 TString goldenFile_PYTHIA_mu5_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu5_pThat30_evtReweight_jetFilter.root";
 TString goldenFile_PYTHIA_mu5_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu5_pThat40_evtReweight_jetFilter.root";
 TString goldenFile_PYTHIA_mu5_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu5_pThat50_evtReweight_jetFilter.root";
 // ---- mu7
-TString goldenFile_PYTHIA_mu7_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu7_pThat30_evtReweight_jetFilter.root";
+TString goldenFile_PYTHIA_mu7_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/golden/PYTHIA_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight.root";
+//TString goldenFile_PYTHIA_mu7_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_doBJetEnergyShift.root";
+TString goldenFile_PYTHIA_mu7_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight.root";
 TString goldenFile_PYTHIA_mu7_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu7_pThat40_evtReweight_jetFilter.root";
 TString goldenFile_PYTHIA_mu7_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu7_pThat50_evtReweight_jetFilter.root";
 // ---- mu12
-TString goldenFile_PYTHIA_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu12_pThat30_evtReweight_jetFilter.root";
+TString goldenFile_PYTHIA_mu12_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight.root";
+TString goldenFile_PYTHIA_mu12_pThat30_EnergyShift = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_doBJetNeutrinoEnergyShift_useNeutrinoTagFractionMap.root";
+TString goldenFile_PYTHIA_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight.root";
+//TString goldenFile_PYTHIA_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_doBJetNeutrinoEnergyShift_useNeutrinoTagFractionMap.root";
 TString goldenFile_PYTHIA_mu12_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu12_pThat40_evtReweight_jetFilter.root";
 TString goldenFile_PYTHIA_mu12_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu12_pThat50_evtReweight_jetFilter.root";
 
+TString goldenFile_PYTHIA_mu12_response_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_mu12_response_pThat-15_muTaggedJets.root";
+TString goldenFile_PYTHIA_mu12_response_pThat15_EnergyShift = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_mu12_response_pThat-15_muTaggedJets_doBJetNeutrinoEnergyShift.root";
+//TString goldenFile_PYTHIA_mu12_response_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight.root";
+//TString goldenFile_PYTHIA_mu12_response_pThat15_EnergyShift = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_bJetNeutrinoEnergyShift_directEnergyAddition.root";
+
 // JER-smeared
 // ---- mu5
+TString goldenFile_PYTHIA_mu5_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/spring2024scans/PYTHIA_DiJet_withGS_scan_mu5_pThat15_removeHYDJETjets_vzReweight_JERsmear.root";
 TString goldenFile_PYTHIA_mu5_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu5_pThat30_evtReweight_jetFilter_JERsmear.root";
 TString goldenFile_PYTHIA_mu5_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu5_pThat40_evtReweight_jetFilter_JERsmear.root";
 TString goldenFile_PYTHIA_mu5_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu5_pThat50_evtReweight_jetFilter_JERsmear.root";
 // ---- mu7
-TString goldenFile_PYTHIA_mu7_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu7_pThat30_evtReweight_jetFilter_JERsmear.root";
+TString goldenFile_PYTHIA_mu7_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/spring2024scans/PYTHIA_DiJet_withGS_scan_mu7_tight_pTwindow_pThat15_removeHYDJETjets_updatedTriggerLogic_jetPtReweight_vzReweight_JERsmear.root";
+TString goldenFile_PYTHIA_mu7_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/golden/PYTHIA_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_JERsmear.root";
 TString goldenFile_PYTHIA_mu7_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu7_pThat40_evtReweight_jetFilter_JERsmear.root";
 TString goldenFile_PYTHIA_mu7_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu7_pThat50_evtReweight_jetFilter_JERsmear.root";
 // ---- mu12
-TString goldenFile_PYTHIA_mu12_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu12_pThat30_evtReweight_jetFilter_JERsmear.root";
+TString goldenFile_PYTHIA_mu12_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/spring2024scans/PYTHIA_DiJet_withGS_scan_mu12_tight_pTwindow_pThat15_removeHYDJETjets_updatedTriggerLogic_jetPtReweight_vzReweight_JERsmear.root";
+TString goldenFile_PYTHIA_mu12_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/golden/PYTHIA_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_JERsmear.root";
 TString goldenFile_PYTHIA_mu12_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu12_pThat40_evtReweight_jetFilter_JERsmear.root";
 TString goldenFile_PYTHIA_mu12_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_DiJet_scan_mu12_pThat50_evtReweight_jetFilter_JERsmear.root";
 
 
-TString goldenFile_PYTHIA_muonReco = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_scan_muonReco_hybridSoft.root";
+//TString goldenFile_PYTHIA_muonReco = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/localScans/PYTHIA_scan_muonReco_hybridSoft.root";
+TString goldenFile_PYTHIA_muonReco = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/final/PYTHIA_scan_muonReco_mu12_tight.root";
 
 
 
@@ -56,10 +71,14 @@ TString goldenFile_PYTHIA_muonReco = "/home/clayton/Analysis/code/bJetMuonTaggin
 
 //// ******************* PYTHIA + HYDJET *********************
 // RAW
-TString goldenFile_PYTHIAHYDJET_DiJet_mu5_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat30_Raw.root";
-TString goldenFile_PYTHIAHYDJET_DiJet_mu7_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat30_Raw.root";
-TString goldenFile_PYTHIAHYDJET_DiJet_mu12_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu12_pThat30_Raw.root";
-// RAW + jet-filter
+TString goldenFile_PYTHIAHYDJET_DiJet_mu5_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_scan_mu5_pThat15_removeHYDJETjets_rawEvts.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_RAW = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight.root";
+// RAW + removeHYDJETjets
+// ----- pThat > 15, spring2024
+TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat15_RAW_jetFilter = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_scan_mu5_pThat15_removeHYDJETjets_rawEvts.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat15_RAW_jetFilter = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_scan_mu7_pThat15_removeHYDJETjets_rawEvts.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_RAW_jetFilter = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_scan_mu12_pThat15_removeHYDJETjets_rawEvts.root";
 // ----- pThat > 30 GeV
 TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30_RAW_jetFilter = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat30_Raw_jetFilter.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_RAW_jetFilter = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat30_Raw_jetFilter.root";
@@ -72,6 +91,10 @@ TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat40_RAW_jetFilter = "/home/clayto
 TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50_RAW_jetFilter = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat50_Raw_jetFilter.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50_RAW_jetFilter = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat50_Raw_jetFilter.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50_RAW_jetFilter = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu12_pThat50_Raw_jetFilter.root";
+// evtReweight -- pThat > 15 GeV
+TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat15_evtReweight = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat15_evtReweight = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_scan_mu7_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_evtReweight = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
 // evtReweight -- pThat > 30 GeV
 TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30_evtReweight = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat30_jetFilter_evtReweight.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_evtReweight = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat30_evtReweight.root";
@@ -91,43 +114,56 @@ TString goldenFile_PYTHIAHYDJET_DiJet_mu12 = "/home/clayton/Analysis/code/bJetMu
 
 // -------- DI JET ---------------
 // --- mu5
+TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_withGS_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat30_jetFilter_evtReweight.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat40_jetFilter_evtReweight.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat50_jetFilter_evtReweight.root";
 // --- mu7
-TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat30_jetFilter_evtReweight.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_withGS_scan_mu7_tight_pTwindow_pThat15_removeHYDJETjets_jetPtReweight_vzReweight_hiBinReweight.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/official/PYTHIAHYDJET_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat40_jetFilter_evtReweight.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat50_jetFilter_evtReweight.root";
 // --- mu12
-TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu12_pThat30_jetFilter_evtReweight.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
+
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/official/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_additionalMC_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/official/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_additionalMC_2024-08-05.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu12_pThat40_jetFilter_evtReweight.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu12_pThat50_jetFilter_evtReweight.root";
 
 // -------- MU JET ---------------
 // --- mu5
+TString goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_MuJet_withGS_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu5_pThat30_jetFilter_evtReweight_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu5_pThat40_jetFilter_evtReweight_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu5_pThat50_jetFilter_evtReweight_flavorFix.root";
 // --- mu7
-TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu7_pThat30_jetFilter_evtReweight_flavorFix.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_MuJet_withGS_scan_mu7_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_MuJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu7_pThat40_jetFilter_evtReweight_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu7_pThat50_jetFilter_evtReweight_flavorFix.root";
 // --- mu12
-TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu12_pThat30_jetFilter_evtReweight_flavorFix.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_MuJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
+
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/official/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu12_pThat40_jetFilter_evtReweight_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu12_pThat50_jetFilter_evtReweight_flavorFix.root";
 
 // -------- B JET ---------------
 // --- mu5
+TString goldenFile_PYTHIAHYDJET_BJet_mu5_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_BJet_withGS_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
+
 TString goldenFile_PYTHIAHYDJET_BJet_mu5_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu5_pThat30_jetFilter_evtReweight_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu5_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu5_pThat40_jetFilter_evtReweight_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu5_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu5_pThat50_jetFilter_evtReweight_flavorFix.root";
 // --- mu7
-TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu7_pThat30_jetFilter_evtReweight_flavorFix.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_BJet_withGS_scan_mu7_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_BJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu7_pThat40_jetFilter_evtReweight_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu7_pThat50_jetFilter_evtReweight_flavorFix.root";
 // --- mu12
-TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu12_pThat30_jetFilter_evtReweight_flavorFix.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_BJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/official/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat40 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu12_pThat40_jetFilter_evtReweight_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat50 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu12_pThat50_jetFilter_evtReweight_flavorFix.root";
 
@@ -135,50 +171,91 @@ TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat50 = "/home/clayton/Analysis/code
 // JER-smeared files
 // -------- DI JET ---------------
 // --- mu5
+TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_withGS_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat30_jetFilter_evtReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat40_jetFilter_evtReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu5_pThat50_jetFilter_evtReweight_JERsmear.root";
 // --- mu7
-TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat30_jetFilter_evtReweight_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_withGS_scan_mu7_tight_pTwindow_pThat15_removeHYDJETjets_jetPtReweight_vzReweight_hiBinReweight_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat40_jetFilter_evtReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu7_pThat50_jetFilter_evtReweight_JERsmear.root";
 // --- mu12
-TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu12_pThat30_jetFilter_evtReweight_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTwindow_pThat15_removeHYDJETjets_jetPtReweight_vzReweight_hiBinReweight_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu12_pThat40_jetFilter_evtReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_scan_mu12_pThat50_jetFilter_evtReweight_JERsmear.root";
 
 // -------- MU JET ---------------
 // --- mu5
+TString goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_MuJet_withGS_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu5_pThat30_jetFilter_evtReweight_JERsmear_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu5_pThat40_jetFilter_evtReweight_JERsmear_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu5_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu5_pThat50_jetFilter_evtReweight_JERsmear_flavorFix.root";
 // --- mu7
-TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu7_pThat30_jetFilter_evtReweight_JERsmear_flavorFix.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_MuJet_withGS_scan_mu7_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_MuJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu7_pThat40_jetFilter_evtReweight_JERsmear_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu7_pThat50_jetFilter_evtReweight_JERsmear_flavorFix.root";
 // --- mu12
-TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu12_pThat30_jetFilter_evtReweight_JERsmear_flavorFix.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_MuJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu12_pThat40_jetFilter_evtReweight_JERsmear_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_MuJet_scan_mu12_pThat50_jetFilter_evtReweight_JERsmear_flavorFix.root";
 
 // -------- B JET ---------------
 // --- mu5
+TString goldenFile_PYTHIAHYDJET_BJet_mu5_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_BJet_withGS_scan_mu5_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu5_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu5_pThat30_jetFilter_evtReweight_JERsmear_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu5_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu5_pThat40_jetFilter_evtReweight_JERsmear_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu5_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu5_pThat50_jetFilter_evtReweight_JERsmear_flavorFix.root";
 // --- mu7
-TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu7_pThat30_jetFilter_evtReweight_JERsmear_flavorFix.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_BJet_withGS_scan_mu7_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_BJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu7_pThat40_jetFilter_evtReweight_JERsmear_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu7_pThat50_jetFilter_evtReweight_JERsmear_flavorFix.root";
 // --- mu12
-TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu12_pThat30_jetFilter_evtReweight_JERsmear_flavorFix.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/spring2024scans/PYTHIAHYDJET_BJet_withGS_scan_mu12_pThat15_removeHYDJETjets_vzAndHiBinReweight_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JERsmear.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat40_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu12_pThat40_jetFilter_evtReweight_JERsmear_flavorFix.root";
 TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat50_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_BJet_scan_mu12_pThat50_jetFilter_evtReweight_JERsmear_flavorFix.root";
 
 
+
+
+
+
+
+
+
+// JEUShiftUp files
+TString goldenFile_PYTHIA_mu7_pThat30_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/golden/PYTHIA_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_JEUShiftUp.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftUp.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_MuJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftUp.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_BJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftUp.root";
+
+TString goldenFile_PYTHIA_mu12_pThat30_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/golden/PYTHIA_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_JEUShiftUp.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftUp.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftUp.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftUp.root";
+
+// JEUShiftDown files
+TString goldenFile_PYTHIA_mu7_pThat30_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/golden/PYTHIA_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_JEUShiftDown.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_DiJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftDown.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_MuJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftDown.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_BJet_withGS_scan_mu7_tight_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftDown.root";
+
+TString goldenFile_PYTHIA_mu12_pThat30_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/golden/PYTHIA_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_JEUShiftDown.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftDown.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat30_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftDown.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat30_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/golden/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_hiBinReweight_JEUShiftDown.root";
+
+
+
+
 // muonReco
-TString goldenFile_PYTHIAHYDJET_DiJet_muonReco = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_muonReco_hybridSoft.root";
-//TString goldenFile_PYTHIAHYDJET_DiJet_muonReco = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_pThat30_muonReco_tight.root";
+//TString goldenFile_PYTHIAHYDJET_DiJet_muonReco = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/localScans/PYTHIAHYDJET_DiJet_muonReco_hybridSoft.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_muonReco = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/PYTHIAHYDJET_DiJet_scan_muonReco_mu12_tight.root";
 
 
 
@@ -186,31 +263,103 @@ TString goldenFile_PYTHIAHYDJET_DiJet_muonReco = "/home/clayton/Analysis/code/bJ
 
 // ********************** pp DATA *********************************
 
-TString goldenFile_pp_SingleMuon_mu5 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/localScans/pp_SingleMuon_scan_mu5.root";
-TString goldenFile_pp_SingleMuon_mu7 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/localScans/pp_SingleMuon_scan_mu7.root";
-TString goldenFile_pp_SingleMuon_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/localScans/pp_SingleMuon_scan_mu12.root";
+TString goldenFile_pp_SingleMuon_mu5 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/spring2024scans/pp_SingleMuon_scan_mu5_tight_updatedTriggerLogic.root";
+TString goldenFile_pp_SingleMuon_mu7 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/golden/pp_SingleMuon_mu7_tight_pTmu-9to14.root";
+TString goldenFile_pp_SingleMuon_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/platinum/pp_SingleMuon_mu12_tight_pTmu-14_evtFilterFix_newJetBins.root";
+
 
 TString goldenFile_pp_MinBias_mu5 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/localScans/pp_MinBias_scan_mu5.root";
 TString goldenFile_pp_MinBias_mu7 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/localScans/pp_MinBias_scan_mu7.root";
-TString goldenFile_pp_MinBias_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/localScans/pp_MinBias_scan_mu12.root";
+TString goldenFile_pp_MinBias_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/platinum/pp_MinBias_mu12_tight_pTmu-14_evtFilterFix_newJetBins.root";
 
 
 // ********************** PbPb DATA *********************************
 
-TString goldenFile_PbPb_SingleMuon_mu5 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/localScans/PbPb_SingleMuon_scan_mu5.root";
-TString goldenFile_PbPb_SingleMuon_mu7 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/localScans/PbPb_SingleMuon_scan_mu7.root";
-TString goldenFile_PbPb_SingleMuon_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/localScans/PbPb_SingleMuon_scan_mu12.root";
+TString goldenFile_PbPb_SingleMuon_mu5 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/spring2024scans/PbPb_SingleMuon_scan_mu5_hybridSoft.root";
+TString goldenFile_PbPb_SingleMuon_mu7 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/golden/PbPb_SingleMuon_scan_mu7_tight_pTmu-9to14.root";
+TString goldenFile_PbPb_SingleMuon_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/platinum/PbPb_SingleMuon_scan_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins.root";
+
 
 TString goldenFile_PbPb_MinBias_mu5 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/localScans/PbPb_MinBias_scan_mu5.root";
 TString goldenFile_PbPb_MinBias_mu7 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/localScans/PbPb_MinBias_scan_mu7.root";
-TString goldenFile_PbPb_MinBias_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/localScans/PbPb_MinBias_scan_mu12.root";
+TString goldenFile_PbPb_MinBias_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/platinum/PbPb_MinBias_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins.root";
 
 TString goldenFile_PbPb_HardProbes_mu5 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/localScans/PbPb_HardProbes_scan_mu5.root";
 TString goldenFile_PbPb_HardProbes_mu7 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/localScans/PbPb_HardProbes_scan_mu7.root";
-TString goldenFile_PbPb_HardProbes_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/localScans/PbPb_HardProbes_scan_mu12.root";
+TString goldenFile_PbPb_HardProbes_mu12 = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/platinum/PbPb_HardProbes_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins.root";
 
+///////// ------ PLATINUM COLLECTION
 
+// pp
+TString goldenFile_pp_SingleMuon_mu7_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/platinum/pp_SingleMuon_mu7_hybridSoft_pTmu-9to14_evtFilterFix_newJetBins.root";
+TString goldenFile_pp_SingleMuon_mu12_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/obsidian/pp_SingleMuon_mu12_tight_pTmu-14_newJetBins_newHistograms.root";
 
+TString goldenFile_pp_MinBias_mu12_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/platinum/pp_MinBias_mu12_tight_pTmu-14_evtFilterFix_newJetBins.root";
+
+// PbPb
+TString goldenFile_PbPb_SingleMuon_mu7_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/platinum/PbPb_SingleMuon_scan_mu7_hybridSoft_pTmu-9to14_evtFilterFix_hiHFcut_newJetBins.root";
+//TString goldenFile_PbPb_SingleMuon_mu12_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/obsidian/PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_newJetBins_fineCentBins.root";
+TString goldenFile_PbPb_SingleMuon_mu12_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/platinum/PbPb_SingleMuon_scan_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins.root";
+TString goldenFile_PbPb_HardProbes_mu12_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/platinum/PbPb_HardProbes_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins.root";
+TString goldenFile_PbPb_MinBias_mu12_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/platinum/PbPb_MinBias_mu12_tight_pTmu-14_evtFilterFix_hiHFcut_newJetBins.root";
+
+// PYTHIA
+
+TString goldenFile_PYTHIA_mu7_pThat30_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/platinum/PYTHIA_DiJet_withGS_mu7_hybridSoft_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_newJetBins.root";
+
+/* TString goldenFile_PYTHIA_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/platinum/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_newJetBins.root"; */
+/* TString goldenFile_PYTHIA_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_newJetBins.root"; */
+/* TString goldenFile_PYTHIA_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_dRReweightJ1_newJetBins.root"; */
+TString goldenFile_PYTHIA_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_hadronPtRelReweightJ1_newJetBins.root";
+/* TString goldenFile_PYTHIA_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_hadronPtRelReweightJ1_newJetBins.root"; */
+TString goldenFile_PYTHIA_mu12_pThat45_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_newJetBins.root";
+TString goldenFile_PYTHIA_mu12_pThat15_newJetBins_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/platinum/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_newJetBins_JERsmear.root";
+TString goldenFile_PYTHIA_mu12_pThat15_newJetBins_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/platinum/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_newJetBins_JEUShiftUp.root";
+TString goldenFile_PYTHIA_mu12_pThat15_newJetBins_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/platinum/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_jetPtReweight_vzReweight_newJetBins_JEUShiftDown.root";
+
+// PYTHIA+HYDJET
+
+TString goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_DiJet_withGS_scan_mu7_hybridSoft_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu7_pThat30_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_MuJet_withGS_scan_mu7_hybridSoft_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu7_pThat30_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_BJet_withGS_scan_mu7_hybridSoft_pTmu-9to14_pThat-30_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins.root";
+
+/* TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins.root" */
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/DiJet/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005.root";
+/* TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/DiJet/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005_dRReweightJ1.root"; */
+/* TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/DiJet/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005_hadronPtRelReweightJ1.root"; */
+//TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/fineCentBins/prime/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_fineCentBins_prime.root";
+/* TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002.root"; */
+/* TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002_hadronPtRelReweight.root"; */
+//TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins.root";
+
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat50_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-50_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat45_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat45_newJetBins_additionalMC = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/fineCentBins/dripping-tap/PH_DiJet_merge.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JEUShiftUp.root";
+TString goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JEUShiftDown.root";
+
+/* TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins.root"; */
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/MuJet/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005.root";
+/* TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/MuJet/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005_dRReweightJ1.root"; */
+/* TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/MuJet/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005_hadronPtRelReweightJ1.root"; */
+/* TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002.root"; */
+/* TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002_hadronPtRelReweight.root"; */
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat45_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JEUShiftUp.root";
+TString goldenFile_PYTHIAHYDJET_MuJet_mu12_pThat15_newJetBins_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JEUShiftDown.root";
+
+//TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/BJet/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005.root";
+/* TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/BJet/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005_dRReweightJ1.root"; */
+/* TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/BJet/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p005_hadronPtRelReweightJ1.root"; */
+/* TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002.root"; */
+/* TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins_templateWeightAnalysis_weightCut0p002_hadronPtRelReweight.root"; */
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat45_newJetBins = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_newJetBins.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins_JERsmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JERsmear.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins_JEUShiftUp = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JEUShiftUp.root";
+TString goldenFile_PYTHIAHYDJET_BJet_mu12_pThat15_newJetBins_JEUShiftDown = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_removeHYDJETjets_leadingXjetDump_vzReweight_hiBinReweight_muomMatchingLogicFix_weightLogicFix_hiHFcut_newJetBins_JEUShiftDown.root";
 
 
 // RESULTS

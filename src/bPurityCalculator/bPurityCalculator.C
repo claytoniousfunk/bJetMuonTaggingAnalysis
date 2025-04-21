@@ -12,10 +12,10 @@ void bPurityCalculator(){
   // double jetPtCenters[N_jetPtAxisEdges-1] = {70,100,160,250};
   // double jetPtWidths[N_jetPtAxisEdges-1] = {10,20,40,50};
 
-  const int N_jetPtAxisEdges = 6;
-  double jetPtAxisEdges[N_jetPtAxisEdges] = {60,80,120,200,300,500};
-  double jetPtCenters[N_jetPtAxisEdges-1] = {70,100,160,250,400};
-  double jetPtWidths[N_jetPtAxisEdges-1] = {10,20,40,50,100};
+  const int N_jetPtAxisEdges = 7;
+  double jetPtAxisEdges[N_jetPtAxisEdges] = {80,100,120,150,200,300,500};
+  double jetPtCenters[N_jetPtAxisEdges-1] = {90,110,135,175,250,400};
+  double jetPtWidths[N_jetPtAxisEdges-1] = {10,10,15,25,50,100};
 
   
   double results_pp[N_jetPtAxisEdges-1], err_results_pp[N_jetPtAxisEdges-1];
@@ -39,71 +39,84 @@ void bPurityCalculator(){
   int do_mergeB = 1;
   int do_mergeC = 1;
 
+  // one has to 1, one has to be 0 for the fit integers
   int do_2tempFit = 1;
-  int do_3tempFit = 0; // one has to 1, one has to be 0 for the fit integers
+  int do_3tempFit = 0; 
 
   
   double pTrel_fit_low  = 0.0;
-  double pTrel_fit_high = 5.0;
+  double pTrel_fit_high = 3.0;
 
   double c_multiplier = 1.0;
   double bGS_multiplier = 1.2;
 
-  int do_JER_smear = 1;
+  int do_JER_smear = 0;
+  int do_JEU_up = 0;
+  int do_JEU_down = 0;
 
-  string output_file_string = Form("../../rootFiles/bPurityResults/bPurityResults_DATA-%i_mu5-%i_mu7-%i_mu12-%i_mergeB-%i_mergeC-%i_pTrel-%1.1f-%1.1f_cMult-%1.1f_bMult-%1.1f-JERsmear-%i.root",do_data,do_mu5,do_mu7,do_mu12,do_mergeB,do_mergeC,pTrel_fit_low,pTrel_fit_high,c_multiplier,bGS_multiplier,do_JER_smear);
+  int do_bJetEnergyShift = 0;
+
+  string output_file_string = Form("../../rootFiles/bPurityResults/golden/bPurityResults_DATA-%i_mu5-%i_mu7-%i_mu12-%i_mergeB-%i_mergeC-%i_pTrel-%1.1fto%1.1f_cMult-%1.1f_bMult-%1.1f_JERsmear-%i_JEUShiftUp-%i_JEUShiftDown-%i_bJetEnergyShift-%i.root",do_data,do_mu5,do_mu7,do_mu12,do_mergeB,do_mergeC,pTrel_fit_low,pTrel_fit_high,c_multiplier,bGS_multiplier,do_JER_smear,do_JEU_up,do_JEU_down,do_bJetEnergyShift);
 
   cout << output_file_string.c_str() << endl;
 
 
+  results_pp[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,  1,0,0,  1,0,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier, 1);
+  err_results_pp[0] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  1,0,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
   
-  results_pp[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,  1,0,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier, 1);
-  err_results_pp[0] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+  results_pp[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_pp[1] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_pp[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_pp[1] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+  results_pp[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_pp[2] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_pp[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_pp[2] = templateFitter(do_data,  do_mu5,do_mu7,do_mu12,  1,0,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+  results_pp[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_pp[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_pp[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_pp[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+  results_pp[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_pp[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_pp[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_pp[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
-
-
-
-  results_C1[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C1[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
-
-  results_C1[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C1[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
-
-  results_C1[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C1[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
-
-  results_C1[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C1[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
-
-  results_C1[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C1[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+  results_pp[5] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_pp[5] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   1,0,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
 
-  results_C2[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C2[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_C2[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C2[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+  results_C1[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  1,0,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  1,0,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_C2[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C2[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+  results_C1[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_C2[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C2[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+  results_C1[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
-  results_C2[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
-  err_results_C2[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+  results_C1[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C1[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C1[5] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C1[5] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,1,0,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+
+  results_C2[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  1,0,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[0] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  1,0,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C2[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[1] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,1,0,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C2[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[2] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,1,0,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C2[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[3] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,1,0,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C2[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[4] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,1,0,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
+
+  results_C2[5] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  1);
+  err_results_C2[5] = templateFitter(do_data, do_mu5,do_mu7,do_mu12,   0,0,1,  0,0,0,0,0,1,  do_mergeC,do_mergeB,  do_2tempFit,do_3tempFit,  pTrel_fit_low,pTrel_fit_high, c_multiplier, bGS_multiplier,  2);
 
 
 
@@ -175,15 +188,16 @@ void bPurityCalculator(){
 
 
   m->Add(g0);
-  m->Add(g1);
-  m->Add(g2);
+  //m->Add(g1);
+  //m->Add(g2);
  
 
   m->GetYaxis()->SetTitleSize(0.06);
   m->GetXaxis()->SetTitleSize(0.06);
   m->GetYaxis()->SetLabelSize(0.045);
   m->GetXaxis()->SetLabelSize(0.045);
-  m->GetYaxis()->SetTitle("#font[52]{b} jet purity");
+  //m->GetYaxis()->SetTitle("#font[52]{b} jet purity");
+  m->GetYaxis()->SetTitle("#it{f}_{#it{b}}^{#it{#mu}-tagged,#it{#mu}-trig}");
   m->GetXaxis()->SetTitle("#font[52]{p}_{T}^{recoJet} [GeV]");
 
   m->GetYaxis()->SetRangeUser(0,1);
@@ -194,8 +208,8 @@ void bPurityCalculator(){
   TLegend *leg = new TLegend(0.46,0.75,0.75,0.88);
   
   leg->AddEntry(g0,"pp","p");
-  leg->AddEntry(g1,"PbPb 30-90%","p");
-  leg->AddEntry(g2,"PbPb 0-30%","p");
+  //leg->AddEntry(g1,"PbPb 30-90%","p");
+  //leg->AddEntry(g2,"PbPb 0-30%","p");
   
   leg->SetBorderSize(0);
   leg->SetTextSize(0.032);

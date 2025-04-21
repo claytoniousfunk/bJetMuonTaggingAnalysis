@@ -44,9 +44,9 @@ double func_temp(double *x, double *par){
 
 
 
-void plot_and_reweight_hiBin(bool ismu5  = 1,
+void plot_and_reweight_hiBin(bool ismu5  = 0,
 			     bool ismu7  = 0,
-			     bool ismu12 = 0)
+			     bool ismu12 = 1)
 {
   // PYTHIA
 
@@ -57,18 +57,18 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
   
   if(ismu5){
     f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu5);
-    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30_RAW_jetFilter);
-    f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30);
+    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_RAW);
+    f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat15);
   }
   else if(ismu7){
     f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu7);
-    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30_RAW_jetFilter);
+    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_RAW);
     f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30);
   }
   else if(ismu12){
-    f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu12);
-    f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30_RAW_jetFilter);
-    f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat30);
+    f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu12_newJetBins);
+    f_pythia = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/correctHiBinShift/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_correctHiBinShift.root");
+    f_pythia_weighted = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/DiJet/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_leadingXjetDump_removeHYDJETjet_jetTrkMaxFilter_vzReweight_newJetBins.root");
   }
   else{};
 
@@ -88,8 +88,8 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
   data_vz->Scale(1.0/data_vz->Integral());
 
 
-  const int N = 16;
-  double vz_axis[N] = {0,5,10,15,20,25,30,40,50,60,70,80,100,120,150,180}; // N = 16
+  const int N = 33;
+  double vz_axis[N] = {0,2,4,6,8,10,12,14,16,18,20,22,24,26,30,35,40,45,50,55,60,65,70,75,80,90,100,110,120,125,150,165,180}; // N = 16
 
 
   //const int N = 8;
@@ -239,18 +239,18 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
       
       
 
-  auto legend = new TLegend(0.28,0.7,0.5,0.89);
+  auto legend = new TLegend(0.26,0.7,0.5,0.89);
   //legend->AddEntry(data_vz_xnorm,"Data","p");
   //legend->AddEntry(pythia_vz_xnorm,"PYTHIA+HYDJET raw","p");
  
  
   legend->AddEntry(data_vz_xnorm,"PbPb SingleMuon","p");
-  legend->AddEntry(pythia_vz_xnorm,"PYTHIA+HYDJET w/ jet-filter","p");
-  legend->AddEntry(pythia_w_vz_xnorm,"PYTHIA+HYDJET weighted + jet-filter","p");
+  legend->AddEntry(pythia_vz_xnorm,"PYTHIA+HYDJET (w/ jet-filter + #it{v}_{z}-weight)","p");
+  legend->AddEntry(pythia_w_vz_xnorm,"PYTHIA+HYDJET (w/ jet-filter + #it{v}_{z}-weight + hiBin-weight)","p");
  
       
   legend->SetBorderSize(0);
-  legend->SetTextSize(0.06);
+  legend->SetTextSize(0.051);
 
      
   data_vz_xnorm->GetYaxis()->SetTitle("1/#font[52]{N}^{evt}_{tot} d#font[52]{N}^{evt}/d#font[52]{v}_{z}");
@@ -271,23 +271,23 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
   double la_y_pos = 0.63; // latex y position variable
   double la_x_pos = 0.30; // latex x position variable
   double la_y_off = 0.08; // latex y offset variable
-  TString jet_info_string_pp = "anti-#font[52]{k}_{T} PF jets, #font[52]{p}_{T}^{jet} > 60 GeV, |#it{#eta}^{jet}| < 1.6";
-    TString jet_info_string_PbPb = "anti-#font[52]{k}_{T} CsPF jets, #font[52]{p}_{T}^{jet} > 60 GeV, |#it{#eta}^{jet}| < 1.6";
-  la->DrawLatexNDC(la_x_pos,la_y_pos,"#mu-triggered events w/ #mu-tagged jet");
+  TString jet_info_string_pp = "anti-#font[52]{k}_{T} PF jets, #font[52]{p}_{T}^{jet} > 80 GeV, |#it{#eta}^{jet}| < 1.6";
+  TString jet_info_string_PbPb = "anti-#font[52]{k}_{T} CsPF jets, #font[52]{p}_{T}^{jet} > 80 GeV, |#it{#eta}^{jet}| < 1.6";
+  la->DrawLatexNDC(la_x_pos,la_y_pos,"#it{#mu}-triggered events w/ #it{#mu}-tagged jet, #hat{#it{p}}_{T} > 45 GeV");
   la->DrawLatexNDC(la_x_pos,la_y_pos - 1*la_y_off, jet_info_string_PbPb);
 
 
 
   if(ismu5){
-    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"tight muon ID, #font[52]{p}_{T}^{#mu} > 7 GeV, |#it{#eta}^{#mu}| < 2.0");
+    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"hybrid-soft muon ID, #font[52]{p}_{T}^{#mu} > 7 GeV, |#it{#eta}^{#mu}| < 2.0");
     la->DrawLatexNDC(la_x_pos,la_y_pos - 3*la_y_off,"mu5 trigger");
   }
   else if(ismu7){
-    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"tight muon ID, #font[52]{p}_{T}^{#mu} > 9 GeV, |#it{#eta}^{#mu}| < 2.0");
+    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"hybrid-soft muon ID, #font[52]{p}_{T}^{#mu} > 9 GeV, |#it{#eta}^{#mu}| < 2.0");
     la->DrawLatexNDC(la_x_pos,la_y_pos - 3*la_y_off,"mu7 trigger");
   }
   else if(ismu12){
-    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"tight muon ID, #font[52]{p}_{T}^{#mu} > 14 GeV, |#it{#eta}^{#mu}| < 2.0");
+    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"tight muon ID, #font[52]{p}_{T}^{#it{#mu}} > 14 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
     la->DrawLatexNDC(la_x_pos,la_y_pos - 3*la_y_off,"mu12 trigger");
   }
   else {};
@@ -339,7 +339,7 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
   r2->Draw("same");
   //func->SetParNames("a_0","a_1","a_2","a_3","a_4");
   //r->Fit("func","MR","N",-15.0,15.0);
-  r->GetYaxis()->SetRangeUser(0.0,3.85);
+  r->GetYaxis()->SetRangeUser(0.0,4.65);
   TLine *l1 = new TLine(0,1,180,1);
   l1->SetLineStyle(7);
   l1->Draw();
@@ -350,7 +350,7 @@ void plot_and_reweight_hiBin(bool ismu5  = 1,
   l3->SetLineStyle(2);
   //l3->Draw();
   //gStyle->SetOptFit(1);
-  //r->Fit("pol4");
+  r->Fit("pol3");
   //r->Fit("expo");
   auto legend2 = new TLegend(0.27,0.12,0.72,0.42);
   legend2->AddEntry(r,"no weight","p");

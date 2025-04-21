@@ -5,7 +5,7 @@ void trigger_turn_on(){
 
 
   TFile *f1 = TFile::Open("../../../rootFiles/scanningOutput/HYDJET/localScans/HYDJET_trigger_scan_mu7.root");
-  TFile *f2 = TFile::Open("../../../rootFiles/scanningOutput/PbPb/localScans/PbPb_trigger_scan_mu7.root");
+  TFile *f2 = TFile::Open("../../../rootFiles/scanningOutput/PbPb/platinum/PbPb_MinBias_triggerEffScan_mu12_tight.root");
 
   
 	
@@ -42,9 +42,14 @@ void trigger_turn_on(){
   D2->Add(D2_add);
 
 
-  const int NPtEdges = 11;
-  double newAxis[NPtEdges] = {3,4,5,6,7,8,9,12,16,21,30};
+  // const int NPtEdges = 11;
+  // double newAxis[NPtEdges] = {3,4,5,6,7,8,9,12,16,21,30};
 
+
+  const int NPtEdges = 22;
+  double newAxis[NPtEdges] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20,24,30};
+
+  
   TH1D *n1, *n2;
   TH1D *d1, *d2;
 

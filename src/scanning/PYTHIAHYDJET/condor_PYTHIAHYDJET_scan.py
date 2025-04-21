@@ -12,8 +12,6 @@ dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet_19Sep23_Group1.txt'
 #dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_MuJet.txt'
 #dblist = '../../../fileNames/fileNames_PYTHIAHYDJET_DiJet_onlyMuJets_noRecoJetPtCut.txt'
 
-
-
 exe = 'PYTHIAHYDJET_scan.C'
 
 jm = jobManager(jobSite ='cern', 

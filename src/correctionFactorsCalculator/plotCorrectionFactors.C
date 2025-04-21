@@ -92,7 +92,7 @@ void plotCorrectionFactors(){
   a0->GetXaxis()->SetTitleSize(titleSize);
   a0->GetYaxis()->SetLabelSize(labelSize);
   a0->GetYaxis()->SetTitleSize(titleSize);
-  a0->GetXaxis()->SetRangeUser(60,200);
+  a0->GetXaxis()->SetRangeUser(80,200);
   a0->Draw();
   a1->Draw("same");
   a2->Draw("same");
@@ -121,7 +121,7 @@ void plotCorrectionFactors(){
   b0->GetYaxis()->SetLabelSize(labelSize);
   b0->GetYaxis()->SetTitleSize(titleSize);
   b0->GetYaxis()->SetRangeUser(0.75,1);
-  b0->GetXaxis()->SetRangeUser(60,200);
+  b0->GetXaxis()->SetRangeUser(80,200);
   b0->Draw();
   b1->Draw("same");
   b2->Draw("same");
@@ -142,7 +142,7 @@ void plotCorrectionFactors(){
   c0->GetYaxis()->SetLabelSize(labelSize);
   c0->GetYaxis()->SetTitleSize(titleSize);
   c0->GetYaxis()->SetRangeUser(0.6,1);
-  c0->GetXaxis()->SetRangeUser(60,200);
+  c0->GetXaxis()->SetRangeUser(80,200);
   c0->Draw();
   c1->Draw("same");
   c2->Draw("same");

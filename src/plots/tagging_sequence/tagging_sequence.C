@@ -1,15 +1,17 @@
 
 #include "../../../headers/goldenFileNames.h"
 
-void tagging_sequence(bool do_pp = 1,
+void tagging_sequence(bool do_pp = 0,
 		      bool do_C2 = 0,
-		      bool do_C1 = 0,
+		      bool do_C1 = 1,
 		      bool do_mu5 = 0,
 		      bool do_mu7 = 0,
 		      bool do_mu12 = 1){
 
-  const int N_axis_edges = 7;
-  double new_axis[N_axis_edges] = {80,100,120,150,200,300,500};
+  const int N_axis_edges = 6;
+  double new_axis[N_axis_edges] = {80,90,100,120,150,200};
+
+  
 
   TLine *li = new TLine();
   li->SetLineStyle(7);
@@ -131,11 +133,13 @@ void tagging_sequence(bool do_pp = 1,
   //f_pyE->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor%s",""),H_shift);
 
   // data histograms
-  TH1D *d_inclReco, *d_inclMuTag, *d_trig;
+  TH1D *d_inclReco, *d_inclMuTag, *dd_inclMuTag, *d_trig;
 
 
-  f_sm->GetObject(Form("h_inclRecoJetPt%s",centrality_identifier.c_str()),d_inclReco);
-  f_sm->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag%s",centrality_identifier.c_str()),d_inclMuTag);
+  f_dj->GetObject(Form("h_inclRecoJetPt%s",centrality_identifier.c_str()),d_inclReco);
+  f_dj->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag%s",centrality_identifier.c_str()),d_inclMuTag);
+  
+  f_sm->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag%s",centrality_identifier.c_str()),dd_inclMuTag);
   f_sm->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_triggerOn%s",centrality_identifier.c_str()),d_trig);
 
   
@@ -163,6 +167,7 @@ void tagging_sequence(bool do_pp = 1,
   h_r = (TH1D*) h_r->Rebin(N_axis_edges-1,"h_r",new_axis);
   d_inclReco = (TH1D*) d_inclReco->Rebin(N_axis_edges-1,"d_inclReco",new_axis);
   d_inclMuTag = (TH1D*) d_inclMuTag->Rebin(N_axis_edges-1,"d_inclMuTag",new_axis);
+  dd_inclMuTag = (TH1D*) dd_inclMuTag->Rebin(N_axis_edges-1,"dd_inclMuTag",new_axis);
   d_trig = (TH1D*) d_trig->Rebin(N_axis_edges-1,"d_trig",new_axis);
   
 
@@ -285,6 +290,8 @@ void tagging_sequence(bool do_pp = 1,
 
   
   
+
+  // MC-driven corrections
   TH1D *r1, *r2, *r3, *r4, *r5, *r6, *r7;
   r1 = (TH1D*) h_inclReco->Clone("r1");
   r1->Divide(h_inclReco,h_inclGen,1,1,"B");
@@ -301,16 +308,12 @@ void tagging_sequence(bool do_pp = 1,
   r7 = (TH1D*) h_i->Clone("r7"); // b-to-incl JER correction
   r7->Divide(h_i,h_r,1,1,"B");
 
-
-
-  
-
-  
+  // Data-driven corrections
   TH1D *rr1, *rr2, *rr3;
   rr1 = (TH1D*) d_inclMuTag->Clone("rr1");
   rr1->Divide(d_inclMuTag,d_inclReco,1,1,"B");
   rr2 = (TH1D*) d_trig->Clone("rr2");
-  rr2->Divide(d_trig,d_inclMuTag,1,1,"B");
+  rr2->Divide(d_trig,dd_inclMuTag,1,1,"B");
 
   TCanvas *c_dSpectra = new TCanvas("c_dSpectra","c_dSpectra",700,700);
   c_dSpectra->cd();
@@ -454,7 +457,9 @@ void tagging_sequence(bool do_pp = 1,
    // matching factor calculation
    TH1D *mf; // mf = matching factor
    TH1D *mf_1, *mf_2, *mf_3, *mf_4; // mf_i = i-th sub-factor
-   
+
+
+   // MC-driven
    mf = (TH1D*) r2->Clone("mf");
    mf_1 = (TH1D*) mf->Clone("mf_1"); // first sub-factor
    mf->Multiply(mf,r3,1,1,"B"); // muon reconstruction eff in MC
@@ -467,7 +472,14 @@ void tagging_sequence(bool do_pp = 1,
    mf_4 = (TH1D*) mf->Clone("mf_4"); // sub-factor
    mf->Multiply(mf,r6,1,1,"B"); // bJet JES correction
    mf->Multiply(mf,r7,1,1,"B"); // mu-tagged bJet JER correction
-  
+
+   // Data-driven
+   // mf = (TH1D*) rr1->Clone("mf"); 
+   // mf->Multiply(rr2); // trigger eff in DATA      
+   // mf->Multiply(mf,r6,1,1,"B"); // bJet JES correction
+   // mf->Multiply(mf,r7,1,1,"B"); // mu-tagged bJet JER correction
+
+
    TCanvas *c_factor = new TCanvas("c_factor", "c_factor", 700,700);
    c_factor->cd();
    TPad *p_mf = new TPad("p_mf","p_mf",0,0,1,1);
@@ -480,6 +492,7 @@ void tagging_sequence(bool do_pp = 1,
    mf->GetXaxis()->SetTitleSize(0.05);
    mf->GetYaxis()->SetTitleSize(0.05);
    mf->GetYaxis()->SetTitle("Jet selection factor, #alpha");
+   mf->GetYaxis()->SetRangeUser(0,0.01);
    mf->Draw();
    TString mf_png_save_string = "";
    if(do_pp){
@@ -536,6 +549,8 @@ void tagging_sequence(bool do_pp = 1,
    r7->Write();
    wf_mf->Close();
 
+   
+
    int nbins = mf->GetNbinsX();
    // for(int ibin = 0; ibin < nbins; ibin++){
    //   mf->SetBinError(ibin,0.);
@@ -551,21 +566,21 @@ void tagging_sequence(bool do_pp = 1,
 
 
    // make sub-amplifiers for closure checks
-   b_genMuTag->Divide(mf_1);
-   TH1D *r_corr_1 = (TH1D*) b_genMuTag->Clone("r_corr_1");
-   r_corr_1->Divide(b_genMuTag,b_inclReco,1,1,"B");
+   // b_genMuTag->Divide(mf_1);
+   // TH1D *r_corr_1 = (TH1D*) b_genMuTag->Clone("r_corr_1");
+   // r_corr_1->Divide(b_genMuTag,b_inclReco,1,1,"B");
 
-   b_matchedRecoMuTag->Divide(mf_2);
-   TH1D *r_corr_2 = (TH1D*) b_matchedRecoMuTag->Clone("r_corr_2");
-   r_corr_2->Divide(b_matchedRecoMuTag,b_genMuTag,1,1,"B");
+   // b_matchedRecoMuTag->Divide(mf_2);
+   // TH1D *r_corr_2 = (TH1D*) b_matchedRecoMuTag->Clone("r_corr_2");
+   // r_corr_2->Divide(b_matchedRecoMuTag,b_genMuTag,1,1,"B");
 
-   b_inclMuTag->Divide(mf_3);
-   TH1D *r_corr_3 = (TH1D*) b_inclMuTag->Clone("r_corr_3");
-   r_corr_3->Divide(b_inclMuTag,b_matchedRecoMuTag,1,1,"B");
+   // b_inclMuTag->Divide(mf_3);
+   // TH1D *r_corr_3 = (TH1D*) b_inclMuTag->Clone("r_corr_3");
+   // r_corr_3->Divide(b_inclMuTag,b_matchedRecoMuTag,1,1,"B");
 
-   b_trig_clone->Divide(mf_4);
-   TH1D *r_corr_4 = (TH1D*) b_trig_clone->Clone("r_corr_4");
-   r_corr_4->Divide(b_trig_clone,b_inclMuTag,1,1,"B");
+   // b_trig_clone->Divide(mf_4);
+   // TH1D *r_corr_4 = (TH1D*) b_trig_clone->Clone("r_corr_4");
+   // r_corr_4->Divide(b_trig_clone,b_inclMuTag,1,1,"B");
 
    // TH1D *cursed_histo = (TH1D*) r_corr_1->Clone("cursed_histo");
    // cursed_histo->Divide(r_corr_1,r_corr_2,1,1,"B");
@@ -584,7 +599,7 @@ void tagging_sequence(bool do_pp = 1,
    //r_corr->GetYaxis()->SetTitle("Corrected(all) / truth(all)");
    r_corr->GetXaxis()->SetTitle("Jet #font[52]{p}_{T} [GeV]");
    r_corr->SetStats(0);
-   //r_corr->GetYaxis()->SetRangeUser(0,30);
+   r_corr->GetYaxis()->SetRangeUser(0,20);
    r_corr->GetYaxis()->SetTitle("#font[52]{b}-amplification factor, #beta");
    r_corr->Draw();
    //r_corr_1->Draw();
@@ -680,21 +695,21 @@ void tagging_sequence(bool do_pp = 1,
    r_corr->Write();
    wf_ba->Close();
 
-   auto wf_ba_sub_1 = TFile::Open(ba_sub_1_file_save_string,"recreate");
-   r_corr_1->Write();
-   wf_ba_sub_1->Close();
+   // auto wf_ba_sub_1 = TFile::Open(ba_sub_1_file_save_string,"recreate");
+   // r_corr_1->Write();
+   // wf_ba_sub_1->Close();
 
-   auto wf_ba_sub_2 = TFile::Open(ba_sub_2_file_save_string,"recreate");
-   r_corr_2->Write();
-   wf_ba_sub_2->Close();
+   // auto wf_ba_sub_2 = TFile::Open(ba_sub_2_file_save_string,"recreate");
+   // r_corr_2->Write();
+   // wf_ba_sub_2->Close();
 
-   auto wf_ba_sub_3 = TFile::Open(ba_sub_3_file_save_string,"recreate");
-   r_corr_3->Write();
-   wf_ba_sub_3->Close();
+   // auto wf_ba_sub_3 = TFile::Open(ba_sub_3_file_save_string,"recreate");
+   // r_corr_3->Write();
+   // wf_ba_sub_3->Close();
 
-   auto wf_ba_sub_4 = TFile::Open(ba_sub_4_file_save_string,"recreate");
-   r_corr_4->Write();
-   wf_ba_sub_4->Close();
+   // auto wf_ba_sub_4 = TFile::Open(ba_sub_4_file_save_string,"recreate");
+   // r_corr_4->Write();
+   // wf_ba_sub_4->Close();
 
 
 
