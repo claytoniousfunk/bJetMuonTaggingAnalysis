@@ -1,0 +1,101 @@
+
+
+TString configureOutputDatasetName(TString generator,
+				   bool doDiJetSample,
+				   bool doMuJetSample,
+				   bool doBJetSample,
+				   bool doDiJetSample_batch1,
+				   bool doDiJetSample_batch2,
+				   bool doDiJetSample_batch3,
+				   bool doDiJetSample_batch4,
+				   bool doDiJetSample_batch5,
+				   bool doDiJetSample_batch6,
+				   bool doDiJetSample_batch7,
+				   bool doDiJetSample_batch8,
+				   bool doDiJetSample_batch9,
+				   bool doDiJetSample_batch10,
+				   bool doDiJetSample_batch11,
+				   bool doDiJetSample_batch12,
+				   bool doDiJetSample_batch13,
+				   bool doDiJetSample_batch14,
+				   bool doDiJetSample_batch15,
+				   double pThat,
+				   bool doVzReweight,
+				   bool doHiBinReweight,
+				   bool doJetPtReweight,
+				   bool doGenJetPthatFilter,
+				   bool doLeadingXjetDumpFilter,
+				   bool doXdumpReweight,
+				   bool doJetTrkMaxFilter,
+				   bool doRemoveHYDJETjet,
+				   bool doEtaPhiMask,
+				   bool doDRReweight,
+				   bool doWeightCut,
+				   bool doHadronPtRelReweight,
+				   bool doBJetEnergyShift,
+				   bool doJERCorrection,
+				   bool apply_JER_smear,
+				   bool apply_JEU_shift_up,
+				   bool apply_JEU_shift_down)
+{
+
+  TString result = "output";
+
+  TString datasetIndicator = "";
+  if(doMuJetSample) datasetIndicator = "MuJet";
+  else if(doBJetSample) datasetIndicator = "BJet";
+  else if(doDiJetSample) datasetIndicator = "DiJet";
+  else if(doDiJetSample_batch1) datasetIndicator = "DiJet_batch1";
+  else if(doDiJetSample_batch2) datasetIndicator = "DiJet_batch2";
+  else if(doDiJetSample_batch3) datasetIndicator = "DiJet_batch3";
+  else if(doDiJetSample_batch4) datasetIndicator = "DiJet_batch4";
+  else if(doDiJetSample_batch5) datasetIndicator = "DiJet_batch5";
+  else if(doDiJetSample_batch6) datasetIndicator = "DiJet_batch6";
+  else if(doDiJetSample_batch7) datasetIndicator = "DiJet_batch7";
+  else if(doDiJetSample_batch8) datasetIndicator = "DiJet_batch8";
+  else if(doDiJetSample_batch9) datasetIndicator = "DiJet_batch9";
+  else if(doDiJetSample_batch10) datasetIndicator = "DiJet_batch10";
+  else if(doDiJetSample_batch11) datasetIndicator = "DiJet_batch11";
+  else if(doDiJetSample_batch12) datasetIndicator = "DiJet_batch12";
+  else if(doDiJetSample_batch13) datasetIndicator = "DiJet_batch13";
+  else if(doDiJetSample_batch14) datasetIndicator = "DiJet_batch14";
+  else if(doDiJetSample_batch15) datasetIndicator = "DiJet_batch15";
+  else{};
+
+  result.Append(datasetIndicator);
+
+  
+
+  // event-based reweights
+  if(doVzReweight) result.Append("_vzReweight");
+  if(doHiBinReweight) result.Append("_hiBinReweight");
+  if(doJetPtReweight) result.Append("_jetPtReweight");
+
+  // jet-based filters
+  if(doGenJetPthatFilter) result.Append("_genJetPthatFilter");
+  if(doLeadingXjetDumpFilter) result.Append("_leadingXjetDumpFilter");
+  if(doXdumpReweight) result.Append("_xDumpReweight");
+  if(doJetTrkMaxFilter) result.Append("_jetTrkMaxFilter");
+  if(doRemoveHYDJETjet) result.Append("_removeHYDJETjet0p45");
+  if(doEtaPhiMask) result.Append("_etaPhiMask");
+
+
+  if(doDRReweight) result.Append("_dRReweight");
+
+
+  // lesser-likely customizations
+  if(doWeightCut) result.Append("_weightCut");
+  if(doHadronPtRelReweight) result.Append("_hadronPtRelReweight");
+  if(doBJetEnergyShift) result.Append("_bJetEnergyShift");
+  if(doJERCorrection) result.Append("_JERCorrection");
+  if(apply_JER_smear) result.Append("_applyJERSmear");
+  if(apply_JEU_shift_up) result.Append("_applyJEUShiftUp");
+  if(apply_JEU_shift_down) result.Append("_applyJEUShiftDown");
+
+ 
+
+
+
+  return result;
+
+}
