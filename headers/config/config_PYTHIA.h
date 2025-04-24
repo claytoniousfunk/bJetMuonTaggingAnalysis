@@ -37,4 +37,5 @@ bool doHadronPtRelReweightToMuon = false;
 bool doDRReweight = true;
 bool doWeightCut = false;
 
-
+// stuff for dataset naming
+TString generator = "PYTHIA";

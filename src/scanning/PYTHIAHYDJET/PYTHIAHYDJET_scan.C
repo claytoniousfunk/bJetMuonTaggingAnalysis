@@ -110,7 +110,10 @@ TF1 *fitFxn_jetPt_C1, *fitFxn_jetPt_C2, *fitFxn_jetPt_C3, *fitFxn_jetPt_C4;
 #include "../../../headers/config/readConfig.h"
 // remove HYDJET jets function
 #include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
-
+// dataset naming functions
+#include "../../../headers/functions/getDatasetName/getDatasetName.h"
+#include "../../../headers/functions/getInputFileName/getInputFileName.h"
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName.h"
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // >>>>>>>>>> Reco jets
@@ -272,12 +275,102 @@ TH1D *h_NMuTaggedJetPerEvent[NCentralityIndices];
 
 void PYTHIAHYDJET_scan(int group = 1){
 
+  TString inputDataset = "";
+  TString inputFileName = "";
+
+  inputDataset = getDatasetName(doDiJetSample,
+				doMuJetSample,
+				doBJetSample,
+				doDiJetSample_batch1,
+				doDiJetSample_batch2,
+				doDiJetSample_batch3,
+				doDiJetSample_batch4,
+				doDiJetSample_batch5,
+				doDiJetSample_batch6,
+				doDiJetSample_batch7,
+				doDiJetSample_batch8,
+				doDiJetSample_batch9,
+				doDiJetSample_batch10,
+				doDiJetSample_batch11,
+				doDiJetSample_batch12,
+				doDiJetSample_batch13,
+				doDiJetSample_batch14,
+				doDiJetSample_batch15);
+
+  inputFileName = getInputFileName(doDiJetSample,
+				   doMuJetSample,
+				   doBJetSample,
+				   doDiJetSample_batch1,
+				   doDiJetSample_batch2,
+				   doDiJetSample_batch3,
+				   doDiJetSample_batch4,
+				   doDiJetSample_batch5,
+				   doDiJetSample_batch6,
+				   doDiJetSample_batch7,
+				   doDiJetSample_batch8,
+				   doDiJetSample_batch9,
+				   doDiJetSample_batch10,
+				   doDiJetSample_batch11,
+				   doDiJetSample_batch12,
+				   doDiJetSample_batch13,
+				   doDiJetSample_batch14,
+				   doDiJetSample_batch15);
+
+  TString input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
+
+  std::cout << "input dataset = " << input << std::endl;
+
+  TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
+
+  TString outputDatasetName = "";
+
+  outputDatasetName = configureOutputDatasetName(generator,
+						 doDiJetSample,
+						 doMuJetSample,
+						 doBJetSample,
+						 doDiJetSample_batch1,
+						 doDiJetSample_batch2,
+						 doDiJetSample_batch3,
+						 doDiJetSample_batch4,
+						 doDiJetSample_batch5,
+						 doDiJetSample_batch6,
+						 doDiJetSample_batch7,
+						 doDiJetSample_batch8,
+						 doDiJetSample_batch9,
+						 doDiJetSample_batch10,
+						 doDiJetSample_batch11,
+						 doDiJetSample_batch12,
+						 doDiJetSample_batch13,
+						 doDiJetSample_batch14,
+						 doDiJetSample_batch15,
+						 pThat,
+						 doVzReweight,
+						 doHiBinReweight,
+						 doJetPtReweight,
+						 doGenJetPthatFilter,
+						 doLeadingXjetDumpFilter,
+						 doXdumpReweight,
+						 doJetTrkMaxFilter,
+						 doRemoveHYDJETjet,
+						 doEtaPhiMask,
+						 doDRReweight,
+						 doWeightCut,
+						 doHadronPtRelReweight,
+						 doBJetEnergyShift,
+						 doJERCorrection,
+						 apply_JER_smear,
+						 apply_JEU_shift_up,
+						 apply_JEU_shift_down);
+
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+
+  std::cout << "output dataset = " << output << std::endl;
   
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_vzReweight_hiBinReweight_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_noHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_vzReweight_hiBinReweight_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_noHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);
+  // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_vzReweight_hiBinReweight_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_noHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_BJet_withGS_withWTA_2/PYTHIAHYDJET_BJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_vzReweight_hiBinReweight_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_noHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);  
