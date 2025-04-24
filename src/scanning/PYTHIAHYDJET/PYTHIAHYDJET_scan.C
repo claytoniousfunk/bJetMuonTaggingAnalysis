@@ -343,7 +343,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 doDiJetSample_batch13,
 						 doDiJetSample_batch14,
 						 doDiJetSample_batch15,
-						 pThat,
+						 pthatcut,
 						 doVzReweight,
 						 doHiBinReweight,
 						 doJetPtReweight,
