@@ -24,4 +24,6 @@ TString getInputFileName(bool doDiJetSample = true,
   else if(doBJetSample) result = "PYTHIAHYDJET_BJet_skim_output";
   else result = "PYTHIAHYDJET_DiJet_skim_output";
 
+  return result;
+
 }
