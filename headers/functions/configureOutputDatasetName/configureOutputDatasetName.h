@@ -40,6 +40,7 @@ TString configureOutputDatasetName(TString generator,
 {
 
   TString result = "output";
+  result.Append(generator);
 
   TString datasetIndicator = "";
   if(doMuJetSample) datasetIndicator = "_MuJet";
@@ -63,14 +64,12 @@ TString configureOutputDatasetName(TString generator,
   else{};
 
   result.Append(datasetIndicator);
-
-  
-
+  result.Append(Form("_pThat-%2.0f",pThat));
+  result.Append("_mu12_pTmu-14_tight");
   // event-based reweights
   if(doVzReweight) result.Append("_vzReweight");
   if(doHiBinReweight) result.Append("_hiBinReweight");
   if(doJetPtReweight) result.Append("_jetPtReweight");
-
   // jet-based filters
   if(doGenJetPthatFilter) result.Append("_genJetPthatFilter");
   if(doLeadingXjetDumpFilter) result.Append("_leadingXjetDumpFilter");
@@ -78,11 +77,7 @@ TString configureOutputDatasetName(TString generator,
   if(doJetTrkMaxFilter) result.Append("_jetTrkMaxFilter");
   if(doRemoveHYDJETjet) result.Append("_removeHYDJETjet0p45");
   if(doEtaPhiMask) result.Append("_etaPhiMask");
-
-
   if(doDRReweight) result.Append("_dRReweight");
-
-
   // lesser-likely customizations
   if(doWeightCut) result.Append("_weightCut");
   if(doHadronPtRelReweight) result.Append("_hadronPtRelReweight");
@@ -91,10 +86,6 @@ TString configureOutputDatasetName(TString generator,
   if(apply_JER_smear) result.Append("_applyJERSmear");
   if(apply_JEU_shift_up) result.Append("_applyJEUShiftUp");
   if(apply_JEU_shift_down) result.Append("_applyJEUShiftDown");
-
- 
-
-
 
   return result;
 
