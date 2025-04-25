@@ -40,7 +40,7 @@ TString configureOutputDatasetName(TString generator,
 {
 
   TString result = "output";
-  result.Append(Form("_%s",generator.Data());
+  result.Append(Form("_%s",generator.Data()));
 
   TString datasetIndicator = "";
   if(doMuJetSample) datasetIndicator = "_MuJet";
