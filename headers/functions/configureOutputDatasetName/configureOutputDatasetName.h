@@ -36,7 +36,8 @@ TString configureOutputDatasetName(TString generator,
 				   bool doJERCorrection,
 				   bool apply_JER_smear,
 				   bool apply_JEU_shift_up,
-				   bool apply_JEU_shift_down)
+				   bool apply_JEU_shift_down,
+				   int hiBinShift)
 {
 
   TString result = "output";
@@ -69,6 +70,7 @@ TString configureOutputDatasetName(TString generator,
   // event-based reweights
   if(doVzReweight) result.Append("_vzReweight");
   if(doHiBinReweight) result.Append("_hiBinReweight");
+  result.Append(Form("_hiBinShift-%i",hiBinShift))
   if(doJetPtReweight) result.Append("_jetPtReweight");
   // jet-based filters
   if(doGenJetPthatFilter) result.Append("_genJetPthatFilter");
@@ -86,6 +88,7 @@ TString configureOutputDatasetName(TString generator,
   if(apply_JER_smear) result.Append("_applyJERSmear");
   if(apply_JEU_shift_up) result.Append("_applyJEUShiftUp");
   if(apply_JEU_shift_down) result.Append("_applyJEUShiftDown");
+  
 
   return result;
 

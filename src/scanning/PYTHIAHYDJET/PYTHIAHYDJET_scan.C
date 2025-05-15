@@ -360,7 +360,8 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 doJERCorrection,
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
-						 apply_JEU_shift_down);
+						 apply_JEU_shift_down,
+						 hiBinShift);
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
@@ -1082,7 +1083,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
 	
     //int CentralityIndex = getCentBin(em->hiBin+10);
-    int CentralityIndex = getCentBin(em->hiBin);
+    int CentralityIndex = getCentBin(em->hiBin+hiBinShift);
 
     if(CentralityIndex < 0) continue;
 
