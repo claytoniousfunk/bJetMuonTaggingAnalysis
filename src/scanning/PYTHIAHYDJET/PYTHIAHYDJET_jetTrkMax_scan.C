@@ -326,7 +326,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     if(w <= 0.0) continue;
     if(w > 0.005) continue;
    
-    int CentralityIndex = getCentBin(em->hiBin+10);
+    int CentralityIndex = getCentBin(em->hiBin+hiBinShift);
     // int CentralityIndex = 1;
     
     if(CentralityIndex < 0) continue;
