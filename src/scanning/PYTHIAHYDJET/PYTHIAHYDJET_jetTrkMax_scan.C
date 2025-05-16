@@ -269,7 +269,6 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
-
   
   TRandom *randomGenerator = new TRandom2();
 
@@ -285,9 +284,6 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   loadFitFxn_jetPt();
   loadFitFxn_hadronPtRel();
   loadFitFxn_dR();
-
-  // define a random-generator 
-  TRandom *randomGenerator = new TRandom2();
  
   // event loop
   int eventCounter = 0;
