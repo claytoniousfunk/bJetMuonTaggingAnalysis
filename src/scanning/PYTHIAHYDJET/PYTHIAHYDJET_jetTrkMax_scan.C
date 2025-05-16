@@ -270,6 +270,15 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
 
+  
+  TRandom *randomGenerator = new TRandom2();
+
+  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
+  JER_fxn->SetParameter(0,-1.91758e-05);
+  JER_fxn->SetParameter(1,-1.79691e+00);
+  JER_fxn->SetParameter(2,1.09880e+01);
+
+  
   // load fit functions
   loadFitFxn_vz();
   loadFitFxn_hiBin();
