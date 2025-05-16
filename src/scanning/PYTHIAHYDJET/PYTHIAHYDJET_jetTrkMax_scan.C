@@ -118,6 +118,7 @@ TH1D *h_jetTrkMaxEta[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxPhi[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxDR[NCentralityIndices][NJetPtIndices];
 TH1D *h_jetTrkMaxPtRel[NCentralityIndices][NJetPtIndices];
+TH2D *h_jetTrkMaxPtRel_recoJetPt[NCentralityIndices][NTemplateIndices];
 TH1D *h_dEta_jet_wta;
 TH1D *h_dPhi_jet_wta;
 TH1D *h_dR_jet_wta;
@@ -166,6 +167,19 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
     if(i==0) h_jetPt[i] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
     else h_jetPt[i] = new TH1D(Form("h_jetPt_C%i",i),Form("jetPt, hiBin %i - %i", centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+
+    for(int t = 0; t < NTemplateIndices; t++){
+
+      if(i==0){
+	h_jetTrkMaxPtRel_recoJetPt[i][t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_C%iT%i",i,t),Form("track #it{p}_{T}^{rel} vs jet #it{p}_{T}, allJets, %i < hiBin < %i, %s",centEdges[0], centEdges[NCentralityIndices-1],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+      }
+      else{
+	h_jetTrkMaxPtRel_recoJetPt[i][t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_C%iT%i",i,t),Form("track #it{p}_{T}^{rel} vs jet #it{p}_{T}, allJets, %i < hiBin < %i, %s",centEdges[i-1], centEdges[i],templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+      }
+
+      h_jetTrkMaxPtRel_recoJetPt[i][t]->Sumw2();
+      
+    }
 
 
     for(int j = 0; j < NJetPtIndices; j++){
@@ -327,6 +341,9 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       JEC.SetJetPhi(em->jetphi[i]);
 
       double recoJetPt_i = JEC.GetCorrectedPT();  // recoJetPt
+      double recoJetPt_JERSmear_i = recoJetPt_i;
+      double recoJetPt_JEUShiftUp_i = recoJetPt_i;
+      double recoJetPt_JEUShiftDown_i = recoJetPt_i;
       double recoJetEta_i = em->jeteta[i]; // recoJetEta
       double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
       double recoJetEtaWTA_i = em->jet_wta_eta[i]; // recoJetEta with WTA axis
@@ -357,18 +374,21 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       double correctedPt_down = 1.0;
       double correctedPt_up = 1.0;
 
-      if(apply_JEU_shift_up){
-	correctedPt_up = recoJetPt_i * (1 + JEU.GetUncertainty().second);
-	recoJetPt_i = correctedPt_up;
-      }
-      else if(apply_JEU_shift_down){
-	correctedPt_down = recoJetPt_i * (1 - JEU.GetUncertainty().first);
-	recoJetPt_i = correctedPt_down;
-      }
+      correctedPt_up = recoJetPt_i * (1 + JEU.GetUncertainty().second);
+      recoJetPt_JEUShiftUp_i = correctedPt_up;
+ 
+      correctedPt_down = recoJetPt_i * (1 - JEU.GetUncertainty().first);
+      recoJetPt_JEUShiftDown_i = correctedPt_down;
 
       double mu = 1.0;
       double sigma = 0.2;
       double smear = 0.0;
+
+      sigma = 0.663*JER_fxn->Eval(recoJetPt_i); // apply a 20% smear
+      smear = randomGenerator->Gaus(mu,sigma);
+      recoJetPt_JERSmear_i = recoJetPt_i * smear;
+
+      double jetPtArray[NTemplateIndices] = {recoJetPt_i,recoJetPt_JERSmear_i,recoJetPt_JEUShiftUp_i,recoJetPt_JEUShiftDown_i};
 
       if(doJetTrkMaxFilter){
 	if(!passesJetTrkMaxFilter(jetTrkMax_i,recoJetPt_i)) continue;
@@ -446,12 +466,15 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxDR[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
       h_jetTrkMaxPtRel[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
 
-      
-      
+      for(int t = 0; t < NTemplateIndices; t++){
+
+	h_jetTrkMaxPtRel_recoJetPt[0][t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	h_jetTrkMaxPtRel_recoJetPt[CentralityIndex][t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	
+      }
 
     }
     // END recoJet LOOP
-
 
   } // end event loop
 
@@ -483,6 +506,10 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   for(int i = 0; i < NCentralityIndices; i++){
 
     h_jetPt[i]->Write();
+
+    for(int t = 0; t < NTemplateIndices; t++){
+      h_jetTrkMaxPtRel_recoJetPt[i][t]->Write();
+    }
     
     for(int j = 0; j < NJetPtIndices; j++){
 
