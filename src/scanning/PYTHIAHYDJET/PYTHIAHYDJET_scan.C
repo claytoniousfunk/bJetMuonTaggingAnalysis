@@ -1058,8 +1058,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     
     double w_reweight_hiBin = 1.0;
     if(doHiBinReweight){
-      //w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin+10);
-      w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin);
+      w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin+hiBinShift);
     }
 
     double w_reweight_vz = 1.0;
@@ -1082,7 +1081,6 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
 	
-    //int CentralityIndex = getCentBin(em->hiBin+10);
     int CentralityIndex = getCentBin(em->hiBin+hiBinShift);
 
     if(CentralityIndex < 0) continue;
@@ -1984,19 +1982,19 @@ void PYTHIAHYDJET_scan(int group = 1){
     
     if(eventHasGoodJet){
 
-      h_hiBin->Fill(em->hiBin+10,w);
+      h_hiBin->Fill(em->hiBin+hiBinShift,w);
       h_vz[0]->Fill(em->vz,w);
       h_vz[CentralityIndex]->Fill(em->vz,w);
 
       if(eventHasInclRecoMuonTag){
 
-	h_hiBin_inclRecoMuonTag->Fill(em->hiBin+10,w);
+	h_hiBin_inclRecoMuonTag->Fill(em->hiBin+hiBinShift,w);
 	h_vz_inclRecoMuonTag[0]->Fill(em->vz,w);
 	h_vz_inclRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
 
 	if(eventHasInclRecoMuonTagPlusTrigger){
 
-	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin+10,w);
+	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin+hiBinShift,w);
 	  h_vz_inclRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
 	  h_vz_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
 
@@ -2007,13 +2005,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       if(eventHasMatchedRecoMuonTag){
 
-	h_hiBin_matchedRecoMuonTag->Fill(em->hiBin+10,w);
+	h_hiBin_matchedRecoMuonTag->Fill(em->hiBin+hiBinShift,w);
 	h_vz_matchedRecoMuonTag[0]->Fill(em->vz,w);
 	h_vz_matchedRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
 
 	if(eventHasMatchedRecoMuonTagPlusTrigger){
 
-	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(em->hiBin+10,w);
+	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(em->hiBin+hiBinShift,w);
 	  h_vz_matchedRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
 	  h_vz_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
 
