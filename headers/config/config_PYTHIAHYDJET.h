@@ -44,7 +44,7 @@ bool doDiJetSample_batch3 = false;
 bool doDiJetSample_batch4 = false;
 bool doDiJetSample_batch5 = false;
 bool doDiJetSample_batch6 = false;
-bool doDiJetSample_batch7 = false;
+bool doDiJetSample_batch7 = true;
 bool doDiJetSample_batch8 = false;
 bool doDiJetSample_batch9 = false;
 bool doDiJetSample_batch10 = false;
@@ -52,7 +52,7 @@ bool doDiJetSample_batch11 = false;
 bool doDiJetSample_batch12 = false;
 bool doDiJetSample_batch13 = false;
 bool doDiJetSample_batch14 = false;
-bool doDiJetSample_batch15 = true;
+bool doDiJetSample_batch15 = false;
 
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
