@@ -131,7 +131,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_pThat-20_trkpT-14_hiBinShift-0/PYTHIAHYDJET_scan_output_%i.root",group);   
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_pThat-20_trkpT-14_hiBinShift-10/PYTHIAHYDJET_scan_output_%i.root",group);   
   
   
   // JET ENERGY CORRECTIONS
@@ -329,7 +329,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     double w = w_pthat * w_reweight_hiBin * w_reweight_vz;
     
     if(w <= 0.0) continue;
-    if(w > 0.005) continue;
+    //if(w > 0.005) continue;
    
     int CentralityIndex = getCentBin(em->hiBin+hiBinShift);
     // int CentralityIndex = 1;
