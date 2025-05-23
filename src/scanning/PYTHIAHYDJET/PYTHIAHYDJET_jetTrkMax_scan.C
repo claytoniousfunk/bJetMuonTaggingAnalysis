@@ -56,7 +56,7 @@
 #include "../../../headers/fitParameters/hadronPtRelFitParams_PbPb.h"
 // dR parameters
 #include "../../../headers/fitParameters/dRFitParams/dRFitParams_PbPb.h"
-#include "../../../headers/fitParameters/muPtFitParams.h"
+#include "../../../headers/fitParameters/muptFitParams.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR, *fitFxn_mupt;
 // hadronPtRel parameters
