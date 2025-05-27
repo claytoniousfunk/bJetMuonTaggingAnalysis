@@ -1815,6 +1815,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
 
+	    h_muptrel_hiBin_allJets[0]->Fill(muPtRel_i,em->hiBin,w_jet);
+	    h_muptrel_hiBin_allJets[jetPtIndex]->Fill(muPtRel_i,em->hiBin,w_jet);
+
 	    // dJets
 	    if(fabs(jetFlavorInt) == 1){
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets[0][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
