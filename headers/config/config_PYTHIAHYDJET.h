@@ -35,8 +35,8 @@ bool onlyOneMuonTaggedJetPerEvent = false;
 TString generator = "PYTHIAHYDJET";
 
 // data set
-bool doDiJetSample = false;
-bool doMuJetSample = true;
+bool doDiJetSample = true;
+bool doMuJetSample = false;
 bool doBJetSample = false;
 bool doDiJetSample_batch1 = false;
 bool doDiJetSample_batch2 = false;
