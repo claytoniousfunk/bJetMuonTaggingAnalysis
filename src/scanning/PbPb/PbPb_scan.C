@@ -707,7 +707,7 @@ void PbPb_scan(int group = 1){
 
 	  h_muptrel_jetpt[0]->Fill(muPtRel,x,w_trig);
 	  h_muptrel_jetpt[CentralityIndex]->Fill(muPtRel,x,w_trig);
-
+	  h_muptrel_hiBin[0]->Fill(muPtRel,em->hiBin,w_trig);
 	  
 	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn[0]->Fill(muPtRel,x,w_trig);
 	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn[0]->Fill(muPt,x,w_trig);
@@ -733,6 +733,8 @@ void PbPb_scan(int group = 1){
 	    h_mupt_muptrel[0][jetPtIndex]->Fill(muPt,muPtRel,w_trig);
 	    h_mupt_muptrel[CentralityIndex][0]->Fill(muPt,muPtRel,w_trig);
 	    h_mupt_muptrel[CentralityIndex][jetPtIndex]->Fill(muPt,muPtRel,w_trig);
+
+	    h_muptrel_hiBin[jetPtIndex]->Fill(muPtRel,em->hiBin,w_trig);
 	   
 	  }
 	} 
