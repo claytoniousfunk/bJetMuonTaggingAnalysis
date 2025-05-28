@@ -430,10 +430,10 @@ void PYTHIAHYDJET_scan(int group = 1){
       h_muptrel_hiBin_lJets[j] = new TH2D(Form("h_muptrel_hiBin_lJets_J%i",j),Form("muptrel vs hiBin, lJets, %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
     }
     else{
-      h_muptrel_hiBin_allJets[j] = new TH2D(Form("h_muptrel_hiBin_allJets_J%i",j),Form("muptrel vs hiBin, allJets, %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
-      h_muptrel_hiBin_bJets[j] = new TH2D(Form("h_muptrel_hiBin_bJets_J%i",j),Form("muptrel vs hiBin, bJets, %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
-      h_muptrel_hiBin_cJets[j] = new TH2D(Form("h_muptrel_hiBin_cJets_J%i",j),Form("muptrel vs hiBin, cJets, %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
-      h_muptrel_hiBin_lJets[j] = new TH2D(Form("h_muptrel_hiBin_lJets_J%i",j),Form("muptrel vs hiBin, lJets, %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
+      h_muptrel_hiBin_allJets[j] = new TH2D(Form("h_muptrel_hiBin_allJets_J%i",j),Form("muptrel vs hiBin, allJets, %3.0f < pTjet < %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
+      h_muptrel_hiBin_bJets[j] = new TH2D(Form("h_muptrel_hiBin_bJets_J%i",j),Form("muptrel vs hiBin, bJets, %3.0f < pTjet < %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
+      h_muptrel_hiBin_cJets[j] = new TH2D(Form("h_muptrel_hiBin_cJets_J%i",j),Form("muptrel vs hiBin, cJets, %3.0f < pTjet < %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
+      h_muptrel_hiBin_lJets[j] = new TH2D(Form("h_muptrel_hiBin_lJets_J%i",j),Form("muptrel vs hiBin, lJets, %3.0f < pTjet < %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
     }
     h_muptrel_hiBin_allJets[j]->Sumw2();
     h_muptrel_hiBin_bJets[j]->Sumw2();
