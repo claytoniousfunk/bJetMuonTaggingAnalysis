@@ -117,7 +117,7 @@ TH2D *h_mupt_muptrel[NCentralityIndices][NJetPtIndices];
 TH2D *h_muptrel_jetpt[NCentralityIndices];
 TH1D *h_NJetPerEvent[NCentralityIndices];
 TH1D *h_NMuTaggedJetPerEvent[NCentralityIndices];
-
+TH2D *h_muptrel_hiBin[NJetPtIndices];
 
 ///////////////////////  start the program
 void PbPb_scan(int group = 1){
@@ -151,6 +151,16 @@ void PbPb_scan(int group = 1){
   h_hiBin_inclRecoMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
   h_inclMuPt->Sumw2();
+
+  for(int j = 0; j < NJetPtIndices; j++){
+    if(j==0){
+      h_muptrel_hiBin_allJets[j] = new TH2D(Form("h_muptrel_hiBin_J%i",j),Form("muptrel vs hiBin, %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
+    }
+    else{
+      h_muptrel_hiBin_allJets[j] = new TH2D(Form("h_muptrel_hiBin_J%i",j),Form("muptrel vs hiBin, %3.0f < pTjet < %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
+    }
+    h_muptrel_hiBin_allJets[j]->Sumw2();
+  }
   
   // for loop through the centrality indices
   for(int i = 0; i < NCentralityIndices; i++){
@@ -828,6 +838,9 @@ void PbPb_scan(int group = 1){
     }
   }
 
+  for(int j = 0; j < NJetPtIndices; j++){
+    h_muptrel_hiBin_allJets[j]->Write();
+  }
 
   wf->Close();
   return;
