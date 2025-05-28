@@ -154,12 +154,12 @@ void PbPb_scan(int group = 1){
 
   for(int j = 0; j < NJetPtIndices; j++){
     if(j==0){
-      h_muptrel_hiBin_allJets[j] = new TH2D(Form("h_muptrel_hiBin_J%i",j),Form("muptrel vs hiBin, %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
+      h_muptrel_hiBin[j] = new TH2D(Form("h_muptrel_hiBin_J%i",j),Form("muptrel vs hiBin, %3.0f < pTjet < %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
     }
     else{
-      h_muptrel_hiBin_allJets[j] = new TH2D(Form("h_muptrel_hiBin_J%i",j),Form("muptrel vs hiBin, %3.0f < pTjet < %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
+      h_muptrel_hiBin[j] = new TH2D(Form("h_muptrel_hiBin_J%i",j),Form("muptrel vs hiBin, %3.0f < pTjet < %3.0f",jetPtEdges[j-1],jetPtEdges[j]),NMuRelPtBins,muRelPtMin,muRelPtMax,NhiBinBins,hiBinMin,hiBinMax) ;
     }
-    h_muptrel_hiBin_allJets[j]->Sumw2();
+    h_muptrel_hiBin[j]->Sumw2();
   }
   
   // for loop through the centrality indices
@@ -839,7 +839,7 @@ void PbPb_scan(int group = 1){
   }
 
   for(int j = 0; j < NJetPtIndices; j++){
-    h_muptrel_hiBin_allJets[j]->Write();
+    h_muptrel_hiBin[j]->Write();
   }
 
   wf->Close();
