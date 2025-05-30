@@ -2361,16 +2361,16 @@ void PYTHIAHYDJET_scan(int group = 1){
   auto wf = TFile::Open(output,"recreate");
 
   h_NEvents->Write();
-  h_delta_muptrel_WTA_nom_flavor->Write();
+  //h_delta_muptrel_WTA_nom_flavor->Write();
   h_hiBin->Write();
   h_hiBin_inclGenMuonTag->Write();
   h_hiBin_inclRecoMuonTag->Write();
   h_hiBin_inclRecoMuonTag_triggerOn->Write();
   h_hiBin_matchedRecoMuonTag->Write();
   h_hiBin_matchedRecoMuonTag_triggerOn->Write();
-  h_weight_pthat_xJets_C1J3->Write();
-  h_weight_pthat_bJets_C1J3->Write();
-  h_matchedPartonFlavor_bHadronNumber->Write();
+  //h_weight_pthat_xJets_C1J3->Write();
+  //h_weight_pthat_bJets_C1J3->Write();
+  //h_matchedPartonFlavor_bHadronNumber->Write();
   
   for(int i = 0; i < NCentralityIndices; i++){
 
@@ -2518,22 +2518,22 @@ void PYTHIAHYDJET_scan(int group = 1){
       h_mupt_muptrel[i][j]->Write();
       h_recoGenDr_flavor[i][j]->Write();
       h_recoGenDpt_flavor[i][j]->Write();
-      h_templateWeight_lJets[i][j]->Write();
-      h_templateWeight_muptrel_lJets[i][j]->Write();
-      h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][0]->Write();
-      h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][1]->Write();
-      h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][2]->Write();
-      h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][3]->Write();
-      h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][4]->Write();
-      h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][5]->Write();
-      h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][6]->Write();
-      h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][0]->Write();
-      h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][1]->Write();
-      h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][2]->Write();
-      h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][3]->Write();
-      h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][4]->Write();
-      h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][5]->Write();
-      h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][6]->Write();
+      // h_templateWeight_lJets[i][j]->Write();
+      // h_templateWeight_muptrel_lJets[i][j]->Write();
+      // h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][0]->Write();
+      // h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][1]->Write();
+      // h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][2]->Write();
+      // h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][3]->Write();
+      // h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][4]->Write();
+      // h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][5]->Write();
+      // h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][6]->Write();
+      // h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][0]->Write();
+      // h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][1]->Write();
+      // h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][2]->Write();
+      // h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][3]->Write();
+      // h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][4]->Write();
+      // h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][5]->Write();
+      // h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[i][j][6]->Write();
     }
   }
 
