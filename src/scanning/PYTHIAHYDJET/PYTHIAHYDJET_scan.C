@@ -128,7 +128,7 @@ TH1D *h_vz_matchedRecoMuonTag[NCentralityIndices];
 TH1D *h_vz_inclRecoMuonTag_triggerOn[NCentralityIndices];
 TH1D *h_vz_matchedRecoMuonTag_triggerOn[NCentralityIndices];
 // >> hiBin
-TH1D *h_hiBin;
+TH1D *h_hiBin, *h_hiBin_raw;
 TH1D *h_hiBin_inclGenMuonTag;
 TH1D *h_hiBin_inclRecoMuonTag;
 TH1D *h_hiBin_matchedRecoMuonTag;
@@ -402,6 +402,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   h_delta_muptrel_WTA_nom_flavor = new TH2D("h_delta_muptrel_WTA_nom_flavor","h_delta_muptrel_WTA_nom_flavor",1000,-1,1,27,-5,22);
   // >> hiBin
   h_hiBin = new TH1D("h_hiBin","hiBin, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin_raw = new TH1D("h_hiBin_raw","hiBin, raw (no weight)",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclGenMuonTag = new TH1D("h_hiBin_inclGenMuonTag","hiBin, events with inclRecoJet-inclGenMuonTag",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
@@ -413,6 +414,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
   h_delta_muptrel_WTA_nom_flavor->Sumw2();
   h_hiBin->Sumw2();
+  h_hiBin_raw->Sumw2();
   h_hiBin_inclGenMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
@@ -1073,16 +1075,21 @@ void PYTHIAHYDJET_scan(int group = 1){
     if(em->checkEventFilter()) continue;
     // hiHF cut
     if(em->hiHF > 6000) continue;
+    // hiBin cut
+    int hiBin_shifted = em->hiBin - hiBinShift;
+    int hiBin_raw = em->hiBin;
 
-    int CentralityIndex = getCentBin(em->hiBin+hiBinShift);
+    if(hiBin_shifted < 0) continue;
+    
+    int CentralityIndex = getCentBin(hiBin_shifted);
 
-    if(CentralityIndex < 0) continue;
+    //if(CentralityIndex < 0) continue;
 
     // calculate event weight
     
     double w_reweight_hiBin = 1.0;
     if(doHiBinReweight){
-      w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-hiBinShift);
+      w_reweight_hiBin = fitFxn_hiBin->Eval(hiBin_shifted);
     }
 
     double w_reweight_vz = 1.0;
@@ -2028,19 +2035,20 @@ void PYTHIAHYDJET_scan(int group = 1){
     
     if(eventHasGoodJet){
 
-      h_hiBin->Fill(em->hiBin-hiBinShift,w);
+      h_hiBin->Fill(hiBin_shifted,w);
       h_vz[0]->Fill(em->vz,w);
       h_vz[CentralityIndex]->Fill(em->vz,w);
 
       if(eventHasInclRecoMuonTag){
 
-	h_hiBin_inclRecoMuonTag->Fill(em->hiBin-hiBinShift,w);
+	h_hiBin_inclRecoMuonTag->Fill(hiBin_shifted,w);
 	h_vz_inclRecoMuonTag[0]->Fill(em->vz,w);
 	h_vz_inclRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
 
 	if(eventHasInclRecoMuonTagPlusTrigger){
 
-	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin-hiBinShift,w);
+	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(hiBin_shifted,w);
+	  h_hiBin_raw->Fill(hiBin_raw,w);
 	  h_vz_inclRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
 	  h_vz_inclRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
 
@@ -2051,13 +2059,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       if(eventHasMatchedRecoMuonTag){
 
-	h_hiBin_matchedRecoMuonTag->Fill(em->hiBin-hiBinShift,w);
+	h_hiBin_matchedRecoMuonTag->Fill(hiBin_shifted,w);
 	h_vz_matchedRecoMuonTag[0]->Fill(em->vz,w);
 	h_vz_matchedRecoMuonTag[CentralityIndex]->Fill(em->vz,w);
 
 	if(eventHasMatchedRecoMuonTagPlusTrigger){
 
-	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(em->hiBin-hiBinShift,w);
+	  h_hiBin_matchedRecoMuonTag_triggerOn->Fill(hiBin_shifted,w);
 	  h_vz_matchedRecoMuonTag_triggerOn[0]->Fill(em->vz,w);
 	  h_vz_matchedRecoMuonTag_triggerOn[CentralityIndex]->Fill(em->vz,w);
 
@@ -2363,6 +2371,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   h_NEvents->Write();
   //h_delta_muptrel_WTA_nom_flavor->Write();
   h_hiBin->Write();
+  h_hiBin_raw->Write();
   h_hiBin_inclGenMuonTag->Write();
   h_hiBin_inclRecoMuonTag->Write();
   h_hiBin_inclRecoMuonTag_triggerOn->Write();
