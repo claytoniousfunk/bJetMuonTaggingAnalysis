@@ -1083,6 +1083,8 @@ void PYTHIAHYDJET_scan(int group = 1){
     
     int CentralityIndex = getCentBin(hiBin_shifted);
 
+    cout << "Event " << evi << " | hiBin_raw = " << hiBin_raw << " | hiBin_shifted = " << hiBin_shifted << endl;
+
     //if(CentralityIndex < 0) continue;
 
     // calculate event weight
