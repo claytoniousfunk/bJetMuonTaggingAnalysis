@@ -13,7 +13,7 @@ bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
 bool skipGenParticles = false; // set TRUE for MuJet and BJet datasets
 // reweighting functions
-bool doHiBinReweight = true;
+bool doHiBinReweight = false;
 bool doVzReweight = false;
 bool doJetPtReweight = false;
 // jet-based filters
@@ -35,7 +35,7 @@ bool onlyOneMuonTaggedJetPerEvent = false;
 TString generator = "PYTHIAHYDJET";
 
 // data set
-bool doDiJetSample = false;
+bool doDiJetSample = true;
 bool doMuJetSample = false;
 bool doBJetSample = false;
 bool doDiJetSample_batch1 = false;
@@ -43,7 +43,7 @@ bool doDiJetSample_batch2 = false;
 bool doDiJetSample_batch3 = false;
 bool doDiJetSample_batch4 = false;
 bool doDiJetSample_batch5 = false;
-bool doDiJetSample_batch6 = true;
+bool doDiJetSample_batch6 = false;
 bool doDiJetSample_batch7 = false;
 bool doDiJetSample_batch8 = false;
 bool doDiJetSample_batch9 = false;
