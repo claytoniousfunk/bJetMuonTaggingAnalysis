@@ -13,7 +13,7 @@ bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
 bool skipGenParticles = false; // set TRUE for MuJet and BJet datasets
 // reweighting functions
-bool doHiBinReweight = false;
+bool doHiBinReweight = true;
 bool doVzReweight = false;
 bool doJetPtReweight = false;
 // jet-based filters
@@ -55,6 +55,6 @@ bool doDiJetSample_batch14 = false;
 bool doDiJetSample_batch15 = false;
 
 // shifting the hiBin distribution by this amount
-int hiBinShift = 10;
+int hiBinShift = 0;
 
 
