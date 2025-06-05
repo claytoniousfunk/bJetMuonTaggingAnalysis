@@ -2450,7 +2450,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     h_muptrel_jetpt[i]->Write();
 
     h_leadingGenJetPt[i]->Write();
-    h_leadingGenJetPt_xJets_greaterThanPthat[i]->Write();
+    // h_leadingGenJetPt_xJets_greaterThanPthat[i]->Write();
 
     for(int t = 0; t < NTemplateIndices; t++){
       // allJets
@@ -2462,73 +2462,73 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       // dJets
       h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t]->Write();
-      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t]->Write();
-      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t]->Write();
-      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t]->Write();
+      // h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t]->Write();
+      // h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t]->Write();
+      // h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets[i][t]->Write();
       h_muJetDr_recoJetPt_dJets[i][t]->Write();
 
       // uJets
       h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t]->Write();
-      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t]->Write();
-      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t]->Write();
-      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t]->Write();
+      // h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t]->Write();
+      // h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t]->Write();
+      // h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets[i][t]->Write();
       h_muJetDr_recoJetPt_uJets[i][t]->Write();
 
       // sJets
       h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t]->Write();
-      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t]->Write();
-      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t]->Write();
-      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t]->Write();
+      // h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t]->Write();
+      // h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t]->Write();
+      // h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets[i][t]->Write();
       h_muJetDr_recoJetPt_sJets[i][t]->Write();
 
       // cJets
       h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t]->Write();
-      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t]->Write();
-      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t]->Write();
-      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t]->Write();
+      // h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t]->Write();
+      // h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t]->Write();
+      // h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets[i][t]->Write();
       h_muJetDr_recoJetPt_cJets[i][t]->Write();
 
       // bJets
       h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t]->Write();
-      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t]->Write();
-      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t]->Write();
-      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t]->Write();
+      // h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t]->Write();
+      // h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t]->Write();
+      // h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets[i][t]->Write();
       h_muJetDr_recoJetPt_bJets[i][t]->Write();
 
       // bGSJets
       h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t]->Write();
-      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t]->Write();
-      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t]->Write();
-      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t]->Write();
+      // h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t]->Write();
+      // h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t]->Write();
+      // h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[i][t]->Write();
       h_muJetDr_recoJetPt_bGSJets[i][t]->Write();
 
       // gJets
       h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t]->Write();
-      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t]->Write();
-      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t]->Write();
-      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t]->Write();
+      // h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t]->Write();
+      // h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t]->Write();
+      // h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets[i][t]->Write();
       h_muJetDr_recoJetPt_gJets[i][t]->Write();
 
       // xJets
       h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t]->Write();
-      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t]->Write();
-      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t]->Write();
-      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t]->Write();
+      // h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t]->Write();
+      // h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t]->Write();
+      // h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets[i][t]->Write();
       h_muJetDr_recoJetPt_xJets[i][t]->Write();    
     }    
     for(int j = 0; j < NJetPtIndices; j++){
 
-      h_inclRecoJetEta_inclRecoJetPhi[i][j]->Write();
-      h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[i][j]->Write();
-      h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[i][j]->Write();
-      h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i][j]->Write();
-      h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[i][j]->Write();
-      h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i][j]->Write();
+      // h_inclRecoJetEta_inclRecoJetPhi[i][j]->Write();
+      // h_inclRecoJetEta_inclRecoJetPhi_inclGenMuonTag[i][j]->Write();
+      // h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[i][j]->Write();
+      // h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i][j]->Write();
+      // h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag[i][j]->Write();
+      // h_inclRecoJetEta_inclRecoJetPhi_matchedRecoMuonTag_triggerOn[i][j]->Write();
       
-      h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[i][j]->Write();
-      h_mupt_muptrel[i][j]->Write();
-      h_recoGenDr_flavor[i][j]->Write();
-      h_recoGenDpt_flavor[i][j]->Write();
+      // h_muptrelGenJet_inclRecoMuonTag_triggerOn_flavor[i][j]->Write();
+      // h_mupt_muptrel[i][j]->Write();
+      // h_recoGenDr_flavor[i][j]->Write();
+      // h_recoGenDpt_flavor[i][j]->Write();
       // h_templateWeight_lJets[i][j]->Write();
       // h_templateWeight_muptrel_lJets[i][j]->Write();
       // h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[i][j][0]->Write();
