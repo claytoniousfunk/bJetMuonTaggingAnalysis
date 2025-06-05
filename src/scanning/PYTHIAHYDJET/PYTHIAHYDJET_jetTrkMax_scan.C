@@ -57,8 +57,9 @@
 // dR parameters
 #include "../../../headers/fitParameters/dRFitParams/dRFitParams_PbPb.h"
 #include "../../../headers/fitParameters/muptFitParams.h"
+#include "../../../headers/fitParameters/trkptrelFitParams.h"
 
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR, *fitFxn_mupt;
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR, *fitFxn_mupt, *fitFxn_trkptrel;
 // hadronPtRel parameters
 #include "../../../headers/fitFunctions/fitFxn_hadronPtRel.h"
 // dR function
@@ -287,6 +288,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   loadFitFxn_hadronPtRel();
   loadFitFxn_dR();
   loadFitFxn_mupt();
+  loadFitFxn_trkptrel();
  
   // event loop
   int eventCounter = 0;
@@ -334,7 +336,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     if(w <= 0.0) continue;
     //if(w > 0.005) continue;
    
-    int CentralityIndex = getCentBin(em->hiBin+hiBinShift);
+    int CentralityIndex = getCentBin(em->hiBin-hiBinShift);
     // int CentralityIndex = 1;
     
     if(CentralityIndex < 0) continue;
@@ -414,7 +416,10 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       // double w_jet = w;
 
       // apply mupt reweight
-      double w_jet = w * fitFxn_mupt->Eval(jetTrkMax_i);
+      //double w_jet = w * fitFxn_mupt->Eval(jetTrkMax_i);
+
+      // apply trkptrel reweight
+      double w_jet = w * fitFxn_trkptrel->Eval(jetTrkMaxPtRel_i);
       
       // apply dR reweight
       // double w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
