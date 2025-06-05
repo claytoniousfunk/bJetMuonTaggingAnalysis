@@ -75,7 +75,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR, *
 // jetPt-fit function
 #include "../../../headers/fitFunctions/fitFxn_jetPt.h"
 #include "../../../headers/fitFunctions/fitFxn_mupt.h"
-
+#include "../../../headers/fitFunctions/fitFxn_trkptrel.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
