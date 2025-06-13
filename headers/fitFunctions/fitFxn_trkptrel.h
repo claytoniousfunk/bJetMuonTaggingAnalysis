@@ -6,13 +6,13 @@ void loadFitFxn_trkptrel(){
 
   fitFxn_trkptrel->SetParameter(0,trkptrelFitParam_0);
   fitFxn_trkptrel->SetParameter(1,trkptrelFitParam_1);
-  fitFxn_trkptrel->SetParameter(2,trkptrelFitParam_1);
-  fitFxn_trkptrel->SetParameter(3,trkptrelFitParam_1);
+  fitFxn_trkptrel->SetParameter(2,trkptrelFitParam_2);
+  fitFxn_trkptrel->SetParameter(3,trkptrelFitParam_3);
  
   fitFxn_trkptrel->SetParError(0,e_trkptrelFitParam_0);
   fitFxn_trkptrel->SetParError(1,e_trkptrelFitParam_1);
-  fitFxn_trkptrel->SetParError(2,e_trkptrelFitParam_1);
-  fitFxn_trkptrel->SetParError(3,e_trkptrelFitParam_1);
+  fitFxn_trkptrel->SetParError(2,e_trkptrelFitParam_2);
+  fitFxn_trkptrel->SetParError(3,e_trkptrelFitParam_3);
  
   cout << "~~ ... finished!" << endl;
  
