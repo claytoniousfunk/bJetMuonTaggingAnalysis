@@ -1046,6 +1046,15 @@ void PYTHIAHYDJET_scan(int group = 1){
   loadFitFxn_hadronPtRel();
   loadFitFxn_dR();
 
+  TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
+  TH2D *neutrino_energy_map;
+  TH1D *neutrino_energy_map_proj;
+  f_neutrino_energy_map->GetObject("neutrino_energy_map",neutrino_energy_map);
+  
+  TFile *f_neutrino_tag_fraction = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_tag_fraction.root");
+  TH1D *neutrino_tag_fraction;
+  f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
+  
   // xDump reweight
   //TFile *f_xDump = TFile::Open("../xDumpReweight.root");
   //TH1D *h_xDump;
@@ -1524,8 +1533,21 @@ void PYTHIAHYDJET_scan(int group = 1){
 	// 			     em->muIsGlobal->at(m),
 	// 			     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
-			
 
+	double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
+	if(doBJetNeutrinoEnergyShift){
+          skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm(); // roll the dice to see if we alter the energy or not
+          //cout << "dice roll = " << skipDoBJetNeutrinoEnergyShift_diceRoll << " | " << neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(recoJetPt_i)) << endl;
+
+	  if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(recoJetPt_i))) continue;
+
+	  neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i),neutrino_energy_map->GetYaxis()->FindBin(recoJetPt_i)+1);
+          nuPtShift_i = neutrino_energy_map_proj->GetRandom();
+          //cout << "pT-nu = " << nuPtShift_i << endl;
+          //cout << "pT-nu-smear = " << recoJetPt_i * nuPtShift_i << endl;
+          recoJetPt_i = recoJetPt_i + nuPtShift_i;
+          //cout << "pT-post-nu-smear = " << recoJetPt_i << endl;
+	}
 
 
 	if(isWDecayMuon(recoMuonPt_m,recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt) 
