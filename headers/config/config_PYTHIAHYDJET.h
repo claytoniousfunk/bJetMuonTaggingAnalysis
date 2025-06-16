@@ -57,4 +57,5 @@ bool doDiJetSample_batch15 = false;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 8;
 
-
+// jet-alterations for closure
+bool doBJetNeutrinoEnergyShift = false;
