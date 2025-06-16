@@ -88,6 +88,7 @@ TString configureOutputDatasetName(TString generator,
   if(apply_JER_smear) result.Append("_applyJERSmear");
   if(apply_JEU_shift_up) result.Append("_applyJEUShiftUp");
   if(apply_JEU_shift_down) result.Append("_applyJEUShiftDown");
+  if(doBJetNeutrinoEnergyShift) result.Append("_BJetNeutrinoEnergyShift");
 
   TDatime dt;
   result.Append(Form("_%i-%i-%i",dt.GetYear(),dt.GetMonth(),dt.GetDay()));
