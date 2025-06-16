@@ -1258,7 +1258,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       // double y = em->jet_wta_eta[i]; // recoJetEta with WTA axis
       // double z = em->jet_wta_phi[i]; // recoJetPhi with WTA axis
       double jetTrkMax_i = em->jetTrkMax[i];
-
+      double nuPtShift_i = 0.0;
       // cout << endl;
       // cout << "em->jet_wta_eta[i] = " << em->jet_wta_eta[i] << endl;
       // cout << "em->jeteta[i] = " << em->jeteta[i] << endl;
