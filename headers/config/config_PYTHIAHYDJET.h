@@ -35,9 +35,9 @@ bool onlyOneMuonTaggedJetPerEvent = false;
 TString generator = "PYTHIAHYDJET";
 
 // data set
-bool doDiJetSample = false;
+bool doDiJetSample = true;
 bool doMuJetSample = false;
-bool doBJetSample = true;
+bool doBJetSample = false;
 bool doDiJetSample_batch1 = false;
 bool doDiJetSample_batch2 = false;
 bool doDiJetSample_batch3 = false;
@@ -58,4 +58,4 @@ bool doDiJetSample_batch15 = false;
 int hiBinShift = 8;
 
 // jet-alterations for closure
-bool doBJetNeutrinoEnergyShift = false;
+bool doBJetNeutrinoEnergyShift = true;
