@@ -32,9 +32,9 @@ bool doJERCorrection = false;
 bool doJESCorrection = false;
 // muptrel reweight
 bool doMuPtRelReweight = false;
-bool doHadronPtRelReweight = false;
+bool doHadronPtRelReweight = true;
 bool doHadronPtRelReweightToMuon = false;
-bool doDRReweight = true;
+bool doDRReweight = false;
 bool doWeightCut = false;
 
 // stuff for dataset naming
