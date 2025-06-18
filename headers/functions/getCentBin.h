@@ -7,8 +7,6 @@ const int getCentBin(int hiBin)
 		result = 2;
 	else if (hiBin > hiBin_C1_hi && hiBin <= hiBin_C2_hi)
 		result = 3;
-	else if (hiBin > hiBin_C2_hi && hiBin <= hiBin_C3_hi)
-		result = 4;
 	else
 		;
 	return result;
