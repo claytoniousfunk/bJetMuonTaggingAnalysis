@@ -58,4 +58,4 @@ bool doDiJetSample_batch15 = false;
 int hiBinShift = 10;
 
 // jet-alterations for closure
-bool doBJetNeutrinoEnergyShift = false;
+bool doBJetNeutrinoEnergyShift = true;
