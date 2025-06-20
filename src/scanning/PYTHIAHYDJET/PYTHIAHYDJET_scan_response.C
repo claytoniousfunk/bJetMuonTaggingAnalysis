@@ -104,7 +104,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 void PYTHIAHYDJET_scan_response(int group = 1){
 
   TString input = Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_reskim/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_pTjet-5_pThat-20_removeHYDJETjet0p45_response_fineCentBins_correctHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_pTjet-5_pThat-20_hiBinShift-10_removeHYDJETjet0p45_response_3CentBins_2025-06-19/PYTHIAHYDJET_scan_output_%i.root",group);
   
 
   readConfig();
@@ -306,13 +306,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
 
-    int CentralityIndex = getCentBin(em->hiBin+10);
+    int CentralityIndex = getCentBin(em->hiBin-hiBinShift);
 
     if(CentralityIndex < 0) continue;
 
 
     
-    double w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin+10);
+    double w_reweight_hiBin = fitFxn_hiBin->Eval(em->hiBin-hiBinShift);
 
 	
     //double w_reweight_vz = fitFxn_vz->Eval(em->vz);
