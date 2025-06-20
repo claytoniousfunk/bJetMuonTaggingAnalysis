@@ -104,7 +104,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 void PYTHIAHYDJET_scan_response(int group = 1){
 
   TString input = Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_reskim/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_pTjet-5_pThat-20_hiBinShift-10_removeHYDJETjet0p45_response_3CentBins_JERCorrection_2025-06-19/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_pTjet-5_pThat-20_hiBinShift-10_removeHYDJETjet0p45_response_3CentBins_muTaggedJets_2025-06-19/PYTHIAHYDJET_scan_output_%i.root",group);
   
 
   readConfig();
@@ -277,6 +277,23 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   // load JER correction fit fxn
   loadFitFxn_PYTHIA_JERCorrection();
+
+
+  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
+  TH2D *neutrino_energy_fraction_map;
+  TH1D *neutrino_energy_fraction_map_proj;
+  f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
+
+  TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
+  TH2D *neutrino_energy_map;
+  TH1D *neutrino_energy_map_proj;
+  f_neutrino_energy_map->GetObject("neutrino_energy_map",neutrino_energy_map);
+
+  TFile *f_neutrino_tag_fraction = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_tag_fraction.root");
+  TH1D *neutrino_tag_fraction;
+  f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
+
+
   
   // event loop
   int evi_frac = 0;
@@ -416,6 +433,17 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	      smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
 	      matchedRecoJetPt = matchedRecoJetPt * smear_JERCorrection;
 	    }
+
+	    double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
+	    double smear_doBJetNeutrinoEnergyShift = 0.0;
+	    if(doBJetNeutrinoEnergyShift){
+	    //if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
+	      skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
+	      if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(matchedRecoJetPt))) continue;
+	      neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
+	      smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
+	      matchedRecoJetPt += smear_doBJetNeutrinoEnergyShift;
+	    }
 	    
 	  }	
 	}
@@ -426,8 +454,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      //if(hasRecoJetMatch && hasRecoJetMuon) {
-      if(hasRecoJetMatch) {
+      if(hasRecoJetMatch && hasRecoJetMuon) {
+      //if(hasRecoJetMatch) {
 	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
