@@ -71,6 +71,7 @@ TString configureOutputDatasetName(TString generator,
   if(doVzReweight) result.Append("_vzReweight");
   if(doHiBinReweight) result.Append("_hiBinReweight");
   result.Append(Form("_hiBinShift-%i",hiBinShift));
+  result.Append("_3CentBins");
   if(doJetPtReweight) result.Append("_jetPtReweight");
   // jet-based filters
   if(doGenJetPthatFilter) result.Append("_genJetPthatFilter");
@@ -90,6 +91,7 @@ TString configureOutputDatasetName(TString generator,
   if(apply_JEU_shift_down) result.Append("_applyJEUShiftDown");
   if(doBJetNeutrinoEnergyShift) result.Append("_BJetNeutrinoEnergyShift");
 
+  
   TDatime dt;
   result.Append(Form("_%i-%i-%i",dt.GetYear(),dt.GetMonth(),dt.GetDay()));
   
