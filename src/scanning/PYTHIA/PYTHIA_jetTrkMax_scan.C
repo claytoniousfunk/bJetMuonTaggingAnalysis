@@ -387,8 +387,6 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       
       
 
-      // initialize 
-      d
 
       if(doJetTrkMaxFilter){
 	if(!passesJetTrkMaxFilter(jetTrkMax_i,recoJetPt_i)) continue;
