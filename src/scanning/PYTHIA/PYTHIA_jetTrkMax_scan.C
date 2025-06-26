@@ -392,7 +392,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       }
 
       // apply trkptrel reweight
-      double w_jet = w_jet * fitFxn_trkptrel->Eval(jetTrkMaxPtRel_i);
+      w_jet = w_jet * fitFxn_trkptrel->Eval(jetTrkMaxPtRel_i);
       
       
       
