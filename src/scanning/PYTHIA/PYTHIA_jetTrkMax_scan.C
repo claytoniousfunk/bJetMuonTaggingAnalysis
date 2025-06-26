@@ -142,7 +142,7 @@ TH1D *h_jetTrkMaxEta[NJetPtIndices];
 TH1D *h_jetTrkMaxPhi[NJetPtIndices];
 TH1D *h_jetTrkMaxDR[NJetPtIndices];
 TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
-TH2D *h_jetTrkMaxPtRel_recoJetPt;
+TH2D *h_jetTrkMaxPtRel_recoJetPt[NTemplateIndices];
 TH1D *h_dEta_jet_wta;
 TH1D *h_dPhi_jet_wta;
 TH1D *h_dR_jet_wta;
@@ -185,9 +185,17 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   h_dPhi_jet_wta->Sumw2();
   h_dR_jet_wta->Sumw2();
 
-  h_jetTrkMaxPtRel_recoJetPt = new TH2D("h_jetTrkMaxPtRel_recoJetPt","jet pt vs jetTrkMax ptrel",NMuRelPtBins,muRelPtMin,muRelPtMax,500,0,500);
-  h_jetTrkMaxPtRel_recoJetPt->Sumw2();
 
+  // loop through template indices
+  for(int t = 0; t < NTemplateIndices; t++){
+
+    h_jetTrkMaxPtRel_recoJetPt[t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_T%i",t),Form("track #it{p}_{T}^{rel} vs jet $it{p}_{T}, allJets, %s", templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+    h_jetTrkMaxPtRel_recoJetPt[t]->Sumw2();
+    
+  }
+
+
+  
   // loop through jet pT indices
   for(int j = 0; j < NJetPtIndices; j++){
 
@@ -254,6 +262,10 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   
   TRandom *randomGenerator = new TRandom2();
 
+  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
+  JER_fxn->SetParameter(0,-1.91758e-05);
+  JER_fxn->SetParameter(1,-1.79691e+00);
+  JER_fxn->SetParameter(2,1.09880e+01);
 
   loadFitFxn_vz();
   loadFitFxn_jetPt();
@@ -318,6 +330,9 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       JEC.SetJetPhi(em->jetphi[i]);
 
       double recoJetPt_i = JEC.GetCorrectedPT();  // apply manual JEC
+      double recoJetPt_JERSmear_i = recoJetPt_i;
+      double recoJetPt_JEUShiftUp_i = recoJetPt_i;
+      double recoJetPt_JEUShiftDown_i = recoJetPt_i;
       double recoJetEta_i = em->jeteta[i]; // recoJetEta
       double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
       double recoJetEtaWTA_i = em->jet_wta_eta[i]; // recoJetEta with WTA axis
@@ -335,6 +350,30 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       double dEta_jet_wta_i = recoJetEta_i - recoJetEtaWTA_i;
       double dPhi_jet_wta_i = acos(cos(recoJetPhi_i - recoJetPhiWTA_i));
       double dR_jet_wta_i = getDr(recoJetEta_i,recoJetPhi_i,recoJetEtaWTA_i,recoJetPhiWTA_i);
+
+      JEU.SetJetPT(recoJetPt_i);
+      JEU.SetJetEta(recoJetEta_i);
+      JEU.SetJetPhi(recoJetPhi_i);
+
+      double correctedPt_down = 1.0;
+      double correctedPt_up = 1.0;
+
+      correctedPt_up = recoJetPt_i * (1 + JEU.GetUncertainty().second);
+      recoJetPt_JEUShiftUp_i = correctedPt_up;
+ 
+      correctedPt_down = recoJetPt_i * (1 - JEU.GetUncertainty().first);
+      recoJetPt_JEUShiftDown_i = correctedPt_down;
+
+      double mu = 1.0;
+      double sigma = 0.2;
+      double smear = 0.0;
+
+      sigma = 0.663*JER_fxn->Eval(recoJetPt_i); // apply a 20% smear
+      smear = randomGenerator->Gaus(mu,sigma);
+      recoJetPt_JERSmear_i = recoJetPt_i * smear;
+
+      double jetPtArray[NTemplateIndices] = {recoJetPt_i,recoJetPt_JERSmear_i,recoJetPt_JEUShiftUp_i,recoJetPt_JEUShiftDown_i};
+
       
       double w_jetPt = 1.0;
 
@@ -346,9 +385,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 	w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
       }
       
-      JEU.SetJetPT(recoJetPt_i);
-      JEU.SetJetEta(recoJetEta_i);
-      JEU.SetJetPhi(recoJetPhi_i);
+      
 
       // initialize 
       double correctedPt_down = 1.0;
@@ -430,7 +467,11 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxDR[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
       h_jetTrkMaxPtRel[jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
 
-      h_jetTrkMaxPtRel_recoJetPt->Fill(jetTrkMaxPtRel_i,recoJetPt_i,w_jet);
+      for(int t = 0; t < NTemplateIndices; t++){
+
+	h_jetTrkMaxPtRel_recoJetPt[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	
+      }
       
 
     }
@@ -461,6 +502,10 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     h_jetTrkMaxDR[j]->Write();
     h_jetTrkMaxPtRel[j]->Write();
       
+  }
+
+  for(int t = 0; t < NTemplateIndices; t++){
+    h_jetTrkMaxPtRel_recoJetPt[t]->Write();
   }
   
   wf->Close();
