@@ -123,7 +123,7 @@ TH2D *h_muptrel_hiBin[NJetPtIndices];
 void PbPb_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_HardProbes_2/PbPb_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_scan_mu12_tight_pTmu-14_hiHFcut_3CentBins_projectableTemplates_jet60_2025-06-26/PbPb_HardProbes_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_scan_mu12_tight_pTmu-14_hiHFcut_3CentBins_projectableTemplates_jet60_2025-06-25/PbPb_HardProbes_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_3CentBins_projectableTemplates_2025-06-25/PbPb_MinBias_scan_output_%i.root",group);
