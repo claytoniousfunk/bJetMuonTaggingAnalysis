@@ -155,7 +155,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PYTHIA_DiJet_withJetTrackMaxInfo/PYTHIA_DiJet_skim_output_%i.root",group);
 
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_jetTrkMax_pThat-20_trkpT-14_2025-06-26/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_jetTrkMax_pThat-20_trkpT-14_jetPtReweight_vzReweight_dRReweight_2025-06-26/PYTHIA_DiJet_scan_output_%i.root",group);
 
   printIntroduction_PYTHIA_scan_V3p7();
   readConfig();
