@@ -72,8 +72,9 @@
 #include "../../../headers/fitParameters/dRFitParams/dRFitParams.h"
 // hadronPtRel parameters
 #include "../../../headers/fitParameters/hadronPtRelFitParams.h"
+#include "../../../headers/fitParameters/trkptrelFitParams_pp.h"
 
-TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_bJetNeutrinoEnergy, *fitFxn_dR, *fitFxn_hadronPtRel;
+TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHIA_bJetNeutrinoEnergy, *fitFxn_dR, *fitFxn_hadronPtRel, *fitFxn_trkptrel;
 TF1 *fitFxn_muptrel_C1J1, *fitFxn_muptrel_C1J2, *fitFxn_muptrel_C1J3, *fitFxn_muptrel_C1J4, *fitFxn_muptrel_C1J5, *fitFxn_muptrel_C1J6;
 TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_muptrel_C2J4, *fitFxn_muptrel_C2J5, *fitFxn_muptrel_C2J6;
 // dR fit function
@@ -101,6 +102,9 @@ TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_mu
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_JESb.h"
 // bJetNeutrinoEnergy-fit function
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_bJetNeutrinoEnergy.h"
+#include "../../../headers/fitFunctions/fitFxn_PbPb_trkptrel.h"
+
+
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -155,7 +159,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PYTHIA_DiJet_withJetTrackMaxInfo/PYTHIA_DiJet_skim_output_%i.root",group);
 
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_jetTrkMax_pThat-20_trkpT-14_jetPtReweight_vzReweight_dRReweight_2025-06-26/PYTHIA_DiJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_jetTrkMax_pThat-20_trkpT-14_jetPtReweight_vzReweight_dRReweight_trkptrelReweight_2025-06-26/PYTHIA_DiJet_scan_output_%i.root",group);
 
   printIntroduction_PYTHIA_scan_V3p7();
   readConfig();
@@ -285,7 +289,9 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   loadFitFxn_muptrel_C2J3();
   loadFitFxn_muptrel_C2J4();
   loadFitFxn_muptrel_C2J5();
-  loadFitFxn_muptrel_C2J6();  
+  loadFitFxn_muptrel_C2J6();
+
+  loadFitFxn_trkptrel();
 
 
   // event loop
@@ -384,6 +390,10 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       if(doDRReweight){
 	w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
       }
+
+      // apply trkptrel reweight
+      double w_jet = w_jet * fitFxn_trkptrel->Eval(jetTrkMaxPtRel_i);
+      
       
       
 
