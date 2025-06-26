@@ -388,18 +388,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       
 
       // initialize 
-      double correctedPt_down = 1.0;
-      double correctedPt_up = 1.0;
-
-      if(apply_JEU_shift_up){
-	correctedPt_up = recoJetPt_i * (1 + JEU.GetUncertainty().second);
-	recoJetPt_i = correctedPt_up;
-      }
-      else if(apply_JEU_shift_down){
-	correctedPt_down = recoJetPt_i * (1 - JEU.GetUncertainty().first);
-	recoJetPt_i = correctedPt_down;
-      }
-
+      d
 
       if(doJetTrkMaxFilter){
 	if(!passesJetTrkMaxFilter(jetTrkMax_i,recoJetPt_i)) continue;
