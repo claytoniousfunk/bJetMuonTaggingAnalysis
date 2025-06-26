@@ -57,7 +57,7 @@
 // dR parameters
 #include "../../../headers/fitParameters/dRFitParams/dRFitParams_PbPb.h"
 #include "../../../headers/fitParameters/muptFitParams.h"
-#include "../../../headers/fitParameters/trkptrelFitParams.h"
+#include "../../../headers/fitParameters/trkptrelFitParams_PbPb.h"
 
 TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR, *fitFxn_mupt, *fitFxn_trkptrel;
 // hadronPtRel parameters
@@ -75,7 +75,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR, *
 // jetPt-fit function
 #include "../../../headers/fitFunctions/fitFxn_jetPt.h"
 #include "../../../headers/fitFunctions/fitFxn_mupt.h"
-#include "../../../headers/fitFunctions/fitFxn_trkptrel.h"
+#include "../../../headers/fitFunctions/fitFxn_PbPb_trkptrel.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
