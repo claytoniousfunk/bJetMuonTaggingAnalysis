@@ -244,8 +244,16 @@ void pp_scan(int group = 1){
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
 
-  loadFitFxn_PYTHIA_JERCorrection();
 
+  loadFitFxn_PYTHIA_JERCorrection();
+  
+  TRandom *randomGenerator = new TRandom2();
+
+  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
+  JER_fxn->SetParameter(0,1.26585e-01);
+  JER_fxn->SetParameter(1,-9.72986e-01);
+  JER_fxn->SetParameter(2,3.67352e-04);
+  
   
   TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
   TH2D *neutrino_energy_fraction_map;
@@ -441,8 +449,8 @@ void pp_scan(int group = 1){
       if(doBJetNeutrinoEnergyShift){
 	//if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
 	skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
-	if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(matchedRecoJetPt))) continue;
-	neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
+	if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(x))) continue;
+	neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(x),neutrino_energy_map->GetYaxis()->FindBin(x)+1);
 	smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
 	matchedRecoJetPt += smear_doBJetNeutrinoEnergyShift;
       }
