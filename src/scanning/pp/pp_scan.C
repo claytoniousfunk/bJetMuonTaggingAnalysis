@@ -452,7 +452,7 @@ void pp_scan(int group = 1){
 	if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(x))) continue;
 	neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(x),neutrino_energy_map->GetYaxis()->FindBin(x)+1);
 	smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
-	matchedRecoJetPt += smear_doBJetNeutrinoEnergyShift;
+	x += smear_doBJetNeutrinoEnergyShift;
       }
 
       double mu_JERCorrection = 1.0;
@@ -461,9 +461,9 @@ void pp_scan(int group = 1){
       double k_JERCorrection = 0.0; // smearing parameter
       if(doJERCorrection){
 	k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
-	sigma_JERCorrection = k_JERCorrection*JER_fxn->Eval(matchedRecoJetPt);
+	sigma_JERCorrection = k_JERCorrection*JER_fxn->Eval(x);
 	smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
-	matchedRecoJetPt = matchedRecoJetPt * smear_JERCorrection;
+	x = x * smear_JERCorrection;
       }
 
       
