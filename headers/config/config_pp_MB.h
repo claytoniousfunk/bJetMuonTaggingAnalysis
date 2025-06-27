@@ -12,4 +12,4 @@ bool applyJet80Trigger = false;
 bool doJESCorrection = true;
 // spectra alterations
 bool doBJetNeutrinoEnergyShift = false;
-bool doJERCorrection = false;
+bool doJERCorrection = true;
