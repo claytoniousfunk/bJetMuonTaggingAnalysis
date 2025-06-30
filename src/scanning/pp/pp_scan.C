@@ -124,7 +124,7 @@ void pp_scan(int group = 1){
   // TString output = Form("output_SingleMuon_mu7/pp_MinBias_scan_output_%i.root",group);
 
   TString input = Form("/eos/user/c/cbennett/skims/output_pp_SingleMuon/pp_SingleMuon_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_SingleMuon_mu12_tight_pTmu-14_projectableTemplates_BJetNeutrinoEnergyShift_2025-06-27/pp_SingleMuon_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_SingleMuon_mu12_tight_pTmu-14_projectableTemplates_2025-06-30/pp_SingleMuon_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1/pp_MinBias_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_JERCorrection_2025-06-27/pp_MinBias_scan_output_%i.root",group);
