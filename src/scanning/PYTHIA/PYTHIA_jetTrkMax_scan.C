@@ -397,14 +397,6 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 	w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
       }
 
-      // apply trkptrel reweight
-
-      ptrel_reweight_fxn->SetParameter(0,ptrel_reweight_param_0[jetPtIndex]);
-      ptrel_reweight_fxn->SetParameter(1,ptrel_reweight_param_1[jetPtIndex]);
-      ptrel_reweight_fxn->SetParameter(2,ptrel_reweight_param_2[jetPtIndex]);
-      ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[jetPtIndex]);
-
-      w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
       
       
       
@@ -444,6 +436,16 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
       if(jetPtIndex < 0) continue;
+
+      // apply trkptrel reweight
+
+      ptrel_reweight_fxn->SetParameter(0,ptrel_reweight_param_0[jetPtIndex]);
+      ptrel_reweight_fxn->SetParameter(1,ptrel_reweight_param_1[jetPtIndex]);
+      ptrel_reweight_fxn->SetParameter(2,ptrel_reweight_param_2[jetPtIndex]);
+      ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[jetPtIndex]);
+
+      w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
+      
 
       int partonFlavor = em->partonFlavor[i];
       int hadronFlavor = em->hadronFlavor[i];
