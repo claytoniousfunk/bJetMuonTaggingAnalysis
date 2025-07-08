@@ -32,7 +32,7 @@ bool doWeightCut = false;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
 // jet-alterations for closure
-bool doBJetNeutrinoEnergyShift = false;
+bool doBJetNeutrinoEnergyShift = true;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
 
