@@ -29,8 +29,15 @@ bool doJESCorrection = false;
 bool doHadronPtRelReweight = false;
 bool doDRReweight = false;
 bool doWeightCut = false;
+// shifting the hiBin distribution by this amount
+int hiBinShift = 10;
+// jet-alterations for closure
+bool doBJetNeutrinoEnergyShift = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
+
+
+
 
 // stuff for dataset naming
 TString generator = "PYTHIAHYDJET";
@@ -55,8 +62,3 @@ bool doDiJetSample_batch13 = false;
 bool doDiJetSample_batch14 = false;
 bool doDiJetSample_batch15 = false;
 
-// shifting the hiBin distribution by this amount
-int hiBinShift = 10;
-
-// jet-alterations for closure
-bool doBJetNeutrinoEnergyShift = true;
