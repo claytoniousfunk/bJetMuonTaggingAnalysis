@@ -144,7 +144,8 @@ TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_mu
 #include "../../../headers/config/readConfig.h"
 // remove HYDJET jets function
 #include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
-
+// dataset naming functions
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIA.h"
 
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -285,10 +286,52 @@ TH2D *h_muJetDr_flavor[NJetPtIndices];
 
 void PYTHIA_scan(int group = 1){
 
+  TString inputDataset = "";
+  TString inputFileName = "";
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_testForest_PYTHIA_DiJet/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-20_removeHYDJETjet0p45_jetTrkMaxFilter_vzReweight_jetPtReweight_hadronPtRelReweight_projectableTemplates_2025-06-18/PYTHIA_DiJet_scan_output_%i.root",group);
+
+  inputDataset = "/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/";
+  inputFileName = "PYTHIA_DiJet_skim_output";
+
+  TString input = "";
+  input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
+
+  std::cout << "input dataset = " << input << std::endl;
+
+  TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
+
+  TString outputDatasetName = "";
+  
+  outputDatasetName = configureOutputDatasetName(generator,
+						 doDiJetSample,
+						 pthatcut,
+						 doVzReweight,
+						 doJetPtReweight,
+						 doGenJetPthatFilter,
+						 doLeadingXjetDumpFilter,
+						 doXdumpReweight,
+						 doJetTrkMaxFilter,
+						 doRemoveHYDJETjet,
+						 doEtaPhiMask,
+						 doDRReweight,
+						 doWeightCut,
+						 doHadronPtRelReweight,
+						 doHadronPtRelReweightToMuon,
+						 doBJetEnergyShift,
+						 doBJetNeutrinoEnergyShift,
+						 doJERCorrection,
+						 doJESCorrection,				   
+						 apply_JER_smear,
+						 apply_JEU_shift_up,
+						 apply_JEU_shift_down);
+
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+
+  std::cout << "output dataset = " << output << std::endl;
+  
+  // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
+  // // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_testForest_PYTHIA_DiJet/PYTHIA_DiJet_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-20_removeHYDJETjet0p45_jetTrkMaxFilter_vzReweight_jetPtReweight_projectableTemplates_2025-06-18/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   printIntroduction_PYTHIA_scan_V3p7();

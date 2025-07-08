@@ -113,7 +113,7 @@ TF1 *fitFxn_jetPt_C1, *fitFxn_jetPt_C2, *fitFxn_jetPt_C3, *fitFxn_jetPt_C4;
 // dataset naming functions
 #include "../../../headers/functions/getDatasetName/getDatasetName.h"
 #include "../../../headers/functions/getInputFileName/getInputFileName.h"
-#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName.h"
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIAHYDJET.h"
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // >>>>>>>>>> Reco jets
@@ -360,7 +360,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 doWeightCut,
 						 doHadronPtRelReweight,
 						 doBJetEnergyShift,
+						 doBJetNeutrinoEnergyShift,						 
 						 doJERCorrection,
+						 doJESCorrection,						 
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down,
