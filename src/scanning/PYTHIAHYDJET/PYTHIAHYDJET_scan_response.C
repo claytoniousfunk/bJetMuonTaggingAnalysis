@@ -512,8 +512,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      if(hasRecoJetMatch && hasRecoJetMuon) {
-      //if(hasRecoJetMatch) {
+      //if(hasRecoJetMatch && hasRecoJetMuon) {
+      if(hasRecoJetMatch) {
 	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
