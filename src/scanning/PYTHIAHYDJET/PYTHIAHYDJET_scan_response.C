@@ -98,14 +98,72 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 #include "../../../headers/config/readConfig.h"
 // remove HYDJET jets function
 #include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
-
+// dataset naming functions
+#include "../../../headers/functions/getDatasetName/getDatasetName.h"
+#include "../../../headers/functions/getInputFileName/getInputFileName.h"
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIAHYDJET_response.h"
 
 
 void PYTHIAHYDJET_scan_response(int group = 1){
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_reskim/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_pTjet-5_pThat-20_hiBinShift-10_removeHYDJETjet0p45_response_3CentBins_muTaggedJets_BJetNeutrinoEnergyShift_2025-06-20/PYTHIAHYDJET_scan_output_%i.root",group);
-  
+  TString inputDataset = "";
+  TString inputFileName = "";
+
+  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_reskim/";
+  inputFileName = "PYTHIAHYDJET_DiJet_skim_output";
+  TString input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
+
+  std::cout << "input dataset = " << input << std::endl;
+
+  TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
+
+  TString outputDatasetName = "";
+
+  outputDatasetName = configureOutputDatasetName(generator,
+						 doDiJetSample,
+						 doMuJetSample,
+						 doBJetSample,
+						 doDiJetSample_batch1,
+						 doDiJetSample_batch2,
+						 doDiJetSample_batch3,
+						 doDiJetSample_batch4,
+						 doDiJetSample_batch5,
+						 doDiJetSample_batch6,
+						 doDiJetSample_batch7,
+						 doDiJetSample_batch8,
+						 doDiJetSample_batch9,
+						 doDiJetSample_batch10,
+						 doDiJetSample_batch11,
+						 doDiJetSample_batch12,
+						 doDiJetSample_batch13,
+						 doDiJetSample_batch14,
+						 doDiJetSample_batch15,
+						 pthatcut,
+						 doVzReweight,
+						 doHiBinReweight,
+						 doJetPtReweight,
+						 doGenJetPthatFilter,
+						 doLeadingXjetDumpFilter,
+						 doXdumpReweight,
+						 doJetTrkMaxFilter,
+						 doRemoveHYDJETjet,
+						 doEtaPhiMask,
+						 doDRReweight,
+						 doWeightCut,
+						 doHadronPtRelReweight,
+						 doBJetEnergyShift,
+						 doBJetNeutrinoEnergyShift,						 
+						 doJERCorrection,
+						 doJESCorrection,						 
+						 apply_JER_smear,
+						 apply_JEU_shift_up,
+						 apply_JEU_shift_down,
+						 hiBinShift);
+
+
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+
+  std::cout << "output dataset = " << output << std::endl;
 
   readConfig();
 
