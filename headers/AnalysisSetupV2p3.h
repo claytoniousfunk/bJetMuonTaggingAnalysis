@@ -1,6 +1,6 @@
 
 //const int NCentralityIndices = 3;
-const int NCentralityIndices = 4;
+const int NCentralityIndices = 5;
 const int NJetPtIndices = 7;
 const int NJetFlavorIndices = 7;
 
@@ -18,8 +18,8 @@ int isXJet = 7;
 const int hiBin_C0_lo = 0;
 const int hiBin_C0_hi = 20;
 const int hiBin_C1_hi = 60;
-const int hiBin_C2_hi = 160;
-//const int hiBin_C3_hi = 160;
+const int hiBin_C2_hi = 100;
+const int hiBin_C3_hi = 160;
 int centEdges[NCentralityIndices] = {hiBin_C0_lo, hiBin_C0_hi, hiBin_C1_hi, hiBin_C2_hi};
 
 /* const int hiBin_C0_lo = 0; */
