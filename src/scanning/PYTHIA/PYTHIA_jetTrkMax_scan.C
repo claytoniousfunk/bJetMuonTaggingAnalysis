@@ -136,7 +136,7 @@ TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_mu
 // remove HYDJET jets function
 #include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
 // dataset naming functions
-#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIA.h"
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIA_jetTrkMax.h"
 
 
 
@@ -175,7 +175,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     
   TString outputDatasetName = "";
 
-    outputDatasetName = configureOutputDatasetName(generator,
+  outputDatasetName = configureOutputDatasetName(generator,
 						 doDiJetSample,
 						 pthatcut,
 						 doVzReweight,
