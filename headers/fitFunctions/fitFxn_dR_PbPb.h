@@ -2,7 +2,7 @@ void loadFitFxn_dR(){
 
   cout << "~~ loading fit function ..." << endl;
   
-  fitFxn_dR = new TF1("fitFxn_dR","1 + [0]*exp(-[1]*x)",0,0.4);
+  fitFxn_dR = new TF1("fitFxn_dR","[0] + [1]*x",0,0.4);
 
   fitFxn_dR->SetParameter(0,dRFitParam_0);
   fitFxn_dR->SetParameter(1,dRFitParam_1);
