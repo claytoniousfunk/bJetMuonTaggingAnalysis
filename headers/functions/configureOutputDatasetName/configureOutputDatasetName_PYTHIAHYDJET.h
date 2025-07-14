@@ -73,7 +73,6 @@ TString configureOutputDatasetName(TString generator,
   if(doVzReweight) result.Append("_vzReweight");
   if(doHiBinReweight) result.Append("_hiBinReweight");
   result.Append(Form("_hiBinShift-%i",hiBinShift));
-  result.Append("_3CentBins");
   if(doJetPtReweight) result.Append("_jetPtReweight");
   // jet-based filters
   if(doGenJetPthatFilter) result.Append("_genJetPthatFilter");
