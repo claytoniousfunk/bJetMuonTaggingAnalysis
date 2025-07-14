@@ -27,12 +27,12 @@ bool doBJetEnergyShift = false;
 bool doJERCorrection = false;
 bool doJESCorrection = false;
 bool doHadronPtRelReweight = false;
-bool doDRReweight = false;
+bool doDRReweight = true;
 bool doWeightCut = false;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
 // jet-alterations for closure
-bool doBJetNeutrinoEnergyShift = true;
+bool doBJetNeutrinoEnergyShift = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
 
