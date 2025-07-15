@@ -152,9 +152,10 @@ const double massMuon = 0.1056; // mass of muon in GeV
 const double weightInputLow = 0.0;
 const double weightInputHigh = 0.1;
 const int NWeightBins = 2000;
-const double weightCut = 0.002;
+const double weightCut = 0.01;
 
-
-
+// templates
+const int NTemplateIndices = 4;
+const string templateIndexNames[NTemplateIndices] = {"nominal","JERSmear","JEUShiftUp","JEUShiftDown"};
 
 
