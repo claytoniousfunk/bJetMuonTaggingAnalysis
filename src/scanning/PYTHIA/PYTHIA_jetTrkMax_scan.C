@@ -437,9 +437,9 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       double mu_dRsmear = 0.0;
       double sigma_dRsmear = 0.01;
       double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
-      if(jetTrkMaxDR_i < 0.01) {
-	jetTrkMaxDR_i = ((jetTrkMaxDR_i + val_dRsmear) < 0) ? (jetTrkMaxDR_i + fabs(val_dRsmear)) : (jetTrkMaxDR_i + val_dRsmear);
-      }
+
+      jetTrkMaxDR_i = ((jetTrkMaxDR_i + val_dRsmear) < 0) ? (jetTrkMaxDR_i + fabs(val_dRsmear)) : (jetTrkMaxDR_i + val_dRsmear);
+
       
       
       double w_jetPt = 1.0;
