@@ -46,8 +46,8 @@
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
 //#include "../../../headers/functions/getCentBin_v2.h"
-//#include "../../../headers/functions/getCentBin.h"
-#include "../../../headers/functions/getCentBin_v3.h"
+#include "../../../headers/functions/getCentBin.h"
+//#include "../../../headers/functions/getCentBin_v3.h"
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
@@ -90,7 +90,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial/PbPb_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_ultraFineCentBins_jet60_doubleDRBins/PbPb_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_jet60_ultraFineCentBins_2025-07-14/PbPb_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
