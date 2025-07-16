@@ -1643,7 +1643,6 @@ void PYTHIAHYDJET_scan(int group = 1){
       }
 
       if(doDRReweight){
-	// only reweight by dR for 0-30% centrality
 	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_dR->Eval(muDR_i);
       }
 	
