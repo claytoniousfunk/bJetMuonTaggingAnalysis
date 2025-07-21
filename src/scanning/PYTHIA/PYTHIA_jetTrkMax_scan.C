@@ -500,6 +500,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
       if(jetPtIndex < 0) continue;
 
+      /////////////////////////////////////
       // apply trkptrel reweight
 
       ptrel_reweight_fxn->SetParameter(0,ptrel_reweight_param_0[jetPtIndex-1]);
@@ -508,6 +509,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[jetPtIndex-1]);
 
       w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
+
+      ////////////////////////////////////
       
 
       int partonFlavor = em->partonFlavor[i];
@@ -532,6 +535,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxEta[0]->Fill(jetTrkMaxEta_i,w_jet);
       h_jetTrkMaxPhi[0]->Fill(jetTrkMaxPhi_i,w_jet);
       h_jetTrkMaxDR[0]->Fill(jetTrkMaxDR_i,w_jet);
+      if(jetFlavorInt == 21) h_jetTrkMaxDR_gJets[0]->Fill(jetTrkMaxDR_i,w_jet);
+      else h_jetTrkMaxDR_qJets[0]->Fill(jetTrkMaxDR_i,w_jet);
       h_jetTrkMaxPtRel[0]->Fill(jetTrkMaxPtRel_i,w_jet);
 
       h_jetTrkMaxPt[jetPtIndex]->Fill(jetTrkMax_i,w_jet);
