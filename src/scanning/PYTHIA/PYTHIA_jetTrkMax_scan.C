@@ -147,6 +147,8 @@ TH1D *h_jetTrkMaxPtOverJetPt[NJetPtIndices];
 TH1D *h_jetTrkMaxEta[NJetPtIndices];
 TH1D *h_jetTrkMaxPhi[NJetPtIndices];
 TH1D *h_jetTrkMaxDR[NJetPtIndices];
+TH1D *h_jetTrkMaxDR_qJets[NJetPtIndices]; // quark jets
+TH1D *h_jetTrkMaxDR_gJets[NJetPtIndices]; // gluon jets
 TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
 TH2D *h_jetTrkMaxPtRel_recoJetPt[NTemplateIndices];
 TH1D *h_dEta_jet_wta;
@@ -256,6 +258,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxEta[j] = new TH1D(Form("h_jetTrkMaxEta_J%i",j),Form("jetTrkMaxEta, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax);
       h_jetTrkMaxPhi[j] = new TH1D(Form("h_jetTrkMaxPhi_J%i",j),Form("jetTrkMaxPhi, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NPhiBins,phiMin,phiMax);
       h_jetTrkMaxDR[j] = new TH1D(Form("h_jetTrkMaxDR_J%i",j),Form("jetTrkMaxDR, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NdRBins,dRBinMin,dRBinMax);
+      h_jetTrkMaxDR_qJets[j] = new TH1D(Form("h_jetTrkMaxDR_qJets_J%i",j),Form("jetTrkMaxDR, quark jets, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NdRBins,dRBinMin,dRBinMax);
+      h_jetTrkMaxDR_gJets[j] = new TH1D(Form("h_jetTrkMaxDR_gJets_J%i",j),Form("jetTrkMaxDR, gluon jets, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NdRBins,dRBinMin,dRBinMax);
       h_jetTrkMaxPtRel[j] = new TH1D(Form("h_jetTrkMaxPtRel_J%i",j),Form("jetTrkMaxPtRel, p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[0],jetPtEdges[NJetPtIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax);
 
     }
@@ -276,6 +280,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     h_jetTrkMaxEta[j]->Sumw2();
     h_jetTrkMaxPhi[j]->Sumw2();
     h_jetTrkMaxDR[j]->Sumw2();
+    h_jetTrkMaxDR_qJets[j]->Sumw2();
+    h_jetTrkMaxDR_gJets[j]->Sumw2();
     h_jetTrkMaxPtRel[j]->Sumw2();
     
   }
@@ -531,6 +537,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxEta[jetPtIndex]->Fill(jetTrkMaxEta_i,w_jet);
       h_jetTrkMaxPhi[jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
       h_jetTrkMaxDR[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
+      if(jetFlavorInt == 21) h_jetTrkMaxDR_gJets[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
+      else h_jetTrkMaxDR_qJets[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
       h_jetTrkMaxPtRel[jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
 
       for(int t = 0; t < NTemplateIndices; t++){
@@ -566,6 +574,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     h_jetTrkMaxEta[j]->Write();
     h_jetTrkMaxPhi[j]->Write();
     h_jetTrkMaxDR[j]->Write();
+    h_jetTrkMaxDR_qJets[j]->Write();
+    h_jetTrkMaxDR_gJets[j]->Write();
     h_jetTrkMaxPtRel[j]->Write();
       
   }
