@@ -413,7 +413,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       }
 
       // apply no reweight
-      // double w_jet = w;
+      double w_jet = w;
 
       // apply mupt reweight
       //double w_jet = w * fitFxn_mupt->Eval(jetTrkMax_i);
