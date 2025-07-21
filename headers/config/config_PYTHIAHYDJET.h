@@ -45,8 +45,8 @@ TString generator = "PYTHIAHYDJET";
 // data set
 bool doDiJetSample = false;
 bool doMuJetSample = false;
-bool doBJetSample = true;
-bool doDiJetSample_batch1 = false;
+bool doBJetSample = false;
+bool doDiJetSample_batch1 = true;
 bool doDiJetSample_batch2 = false;
 bool doDiJetSample_batch3 = false;
 bool doDiJetSample_batch4 = false;
