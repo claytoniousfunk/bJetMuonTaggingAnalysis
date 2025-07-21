@@ -510,8 +510,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
       
 
-      int partonFlavor = em->partonFlavor[i];
-      int hadronFlavor = em->hadronFlavor[i];
+      int partonFlavor = em->jtPartonFlavor[i];
+      int hadronFlavor = em->jtHadronFlavor[i];
       int jetFlavorInt = partonFlavor;
       int bHadronNumber = em->bHadronNumber[i];
 
