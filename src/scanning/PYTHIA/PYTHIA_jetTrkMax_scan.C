@@ -508,7 +508,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       ptrel_reweight_fxn->SetParameter(2,ptrel_reweight_param_2[jetPtIndex-1]);
       ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[jetPtIndex-1]);
 
-      w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
+      //w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
 
       ////////////////////////////////////
       
