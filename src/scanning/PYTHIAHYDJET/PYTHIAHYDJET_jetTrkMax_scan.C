@@ -38,8 +38,8 @@
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
 //#include "../../../headers/AnalysisSetupV2p2.h"
-#include "../../../headers/AnalysisSetupV2p3.h"
-//#include "../../../headers/AnalysisSetupV2p4.h"
+//#include "../../../headers/AnalysisSetupV2p3.h"
+#include "../../../headers/AnalysisSetupV2p4.h"
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
@@ -84,8 +84,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR, *
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
 //#include "../../../headers/functions/getCentBin_v2.h" // course centrality binning
-#include "../../../headers/functions/getCentBin.h" // fine centrality binning
-//#include "../../../headers/functions/getCentBin_v3.h" // ultra-fine centrality binning 
+//#include "../../../headers/functions/getCentBin.h" // fine centrality binning
+#include "../../../headers/functions/getCentBin_v3.h" // ultra-fine centrality binning 
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
@@ -134,7 +134,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_pThat-20_trkpT-14_hiBinShift-10_dRReweight_2025-07-21/PYTHIAHYDJET_scan_output_%i.root",group);   
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_pThat-20_trkpT-14_hiBinShift-10_dRReweight_ultraFineCentBins_2025-07-21/PYTHIAHYDJET_scan_output_%i.root",group);   
   
   
   // JET ENERGY CORRECTIONS
