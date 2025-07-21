@@ -442,11 +442,11 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
 
       // experimental dR smear
-      double mu_dRsmear = 0.0;
-      double sigma_dRsmear = 0.02;
-      double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+      // double mu_dRsmear = 0.0;
+      // double sigma_dRsmear = 0.02;
+      // double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
 
-      jetTrkMaxDR_i = ((jetTrkMaxDR_i + val_dRsmear) < 0) ? (jetTrkMaxDR_i + fabs(val_dRsmear)) : (jetTrkMaxDR_i + val_dRsmear);
+      // jetTrkMaxDR_i = ((jetTrkMaxDR_i + val_dRsmear) < 0) ? (jetTrkMaxDR_i + fabs(val_dRsmear)) : (jetTrkMaxDR_i + val_dRsmear);
 
       
       
