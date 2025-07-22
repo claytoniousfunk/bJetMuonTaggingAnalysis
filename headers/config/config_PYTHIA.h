@@ -34,7 +34,7 @@ bool doJESCorrection = false;
 bool doMuPtRelReweight = false;
 bool doHadronPtRelReweight = false;
 bool doHadronPtRelReweightToMuon = false;
-bool doDRReweight = false;
+bool doDRReweight = true;
 bool doWeightCut = false;
 
 // select dataset
