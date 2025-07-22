@@ -80,7 +80,7 @@ TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
 void pp_jetTrkMax_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_withJetTrackMaxInfo/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_jetTrkMax_jet60/pp_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_jetTrkMax_trkPt-14_jet60_2025-07-22/pp_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -225,7 +225,7 @@ void pp_jetTrkMax_scan(int group = 1){
      
      		
       if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
-      if(jetTrkMax_i < 5.) continue;
+      if(jetTrkMax_i < 14.) continue;
 
       int jetPtIndex = getJetPtBin(recoJetPt_i);
       
