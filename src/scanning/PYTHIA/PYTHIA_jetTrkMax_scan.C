@@ -200,6 +200,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down);
 
+  outputDatasetName.Append("_jet60");
+
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
@@ -372,7 +374,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     if(em->checkEventFilter()) continue;
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
 
-    //if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+    if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
     //if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
     //if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
     
