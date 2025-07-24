@@ -200,7 +200,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down);
 
-  outputDatasetName.Append("_jet60");
+  outputDatasetName.Append("_jet60_multiplicativeDRsmear");
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
@@ -444,12 +444,12 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
 
       // experimental dR smear
-      // double mu_dRsmear = 0.0;
-      // double sigma_dRsmear = 0.02;
-      // double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+      double mu_dRsmear = 1.0; // set to 0 for additive smear, set to 1 for multiplicative
+      double sigma_dRsmear = 0.02;
+      double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
 
-      // jetTrkMaxDR_i = ((jetTrkMaxDR_i + val_dRsmear) < 0) ? (jetTrkMaxDR_i + fabs(val_dRsmear)) : (jetTrkMaxDR_i + val_dRsmear);
-
+      //jetTrkMaxDR_i = ((jetTrkMaxDR_i + val_dRsmear) < 0) ? (jetTrkMaxDR_i + fabs(val_dRsmear)) : (jetTrkMaxDR_i + val_dRsmear); // additive
+      jetTrkMaxDR_i = (jetTrkMaxDR_i * val_dRsmear < 0) ? (jetTrkMaxDR_i * fabs(val_dRsmear)) : (jetTrkMaxDR_i * val_dRsmear); // multiplicative
       
       
       double w_jetPt = 1.0;
