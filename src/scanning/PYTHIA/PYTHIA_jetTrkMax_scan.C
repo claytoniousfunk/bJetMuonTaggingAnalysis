@@ -409,6 +409,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       double jetTrkMaxEta_i = em->jetTrkMaxEta[i];
       double jetTrkMaxPhi_i = em->jetTrkMaxPhi[i];
       double jetTrkMaxDR_i = em->jetTrkMaxDR[i];
+      double jetTrkMaxDRManual_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEta_i,recoJetPhi_i);
+      //std::cout << "out-of-box dR = " << jetTrkMaxDR_i << " | manual dR = " << jetTrkMaxDRManual_i << "\n";
       double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
 
       double dEta_trk_wta_i = jetTrkMaxEta_i - recoJetEtaWTA_i;
@@ -441,16 +443,18 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       recoJetPt_JERSmear_i = recoJetPt_i * smear;
 
       double jetPtArray[NTemplateIndices] = {recoJetPt_i,recoJetPt_JERSmear_i,recoJetPt_JEUShiftUp_i,recoJetPt_JEUShiftDown_i};
-
+      
 
       // experimental dR smear
-      double mu_dRsmear = 1.0; // set to 0 for additive smear, set to 1 for multiplicative
-      double sigma_dRsmear = 0.2;
+      double mu_dRsmear = 0.0; // set to 0 for additive smear, set to 1 for multiplicative
+      double sigma_dRsmear = 0.02;
       double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+      double recoJetEtaSmear_i = recoJetEta_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear); 
+      double recoJetPhiSmear_i = recoJetPhi_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear); 
 
       //jetTrkMaxDR_i = ((jetTrkMaxDR_i + val_dRsmear) < 0) ? (jetTrkMaxDR_i + fabs(val_dRsmear)) : (jetTrkMaxDR_i + val_dRsmear); // additive
-      jetTrkMaxDR_i = (jetTrkMaxDR_i * val_dRsmear < 0) ? (jetTrkMaxDR_i * fabs(val_dRsmear)) : (jetTrkMaxDR_i * val_dRsmear); // multiplicative
-      
+      //jetTrkMaxDR_i = (jetTrkMaxDR_i * val_dRsmear < 0) ? (jetTrkMaxDR_i * fabs(val_dRsmear)) : (jetTrkMaxDR_i * val_dRsmear); // multiplicative
+      jetTrkMaxDR_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEtaSmear_i,recoJetPhiSmear_i);
       
       double w_jetPt = 1.0;
 
