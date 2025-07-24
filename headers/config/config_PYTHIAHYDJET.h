@@ -27,7 +27,7 @@ bool doBJetEnergyShift = false;
 bool doJERCorrection = false;
 bool doJESCorrection = false;
 bool doHadronPtRelReweight = false;
-bool doDRReweight = true;
+bool doDRReweight = false;
 bool doWeightCut = false;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
