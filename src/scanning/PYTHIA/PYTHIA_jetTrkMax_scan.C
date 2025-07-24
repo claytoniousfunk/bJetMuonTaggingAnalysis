@@ -200,7 +200,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down);
 
-  outputDatasetName.Append("_jet60_multiplicativeDRsmear");
+  outputDatasetName.Append("_jet60_jetEtaPhiSmear");
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
