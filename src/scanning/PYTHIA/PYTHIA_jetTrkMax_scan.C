@@ -200,7 +200,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down);
 
-  outputDatasetName.Append("_jet60_jetEtaPhiSmear");
+  outputDatasetName.Append("_jet60_jetAxisSmear");
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
@@ -411,7 +411,18 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       double jetTrkMaxDR_i = em->jetTrkMaxDR[i];
       double jetTrkMaxDRManual_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEta_i,recoJetPhi_i);
       //std::cout << "out-of-box dR = " << jetTrkMaxDR_i << " | manual dR = " << jetTrkMaxDRManual_i << "\n";
+
+      // experimental dR smear
+      double mu_dRsmear = 0.0; // set to 0 for additive smear, set to 1 for multiplicative
+      double sigma_dRsmear = 0.01;
+      double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+      double recoJetEtaSmear_i = recoJetEta_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear); 
+      double recoJetPhiSmear_i = recoJetPhi_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+      recoJetEta_i = recoJetEtaSmear_i;
+      recoJetPhi_i = recoJetPhiSmear_i;
       double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
+      // recalculate dR(leading-hadron,jet) with smeared jet axis
+      jetTrkMaxDR_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEtaSmear_i,recoJetPhiSmear_i);
 
       double dEta_trk_wta_i = jetTrkMaxEta_i - recoJetEtaWTA_i;
       double dPhi_trk_wta_i = acos(cos(jetTrkMaxPhi_i - recoJetPhiWTA_i));
@@ -445,16 +456,8 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       double jetPtArray[NTemplateIndices] = {recoJetPt_i,recoJetPt_JERSmear_i,recoJetPt_JEUShiftUp_i,recoJetPt_JEUShiftDown_i};
       
 
-      // experimental dR smear
-      double mu_dRsmear = 0.0; // set to 0 for additive smear, set to 1 for multiplicative
-      double sigma_dRsmear = 0.01;
-      double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
-      double recoJetEtaSmear_i = recoJetEta_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear); 
-      double recoJetPhiSmear_i = recoJetPhi_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear); 
 
-      //jetTrkMaxDR_i = ((jetTrkMaxDR_i + val_dRsmear) < 0) ? (jetTrkMaxDR_i + fabs(val_dRsmear)) : (jetTrkMaxDR_i + val_dRsmear); // additive
-      //jetTrkMaxDR_i = (jetTrkMaxDR_i * val_dRsmear < 0) ? (jetTrkMaxDR_i * fabs(val_dRsmear)) : (jetTrkMaxDR_i * val_dRsmear); // multiplicative
-      jetTrkMaxDR_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEtaSmear_i,recoJetPhiSmear_i);
+
       
       double w_jetPt = 1.0;
 
