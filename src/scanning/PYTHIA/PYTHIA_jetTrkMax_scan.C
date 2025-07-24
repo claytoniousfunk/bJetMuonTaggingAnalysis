@@ -445,7 +445,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
       // experimental dR smear
       double mu_dRsmear = 1.0; // set to 0 for additive smear, set to 1 for multiplicative
-      double sigma_dRsmear = 0.02;
+      double sigma_dRsmear = 0.1;
       double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
 
       //jetTrkMaxDR_i = ((jetTrkMaxDR_i + val_dRsmear) < 0) ? (jetTrkMaxDR_i + fabs(val_dRsmear)) : (jetTrkMaxDR_i + val_dRsmear); // additive
