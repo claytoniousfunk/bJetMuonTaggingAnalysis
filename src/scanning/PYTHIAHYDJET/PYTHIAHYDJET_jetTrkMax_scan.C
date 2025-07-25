@@ -134,7 +134,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_pThat-20_trkpT-14_hiBinShift-10_dRReweight_ultraFineCentBins_jet60_2025-07-24/PYTHIAHYDJET_scan_output_%i.root",group);   
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_pThat-20_trkpT-14_hiBinShift-10_ultraFineCentBins_jet60_jetAxisSmear-0p01_2025-07-24/PYTHIAHYDJET_scan_output_%i.root",group);   
   
   
   // JET ENERGY CORRECTIONS
@@ -362,6 +362,16 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       double jetTrkMaxEta_i = em->jetTrkMaxEta[i];
       double jetTrkMaxPhi_i = em->jetTrkMaxPhi[i];
       double jetTrkMaxDR_i = em->jetTrkMaxDR[i];
+
+      // experimental dR smear
+      double mu_dRsmear = 0.0; // set to 0 for additive smear, set to 1 for multiplicative
+      double sigma_dRsmear = 0.01;
+      double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+      double recoJetEtaSmear_i = recoJetEta_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear); 
+      double recoJetPhiSmear_i = recoJetPhi_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+      recoJetEta_i = recoJetEtaSmear_i;
+      recoJetPhi_i = recoJetPhiSmear_i;
+
       double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
 
       double dEta_trk_wta_i = jetTrkMaxEta_i - recoJetEtaWTA_i;
