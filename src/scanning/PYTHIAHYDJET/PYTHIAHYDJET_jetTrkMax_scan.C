@@ -108,7 +108,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_hadronPtRel, *fitFxn_dR, *
 #include "../../../headers/config/readConfig.h"
 // remove HYDJET jets function
 #include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
-
+// dataset naming functions
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIAHYDJET_jetTrkMax.h"
 
 /*
   initialize your histograms here!
@@ -132,10 +133,67 @@ TH1D *h_dR_trk_wta;
 
 void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
-  
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_jetTrkMax_pThat-20_trkpT-14_hiBinShift-10_ultraFineCentBins_jet60_jetAxisSmear-0p01_2025-07-24/PYTHIAHYDJET_scan_output_%i.root",group);   
-  
+
+  TString inputDataset = "";
+  TString inputFileName = "";
+
+  inputDataset = "/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skim_PH_DiJet_onlyJets_withTrackMaxInfo_withHLT/";
+  inputFileName = "PYTHIAHYDJET_DiJet_skim_output";
+
+  TString input = "";
+  input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
+
+  std::cout << "input dataset = " << input << std::endl;
+
+  TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
+  TString outputDatasetName = "";
+
+  outputDatasetName = configureOutputDatasetName(generator,
+						 doDiJetSample,
+						 doMuJetSample,
+						 doBJetSample,
+						 doDiJetSample_batch1,
+						 doDiJetSample_batch2,
+						 doDiJetSample_batch3,
+						 doDiJetSample_batch4,
+						 doDiJetSample_batch5,
+						 doDiJetSample_batch6,
+						 doDiJetSample_batch7,
+						 doDiJetSample_batch8,
+						 doDiJetSample_batch9,
+						 doDiJetSample_batch10,
+						 doDiJetSample_batch11,
+						 doDiJetSample_batch12,
+						 doDiJetSample_batch13,
+						 doDiJetSample_batch14,
+						 doDiJetSample_batch15,
+						 pthatcut,
+						 doVzReweight,
+						 doHiBinReweight,
+						 doJetPtReweight,
+						 doGenJetPthatFilter,
+						 doLeadingXjetDumpFilter,
+						 doXdumpReweight,
+						 doJetTrkMaxFilter,
+						 doRemoveHYDJETjet,
+						 doEtaPhiMask,
+						 doDRReweight,
+						 doWeightCut,
+						 doJetAxisSmearing,
+						 doHadronPtRelReweight,
+						 doBJetEnergyShift,
+						 doBJetNeutrinoEnergyShift,						 
+						 doJERCorrection,
+						 doJESCorrection,						 
+						 apply_JER_smear,
+						 apply_JEU_shift_up,
+						 apply_JEU_shift_down,
+						 hiBinShift);
+
+
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+
+  std::cout << "output dataset = " << output << std::endl;
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -371,8 +429,9 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       double recoJetPhiSmear_i = recoJetPhi_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
       recoJetEta_i = recoJetEtaSmear_i;
       recoJetPhi_i = recoJetPhiSmear_i;
-
       double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
+      // recalculate dR(leading-hadron,jet) with smeared jet axis
+      jetTrkMaxDR_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEtaSmear_i,recoJetPhiSmear_i);
 
       double dEta_trk_wta_i = jetTrkMaxEta_i - recoJetEtaWTA_i;
       double dPhi_trk_wta_i = acos(cos(jetTrkMaxPhi_i - recoJetPhiWTA_i));
