@@ -423,7 +423,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       }
 
       // apply no reweight
-      // double w_jet = w;
+      double w_jet = w;
 
       // apply mupt reweight
       // double w_jet = w * fitFxn_mupt->Eval(jetTrkMax_i);
@@ -432,7 +432,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       // double w_jet = w * fitFxn_trkptrel->Eval(jetTrkMaxPtRel_i);
       
       // apply dR reweight
-      double w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
+      // double w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
 
       // apply hadronPtRel reweight
       // double w_jet = w * fitFxn_hadronPtRel->Eval(jetTrkMaxPtRel_i);
