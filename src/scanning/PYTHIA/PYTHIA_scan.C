@@ -315,6 +315,7 @@ void PYTHIA_scan(int group = 1){
 						 doEtaPhiMask,
 						 doDRReweight,
 						 doWeightCut,
+						 doJetAxisSmearing,
 						 doHadronPtRelReweight,
 						 doHadronPtRelReweightToMuon,
 						 doBJetEnergyShift,
