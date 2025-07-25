@@ -947,6 +947,18 @@ void PYTHIA_scan(int group = 1){
       double recoJetPt_JEUShiftDown_i = recoJetPt_i;
       double recoJetEta_i = em->jeteta[i]; // recoJetEta
       double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
+
+            // experimental dR smear
+      double mu_dRsmear = 0.0; // set to 0 for additive smear, set to 1 for multiplicative
+      double sigma_dRsmear = 0.01;
+      double val_dRsmear = 0.0;
+      if(doJetAxisSmearing){
+	val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+	recoJetEta_i = recoJetEta_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear); 
+	recoJetPhi_i = recoJetPhi_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+      }
+
+      
       double jetTrkMax_i = em->jetTrkMax[i];
       double nuPtShift_i = 0.0;
 
