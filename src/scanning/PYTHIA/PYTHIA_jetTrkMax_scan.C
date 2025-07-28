@@ -413,11 +413,10 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       //std::cout << "out-of-box dR = " << jetTrkMaxDR_i << " | manual dR = " << jetTrkMaxDRManual_i << "\n";
 
       // experimental dR smear
-      double mu_dRsmear = 0.0; // set to 0 for additive smear, set to 1 for multiplicative
-      double sigma_dRsmear = 0.008;
-      double val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
-      double recoJetEtaSmear_i = recoJetEta_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear); 
-      double recoJetPhiSmear_i = recoJetPhi_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+      double val_etaSmear = randomGenerator->Gaus(mu_eta,sigma_eta);
+      double val_phiSmear = randomGenerator->Gaus(mu_phi,sigma_phi);
+      double recoJetEtaSmear_i = recoJetEta_i + val_etaSmear;
+      double recoJetPhiSmear_i = recoJetPhi_i + val_phiSmear;
       recoJetEta_i = recoJetEtaSmear_i;
       recoJetPhi_i = recoJetPhiSmear_i;
       double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
