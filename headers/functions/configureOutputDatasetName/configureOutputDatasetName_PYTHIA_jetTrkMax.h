@@ -13,6 +13,11 @@ TString configureOutputDatasetName(TString generator,
 				   bool doEtaPhiMask,
 				   bool doDRReweight,
 				   bool doWeightCut,
+				   bool doJetAxisSmearing,
+				   double mu_phi,
+				   double sigma_phi,
+				   double mu_eta,
+				   double sigma_eta,
 				   bool doHadronPtRelReweight,
 				   bool doHadronPtRelReweightToMuon,
 				   bool doBJetEnergyShift,
@@ -45,6 +50,7 @@ TString configureOutputDatasetName(TString generator,
   if(doRemoveHYDJETjet) result.Append("_removeHYDJETjet0p45");
   if(doEtaPhiMask) result.Append("_etaPhiMask");
   if(doDRReweight) result.Append("_dRReweight");
+  if(doJetAxisSmearing) result.Append(Form("_jetAxisSmear_muPhi-%1.3f_sigmaPhi-%1.3f_muEta-%1.3f_sigmaEta-%1.3f",mu_phi,sigma_phi,mu_eta,sigma_eta));
   // lesser-likely customizations
   if(doWeightCut) result.Append("_weightCut");
   if(doHadronPtRelReweight) result.Append("_hadronPtRelReweight");
