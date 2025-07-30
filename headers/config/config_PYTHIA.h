@@ -45,6 +45,6 @@ TString generator = "PYTHIA";
 
 // jet-axis smearing parameters
 double mu_phi = 0.0;
-double sigma_phi = 0.010;
+double sigma_phi = 0.003;
 double mu_eta = 0.0;
-double sigma_eta = 0.007;
+double sigma_eta = 0.003;
