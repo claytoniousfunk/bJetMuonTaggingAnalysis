@@ -63,3 +63,8 @@ bool doDiJetSample_batch13 = false;
 bool doDiJetSample_batch14 = false;
 bool doDiJetSample_batch15 = false;
 
+// jet-axis smearing parameters
+double mu_phi = 0.0;
+double sigma_phi = 0.005;
+double mu_eta = 0.0;
+double sigma_eta = 0.005;
