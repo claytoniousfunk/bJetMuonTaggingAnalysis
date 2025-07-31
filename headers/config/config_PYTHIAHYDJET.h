@@ -29,7 +29,7 @@ bool doJESCorrection = false;
 bool doHadronPtRelReweight = false;
 bool doDRReweight = false;
 bool doWeightCut = false;
-bool doJetAxisSmearing = true;
+bool doJetAxisSmearing = false;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
 // jet-alterations for closure
