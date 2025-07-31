@@ -47,4 +47,4 @@ TString generator = "PYTHIA";
 double mu_phi = 0.0;
 double sigma_phi = 0.001;
 double mu_eta = 0.0;
-double sigma_eta = 0.002;
+double sigma_eta = 0.003;
