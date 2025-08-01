@@ -32,7 +32,7 @@ public :
   void loadBTagger();
   void loadBTaggerInputVariables();
   void getEvent(Long64_t j){evtTree->GetEntry(j);};
-  void loadTrack();
+  void loadTrack(const char* name);
   void loadGenParticle();
   void unloadGP();
   void regEventFilter(int nfilter, std::string *filtername);
@@ -67,6 +67,7 @@ public :
   static const int trkMax = 99999;
   int ntrk=0;
   Float_t trkpt[trkMax],trkpterr[trkMax],trketa[trkMax],trkphi[trkMax],trkchi2[trkMax];
+  vector<Float_t> *trkPt=0, *trkEta=0, *trkPhi=0;
   UChar_t trknlayer[trkMax], trknhit[trkMax], trkndof[trkMax];
   Bool_t highPurity[trkMax];
   Float_t pfEcal[trkMax], pfHcal[trkMax];
@@ -135,6 +136,48 @@ public :
   int HLT_HICsAK4PFJet60Eta1p5_v1, HLT_HICsAK4PFJet80Eta1p5_v1, HLT_HICsAK4PFJet100Eta1p5_v1;
   int HLT_HICsAK4PFJet60Eta1p5_v1_Prescl, HLT_HICsAK4PFJet80Eta1p5_v1_Prescl, HLT_HICsAK4PFJet100Eta1p5_v1_Prescl;
 
+  // min-bias triggers
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part1_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part2_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part3_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part4_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part5_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part6_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part7_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part8_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part9_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part10_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part11_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part12_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part13_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part14_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part15_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part16_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part17_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part18_v1;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part19_v1;
+
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part1_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part2_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part3_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part4_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part5_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part6_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part7_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part8_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part9_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part10_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part11_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part12_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part13_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part14_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part15_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part16_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part17_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part18_v1_Prescl;
+  int HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part19_v1_Prescl;
+
+
 
 
   // jet for CSV inputs
@@ -158,7 +201,9 @@ public :
 
 void eventMap::init(){
   //evtTree = (TTree*) _file->Get("jetTree");
-  evtTree = (TTree*) _file->Get("evtTree");
+  //evtTree = (TTree*) _file->Get("evtTree");
+  evtTree = (TTree*) _file->Get("hiEvtAnalyzer/HiTree");
+  //evtTree = (TTree*) _file->Get(Form("%s",name));
   evtTree->SetBranchAddress("vz", &vz);
   evtTree->SetBranchAddress("hiBin", &hiBin);
   evtTree->SetBranchAddress("hiHF", &hiHF);
@@ -172,7 +217,8 @@ void eventMap::init(){
 }
 
 void eventMap::regEventFilter(int nfilter, std::string *filtername){
-  filterTree = (TTree*) _file->Get("filterTree");
+  //filterTree = (TTree*) _file->Get("filterTree");
+  filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
   evtTree->AddFriend(filterTree);
   filters.clear();
   filters.resize(nfilter);
@@ -202,14 +248,18 @@ void eventMap::regEventFilter(std::vector<std::string> &filtername){
   }
 }
 
-void eventMap::loadTrack(){
-  trkTree = (TTree*) _file->Get("ppTrack/trackTree");
+void eventMap::loadTrack(const char* name){
+  //trkTree = (TTree*) _file->Get("ppTrack/trackTree");
   //trkTree = new Tree("ppTrack", "");
+  trkTree = (TTree*) _file->Get(Form("%s",name));
   evtTree->AddFriend(trkTree);
   evtTree->SetBranchAddress("nTrk", &ntrk);
   evtTree->SetBranchAddress("trkPt", 	&trkpt);
   evtTree->SetBranchAddress("trkEta",	&trketa);
   evtTree->SetBranchAddress("trkPhi",	&trkphi);
+  evtTree->SetBranchAddress("trkPt", 	&trkPt);
+  evtTree->SetBranchAddress("trkEta",	&trkEta);
+  evtTree->SetBranchAddress("trkPhi",	&trkPhi);
   evtTree->SetBranchAddress("trkPtError", &trkpterr);
   evtTree->SetBranchAddress("trkChi2", 	&trkchi2);
   evtTree->SetBranchAddress("trkNlayer", 	&trknlayer);
@@ -382,6 +432,46 @@ void eventMap::loadMuonTrigger(const char* name){
   //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet80Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet80Eta5p1_v1_Prescl);
   //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet100Eta5p1_v1",&HLT_HIPuAK4CaloJet100Eta5p1_v1);
   //evtTree->SetBranchAddress("HLT_HIPuAK4CaloJet100Eta5p1_v1_Prescl",&HLT_HIPuAK4CaloJet100Eta5p1_v1_Prescl);
+
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part1_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part1_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part2_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part2_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part3_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part3_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part4_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part4_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part5_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part5_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part6_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part6_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part7_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part7_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part8_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part8_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part9_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part9_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part10_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part10_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part11_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part11_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part12_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part12_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part13_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part13_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part14_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part14_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part15_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part15_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part16_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part16_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part17_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part17_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part18_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part18_v1);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part19_v1",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part19_v1);
+
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part1_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part1_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part2_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part2_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part3_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part3_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part4_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part4_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part5_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part5_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part6_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part6_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part7_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part7_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part8_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part8_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part9_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part9_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part10_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part10_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part11_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part11_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part12_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part12_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part13_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part13_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part14_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part14_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part15_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part15_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part16_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part16_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part17_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part17_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part18_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part18_v1_Prescl);
+  evtTree->SetBranchAddress("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part19_v1_Prescl",&HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part19_v1_Prescl);
 
 }
 
