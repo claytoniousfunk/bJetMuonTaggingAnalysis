@@ -28,7 +28,7 @@ bool doJERCorrection = false;
 bool doJESCorrection = false;
 bool doHadronPtRelReweight = false;
 bool doDRReweight = false;
-bool doWeightCut = true;
+bool doWeightCut = false;
 bool doJetAxisSmearing = true;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
@@ -39,9 +39,9 @@ bool onlyOneMuonTaggedJetPerEvent = false;
 
 // jet-axis smearing parameters
 double mu_phi = 0.0;
-double sigma_phi = 0.005;
+double sigma_phi = 0.020;
 double mu_eta = 0.0;
-double sigma_eta = 0.005;
+double sigma_eta = 0.020;
 
 
 
