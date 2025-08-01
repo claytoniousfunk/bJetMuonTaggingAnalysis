@@ -9,5 +9,6 @@ bool doJetTrkMaxFilter = false;
 bool doEtaPhiMask = false;
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
+bool applyMinBiasTrigger = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
