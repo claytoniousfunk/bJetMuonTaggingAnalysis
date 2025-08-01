@@ -359,6 +359,10 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 doDRReweight,
 						 doWeightCut,
 						 doJetAxisSmearing,
+						 mu_phi,
+						 sigma_phi,
+						 mu_eta,
+						 sigma_eta,
 						 doHadronPtRelReweight,
 						 doBJetEnergyShift,
 						 doBJetNeutrinoEnergyShift,						 
@@ -1259,14 +1263,14 @@ void PYTHIAHYDJET_scan(int group = 1){
       double recoJetEta_i = em->jeteta[i]; // recoJetEta
       double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
 
-      // experimental dR smear
-      double mu_dRsmear = 0.0; // set to 0 for additive smear, set to 1 for multiplicative
-      double sigma_dRsmear = 0.01;
-      double val_dRsmear = 0.0;
+      // experimental jet-axis smearing
+      double val_etaSmear = randomGenerator->Gaus(mu_eta,sigma_eta);
+      double val_phiSmear = randomGenerator->Gaus(mu_phi,sigma_phi);
+      double recoJetEtaSmear_i = recoJetEta_i + val_etaSmear;
+      double recoJetPhiSmear_i = recoJetPhi_i + val_phiSmear;
       if(doJetAxisSmearing){
-	val_dRsmear = randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
-	recoJetEta_i = recoJetEta_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear); 
-	recoJetPhi_i = recoJetPhi_i + randomGenerator->Gaus(mu_dRsmear,sigma_dRsmear);
+	recoJetEta_i = recoJetEtaSmear_i;
+	recoJetPhi_i = recoJetPhiSmear_i;
       }
       
       // double y = em->jet_wta_eta[i]; // recoJetEta with WTA axis
