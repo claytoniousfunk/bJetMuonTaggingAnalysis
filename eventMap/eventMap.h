@@ -201,8 +201,8 @@ public :
 
 void eventMap::init(){
   //evtTree = (TTree*) _file->Get("jetTree");
-  //evtTree = (TTree*) _file->Get("evtTree");
-  evtTree = (TTree*) _file->Get("hiEvtAnalyzer/HiTree");
+  evtTree = (TTree*) _file->Get("evtTree");
+  //evtTree = (TTree*) _file->Get("hiEvtAnalyzer/HiTree");
   //evtTree = (TTree*) _file->Get(Form("%s",name));
   evtTree->SetBranchAddress("vz", &vz);
   evtTree->SetBranchAddress("hiBin", &hiBin);
@@ -217,8 +217,8 @@ void eventMap::init(){
 }
 
 void eventMap::regEventFilter(int nfilter, std::string *filtername){
-  //filterTree = (TTree*) _file->Get("filterTree");
-  filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
+  filterTree = (TTree*) _file->Get("filterTree");
+  //filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
   evtTree->AddFriend(filterTree);
   filters.clear();
   filters.resize(nfilter);
