@@ -116,8 +116,6 @@ void PbPb_skim_simple(int group = 1){
     old_hlt_tree->SetBranchStatus("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part18_v1_Prescl",1);
     old_hlt_tree->SetBranchStatus("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part19_v1",1);
     old_hlt_tree->SetBranchStatus("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part19_v1_Prescl",1);
-    old_hlt_tree->SetBranchStatus("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part20_v1",1);
-    old_hlt_tree->SetBranchStatus("HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part20_v1_Prescl",1);
     // jets
     old_jet_tree->SetBranchStatus("jtpt",1);
     old_jet_tree->SetBranchStatus("rawpt",1);
