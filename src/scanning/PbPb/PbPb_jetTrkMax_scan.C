@@ -90,7 +90,7 @@ void PbPb_jetTrkMax_scan(int group = 1){
 
   
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial/PbPb_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_trkPt-14_jet60_ultraFineCentBins_2025-07-14/PbPb_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_trkPt-14_jet60_ultraFineCentBins_2025-08-04/PbPb_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
