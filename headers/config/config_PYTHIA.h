@@ -33,7 +33,7 @@ bool doJESCorrection = false;
 // muptrel reweight
 bool doMuPtRelReweight = false;
 bool doHadronPtRelReweight = false;
-bool doHadronPtRelReweightToMuon = true;
+bool doHadronPtRelReweightToMuon = false;
 bool doDRReweight = false;
 bool doWeightCut = false;
 bool doJetAxisSmearing = false;
