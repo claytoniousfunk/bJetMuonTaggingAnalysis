@@ -331,10 +331,10 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   JER_fxn->SetParameter(2,1.09880e+01);
 
   TF1 *ptrel_reweight_fxn = new TF1("ptrel_reweight_fxn","[0] + [1]*x + [2]*x*x + [3]*x*x*x",0,5);
-  double ptrel_reweight_param_0[NJetPtIndices-1] = {1.45261e+00,1.56644e+00,1.47540e+00,1.54805e+00,1.74787e+00,1.77217e+00};
-  double ptrel_reweight_param_1[NJetPtIndices-1] = {-8.93318e-01,-1.02836e+00,-8.21530e-01,-8.53191e-01,-1.16147e+00,-1.13383e+00};
-  double ptrel_reweight_param_2[NJetPtIndices-1] = {3.29664e-01,3.26709e-01,2.34548e-01,2.19521e-01,3.27115e-01,3.01231e-01};
-  double ptrel_reweight_param_3[NJetPtIndices-1] = {-2.88554e-02,-2.60798e-02,-1.86332e-02,-1.65286e-02,-2.61209e-02,-2.32847e-02};
+  double ptrel_reweight_param_0[NJetPtIndices-1] = {1.32619e+00,1.46306e+00,1.35661e+00,1.43428e+00,1.65955e+00,1.71624e+00};
+  double ptrel_reweight_param_1[NJetPtIndices-1] = {-7.53326e-01,-9.27482e-01,-6.89141e-01,-7.31739e-01,-1.08741e+00,-1.10073e+00};
+  double ptrel_reweight_param_2[NJetPtIndices-1] = {3.38996e-01,3.35900e-01,2.26239e-01,2.07131e-01,3.28345e-01,3.08872e-01};
+  double ptrel_reweight_param_3[NJetPtIndices-1] = {-3.06283e-02,-2.70864e-02,-1.87738e-02,-1.61812e-02,-2.69771e-02,-2.44535e-02};
 
   loadFitFxn_vz();
   loadFitFxn_jetPt();
