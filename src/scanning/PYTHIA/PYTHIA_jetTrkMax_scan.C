@@ -331,10 +331,10 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   JER_fxn->SetParameter(2,1.09880e+01);
 
   TF1 *ptrel_reweight_fxn = new TF1("ptrel_reweight_fxn","[0] + [1]*x + [2]*x*x + [3]*x*x*x",0,5);
-  double ptrel_reweight_param_0[NJetPtIndices] = {1.23854,1.56407,1.59517,1.45676,1.64158,1.92623,2.1181};
-  double ptrel_reweight_param_1[NJetPtIndices] = {-0.299257,-0.90466,-1.10229,-0.65947,-1.02015,-1.48452,-1.8268};
-  double ptrel_reweight_param_2[NJetPtIndices] = {-0.0876053,0.143887,0.361878,0.0764208,0.308364,0.509809,0.680193};
-  double ptrel_reweight_param_3[NJetPtIndices] = {0.0345617,0.00787589,-0.0387557,0.00943569,-0.0320499,-0.0560105,-0.0791427};
+  double ptrel_reweight_param_0[NJetPtIndices-1] = {1.45261e+00,1.56644e+00,1.47540e+00,1.54805e+00,1.74787e+00,1.77217e+00};
+  double ptrel_reweight_param_1[NJetPtIndices-1] = {-8.93318e-01,-1.02836e+00,-8.21530e-01,-8.53191e-01,-1.16147e+00,-1.13383e+00};
+  double ptrel_reweight_param_2[NJetPtIndices-1] = {3.29664e-01,3.26709e-01,2.34548e-01,2.19521e-01,3.27115e-01,3.01231e-01};
+  double ptrel_reweight_param_3[NJetPtIndices-1] = {-2.88554e-02,-2.60798e-02,-1.86332e-02,-1.65286e-02,-2.61209e-02,-2.32847e-02};
 
   loadFitFxn_vz();
   loadFitFxn_jetPt();
@@ -420,8 +420,10 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       double val_phiSmear = randomGenerator->Gaus(mu_phi,sigma_phi);
       double recoJetEtaSmear_i = recoJetEta_i + val_etaSmear;
       double recoJetPhiSmear_i = recoJetPhi_i + val_phiSmear;
-      recoJetEta_i = recoJetEtaSmear_i;
-      recoJetPhi_i = recoJetPhiSmear_i;
+      if(doJetAxisSmearing){
+	recoJetEta_i = recoJetEtaSmear_i;
+	recoJetPhi_i = recoJetPhiSmear_i;
+      }
       double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
       // recalculate dR(leading-hadron,jet) with smeared jet axis
       jetTrkMaxDR_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEtaSmear_i,recoJetPhiSmear_i);
@@ -457,24 +459,15 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
       double jetPtArray[NTemplateIndices] = {recoJetPt_i,recoJetPt_JERSmear_i,recoJetPt_JEUShiftUp_i,recoJetPt_JEUShiftDown_i};
       
-
-
-
-      
       double w_jetPt = 1.0;
 
       //double w_jet = w * w_jetPt * fitFxn_dR->Eval(jetTrkMaxDR_i);
       double w_jet = w * w_jetPt;
-      if(doHadronPtRelReweightToMuon) w_jet *= fitFxn_hadronPtRel->Eval(jetTrkMaxPtRel_i);
+
       
       if(doDRReweight){
 	w_jet = w * fitFxn_dR->Eval(jetTrkMaxDR_i);
       }
-
-      
-      
-      
-
 
       if(doJetTrkMaxFilter){
 	if(!passesJetTrkMaxFilter(jetTrkMax_i,recoJetPt_i)) continue;
@@ -519,7 +512,11 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       ptrel_reweight_fxn->SetParameter(2,ptrel_reweight_param_2[jetPtIndex-1]);
       ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[jetPtIndex-1]);
 
-      //w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
+      if(doHadronPtRelReweightToMuon){
+	w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
+      }
+
+      //
 
       ////////////////////////////////////
       
