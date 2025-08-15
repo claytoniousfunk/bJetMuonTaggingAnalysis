@@ -37,6 +37,7 @@ TString configureOutputDatasetName(TString generator,
 				   double mu_eta,
 				   double sigma_eta,
 				   bool doHadronPtRelReweight,
+				   bool doHadronPtRelReweightToMuon,				   
 				   bool doBJetEnergyShift,
 				   bool doBJetNeutrinoEnergyShift,				   
 				   bool doJERCorrection,
@@ -91,6 +92,7 @@ TString configureOutputDatasetName(TString generator,
   // lesser-likely customizations
   if(doWeightCut) result.Append("_weightCut");
   if(doHadronPtRelReweight) result.Append("_hadronPtRelReweight");
+  if(doHadronPtRelReweightToMuon) result.Append("_hadronPtRelReweightToMuon");
   if(doBJetEnergyShift) result.Append("_bJetEnergyShift");
   if(doJERCorrection) result.Append("_JERCorrection");
   if(doJESCorrection) result.Append("_JESCorrection");
