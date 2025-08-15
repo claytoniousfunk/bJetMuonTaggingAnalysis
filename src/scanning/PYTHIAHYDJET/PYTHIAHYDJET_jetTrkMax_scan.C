@@ -185,6 +185,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 						 mu_eta,
 						 sigma_eta,
 						 doHadronPtRelReweight,
+						 doHadronPtRelReweightToMuon,					 
 						 doBJetEnergyShift,
 						 doBJetNeutrinoEnergyShift,		 
 						 doJERCorrection,
@@ -344,6 +345,24 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   JER_fxn->SetParameter(1,-1.79691e+00);
   JER_fxn->SetParameter(2,1.09880e+01);
 
+  TF1 *ptrel_reweight_fxn = new TF1("ptrel_reweight_fxn","[0] + [1]*x + [2]*x*x + [3]*x*x*x",0,5);
+  double ptrel_reweight_param_0[NCentralityIndices-1][NJetPtIndices-1] = {{1.36501e+00,2.02715e+00,2.16595e+00,1.91979e+00,1.91982e+00,1.47564e+00},
+									  {1.19456e+00,1.58373e+00,1.64756e+00,1.80349e+00,1.88037e+00,2.13877e+00},
+									  {1.23561e+00,1.60814e+00,1.52813e+00,1.57036e+00,1.73784e+00,1.87226e+00},
+									  {1.49378e+00,1.25716e+00,1.41134e+00,1.69542e+00,1.60621e+00,1.76242e+00}};
+  double ptrel_reweight_param_1[NCentralityIndices-1][NJetPtIndices-1] = {{-9.10491e-01,-1.77829e+00,-2.00952e+00,-1.29628e+00,-1.31746e+00,-7.95699e-01},
+									  {-8.16984e-01,-1.04104e+00,-1.14595e+00,-1.25411e+00,-1.42819e+00,-1.61492e+00},
+									  {-4.50650e-01,-1.07022e+00,-9.69664e-01,-9.49163e-01,-1.18606e+00,-1.34418e+00},
+									  {-1.00716e+00,-6.31456e-01,-8.24604e-01,-1.24483e+00,-9.65237e-01,-1.26684e+00}};
+  double ptrel_reweight_param_2[NCentralityIndices-1][NJetPtIndices-1] = {{1.64941e-01,4.99555e-01,5.89812e-01,3.33413e-01,3.28973e-01,1.80478e-01},
+									  {2.01447e-01,3.13558e-01,3.12048e-01,3.50056e-01,4.47537e-01,4.43346e-01},
+									  {3.34257e-02,3.20543e-01,2.91702e-01,2.50573e-01,3.49992e-01,3.60869e-01},
+									  {3.21225e-01,1.96415e-01,2.60536e-01,3.93206e-01,2.31793e-01,3.69537e-01}};
+  double ptrel_reweight_param_3[NCentralityIndices-1][NJetPtIndices-1] = {{-4.45208e-03,-3.95133e-02,-4.50243e-02,-2.32179e-02,-2.38183e-02,-1.28901e-02},
+									  {-1.28132e-02,-2.68357e-02,-2.31305e-02,-2.68361e-02,-3.72566e-02,-3.42173e-02},
+									  {1.88560e-03,-2.73887e-02,-2.15626e-02,-1.87775e-02,-2.88646e-02,-2.76208e-02},
+									  {-2.68850e-02,-1.64639e-02,-2.11985e-02,-3.25855e-02,-1.65680e-02,-3.00956e-02}};
+
   
   // load fit functions
   loadFitFxn_vz();
@@ -404,8 +423,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
     if(w <= 0.0) continue;
     //if(w > 0.005) continue;
    
-    int CentralityIndex = getCentBin(em->hiBin-hiBinShift);
-    // int CentralityIndex = 1;
+    int CentralityIndex = getCentBin(hiBin_shifted);
     
     if(CentralityIndex < 0) continue;
    
@@ -526,6 +544,18 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
       if(jetPtIndex < 0) continue;
+
+
+      ptrel_reweight_fxn->SetParameter(0,ptrel_reweight_param_0[CentralityIndex-1][jetPtIndex-1]);
+      ptrel_reweight_fxn->SetParameter(1,ptrel_reweight_param_1[CentralityIndex-1][jetPtIndex-1]);
+      ptrel_reweight_fxn->SetParameter(2,ptrel_reweight_param_2[CentralityIndex-1][jetPtIndex-1]);
+      ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[CentralityIndex-1][jetPtIndex-1]);
+
+      if(doHadronPtRelReweightToMuon){
+	w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
+      }
+
+      
 
       h_dEta_trk_wta->Fill(dEta_trk_wta_i, w_jet);
       h_dPhi_trk_wta->Fill(dPhi_trk_wta_i, w_jet);
