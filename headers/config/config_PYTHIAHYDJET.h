@@ -30,7 +30,7 @@ bool doHadronPtRelReweight = false;
 bool doHadronPtRelReweightToMuon = true;
 bool doDRReweight = false;
 bool doWeightCut = false;
-bool doJetAxisSmearing = false;
+bool doJetAxisSmearing = true;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
 // jet-alterations for closure
@@ -40,9 +40,9 @@ bool onlyOneMuonTaggedJetPerEvent = false;
 
 // jet-axis smearing parameters
 double mu_phi = 0.0;
-double sigma_phi = 0.020;
+double sigma_phi = 0.010;
 double mu_eta = 0.0;
-double sigma_eta = 0.020;
+double sigma_eta = 0.010;
 
 
 
