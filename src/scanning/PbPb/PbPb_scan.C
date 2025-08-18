@@ -36,6 +36,11 @@
 #include "../../../JetEnergyCorrections/JetCorrector.h"
 // general analysis variables
 #include "../../../headers/AnalysisSetupV2p3.h"
+// JERCorrection params
+#include "../../../headers/fitParameters/JERCorrectionParams_PYTHIA_mu12.h"
+TF1 *fitFxn_PYTHIA_JERCorrection;
+// JER-correction function
+#include "../../../headers/fitFunctions/fitFxn_PYTHIA_JERCorrection.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -363,19 +368,6 @@ void PbPb_scan(int group = 1){
   JER_fxn->SetParameter(1,-1.79691e+00);
   JER_fxn->SetParameter(2,1.09880e+01);
 
-  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
-  TH2D *neutrino_energy_fraction_map;
-  TH1D *neutrino_energy_fraction_map_proj;
-  f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
-
-  TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
-  TH2D *neutrino_energy_map;
-  TH1D *neutrino_energy_map_proj;
-  f_neutrino_energy_map->GetObject("neutrino_energy_map",neutrino_energy_map);
-
-  TFile *f_neutrino_tag_fraction = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_tag_fraction.root");
-  TH1D *neutrino_tag_fraction;
-  f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
 
   // event loop
   int eventCounter = 0;
