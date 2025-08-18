@@ -69,8 +69,8 @@ TF1 *fitFxn_PYTHIA_JERCorrection;
 // print introduction
 #include "../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-//#include "../../../headers/config/config_PbPb_SingleMuon.h"
-#include "../../../headers/config/config_PbPb_MinBias.h"
+#include "../../../headers/config/config_PbPb_SingleMuon.h"
+//#include "../../../headers/config/config_PbPb_MinBias.h"
 //#include "../../../headers/config/config_PbPb_diJet.h"
 // read config
 #include "../../../headers/config/readConfig.h"
@@ -133,11 +133,11 @@ void PbPb_scan(int group = 1){
   // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_MinBias_withMinBiasTrigger/PbPb_MinBias_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_MinBiasTrigger_2025-07-31/PbPb_MinBias_scan_output_%i.root",group);
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_JERCorrection_2025-08-18/PbPb_MinBias_scan_output_%i.root",group);
+  // TString input = Form("/eos/user/c/cbennett/skims/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_JERCorrection_2025-08-18/PbPb_MinBias_scan_output_%i.root",group);
 
-  // TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_3CentBins_projectableTemplates_2025-06-25/PbPb_SingleMuon_scan_output_%i.root",group);
+  TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_BJetNeutrinoEnergyShift_2025-08-18/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;

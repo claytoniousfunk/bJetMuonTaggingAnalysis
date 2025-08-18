@@ -13,6 +13,6 @@ bool applyMinBiasTrigger = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
 // spectra alterations
-bool doBJetNeutrinoEnergyShift = false;
+bool doBJetNeutrinoEnergyShift = true;
 bool doJERCorrection = false;
 
