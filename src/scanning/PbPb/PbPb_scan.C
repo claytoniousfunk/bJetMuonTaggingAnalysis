@@ -65,8 +65,8 @@
 #include "../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
 //#include "../../../headers/config/config_PbPb_SingleMuon.h"
-//#include "../../../headers/config/config_PbPb_MinBias.h"
-#include "../../../headers/config/config_PbPb_diJet.h"
+#include "../../../headers/config/config_PbPb_MinBias.h"
+//#include "../../../headers/config/config_PbPb_diJet.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 // initialize histograms
@@ -125,8 +125,11 @@ void PbPb_scan(int group = 1){
   // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_HardProbes_2/PbPb_DiJet_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_scan_mu12_tight_pTmu-14_hiHFcut_3CentBins_projectableTemplates_2025-06-25/PbPb_HardProbes_scan_output_%i.root",group);
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_MinBias_withMinBiasTrigger/PbPb_MinBias_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_MinBiasTrigger_2025-07-31/PbPb_MinBias_scan_output_%i.root",group);
+  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_MinBias_withMinBiasTrigger/PbPb_MinBias_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_MinBiasTrigger_2025-07-31/PbPb_MinBias_scan_output_%i.root",group);
+
+  TString input = Form("/eos/user/c/cbennett/skims/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_JERCorrection_2025-08-18/PbPb_MinBias_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_3CentBins_projectableTemplates_2025-06-25/PbPb_SingleMuon_scan_output_%i.root",group);
@@ -360,6 +363,19 @@ void PbPb_scan(int group = 1){
   JER_fxn->SetParameter(1,-1.79691e+00);
   JER_fxn->SetParameter(2,1.09880e+01);
 
+  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
+  TH2D *neutrino_energy_fraction_map;
+  TH1D *neutrino_energy_fraction_map_proj;
+  f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
+
+  TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
+  TH2D *neutrino_energy_map;
+  TH1D *neutrino_energy_map_proj;
+  f_neutrino_energy_map->GetObject("neutrino_energy_map",neutrino_energy_map);
+
+  TFile *f_neutrino_tag_fraction = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_tag_fraction.root");
+  TH1D *neutrino_tag_fraction;
+  f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
 
   // event loop
   int eventCounter = 0;
@@ -591,6 +607,28 @@ void PbPb_scan(int group = 1){
       //cout << "rawPt = " << em->rawpt[i] << "  |  jetPt = " << em->jetpt[i] << "  |  corrPt = " << x << endl;
       if(doEtaPhiMask){
 	if(etaPhiMask(y,z)) continue;
+      }
+
+      double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
+      double smear_doBJetNeutrinoEnergyShift = 0.0;
+      if(doBJetNeutrinoEnergyShift){
+	//if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
+	skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
+	if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(x))) continue;
+	neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(x),neutrino_energy_map->GetYaxis()->FindBin(x)+1);
+	smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
+	x += smear_doBJetNeutrinoEnergyShift;
+      }
+
+      double mu_JERCorrection = 1.0;
+      double sigma_JERCorrection = 0.2;
+      double smear_JERCorrection = 0.0; // smeared pT
+      double k_JERCorrection = 0.0; // smearing parameter
+      if(doJERCorrection){
+	k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
+	sigma_JERCorrection = k_JERCorrection*JER_fxn->Eval(x);
+	smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
+	x = x * smear_JERCorrection;
       }
 
       //cout << "Event " << evi << ", jet " << i << endl;
