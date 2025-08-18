@@ -336,7 +336,7 @@ void PbPb_scan(int group = 1){
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
   
-  
+  loadFitFxn_PYTHIA_JERCorrection();
   
   TRandom *randomGenerator = new TRandom2();
 
