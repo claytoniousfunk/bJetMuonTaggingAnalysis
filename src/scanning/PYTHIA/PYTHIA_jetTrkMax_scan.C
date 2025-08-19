@@ -151,6 +151,7 @@ TH1D *h_jetTrkMaxDR_qJets[NJetPtIndices]; // quark jets
 TH1D *h_jetTrkMaxDR_gJets[NJetPtIndices]; // gluon jets
 TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
 TH2D *h_jetTrkMaxPtRel_recoJetPt[NTemplateIndices];
+TH2D *h_jetTrkMaxDR_recoJetPt[NTemplateIndices];
 TH1D *h_dEta_jet_wta;
 TH1D *h_dPhi_jet_wta;
 TH1D *h_dR_jet_wta;
@@ -247,7 +248,11 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   for(int t = 0; t < NTemplateIndices; t++){
 
     h_jetTrkMaxPtRel_recoJetPt[t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_T%i",t),Form("track #it{p}_{T}^{rel} vs jet $it{p}_{T}, allJets, %s", templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+    h_jetTrkMaxDR_recoJetPt[t] = new TH2D(Form("h_jetTrkMaxDR_recoJetPt_T%i",t),Form("#DeltaR(leading-hadron,jet) vs jet $it{p}_{T}, allJets, %s", templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+
+    
     h_jetTrkMaxPtRel_recoJetPt[t]->Sumw2();
+    h_jetTrkMaxDR_recoJetPt[t]->Sumw2();
     
   }
 
@@ -559,6 +564,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       for(int t = 0; t < NTemplateIndices; t++){
 
 	h_jetTrkMaxPtRel_recoJetPt[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	h_jetTrkMaxDR_recoJetPt[t]->Fill(jetTrkMaxDR_i,jetPtArray[t],w_jet);
 	
       }
       
@@ -597,6 +603,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
   for(int t = 0; t < NTemplateIndices; t++){
     h_jetTrkMaxPtRel_recoJetPt[t]->Write();
+    h_jetTrkMaxDR_recoJetPt[t]->Write();
   }
   
   wf->Close();
