@@ -36,7 +36,7 @@ bool doHadronPtRelReweight = false;
 bool doHadronPtRelReweightToMuon = false;
 bool doDRReweight = false;
 bool doWeightCut = false;
-bool doJetAxisSmearing = false;
+bool doJetAxisSmearing = true;
 // select dataset
 bool doDiJetSample = true;
 
