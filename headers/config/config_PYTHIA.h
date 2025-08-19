@@ -36,7 +36,7 @@ bool doHadronPtRelReweight = false;
 bool doHadronPtRelReweightToMuon = false;
 bool doDRReweight = false;
 bool doWeightCut = false;
-bool doJetAxisSmearing = false;
+bool doJetAxisSmearing = true;
 // select dataset
 bool doDiJetSample = true;
 
@@ -45,6 +45,6 @@ TString generator = "PYTHIA";
 
 // jet-axis smearing parameters
 double mu_phi = 0.0;
-double sigma_phi = 0.005;
+double sigma_phi = 0.01;
 double mu_eta = 0.0;
-double sigma_eta = 0.005;
+double sigma_eta = 0.01;
