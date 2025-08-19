@@ -428,10 +428,10 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       if(doJetAxisSmearing){
 	recoJetEta_i = recoJetEtaSmear_i;
 	recoJetPhi_i = recoJetPhiSmear_i;
+	jetTrkMaxDR_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEtaSmear_i,recoJetPhiSmear_i);
       }
       double jetTrkMaxPtRel_i = getPtRel(jetTrkMax_i,jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
-      // recalculate dR(leading-hadron,jet) with smeared jet axis
-      jetTrkMaxDR_i = getDr(jetTrkMaxEta_i,jetTrkMaxPhi_i,recoJetEtaSmear_i,recoJetPhiSmear_i);
+      
 
       double dEta_trk_wta_i = jetTrkMaxEta_i - recoJetEtaWTA_i;
       double dPhi_trk_wta_i = acos(cos(jetTrkMaxPhi_i - recoJetPhiWTA_i));
