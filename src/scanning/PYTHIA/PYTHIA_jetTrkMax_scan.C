@@ -331,9 +331,12 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   TRandom *randomGenerator = new TRandom2();
 
   TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
-  JER_fxn->SetParameter(0,-1.91758e-05);
-  JER_fxn->SetParameter(1,-1.79691e+00);
-  JER_fxn->SetParameter(2,1.09880e+01);
+  // JER_fxn->SetParameter(0,-1.91758e-05);
+  // JER_fxn->SetParameter(1,-1.79691e+00);
+  // JER_fxn->SetParameter(2,1.09880e+01);
+  JER_fxn->SetParameter(0,1.26585e-01);
+  JER_fxn->SetParameter(1,-9.72986e-01);
+  JER_fxn->SetParameter(2,3.67352e-04);
 
   TF1 *ptrel_reweight_fxn = new TF1("ptrel_reweight_fxn","[0] + [1]*x + [2]*x*x + [3]*x*x*x",0,5);
   double ptrel_reweight_param_0[NJetPtIndices-1] = {1.32619e+00,1.46306e+00,1.35661e+00,1.43428e+00,1.65955e+00,1.71624e+00};
@@ -502,7 +505,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
       bool hasGenJetMatch = false;
       
-      if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
+      if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 50.) continue;
       if(jetTrkMax_i < 14.) continue;
 		
       int jetPtIndex = getJetPtBin(recoJetPt_i);
