@@ -91,12 +91,63 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 #include "../../../headers/config/readConfig.h"
 // remove HYDJET jets function
 #include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
+// dataset naming functions
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIA_response.h"
 
 
 void PYTHIA_scan_response(int group = 1){
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_response_pThat-15_inclJets/PYTHIA_DiJet_scan_output_%i.root",group);
+
+  TString inputDataset = "";
+  TString inputFileName = "";
+
+
+  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/";
+  inputFileName = "PYTHIA_DiJet_skim_output";
+
+  TString input = "";
+  input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
+
+  std::cout << "input dataset = " << input << std::endl;
+
+  TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
+
+  TString outputDatasetName = "";
+
+  
+  outputDatasetName = configureOutputDatasetName(generator,
+						 doDiJetSample,
+						 pthatcut,
+						 doVzReweight,
+						 doJetPtReweight,
+						 doGenJetPthatFilter,
+						 doLeadingXjetDumpFilter,
+						 doXdumpReweight,
+						 doJetTrkMaxFilter,
+						 doRemoveHYDJETjet,
+						 doEtaPhiMask,
+						 doDRReweight,
+						 doWeightCut,
+						 doJetAxisSmearing,
+						 mu_phi,
+						 sigma_phi,
+						 mu_eta,
+						 sigma_eta,
+						 doHadronPtRelReweight,
+						 doHadronPtRelReweightToMuon,
+						 doBJetEnergyShift,
+						 doBJetNeutrinoEnergyShift,
+						 doJERCorrection,
+						 doJESCorrection,				   
+						 apply_JER_smear,
+						 apply_JEU_shift_up,
+						 apply_JEU_shift_down);
+
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+
+  std::cout << "output dataset = " << output << std::endl;
+
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_response_pThat-15_inclJets/PYTHIA_DiJet_scan_output_%i.root",group);
 
 
   
@@ -375,11 +426,10 @@ void PYTHIA_scan_response(int group = 1){
   TRandom *randomGenerator = new TRandom2();
 
   // jet-energy resolution fit function
-  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
+  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,500);
   JER_fxn->SetParameter(0,1.26585e-01);
   JER_fxn->SetParameter(1,-9.72986e-01);
   JER_fxn->SetParameter(2,3.67352e-04);
-
 
   loadFitFxn_vz();
   loadFitFxn_PYTHIA_JESb();
@@ -399,7 +449,7 @@ void PYTHIA_scan_response(int group = 1){
   TH1D *neutrino_tag_fraction;
   f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
 
-  TF1 *fxn_JES_Corr = new TF1("fxn_JES_Corr","[0] + [1]*x",80,500);
+  TF1 *fxn_JES_Corr = new TF1("fxn_JES_Corr","[0] + [1]*x",50,500);
   fxn_JES_Corr->SetParameter(0,0.907383);
   fxn_JES_Corr->SetParameter(1,0.000114088);
   
@@ -570,7 +620,7 @@ void PYTHIA_scan_response(int group = 1){
 	    double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
 	    double smear_doBJetNeutrinoEnergyShift = 0.0;
 	    if(doBJetNeutrinoEnergyShift){
-	    //if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
+	      //if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
 	      skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
 	      if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(matchedRecoJetPt))) continue;
 	      neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
@@ -618,10 +668,10 @@ void PYTHIA_scan_response(int group = 1){
       // fill response matrix
       if(hasRecoJetMatch) {
       
-      //if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
-      //if(hasRecoJetMatch && hasRecoJetNeutrino) {   // keep only neutrino-full jets
-      //if(hasRecoJetMatch && hasRecoJetMuon && matchedRecoJetPt) {   // keep only muon-tagged jets
-      //if(hasRecoJetMatch && hasRecoJetMuon && hasRecoJetNeutrino) { // keep only muon-tagged + neutrino-tagged jets
+	//if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
+	//if(hasRecoJetMatch && hasRecoJetNeutrino) {   // keep only neutrino-full jets
+	//if(hasRecoJetMatch && hasRecoJetMuon && matchedRecoJetPt) {   // keep only muon-tagged jets
+	//if(hasRecoJetMatch && hasRecoJetMuon && hasRecoJetNeutrino) { // keep only muon-tagged + neutrino-tagged jets
 
 	//cout << "matchedRecoJetPt = " << matchedRecoJetPt << endl;
 	
