@@ -1594,24 +1594,26 @@ void PYTHIA_scan(int group = 1){
 	  if(jetPtIndex > 0) {
 
 	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
+
+	    if(hasGenJetMatch){
+	      if(jetPtIndex == matchedGenJetPtIndex){
+		h_muptrel_proper_allJets[0]->Fill(muPtRel_i,w_jet);
+		h_muptrel_proper_allJets[jetPtIndex]->Fill(muPtRel_i,w_jet);
+	      }
+	      else if(jetPtIndex < matchedGenJetPtIndex){
+		h_muptrel_spillFromAbove_allJets[0]->Fill(muPtRel_i,w_jet);
+		h_muptrel_spillFromAbove_allJets[jetPtIndex]->Fill(muPtRel_i,w_jet);
+	      }
+	      else if(jetPtIndex > matchedGenJetPtIndex){
+		h_muptrel_spillFromBelow_allJets[0]->Fill(muPtRel_i,w_jet);
+		h_muptrel_spillFromBelow_allJets[jetPtIndex]->Fill(muPtRel_i,w_jet);
+	      }
+	      else{};
+	    }
 	    
 	  }
 
-	  if(hasGenJetMatch){
-	    if(jetPtIndex == matchedGenJetPtIndex){
-	      h_muptrel_proper_allJets[0]->Fill(muPtRel_i,w_jet);
-	      h_muptrel_proper_allJets[jetPtIndex]->Fill(muPtRel_i,w_jet);
-	    }
-	    else if(jetPtIndex < matchedGenJetPtIndex){
-	      h_muptrel_spillFromAbove_allJets[0]->Fill(muPtRel_i,w_jet);
-	      h_muptrel_spillFromAbove_allJets[jetPtIndex]->Fill(muPtRel_i,w_jet);
-	    }
-	    else if(jetPtIndex > matchedGenJetPtIndex){
-	      h_muptrel_spillFromBelow_allJets[0]->Fill(muPtRel_i,w_jet);
-	      h_muptrel_spillFromBelow_allJets[jetPtIndex]->Fill(muPtRel_i,w_jet);
-	    }
-	    else{};
-	  }
+	  
 	    
 	} 
 
