@@ -283,8 +283,8 @@ TH2D *h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[NJet
 TH2D *h_muJetDr_flavor[NJetPtIndices];
 
 TH1D *h_muptrel_proper_allJets[NJetPtIndices];
-TH1D *h_muptrel_proper_spillFromBelow[NJetPtIndices];
-TH1D *h_muptrel_proper_spillFromAbove[NJetPtIndices];
+TH1D *h_muptrel_spillFromBelow_allJets[NJetPtIndices];
+TH1D *h_muptrel_spillFromAbove_allJets[NJetPtIndices];
 
 
 
