@@ -1057,6 +1057,7 @@ void PYTHIA_scan(int group = 1){
       if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < jetPtCut) continue;
 		
       int jetPtIndex = getJetPtBin(recoJetPt_i);
+      int jetPtSmearIndex = getJetPtBin(recoJetPt_JERSmear_i);
       int matchedGenJetPtIndex = 0;
 
       if(recoJetPt_i > leadingRecoJetPt) leadingRecoJetPt = recoJetPt_i;
@@ -1596,15 +1597,18 @@ void PYTHIA_scan(int group = 1){
 	    h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[jetPtIndex]->Fill(recoJetEta_i,recoJetPhi_i,w_jet);
 
 	    if(hasGenJetMatch){
-	      if(jetPtIndex == matchedGenJetPtIndex){
+	      //if(jetPtIndex == matchedGenJetPtIndex){
+	      if(jetPtSmearIndex == matchedGenJetPtIndex){
 		h_muptrel_proper_allJets[0]->Fill(muPtRel_i,w_jet);
 		h_muptrel_proper_allJets[jetPtIndex]->Fill(muPtRel_i,w_jet);
 	      }
-	      else if(jetPtIndex < matchedGenJetPtIndex){
+	      //else if(jetPtIndex < matchedGenJetPtIndex){
+	      else if(jetPtSmearIndex < matchedGenJetPtIndex){
 		h_muptrel_spillFromAbove_allJets[0]->Fill(muPtRel_i,w_jet);
 		h_muptrel_spillFromAbove_allJets[jetPtIndex]->Fill(muPtRel_i,w_jet);
 	      }
-	      else if(jetPtIndex > matchedGenJetPtIndex){
+	      //else if(jetPtIndex > matchedGenJetPtIndex){
+	      else if(jetPtSmearIndex > matchedGenJetPtIndex){
 		h_muptrel_spillFromBelow_allJets[0]->Fill(muPtRel_i,w_jet);
 		h_muptrel_spillFromBelow_allJets[jetPtIndex]->Fill(muPtRel_i,w_jet);
 	      }
