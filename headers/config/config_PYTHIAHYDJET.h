@@ -34,7 +34,7 @@ bool doJetAxisSmearing = true;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
 // jet-alterations for closure
-bool doBJetNeutrinoEnergyShift = true;
+bool doBJetNeutrinoEnergyShift = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
 
