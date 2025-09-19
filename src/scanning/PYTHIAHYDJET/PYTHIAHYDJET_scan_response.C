@@ -161,8 +161,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 						 hiBinShift);
 
 
-  // TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -513,8 +513,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      if(hasRecoJetMatch && hasRecoJetMuon) {
-      //if(hasRecoJetMatch) {
+      //if(hasRecoJetMatch && hasRecoJetMuon) {
+      if(hasRecoJetMatch) {
 	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
