@@ -143,7 +143,8 @@ void PYTHIA_scan_response(int group = 1){
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down);
 
-  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -666,7 +667,8 @@ void PYTHIA_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      if(hasRecoJetMatch) {
+      //if(hasRecoJetMatch) {
+      if(hasRecoJetMatch && hasRecoJetMuon) {
       
 	//if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
 	//if(hasRecoJetMatch && hasRecoJetNeutrino) {   // keep only neutrino-full jets
