@@ -7,7 +7,7 @@ TString hltString = "hltTree";
 const int NeventFilters = 5;
 std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter", "HBHENoiseFilterResultRun2Loose", "collisionEventSelectionAODv2", "phfCoincFilter2Th4", "pclusterCompatibilityFilter"};
 // options for systematic studies
-bool apply_JER_smear = false;
+bool apply_JER_smear = true;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
@@ -24,7 +24,7 @@ bool doJetTrkMaxFilter = true;
 bool doRemoveHYDJETjet = true;
 bool doEtaPhiMask = false;
 bool doBJetEnergyShift = false;
-bool doJERCorrection = true;
+bool doJERCorrection = false;
 bool doJESCorrection = false;
 bool doHadronPtRelReweight = false;
 bool doHadronPtRelReweightToMuon = true;
