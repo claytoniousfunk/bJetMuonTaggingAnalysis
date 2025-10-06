@@ -324,10 +324,10 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   TRandom *randomGenerator = new TRandom2();
 
   // jet-energy resolution fit function
-  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
-  JER_fxn->SetParameter(0,-1.91758e-05);
-  JER_fxn->SetParameter(1,-1.79691e+00);
-  JER_fxn->SetParameter(2,1.09880e+01);
+  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,500);
+  JER_fxn->SetParameter(0,1.26585e-01);
+  JER_fxn->SetParameter(1,-9.72986e-01);
+  JER_fxn->SetParameter(2,3.67352e-04);
 
   // define vz & hiBin reweighting functions
   loadFitFxn_vz();
