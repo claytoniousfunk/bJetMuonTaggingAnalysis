@@ -587,10 +587,10 @@ void PbPb_scan(int group = 1){
       double jetTrkMax_i = em->jetTrkMax[i]; 
 
 
-      double sigma = 0.663*JER_fxn->Eval(x);
-      double mu = 1.0;
+      // double sigma = 0.663*JER_fxn->Eval(x);
+      // double mu = 1.0;
 
-      double smear = randomGenerator->Gaus(mu,sigma);
+      // double smear = randomGenerator->Gaus(mu,sigma);
       //cout << "smear = " << smear << endl;
       
       //x = x*smear;
