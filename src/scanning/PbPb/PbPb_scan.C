@@ -69,9 +69,9 @@ TF1 *fitFxn_PYTHIA_JERCorrection;
 // print introduction
 #include "../../../headers/introductions/printIntroduction_PbPb_scan_V3p7.h"
 // analysis config
-#include "../../../headers/config/config_PbPb_SingleMuon.h"
+//#include "../../../headers/config/config_PbPb_SingleMuon.h"
 //#include "../../../headers/config/config_PbPb_MinBias.h"
-//#include "../../../headers/config/config_PbPb_diJet.h"
+#include "../../../headers/config/config_PbPb_diJet.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 // initialize histograms
@@ -127,8 +127,8 @@ TH2D *h_muptrel_hiBin[NJetPtIndices];
 ///////////////////////  start the program
 void PbPb_scan(int group = 1){
 
-  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_HardProbes_2/PbPb_DiJet_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_scan_mu12_tight_pTmu-14_hiHFcut_3CentBins_projectableTemplates_2025-06-25/PbPb_HardProbes_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_HardProbes_2/PbPb_DiJet_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_scan_mu12_tight_pTmu-14_hiHFcut_2025-10-13/PbPb_HardProbes_scan_output_%i.root",group);
 
   // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_MinBias_withMinBiasTrigger/PbPb_MinBias_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_MinBiasTrigger_2025-07-31/PbPb_MinBias_scan_output_%i.root",group);
@@ -136,8 +136,8 @@ void PbPb_scan(int group = 1){
   // TString input = Form("/eos/user/c/cbennett/skims/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_JERCorrection_2025-08-18/PbPb_MinBias_scan_output_%i.root",group);
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_BJetNeutrinoEnergyShift_2025-08-18/PbPb_SingleMuon_scan_output_%i.root",group);
+  // TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_BJetNeutrinoEnergyShift_2025-08-18/PbPb_SingleMuon_scan_output_%i.root",group);
   
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -363,10 +363,10 @@ void PbPb_scan(int group = 1){
 
   
   // jet-energy resolution fit function
-  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
-  JER_fxn->SetParameter(0,-1.91758e-05);
-  JER_fxn->SetParameter(1,-1.79691e+00);
-  JER_fxn->SetParameter(2,1.09880e+01);
+  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,500);
+  JER_fxn->SetParameter(0,1.26585e-01);
+  JER_fxn->SetParameter(1,-9.72986e-01);
+  JER_fxn->SetParameter(2,3.67352e-04);
 
 
   // event loop
@@ -599,6 +599,29 @@ void PbPb_scan(int group = 1){
       //cout << "rawPt = " << em->rawpt[i] << "  |  jetPt = " << em->jetpt[i] << "  |  corrPt = " << x << endl;
       if(doEtaPhiMask){
 	if(etaPhiMask(y,z)) continue;
+      }
+
+      // initialize
+      double correctedPt_down = 1.0;
+      double correctedPt_up = 1.0;
+
+      if(apply_JEU_shift_up){
+	correctedPt_up = x * (1 + JEU.GetUncertainty().second);
+	x = correctedPt_up;
+      }
+      else if(apply_JEU_shift_down){
+	correctedPt_down = x * (1 - JEU.GetUncertainty().first);
+	x = correctedPt_down;
+      }
+
+      double mu = 1.0;
+      double sigma = 0.2;
+      double smear = 0.0;
+
+      if(apply_JER_smear){
+	sigma = 0.663*JER_fxn->Eval(x); // apply a 20% smear
+	smear = randomGenerator->Gaus(mu,sigma);
+	x = x * smear;
       }
 
       double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
