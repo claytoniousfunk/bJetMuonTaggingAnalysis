@@ -34,6 +34,8 @@
 #include "../../../eventMap/eventMap.h"
 // jet corrector
 #include "../../../JetEnergyCorrections/JetCorrector.h"
+// jet uncertainty
+#include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
 #include "../../../headers/AnalysisSetupV2p3.h"
 // JERCorrection params
@@ -138,6 +140,7 @@ void pp_scan(int group = 1){
   Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
   Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   JetCorrector JEC(Files);
+  JetUncertainty JEU("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
   /// >>>>>>>>>>>>>>> print out some info
   printIntroduction_pp_scan_V3p7();
   readConfig();
@@ -232,8 +235,8 @@ void pp_scan(int group = 1){
   em->loadMuon(muonTreeString);
   cout << "	Loading muon triggers..." << endl;
   em->loadMuonTrigger(hltString);
-  cout << "	Loading tracks..." << endl;
-  em->loadTrack();
+  //cout << "	Loading tracks..." << endl;
+  //em->loadTrack();
   cout << "	Loading gen particles..." << endl;
   em->loadGenParticle();
   cout << "	Variables initilized!" << endl << endl ;
