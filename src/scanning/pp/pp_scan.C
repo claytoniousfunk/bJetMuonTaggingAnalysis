@@ -126,11 +126,11 @@ void pp_scan(int group = 1){
   // TString input = Form("/eos/user/c/cbennett/skims/output_pp_SingleMuon/pp_SingleMuon_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_SingleMuon_mu12_tight_pTmu-14_projectableTemplates_2025-06-30/pp_SingleMuon_scan_output_%i.root",group);
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1/pp_MinBias_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_2025-06-30/pp_MinBias_scan_output_%i.root",group);
+  // TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1/pp_MinBias_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_2025-06-30/pp_MinBias_scan_output_%i.root",group);
 
-  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_jet60_mu12_tight_pTmu-14_projectableTemplates/pp_HighEGJet_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_mu12_tight_pTmu-14_2025-10-13/pp_HighEGJet_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -444,6 +444,30 @@ void pp_scan(int group = 1){
 	x = x * fxn_JES_Corr->Eval(x);
       }
 
+
+      // initialize
+      double correctedPt_down = 1.0;
+      double correctedPt_up = 1.0;
+
+      if(apply_JEU_shift_up){
+	correctedPt_up = x * (1 + JEU.GetUncertainty().second);
+	x = correctedPt_up;
+      }
+      else if(apply_JEU_shift_down){
+	correctedPt_down = x * (1 - JEU.GetUncertainty().first);
+	x = correctedPt_down;
+      }
+
+      double mu = 1.0;
+      double sigma = 0.2;
+      double smear = 0.0;
+
+      if(apply_JER_smear){
+	sigma = 0.663*JER_fxn->Eval(x); // apply a 20% smear
+	smear = randomGenerator->Gaus(mu,sigma);
+	x = x * smear;
+      }
+      
       double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
       double smear_doBJetNeutrinoEnergyShift = 0.0;
       if(doBJetNeutrinoEnergyShift){
