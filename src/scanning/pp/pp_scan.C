@@ -132,7 +132,7 @@ void pp_scan(int group = 1){
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_2025-06-30/pp_MinBias_scan_output_%i.root",group);
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_mu12_tight_pTmu-14_2025-10-13_applyJERsmear/pp_HighEGJet_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_mu12_tight_pTmu-14_2025-10-13_applyJEUShiftUp/pp_HighEGJet_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
