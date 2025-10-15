@@ -96,6 +96,8 @@ TH1D *h_hiBin_inclRecoMuonTag_triggerOn;
 // ~~~~~~~~~ jet variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ----------------------------------------- incl. reco jets --------------
 TH1D *h_inclRecoJetPt;
+TH1D *h_muTaggedRecoJetPt;
+TH1D *h_muTaggedRecoJetPt_triggerOn;
 TH1D *h_inclRecoJetEta;
 TH1D *h_inclRecoJetPhi;
 TH2D *h_inclRecoJetPt_inclRecoJetEta;
@@ -201,6 +203,8 @@ void pp_scan(int group = 1){
   h_vz_inclRecoMuonTag_triggerOn = new TH1D("h_vz_inclRecoMuonTag_triggerOn","vz, events with inclRecoJet-inclRecoMuonTag-triggerOn",NVzBins,vzMin,vzMax);
   // ----------------------------------------- incl. reco jets --------------
   h_inclRecoJetPt = new TH1D("h_inclRecoJetPt","incl. reco p_{T}^{jet}",NPtBins,ptMin,ptMax);
+  h_muTaggedRecoJetPt = new TH1D("h_muTaggedRecoJetPt","#mu-tagged reco p_{T}^{jet}",NPtBins,ptMin,ptMax);
+  h_muTaggedRecoJetPt_triggerOn = new TH1D("h_muTaggedRecoJetPt_triggerOn","#mu-tagged reco p_{T}^{jet}, trigger ON",NPtBins,ptMin,ptMax);
   h_inclRecoJetEta = new TH1D("h_inclRecoJetEta","incl. reco #eta^{jet}",NEtaBins,etaMin,etaMax);
   h_inclRecoJetPhi = new TH1D("h_inclRecoJetPhi","incl. reco #phi^{jet}",NPhiBins,phiMin,phiMax);
   h_inclRecoJetPt_inclRecoJetEta = new TH2D("h_inclRecoJetPt_inclRecoJetEta","incl. reco #eta^{jet} vs. incl. reco p_{T}^{jet}",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
@@ -237,6 +241,8 @@ void pp_scan(int group = 1){
   h_vz_inclRecoMuonTag_triggerOn->Sumw2();
 
   h_inclRecoJetPt->Sumw2();
+  h_muTaggedRecoJetPt->Sumw2();
+  h_muTaggedRecoJetPt_triggerOn->Sumw2();
   h_inclRecoJetEta->Sumw2();
   h_inclRecoJetPhi->Sumw2();
   h_inclRecoJetPt_inclRecoJetEta->Sumw2();
@@ -483,6 +489,10 @@ void pp_scan(int group = 1){
       double y = em->jeteta[i]; // recoJetEta
       double z = em->jetphi[i]; // recoJetPhi
       double jetTrkMax_i = em->jetTrkMax[i];
+      double inJetMuPt_i = em->mupt[i];
+      double inJetMuEta_i = em->mueta[i];
+      double inJetMuPhi_i = em->muphi[i];
+      double inJetMuPtRel_i = em->muptrel[i];
       double muJetDr_i = -99.0;
 
       if(doJetTrkMaxFilter){
@@ -614,6 +624,12 @@ void pp_scan(int group = 1){
      
       // Fill the jet/event histograms
       h_inclRecoJetPt->Fill(x,w);
+      if(inJetMuPt_i > 14. && fabs(inJetMuEta_i) < 2.){
+	h_muTaggedRecoJetPt->Fill(x,w);
+	if(evtTriggerDecision) h_muTaggedRecoJetPt_triggerOn->Fill(x,w);	  
+      }
+
+      
       h_inclRecoJetEta->Fill(y,w);
       h_inclRecoJetPhi->Fill(z,w);
       h_inclRecoJetPt_inclRecoJetEta->Fill(x,y,w);
@@ -696,6 +712,8 @@ void pp_scan(int group = 1){
   h_vz_inclRecoMuonTag_triggerOn->Write();
    
   h_inclRecoJetPt->Write();
+  h_muTaggedRecoJetPt->Write();
+  h_muTaggedRecoJetPt_triggerOn->Write();
   h_inclRecoJetEta->Write();
   h_inclRecoJetPhi->Write();
   h_inclRecoJetPt_inclRecoJetEta->Write();
