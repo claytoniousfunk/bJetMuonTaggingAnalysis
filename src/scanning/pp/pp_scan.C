@@ -68,10 +68,20 @@ TF1 *fitFxn_PYTHIA_JERCorrection;
 // print introduction
 #include "../../../headers/introductions/printIntroduction_pp_scan_V3p7.h"
 // analysis config
-#include "../../../headers/config/config_pp_SingleMuon.h"
+#include "../../../headers/config/config_pp.h"
+//#include "../../../headers/config/config_pp_SingleMuon.h"
 //#include "../../../headers/config/config_pp_MB.h"
 // read config
 #include "../../../headers/config/readConfig.h"
+// dataset naming functions
+#include "../../../headers/functions/getDatasetName/getDatasetName_pp.h"
+#include "../../../headers/functions/getInputFileName/getInputFileName_pp.h"
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_pp.h"
+
+
+
+
+
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // -----------------------------------------events w/ incl. reco jet -------
@@ -118,6 +128,41 @@ TH2D *h_muJetDr_recoJetPt;
 ///////////////////////  start the program
 void pp_scan(int group = 1){
 
+
+  TString inputDataset = "";
+  TString inputFileName = "";
+
+  inputDataset = getDatasetName(doSingleMuonSample,
+				doMinBiasSample,
+				doHighEGJetSample);
+
+  inputFileName = getInputFileName(doSingleMuonSample,
+				   doMinBiasSample,
+				   doHighEGJetSample);
+
+  TString input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
+  std::cout << "input dataset = " << input << std::endl;
+  TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
+
+  TString outputDatasetName = "";
+  outputDatasetName = configureOutputDatasetName(doSingleMuonSample,
+						 doMinBiasSample,
+						 doHighEGJetSample,
+						 applyJet60Trigger,
+						 applyJet80Trigger,
+						 doJetTrkMaxFilter,
+						 doEtaPhiMask,
+						 doJESCorrection,
+						 doBJetNeutrinoEnergyShift,
+						 doJERCorrection,
+						 apply_JER_smear,
+						 apply_JEU_shift_up,
+						 apply_JEU_shift_down);
+
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+
+  std::cout << "output dataset = " << output << std::endl;
+
   //TString input = Form("../../../rootFiles/skimmingOutput/pp/output/pp_skim_output_%i.root",group);
   //TString input = "../../../rootFiles/skimmingOutput/pp/test/testFile.root";
 
@@ -131,8 +176,8 @@ void pp_scan(int group = 1){
   // TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1/pp_MinBias_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_2025-06-30/pp_MinBias_scan_output_%i.root",group);
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_mu12_tight_pTmu-14_2025-10-13_applyJEUShiftDown/pp_HighEGJet_scan_output_%i.root",group);
+  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
+  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_mu12_tight_pTmu-14_2025-10-13_applyJEUShiftDown/pp_HighEGJet_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -245,8 +290,13 @@ void pp_scan(int group = 1){
 
 
   // define event filters
-  em->regEventFilter(NeventFilters, eventFilters);
+  if(doSingleMuonSample || doHighEGJetSample){
+    em->regEventFilter(NeventFilters_SingleMuon, eventFilters_SingleMuon);
+  }
 
+  else if(doMinBiasSample){
+    em->regEventFilter(NeventFilters_MinBias, eventFilters_MinBias);
+  }
 
   loadFitFxn_PYTHIA_JERCorrection();
   
