@@ -16,7 +16,7 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
 {
 
   TString result = "output";
-  result.Append(Form("_pp");
+  result.Append("_pp");
 
   TString datasetIndicator = "";
   if(doSingleMuonSample) datasetIndicator = "_SingleMuon";
