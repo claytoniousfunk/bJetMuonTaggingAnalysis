@@ -301,7 +301,8 @@ void pp_scan(int group = 1){
   }
 
   else if(doMinBiasSample){
-    em->regEventFilter(NeventFilters_MinBias, eventFilters_MinBias);
+    //em->regEventFilter(NeventFilters_MinBias, eventFilters_MinBias);
+    em->regEventFilter(NeventFilters_SingleMuon, eventFilters_SingleMuon);
   }
 
   loadFitFxn_PYTHIA_JERCorrection();
