@@ -136,7 +136,7 @@ void PbPb_scan(int group = 1){
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_MinBiasTrigger_2025-07-31/PbPb_MinBias_scan_output_%i.root",group);
 
   TString input = Form("/eos/user/c/cbennett/skims/output_skims_PbPb_HIMinimumBias0/PbPb_MinBias_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_applyJERsmear_2025-10-16/PbPb_MinBias_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_applyJEUShiftUp_2025-10-16/PbPb_MinBias_scan_output_%i.root",group);
 
   // TString input = Form("/eos/user/c/cbennett/skims/output_PbPb_SingleMuon_withWTA/PbPb_SingleMuon_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_BJetNeutrinoEnergyShift_2025-08-18/PbPb_SingleMuon_scan_output_%i.root",group);
