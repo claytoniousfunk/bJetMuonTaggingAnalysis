@@ -22,7 +22,7 @@ bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = true;
 // select dataset
-bool doSingleMuonSample = false;
+bool doSingleMuonSample = true;
 bool doMinBiasSample = false;
-bool doHighEGJetSample = true;
+bool doHighEGJetSample = false;
 
