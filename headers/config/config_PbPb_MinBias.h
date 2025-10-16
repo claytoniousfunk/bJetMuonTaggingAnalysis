@@ -14,4 +14,8 @@ bool applyMinBiasTrigger = false;
 bool onlyOneMuonTaggedJetPerEvent = false;
 // spectra alterations
 bool doBJetNeutrinoEnergyShift = false;
-bool doJERCorrection = true;
+bool doJERCorrection = false;
+// options for systematic studies
+bool apply_JER_smear = false;
+bool apply_JEU_shift_up = false;
+bool apply_JEU_shift_down = true;
