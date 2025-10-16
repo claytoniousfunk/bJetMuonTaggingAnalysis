@@ -18,9 +18,9 @@ bool doJESCorrection = false;
 bool doBJetNeutrinoEnergyShift = false;
 bool doJERCorrection = false;
 // options for systematic studies
-bool apply_JER_smear = false;
+bool apply_JER_smear = true;
 bool apply_JEU_shift_up = false;
-bool apply_JEU_shift_down = true;
+bool apply_JEU_shift_down = false;
 // select dataset
 bool doSingleMuonSample = false;
 bool doMinBiasSample = true;
