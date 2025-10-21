@@ -646,26 +646,26 @@ void PYTHIA_scan_response(int group = 1){
       // begin gen-muon loop
       
       bool hasGenMuon = false;
-      for(int j = 0; j < em->gpptp->size(); j++){
+      // for(int j = 0; j < em->gpptp->size(); j++){
 
-	if(hasGenMuon) continue;
+      // 	if(hasGenMuon) continue;
 
-	if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+      // 	if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+      // 	if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
-	double genMuonPt_j = em->gpptp->at(j);
-	double genMuonEta_j = em->gpetap->at(j);
-	double genMuonPhi_j = em->gpphip->at(j);
+      // 	double genMuonPt_j = em->gpptp->at(j);
+      // 	double genMuonEta_j = em->gpetap->at(j);
+      // 	double genMuonPhi_j = em->gpphip->at(j);
 
-	if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;
+      // 	if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;
 
-	if(getDr(genMuonEta_j,genMuonPhi_j,y,z) < deltaRCut){
-	  hasGenMuon = true;
-	  h_inclGenJetPt_inclGenMuonTag_flavor->Fill(x,jetFlavorInt,w);	  
-	}
+      // 	if(getDr(genMuonEta_j,genMuonPhi_j,y,z) < deltaRCut){
+      // 	  hasGenMuon = true;
+      // 	  h_inclGenJetPt_inclGenMuonTag_flavor->Fill(x,jetFlavorInt,w);	  
+      // 	}
 	
-      }
+      // }
 
       
 			
