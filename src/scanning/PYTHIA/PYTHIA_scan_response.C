@@ -102,7 +102,8 @@ void PYTHIA_scan_response(int group = 1){
   TString inputFileName = "";
 
 
-  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/";
+  //inputDataset = "/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/";
+  inputDataset = "/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_noRecoJetPtCut//";
   inputFileName = "PYTHIA_DiJet_skim_output";
 
   TString input = "";
@@ -142,6 +143,8 @@ void PYTHIA_scan_response(int group = 1){
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down);
+
+  outputDatasetName.Append("_noNeutrinoInfo");
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
