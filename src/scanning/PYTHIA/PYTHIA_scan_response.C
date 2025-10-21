@@ -599,17 +599,18 @@ void PYTHIA_scan_response(int group = 1){
 	    }
 
 	    // loop through gen particles to find gen-neutrino match
-	    for(int j = 0; j < em->gpptp->size(); j++){
-	      if(TMath::Abs(em->gppdgIDp->at(j)) != 12 && TMath::Abs(em->gppdgIDp->at(j)) != 14 && TMath::Abs(em->gppdgIDp->at(j)) != 16 && TMath::Abs(em->gppdgIDp->at(j)) != 18) continue;
-	      double genNeutrinoPt_j = em->gpptp->at(j);
-	      double genNeutrinoEta_j = em->gpetap->at(j);
-	      double genNeutrinoPhi_j = em->gpphip->at(j);
-	      if(genNeutrinoPt_j < nuPtCut || genNeutrinoPt_j > nuPtMaxCut || fabs(genNeutrinoEta_j) > 2.0) continue;
-	      if(getDr(genNeutrinoEta_j,genNeutrinoPhi_j,em->jeteta[k],em->jetphi[k]) < deltaRCut){
-		hasRecoJetNeutrino = true;
-		matchedNeutrinoPt = genNeutrinoPt_j;
+	    if(!skipGenParticles){
+	      for(int j = 0; j < em->gpptp->size(); j++){
+		if(TMath::Abs(em->gppdgIDp->at(j)) != 12 && TMath::Abs(em->gppdgIDp->at(j)) != 14 && TMath::Abs(em->gppdgIDp->at(j)) != 16 && TMath::Abs(em->gppdgIDp->at(j)) != 18) continue;
+		double genNeutrinoPt_j = em->gpptp->at(j);
+		double genNeutrinoEta_j = em->gpetap->at(j);
+		double genNeutrinoPhi_j = em->gpphip->at(j);
+		if(genNeutrinoPt_j < nuPtCut || genNeutrinoPt_j > nuPtMaxCut || fabs(genNeutrinoEta_j) > 2.0) continue;
+		if(getDr(genNeutrinoEta_j,genNeutrinoPhi_j,em->jeteta[k],em->jetphi[k]) < deltaRCut){
+		  hasRecoJetNeutrino = true;
+		  matchedNeutrinoPt = genNeutrinoPt_j;
+		}
 	      }
-
 	    }
 
 	    if(doNeutrinoEnergyAddition && hasRecoJetNeutrino){
