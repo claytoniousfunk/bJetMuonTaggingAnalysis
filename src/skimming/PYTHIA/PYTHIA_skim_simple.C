@@ -84,8 +84,8 @@ void PYTHIA_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("rawpt",1);
     old_jet_tree->SetBranchStatus("jteta",1);
     old_jet_tree->SetBranchStatus("jtphi",1);
-    old_jet_tree->SetBranchStatus("WTAeta",1);
-    old_jet_tree->SetBranchStatus("WTAphi",1);
+    // old_jet_tree->SetBranchStatus("WTAeta",1);
+    // old_jet_tree->SetBranchStatus("WTAphi",1);
     old_jet_tree->SetBranchStatus("trackMax",1);
     old_jet_tree->SetBranchStatus("nref",1);
     old_jet_tree->SetBranchStatus("jtPartonFlavor",1);
@@ -100,9 +100,9 @@ void PYTHIA_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("muphi",1);
     old_jet_tree->SetBranchStatus("muptrel",1);
     old_jet_tree->SetBranchStatus("mudr",1);
-    old_jet_tree->SetBranchStatus("trackMaxEta",1);
-    old_jet_tree->SetBranchStatus("trackMaxPhi",1);
-    old_jet_tree->SetBranchStatus("trackMaxDR",1);
+    // old_jet_tree->SetBranchStatus("trackMaxEta",1);
+    // old_jet_tree->SetBranchStatus("trackMaxPhi",1);
+    // old_jet_tree->SetBranchStatus("trackMaxDR",1);
 
     // muons
     old_muon_tree->SetBranchStatus("muPt",1);
