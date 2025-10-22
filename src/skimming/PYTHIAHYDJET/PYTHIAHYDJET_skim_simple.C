@@ -23,9 +23,9 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // in_file_name = "../../../fileNames/fileNames_forest_PYTHIAHYDJET_DiJet_additionalMC_2024-08-05.txt";
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIAHYDJET_DiJet_additionalMC_2024-08-05/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
-  // // DiJet, incl, pTjet-5, N = 7117
-  // in_file_name = "../../../fileNames/fileNames_PH_DiJet_pTjet-5.txt";
-  // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PH_DiJet_pTjet-5_reskim/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  // DiJet, incl, pTjet-5, N = 7117
+  in_file_name = "../../../fileNames/fileNames_PH_DiJet_pTjet-5.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PH_DiJet_pTjet-5_withJetTriggers/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
   // DiJet, additional MC, incl, pTjet-15, N = 1411
   // in_file_name = "../../../fileNames/fileNames_PH_DiJet_batch13.txt";
@@ -107,9 +107,9 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch14.txt";
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch14/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
-  // BATCH 15: DiJet, additional MC, incl, pTjet-15, N = 851
-  in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch15.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch15/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  // // BATCH 15: DiJet, additional MC, incl, pTjet-15, N = 851
+  // in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch15.txt";
+  // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch15/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
   
   int endfile = 851;
