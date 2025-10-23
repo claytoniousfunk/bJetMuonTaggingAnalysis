@@ -724,13 +724,7 @@ void PYTHIA_scan(int group = 1){
   // define event filters
   em->regEventFilter(NeventFilters, eventFilters);
 
-  // apply jet-trigger if activated in config
-  if(applyJet60Trigger){
-    if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
-  }
-  if(applyJet80Trigger){
-    if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
-  }
+
   
   TRandom *randomGenerator = new TRandom2();
 
@@ -805,6 +799,13 @@ void PYTHIA_scan(int group = 1){
     if(fabs(em->vz) > 15.0) continue;
     if(em->checkEventFilter()) continue;
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
+    // apply jet-trigger if activated in config
+    if(applyJet60Trigger){
+      if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+    }
+    if(applyJet80Trigger){
+      if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
+    }
 
     double w_reweight_vz = 1.0;
     if(doVzReweight){
