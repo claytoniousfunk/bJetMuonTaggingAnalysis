@@ -294,7 +294,8 @@ void PYTHIA_scan(int group = 1){
   TString inputFileName = "";
 
 
-  inputDataset = "/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/";
+  //inputDataset = "/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/";
+  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withJetTriggers/";
   inputFileName = "PYTHIA_DiJet_skim_output";
 
   TString input = "";
@@ -721,8 +722,15 @@ void PYTHIA_scan(int group = 1){
 
 
   // define event filters
-  //em->regEventFilter(NeventFilters, eventFilters);
+  em->regEventFilter(NeventFilters, eventFilters);
 
+  // apply jet-trigger if activated in config
+  if(applyJet60Trigger){
+    if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+  }
+  if(applyJet80Trigger){
+    if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
+  }
   
   TRandom *randomGenerator = new TRandom2();
 
