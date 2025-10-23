@@ -23,10 +23,12 @@ TString configureOutputDatasetName(TString generator,
 				   bool doBJetEnergyShift,
 				   bool doBJetNeutrinoEnergyShift,
 				   bool doJERCorrection,
-				   bool doJESCorrection,				   
+				   bool doJESCorrection,		   
 				   bool apply_JER_smear,
 				   bool apply_JEU_shift_up,
-				   bool apply_JEU_shift_down)
+				   bool apply_JEU_shift_down,
+				   bool applyJet60Trigger,
+				   bool applyJet80Trigger)
 {
 
   TString result = "output";
@@ -35,7 +37,8 @@ TString configureOutputDatasetName(TString generator,
   TString datasetIndicator = "";
   if(doDiJetSample) datasetIndicator = "_DiJet";
   result.Append(datasetIndicator);
-
+  if(applyJet60Trigger) result.Append("_Jet60HLT");
+  if(applyJet80Trigger) result.Append("_Jet80HLT");
   // general information
   result.Append(Form("_pThat-%2.0f",pThat));
   result.Append("_mu12_pTmu-14_tight");
@@ -62,6 +65,7 @@ TString configureOutputDatasetName(TString generator,
   if(apply_JER_smear) result.Append("_applyJERSmear");
   if(apply_JEU_shift_up) result.Append("_applyJEUShiftUp");
   if(apply_JEU_shift_down) result.Append("_applyJEUShiftDown");
+  
   
   TDatime dt;
   result.Append(Form("_%i-%i-%i",dt.GetYear(),dt.GetMonth(),dt.GetDay()));
