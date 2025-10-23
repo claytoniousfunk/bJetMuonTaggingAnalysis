@@ -333,7 +333,9 @@ void PYTHIA_scan(int group = 1){
 						 doJESCorrection,				   
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
-						 apply_JEU_shift_down);
+						 apply_JEU_shift_down,
+						 applyJet60Trigger,
+						 applyJet80Trigger);
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
