@@ -374,6 +374,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
     }
     if(applyJet80Trigger){
+      std::cout << "jet80 (event "<< evi << ") = " << em->HLT_HICsAK4PFJet80Eta1p5_v1 << std::endl;
       if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
     }
 
