@@ -39,7 +39,9 @@ TString configureOutputDatasetName(TString generator,
 				   bool apply_JER_smear,
 				   bool apply_JEU_shift_up,
 				   bool apply_JEU_shift_down,
-				   int hiBinShift)
+				   int hiBinShift,
+				   bool applyJet60Trigger,
+				   bool applyJet80Trigger)
 {
 
   TString result = "output";
@@ -50,6 +52,8 @@ TString configureOutputDatasetName(TString generator,
   result.Append(datasetIndicator);
   
   result.Append(Form("_pThat-%2.0f",pThat));
+  if(applyJet60Trigger) result.Append("_Jet60HLT");
+  if(applyJet80Trigger) result.Append("_Jet80HLT");
   result.Append("_mu12_pTmu-14_tight");
   // event-based reweights
   if(doVzReweight) result.Append("_vzReweight");
