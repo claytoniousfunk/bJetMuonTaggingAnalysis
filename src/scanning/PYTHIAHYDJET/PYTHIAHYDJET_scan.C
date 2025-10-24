@@ -372,7 +372,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down,
-						 hiBinShift);
+						 hiBinShift,
+						 applyJet60Trigger,
+						 applyJet80Trigger);
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
@@ -1103,6 +1105,13 @@ void PYTHIAHYDJET_scan(int group = 1){
     //cout << "Event " << evi << " | hiBin_raw = " << hiBin_raw << " | hiBin_shifted = " << hiBin_shifted << " | CentralityIndex = " << CentralityIndex << endl;
 
     if(CentralityIndex < 0) continue;
+
+    if(applyJet60Trigger){
+      if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    }
+    if(applyJet80Trigger){
+      if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
+    }
 
     // calculate event weight
     
