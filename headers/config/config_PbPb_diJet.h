@@ -8,7 +8,7 @@ std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter","pclusterCompa
 bool doJetTrkMaxFilter = false;
 bool doEtaPhiMask = false;
 bool applyJet60Trigger = false;
-bool applyJet80Trigger = false;
+bool applyJet80Trigger = true;
 bool applyMinBiasTrigger = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
@@ -18,4 +18,4 @@ bool doJERCorrection = false;
 // options for systematic studies
 bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
-bool apply_JEU_shift_down = true;
+bool apply_JEU_shift_down = false;
