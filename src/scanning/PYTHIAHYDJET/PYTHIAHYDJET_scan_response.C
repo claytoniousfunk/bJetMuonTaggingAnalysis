@@ -109,7 +109,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   TString inputDataset = "";
   TString inputFileName = "";
 
-  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_reskim/";
+  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withJetTriggers/";
   inputFileName = "PYTHIAHYDJET_DiJet_skim_output";
   TString input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
 
@@ -158,7 +158,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down,
-						 hiBinShift);
+						 hiBinShift,
+						 applyJet60Trigger,
+						 applyJet80Trigger);
 
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
@@ -177,12 +179,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   JetUncertainty JEU("../../../JetEnergyCorrections/Autumn18_HI_V8_MC_Uncertainty_AK4PF.txt");
 
-
-
   // WEIGHT FUNCTIONS
-
-  
-
 
   //  initialize histograms
   // JETS
@@ -372,6 +369,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     if(em->hiBin > 190) continue;
     if(em->checkEventFilter()) continue;
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
+
+    if(applyJet60Trigger){
+      if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    }
+    if(applyJet80Trigger){
+      if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
+    }
 
     // apply HLT
     int triggerDecision = em->HLT_HIL3Mu12_v1;
