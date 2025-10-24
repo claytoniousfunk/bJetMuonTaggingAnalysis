@@ -308,6 +308,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   em->init();
   cout << "	Loading jet..." << endl;
   em->loadJet(jetTreeString);
+  cout << "Loading muon triggers..." << endl;
+  em->loadMuonTrigger(hltString);
   cout << "	Loading gen particles..." << endl;
   em->loadGenParticle();
   cout << "	Variables initilized!" << endl << endl ;
