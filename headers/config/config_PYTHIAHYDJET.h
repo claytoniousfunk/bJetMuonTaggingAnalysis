@@ -64,5 +64,5 @@ bool doDiJetSample_batch13 = false;
 bool doDiJetSample_batch14 = false;
 bool doDiJetSample_batch15 = false;
 // jet triggers
-bool applyJet60Trigger = false;
-bool applyJet80Trigger = true;
+bool applyJet60Trigger = true;
+bool applyJet80Trigger = false;
