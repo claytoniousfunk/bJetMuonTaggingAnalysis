@@ -1041,10 +1041,32 @@ void PYTHIAHYDJET_scan(int group = 1){
   TRandom *randomGenerator = new TRandom2();
 
   // jet-energy resolution fit function
-  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
-  JER_fxn->SetParameter(0,-1.91758e-05);
-  JER_fxn->SetParameter(1,-1.79691e+00);
-  JER_fxn->SetParameter(2,1.09880e+01);
+  TF1 *JER_fxn[NCentralityIndices];
+  // pp
+  JER_fxn[0] = new TF1("JER_fxn_pp","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[0]->SetParameter(0,0.0640995);
+  JER_fxn[0]->SetParameter(1,0.917851);
+  JER_fxn[0]->SetParameter(2,-0.00211695);
+  // C4
+  JER_fxn[4] = new TF1("JER_fxn_C4","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[4]->SetParameter(0,0.0606347);
+  JER_fxn[4]->SetParameter(1,1.08087);
+  JER_fxn[4]->SetParameter(2,-0.374138);
+  // C3
+  JER_fxn[3] = new TF1("JER_fxn_C3","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[3]->SetParameter(0,0.0576787);
+  JER_fxn[3]->SetParameter(1,1.1762);
+  JER_fxn[3]->SetParameter(2,-5.67268);
+  // C2
+  JER_fxn[2] = new TF1("JER_fxn_C2","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[2]->SetParameter(0,0.0547384);
+  JER_fxn[2]->SetParameter(1,1.306);
+  JER_fxn[2]->SetParameter(2,-11.1249);
+  // C1
+  JER_fxn[1] = new TF1("JER_fxn_C1","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[1]->SetParameter(0,0.0598659);
+  JER_fxn[1]->SetParameter(1,1.30631);
+  JER_fxn[1]->SetParameter(2,-16.893);
 
   // define vz , hiBin, & jetPt reweighting functions
   loadFitFxn_vz();
@@ -1311,7 +1333,7 @@ void PYTHIAHYDJET_scan(int group = 1){
       double smear = 0.0;
 
 
-      sigma = 0.663*JER_fxn->Eval(recoJetPt_i); // apply a 20% smear
+      sigma = 0.663*JER_fxn[CentralityIndex]->Eval(recoJetPt_i); // apply a 20% smear
       smear = randomGenerator->Gaus(mu,sigma);
       recoJetPt_JERSmear_i = recoJetPt_i * smear;
 

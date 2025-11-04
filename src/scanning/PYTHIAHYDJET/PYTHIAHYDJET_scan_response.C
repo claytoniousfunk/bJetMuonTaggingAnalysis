@@ -163,8 +163,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 						 applyJet80Trigger);
 
 
-  //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -323,10 +323,32 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   TRandom *randomGenerator = new TRandom2();
 
   // jet-energy resolution fit function
-  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,500);
-  JER_fxn->SetParameter(0,1.26585e-01);
-  JER_fxn->SetParameter(1,-9.72986e-01);
-  JER_fxn->SetParameter(2,3.67352e-04);
+  TF1 *JER_fxn[NCentralityIndices];
+  // pp
+  JER_fxn[0] = new TF1("JER_fxn_pp","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[0]->SetParameter(0,0.0640995);
+  JER_fxn[0]->SetParameter(1,0.917851);
+  JER_fxn[0]->SetParameter(2,-0.00211695);
+  // C4
+  JER_fxn[4] = new TF1("JER_fxn_C4","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[4]->SetParameter(0,0.0606347);
+  JER_fxn[4]->SetParameter(1,1.08087);
+  JER_fxn[4]->SetParameter(2,-0.374138);
+  // C3
+  JER_fxn[3] = new TF1("JER_fxn_C3","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[3]->SetParameter(0,0.0576787);
+  JER_fxn[3]->SetParameter(1,1.1762);
+  JER_fxn[3]->SetParameter(2,-5.67268);
+  // C2
+  JER_fxn[2] = new TF1("JER_fxn_C2","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[2]->SetParameter(0,0.0547384);
+  JER_fxn[2]->SetParameter(1,1.306);
+  JER_fxn[2]->SetParameter(2,-11.1249);
+  // C1
+  JER_fxn[1] = new TF1("JER_fxn_C1","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[1]->SetParameter(0,0.0598659);
+  JER_fxn[1]->SetParameter(1,1.30631);
+  JER_fxn[1]->SetParameter(2,-16.893);
 
   // define vz & hiBin reweighting functions
   loadFitFxn_vz();
@@ -484,7 +506,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	    double smear = 0.0;
 
 	    if(apply_JER_smear){
-	      sigma = 0.663*JER_fxn->Eval(matchedRecoJetPt); // apply a 20% smear
+	      sigma = 0.663*JER_fxn[CentralityIndex]->Eval(matchedRecoJetPt); // apply a 20% smear
 	      smear = randomGenerator->Gaus(mu,sigma);
 	      matchedRecoJetPt = matchedRecoJetPt * smear;
 	    }
@@ -495,7 +517,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	    double k_JERCorrection = 0.0; // smearing parameter
 	    if(doJERCorrection){
 	      k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
-	      sigma_JERCorrection = k_JERCorrection*JER_fxn->Eval(matchedRecoJetPt);
+	      sigma_JERCorrection = k_JERCorrection*JER_fxn[CentralityIndex]->Eval(matchedRecoJetPt);
 	      smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
 	      matchedRecoJetPt = matchedRecoJetPt * smear_JERCorrection;
 	    }
@@ -521,8 +543,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 			
       // fill response matrix
       //if(hasRecoJetMatch && hasRecoJetMuon) {
-      if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
-      //if(hasRecoJetMatch) {
+      //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
+      if(hasRecoJetMatch) {
 	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
