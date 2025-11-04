@@ -340,10 +340,34 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
   
   TRandom *randomGenerator = new TRandom2();
 
-  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
-  JER_fxn->SetParameter(0,-1.91758e-05);
-  JER_fxn->SetParameter(1,-1.79691e+00);
-  JER_fxn->SetParameter(2,1.09880e+01);
+// jet-energy resolution fit function
+  TF1 *JER_fxn[NCentralityIndices];
+  // pp
+  JER_fxn[0] = new TF1("JER_fxn_pp","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[0]->SetParameter(0,0.0640995);
+  JER_fxn[0]->SetParameter(1,0.917851);
+  JER_fxn[0]->SetParameter(2,-0.00211695);
+  // C4
+  JER_fxn[4] = new TF1("JER_fxn_C4","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[4]->SetParameter(0,0.0606347);
+  JER_fxn[4]->SetParameter(1,1.08087);
+  JER_fxn[4]->SetParameter(2,-0.374138);
+  // C3
+  JER_fxn[3] = new TF1("JER_fxn_C3","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[3]->SetParameter(0,0.0576787);
+  JER_fxn[3]->SetParameter(1,1.1762);
+  JER_fxn[3]->SetParameter(2,-5.67268);
+  // C2
+  JER_fxn[2] = new TF1("JER_fxn_C2","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[2]->SetParameter(0,0.0547384);
+  JER_fxn[2]->SetParameter(1,1.306);
+  JER_fxn[2]->SetParameter(2,-11.1249);
+  // C1
+  JER_fxn[1] = new TF1("JER_fxn_C1","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",30,500);
+  JER_fxn[1]->SetParameter(0,0.0598659);
+  JER_fxn[1]->SetParameter(1,1.30631);
+  JER_fxn[1]->SetParameter(2,-16.893);
+
 
   TF1 *ptrel_reweight_fxn = new TF1("ptrel_reweight_fxn","[0] + [1]*x + [2]*x*x + [3]*x*x*x",0,5);
   double ptrel_reweight_param_0[NCentralityIndices-1][NJetPtIndices-1] = {{1.36501e+00,2.02715e+00,2.16595e+00,1.91979e+00,1.91982e+00,1.47564e+00},
@@ -493,7 +517,7 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       double sigma = 0.2;
       double smear = 0.0;
 
-      sigma = 0.663*JER_fxn->Eval(recoJetPt_i); // apply a 20% smear
+      sigma = 0.663*JER_fxn[CentralityIndex]->Eval(recoJetPt_i); // apply a 20% smear
       smear = randomGenerator->Gaus(mu,sigma);
       recoJetPt_JERSmear_i = recoJetPt_i * smear;
 
@@ -538,12 +562,13 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting 
       
       // jet kinematic cuts
-      if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
+      //if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 80.) continue;
+      if(TMath::Abs(recoJetEta_i) > 1.6) continue;
       if(jetTrkMax_i < 14.) continue;
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
-      if(jetPtIndex < 0) continue;
+      //if(jetPtIndex < 0) continue;
 
 
       ptrel_reweight_fxn->SetParameter(0,ptrel_reweight_param_0[CentralityIndex-1][jetPtIndex-1]);
@@ -582,20 +607,23 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
       h_jetTrkMaxDR[CentralityIndex][0]->Fill(jetTrkMaxDR_i,w_jet);
       h_jetTrkMaxPtRel[CentralityIndex][0]->Fill(jetTrkMaxPtRel_i,w_jet);
 
-      h_jetTrkMaxPt[0][jetPtIndex]->Fill(jetTrkMax_i,w_jet);
-      h_jetTrkMaxPtOverJetPt[0][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
-      h_jetTrkMaxEta[0][jetPtIndex]->Fill(jetTrkMaxEta_i,w_jet);
-      h_jetTrkMaxPhi[0][jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
-      h_jetTrkMaxDR[0][jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
-      h_jetTrkMaxPtRel[0][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
+      if(jetPtIndex > 0){
+	h_jetTrkMaxPt[0][jetPtIndex]->Fill(jetTrkMax_i,w_jet);
+	h_jetTrkMaxPtOverJetPt[0][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
+	h_jetTrkMaxEta[0][jetPtIndex]->Fill(jetTrkMaxEta_i,w_jet);
+	h_jetTrkMaxPhi[0][jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
+	h_jetTrkMaxDR[0][jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
+	h_jetTrkMaxPtRel[0][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
 
-      h_jetTrkMaxPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i,w_jet);
-      h_jetTrkMaxPtOverJetPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
-      h_jetTrkMaxEta[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxEta_i,w_jet);
-      h_jetTrkMaxPhi[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
-      h_jetTrkMaxDR[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
-      h_jetTrkMaxPtRel[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
+	h_jetTrkMaxPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i,w_jet);
+	h_jetTrkMaxPtOverJetPt[CentralityIndex][jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
+	h_jetTrkMaxEta[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxEta_i,w_jet);
+	h_jetTrkMaxPhi[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
+	h_jetTrkMaxDR[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
+	h_jetTrkMaxPtRel[CentralityIndex][jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
+      }
 
+      
       for(int t = 0; t < NTemplateIndices; t++){
 
 	h_jetTrkMaxPtRel_recoJetPt[0][t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
