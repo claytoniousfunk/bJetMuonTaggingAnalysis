@@ -570,13 +570,14 @@ void PYTHIAHYDJET_jetTrkMax_scan(int group = 1){
 
       //if(jetPtIndex < 0) continue;
 
-
-      ptrel_reweight_fxn->SetParameter(0,ptrel_reweight_param_0[CentralityIndex-1][jetPtIndex-1]);
-      ptrel_reweight_fxn->SetParameter(1,ptrel_reweight_param_1[CentralityIndex-1][jetPtIndex-1]);
-      ptrel_reweight_fxn->SetParameter(2,ptrel_reweight_param_2[CentralityIndex-1][jetPtIndex-1]);
-      ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[CentralityIndex-1][jetPtIndex-1]);
-
-      if(doHadronPtRelReweightToMuon){
+      if(jetPtIndex > 0){
+	ptrel_reweight_fxn->SetParameter(0,ptrel_reweight_param_0[CentralityIndex-1][jetPtIndex-1]);
+	ptrel_reweight_fxn->SetParameter(1,ptrel_reweight_param_1[CentralityIndex-1][jetPtIndex-1]);
+	ptrel_reweight_fxn->SetParameter(2,ptrel_reweight_param_2[CentralityIndex-1][jetPtIndex-1]);
+	ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[CentralityIndex-1][jetPtIndex-1]);
+      }
+      
+      if(doHadronPtRelReweightToMuon && jetPtIndex > 0){
 	w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
       }
 
