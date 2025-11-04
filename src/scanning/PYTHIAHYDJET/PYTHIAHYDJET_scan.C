@@ -1392,7 +1392,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 		        
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
-      if(jetPtIndex < 0) continue;
+      //if(jetPtIndex < 0) continue;
       
       // fill genJetPt vs pthat
       h_recoJetPt_pthat[0]->Fill(recoJetPt_i,em->pthat,w);
