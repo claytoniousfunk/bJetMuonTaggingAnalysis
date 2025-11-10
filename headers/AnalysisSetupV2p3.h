@@ -68,9 +68,9 @@ double nuPtCut = 0.0;
 double nuPtMaxCut = 1000.0;
 
 //const double pthatcut = 15.0;
-const double pthatcut = 20.0;
+//const double pthatcut = 20.0;
 //const double pthatcut = 25.0;
-//const double pthatcut = 30.0;
+const double pthatcut = 30.0;
 //const double pthatcut = 45.0;
 //const double pthatcut = 40.0;
 //const double pthatcut = 50.0;
