@@ -47,5 +47,5 @@ double sigma_phi = 0.005;
 double mu_eta = 0.0;
 double sigma_eta = 0.005;
 // jet triggers
-bool applyJet60Trigger = true;
+bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
