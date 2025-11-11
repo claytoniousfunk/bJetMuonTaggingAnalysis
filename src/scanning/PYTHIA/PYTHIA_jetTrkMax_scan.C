@@ -385,7 +385,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
     if(em->checkEventFilter()) continue;
     //cout << "Event #" << evi << " passed the global cuts!" << endl;
 
-    if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+    //if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
     //if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
     //if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
     
@@ -505,20 +505,23 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
       bool hasGenJetMatch = false;
       
-      if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 50.) continue;
+      //if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 50.) continue;
+      if(TMath::Abs(recoJetEta_i) > 1.6) continue;
       if(jetTrkMax_i < 14.) continue;
 		
       int jetPtIndex = getJetPtBin(recoJetPt_i);
 
-      if(jetPtIndex < 0) continue;
+      //if(jetPtIndex < 0) continue;
 
       /////////////////////////////////////
       // apply trkptrel reweight
 
-      ptrel_reweight_fxn->SetParameter(0,ptrel_reweight_param_0[jetPtIndex-1]);
-      ptrel_reweight_fxn->SetParameter(1,ptrel_reweight_param_1[jetPtIndex-1]);
-      ptrel_reweight_fxn->SetParameter(2,ptrel_reweight_param_2[jetPtIndex-1]);
-      ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[jetPtIndex-1]);
+      if(jetPtIndex > 0){
+	ptrel_reweight_fxn->SetParameter(0,ptrel_reweight_param_0[jetPtIndex-1]);
+	ptrel_reweight_fxn->SetParameter(1,ptrel_reweight_param_1[jetPtIndex-1]);
+	ptrel_reweight_fxn->SetParameter(2,ptrel_reweight_param_2[jetPtIndex-1]);
+	ptrel_reweight_fxn->SetParameter(3,ptrel_reweight_param_3[jetPtIndex-1]);
+      }
 
       if(doHadronPtRelReweightToMuon){
 	w_jet = w_jet * ptrel_reweight_fxn->Eval(jetTrkMaxPtRel_i);
@@ -555,14 +558,16 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       else h_jetTrkMaxDR_qJets[0]->Fill(jetTrkMaxDR_i,w_jet);
       h_jetTrkMaxPtRel[0]->Fill(jetTrkMaxPtRel_i,w_jet);
 
-      h_jetTrkMaxPt[jetPtIndex]->Fill(jetTrkMax_i,w_jet);
-      h_jetTrkMaxPtOverJetPt[jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
-      h_jetTrkMaxEta[jetPtIndex]->Fill(jetTrkMaxEta_i,w_jet);
-      h_jetTrkMaxPhi[jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
-      h_jetTrkMaxDR[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
-      if(jetFlavorInt == 21) h_jetTrkMaxDR_gJets[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
-      else h_jetTrkMaxDR_qJets[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
-      h_jetTrkMaxPtRel[jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
+      if(jetPtIndex > 0){
+	h_jetTrkMaxPt[jetPtIndex]->Fill(jetTrkMax_i,w_jet);
+	h_jetTrkMaxPtOverJetPt[jetPtIndex]->Fill(jetTrkMax_i/recoJetPt_i,w_jet);
+	h_jetTrkMaxEta[jetPtIndex]->Fill(jetTrkMaxEta_i,w_jet);
+	h_jetTrkMaxPhi[jetPtIndex]->Fill(jetTrkMaxPhi_i,w_jet);
+	h_jetTrkMaxDR[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
+	if(jetFlavorInt == 21) h_jetTrkMaxDR_gJets[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
+	else h_jetTrkMaxDR_qJets[jetPtIndex]->Fill(jetTrkMaxDR_i,w_jet);
+	h_jetTrkMaxPtRel[jetPtIndex]->Fill(jetTrkMaxPtRel_i,w_jet);
+      }
 
       for(int t = 0; t < NTemplateIndices; t++){
 
