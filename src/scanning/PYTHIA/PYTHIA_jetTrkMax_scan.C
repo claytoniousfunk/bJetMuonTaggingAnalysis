@@ -151,6 +151,12 @@ TH1D *h_jetTrkMaxDR_qJets[NJetPtIndices]; // quark jets
 TH1D *h_jetTrkMaxDR_gJets[NJetPtIndices]; // gluon jets
 TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
 TH2D *h_jetTrkMaxPtRel_recoJetPt[NTemplateIndices];
+TH2D *h_jetTrkMaxPtRel_recoJetPt_PtSlice14to17[NTemplateIndices];
+TH2D *h_jetTrkMaxPtRel_recoJetPt_PtSlice17to20[NTemplateIndices];
+TH2D *h_jetTrkMaxPtRel_recoJetPt_PtSlice20to25[NTemplateIndices];
+TH2D *h_jetTrkMaxPtRel_recoJetPt_PtSlice25to30[NTemplateIndices];
+TH2D *h_jetTrkMaxPtRel_recoJetPt_PtSlice30to40[NTemplateIndices];
+TH2D *h_jetTrkMaxPtRel_recoJetPt_PtSlice40toInf[NTemplateIndices];
 TH2D *h_jetTrkMaxDR_recoJetPt[NTemplateIndices];
 TH1D *h_dEta_jet_wta;
 TH1D *h_dPhi_jet_wta;
@@ -248,6 +254,14 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
   for(int t = 0; t < NTemplateIndices; t++){
 
     h_jetTrkMaxPtRel_recoJetPt[t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_T%i",t),Form("track #it{p}_{T}^{rel} vs jet $it{p}_{T}, allJets, %s", templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice14to17[t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_PtSlice14to17_T%i",t),Form("track #it{p}_{T}^{rel} vs jet $it{p}_{T}, allJets, 14 < #it{p}_{T}^{h} (GeV) < 17, %s", templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice17to20[t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_PtSlice17to20_T%i",t),Form("track #it{p}_{T}^{rel} vs jet $it{p}_{T}, allJets, 17 < #it{p}_{T}^{h} (GeV) < 20, %s", templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice20to25[t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_PtSlice20to25_T%i",t),Form("track #it{p}_{T}^{rel} vs jet $it{p}_{T}, allJets, 20 < #it{p}_{T}^{h} (GeV) < 25, %s", templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice25to30[t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_PtSlice25to30_T%i",t),Form("track #it{p}_{T}^{rel} vs jet $it{p}_{T}, allJets, 25 < #it{p}_{T}^{h} (GeV) < 30, %s", templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);    
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice30to40[t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_PtSlice30to40_T%i",t),Form("track #it{p}_{T}^{rel} vs jet $it{p}_{T}, allJets, 30 < #it{p}_{T}^{h} (GeV) < 40, %s", templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice40toInf[t] = new TH2D(Form("h_jetTrkMaxPtRel_recoJetPt_PtSlice40toInf_T%i",t),Form("track #it{p}_{T}^{rel} vs jet $it{p}_{T}, allJets, 40 < #it{p}_{T}^{h} (GeV) < Inf, %s", templateIndexNames[t].c_str()),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);    
+
+    
     h_jetTrkMaxDR_recoJetPt[t] = new TH2D(Form("h_jetTrkMaxDR_recoJetPt_T%i",t),Form("#DeltaR(leading-hadron,jet) vs jet $it{p}_{T}, allJets, %s", templateIndexNames[t].c_str()),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
 
     
@@ -572,6 +586,14 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       for(int t = 0; t < NTemplateIndices; t++){
 
 	h_jetTrkMaxPtRel_recoJetPt[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMaxPtRel_i > 14. && jetTrkMaxPtRel_i <= 17.) h_jetTrkMaxPtRel_recoJetPt_PtSlice14to17[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMaxPtRel_i > 17. && jetTrkMaxPtRel_i <= 20.) h_jetTrkMaxPtRel_recoJetPt_PtSlice17to20[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMaxPtRel_i > 20. && jetTrkMaxPtRel_i <= 25.) h_jetTrkMaxPtRel_recoJetPt_PtSlice20to25[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMaxPtRel_i > 25. && jetTrkMaxPtRel_i <= 30.) h_jetTrkMaxPtRel_recoJetPt_PtSlice25to30[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMaxPtRel_i > 30. && jetTrkMaxPtRel_i <= 40.) h_jetTrkMaxPtRel_recoJetPt_PtSlice30to40[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMaxPtRel_i > 40.) h_jetTrkMaxPtRel_recoJetPt_PtSlice40toInf[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+
+	
 	h_jetTrkMaxDR_recoJetPt[t]->Fill(jetTrkMaxDR_i,jetPtArray[t],w_jet);
 	
       }
@@ -611,6 +633,12 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
   for(int t = 0; t < NTemplateIndices; t++){
     h_jetTrkMaxPtRel_recoJetPt[t]->Write();
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice17to20[t]->Write();
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice20to25[t]->Write();
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice25to30[t]->Write();
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice30to40[t]->Write();
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice40toInf[t]->Write();
+    
     h_jetTrkMaxDR_recoJetPt[t]->Write();
   }
   
