@@ -633,6 +633,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 
   for(int t = 0; t < NTemplateIndices; t++){
     h_jetTrkMaxPtRel_recoJetPt[t]->Write();
+    h_jetTrkMaxPtRel_recoJetPt_PtSlice14to17[t]->Write();
     h_jetTrkMaxPtRel_recoJetPt_PtSlice17to20[t]->Write();
     h_jetTrkMaxPtRel_recoJetPt_PtSlice20to25[t]->Write();
     h_jetTrkMaxPtRel_recoJetPt_PtSlice25to30[t]->Write();
