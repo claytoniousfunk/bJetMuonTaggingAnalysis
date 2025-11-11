@@ -586,12 +586,12 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       for(int t = 0; t < NTemplateIndices; t++){
 
 	h_jetTrkMaxPtRel_recoJetPt[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
-	if(jetTrkMaxPtRel_i > 14. && jetTrkMaxPtRel_i <= 17.) h_jetTrkMaxPtRel_recoJetPt_PtSlice14to17[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
-	if(jetTrkMaxPtRel_i > 17. && jetTrkMaxPtRel_i <= 20.) h_jetTrkMaxPtRel_recoJetPt_PtSlice17to20[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
-	if(jetTrkMaxPtRel_i > 20. && jetTrkMaxPtRel_i <= 25.) h_jetTrkMaxPtRel_recoJetPt_PtSlice20to25[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
-	if(jetTrkMaxPtRel_i > 25. && jetTrkMaxPtRel_i <= 30.) h_jetTrkMaxPtRel_recoJetPt_PtSlice25to30[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
-	if(jetTrkMaxPtRel_i > 30. && jetTrkMaxPtRel_i <= 40.) h_jetTrkMaxPtRel_recoJetPt_PtSlice30to40[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
-	if(jetTrkMaxPtRel_i > 40.) h_jetTrkMaxPtRel_recoJetPt_PtSlice40toInf[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMax_i > 14. && jetTrkMax_i <= 17.) h_jetTrkMaxPtRel_recoJetPt_PtSlice14to17[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMax_i > 17. && jetTrkMax_i <= 20.) h_jetTrkMaxPtRel_recoJetPt_PtSlice17to20[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMax_i > 20. && jetTrkMax_i <= 25.) h_jetTrkMaxPtRel_recoJetPt_PtSlice20to25[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMax_i > 25. && jetTrkMax_i <= 30.) h_jetTrkMaxPtRel_recoJetPt_PtSlice25to30[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMax_i > 30. && jetTrkMax_i <= 40.) h_jetTrkMaxPtRel_recoJetPt_PtSlice30to40[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
+	if(jetTrkMax_i > 40.) h_jetTrkMaxPtRel_recoJetPt_PtSlice40toInf[t]->Fill(jetTrkMaxPtRel_i,jetPtArray[t],w_jet);
 
 	
 	h_jetTrkMaxDR_recoJetPt[t]->Fill(jetTrkMaxDR_i,jetPtArray[t],w_jet);
