@@ -80,13 +80,15 @@ TH1D *h_jetTrkMaxPtRel[NJetPtIndices];
 void pp_jetTrkMax_scan(int group = 1){
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_withJetTrackMaxInfo/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_jetTrkMax_trkPt-14_jet60_2025-07-22/pp_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_jetTrkMax_trkPt-14_jet60_updatedJEC_2025-11-24/pp_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
   vector<string> Files;
-  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
-  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+  // Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+  // Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+  Files.push_back("../../../JetEnergyCorrections/Fall17_17Nov2017F_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+  Files.push_back("../../../JetEnergyCorrections/Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   JetCorrector JEC(Files);
   /// >>>>>>>>>>>>>>> print out some info
   printIntroduction_pp_scan_V3p7();
