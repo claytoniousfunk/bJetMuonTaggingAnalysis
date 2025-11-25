@@ -11,7 +11,7 @@ std::string eventFilters_MinBias[NeventFilters_MinBias] = {"pprimaryVertexFilter
 // jet options
 bool doJetTrkMaxFilter = true;
 bool doEtaPhiMask = false;
-bool applyJet60Trigger = true;
+bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
 bool doJESCorrection = false;
 // spectra alterations
