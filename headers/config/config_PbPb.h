@@ -8,8 +8,6 @@ const int NeventFilters_HardProbes = 2;
 std::string eventFilters_HardProbes[NeventFilters_HardProbes] = {"pprimaryVertexFilter","pclusterCompatibilityFilter"};
 const int NeventFilters_SingleMuon = 5;
 std::string eventFilters_SingleMuon[NeventFilters_SingleMuon] = {"pprimaryVertexFilter", "HBHENoiseFilterResultRun2Loose", "collisionEventSelectionAODv2", "phfCoincFilter2Th4", "pclusterCompatibilityFilter"};
-const int NeventFilters_SingleMuon = 5;
-std::string eventFilters_SingleMuon[NeventFilters_SingleMuon] = {"pprimaryVertexFilter", "HBHENoiseFilterResultRun2Loose", "collisionEventSelectionAODv2", "phfCoincFilter2Th4", "pclusterCompatibilityFilter"};
 const int NeventFilters_MinBias = 2;
 std::string eventFilters_MinBias[NeventFilters_MinBias] = {"pprimaryVertexFilter", "pclusterCompatibilityFilter"};
 // jet options
