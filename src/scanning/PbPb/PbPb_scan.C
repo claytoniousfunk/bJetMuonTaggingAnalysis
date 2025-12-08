@@ -391,7 +391,16 @@ void PbPb_scan(int group = 1){
   cout << "     Number of jets = " << NJets << endl;
 
   // define event filters
-  em->regEventFilter(NeventFilters, eventFilters);
+  if(doSingleMuonSample){
+    em->regEventFilter(NeventFilters_SingleMuon, eventFilters_SingleMuon);
+  }
+  else if(doMinBiasSample){
+    em->regEventFilter(NeventFilters_MinBias, eventFilters_MinBias);
+  }
+  else if(doHardProbesSample){
+    em->regEventFilter(NeventFilters_HardProbes, eventFilters_HardProbes);
+  }
+  else{};
   
   loadFitFxn_PYTHIA_JERCorrection();
   
