@@ -20,7 +20,7 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   TString datasetIndicator = "";
   if(doSingleMuonSample) datasetIndicator = "_SingleMuon";
   else if(doMinBiasSample) datasetIndicator = "_MinBias";
-  else if(doHardProbesSample) datasetIndicator = "_HighEGJet";
+  else if(doHardProbesSample) datasetIndicator = "_HardProbes";
   else{};
   result.Append(datasetIndicator);
 
