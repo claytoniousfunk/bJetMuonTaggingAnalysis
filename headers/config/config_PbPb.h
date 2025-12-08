@@ -11,11 +11,11 @@ std::string eventFilters_SingleMuon[NeventFilters_SingleMuon] = {"pprimaryVertex
 const int NeventFilters_MinBias = 2;
 std::string eventFilters_MinBias[NeventFilters_MinBias] = {"pprimaryVertexFilter", "pclusterCompatibilityFilter"};
 // jet options
-bool doJetTrkMaxFilter = false;
+bool doJetTrkMaxFilter = true;
 bool doEtaPhiMask = false;
 // High Level Triggers (HLTs)
 bool applyJet60Trigger = false;
-bool applyJet80Trigger = false;
+bool applyJet80Trigger = true;
 bool applyMinBiasTrigger = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
@@ -27,6 +27,6 @@ bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // select dataset
-bool doSingleMuonSample = true;
+bool doSingleMuonSample = false;
 bool doMinBiasSample = false;
-bool doHardProbesSample = false;
+bool doHardProbesSample = true;
