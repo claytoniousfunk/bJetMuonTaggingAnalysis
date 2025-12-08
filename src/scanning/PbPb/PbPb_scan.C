@@ -161,7 +161,7 @@ void PbPb_scan(int group = 1){
   TString outputDatasetName = "";
   outputDatasetName = configureOutputDatasetName(doSingleMuonSample,
 						 doMinBiasSample,
-						 doHighEGJetSample,
+						 doHardProbesSample,
 						 applyJet60Trigger,
 						 applyJet80Trigger,
 						 doJetTrkMaxFilter,
