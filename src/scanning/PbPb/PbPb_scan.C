@@ -76,6 +76,17 @@ TF1 *fitFxn_PYTHIA_JERCorrection;
 #include "../../../headers/config/config_PbPb_diJet.h"
 // read config
 #include "../../../headers/config/readConfig.h"
+// dataset naming functions
+#include "../../../headers/functions/getDatasetName/getDatasetName_PbPb.h"
+#include "../../../headers/functions/getInputFileName/getInputFileName_PbPb.h"
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PbPb.h"
+
+
+
+
+
+
+
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TH1D *h_NEvents;
@@ -132,8 +143,42 @@ TH2D *h_muptrel_hiBin[NJetPtIndices];
 ///////////////////////  start the program
 void PbPb_scan(int group = 1){
 
-  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_HardProbes_2/PbPb_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_Jet60HLT_mu12_tight_pTmu-14_hiHFcut_2025-10-27/PbPb_HardProbes_scan_output_%i.root",group);
+  TString inputDataset = "";
+  TString inputFileName = "";
+
+  inputDataset = getDatasetName(doSingleMuonSample,
+				doMinBiasSample,
+				doHardProbesSample);
+
+  inputFileName = getInputFileName(doSingleMuonSample,
+				   doMinBiasSample,
+				   doHardProbesSample);
+
+  TString input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
+  std::cout << "input dataset = " << input << std::endl;
+  TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
+
+  TString outputDatasetName = "";
+  outputDatasetName = configureOutputDatasetName(doSingleMuonSample,
+						 doMinBiasSample,
+						 doHighEGJetSample,
+						 applyJet60Trigger,
+						 applyJet80Trigger,
+						 doJetTrkMaxFilter,
+						 doEtaPhiMask,
+						 doJESCorrection,
+						 doBJetNeutrinoEnergyShift,
+						 doJERCorrection,
+						 apply_JER_smear,
+						 apply_JEU_shift_up,
+						 apply_JEU_shift_down);
+
+  TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+
+  std::cout << "output dataset = " << output << std::endl;
+  
+  //TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_HardProbes_2/PbPb_DiJet_skim_output_%i.root",group);
+  //TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_Jet60HLT_mu12_tight_pTmu-14_hiHFcut_2025-10-27/PbPb_HardProbes_scan_output_%i.root",group);
 
   // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_MinBias_withMinBiasTrigger/PbPb_MinBias_skim_output_%i.root",group);
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_MinBiasTrigger_2025-07-31/PbPb_MinBias_scan_output_%i.root",group);
