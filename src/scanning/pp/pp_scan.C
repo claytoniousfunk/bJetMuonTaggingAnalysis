@@ -84,9 +84,12 @@ TF1 *fitFxn_PYTHIA_JERCorrection;
 
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// -----------------------------------------events w/ incl. reco jet -------
+// ----------------------------------- inclusive events -------------------
 TH1D *h_vz;
 TH1D *h_hiBin;
+// -----------------------------------------events w/ incl. reco jet -------
+TH1D *h_vz_jet;
+TH1D *h_hiBin_jet;
 // ----------------------- events w/ incl. reco jet + incl. reco muon tag --
 TH1D *h_vz_inclRecoMuonTag;
 TH1D *h_hiBin_inclRecoMuonTag;
@@ -196,11 +199,13 @@ void pp_scan(int group = 1){
   // >>>>>>>>>>>>>>>> define histograms
   // ---------------------- event histograms --------------------------------
   // ------------ hiBin ---------------
-  h_hiBin = new TH1D("h_hiBin","hiBin, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin = new TH1D("h_hiBin","hiBin, inclusive events",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin_jet = new TH1D("h_hiBin_jet","hiBin, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
   // ------------ vz ------------------
-  h_vz = new TH1D("h_vz","vz, events with inclRecoJet",NVzBins,vzMin,vzMax);
+  h_vz = new TH1D("h_vz","vz, inclusive events",NVzBins,vzMin,vzMax);
+  h_vz_jet = new TH1D("h_vz_jet","vz, events with inclRecoJet",NVzBins,vzMin,vzMax);
   h_vz_inclRecoMuonTag = new TH1D("h_vz_inclRecoMuonTag","vz, events with inclRecoJet-inclRecoMuonTag",NVzBins,vzMin,vzMax);
   h_vz_inclRecoMuonTag_triggerOn = new TH1D("h_vz_inclRecoMuonTag_triggerOn","vz, events with inclRecoJet-inclRecoMuonTag-triggerOn",NVzBins,vzMin,vzMax);
   // ----------------------------------------- incl. reco jets --------------
@@ -236,9 +241,11 @@ void pp_scan(int group = 1){
 
   // Sumw2 commands
   h_hiBin->Sumw2();
+  h_hiBin_jet->Sumw2();
   h_hiBin_inclRecoMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
   h_vz->Sumw2();
+  h_vz_jet->Sumw2();
   h_vz_inclRecoMuonTag->Sumw2();
   h_vz_inclRecoMuonTag_triggerOn->Sumw2();
 
@@ -377,21 +384,21 @@ void pp_scan(int group = 1){
     }
 
     
+    
     // In data, event weight = 1
     double w = 1.0;
+
+    h_vz->Fill(em->vz,w);
+    h_hiBin->Fill(em->hiBin,w);
+  
    
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
-
     int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
-
     bool evtTriggerDecision = false;
-
     int triggerDecision_mu5 = em->HLT_HIL3Mu5_NHitQ10_v1;
     int triggerDecision_mu5_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
-
     int triggerDecision_mu7 = em->HLT_HIL3Mu7_v1;
     int triggerDecision_mu7_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
-
     int triggerDecision_mu12 = em->HLT_HIL3Mu12_v1;
     int triggerDecision_mu12_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
@@ -672,12 +679,11 @@ void pp_scan(int group = 1){
 
     }
     // END recoJet LOOP
-
-    h_vz->Fill(em->vz,w);
     
     if(eventHasGoodJet && leadingRecoJetPt > 80){
 
-      h_hiBin->Fill(em->hiBin,w);
+      h_vz_jet->Fill(em->vz,w);
+      h_hiBin_jet->Fill(em->hiBin,w);
       
       if(eventHasInclRecoMuonTag){
 
@@ -707,10 +713,12 @@ void pp_scan(int group = 1){
   auto wf = TFile::Open(output,"recreate");
 
   h_hiBin->Write();
+  h_hiBin_jet->Write();
   h_hiBin_inclRecoMuonTag->Write();
   h_hiBin_inclRecoMuonTag_triggerOn->Write();
 
   h_vz->Write();
+  h_vz_jet->Write();
   h_vz_inclRecoMuonTag->Write();
   h_vz_inclRecoMuonTag_triggerOn->Write();
    
