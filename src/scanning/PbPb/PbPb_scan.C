@@ -73,7 +73,8 @@ TF1 *fitFxn_PYTHIA_JERCorrection;
 // analysis config
 //#include "../../../headers/config/config_PbPb_SingleMuon.h"
 //#include "../../../headers/config/config_PbPb_MinBias.h"
-#include "../../../headers/config/config_PbPb_diJet.h"
+//#include "../../../headers/config/config_PbPb_diJet.h"
+#include "../../../headers/config/config_PbPb.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 // dataset naming functions
