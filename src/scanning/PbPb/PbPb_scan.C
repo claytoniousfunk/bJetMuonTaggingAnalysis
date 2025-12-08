@@ -167,7 +167,6 @@ void PbPb_scan(int group = 1){
 						 applyJet80Trigger,
 						 doJetTrkMaxFilter,
 						 doEtaPhiMask,
-						 doJESCorrection,
 						 doBJetNeutrinoEnergyShift,
 						 doJERCorrection,
 						 apply_JER_smear,
