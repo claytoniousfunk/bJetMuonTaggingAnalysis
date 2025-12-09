@@ -792,7 +792,7 @@ void PbPb_scan(int group = 1){
 		        
       int jetPtIndex = getJetPtBin(x);
 
-      //cout << "nMu = " << em->nMu << endl;
+      cout << "nMu = " << em->nMu << endl;
 
       // look for recoMuon match to recoJet		
       for(int m = 0; m < em->nMu; m++){
