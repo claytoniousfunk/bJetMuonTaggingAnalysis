@@ -401,16 +401,7 @@ void pp_scan(int group = 1){
     // event filters
     if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
 
-    // apply jet-trigger if activated in config
-    if(applyJet60Trigger){
-      if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
-    }
-    if(applyJet80Trigger){
-      if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
-    }
-
-    
-    
+       
     // In data, event weight = 1
     double w = 1.0;
 
@@ -431,7 +422,8 @@ void pp_scan(int group = 1){
       h_vz_jet100->Fill(em->vz,w);
       h_hiBin_jet100->Fill(em->hiBin,w);
     }
-  
+
+    
    
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
     int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
@@ -464,7 +456,15 @@ void pp_scan(int group = 1){
       h_hiBin_triggerOn->Fill(em->hiBin,w);
     }
     // ******************************************
-   
+
+
+    // apply jet-trigger if activated in config
+    if(applyJet60Trigger){
+      if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+    }
+    if(applyJet80Trigger){
+      if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
+    }
 
 
     // set the weight equal to the "gluing" parameter
