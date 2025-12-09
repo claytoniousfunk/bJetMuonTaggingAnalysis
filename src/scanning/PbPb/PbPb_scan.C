@@ -529,7 +529,6 @@ void PbPb_scan(int group = 1){
     }
 
 
-
     // apply jet-trigger if activated in config
     if(applyJet60Trigger){
       if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
