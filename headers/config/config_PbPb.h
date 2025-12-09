@@ -11,7 +11,7 @@ std::string eventFilters_SingleMuon[NeventFilters_SingleMuon] = {"pprimaryVertex
 const int NeventFilters_MinBias = 2;
 std::string eventFilters_MinBias[NeventFilters_MinBias] = {"pprimaryVertexFilter", "pclusterCompatibilityFilter"};
 // jet options
-bool doJetTrkMaxFilter = true;
+bool doJetTrkMaxFilter = false;
 bool doEtaPhiMask = false;
 // High Level Triggers (HLTs)
 bool applyJet60Trigger = false;
