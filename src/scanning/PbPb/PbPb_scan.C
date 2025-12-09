@@ -94,6 +94,16 @@ TH1D *h_NEvents;
 // -----------------------------------------inclusive events ------- -------
 TH1D *h_vz[NCentralityIndices];
 TH1D *h_hiBin;
+// -----------------------------------------events w/ muTrigger ------- -------
+TH1D *h_vz_triggerOn[NCentralityIndices];
+TH1D *h_hiBin_triggerOn;
+// -----------------------------------------events w/ jetTrigger ------- -------
+TH1D *h_vz_jet60[NCentralityIndices];
+TH1D *h_hiBin_jet60;
+TH1D *h_vz_jet80[NCentralityIndices];
+TH1D *h_hiBin_jet80;
+TH1D *h_vz_jet100[NCentralityIndices];
+TH1D *h_hiBin_jet100;
 // -----------------------------------------events w/ incl. reco jet -------
 TH1D *h_vz_jet[NCentralityIndices];
 TH1D *h_hiBin_jet;
@@ -201,6 +211,10 @@ void PbPb_scan(int group = 1){
   // define histograms
   h_NEvents = new TH1D("h_NEvents","Number of events (L3Mu5 trigger)",100,0,10000);
   h_hiBin = new TH1D("h_hiBin","hiBin, inclusive events",200,0,200);
+  h_hiBin_triggerOn = new TH1D("h_hiBin_triggerOn","hiBin, events with triggerOn",200,0,200);
+  h_hiBin_jet60 = new TH1D("h_hiBin_jet60","hiBin, events with jet60",200,0,200);
+  h_hiBin_jet80 = new TH1D("h_hiBin_jet80","hiBin, events with jet80",200,0,200);
+  h_hiBin_jet100 = new TH1D("h_hiBin_jet100","hiBin, events with jet100",200,0,200);
   h_hiBin_jet = new TH1D("h_hiBin_jet","hiBin, events with inclRecoJet",200,0,200);
   h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",200,0,200);
   h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",200,0,200);
@@ -208,6 +222,10 @@ void PbPb_scan(int group = 1){
 
   h_NEvents->Sumw2();
   h_hiBin->Sumw2();
+  h_hiBin_triggerOn->Sumw2();
+  h_hiBin_jet60->Sumw2();
+  h_hiBin_jet80->Sumw2();
+  h_hiBin_jet100->Sumw2();
   h_hiBin_jet->Sumw2();
   h_hiBin_inclRecoMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
@@ -229,6 +247,10 @@ void PbPb_scan(int group = 1){
     if(i==0){
       // ---------------------- event histograms --------------------------------
       h_vz[i] = new TH1D(Form("h_vz_C%i",i),Form("vz, inclusive events, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz_triggerOn[i] = new TH1D(Form("h_vz_triggerOn_C%i",i),Form("vz, events with muTrigger, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz_jet60[i] = new TH1D(Form("h_vz_jet60_C%i",i),Form("vz, events with jet60, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz_jet80[i] = new TH1D(Form("h_vz_jet80_C%i",i),Form("vz, events with jet80, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz_jet100[i] = new TH1D(Form("h_vz_jet100_C%i",i),Form("vz, events with jet100, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
       h_vz_jet[i] = new TH1D(Form("h_vz_jet_C%i",i),Form("vz, events with inclRecoJet, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag[i] = new TH1D(Form("h_vz_inclRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag_triggerOn[i] = new TH1D(Form("h_vz_inclRecoMuonTag_triggerOn_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag-triggerOn, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
@@ -265,6 +287,10 @@ void PbPb_scan(int group = 1){
     else{
       // ---------------------- event histograms --------------------------------
       h_vz[i] = new TH1D(Form("h_vz_C%i",i),Form("vz, inclusive events, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz_triggerOn[i] = new TH1D(Form("h_vz_triggerOn_C%i",i),Form("vz, events with triggerOn, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz_jet60[i] = new TH1D(Form("h_vz_jet60_C%i",i),Form("vz, events with jet60, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz_jet80[i] = new TH1D(Form("h_vz_jet80_C%i",i),Form("vz, events with jet80, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz_jet100[i] = new TH1D(Form("h_vz_jet100_C%i",i),Form("vz, events with jet100, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
       h_vz_jet[i] = new TH1D(Form("h_vz_jet_C%i",i),Form("vz, events with inclRecoJet, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag[i] = new TH1D(Form("h_vz_inclRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag_triggerOn[i] = new TH1D(Form("h_vz_inclRecoMuonTag_triggerOn_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag-triggerOn, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
@@ -302,6 +328,10 @@ void PbPb_scan(int group = 1){
     h_NJetPerEvent[i]->Sumw2();
     h_NMuTaggedJetPerEvent[i]->Sumw2();
     h_vz[i]->Sumw2();
+    h_vz_triggerOn[i]->Sumw2();
+    h_vz_jet60[i]->Sumw2();
+    h_vz_jet80[i]->Sumw2();
+    h_vz_jet100[i]->Sumw2();
     h_vz_jet[i]->Sumw2();
     h_vz_inclRecoMuonTag[i]->Sumw2();
     h_vz_inclRecoMuonTag_triggerOn[i]->Sumw2();
@@ -503,6 +533,30 @@ void PbPb_scan(int group = 1){
     h_vz[0]->Fill(em->vz,w);
     h_vz[CentralityIndex]->Fill(em->vz,w);
     h_hiBin->Fill(em->hiBin,w);
+
+    if(em->HLT_HIL3Mu12_v1 == 1){
+      h_vz_triggerOn[0]->Fill(em->vz,w);
+      h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin_triggerOn->Fill(em->hiBin,w);
+    }
+
+    if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 1){
+      h_vz_jet60[0]->Fill(em->vz,w);
+      h_vz_jet60[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin_jet60->Fill(em->hiBin,w);
+    }
+
+    if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 1){
+      h_vz_jet80[0]->Fill(em->vz,w);
+      h_vz_jet80[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin_jet80->Fill(em->hiBin,w);
+    }
+
+    if(em->HLT_HICsAK4PFJet100Eta1p5_v1 == 1){
+      h_vz_jet100[0]->Fill(em->vz,w);
+      h_vz_jet100[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin_jet100->Fill(em->hiBin,w);
+    }
 
     bool evtTriggerDecision = false;
 
@@ -959,6 +1013,11 @@ void PbPb_scan(int group = 1){
   
   h_NEvents->Write();
   h_hiBin->Write();
+  h_hiBin_triggerOn->Write();
+  h_hiBin_jet60->Write();
+  h_hiBin_jet80->Write();
+  h_hiBin_jet100->Write();
+  h_hiBin_jet->Write();
   h_hiBin_inclRecoMuonTag->Write();
   h_hiBin_inclRecoMuonTag_triggerOn->Write();
   h_inclMuPt->Write();
@@ -969,6 +1028,10 @@ void PbPb_scan(int group = 1){
     h_NMuTaggedJetPerEvent[i]->Write();
     
     h_vz[i]->Write();
+    h_vz_triggerOn[i]->Write();
+    h_vz_jet60[i]->Write();
+    h_vz_jet80[i]->Write();
+    h_vz_jet100[i]->Write();
     h_vz_jet[i]->Write();
     h_vz_inclRecoMuonTag[i]->Write();
     h_vz_inclRecoMuonTag_triggerOn[i]->Write();
