@@ -5,6 +5,7 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
 				   bool doHardProbesSample,
 				   bool applyJet60Trigger,
 				   bool applyJet80Trigger,
+				   bool applyJet100Trigger,
 				   bool doJetTrkMaxFilter,
 				   bool doEtaPhiMask,
 				   bool doBJetNeutrinoEnergyShift,
@@ -27,6 +28,7 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   // general information
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
+  if(applyJet100Trigger) result.Append("_Jet100HLT");
   result.Append("_mu12_pTmu-14_tight");
 	
   // jet-based filters

@@ -15,7 +15,8 @@ bool doJetTrkMaxFilter = false;
 bool doEtaPhiMask = false;
 // High Level Triggers (HLTs)
 bool applyJet60Trigger = false;
-bool applyJet80Trigger = true;
+bool applyJet80Trigger = false;
+bool applyJet100Trigger = true;
 bool applyMinBiasTrigger = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;

@@ -175,6 +175,7 @@ void PbPb_scan(int group = 1){
 						 doHardProbesSample,
 						 applyJet60Trigger,
 						 applyJet80Trigger,
+						 applyJet100Trigger,
 						 doJetTrkMaxFilter,
 						 doEtaPhiMask,
 						 doBJetNeutrinoEnergyShift,
@@ -535,6 +536,9 @@ void PbPb_scan(int group = 1){
     }
     if(applyJet80Trigger){
       if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
+    }
+    if(applyJet100Trigger){
+      if(em->HLT_HICsAK4PFJet100Eta1p5_v1 == 0) continue;
     }
 
     // apply min-bias trigger if activated in config
