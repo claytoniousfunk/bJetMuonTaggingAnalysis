@@ -173,6 +173,7 @@ void PbPb_scan(int group = 1){
   outputDatasetName = configureOutputDatasetName(doSingleMuonSample,
 						 doMinBiasSample,
 						 doHardProbesSample,
+						 applyMinBiasTrigger,
 						 applyJet60Trigger,
 						 applyJet80Trigger,
 						 applyJet100Trigger,

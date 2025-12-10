@@ -3,6 +3,7 @@
 TString configureOutputDatasetName(bool doSingleMuonSample,
 				   bool doMinBiasSample,
 				   bool doHardProbesSample,
+				   bool applyMinBiasTrigger,
 				   bool applyJet60Trigger,
 				   bool applyJet80Trigger,
 				   bool applyJet100Trigger,
@@ -26,6 +27,7 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   result.Append(datasetIndicator);
 
   // general information
+  if(applyMinBiasTrigger) result.Append("_MinBiasHLT");
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
   if(applyJet100Trigger) result.Append("_Jet100HLT");
