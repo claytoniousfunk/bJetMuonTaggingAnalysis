@@ -656,7 +656,7 @@ void PbPb_scan(int group = 1){
     int inclJetCounter = 0;
     int muTaggedJetCounter = 0;
 
-    cout << "nMu = " << em->nMu << endl;
+    //cout << "nMu = " << em->nMu << endl;
     // RECO MUON LOOP
     for(int m = 0; m < em->nMu; m++){
 
