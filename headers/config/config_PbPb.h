@@ -16,8 +16,8 @@ bool doEtaPhiMask = false;
 // High Level Triggers (HLTs)
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
-bool applyJet100Trigger = false;
-bool applyMinBiasTrigger = true;
+bool applyJet100Trigger = true;
+bool applyMinBiasTrigger = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
 // spectra alterations
@@ -29,5 +29,5 @@ bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // select dataset
 bool doSingleMuonSample = false;
-bool doMinBiasSample = true;
-bool doHardProbesSample = false;
+bool doMinBiasSample = false;
+bool doHardProbesSample = true;
