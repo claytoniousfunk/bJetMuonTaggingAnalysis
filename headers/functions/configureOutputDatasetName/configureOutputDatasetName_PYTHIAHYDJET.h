@@ -88,7 +88,7 @@ TString configureOutputDatasetName(TString generator,
   if(doLeadingXjetDumpFilter) result.Append("_leadingXjetDumpFilter");
   if(doXdumpReweight) result.Append("_xDumpReweight");
   if(doJetTrkMaxFilter) result.Append("_jetTrkMaxFilter");
-  if(doRemoveHYDJETjet) result.Append("_removeHYDJETjet0p45");
+  if(doRemoveHYDJETjet) result.Append("_removeHYDJETjet0p35");
   if(doEtaPhiMask) result.Append("_etaPhiMask");
   if(doDRReweight) result.Append("_dRReweight");
   if(doJetAxisSmearing) result.Append(Form("_jetAxisSmear_muPhi-%1.3f_sigmaPhi-%1.3f_muEta-%1.3f_sigmaEta-%1.3f",mu_phi,sigma_phi,mu_eta,sigma_eta));
