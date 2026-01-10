@@ -1889,12 +1889,14 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets[0][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	    h_muJetDr_recoJetPt_allJets[0][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	  
 	    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[CentralityIndex][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_allJets[CentralityIndex][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_allJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_allJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
-
+	    h_muJetDr_recoJetPt_allJets[CentralityIndex][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
+	    
 	    h_muptrel_hiBin_allJets[0]->Fill(muPtRel_i,em->hiBin,w_jet);
 	    if(jetPtIndex > 0) h_muptrel_hiBin_allJets[jetPtIndex]->Fill(muPtRel_i,em->hiBin,w_jet);
 
@@ -1904,11 +1906,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets[0][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_dJets[0][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	  
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_dJets[CentralityIndex][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_dJets[CentralityIndex][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_dJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_dJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_dJets[CentralityIndex][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 
 	      h_muptrel_hiBin_lJets[0]->Fill(muPtRel_i,em->hiBin,w_jet);
 	      if(jetPtIndex > 0) h_muptrel_hiBin_lJets[jetPtIndex]->Fill(muPtRel_i,em->hiBin,w_jet);
@@ -1918,11 +1922,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets[0][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_uJets[0][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	  
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_uJets[CentralityIndex][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_uJets[CentralityIndex][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_uJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_uJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_uJets[CentralityIndex][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 
 	      h_muptrel_hiBin_lJets[0]->Fill(muPtRel_i,em->hiBin,w_jet);
 	      if(jetPtIndex > 0) h_muptrel_hiBin_lJets[jetPtIndex]->Fill(muPtRel_i,em->hiBin,w_jet);
@@ -1932,11 +1938,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets[0][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_sJets[0][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	  
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_sJets[CentralityIndex][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_sJets[CentralityIndex][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_sJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_sJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_sJets[CentralityIndex][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 
 	      h_muptrel_hiBin_lJets[0]->Fill(muPtRel_i,em->hiBin,w_jet);
 	      if(jetPtIndex > 0) h_muptrel_hiBin_lJets[jetPtIndex]->Fill(muPtRel_i,em->hiBin,w_jet);
@@ -1946,11 +1954,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets[0][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_cJets[0][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	  
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_cJets[CentralityIndex][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_cJets[CentralityIndex][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_cJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_cJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_cJets[CentralityIndex][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 
 	      h_muptrel_hiBin_cJets[0]->Fill(muPtRel_i,em->hiBin,w_jet);
 	      if(jetPtIndex > 0) h_muptrel_hiBin_cJets[jetPtIndex]->Fill(muPtRel_i,em->hiBin,w_jet);
@@ -1960,11 +1970,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets[0][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_bJets[0][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	  
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bJets[CentralityIndex][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bJets[CentralityIndex][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_bJets[CentralityIndex][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 
 	      h_muptrel_hiBin_bJets[0]->Fill(muPtRel_i,em->hiBin,w_jet);
 	      if(jetPtIndex > 0) h_muptrel_hiBin_bJets[jetPtIndex]->Fill(muPtRel_i,em->hiBin,w_jet);
@@ -1974,11 +1986,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[0][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_bGSJets[0][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	  
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[CentralityIndex][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[CentralityIndex][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_bGSJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_bGSJets[CentralityIndex][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 
 	      h_muptrel_hiBin_bJets[0]->Fill(muPtRel_i,em->hiBin,w_jet);
 	      if(jetPtIndex > 0) h_muptrel_hiBin_bJets[jetPtIndex]->Fill(muPtRel_i,em->hiBin,w_jet);
@@ -1988,11 +2002,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets[0][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_gJets[0][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	  
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_gJets[CentralityIndex][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_gJets[CentralityIndex][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_gJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_gJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_gJets[CentralityIndex][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 
 	      h_muptrel_hiBin_lJets[0]->Fill(muPtRel_i,em->hiBin,w_jet);
 	      if(jetPtIndex > 0) h_muptrel_hiBin_lJets[jetPtIndex]->Fill(muPtRel_i,em->hiBin,w_jet);
@@ -2002,11 +2018,13 @@ void PYTHIAHYDJET_scan(int group = 1){
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets[0][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets[0][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets[0][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_xJets[0][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	  
 	      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_xJets[CentralityIndex][t]->Fill(muPtRel_i,jetPtArray[t],w_jet);
 	      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn_xJets[CentralityIndex][t]->Fill(muPt_i,jetPtArray[t],w_jet);
 	      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_xJets[CentralityIndex][t]->Fill(muEta_i,jetPtArray[t],w_jet);
 	      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_xJets[CentralityIndex][t]->Fill(muPhi_i,jetPtArray[t],w_jet);
+	      h_muJetDr_recoJetPt_xJets[CentralityIndex][t]->Fill(muJetDr_i,jetPtArray[t],w_jet);
 	    }
 
 	  }
