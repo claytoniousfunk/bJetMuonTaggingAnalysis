@@ -144,10 +144,10 @@ void PYTHIA_scan_response(int group = 1){
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down);
 
-  outputDatasetName.Append("_noNeutrinoInfo");
+  //outputDatasetName.Append("_noNeutrinoInfo");
 
-  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  //TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -280,7 +280,7 @@ void PYTHIA_scan_response(int group = 1){
   
 
   
-  h_matchedRecoJetPt_genJetPt_var = new TH2D("h_matchedRecoJetPt_genJetPt_var","genJetPt vs. matchedRecoJetPt, var bins",N1-1,ptAxis1,N2-1,ptAxis2);
+  h_matchedRecoJetPt_genJetPt_var = new TH2D("h_matchedRecoJetPt_genJetPt_var","genJetPt vs. matchedRecoJetPt, var bins",N1-1,ptAxis1,N1-1,ptAxis1);
     
   h_matchedRecoJetPt_genJetPt_var->Sumw2();  
 		
@@ -671,8 +671,8 @@ void PYTHIA_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      if(hasRecoJetMatch) {
-      //if(hasRecoJetMatch && hasRecoJetMuon) {
+      //if(hasRecoJetMatch) {
+      if(hasRecoJetMatch && hasRecoJetMuon) {
       
 	//if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
 	//if(hasRecoJetMatch && hasRecoJetNeutrino) {   // keep only neutrino-full jets
