@@ -174,7 +174,8 @@ void pp_scan(int group = 1){
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down);
 
-  TString output = Form("%s%s/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_noL2L3Correction/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -198,7 +199,7 @@ void pp_scan(int group = 1){
   // JET ENERGY CORRECTIONS
   vector<string> Files;
   Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
-  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+  //Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   // Files.push_back("../../../JetEnergyCorrections/Fall17_17Nov2017F_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
   // Files.push_back("../../../JetEnergyCorrections/Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
   JetCorrector JEC(Files);
