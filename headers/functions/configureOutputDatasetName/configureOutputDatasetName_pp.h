@@ -12,7 +12,8 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
 				   bool doJERCorrection,
 				   bool apply_JER_smear,
 				   bool apply_JEU_shift_up,
-				   bool apply_JEU_shift_down)
+				   bool apply_JEU_shift_down,
+				   double muPtCut)
 {
 
   TString result = "output";
@@ -28,7 +29,7 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   // general information
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
-  result.Append("_mu12_pTmu-14_tight");
+  result.Append(Form("_mu12_pTmu-%2.0f_tight",muPtCut));
 	
   // jet-based filters
   if(doJetTrkMaxFilter) result.Append("_jetTrkMaxFilter");
