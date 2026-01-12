@@ -338,7 +338,7 @@ void PYTHIA_scan(int group = 1){
 						 applyJet80Trigger,
 						 muPtCut);
 
-  TString output = Form("%s%s_rawJetPt/PYTHIA_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s/PYTHIA_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
   
@@ -979,8 +979,7 @@ void PYTHIA_scan(int group = 1){
       JEC.SetJetEta(em->jeteta[i]);
       JEC.SetJetPhi(em->jetphi[i]);
 
-      //double recoJetPt_i = JEC.GetCorrectedPT();  // apply manual JEC
-      double recoJetPt_i = em->rawpt[i];  // apply manual JEC
+      double recoJetPt_i = JEC.GetCorrectedPT();  // apply manual JEC
       double recoJetPt_JERSmear_i = recoJetPt_i;
       double recoJetPt_JEUShiftUp_i = recoJetPt_i;
       double recoJetPt_JEUShiftDown_i = recoJetPt_i;
