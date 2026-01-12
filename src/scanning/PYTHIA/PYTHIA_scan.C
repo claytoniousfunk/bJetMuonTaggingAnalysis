@@ -294,8 +294,8 @@ void PYTHIA_scan(int group = 1){
   TString inputFileName = "";
 
 
-  //inputDataset = "/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/";
-  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withJetTriggers/";
+  inputDataset = "/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/";
+  //inputDataset = "/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withJetTriggers/";
   inputFileName = "PYTHIA_DiJet_skim_output";
 
   TString input = "";
