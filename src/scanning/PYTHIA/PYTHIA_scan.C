@@ -335,7 +335,8 @@ void PYTHIA_scan(int group = 1){
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down,
 						 applyJet60Trigger,
-						 applyJet80Trigger);
+						 applyJet80Trigger,
+						 muPtCut);
 
   TString output = Form("%s%s_rawJetPt/PYTHIA_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 

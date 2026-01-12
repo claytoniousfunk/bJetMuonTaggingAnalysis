@@ -172,7 +172,8 @@ void pp_scan(int group = 1){
 						 doJERCorrection,
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
-						 apply_JEU_shift_down);
+						 apply_JEU_shift_down,
+						 muPtCut);
 
   //TString output = Form("%s%s/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   TString output = Form("%s%s_rawJetPt/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
