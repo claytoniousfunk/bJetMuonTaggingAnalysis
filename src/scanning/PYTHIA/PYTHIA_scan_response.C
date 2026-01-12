@@ -672,7 +672,7 @@ void PYTHIA_scan_response(int group = 1){
 			
       // fill response matrix
       //if(hasRecoJetMatch) {
-      if(hasRecoJetMatch && hasRecoJetMuon) {
+      if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
       
 	//if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
 	//if(hasRecoJetMatch && hasRecoJetNeutrino) {   // keep only neutrino-full jets
