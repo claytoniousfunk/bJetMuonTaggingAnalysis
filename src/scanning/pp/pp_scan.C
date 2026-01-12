@@ -175,7 +175,7 @@ void pp_scan(int group = 1){
 						 apply_JEU_shift_down);
 
   //TString output = Form("%s%s/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_noL2L3Correction/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_rawJetPt/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -540,7 +540,8 @@ void pp_scan(int group = 1){
       JEC.SetJetEta(em->jeteta[i]);
       JEC.SetJetPhi(em->jetphi[i]);
 
-      double x = JEC.GetCorrectedPT();  // use manual JEC
+      double x = em->rawpt[i];  // use manual JEC
+      //double x = JEC.GetCorrectedPT();  // use manual JEC
       //double x = em->jetpt[i]; // use built-in JEC
       double y = em->jeteta[i]; // recoJetEta
       double z = em->jetphi[i]; // recoJetPhi
