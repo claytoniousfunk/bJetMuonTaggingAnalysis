@@ -1043,9 +1043,9 @@ void PYTHIA_scan(int group = 1){
 	if(etaPhiMask(recoJetEta_i,recoJetPhi_i)) continue;
       }
 
-      if(doRemoveHYDJETjet){
-	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
-      }
+      // if(doRemoveHYDJETjet){
+      // 	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
+      // }
 
       if(doJESCorrection){
 	recoJetPt_i = recoJetPt_i * fxn_JES_Corr->Eval(recoJetPt_i);
@@ -1136,6 +1136,10 @@ void PYTHIA_scan(int group = 1){
 	if(jetPtIndex > 0) h_recoGenDpt_flavor[jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
 	
 
+      }
+
+      if(doRemoveHYDJETjet && hasGenJetMatch){
+	if(remove_HYDJET_jet(em->pthat, matchedGenJetPt_i)) continue;
       }
 
 
