@@ -1356,9 +1356,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 	if(etaPhiMask(recoJetEta_i,recoJetPhi_i)) continue;
       }
 
-      if(doRemoveHYDJETjet){
-	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
-      }
+      // if(doRemoveHYDJETjet){
+      // 	if(remove_HYDJET_jet(em->pthat, recoJetPt_i)) continue;
+      // }
 
       // in-jet muon variables
       double muPtRel_i = -1.0;
@@ -1466,6 +1466,10 @@ void PYTHIAHYDJET_scan(int group = 1){
 	h_recoGenDpt_flavor[CentralityIndex][0]->Fill(dPt_recoGen_min,jetFlavorInt,w);
 	if(jetPtIndex > 0) h_recoGenDpt_flavor[CentralityIndex][jetPtIndex]->Fill(dPt_recoGen_min,jetFlavorInt,w);
 
+      }
+
+      if(doRemoveHYDJETjet){
+	if(remove_HYDJET_jet(em->pthat, matchedGenJetPt_i)) continue;
       }
 
 
