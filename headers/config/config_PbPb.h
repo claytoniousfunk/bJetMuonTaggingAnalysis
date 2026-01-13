@@ -17,7 +17,7 @@ bool doWDecayFilter = true;
 // High Level Triggers (HLTs)
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
-bool applyJet100Trigger = true;
+bool applyJet100Trigger = false;
 bool applyMinBiasTrigger = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
@@ -29,7 +29,7 @@ bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // select dataset
-bool doSingleMuonSample = false;
+bool doSingleMuonSample = true;
 bool doMinBiasSample = false;
-bool doHardProbesSample = true;
+bool doHardProbesSample = false;
 
