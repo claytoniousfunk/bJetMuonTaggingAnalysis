@@ -359,6 +359,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 doDRReweight,
 						 doWeightCut,
 						 doJetAxisSmearing,
+						 doWDecayFilter,
 						 mu_phi,
 						 sigma_phi,
 						 mu_eta,
@@ -1486,7 +1487,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp->at(j),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(doWDecayFilter){
+	    if(isWDecayMuon(em->gpptp->at(j),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  }
 
 	  double genMuonPt_j = em->gpptp->at(j);
 	  double genMuonPt_matched_j = -1.0;
@@ -1523,7 +1526,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    // 				 em->muIsGlobal->at(l),
 	    // 				 em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
 
-	    if(isWDecayMuon(em->muPt->at(l),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	    if(doWDecayFilter){
+	      if(isWDecayMuon(em->muPt->at(l),recoJetPt_i)) continue;
+	    }
 
 	    double recoMuonPt_l = em->muPt->at(l);
 	    double recoMuonEta_l = em->muEta->at(l);
@@ -1605,7 +1610,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 	}
 
 
-	if(isWDecayMuon(recoMuonPt_m,recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	if(doWDecayFilter){
+	  if(isWDecayMuon(recoMuonPt_m,recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	}
 			
 
 	// match to genMuon
@@ -2262,7 +2269,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(isWDecayMuon(em->gpptp->at(j),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  if(doWDecayFilter){
+	    if(isWDecayMuon(em->gpptp->at(j),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	  }
 
 	  double genMuonPt_j = em->gpptp->at(j);
 	  double genMuonPt_matched_j = -1.0;
@@ -2352,7 +2361,9 @@ void PYTHIAHYDJET_scan(int group = 1){
 	// 			     em->muIsGlobal->at(m),
 	// 			     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 
-	if(isWDecayMuon(em->muPt->at(m),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	if(doWDecayFilter){
+	  if(isWDecayMuon(em->muPt->at(m),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	}
 	
 			
 	// match to genMuon

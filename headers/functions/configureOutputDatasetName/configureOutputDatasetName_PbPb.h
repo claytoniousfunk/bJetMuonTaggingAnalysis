@@ -9,6 +9,7 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
 				   bool applyJet100Trigger,
 				   bool doJetTrkMaxFilter,
 				   bool doEtaPhiMask,
+				   bool doWDecayFilter,
 				   bool doBJetNeutrinoEnergyShift,
 				   bool doJERCorrection,
 				   bool apply_JER_smear,
@@ -37,6 +38,7 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   // jet-based filters
   if(doJetTrkMaxFilter) result.Append("_jetTrkMaxFilter");
   if(doEtaPhiMask) result.Append("_etaPhiMask");
+  if(doWDecayFilter) result.Append("_WDecayFilter");
   if(doBJetNeutrinoEnergyShift) result.Append("_BJetNeutrinoEnergyShift");
   if(doJERCorrection) result.Append("_JERCorrection");
   if(apply_JER_smear) result.Append("_applyJERSmear");

@@ -181,6 +181,7 @@ void PbPb_scan(int group = 1){
 						 applyJet100Trigger,
 						 doJetTrkMaxFilter,
 						 doEtaPhiMask,
+						 doWDecayFilter,
 						 doBJetNeutrinoEnergyShift,
 						 doJERCorrection,
 						 apply_JER_smear,
@@ -843,7 +844,9 @@ void PbPb_scan(int group = 1){
 
 
 
-	if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	if(doWDecayFilter){
+	  if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	}
 	//if(isWDecayMuon_raw(muPt_m,em->rawpt[i])) continue;
        
 	// match to recoJets
