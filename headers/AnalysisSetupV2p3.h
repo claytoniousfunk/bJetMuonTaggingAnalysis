@@ -67,8 +67,8 @@ double muPtMaxCut = 1000.0; // mu12 scans
 double nuPtCut = 0.0;
 double nuPtMaxCut = 1000.0;
 
-const double pthatcut = 15.0;
-//const double pthatcut = 20.0;
+//const double pthatcut = 15.0;
+const double pthatcut = 20.0;
 //const double pthatcut = 25.0;
 //const double pthatcut = 30.0;
 //const double pthatcut = 45.0;
