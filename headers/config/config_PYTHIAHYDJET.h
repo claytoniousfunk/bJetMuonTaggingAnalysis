@@ -46,8 +46,8 @@ double sigma_eta = 0.005;
 // stuff for dataset naming
 TString generator = "PYTHIAHYDJET";
 // data set
-bool doDiJetSample = true;
-bool doMuJetSample = false;
+bool doDiJetSample = false;
+bool doMuJetSample = true;
 bool doBJetSample = false;
 bool doDiJetSample_batch1 = false;
 bool doDiJetSample_batch2 = false;
