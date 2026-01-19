@@ -13,8 +13,8 @@ bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
 bool skipGenParticles = false; // set TRUE for MuJet and BJet datasets
 // reweighting functions
-bool doHiBinReweight = true;
-bool doVzReweight = true;
+bool doHiBinReweight = false;
+bool doVzReweight = false;
 bool doJetPtReweight = false;
 // jet-based filters
 bool doGenJetPthatFilter = false;
@@ -29,7 +29,7 @@ bool doJESCorrection = false;
 bool doHadronPtRelReweight = false;
 bool doHadronPtRelReweightToMuon = false;
 bool doDRReweight = false;
-bool doWeightCut = true;
+bool doWeightCut = false;
 bool doJetAxisSmearing = false;
 bool doWDecayFilter = true;
 // shifting the hiBin distribution by this amount
