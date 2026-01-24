@@ -102,8 +102,8 @@ void PYTHIA_scan_response(int group = 1){
   TString inputFileName = "";
 
 
-  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/";
-  //inputDataset = "/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_noRecoJetPtCut/";
+  //inputDataset = "/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withNeutrinos/";
+  inputDataset = "/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_noRecoJetPtCut/";
   inputFileName = "PYTHIA_DiJet_skim_output";
 
   TString input = "";
