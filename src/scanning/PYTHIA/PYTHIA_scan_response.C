@@ -142,7 +142,8 @@ void PYTHIA_scan_response(int group = 1){
 						 doJESCorrection,				   
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
-						 apply_JEU_shift_down);
+						 apply_JEU_shift_down,
+						 muPtCut);
 
   //outputDatasetName.Append("_noNeutrinoInfo");
 
@@ -543,7 +544,7 @@ void PYTHIA_scan_response(int group = 1){
 	    hasRecoJetMatch = true;
 	    recoJetFlavorFlag = k;
 
-	    if(em->mupt[k] > 14.0 && fabs(em->mueta[k]) < 2.) hasRecoJetMuon = true;
+	    if(em->mupt[k] > muPtCut && fabs(em->mueta[k]) < 2.) hasRecoJetMuon = true;
 	    //if(em->mupt[k] > 7.0 && em->mupt[k] < 14.0) hasRecoJetMuon = true;
 
 	    JEC.SetJetPT(em->rawpt[k]);
