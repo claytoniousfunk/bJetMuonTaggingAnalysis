@@ -160,11 +160,12 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 						 apply_JEU_shift_down,
 						 hiBinShift,
 						 applyJet60Trigger,
-						 applyJet80Trigger);
+						 applyJet80Trigger,
+						 muPtCut);
 
 
-  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  //TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -194,8 +195,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
 
   // Define histograms
-  const int N1 = 15;
-  double ptAxis1[N1] = {0,10,20,30,40,50,60,70,80,100,120,150,200,300,500};
+  const int N1 = 16;
+  double ptAxis1[N1] = {0,10,20,30,40,50,60,70,80,90,100,120,150,200,300,500};
   const int N2 = 32;
   double ptAxis2[N2] = {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,500};
 
@@ -466,7 +467,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	    hasRecoJetMatch = true;
 	    recoJetFlavorFlag = k;
 
-	    if(em->mupt[k] > 14.0) hasRecoJetMuon = true;
+	    if(em->mupt[k] > muPtCut && fabs(em->mueta[k]) < 2.) hasRecoJetMuon = true;
 
 	    JEC.SetJetPT(em->rawpt[k]);
 	    JEC.SetJetEta(em->jeteta[k]);
@@ -543,8 +544,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 			
       // fill response matrix
       //if(hasRecoJetMatch && hasRecoJetMuon) {
-      //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
-      if(hasRecoJetMatch) {
+      if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
+      // if(hasRecoJetMatch) {
 	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
