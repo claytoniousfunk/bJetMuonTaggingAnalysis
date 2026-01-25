@@ -37,7 +37,7 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p3.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -45,7 +45,8 @@
 // getJetPtBin function
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../headers/functions/getCentBin_v2.h"
+//#include "../../../headers/functions/getCentBin_v2.h" // coarse centrality
+#include "../../../headers/functions/getCentBin.h" // nominal centrality
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
@@ -64,7 +65,8 @@
 #include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
 //#include "../../../headers/config/config_PbPb_MinBias.h"
-#include "../../../headers/config/config_PbPb_diJet.h"
+//#include "../../../headers/config/config_PbPb_diJet.h"
+#include "../../../headers/config/config_PbPb.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 
@@ -423,7 +425,7 @@ void PbPb_trigger_scan(int group = 1){
     evi_frac = 100*evi / NEvents;
 
     // global event cuts
-    if(fabs(em->vz) > 15.0 || em->hiBin > 180) continue;
+    if(fabs(em->vz) > 15.0 || em->hiBin > 160 || em->hiBin < 0) continue;
     if(em->checkEventFilter()) continue;
     
     
@@ -604,7 +606,7 @@ void PbPb_trigger_scan(int group = 1){
 	    muMuonHits_trigOn[3]->Fill(em->muMuonHits->at(m),w);
 	  }
 	}
-	if(em->hiBin > 100 && em->hiBin <=180){
+	if(em->hiBin > 100 && em->hiBin <=160){
 	  muPt_trigOn[4]->Fill(muPt,w_trig);
 	  if(muPt > muonPtCutoff_qualityCuts){
 	    muEta_trigOn[4]->Fill(muEta,w_trig);
@@ -693,7 +695,7 @@ void PbPb_trigger_scan(int group = 1){
 	    muMuonHits_trigOff[3]->Fill(em->muMuonHits->at(m),w);
 	  }
 	}
-	if(em->hiBin > 100 && em->hiBin <=180){
+	if(em->hiBin > 100 && em->hiBin <=160){
 	  muPt_trigOff[4]->Fill(muPt,w);
 	  if(muPt > muonPtCutoff_qualityCuts){
 	    muEta_trigOff[4]->Fill(muEta,w);
@@ -781,7 +783,7 @@ void PbPb_trigger_scan(int group = 1){
 	  muMuonHits_all[3]->Fill(em->muMuonHits->at(m),w);
 	}
       }
-      if(em->hiBin > 100 && em->hiBin <=180){
+      if(em->hiBin > 100 && em->hiBin <=160){
 	muPt_all[4]->Fill(muPt,w);
 	if(muPt > muonPtCutoff_qualityCuts){
 	  muEta_all[4]->Fill(muEta,w);
