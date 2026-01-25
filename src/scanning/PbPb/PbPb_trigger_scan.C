@@ -404,7 +404,7 @@ void PbPb_trigger_scan(int group = 1){
   cout << "     Number of jets = " << NJets << endl;
 
   // define event filters
-  em->regEventFilter(NeventFilters, eventFilters);
+  em->regEventFilter(NeventFilters_HardProbes, eventFilters_HardProbes);
 
  
   // event loop
