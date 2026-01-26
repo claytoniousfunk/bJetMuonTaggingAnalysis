@@ -214,7 +214,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 						 muPtCut);
 
   //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_LowerJetPtBy20Percent/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_RaiseJetPtBy20Percent/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -464,9 +464,10 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       JEU.SetJetEta(recoJetEta_i);
       JEU.SetJetPhi(recoJetPhi_i);
 
-      //////////////  EXPERIMENTAL -- lower jet pt by 20% for dR check /////////////////////////
+      //////////////  EXPERIMENTAL -- lower/raise jet pt by 20% for dR check /////////////////////////
 
-      recoJetPt_i = 0.8 * recoJetPt_i;
+      //recoJetPt_i = 0.8 * recoJetPt_i;
+      recoJetPt_i = 1.2 * recoJetPt_i;
       
       /////////////////////////////////////////////////////////////////////////////////////////
 
