@@ -210,9 +210,11 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
 						 doJESCorrection,				   
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
-						 apply_JEU_shift_down);
+						 apply_JEU_shift_down,
+						 muPtCut);
 
-  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_LowerJetPtBy20Percent/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -462,6 +464,14 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       JEU.SetJetEta(recoJetEta_i);
       JEU.SetJetPhi(recoJetPhi_i);
 
+      //////////////  EXPERIMENTAL -- lower jet pt by 20% for dR check /////////////////////////
+
+      recoJetPt_i = 0.8 * recoJetPt_i;
+      
+      /////////////////////////////////////////////////////////////////////////////////////////
+
+      
+
       double correctedPt_down = 1.0;
       double correctedPt_up = 1.0;
 
@@ -521,6 +531,7 @@ void PYTHIA_jetTrkMax_scan(int group = 1){
       
       //if(TMath::Abs(recoJetEta_i) > 1.6 || recoJetPt_i < 50.) continue;
       if(TMath::Abs(recoJetEta_i) > 1.6) continue;
+      //if(jetTrkMax_i < muPtCut) continue;
       if(jetTrkMax_i < 14.) continue;
 		
       int jetPtIndex = getJetPtBin(recoJetPt_i);
