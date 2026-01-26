@@ -148,7 +148,8 @@ void PYTHIA_scan_response(int group = 1){
   //outputDatasetName.Append("_noNeutrinoInfo");
 
   //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_genMuTaggedGenJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -522,6 +523,16 @@ void PYTHIA_scan_response(int group = 1){
       double matchedNeutrinoPt = 0.0;
       			
       if(TMath::Abs(y) > etaMax) continue;
+
+      bool hasGenMuonMatch = false;
+      // loop through gen particles to find gen-muon match
+      for(int j = 0; j < em->gpptp->size(); j++){
+
+	if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue; // skip if not a muon
+	if(em->gpptp->at(j) < muPtCut) continue;
+	if(getDr(y,z,em->gpetap->at(j),em->gpphip->at(j)) < epsilon_mm) hasGenMuonMatch = true;
+
+      }
 	
       // GET FLAVOR FROM RECO MATCH
       bool hasRecoJetMatch = false;
@@ -673,7 +684,8 @@ void PYTHIA_scan_response(int group = 1){
 			
       // fill response matrix
       //if(hasRecoJetMatch) {
-      if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
+      //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
+      if(hasGenMuonMatch){
       
 	//if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
 	//if(hasRecoJetMatch && hasRecoJetNeutrino) {   // keep only neutrino-full jets
