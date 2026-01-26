@@ -147,9 +147,9 @@ void PYTHIA_scan_response(int group = 1){
 
   //outputDatasetName.Append("_noNeutrinoInfo");
 
-  //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_genMuTaggedGenJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_genMuTaggedGenJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -683,9 +683,9 @@ void PYTHIA_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      //if(hasRecoJetMatch) {
+      if(hasRecoJetMatch) {
       //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
-      if(hasGenMuonMatch){
+      //if(hasGenMuonMatch){
       
 	//if(hasRecoJetMatch && !hasRecoJetNeutrino) {   // keep only neutrino-less jets
 	//if(hasRecoJetMatch && hasRecoJetNeutrino) {   // keep only neutrino-full jets
