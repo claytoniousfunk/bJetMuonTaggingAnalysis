@@ -711,7 +711,7 @@ void PYTHIA_scan_response(int group = 1){
 	h_matchedNeutrinoPtOverGenJetPt_recoJetPt[0]->Fill(matchedNeutrinoPt/x,matchedRecoJetPt,w);
 	h_matchedNeutrinoPtOverRecoJetPt_genJetPt[0]->Fill(matchedNeutrinoPt/matchedRecoJetPt,x,w);
 
-	if(x>60){
+	if(x>100){
 	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0]->Fill(matchedRecoJetPt/x,y,w);
 	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0]->Fill(matchedRecoJetPt/x,y,w);
 	}
@@ -728,7 +728,7 @@ void PYTHIA_scan_response(int group = 1){
 	  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[1]->Fill(matchedNeutrinoPt/x,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[1]->Fill(matchedNeutrinoPt/matchedRecoJetPt,x,w);
 	  				
-	  if(x>60){
+	  if(x>100){
 	    h_matchedRecoJetPtOverGenJetPt_genJetEta[1]->Fill(matchedRecoJetPt/x,y,w);
 	    
 	  }
@@ -744,7 +744,7 @@ void PYTHIA_scan_response(int group = 1){
 	  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[2]->Fill(matchedNeutrinoPt/x,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[2]->Fill(matchedNeutrinoPt/matchedRecoJetPt,x,w);
 	  
-	  if(x>60){
+	  if(x>100){
 	    h_matchedRecoJetPtOverGenJetPt_genJetEta[2]->Fill(matchedRecoJetPt/x,y,w);
 	  
 	  }
@@ -761,7 +761,7 @@ void PYTHIA_scan_response(int group = 1){
 	  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[3]->Fill(matchedNeutrinoPt/x,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[3]->Fill(matchedNeutrinoPt/matchedRecoJetPt,x,w);
 	  
-	  if(x>60){
+	  if(x>100){
 	    h_matchedRecoJetPtOverGenJetPt_genJetEta[3]->Fill(matchedRecoJetPt/x,y,w);
 	  
 	  }
@@ -777,7 +777,7 @@ void PYTHIA_scan_response(int group = 1){
 	  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[4]->Fill(matchedNeutrinoPt/x,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[4]->Fill(matchedNeutrinoPt/matchedRecoJetPt,x,w);
 
-	  if(x>60){
+	  if(x>100){
 	    h_matchedRecoJetPtOverGenJetPt_genJetEta[4]->Fill(matchedRecoJetPt/x,y,w);
 	    
 	  }
@@ -794,7 +794,7 @@ void PYTHIA_scan_response(int group = 1){
 	  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[5]->Fill(matchedNeutrinoPt/x,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[5]->Fill(matchedNeutrinoPt/matchedRecoJetPt,x,w);
 	  
-	  if(x>60){
+	  if(x>100){
 	    h_matchedRecoJetPtOverGenJetPt_genJetEta[5]->Fill(matchedRecoJetPt/x,y,w);
 	    
 	  }
@@ -811,7 +811,7 @@ void PYTHIA_scan_response(int group = 1){
 	  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[6]->Fill(matchedNeutrinoPt/x,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[6]->Fill(matchedNeutrinoPt/matchedRecoJetPt,x,w);
 	  
-	  if(x>60){
+	  if(x>100){
 	    h_matchedRecoJetPtOverGenJetPt_genJetEta[6]->Fill(matchedRecoJetPt/x,y,w);
 	  
 	  }
