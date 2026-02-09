@@ -3,10 +3,10 @@ void loadFitFxn_PbPb_HLT(){
 
   cout << "~~ loading fit function ..." << endl;
 
-  fitFxn_PbPb_HLT_C4 = new TF1("fitFxn_PbPb_HLT_C4","[0] - ([0] - [1])*TMath::Exp(-par[2]*x)",15,100);
-  fitFxn_PbPb_HLT_C3 = new TF1("fitFxn_PbPb_HLT_C3","[0] - ([0] - [1])*TMath::Exp(-par[2]*x)",15,100);
-  fitFxn_PbPb_HLT_C2 = new TF1("fitFxn_PbPb_HLT_C2","[0] - ([0] - [1])*TMath::Exp(-par[2]*x)",15,100);
-  fitFxn_PbPb_HLT_C1 = new TF1("fitFxn_PbPb_HLT_C1","[0] - ([0] - [1])*TMath::Exp(-par[2]*x)",15,100);
+  fitFxn_PbPb_HLT_C4 = new TF1("fitFxn_PbPb_HLT_C4","[0] - ([0] - [1])*exp(-par[2]*x)",15,100);
+  fitFxn_PbPb_HLT_C3 = new TF1("fitFxn_PbPb_HLT_C3","[0] - ([0] - [1])*exp(-par[2]*x)",15,100);
+  fitFxn_PbPb_HLT_C2 = new TF1("fitFxn_PbPb_HLT_C2","[0] - ([0] - [1])*exp(-par[2]*x)",15,100);
+  fitFxn_PbPb_HLT_C1 = new TF1("fitFxn_PbPb_HLT_C1","[0] - ([0] - [1])*exp(-par[2]*x)",15,100);
 
   fitFxn_PbPb_HLT_C4->SetParameter(0,HLTFitParam_C4_0);
   fitFxn_PbPb_HLT_C4->SetParameter(1,HLTFitParam_C4_1);
