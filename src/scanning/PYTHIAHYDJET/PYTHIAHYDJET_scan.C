@@ -79,6 +79,11 @@ TF1 *fitFxn_jetPt_C1, *fitFxn_jetPt_C2, *fitFxn_jetPt_C3, *fitFxn_jetPt_C4;
 #include "../../../headers/fitFunctions/fitFxn_jetPt_C3.h"
 #include "../../../headers/fitFunctions/fitFxn_jetPt_C4.h"
 
+// HLT fit params/fxn
+#include "../../../headers/fitParameters/HLTFitParams_PbPb.h"
+TF1 *fitFxn_PbPb_HLT_C4, *fitFxn_PbPb_HLT_C3, *fitFxn_PbPb_HLT_C2, *fitFxn_PbPb_HLT_C1;
+#include "../../../headers/fitFunctions/fitFxn_PbPb_HLT.h"
+
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -274,6 +279,7 @@ TH2D *h_muptrel_hiBin_allJets[NJetPtIndices];
 TH2D *h_muptrel_hiBin_bJets[NJetPtIndices];
 TH2D *h_muptrel_hiBin_cJets[NJetPtIndices];
 TH2D *h_muptrel_hiBin_lJets[NJetPtIndices];
+TH1D *h_inclMuPt;
 
 
 void PYTHIAHYDJET_scan(int group = 1){
@@ -1079,6 +1085,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   loadFitFxn_jetPt_C4();
   loadFitFxn_hadronPtRel();
   loadFitFxn_dR();
+  loadFitFxn_PbPb_HLT();
 
   TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
   TH2D *neutrino_energy_map;
@@ -1276,6 +1283,31 @@ void PYTHIAHYDJET_scan(int group = 1){
 	h_leadingGenJetPt_xJets_greaterThanPthat[CentralityIndex]->Fill(leadingGenJetPt_i,1.);
       }
     }
+
+
+    // RECO MUON LOOP
+    double leadingMuonPt = 0.0;
+    for(int m = 0; m < em->nMu; m++){
+
+      double muPt_m = em->muPt->at(m);
+      double muEta_m = em->muEta->at(m);
+      double muPhi_m = em->muPhi->at(m);
+
+      if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
+      if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+			      em->muInnerD0->at(m),
+			      em->muInnerDz->at(m),
+			      em->muMuonHits->at(m),
+			      em->muPixelHits->at(m),
+			      em->muIsGlobal->at(m),
+			      em->muIsPF->at(m),
+			      em->muStations->at(m),
+			      em->muTrkLayers->at(m))) continue;
+      if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
+      h_inclMuPt->Fill(muPt_m,w);
+
+    }
+    
     
    
     // RECO JET LOOP
@@ -1551,7 +1583,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    hasInclGenMuonTag = true;
 	    if(isMatchedGenMuon) {
 	      hasMatchedGenMuonTag = true;
-	      if(hasGenJetMatch){
+a	      if(hasGenJetMatch){
 		recoJetRecoMuonPtRel_i = getPtRel(genMuonPt_matched_j,genMuonEta_matched_j,genMuonPhi_matched_j,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
 		genJetGenMuonPtRel_i   = getPtRel(genMuonPt_j,genMuonEta_j,genMuonPhi_j,matchedGenJetPt_i,matchedGenJetEta_i,matchedGenJetPhi_i);
 	      }
@@ -1708,6 +1740,14 @@ void PYTHIAHYDJET_scan(int group = 1){
 	
       if(doHadronPtRelReweight){
 	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * w_reweight_hiBin * fitFxn_hadronPtRel->Eval(muPtRel_i);
+      }
+
+      if(applyMu12TriggerEfficiencyCorrection){
+	if(CentralityIndex == 4) w_jet = w_jet / fitFxn_PbPb_HLT_C4->Eval(leadingMuonPt);
+	else if(CentralityIndex == 3) w_jet = w_jet / fitFxn_PbPb_HLT_C3->Eval(leadingMuonPt);
+	else if(CentralityIndex == 2) w_jet = w_jet / fitFxn_PbPb_HLT_C2->Eval(leadingMuonPt);
+	else if(CentralityIndex == 1) w_jet = w_jet / fitFxn_PbPb_HLT_C1->Eval(leadingMuonPt);
+	else{};
       }
 
 

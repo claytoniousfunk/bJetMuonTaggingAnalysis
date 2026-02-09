@@ -36,6 +36,8 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   
   result.Append(Form("_mu12_pTmu-%2.0f_tight",muPtCut));
   if(applyMu12TriggerEfficiencyCorrection) result.Append("_mu12TriggerEfficiencyCorrection");
+
+  
 	
   // jet-based filters
   if(doJetTrkMaxFilter) result.Append("_jetTrkMaxFilter");

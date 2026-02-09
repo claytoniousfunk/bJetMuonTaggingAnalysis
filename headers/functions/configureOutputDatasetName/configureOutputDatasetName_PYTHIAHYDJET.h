@@ -80,6 +80,7 @@ TString configureOutputDatasetName(TString generator,
   /* if(applyJet60Trigger) result.Append("_Jet60HLT"); */
   /* if(applyJet80Trigger) result.Append("_Jet80HLT"); */
   result.Append(Form("_mu12_pTmu-%2.0f_tight",muPtCut));
+  if(applyMu12TriggerEfficiencyCorrection) result.Append("_mu12TriggerEfficiencyCorrection");
   // event-based reweights
   if(doVzReweight) result.Append("_vzReweight");
   if(doHiBinReweight) result.Append("_hiBinReweight");
