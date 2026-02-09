@@ -397,8 +397,9 @@ void pp_trigger_scan(int group = 1){
   int NJets = em->recoJetTree->GetEntries();
   cout << "     Number of jets = " << NJets << endl;
 
-  // define event filters
-  em->regEventFilter(NeventFilters, eventFilters);
+
+  em->regEventFilter(NeventFilters_SingleMuon, eventFilters_SingleMuon);
+
 
  
   // event loop
