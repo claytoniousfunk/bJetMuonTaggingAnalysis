@@ -718,11 +718,14 @@ void PbPb_scan(int group = 1){
     }
 
     double w_trig = w;
-    if(CentralityIndex == 4) w_trig = w / fitFxn_PbPb_HLT_C4->Eval(leadingMuonPt);
-    else if(CentralityIndex == 3) w_trig = w / fitFxn_PbPb_HLT_C3->Eval(leadingMuonPt);
-    else if(CentralityIndex == 2) w_trig = w / fitFxn_PbPb_HLT_C2->Eval(leadingMuonPt);
-    else if(CentralityIndex == 1) w_trig = w / fitFxn_PbPb_HLT_C1->Eval(leadingMuonPt);
-    else{};
+
+    if(applyMu12TriggerEfficiencyCorrection){
+      if(CentralityIndex == 4) w_trig = w / fitFxn_PbPb_HLT_C4->Eval(leadingMuonPt);
+      else if(CentralityIndex == 3) w_trig = w / fitFxn_PbPb_HLT_C3->Eval(leadingMuonPt);
+      else if(CentralityIndex == 2) w_trig = w / fitFxn_PbPb_HLT_C2->Eval(leadingMuonPt);
+      else if(CentralityIndex == 1) w_trig = w / fitFxn_PbPb_HLT_C1->Eval(leadingMuonPt);
+      else{};
+    }
 
     double leadingRecoJetPt = 0.0;
     // RECO JET LOOP
