@@ -33,8 +33,9 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
   if(applyJet100Trigger) result.Append("_Jet100HLT");
-  if(applyMu12TriggerEfficiencyCorrection) result.Append("_mu12TriggerEfficiencyCorrection");
+  
   result.Append(Form("_mu12_pTmu-%2.0f_tight",muPtCut));
+  if(applyMu12TriggerEfficiencyCorrection) result.Append("_mu12TriggerEfficiencyCorrection");
 	
   // jet-based filters
   if(doJetTrkMaxFilter) result.Append("_jetTrkMaxFilter");
