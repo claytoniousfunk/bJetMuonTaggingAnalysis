@@ -429,6 +429,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   h_weight_pthat_xJets_C1J3 = new TH2D("h_weight_pthat_xJets_C1J3","pthat vs w_{pthat}, xJets, 80 < p_{T} < 120 GeV, cent. 0-30%",NWeightBins,weightInputLow,weightInputHigh,500,0,500);
   h_weight_pthat_bJets_C1J3 = new TH2D("h_weight_pthat_bJets_C1J3","pthat vs w_{pthat}, bJets, 80 < p_{T} < 120 GeV, cent. 0-30%",NWeightBins,weightInputLow,weightInputHigh,500,0,500);
   h_matchedPartonFlavor_bHadronNumber = new TH2D("h_matchedPartonFlavor_bHadronNumber","matchedPartonFlavor vs bHadronNumber",27,-5,22,5,0,5);
+  h_inclMuPt = new TH1D("h_inclMuPt","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
 
   h_delta_muptrel_WTA_nom_flavor->Sumw2();
   h_hiBin->Sumw2();
@@ -441,6 +442,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   h_weight_pthat_xJets_C1J3->Sumw2();
   h_weight_pthat_bJets_C1J3->Sumw2();
   h_matchedPartonFlavor_bHadronNumber->Sumw2();
+  h_inclMuPt->Sumw2();
 
   for(int j = 0; j < NJetPtIndices; j++){
     if(j==0){
@@ -2527,6 +2529,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   //h_weight_pthat_xJets_C1J3->Write();
   //h_weight_pthat_bJets_C1J3->Write();
   //h_matchedPartonFlavor_bHadronNumber->Write();
+  h_inclMuPt->Write();
   
   for(int i = 0; i < NCentralityIndices; i++){
 
