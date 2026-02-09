@@ -145,7 +145,11 @@ const int NinclParentMassBins = 500;
 const double parentMassMin = 0.0;
 const double parentMassMax = 50.0;
 
-const double massMuon = 0.1056; // mass of muon in GeV
+const double massMuon = 0.1056583755; // mass of muon in GeV
+
+const int NDimuonMassBins = 60;
+const double dimuonMassMin = 60;
+const double dimuonMassMax = 120;
 
 /// weight distributions
 const double weightInputLow = 0.0;

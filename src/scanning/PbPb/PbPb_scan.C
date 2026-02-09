@@ -87,8 +87,8 @@ TF1 *fitFxn_PbPb_HLT_C4, *fitFxn_PbPb_HLT_C3, *fitFxn_PbPb_HLT_C2, *fitFxn_PbPb_
 #include "../../../headers/functions/getDatasetName/getDatasetName_PbPb.h"
 #include "../../../headers/functions/getInputFileName/getInputFileName_PbPb.h"
 #include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PbPb.h"
-
-
+// dimuon mass calculation
+#include "../../../headers/functions/calculateDimuonMass.h"
 
 
 
@@ -158,6 +158,7 @@ TH2D *h_muptrel_jetpt[NCentralityIndices];
 TH1D *h_NJetPerEvent[NCentralityIndices];
 TH1D *h_NMuTaggedJetPerEvent[NCentralityIndices];
 TH2D *h_muptrel_hiBin[NJetPtIndices];
+TH1D *h_dimuonMass[NCentralityIndices];
 
 ///////////////////////  start the program
 void PbPb_scan(int group = 1){
@@ -298,6 +299,7 @@ void PbPb_scan(int group = 1){
       h_mueta_recoJetPt_inclRecoMuonTag_triggerOn[i] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_C%i",i),Form("muon #it{#eta} vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
       h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[i] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_C%i",i),Form("muon #it{#phi} vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
       h_muJetDr_recoJetPt[i] = new TH2D(Form("h_muJetDr_recoJetPt_C%i",i),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+      h_dimuonMass[i] = new TH1D(Form("h_dimuonMass_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
     }
     else{
       // ---------------------- event histograms --------------------------------
@@ -339,6 +341,7 @@ void PbPb_scan(int group = 1){
       h_mueta_recoJetPt_inclRecoMuonTag_triggerOn[i] = new TH2D(Form("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn_C%i",i),Form("muon #it{#eta} vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
       h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[i] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_C%i",i),Form("muon #it{#phi} vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
       h_muJetDr_recoJetPt[i] = new TH2D(Form("h_muJetDr_recoJetPt_C%i",i),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+      h_dimuonMass[i] = new TH1D(Form("h_dimuonMass_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
     }
     // sumw2 commands
     h_NJetPerEvent[i]->Sumw2();
@@ -374,6 +377,7 @@ void PbPb_scan(int group = 1){
     h_mueta_recoJetPt_inclRecoMuonTag_triggerOn[i]->Sumw2();
     h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[i]->Sumw2();
     h_muJetDr_recoJetPt[i]->Sumw2();
+    h_dimuonMass[i]->Sumw2();
     
     // loop through jet pt indices
     for(int j = 0; j < NJetPtIndices; j++){
@@ -714,6 +718,35 @@ void PbPb_scan(int group = 1){
       if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
 
       h_inclMuPt->Fill(muPt_m,w);
+
+      for(int k = m+1; k < em->nMu; k++){
+
+	double muPt_k = em->muPt->at(k);
+	double muEta_k = em->muEta->at(k);
+	double muPhi_k = em->muPhi->at(k);
+
+	if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.0) continue;
+
+	if(!isQualityMuon_tight(em->muChi2NDF->at(k),
+			      em->muInnerD0->at(k),
+			      em->muInnerDz->at(k),
+			      em->muMuonHits->at(k),
+			      em->muPixelHits->at(k),
+			      em->muIsGlobal->at(k),
+			      em->muIsPF->at(k),
+			      em->muStations->at(k),
+			      em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+
+	if(em->muCharge(m)*em->muCharge(k) == 1){
+
+	  h_dimuonMass[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
+	  h_dimuonMass[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
+	  
+	}
+	
+      }
+
+      
 
     }
 
@@ -1085,6 +1118,7 @@ void PbPb_scan(int group = 1){
     h_vz_jet[i]->Write();
     h_vz_inclRecoMuonTag[i]->Write();
     h_vz_inclRecoMuonTag_triggerOn[i]->Write();
+    h_dimuonMass[i]->Write();
    
     h_inclRecoJetPt[i]->Write();
     h_inclRecoJetEta[i]->Write();
