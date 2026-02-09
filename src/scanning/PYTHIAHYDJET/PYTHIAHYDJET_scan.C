@@ -1583,7 +1583,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	    hasInclGenMuonTag = true;
 	    if(isMatchedGenMuon) {
 	      hasMatchedGenMuonTag = true;
-a	      if(hasGenJetMatch){
+	      if(hasGenJetMatch){
 		recoJetRecoMuonPtRel_i = getPtRel(genMuonPt_matched_j,genMuonEta_matched_j,genMuonPhi_matched_j,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
 		genJetGenMuonPtRel_i   = getPtRel(genMuonPt_j,genMuonEta_j,genMuonPhi_j,matchedGenJetPt_i,matchedGenJetEta_i,matchedGenJetPhi_i);
 	      }
