@@ -119,7 +119,7 @@ void pp_trigger_scan(int group = 1){
   
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_triggerEffScan_mu12_tight/pp_ZeroBias_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_triggerEffScan_mu12_tight/pp_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
