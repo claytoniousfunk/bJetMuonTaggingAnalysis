@@ -6,7 +6,7 @@ double HLTFitParam_C4_2 = 0.107355;
 
 double e_HLTFitParam_C4_0 = 0.00972729;
 double e_HLTFitParam_C4_1 = 0.189867;
-double e_HLTFitParam_C4_2 = 0.119078
+double e_HLTFitParam_C4_2 = 0.119078;
 
 
 double HLTFitParam_C3_0 = 0.950489;
