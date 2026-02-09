@@ -29,7 +29,7 @@ bool doJESCorrection = false;
 bool doHadronPtRelReweight = false;
 bool doHadronPtRelReweightToMuon = false;
 bool doDRReweight = false;
-bool doWeightCut = false;
+bool doWeightCut = true;
 bool doJetAxisSmearing = false;
 bool doWDecayFilter = true;
 // shifting the hiBin distribution by this amount
@@ -46,9 +46,9 @@ double sigma_eta = 0.005;
 // stuff for dataset naming
 TString generator = "PYTHIAHYDJET";
 // data set
-bool doDiJetSample = false;
+bool doDiJetSample = true;
 bool doMuJetSample = false;
-bool doBJetSample = true;
+bool doBJetSample = false;
 bool doDiJetSample_batch1 = false;
 bool doDiJetSample_batch2 = false;
 bool doDiJetSample_batch3 = false;
