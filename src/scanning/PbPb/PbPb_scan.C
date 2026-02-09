@@ -747,6 +747,13 @@ void PbPb_scan(int group = 1){
 	  h_dimuonMass[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
 	  
 	}
+
+	else if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
+
+	  h_dimuonMass_sameSign[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
+	  h_dimuonMass_sameSign[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
+	  
+	}
 	
       }
 
