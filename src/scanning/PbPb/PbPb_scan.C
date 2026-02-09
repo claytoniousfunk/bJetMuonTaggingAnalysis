@@ -159,6 +159,7 @@ TH1D *h_NJetPerEvent[NCentralityIndices];
 TH1D *h_NMuTaggedJetPerEvent[NCentralityIndices];
 TH2D *h_muptrel_hiBin[NJetPtIndices];
 TH1D *h_dimuonMass[NCentralityIndices];
+TH1D *h_dimuonMass_sameSign[NCentralityIndices];
 
 ///////////////////////  start the program
 void PbPb_scan(int group = 1){
@@ -300,6 +301,7 @@ void PbPb_scan(int group = 1){
       h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[i] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_C%i",i),Form("muon #it{#phi} vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
       h_muJetDr_recoJetPt[i] = new TH2D(Form("h_muJetDr_recoJetPt_C%i",i),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
       h_dimuonMass[i] = new TH1D(Form("h_dimuonMass_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
+      h_dimuonMass_sameSign[i] = new TH1D(Form("h_dimuonMass_sameSign_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
     }
     else{
       // ---------------------- event histograms --------------------------------
@@ -342,6 +344,7 @@ void PbPb_scan(int group = 1){
       h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[i] = new TH2D(Form("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn_C%i",i),Form("muon #it{#phi} vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
       h_muJetDr_recoJetPt[i] = new TH2D(Form("h_muJetDr_recoJetPt_C%i",i),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
       h_dimuonMass[i] = new TH1D(Form("h_dimuonMass_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
+      h_dimuonMass_sameSign[i] = new TH1D(Form("h_dimuonMass_sameSign_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
     }
     // sumw2 commands
     h_NJetPerEvent[i]->Sumw2();
@@ -378,6 +381,7 @@ void PbPb_scan(int group = 1){
     h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[i]->Sumw2();
     h_muJetDr_recoJetPt[i]->Sumw2();
     h_dimuonMass[i]->Sumw2();
+    h_dimuonMass_sameSign[i]->Sumw2();
     
     // loop through jet pt indices
     for(int j = 0; j < NJetPtIndices; j++){
@@ -1119,6 +1123,7 @@ void PbPb_scan(int group = 1){
     h_vz_inclRecoMuonTag[i]->Write();
     h_vz_inclRecoMuonTag_triggerOn[i]->Write();
     h_dimuonMass[i]->Write();
+    h_dimuonMass_sameSign[i]->Write();
    
     h_inclRecoJetPt[i]->Write();
     h_inclRecoJetEta[i]->Write();
