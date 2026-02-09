@@ -37,7 +37,7 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p1.h"
+#include "../../../headers/AnalysisSetupV2p3.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -45,7 +45,7 @@
 // getJetPtBin function
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../headers/functions/getCentBin_v2.h"
+#include "../../../headers/functions/getCentBin.h"
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
@@ -64,7 +64,8 @@
 #include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
 //#include "../../../headers/config/config_pp_MB.h"
-#include "../../../headers/config/config_pp_SingleMuon.h"
+//#include "../../../headers/config/config_pp_SingleMuon.h"
+#include "../../../headers/config/config_pp.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 
@@ -117,8 +118,8 @@ TH1D *muMuonHits_all[5];
 void pp_trigger_scan(int group = 1){
   
 
-  TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1_alt/pp_MinBias_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_ZeroBias_triggerEffScan_mu12_tight/pp_ZeroBias_scan_output_%i.root",group);
+  TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_triggerEffScan_mu12_tight/pp_ZeroBias_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
