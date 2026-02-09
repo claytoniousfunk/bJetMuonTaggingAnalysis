@@ -43,6 +43,12 @@
 TF1 *fitFxn_PYTHIA_JERCorrection;
 // JER-correction function
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_JERCorrection.h"
+
+// HLT fit params/fxn
+#include "../../../headers/fitParameters/HLTFitParams_PbPb.h"
+TF1 *fitFxn_PbPb_HLT_C4, *fitFxn_PbPb_HLT_C3, *fitFxn_PbPb_HLT_C2, *fitFxn_PbPb_HLT_C1;
+#include "../../../headers/fitFunctions/fitFxn_PbPb_HLT.h"
+
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -443,6 +449,7 @@ void PbPb_scan(int group = 1){
   else{};
   
   loadFitFxn_PYTHIA_JERCorrection();
+  loadFitFxn_PbPb_HLT();
   
   TRandom *randomGenerator = new TRandom2();
 
@@ -509,6 +516,8 @@ void PbPb_scan(int group = 1){
 	
     int CentralityIndex = getCentBin(em->hiBin);
     if(CentralityIndex < 0) continue;
+
+    
 
 
     // apply min-bias trigger if activated in config
@@ -652,7 +661,7 @@ void PbPb_scan(int group = 1){
     // }
     // else{continue ; }
 
-    double w_trig = w;
+    
     //double w_trig = 1.0 / ( triggerDecision_Prescl * 1.0 ); // set weight as 1/prescl for triggered events
     //double w_trig = 1.0; // don't scale by prescales for templates
     
@@ -671,6 +680,7 @@ void PbPb_scan(int group = 1){
 
     //cout << "nMu = " << em->nMu << endl;
     // RECO MUON LOOP
+    double leadingMuonPt = 0.0;
     for(int m = 0; m < em->nMu; m++){
 
       double muPt_m = em->muPt->at(m);
@@ -699,11 +709,20 @@ void PbPb_scan(int group = 1){
       // 				   em->muPixelHits->at(m),
       // 				   em->muIsTracker->at(m),
       // 				   em->muIsGlobal->at(m),
-      // 				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+      // 				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+
+      if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
 
       h_inclMuPt->Fill(muPt_m,w);
 
     }
+
+    double w_trig = w;
+    if(CentralityIndex == 4) w_trig = w / fitFxn_PbPb_HLT_C4->Eval(leadingMuonPt);
+    else if(CentralityIndex == 3) w_trig = w / fitFxn_PbPb_HLT_C3->Eval(leadingMuonPt);
+    else if(CentralityIndex == 2) w_trig = w / fitFxn_PbPb_HLT_C2->Eval(leadingMuonPt);
+    else if(CentralityIndex == 1) w_trig = w / fitFxn_PbPb_HLT_C1->Eval(leadingMuonPt);
+    else{};
 
     double leadingRecoJetPt = 0.0;
     // RECO JET LOOP
