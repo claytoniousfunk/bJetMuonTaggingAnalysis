@@ -437,11 +437,18 @@ void pp_trigger_scan(int group = 1){
     double w = 1.0;
     double w_trig = 1.0 * triggerDecision_Prescl;
 
+    cout << "---- output muon information:\n";
+    cout << " nMu = " << em->nMu << "\n";
+
     
     for(int m = 0; m < em->nMu; m++){
 
       double muEta = em->muEta->at(m); 
       double muPt = em->muPt->at(m);
+
+      cout << " muPt = " << muPt << "\n";
+      cout << " muEta = " << muEta << "\n";
+	
 
       // muon kinematic cuts
       if(fabs(muEta) > 2.0) continue;
