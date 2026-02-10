@@ -119,7 +119,7 @@ void pp_trigger_scan(int group = 1){
   
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_triggerEffScan_mu12_tight/pp_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_triggerEffScan_mu12_tight_onlyOneMuonPerEvent/pp_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -437,17 +437,25 @@ void pp_trigger_scan(int group = 1){
     double w = 1.0;
     double w_trig = 1.0 * triggerDecision_Prescl;
 
-    cout << "---- output muon information:\n";
-    cout << " nMu = " << em->nMu << "\n";
+    // cout << "---- output muon information:\n";
+    // cout << " nMu = " << em->nMu << "\n";
 
+    ////////////////////////////////////////////////////////
+
+    ///// experimental "one muon per event" requirement
+
+    if(em->nMu > 1) continue;
+
+    ///////////////////////////////////////////////////////
+    
     
     for(int m = 0; m < em->nMu; m++){
 
       double muEta = em->muEta->at(m); 
       double muPt = em->muPt->at(m);
 
-      cout << " muPt = " << muPt << "\n";
-      cout << " muEta = " << muEta << "\n";
+      // cout << " muPt = " << muPt << "\n";
+      // cout << " muEta = " << muEta << "\n";
 	
 
       // muon kinematic cuts
