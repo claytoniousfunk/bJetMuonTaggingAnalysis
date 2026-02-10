@@ -43,6 +43,10 @@
 TF1 *fitFxn_PYTHIA_JERCorrection;
 // JER-correction function
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_JERCorrection.h"
+// HLT fit params/fxn
+#include "../../../headers/fitParameters/HLTFitParams_pp.h"
+TF1 *fitFxn_pp_HLT;
+#include "../../../headers/fitFunctions/fitFxn_PbPb_pp.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -169,6 +173,7 @@ void pp_scan(int group = 1){
 						 doHighEGJetSample,
 						 applyJet60Trigger,
 						 applyJet80Trigger,
+						 applyMu12TriggerEfficiencyCorrection,
 						 doJetTrkMaxFilter,
 						 doEtaPhiMask,
 						 doJESCorrection,
@@ -350,6 +355,7 @@ void pp_scan(int group = 1){
   }
 
   loadFitFxn_PYTHIA_JERCorrection();
+  loadFitFxn_pp_HLT();
   
   TRandom *randomGenerator = new TRandom2();
 
@@ -492,6 +498,10 @@ void pp_scan(int group = 1){
  
     double w_trig = w;
 
+    if(applyMu12TriggerEfficiencyCorrection){
+      w_trig = w / fitFxn_pp_HLT->Eval(leadingMuonPt);
+    }
+
    
     bool eventHasGoodJet = false;
     bool eventHasInclRecoMuonTag = false;
@@ -556,13 +566,13 @@ void pp_scan(int group = 1){
 
 	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
 
-	    h_dimuonMass->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
+	    h_dimuonMass->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k)));
 	  
 	  }
 
 	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
 
-	    h_dimuonMass_sameSign->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
+	    h_dimuonMass_sameSign->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k)));
 	  
 	  }
 	
@@ -722,7 +732,11 @@ void pp_scan(int group = 1){
 
       }
      
-     
+      if(applyMu12TriggerEfficiencyCorrection){
+	w_trig = w / fitFxn_pp_HLT->Eval(muPt);
+      }
+
+      
       // Fill the jet/event histograms
       h_inclRecoJetPt->Fill(x,w);
       if(inJetMuPt_i > 14. && fabs(inJetMuEta_i) < 2.){

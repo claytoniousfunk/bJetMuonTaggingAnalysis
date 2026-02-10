@@ -13,8 +13,9 @@ bool doJetTrkMaxFilter = true;
 bool doEtaPhiMask = false;
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
-bool doJESCorrection = false;
+bool applyMu12TriggerEfficiencyCorrection = true;
 // spectra alterations
+bool doJESCorrection = false;
 bool doBJetNeutrinoEnergyShift = false;
 bool doJERCorrection = false;
 // options for systematic studies
