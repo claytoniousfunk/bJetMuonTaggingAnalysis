@@ -743,17 +743,24 @@ void PbPb_scan(int group = 1){
 				  em->muStations->at(k),
 				  em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
 
+	  double w_mk = w;
+	  if(CentralityIndex == 4) w_mk = w / (fitFxn_PbPb_HLT_C4->Eval(muPt_m)*fitFxn_PbPb_HLT_C4->Eval(muPt_k));
+	  else if(CentralityIndex == 3) w_mk = w / (fitFxn_PbPb_HLT_C3->Eval(muPt_m)*fitFxn_PbPb_HLT_C3->Eval(muPt_k));
+	  else if(CentralityIndex == 2) w_mk = w / (fitFxn_PbPb_HLT_C2->Eval(muPt_m)*fitFxn_PbPb_HLT_C2->Eval(muPt_k));
+	  else if(CentralityIndex == 1) w_mk = w / (fitFxn_PbPb_HLT_C1->Eval(muPt_m)*fitFxn_PbPb_HLT_C1->Eval(muPt_k));
+	  else{};
+
 	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
 
-	    h_dimuonMass[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k)));
-	    h_dimuonMass[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k)));
+	    h_dimuonMass[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	    h_dimuonMass[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
 	  
 	  }
 
 	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
 
-	    h_dimuonMass_sameSign[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k)));
-	    h_dimuonMass_sameSign[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k)));
+	    h_dimuonMass_sameSign[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	    h_dimuonMass_sameSign[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
 	  
 	  }
 	
