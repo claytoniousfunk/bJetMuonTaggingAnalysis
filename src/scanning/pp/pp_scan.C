@@ -46,7 +46,7 @@ TF1 *fitFxn_PYTHIA_JERCorrection;
 // HLT fit params/fxn
 #include "../../../headers/fitParameters/HLTFitParams_pp.h"
 TF1 *fitFxn_pp_HLT;
-#include "../../../headers/fitFunctions/fitFxn_PbPb_pp.h"
+#include "../../../headers/fitFunctions/fitFxn_pp_HLT.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
