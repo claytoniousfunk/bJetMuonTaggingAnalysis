@@ -497,11 +497,6 @@ void pp_scan(int group = 1){
     // else{ continue ;}
  
     double w_trig = w;
-
-    if(applyMu12TriggerEfficiencyCorrection){
-      w_trig = w / fitFxn_pp_HLT->Eval(leadingMuonPt);
-    }
-
    
     bool eventHasGoodJet = false;
     bool eventHasInclRecoMuonTag = false;
