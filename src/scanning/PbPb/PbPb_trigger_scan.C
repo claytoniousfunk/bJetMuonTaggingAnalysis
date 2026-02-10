@@ -123,7 +123,7 @@ void PbPb_trigger_scan(int group = 1){
   // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_MinBias_triggerEffScan_mu12_tight/PbPb_SingleMuon_scan_output_%i.root",group);
 
   TString input = Form("/eos/user/c/cbennett/skims/output_skims_PbPb_HardProbes/PbPb_HardProbes_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_triggerEffScan_mu12_tight/PbPb_SingleMuon_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PbPb_HardProbes_triggerEffScan_mu12_tight_onlyOneMuonPerEvent/PbPb_SingleMuon_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -441,6 +441,14 @@ void PbPb_trigger_scan(int group = 1){
 
     double w = 1.0;
     double w_trig = 1.0 * triggerDecision_Prescl;
+
+    ////////////////////////////////////////////////////////
+
+    ///// experimental "one muon per event" requirement
+
+    if(em->nMu > 1) continue;
+
+    ///////////////////////////////////////////////////////
 
     
     for(int m = 0; m < em->nMu; m++){
