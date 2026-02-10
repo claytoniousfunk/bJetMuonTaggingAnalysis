@@ -285,8 +285,8 @@ TH2D *h_muJetDr_flavor[NJetPtIndices];
 TH1D *h_muptrel_proper_allJets[NJetPtIndices];
 TH1D *h_muptrel_spillFromBelow_allJets[NJetPtIndices];
 TH1D *h_muptrel_spillFromAbove_allJets[NJetPtIndices];
-TH1D *h_dimuonMass[NCentralityIndices];
-TH1D *h_dimuonMass_sameSign[NCentralityIndices];
+TH1D *h_dimuonMass;
+TH1D *h_dimuonMass_sameSign;
 
 
 void PYTHIA_scan(int group = 1){
@@ -922,7 +922,7 @@ void PYTHIA_scan(int group = 1){
 
 	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
 
-	    h_dimuonMass[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
+	    h_dimuonMass->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
 	   	  
 	  }
 
