@@ -146,7 +146,8 @@ TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_mu
 #include "../../../headers/functions/jet_filter/remove_HYDJET_jet.h"
 // dataset naming functions
 #include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIA.h"
-
+// dimuon mass calculation
+#include "../../../headers/functions/calculateDimuonMass.h"
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // >>>>>>>>>> Reco jets
@@ -281,11 +282,11 @@ TH2D *h_recoGenDpt_flavor[NJetPtIndices];
 TH2D *h_muptrelGenJetGenMuon_muptrelRecoJetRecoMuon[NJetPtIndices][7];
 TH2D *h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[NJetPtIndices][7];
 TH2D *h_muJetDr_flavor[NJetPtIndices];
-
 TH1D *h_muptrel_proper_allJets[NJetPtIndices];
 TH1D *h_muptrel_spillFromBelow_allJets[NJetPtIndices];
 TH1D *h_muptrel_spillFromAbove_allJets[NJetPtIndices];
-
+TH1D *h_dimuonMass[NCentralityIndices];
+TH1D *h_dimuonMass_sameSign[NCentralityIndices];
 
 
 void PYTHIA_scan(int group = 1){
@@ -420,6 +421,9 @@ void PYTHIA_scan(int group = 1){
   h_recoJetPt_pthat = new TH2D("h_recoJetPt_pthat","reco p_{T}^{jet} vs. #hat{p}_{T}, PYTHIA; reco p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
   h_genJetPt_pthat = new TH2D("h_genJetPt_pthat","gen p_{T}^{jet} vs. #hat{p}_{T}, PYTHIA; gen p_{T}^{jet} [GeV]; #hat{p}_{T} [GeV]",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
 
+  h_dimuonMass = new TH1D("h_dimuonMass","dimuon mass (opposite sign); m_{#mu#mu} [GeV]; Entries",NDimuonMassBins,dimuonMassMin,dimuonMassMax);
+  h_dimuonMass_sameSign = new TH1D("h_dimuonMass_sameSign","dimuon mass (same sign); m_{#mu#mu} [GeV]; Entries",NDimuonMassBins,dimuonMassMin,dimuonMassMax);
+
   // muon-based 2d histograms
   for(int t = 0; t < NTemplateIndices; t++){
     // allJets
@@ -534,6 +538,9 @@ void PYTHIA_scan(int group = 1){
 
   h_recoJetPt_pthat->Sumw2();	
   h_genJetPt_pthat->Sumw2();
+
+  h_dimuonMass->Sumw2();
+  h_dimuonMass_sameSign->Sumw2();
 
   for(int t = 0; t < NTemplateIndices; t++){
     h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[t]->Sumw2();
@@ -652,7 +659,7 @@ void PYTHIA_scan(int group = 1){
       h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon[j][6] = new TH2D(Form("h_muptrelRecoJetRecoMuonOverMuptrelGenJetGenMuon_muptrelGenJetGenMuon_xJets_J%i",j),Form("xJets, muon pTrel(recoJet,matchedRecoMuon) / muon pTrel (genJet,genMuon) vs. muon pTrel (genJet,genMuon), p_{T}^{jet} %3.0f - %3.0f",jetPtEdges[j-1],jetPtEdges[j]),100,0,5,NMuRelPtBins,muRelPtMin,muRelPtMax);
       
       
-      }
+    }
 
 
     h_inclRecoJetEta_inclRecoJetPhi[j]->Sumw2();
@@ -858,6 +865,77 @@ void PYTHIA_scan(int group = 1){
     if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
     // ******************************************
 
+    // RECO MUON LOOP
+    double leadingMuonPt = 0.0;
+    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+      for(int m = 0; m < em->nMu; m++){
+
+	double muPt_m = em->muPt->at(m);
+	double muEta_m = em->muEta->at(m);
+	double muPhi_m = em->muPhi->at(m);
+
+	//cout << "(muPt, muEta, muPhi) = (" << muPt_m << ", " << muEta_m << ", " << muPhi_m << ")" << endl;
+
+	// skip if muon has already been matched to a jet in this event
+	// muon kinematic cuts
+	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
+	// muon quality cuts
+	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				em->muInnerD0->at(m),
+				em->muInnerDz->at(m),
+				em->muMuonHits->at(m),
+				em->muPixelHits->at(m),
+				em->muIsGlobal->at(m),
+				em->muIsPF->at(m),
+				em->muStations->at(m),
+				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+
+	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+	// 				   em->muInnerD0->at(m),
+	// 				   em->muInnerDz->at(m),
+	// 				   em->muPixelHits->at(m),
+	// 				   em->muIsTracker->at(m),
+	// 				   em->muIsGlobal->at(m),
+	// 				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+
+	if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
+
+	h_inclMuPt->Fill(muPt_m,w);
+
+	for(int k = m+1; k < em->nMu; k++){
+
+	  double muPt_k = em->muPt->at(k);
+	  double muEta_k = em->muEta->at(k);
+	  double muPhi_k = em->muPhi->at(k);
+
+	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.0) continue;
+
+	  if(!isQualityMuon_tight(em->muChi2NDF->at(k),
+				  em->muInnerD0->at(k),
+				  em->muInnerDz->at(k),
+				  em->muMuonHits->at(k),
+				  em->muPixelHits->at(k),
+				  em->muIsGlobal->at(k),
+				  em->muIsPF->at(k),
+				  em->muStations->at(k),
+				  em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+
+	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
+
+	    h_dimuonMass[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
+	   	  
+	  }
+
+	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
+
+	    h_dimuonMass_sameSign->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w);
+	    	  
+	  }
+	
+	}
+
+      }
+    }
 
     
     double leadingRecoJetPt = -1.0;
@@ -2039,6 +2117,8 @@ void PYTHIA_scan(int group = 1){
   h_inclGenJetPt_matchedRecoMuonTag_flavor->Write();
   h_inclGenJetPt_matchedRecoMuonTag_triggerOn_flavor->Write();
 
+  h_dimuonMass->Write();
+  h_dimuonMass_sameSign->Write();
 
   for(int t = 0; t < NTemplateIndices; t++){
     h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[t]->Write();
