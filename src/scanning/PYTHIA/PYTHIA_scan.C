@@ -287,6 +287,7 @@ TH1D *h_muptrel_spillFromBelow_allJets[NJetPtIndices];
 TH1D *h_muptrel_spillFromAbove_allJets[NJetPtIndices];
 TH1D *h_dimuonMass;
 TH1D *h_dimuonMass_sameSign;
+TH1D *h_inclMuPt;
 
 
 void PYTHIA_scan(int group = 1){
@@ -423,6 +424,7 @@ void PYTHIA_scan(int group = 1){
 
   h_dimuonMass = new TH1D("h_dimuonMass","dimuon mass (opposite sign); m_{#mu#mu} [GeV]; Entries",NDimuonMassBins,dimuonMassMin,dimuonMassMax);
   h_dimuonMass_sameSign = new TH1D("h_dimuonMass_sameSign","dimuon mass (same sign); m_{#mu#mu} [GeV]; Entries",NDimuonMassBins,dimuonMassMin,dimuonMassMax);
+  h_inclMuPt = new TH1D("h_inclMuPt","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
 
   // muon-based 2d histograms
   for(int t = 0; t < NTemplateIndices; t++){
@@ -541,6 +543,7 @@ void PYTHIA_scan(int group = 1){
 
   h_dimuonMass->Sumw2();
   h_dimuonMass_sameSign->Sumw2();
+  h_inclMuPt->Sumw2();
 
   for(int t = 0; t < NTemplateIndices; t++){
     h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[t]->Sumw2();
@@ -2119,6 +2122,7 @@ void PYTHIA_scan(int group = 1){
 
   h_dimuonMass->Write();
   h_dimuonMass_sameSign->Write();
+  h_inclMuPt->Write();
 
   for(int t = 0; t < NTemplateIndices; t++){
     h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn_allJets[t]->Write();
