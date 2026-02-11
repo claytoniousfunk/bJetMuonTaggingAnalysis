@@ -114,6 +114,10 @@ TF1 *fitFxn_muptrel_C2J1, *fitFxn_muptrel_C2J2, *fitFxn_muptrel_C2J3, *fitFxn_mu
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_JESb.h"
 // bJetNeutrinoEnergy-fit function
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_bJetNeutrinoEnergy.h"
+// HLT fit params/fxn
+#include "../../../headers/fitParameters/HLTFitParams_PYTHIA.h"
+TF1 *fitFxn_PYTHIA_HLT;
+#include "../../../headers/fitFunctions/fitFxn_PYTHIA_HLT.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -338,6 +342,7 @@ void PYTHIA_scan(int group = 1){
 						 apply_JEU_shift_down,
 						 applyJet60Trigger,
 						 applyJet80Trigger,
+						 applyMu12TriggerEfficiencyCorrection,
 						 muPtCut);
 
   TString output = Form("%s%s/PYTHIA_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
@@ -771,7 +776,9 @@ void PYTHIA_scan(int group = 1){
   loadFitFxn_muptrel_C2J3();
   loadFitFxn_muptrel_C2J4();
   loadFitFxn_muptrel_C2J5();
-  loadFitFxn_muptrel_C2J6();  
+  loadFitFxn_muptrel_C2J6();
+
+  loadFitFxn_PYTHIA_HLT();
 
   TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
   TH2D *neutrino_energy_fraction_map;
@@ -1461,6 +1468,10 @@ void PYTHIA_scan(int group = 1){
 
       if(doHadronPtRelReweight){
 	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz * fitFxn_jetPt->Eval(recoJetPt_i) * fitFxn_hadronPtRel->Eval(muPtRel_i);
+      }
+
+      if(applyMu12TriggerEfficiencyCorrection){
+	if(hasInclRecoMuonTag && evtTriggerDecision) w_jet = w_pthat * w_reweight_vz / fitFxn_PYTHIA_HLT->Eval(muPt_i);
       }
       
       double w_muptrel = w_jet;

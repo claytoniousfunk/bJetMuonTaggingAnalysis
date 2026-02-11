@@ -29,6 +29,7 @@ TString configureOutputDatasetName(TString generator,
 				   bool apply_JEU_shift_down,
 				   bool applyJet60Trigger,
 				   bool applyJet80Trigger,
+				   bool applyMu12TriggerEfficiencyCorrection,
 				   double muPtCut)
 {
 
@@ -43,6 +44,7 @@ TString configureOutputDatasetName(TString generator,
   // general information
   result.Append(Form("_pThat-%2.0f",pThat));
   result.Append(Form("_mu12_pTmu-%2.0f_tight",muPtCut));
+  if(applyMu12TriggerEfficiencyCorrection) result.Append("_mu12TriggerEfficiencyCorrection");
   // event-based reweights
   if(doVzReweight) result.Append("_vzReweight");
   if(doJetPtReweight) result.Append("_jetPtReweight");
