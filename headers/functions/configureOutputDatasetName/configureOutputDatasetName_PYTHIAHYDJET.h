@@ -49,6 +49,7 @@ TString configureOutputDatasetName(TString generator,
 				   int hiBinShift,
 				   bool applyJet60Trigger,
 				   bool applyJet80Trigger,
+				   bool applyMu12TriggerEfficiencyCorrection,
 				   double muPtCut)
 {
 

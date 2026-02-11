@@ -80,9 +80,9 @@ TF1 *fitFxn_jetPt_C1, *fitFxn_jetPt_C2, *fitFxn_jetPt_C3, *fitFxn_jetPt_C4;
 #include "../../../headers/fitFunctions/fitFxn_jetPt_C4.h"
 
 // HLT fit params/fxn
-#include "../../../headers/fitParameters/HLTFitParams_PbPb.h"
-TF1 *fitFxn_PbPb_HLT_C4, *fitFxn_PbPb_HLT_C3, *fitFxn_PbPb_HLT_C2, *fitFxn_PbPb_HLT_C1;
-#include "../../../headers/fitFunctions/fitFxn_PbPb_HLT.h"
+#include "../../../headers/fitParameters/HLTFitParams_PYTHIAHYDJET.h"
+TF1 *fitFxn_PYTHIAHYDJET_HLT_C4, *fitFxn_PYTHIAHYDJET_HLT_C3, *fitFxn_PYTHIAHYDJET_HLT_C2, *fitFxn_PYTHIAHYDJET_HLT_C1;
+#include "../../../headers/fitFunctions/fitFxn_PYTHIAHYDJET_HLT.h"
 
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
@@ -382,6 +382,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 hiBinShift,
 						 applyJet60Trigger,
 						 applyJet80Trigger,
+						 applyMu12TriggerEfficiencyCorrection,
 						 muPtCut);
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
@@ -1087,7 +1088,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   loadFitFxn_jetPt_C4();
   loadFitFxn_hadronPtRel();
   loadFitFxn_dR();
-  loadFitFxn_PbPb_HLT();
+  loadFitFxn_PYTHIAHYDJET_HLT();
 
   TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
   TH2D *neutrino_energy_map;
@@ -1745,11 +1746,13 @@ void PYTHIAHYDJET_scan(int group = 1){
       }
 
       if(applyMu12TriggerEfficiencyCorrection){
-	if(CentralityIndex == 4) w_jet = w_jet / fitFxn_PbPb_HLT_C4->Eval(leadingMuonPt);
-	else if(CentralityIndex == 3) w_jet = w_jet / fitFxn_PbPb_HLT_C3->Eval(leadingMuonPt);
-	else if(CentralityIndex == 2) w_jet = w_jet / fitFxn_PbPb_HLT_C2->Eval(leadingMuonPt);
-	else if(CentralityIndex == 1) w_jet = w_jet / fitFxn_PbPb_HLT_C1->Eval(leadingMuonPt);
-	else{};
+	if(hasInclRecoMuonTag && evtTriggerDecision){
+	  if(CentralityIndex == 4) w_jet = w_jet / fitFxn_PYTHIAHYDJET_HLT_C4->Eval(muPt_i);
+	  else if(CentralityIndex == 3) w_jet = w_jet / fitFxn_PYTHIAHYDJET_HLT_C3->Eval(muPt_i);
+	  else if(CentralityIndex == 2) w_jet = w_jet / fitFxn_PYTHIAHYDJET_HLT_C2->Eval(muPt_i);
+	  else if(CentralityIndex == 1) w_jet = w_jet / fitFxn_PYTHIAHYDJET_HLT_C1->Eval(muPt_i);
+	  else{};
+	}
       }
 
 
