@@ -114,7 +114,7 @@ TH1D *muStations_all[5];
 TH1D *muMuonHits_all[5];
 
 
-void PbPb_trigger_scan(int group = 1){
+void PYTHIAHYDJET_trigger_scan(int group = 1){
   
   
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
