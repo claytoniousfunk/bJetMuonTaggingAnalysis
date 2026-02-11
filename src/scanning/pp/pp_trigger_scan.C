@@ -119,7 +119,7 @@ void pp_trigger_scan(int group = 1){
   
 
   TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_triggerEffScan_mu12_tight_onlyOneMuonPerEvent/pp_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_triggerEffScan_Jet60HLT_mu12_tight_onlyOneMuonPerEvent/pp_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
@@ -422,7 +422,8 @@ void pp_trigger_scan(int group = 1){
     // global event cuts
     if(fabs(em->vz) > 15.0 || em->hiBin > 180) continue;
     if(em->checkEventFilter()) continue;
-    
+    // apply jet60
+    if(em->HLT_HIAK4PFJet60_v1 == 0) continue;        
     
 
     // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
