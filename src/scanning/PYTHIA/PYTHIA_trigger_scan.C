@@ -116,7 +116,7 @@ TH1D *muMuonHits_all[5];
 void PYTHIA_trigger_scan(int group = 1){
   
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIA_DiJet_withGS/PYTHIA_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_triggerEffScan_mu12_tight_onlyOneMuonPerEvent/PYTHIA_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIA_triggerEffScan_Jet60HLT_mu12_tight_onlyOneMuonPerEvent/PYTHIA_scan_output_%i.root",group);
 
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -417,7 +417,9 @@ void PYTHIA_trigger_scan(int group = 1){
     // global event cuts
     if(fabs(em->vz) > 15.0 || em->hiBin > 180) continue;
     if(em->checkEventFilter()) continue;
-    
+
+    // apply jet60
+    if(em->HLT_HIAK4PFJet60_v1 == 0) continue;    
     
 
     // int triggerDecision = em->HLT_HIL3Mu5_NHitQ10_v1;
