@@ -118,7 +118,7 @@ void PbPb_trigger_scan(int group = 1){
   
   
   TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_triggerEffScan_Jet80HLT_mu12_tight_onlyOneMuonPerEvent/PYTHIAHYDJET_scan_output_%i.root",group);
+  TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_triggerEffScan_mu12_tight_onlyOneMuonPerEvent/PYTHIAHYDJET_scan_output_%i.root",group);
 
 
   // JET ENERGY CORRECTIONS
