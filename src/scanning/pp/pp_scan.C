@@ -507,7 +507,7 @@ void pp_scan(int group = 1){
 
     int loopTrigger = 0;
     if(doSingleMuonSample) loopTrigger = triggerDecision_mu12;
-    else if(doHardProbesSample) loopTrigger = em->HLT_HIAK4PFJet80_v1;
+    else if(doHighEGJetSample) loopTrigger = em->HLT_HIAK4PFJet80_v1;
     else loopTrigger = 1;
     
     // RECO MUON LOOP
