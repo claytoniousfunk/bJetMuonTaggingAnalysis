@@ -689,8 +689,15 @@ void PbPb_scan(int group = 1){
 
     //cout << "nMu = " << em->nMu << endl;
     // RECO MUON LOOP
+
+    int loopTrigger = 0;
+    if(doSingleMuonSample) loopTrigger = triggerDecision_mu12;
+    else if(doHardProbesSample) loopTrigger = em->HLT_HICsAK4PFJet80Eta1p5_v1;
+    else loopTrigger = 1;
+
     double leadingMuonPt = 0.0;
-    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+    
+    if(triggerIsOn(loopTrigger,1)){
       for(int m = 0; m < em->nMu; m++){
 
 	double muPt_m = em->muPt->at(m);
