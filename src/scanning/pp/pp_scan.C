@@ -503,10 +503,16 @@ void pp_scan(int group = 1){
     bool eventHasInclRecoMuonTagPlusTrigger = false;
     bool eventHasMatchedRecoMuonTag = false;
     bool eventHasMatchedRecoMuonTagPlusTrigger = false;
-   
-        // RECO MUON LOOP
+
+
+    int loopTrigger = 0;
+    if(doSingleMuonSample) loopTrigger = triggerDecision_mu12;
+    else if(doHardProbesSample) loopTrigger = em->HLT_HIAK4PFJet80_v1;
+    else loopTrigger = 1;
+    
+    // RECO MUON LOOP
     double leadingMuonPt = 0.0;
-    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+    if(triggerIsOn(loopTrigger,1)){
       for(int m = 0; m < em->nMu; m++){
 
 	double muPt_m = em->muPt->at(m);
