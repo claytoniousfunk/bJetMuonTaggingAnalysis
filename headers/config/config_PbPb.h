@@ -19,7 +19,7 @@ bool applyJet60Trigger = false;
 bool applyJet80Trigger = true;
 bool applyJet100Trigger = false;
 bool applyMinBiasTrigger = false;
-bool applyMu12TriggerEfficiencyCorrection = true;
+bool applyMu12TriggerEfficiencyCorrection = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
 // spectra alterations
