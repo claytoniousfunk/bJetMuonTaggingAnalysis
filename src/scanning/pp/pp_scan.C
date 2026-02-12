@@ -565,15 +565,18 @@ void pp_scan(int group = 1){
 				  em->muStations->at(k),
 				  em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
 
+	  //double w_mk = w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k));
+	  double w_mk = w;
+	  
 	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
 
-	    h_dimuonMass->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k)));
+	    h_dimuonMass->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
 	  
 	  }
 
 	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
 
-	    h_dimuonMass_sameSign->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k)));
+	    h_dimuonMass_sameSign->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
 	  
 	  }
 	
