@@ -173,6 +173,7 @@ void pp_scan(int group = 1){
 						 doHighEGJetSample,
 						 applyJet60Trigger,
 						 applyJet80Trigger,
+						 applyJet100Trigger,
 						 applyMu12TriggerEfficiencyCorrection,
 						 doJetTrkMaxFilter,
 						 doEtaPhiMask,
@@ -480,6 +481,9 @@ void pp_scan(int group = 1){
     if(applyJet80Trigger){
       if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
     }
+    if(applyJet100Trigger){
+      if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
+    }
 
 
     // set the weight equal to the "gluing" parameter
@@ -507,7 +511,12 @@ void pp_scan(int group = 1){
 
     int loopTrigger = 0;
     if(doSingleMuonSample) loopTrigger = triggerDecision_mu12;
-    else if(doHighEGJetSample) loopTrigger = em->HLT_HIAK4PFJet80_v1;
+    else if(doHighEGJetSample){
+      if(applyJet60Trigger) loopTrigger = em->HLT_HIAK4PFJet60_v1;
+      else if(applyJet80Trigger) loopTrigger = em->HLT_HIAK4PFJet80_v1;
+      else if(applyJet100Trigger) loopTrigger = em->HLT_HIAK4PFJet100_v1;
+      else loopTrigger = 1;
+    }
     else loopTrigger = 1;
     
     // RECO MUON LOOP
