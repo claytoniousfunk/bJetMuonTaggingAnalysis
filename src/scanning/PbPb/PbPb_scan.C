@@ -693,9 +693,9 @@ void PbPb_scan(int group = 1){
     int loopTrigger = 0;
     if(doSingleMuonSample) loopTrigger = triggerDecision_mu12;
     else if(doHardProbesSample){
-      if(applyJet60Trigger) loopTrigger = em->HLT_HIAK4PFJet60_v1;
-      else if(applyJet80Trigger) loopTrigger = em->HLT_HIAK4PFJet80_v1;
-      else if(applyJet100Trigger) loopTrigger = em->HLT_HIAK4PFJet100_v1;
+      if(applyJet60Trigger) loopTrigger = em->HLT_HICsAK4PFJet60Eta1p5_v1;
+      else if(applyJet80Trigger) loopTrigger = em->HLT_HICsAK4PFJet80Eta1p5_v1;
+      else if(applyJet100Trigger) loopTrigger = em->HLT_HICsAK4PFJet100Eta1p5_v1;
       else loopTrigger = 1;
     }
     else loopTrigger = 1;
