@@ -241,8 +241,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_inclGenJetPt_inclRecoMuonTag_flavor[i]->Sumw2();
 
 
-    h_matchedRecoJetPt_genJetPt_var[i]->Sumw2();  
-		
+    	
     if(i==0) {
 
        h_matchedRecoJetPt_genJetPt_var[i][0] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_allJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, allJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
