@@ -183,7 +183,7 @@ void PYTHIA_scan_response(int group = 1){
   TH2D *h_matchedRecoJetPt_genNeutrinoTag_genJetPt[7];
   TH2D *h_matchedNeutrinoPt_recoJetPt[7];
   TH2D *h_matchedNeutrinoPt_genJetPt[7];
-  TH2D *h_matchedRecoJetPt_genJetPt_var;
+  TH2D *h_matchedRecoJetPt_genJetPt_var[7];
   TH2D *h_matchedRecoJetPtOverGenJetPt_genJetPt[7];
   TH2D *h_matchedRecoJetPtOverGenJetPt_recoJetPt[7];
   TH2D *h_matchedRecoJetPtOverGenJetPt_genJetEta[7];
@@ -242,52 +242,15 @@ void PYTHIA_scan_response(int group = 1){
   h_inclGenJetPt_inclGenMuonTag_flavor = new TH2D("h_inclGenJetPt_inclGenMuonTag_flavor","JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,27,-5,22);
   h_inclGenJetPt_inclRecoMuonTag_flavor = new TH2D("h_inclGenJetPt_inclRecoMuonTag_flavor","JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. gen muon",NPtBins,ptMin,ptMax,27,-5,22);
 
-
-  h_inclGenJetPt_flavor->Sumw2();
-  h_inclGenJetPt_inclGenMuonTag_flavor->Sumw2();
-  h_inclGenJetPt_inclRecoMuonTag_flavor->Sumw2();
-
   
-  h_matchedRecoJetPt_genJetPt[0]->Sumw2();
-  h_matchedRecoJetPt_genJetPt[1]->Sumw2();
-  h_matchedRecoJetPt_genJetPt[2]->Sumw2();
-  h_matchedRecoJetPt_genJetPt[3]->Sumw2();
-  h_matchedRecoJetPt_genJetPt[4]->Sumw2();
-  h_matchedRecoJetPt_genJetPt[5]->Sumw2();
-  h_matchedRecoJetPt_genJetPt[6]->Sumw2();
-
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[0]->Sumw2();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[1]->Sumw2();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[2]->Sumw2();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[3]->Sumw2();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[4]->Sumw2();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[5]->Sumw2();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[6]->Sumw2();
-
-  h_matchedNeutrinoPt_recoJetPt[0]->Sumw2();
-  h_matchedNeutrinoPt_recoJetPt[1]->Sumw2();
-  h_matchedNeutrinoPt_recoJetPt[2]->Sumw2();
-  h_matchedNeutrinoPt_recoJetPt[3]->Sumw2();
-  h_matchedNeutrinoPt_recoJetPt[4]->Sumw2();
-  h_matchedNeutrinoPt_recoJetPt[5]->Sumw2();
-  h_matchedNeutrinoPt_recoJetPt[6]->Sumw2();
-
-
-  h_matchedNeutrinoPt_genJetPt[0]->Sumw2();
-  h_matchedNeutrinoPt_genJetPt[1]->Sumw2();
-  h_matchedNeutrinoPt_genJetPt[2]->Sumw2();
-  h_matchedNeutrinoPt_genJetPt[3]->Sumw2();
-  h_matchedNeutrinoPt_genJetPt[4]->Sumw2();
-  h_matchedNeutrinoPt_genJetPt[5]->Sumw2();
-  h_matchedNeutrinoPt_genJetPt[6]->Sumw2();
-
-  
-
-  
-  h_matchedRecoJetPt_genJetPt_var = new TH2D("h_matchedRecoJetPt_genJetPt_var","genJetPt vs. matchedRecoJetPt, var bins",N1-1,ptAxis1,N1-1,ptAxis1);
-    
-  h_matchedRecoJetPt_genJetPt_var->Sumw2();  
-		
+  h_matchedRecoJetPt_genJetPt_var[0] = new TH2D("h_matchedRecoJetPt_genJetPt_var_allJets","genJetPt vs. matchedRecoJetPt, var bins, allJets",N1-1,ptAxis1,N1-1,ptAxis1);
+  h_matchedRecoJetPt_genJetPt_var[1] = new TH2D("h_matchedRecoJetPt_genJetPt_var_bJets","genJetPt vs. matchedRecoJetPt, var bins, bJets",N1-1,ptAxis1,N1-1,ptAxis1);
+  h_matchedRecoJetPt_genJetPt_var[2] = new TH2D("h_matchedRecoJetPt_genJetPt_var_cJets","genJetPt vs. matchedRecoJetPt, var bins, cJets",N1-1,ptAxis1,N1-1,ptAxis1);
+  h_matchedRecoJetPt_genJetPt_var[3] = new TH2D("h_matchedRecoJetPt_genJetPt_var_udJets","genJetPt vs. matchedRecoJetPt, var bins, udJets",N1-1,ptAxis1,N1-1,ptAxis1);
+  h_matchedRecoJetPt_genJetPt_var[4] = new TH2D("h_matchedRecoJetPt_genJetPt_var_sJets","genJetPt vs. matchedRecoJetPt, var bins, sJets",N1-1,ptAxis1,N1-1,ptAxis1);
+  h_matchedRecoJetPt_genJetPt_var[5] = new TH2D("h_matchedRecoJetPt_genJetPt_var_gJets","genJetPt vs. matchedRecoJetPt, var bins, gJets",N1-1,ptAxis1,N1-1,ptAxis1);
+  h_matchedRecoJetPt_genJetPt_var[6] = new TH2D("h_matchedRecoJetPt_genJetPt_var_xJets","genJetPt vs. matchedRecoJetPt, var bins, xJets",N1-1,ptAxis1,N1-1,ptAxis1);
+ 		
     
   h_matchedRecoJetPtOverGenJetPt_genJetPt[0] = new TH2D("h_matchedRecoJetPtOverGenJetPt_genJetPt_allJets","matchedRecoJetPt/genJetPt vs genJetPt, all flavors",500,0,5,NPtBins,ptMin,ptMax);
   h_matchedRecoJetPtOverGenJetPt_genJetPt[1] = new TH2D("h_matchedRecoJetPtOverGenJetPt_genJetPt_bJets","matchedRecoJetPt/genJetPt vs genJetPt, bJets",500,0,5,NPtBins,ptMin,ptMax);
@@ -346,64 +309,24 @@ void PYTHIA_scan_response(int group = 1){
   h_matchedNeutrinoPtOverRecoJetPt_genJetPt[6] = new TH2D("h_matchedNeutrinoPtOverRecoJetPt_genJetPt_xJets","matchedNeutrinoPt / recoJetPt vs. genJetPt, xJets",500,0,5,NPtBins,ptMin,ptMax);
 
 
-      
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[0]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[1]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[2]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[3]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[4]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[5]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[6]->Sumw2();
+  h_inclGenJetPt_flavor->Sumw2();
+  h_inclGenJetPt_inclGenMuonTag_flavor->Sumw2();
+  h_inclGenJetPt_inclRecoMuonTag_flavor->Sumw2();
 
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[0]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[1]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[2]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[3]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[4]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[5]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[6]->Sumw2();
-
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[0]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[1]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[2]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[3]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[4]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[5]->Sumw2();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[6]->Sumw2();
-
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[0]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[1]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[2]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[3]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[4]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[5]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[6]->Sumw2();
-
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[0]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[1]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[2]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[3]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[4]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[5]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[6]->Sumw2();
-
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[0]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[1]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[2]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[3]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[4]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[5]->Sumw2();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[6]->Sumw2();
-
-  
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[0]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[1]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[2]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[3]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[4]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[5]->Sumw2();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[6]->Sumw2();
-
+  for(int i = 0; i < 6; i++){
+    h_matchedRecoJetPt_genJetPt[i]->Sumw2();
+    h_matchedRecoJetPt_genNeutrinoTag_genJetPt[i]->Sumw2();
+    h_matchedNeutrinoPt_recoJetPt[i]->Sumw2();
+    h_matchedNeutrinoPt_genJetPt[i]->Sumw2();
+    h_matchedRecoJetPt_genJetPt_var[i]->Sumw2();
+    h_matchedRecoJetPtOverGenJetPt_genJetPt[i]->Sumw2();
+    h_matchedRecoJetPtOverGenJetPt_recoJetPt[i]->Sumw2();
+    h_matchedRecoJetPtOverGenJetPt_genJetEta[i]->Sumw2();
+    h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[i]->Sumw2();
+    h_matchedNeutrinoPtOverGenJetPt_genJetPt[i]->Sumw2();
+    h_matchedNeutrinoPtOverGenJetPt_recoJetPt[i]->Sumw2();
+    h_matchedNeutrinoPtOverRecoJetPt_genJetPt[i]->Sumw2();
+  }
 
 
   TFile *f = TFile::Open(input);
@@ -701,7 +624,7 @@ void PYTHIA_scan_response(int group = 1){
 	h_matchedNeutrinoPt_recoJetPt[0]->Fill(matchedNeutrinoPt,matchedRecoJetPt,w);
 	h_matchedNeutrinoPt_genJetPt[0]->Fill(matchedNeutrinoPt,x,w);
 
-	h_matchedRecoJetPt_genJetPt_var->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt_var[0]->Fill(matchedRecoJetPt,x,w);
 	
 
 	h_matchedRecoJetPtOverGenJetPt_genJetPt[0]->Fill(matchedRecoJetPt/x,x,w);
@@ -718,6 +641,7 @@ void PYTHIA_scan_response(int group = 1){
 
 
 	if(fabs(jetFlavorInt) == 5){
+	  h_matchedRecoJetPt_genJetPt_var[1]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPt_genJetPt[1]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedNeutrinoPt_recoJetPt[1]->Fill(matchedNeutrinoPt,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPt_genJetPt[1]->Fill(matchedNeutrinoPt,x,w);
@@ -734,6 +658,7 @@ void PYTHIA_scan_response(int group = 1){
 	  }
 	} 
 	if(fabs(jetFlavorInt) == 4){
+	  h_matchedRecoJetPt_genJetPt_var[2]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPt_genJetPt[2]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedNeutrinoPt_recoJetPt[2]->Fill(matchedNeutrinoPt,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPt_genJetPt[2]->Fill(matchedNeutrinoPt,x,w);
@@ -751,6 +676,7 @@ void PYTHIA_scan_response(int group = 1){
 
 	} 
 	if(fabs(jetFlavorInt) == 1 || fabs(jetFlavorInt) == 2){
+	  h_matchedRecoJetPt_genJetPt_var[3]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPt_genJetPt[3]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedNeutrinoPt_recoJetPt[3]->Fill(matchedNeutrinoPt,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPt_genJetPt[3]->Fill(matchedNeutrinoPt,x,w);
@@ -767,6 +693,7 @@ void PYTHIA_scan_response(int group = 1){
 	  }
 	} 
 	if(fabs(jetFlavorInt) == 3){
+	  h_matchedRecoJetPt_genJetPt_var[4]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPt_genJetPt[4]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedNeutrinoPt_recoJetPt[4]->Fill(matchedNeutrinoPt,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPt_genJetPt[4]->Fill(matchedNeutrinoPt,x,w);
@@ -784,6 +711,7 @@ void PYTHIA_scan_response(int group = 1){
 
 	}  
 	if(jetFlavorInt == 21){
+	  h_matchedRecoJetPt_genJetPt_var[5]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPt_genJetPt[5]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedNeutrinoPt_recoJetPt[5]->Fill(matchedNeutrinoPt,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPt_genJetPt[5]->Fill(matchedNeutrinoPt,x,w);
@@ -801,6 +729,7 @@ void PYTHIA_scan_response(int group = 1){
 
 	}  
 	if(jetFlavorInt == 0){
+	  h_matchedRecoJetPt_genJetPt_var[6]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedRecoJetPt_genJetPt[6]->Fill(matchedRecoJetPt,x,w);
 	  h_matchedNeutrinoPt_recoJetPt[6]->Fill(matchedNeutrinoPt,matchedRecoJetPt,w);
 	  h_matchedNeutrinoPt_genJetPt[6]->Fill(matchedNeutrinoPt,x,w);
@@ -846,102 +775,22 @@ void PYTHIA_scan_response(int group = 1){
   h_inclGenJetPt_flavor->Write();
   h_inclGenJetPt_inclGenMuonTag_flavor->Write();
   h_inclGenJetPt_inclRecoMuonTag_flavor->Write();
-    
-  h_matchedRecoJetPt_genJetPt[0]->Write();
-  h_matchedRecoJetPt_genJetPt[1]->Write();
-  h_matchedRecoJetPt_genJetPt[2]->Write();
-  h_matchedRecoJetPt_genJetPt[3]->Write();
-  h_matchedRecoJetPt_genJetPt[4]->Write();
-  h_matchedRecoJetPt_genJetPt[5]->Write();
-  h_matchedRecoJetPt_genJetPt[6]->Write();
 
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[0]->Write();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[1]->Write();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[2]->Write();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[3]->Write();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[4]->Write();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[5]->Write();
-  h_matchedRecoJetPt_genNeutrinoTag_genJetPt[6]->Write();
+  for(int i = 0; i < 6; i++){
+    h_matchedRecoJetPt_genJetPt[i]->Write();
+    h_matchedRecoJetPt_genNeutrinoTag_genJetPt[i]->Write();
+    h_matchedNeutrinoPt_recoJetPt[i]->Write();
+    h_matchedNeutrinoPt_genJetPt[i]->Write();
+    h_matchedRecoJetPt_genJetPt_var[i]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetPt[i]->Write();
+    h_matchedRecoJetPtOverGenJetPt_recoJetPt[i]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetEta[i]->Write();
+    h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[i]->Write();
+    h_matchedNeutrinoPtOverGenJetPt_genJetPt[i]->Write();
+    h_matchedNeutrinoPtOverGenJetPt_recoJetPt[i]->Write();
+    h_matchedNeutrinoPtOverRecoJetPt_genJetPt[i]->Write();
+  }
 
-  
-  h_matchedNeutrinoPt_recoJetPt[0]->Write();
-  h_matchedNeutrinoPt_recoJetPt[1]->Write();
-  h_matchedNeutrinoPt_recoJetPt[2]->Write();
-  h_matchedNeutrinoPt_recoJetPt[3]->Write();
-  h_matchedNeutrinoPt_recoJetPt[4]->Write();
-  h_matchedNeutrinoPt_recoJetPt[5]->Write();
-  h_matchedNeutrinoPt_recoJetPt[6]->Write();
-
-  h_matchedNeutrinoPt_genJetPt[0]->Write();
-  h_matchedNeutrinoPt_genJetPt[1]->Write();
-  h_matchedNeutrinoPt_genJetPt[2]->Write();
-  h_matchedNeutrinoPt_genJetPt[3]->Write();
-  h_matchedNeutrinoPt_genJetPt[4]->Write();
-  h_matchedNeutrinoPt_genJetPt[5]->Write();
-  h_matchedNeutrinoPt_genJetPt[6]->Write();
-
-  
-  h_matchedRecoJetPt_genJetPt_var->Write();
-    
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[0]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[1]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[2]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[3]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[4]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[5]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[6]->Write();
-
-    
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[0]->Write();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[1]->Write();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[2]->Write();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[3]->Write();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[4]->Write();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[5]->Write();
-  h_matchedRecoJetPtOverGenJetPt_recoJetPt[6]->Write();
-
-  
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[0]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[1]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[2]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[3]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[4]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[5]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[6]->Write();
-
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[0]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[1]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[2]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[3]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[4]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[5]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_recoJetPt[6]->Write();
-
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[0]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[1]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[2]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[3]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[4]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[5]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_genJetPt[6]->Write();
-
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[0]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[1]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[2]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[3]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[4]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[5]->Write();
-  h_matchedNeutrinoPtOverGenJetPt_recoJetPt[6]->Write();
-
-  
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[0]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[1]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[2]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[3]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[4]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[5]->Write();
-  h_matchedNeutrinoPtOverRecoJetPt_genJetPt[6]->Write();
-  
 
 
 
