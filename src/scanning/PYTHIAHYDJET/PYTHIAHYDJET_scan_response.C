@@ -240,8 +240,6 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_inclGenJetPt_inclGenMuonTag_flavor[i]->Sumw2();
     h_inclGenJetPt_inclRecoMuonTag_flavor[i]->Sumw2();
 
-    if(i==0)
-    else 
 
     h_matchedRecoJetPt_genJetPt_var[i]->Sumw2();  
 		
