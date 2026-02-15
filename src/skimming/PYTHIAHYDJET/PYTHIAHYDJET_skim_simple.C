@@ -23,9 +23,9 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // in_file_name = "../../../fileNames/fileNames_forest_PYTHIAHYDJET_DiJet_additionalMC_2024-08-05.txt";
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/output_skim_PYTHIAHYDJET_DiJet_additionalMC_2024-08-05/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
-  // DiJet, incl, pTjet-5, N = 7117
-  in_file_name = "../../../fileNames/fileNames_PH_DiJet_pTjet-5.txt";
-  output_file_base += Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withJetTriggers/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  // // DiJet, incl, pTjet-5, N = 7117
+  // in_file_name = "../../../fileNames/fileNames_PH_DiJet_pTjet-5.txt";
+  // output_file_base += Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withJetTriggers/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
   // DiJet, additional MC, incl, pTjet-15, N = 1411
   // in_file_name = "../../../fileNames/fileNames_PH_DiJet_batch13.txt";
@@ -111,8 +111,12 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // in_file_name = "../../../fileNames/dripping-tap/fileNames_PH_DiJet_batch15.txt";
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch15/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
+  // DiJet, incl, pTjet-5, N = 6754
+  in_file_name = "../../../fileNames/fileNames_PH_DiJet_pTjet-5_withGenNeutrino.txt";
+  output_file_base += Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withGenNeutrino/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+
   
-  int endfile = 851;
+  int endfile = 6754;
 
 
 
@@ -152,14 +156,14 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     old_file->GetObject("hiEvtAnalyzer/HiTree",old_evt_tree);
     old_file->GetObject("hltanalysis/HltTree",old_hlt_tree);
     old_file->GetObject("akCs4PFJetAnalyzer/t",old_jet_tree);
-    // old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
+    old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
     old_file->GetObject("HiGenParticleAna/hi",old_gen_tree);
     // deactivate all branches                                                                                   
     old_filter_tree->SetBranchStatus("*",0);
     old_evt_tree->SetBranchStatus("*",0);
     old_hlt_tree->SetBranchStatus("*",0);
     old_jet_tree->SetBranchStatus("*",0);
-    // old_muon_tree->SetBranchStatus("*",0);
+    old_muon_tree->SetBranchStatus("*",0);
     old_gen_tree->SetBranchStatus("*",0);
     
     // activate only our variables of interest
@@ -220,21 +224,21 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     old_jet_tree->SetBranchStatus("trackMaxDR",1);
 
     // muons
-    // old_muon_tree->SetBranchStatus("muPt",1);
-    // old_muon_tree->SetBranchStatus("muEta",1);
-    // old_muon_tree->SetBranchStatus("muPhi",1);
-    // old_muon_tree->SetBranchStatus("muChi2NDF",1);
-    // old_muon_tree->SetBranchStatus("muInnerD0",1);
-    // old_muon_tree->SetBranchStatus("muInnerDz",1);
-    // old_muon_tree->SetBranchStatus("muIsPF",1);
-    // old_muon_tree->SetBranchStatus("muIsGlobal",1);
-    // old_muon_tree->SetBranchStatus("muIsTracker",1);
-    // old_muon_tree->SetBranchStatus("muMuonHits",1);
-    // old_muon_tree->SetBranchStatus("muStations",1);
-    // old_muon_tree->SetBranchStatus("muTrkLayers",1);
-    // old_muon_tree->SetBranchStatus("muPixelHits",1);
-    // old_muon_tree->SetBranchStatus("muCharge",1);
-    // old_muon_tree->SetBranchStatus("nMu",1);
+    old_muon_tree->SetBranchStatus("muPt",1);
+    old_muon_tree->SetBranchStatus("muEta",1);
+    old_muon_tree->SetBranchStatus("muPhi",1);
+    old_muon_tree->SetBranchStatus("muChi2NDF",1);
+    old_muon_tree->SetBranchStatus("muInnerD0",1);
+    old_muon_tree->SetBranchStatus("muInnerDz",1);
+    old_muon_tree->SetBranchStatus("muIsPF",1);
+    old_muon_tree->SetBranchStatus("muIsGlobal",1);
+    old_muon_tree->SetBranchStatus("muIsTracker",1);
+    old_muon_tree->SetBranchStatus("muMuonHits",1);
+    old_muon_tree->SetBranchStatus("muStations",1);
+    old_muon_tree->SetBranchStatus("muTrkLayers",1);
+    old_muon_tree->SetBranchStatus("muPixelHits",1);
+    old_muon_tree->SetBranchStatus("muCharge",1);
+    old_muon_tree->SetBranchStatus("nMu",1);
 
     // gen
     old_gen_tree->SetBranchStatus("pt",1);
@@ -251,21 +255,21 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     new_evt_tree = (TTree*) old_evt_tree->CloneTree(0);
     new_hlt_tree = (TTree*) old_hlt_tree->CloneTree(0);
     new_jet_tree = (TTree*) old_jet_tree->CloneTree(0);
-    // new_muon_tree = (TTree*) old_muon_tree->CloneTree(0);
+    new_muon_tree = (TTree*) old_muon_tree->CloneTree(0);
     new_gen_tree = (TTree*) old_gen_tree->CloneTree(0);
 
     new_filter_tree->CopyEntries(old_filter_tree);
     new_evt_tree->CopyEntries(old_evt_tree);
     new_hlt_tree->CopyEntries(old_hlt_tree);
     new_jet_tree->CopyEntries(old_jet_tree);
-    // new_muon_tree->CopyEntries(old_muon_tree);
+    new_muon_tree->CopyEntries(old_muon_tree);
     new_gen_tree->CopyEntries(old_gen_tree);
 
     new_filter_tree->SetName("filterTree");
     new_evt_tree->SetName("evtTree");
     new_hlt_tree->SetName("hltTree");
     new_jet_tree->SetName("jetTree");
-    // new_muon_tree->SetName("muonTree");
+    new_muon_tree->SetName("muonTree");
     new_gen_tree->SetName("genParticleTree");
 
     new_file->Write();
