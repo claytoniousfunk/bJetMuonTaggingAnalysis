@@ -13,7 +13,7 @@ bool doJetTrkMaxFilter = true;
 bool doEtaPhiMask = false;
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
-bool applyJet100Trigger = true;
+bool applyJet100Trigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
 bool fillMu5 = true;
 bool fillMu7 = false;
@@ -27,7 +27,7 @@ bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // select dataset
-bool doSingleMuonSample = false;
+bool doSingleMuonSample = true;
 bool doMinBiasSample = false;
-bool doHighEGJetSample = true;
+bool doHighEGJetSample = false;
 
