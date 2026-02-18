@@ -15,7 +15,11 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
 				   bool apply_JER_smear,
 				   bool apply_JEU_shift_up,
 				   bool apply_JEU_shift_down,
-				   double muPtCut)
+				   double muPtCut,
+				   double muPtMaxCut,
+				   bool fillMu5,
+				   bool fillMu7,
+				   bool fillMu12)
 {
 
   TString result = "output";
@@ -32,7 +36,10 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
   if(applyJet100Trigger) result.Append("_Jet100HLT");
-  result.Append(Form("_mu12_pTmu-%2.0f_tight",muPtCut));
+  if(fillMu5) result.Append(Form("_mu5_pTmu-%1.0fto%1.0f_hybridSoft",muPtCut,muPtMaxCut));
+  else if(fillMu7) result.Append(Form("_mu7_pTmu-%1.0fto%2.0f_hybridSoft",muPtCut,muPtMaxCut));
+  else if(fillMu12) result.Append(Form("_mu12_pTmu-%2.0fto%3.0f_tight",muPtCut,muPtMaxCut));
+  else{};
   if(applyMu12TriggerEfficiencyCorrection) result.Append("_mu12TriggerEfficiencyCorrection");
 	
   // jet-based filters
