@@ -15,8 +15,8 @@ bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
 bool applyJet100Trigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
-bool fillMu5 = true;
-bool fillMu7 = false;
+bool fillMu5 = false;
+bool fillMu7 = true;
 bool fillMu12 = false;
 // spectra alterations
 bool doJESCorrection = false;
