@@ -315,15 +315,15 @@ void PYTHIA_scan(int group = 1){
 
   if(fillMu5){
     muPtCut = 7.0;
-    muPtCutMax = 9.0;
+    muPtMaxCut = 9.0;
   }
   else if(fillMu7){
     muPtCut = 9.0;
-    muPtCutMax = 15.0;
+    muPtMaxCut = 15.0;
   }
   else if(fillMu12){
     muPtCut = 12.0;
-    muPtCutMax = 999.0;
+    muPtMaxCut = 999.0;
   }
   else{};
   
@@ -358,7 +358,7 @@ void PYTHIA_scan(int group = 1){
 						 applyJet80Trigger,
 						 applyMu12TriggerEfficiencyCorrection,
 						 muPtCut,
-						 muPtCutMax,
+						 muPtMaxCut,
 						 fillMu5,
 						 fillMu7,
 						 fillMu12);
