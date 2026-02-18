@@ -879,7 +879,7 @@ void PYTHIA_scan(int group = 1){
     if(fillMu5){
       if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl)) evtTriggerDecision = true;
     }
-    if(fillMu7){
+    else if(fillMu7){
       if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)) evtTriggerDecision = true;
     }
     else if(fillMu12){
