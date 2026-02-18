@@ -902,23 +902,28 @@ void PYTHIA_scan(int group = 1){
 	// muon kinematic cuts
 	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
 	// muon quality cuts
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	if(fillMu12){
+	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				  em->muInnerD0->at(m),
+				  em->muInnerDz->at(m),
+				  em->muMuonHits->at(m),
+				  em->muPixelHits->at(m),
+				  em->muIsGlobal->at(m),
+				  em->muIsPF->at(m),
+				  em->muStations->at(m),
+				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
 
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 				   em->muInnerD0->at(m),
-	// 				   em->muInnerDz->at(m),
-	// 				   em->muPixelHits->at(m),
-	// 				   em->muIsTracker->at(m),
-	// 				   em->muIsGlobal->at(m),
-	// 				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	else if(fillMu5 || fillMu7){
+	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				       em->muInnerD0->at(m),
+				       em->muInnerDz->at(m),
+				       em->muPixelHits->at(m),
+				       em->muIsTracker->at(m),
+				       em->muIsGlobal->at(m),
+				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
+	else{};
 
 	if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
 
@@ -1323,23 +1328,28 @@ void PYTHIA_scan(int group = 1){
 
 	    if(em->muPt->at(l) < muPtCut || fabs(em->muEta->at(l)) > 2.0) continue;
 	 
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				    em->muInnerD0->at(l),
-				    em->muInnerDz->at(l),
-				    em->muMuonHits->at(l),
-				    em->muPixelHits->at(l),
-				    em->muIsGlobal->at(l),
-				    em->muIsPF->at(l),
-				    em->muStations->at(l),
-				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+	    if(fillMu12){
+	      if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+				      em->muInnerD0->at(l),
+				      em->muInnerDz->at(l),
+				      em->muMuonHits->at(l),
+				      em->muPixelHits->at(l),
+				      em->muIsGlobal->at(l),
+				      em->muIsPF->at(l),
+				      em->muStations->at(l),
+				      em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+	    }
 
-	    // if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
-	    // 				 em->muInnerD0->at(l),
-	    // 				 em->muInnerDz->at(l),
-	    // 				 em->muPixelHits->at(l),
-	    // 				 em->muIsTracker->at(l),
-	    // 				 em->muIsGlobal->at(l),
-	    // 				 em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    else if(fillMu5 || fillMu7){
+	      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
+					   em->muInnerD0->at(l),
+					   em->muInnerDz->at(l),
+					   em->muPixelHits->at(l),
+					   em->muIsTracker->at(l),
+					   em->muIsGlobal->at(l),
+					   em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+	    }
+	    else{};
 
 
 	    if(isWDecayMuon(em->muPt->at(l),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)	
@@ -1388,23 +1398,28 @@ void PYTHIA_scan(int group = 1){
 
 	if(em->muPt->at(m) < muPtCut || em->muPt->at(m) > muPtMaxCut  || fabs(em->muEta->at(m)) > 2.0) continue;
 			 
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	if(fillMu12){
+	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				  em->muInnerD0->at(m),
+				  em->muInnerDz->at(m),
+				  em->muMuonHits->at(m),
+				  em->muPixelHits->at(m),
+				  em->muIsGlobal->at(m),
+				  em->muIsPF->at(m),
+				  em->muStations->at(m),
+				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
 
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 			     em->muInnerD0->at(m),
-	// 			     em->muInnerDz->at(m),
-	// 			     em->muPixelHits->at(m),
-	// 			     em->muIsTracker->at(m),
-	// 			     em->muIsGlobal->at(m),
-	// 			     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	else if(fillMu5 || fillMu7){
+	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				       em->muInnerD0->at(m),
+				       em->muInnerDz->at(m),
+				       em->muPixelHits->at(m),
+				       em->muIsTracker->at(m),
+				       em->muIsGlobal->at(m),
+				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
+	else{};
 
 	if(doBJetEnergyShift){
 	  recoJetPt_i = recoJetPt_i * (1.0 / fitFxn_PYTHIA_JESb->Eval(recoJetPt_i));
@@ -1908,23 +1923,28 @@ void PYTHIA_scan(int group = 1){
 
 	    if(em->muPt->at(l) < muPtCut || em->muPt->at(l) > muPtMaxCut || fabs(em->muEta->at(l)) > 2.0) continue;
 	  
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				    em->muInnerD0->at(l),
-				    em->muInnerDz->at(l),
-				    em->muMuonHits->at(l),
-				    em->muPixelHits->at(l),
-				    em->muIsGlobal->at(l),
-				    em->muIsPF->at(l),
-				    em->muStations->at(l),
-				    em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+	    if(fillMu12){
+	      if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+				      em->muInnerD0->at(l),
+				      em->muInnerDz->at(l),
+				      em->muMuonHits->at(l),
+				      em->muPixelHits->at(l),
+				      em->muIsGlobal->at(l),
+				      em->muIsPF->at(l),
+				      em->muStations->at(l),
+				      em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+	    }
 
-	    // if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
-	    // 				 em->muInnerD0->at(l),
-	    // 				 em->muInnerDz->at(l),
-	    // 				 em->muPixelHits->at(l),
-	    // 				 em->muIsTracker->at(l),
-	    // 				 em->muIsGlobal->at(l),
-	    // 				 em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+	    else if(fillMu5 || fillMu7){
+	      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
+					   em->muInnerD0->at(l),
+					   em->muInnerDz->at(l),
+					   em->muPixelHits->at(l),
+					   em->muIsTracker->at(l),
+					   em->muIsGlobal->at(l),
+					   em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+	    }
+	    else{};
 
 
 	    //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
@@ -1972,24 +1992,28 @@ void PYTHIA_scan(int group = 1){
 
 	if(em->muPt->at(m) < muPtCut || em->muPt->at(m) > muPtMaxCut || fabs(em->muEta->at(m)) > 2.0) continue;
 
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	if(fillMu12){
+	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				  em->muInnerD0->at(m),
+				  em->muInnerDz->at(m),
+				  em->muMuonHits->at(m),
+				  em->muPixelHits->at(m),
+				  em->muIsGlobal->at(m),
+				  em->muIsPF->at(m),
+				  em->muStations->at(m),
+				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
 
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 			     em->muInnerD0->at(m),
-	// 			     em->muInnerDz->at(m),
-	// 			     em->muPixelHits->at(m),
-	// 			     em->muIsTracker->at(m),
-	// 			     em->muIsGlobal->at(m),
-	// 			     em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
-
+	else if(fillMu5 || fillMu7){
+	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				       em->muInnerD0->at(m),
+				       em->muInnerDz->at(m),
+				       em->muPixelHits->at(m),
+				       em->muIsTracker->at(m),
+				       em->muIsGlobal->at(m),
+				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
+	}
+	else{};
 
 	if(isWDecayMuon(em->muPt->at(m),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt) 
 			

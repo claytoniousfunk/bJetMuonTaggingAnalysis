@@ -47,8 +47,8 @@ TString configureOutputDatasetName(TString generator,
   if(applyJet80Trigger) result.Append("_Jet80HLT");
   // general information
   result.Append(Form("_pThat-%2.0f",pThat));
-  if(fillMu5) result.Append(Form("_mu5_pTmu-%1.0fto%1.0f_tight",muPtCut,muPtMaxCut));
-  else if(fillMu7) result.Append(Form("_mu7_pTmu-%1.0fto%2.0f_tight",muPtCut,muPtMaxCut));
+  if(fillMu5) result.Append(Form("_mu5_pTmu-%1.0fto%1.0f_hybridSoft",muPtCut,muPtMaxCut));
+  else if(fillMu7) result.Append(Form("_mu7_pTmu-%1.0fto%2.0f_hybridSoft",muPtCut,muPtMaxCut));
   else if(fillMu12) result.Append(Form("_mu12_pTmu-%2.0fto%3.0f_tight",muPtCut,muPtMaxCut));
   else{};
   if(applyMu12TriggerEfficiencyCorrection) result.Append("_mu12TriggerEfficiencyCorrection");
