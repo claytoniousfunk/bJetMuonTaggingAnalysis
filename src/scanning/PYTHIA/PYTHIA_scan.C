@@ -312,6 +312,20 @@ void PYTHIA_scan(int group = 1){
   TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
 
   TString outputDatasetName = "";
+
+  if(fillMu5){
+    muPtCut = 7.0;
+    muPtCutMax = 9.0;
+  }
+  else if(fillMu7){
+    muPtCut = 9.0;
+    muPtCutMax = 15.0;
+  }
+  else if(fillMu12){
+    muPtCut = 12.0;
+    muPtCutMax = 999.0;
+  }
+  else{};
   
   outputDatasetName = configureOutputDatasetName(generator,
 						 doDiJetSample,
@@ -343,7 +357,11 @@ void PYTHIA_scan(int group = 1){
 						 applyJet60Trigger,
 						 applyJet80Trigger,
 						 applyMu12TriggerEfficiencyCorrection,
-						 muPtCut);
+						 muPtCut,
+						 muPtCutMax,
+						 fillMu5,
+						 fillMu7,
+						 fillMu12);
 
   TString output = Form("%s%s/PYTHIA_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
@@ -858,22 +876,16 @@ void PYTHIA_scan(int group = 1){
     int triggerDecision_mu12_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
 
-    // ******************************************
-    // -------- mu5 configuration ---------------
-    // if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl) &&
-    //    !triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
-    //    !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
-    // ******************************************
-    
-    // ******************************************
-    // -------- mu7 configuration ---------------
-    // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)) evtTriggerDecision = true;
-    // ******************************************
-    
-    // ******************************************
-    // -------- mu12 configuration ---------------
-    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
-    // ******************************************
+    if(fillMu5){
+      if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl)) evtTriggerDecision = true;
+    }
+    if(fillMu7){
+      if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)) evtTriggerDecision = true;
+    }
+    else if(fillMu12){
+      if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)) evtTriggerDecision = true;
+    }
+    else{};
 
     // RECO MUON LOOP
     double leadingMuonPt = 0.0;

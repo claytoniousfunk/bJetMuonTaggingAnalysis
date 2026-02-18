@@ -49,7 +49,7 @@ double sigma_eta = 0.005;
 // triggers
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
-bool applyMu12TriggerEfficiencyCorrection = true;
+bool applyMu12TriggerEfficiencyCorrection = false;
 bool fillMu5 = false;
 bool fillMu7 = false;
 bool fillMu12 = true;

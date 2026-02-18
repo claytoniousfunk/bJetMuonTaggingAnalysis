@@ -62,7 +62,7 @@ double muPtCut = 15.0; // mu12 scans
 
 //double muPtMaxCut = 9.0; // mu5 scans
 //double muPtMaxCut = 14.0; // mu7 scans
-double muPtMaxCut = 1000.0; // mu12 scans
+double muPtMaxCut = 999.0; // mu12 scans
 
 double nuPtCut = 0.0;
 double nuPtMaxCut = 1000.0;
