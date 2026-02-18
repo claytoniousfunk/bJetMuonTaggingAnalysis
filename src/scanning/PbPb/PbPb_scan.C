@@ -164,6 +164,20 @@ TH1D *h_dimuonMass_sameSign[NCentralityIndices];
 ///////////////////////  start the program
 void PbPb_scan(int group = 1){
 
+  if(fillMu5){
+    muPtCut = 7.0;
+    muPtMaxCut = 9.0;
+  }
+  else if(fillMu7){
+    muPtCut = 9.0;
+    muPtMaxCut = 15.0;
+  }
+  else if(fillMu12){
+    muPtCut = 12.0;
+    muPtMaxCut = 999.0;
+  }
+  else{};
+
   TString inputDataset = "";
   TString inputFileName = "";
 
@@ -196,7 +210,11 @@ void PbPb_scan(int group = 1){
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down,
-						 muPtCut);
+						 muPtCut,
+						 muPtMaxCut,
+						 fillMu5,
+						 fillMu7,
+						 fillMu12);
 
   TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
@@ -607,76 +625,32 @@ void PbPb_scan(int group = 1){
     int triggerDecision_mu12_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
 
-    // ******************************************
-    // -------- mu5 configuration ---------------
-    // if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl) &&
-    //    !triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl) &&
-    //    !triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
-    //   evtTriggerDecision = true;
-    //   eventCounter++;
-    // }
-    // ******************************************
-    
-    // ******************************************
-    // -------- mu7 configuration ---------------
-    // if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
-    //  evtTriggerDecision = true;
-    //  eventCounter++;
-    // }
-    // ******************************************
-    
-    // ******************************************
-    // -------- mu12 configuration ---------------
-    if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
-      evtTriggerDecision = true;
-      eventCounter++;
+    if(fillMu5){
+      if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl)){
+	evtTriggerDecision = true;
+	// h_vz_triggerOn->Fill(em->vz,w);
+	// h_hiBin_triggerOn->Fill(em->hiBin,w);
+	eventCounter++;
+      }
     }
-    // ******************************************
+    else if(fillMu7){
+      if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
+	evtTriggerDecision = true;
+	// h_vz_triggerOn->Fill(em->vz,w);
+	// h_hiBin_triggerOn->Fill(em->hiBin,w);
+	eventCounter++;
+      }
+    }
+    else if(fillMu12){
+      if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+	evtTriggerDecision = true;
+	// h_vz_triggerOn->Fill(em->vz,w);
+	// h_hiBin_triggerOn->Fill(em->hiBin,w);
+	eventCounter++;
+      }
+    }
+    else{};
 
-    
-
-    
-
-    // if(triggerDecision_Prescl == 0) continue;
-    // else if(triggerDecision_Prescl == 1){
-    //   w = 1.0;
-    // }
-    // else if(triggerDecision_Prescl == 2){
-    //   w = 1.0 / 0.0318182;
-    // }
-    // else if(triggerDecision_Prescl == 3){
-    //   w = 1.0 / 13.4136;
-    // }
-    // else if(triggerDecision_Prescl == 5){
-    //   w = 1.0 / 8.80909;
-    // }
-    // else if(triggerDecision_Prescl == 7){
-    //   w = 1.0 / 1.48182;
-    // }
-    // else if(triggerDecision_Prescl == 11){
-    //   w = 1.0 / 6.06818;
-    // }
-    // else if(triggerDecision_Prescl == 13){
-    //   w = 1.0 / 9.90455;
-    // }
-    // else if(triggerDecision_Prescl == 15){
-    //   w = 1.0 / 0.318182;
-    // }
-    // else if(triggerDecision_Prescl == 17){
-    //   w = 1.0 / 0.15;
-    // }
-    // else if(triggerDecision_Prescl == 23){
-    //   w = 1.0 / 9.80455;
-    // }
-    // else{continue ; }
-
-    
-    //double w_trig = 1.0 / ( triggerDecision_Prescl * 1.0 ); // set weight as 1/prescl for triggered events
-    //double w_trig = 1.0; // don't scale by prescales for templates
-    
-    // skip if the trigger is off or if the prescale is zero
-   
-    
     
    
     bool eventHasGoodJet = false;
@@ -715,23 +689,28 @@ void PbPb_scan(int group = 1){
 	// muon kinematic cuts
 	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
 	// muon quality cuts
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	if(fillMu12){
+	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				  em->muInnerD0->at(m),
+				  em->muInnerDz->at(m),
+				  em->muMuonHits->at(m),
+				  em->muPixelHits->at(m),
+				  em->muIsGlobal->at(m),
+				  em->muIsPF->at(m),
+				  em->muStations->at(m),
+				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
 
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 				   em->muInnerD0->at(m),
-	// 				   em->muInnerDz->at(m),
-	// 				   em->muPixelHits->at(m),
-	// 				   em->muIsTracker->at(m),
-	// 				   em->muIsGlobal->at(m),
-	// 				   em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	else if(fillMu5 || fillMu7){
+	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				       em->muInnerD0->at(m),
+				       em->muInnerDz->at(m),
+				       em->muPixelHits->at(m),
+				       em->muIsTracker->at(m),
+				       em->muIsGlobal->at(m),
+				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
+	else{};
 
 	if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
 
@@ -909,26 +888,27 @@ void PbPb_scan(int group = 1){
 	// muon kinematic cuts
 	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
 	// muon quality cuts
-	// ------ tight muon ID -----
-	if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				em->muInnerD0->at(m),
-				em->muInnerDz->at(m),
-				em->muMuonHits->at(m),
-				em->muPixelHits->at(m),
-				em->muIsGlobal->at(m),
-				em->muIsPF->at(m),
-				em->muStations->at(m),
-				em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
-	// ------ hybrid-soft muon ID ----
-	// if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-	// 			    em->muInnerD0->at(m),
-	// 			    em->muInnerDz->at(m),
-	// 			    em->muPixelHits->at(m),
-	// 			    em->muIsTracker->at(m),
-	// 			    em->muIsGlobal->at(m),
-	// 			    em->muTrkLayers->at(m))) continue; 
-			
-
+	if(fillMu12){
+	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				  em->muInnerD0->at(m),
+				  em->muInnerDz->at(m),
+				  em->muMuonHits->at(m),
+				  em->muPixelHits->at(m),
+				  em->muIsGlobal->at(m),
+				  em->muIsPF->at(m),
+				  em->muStations->at(m),
+				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
+	else if(fillMu5 || fillMu7){
+	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				       em->muInnerD0->at(m),
+				       em->muInnerDz->at(m),
+				       em->muPixelHits->at(m),
+				       em->muIsTracker->at(m),
+				       em->muIsGlobal->at(m),
+				       em->muTrkLayers->at(m))) continue; 
+	}
+	else{};
 
 
 	if(doWDecayFilter){
