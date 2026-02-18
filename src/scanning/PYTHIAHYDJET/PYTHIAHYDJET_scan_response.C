@@ -195,8 +195,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
 
   // Define histograms
-  const int N1 = 16;
-  double ptAxis1[N1] = {0,10,20,30,40,50,60,70,80,90,100,120,150,200,300,500};
+  const int N1 = 10;
+  double ptAxis1[N1] = {60,70,80,90,100,120,150,200,300,500};
   const int N2 = 32;
   double ptAxis2[N2] = {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,500};
 
