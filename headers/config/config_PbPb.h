@@ -20,8 +20,8 @@ bool applyJet80Trigger = false;
 bool applyJet100Trigger = false;
 bool applyMinBiasTrigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
-bool fillMu5 = true;
-bool fillMu7 = false;
+bool fillMu5 = false;
+bool fillMu7 = true;
 bool fillMu12 = false;
 // experimental filters
 bool onlyOneMuonTaggedJetPerEvent = false;
