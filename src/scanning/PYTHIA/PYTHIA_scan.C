@@ -322,7 +322,7 @@ void PYTHIA_scan(int group = 1){
     muPtMaxCut = 15.0;
   }
   else if(fillMu12){
-    muPtCut = 12.0;
+    muPtCut = 15.0;
     muPtMaxCut = 999.0;
   }
   else{};
