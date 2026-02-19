@@ -191,6 +191,7 @@ void pp_scan(int group = 1){
 						 applyMu12TriggerEfficiencyCorrection,
 						 doJetTrkMaxFilter,
 						 doEtaPhiMask,
+						 doWDecayFilter,
 						 doJESCorrection,
 						 doBJetNeutrinoEnergyShift,
 						 doJERCorrection,
