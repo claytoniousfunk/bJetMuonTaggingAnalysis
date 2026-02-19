@@ -757,8 +757,9 @@ void pp_scan(int group = 1){
 	}
 	else{};
 
-	if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
-
+	if(doWDecayFilter){
+	  if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	}
 	// match to recoJets
 	if(getDr(muEta_m,muPhi_m,y,z) < epsilon_mm){
 
