@@ -67,7 +67,7 @@ bool doDiJetSample_batch15 = false;
 // jet triggers
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
-bool applyMu12TriggerEfficiencyCorrection = true;
+bool applyMu12TriggerEfficiencyCorrection = false;
 bool fillMu5 = true;
 bool fillMu7 = false;
 bool fillMu12 = false;
