@@ -42,11 +42,13 @@
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
-#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIAHYDJET.h"
 // hiBin-fit parameters
 //#include "../../../headers/fitParameters/hiBinFitParams_mu5.h"
 //#include "../../../headers/fitParameters/hiBinFitParams_mu7.h"
-#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
+//#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
+#include "../../../headers/fitParameters/hiBinFitParams_PYTHIAHYDJET.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
@@ -1100,8 +1102,21 @@ void PYTHIAHYDJET_scan(int group = 1){
   JER_fxn[1]->SetParameter(2,-16.893);
 
   // define vz , hiBin, & jetPt reweighting functions
-  loadFitFxn_vz();
-  loadFitFxn_hiBin();
+  if(fillMu5){
+    loadFitFxn_vz_mu5();
+    loadFitFxn_hiBin_mu5();
+  }
+  else if(fillMu7){
+    loadFitFxn_vz_mu7();
+    loadFitFxn_hiBin_mu7();
+  }
+  else if(fillMu12){
+    loadFitFxn_vz_mu12();
+    loadFitFxn_hiBin_mu12();
+  }
+  else{};
+  
+  
   loadFitFxn_jetPt_C1();
   loadFitFxn_jetPt_C2();
   loadFitFxn_jetPt_C3();
