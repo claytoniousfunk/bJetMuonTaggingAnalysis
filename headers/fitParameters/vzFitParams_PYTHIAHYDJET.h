@@ -4,37 +4,37 @@
 
 ////////////////////////////////////////////////
 
-double vzFitParam_mu5_0 = 9.36300e-01;
-double vzFitParam_mu5_1 = -1.46719e-02;
-double vzFitParam_mu5_2 = 3.02369e-03;
-double vzFitParam_mu5_3 = 2.04703e-05;
+double vzFitParam_mu5_0 = 9.40229e-01;
+double vzFitParam_mu5_1 = -1.92752e-02;
+double vzFitParam_mu5_2 = 4.05840e-03;
+double vzFitParam_mu5_3 = -3.58496e-05;
 
-double e_vzFitParam_mu5_0 = 2.20511e-02;
-double e_vzFitParam_mu5_1 = 6.25420e-03;
-double e_vzFitParam_mu5_2 = 5.58661e-04;
-double e_vzFitParam_mu5_3 = 7.35975e-05;
-
-////////////////////////////////////////////////
-
-double vzFitParam_mu7_0 = 9.81506e-01;
-double vzFitParam_mu7_1 = -1.21066e-02;
-double vzFitParam_mu7_2 = 1.29050e-03;
-double vzFitParam_mu7_3 = -8.35634e-06;
-
-double e_vzFitParam_mu7_0 = 1.40943e-02;
-double e_vzFitParam_mu7_1 = 3.96917e-03;
-double e_vzFitParam_mu7_2 = 3.78670e-04;
-double e_vzFitParam_mu7_3 = 4.79740e-05;
+double e_vzFitParam_mu5_0 = 3.98046e-02;
+double e_vzFitParam_mu5_1 = 1.15407e-02;
+double e_vzFitParam_mu5_2 = 9.87896e-04;
+double e_vzFitParam_mu5_3 = 1.29200e-04;
 
 ////////////////////////////////////////////////
 
-double vzFitParam_mu12_0 = 9.96560e-01;
-double vzFitParam_mu12_1 = -1.46536e-02;
-double vzFitParam_mu12_2 = 7.34228e-04;
-double vzFitParam_mu12_3 = -1.57123e-05;
+double vzFitParam_mu7_0 = 1.02702e+00;
+double vzFitParam_mu7_1 = -2.10139e-02;
+double vzFitParam_mu7_2 = 2.05860e-04;
+double vzFitParam_mu7_3 = 8.54184e-05;
 
-double e_vzFitParam_mu12_0 = 1.27347e-02;
-double e_vzFitParam_mu12_1 = 3.41298e-03;
-double e_vzFitParam_mu12_2 = 3.34077e-04;
-double e_vzFitParam_mu12_3 = 4.15961e-05;
+double e_vzFitParam_mu7_0 = 2.60945e-02;
+double e_vzFitParam_mu7_1 = 7.25459e-03;
+double e_vzFitParam_mu7_2 = 6.40386e-04;
+double e_vzFitParam_mu7_3 = 8.26491e-05;
+
+////////////////////////////////////////////////
+
+double vzFitParam_mu12_0 = 9.98272e-01;
+double vzFitParam_mu12_1 = -1.88740e-02;
+double vzFitParam_mu12_2 = 1.03042e-03;
+double vzFitParam_mu12_3 = 2.79796e-05;
+
+double e_vzFitParam_mu12_0 = 2.43784e-02;
+double e_vzFitParam_mu12_1 = 6.21292e-03;
+double e_vzFitParam_mu12_2 = 5.64635e-04;
+double e_vzFitParam_mu12_3 = 7.04511e-05;
 
