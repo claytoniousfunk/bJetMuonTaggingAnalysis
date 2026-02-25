@@ -13,7 +13,7 @@ bool apply_JEU_shift_down = false;
 // options to skip genParticle loops (for forests with no genParticle info)
 bool skipGenParticles = false;
 // reweighting functions
-bool doVzReweight = false;
+bool doVzReweight = true;
 bool doJetPtReweight = false;
 // jet-based filers
 bool doGenJetPthatFilter = false;
@@ -50,8 +50,8 @@ double sigma_eta = 0.005;
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
-bool fillMu5 = false;
+bool fillMu5 = true;
 bool fillMu7 = false;
-bool fillMu12 = true;
+bool fillMu12 = false;
 
 
