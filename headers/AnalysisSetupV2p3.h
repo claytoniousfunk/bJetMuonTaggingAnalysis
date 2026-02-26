@@ -98,7 +98,10 @@ const double vzMin = -15.0;
 const double vzMax = 15.0;
 
 const double epsilon = 0.03;
-const double epsilon_mm = 0.4;
+
+const double epsilon_mm = 0.35;
+//const double epsilon_mm = 0.4;
+//const double epsilon_mm = 0.45;
 
 const double d0cut = 0.002;
 
