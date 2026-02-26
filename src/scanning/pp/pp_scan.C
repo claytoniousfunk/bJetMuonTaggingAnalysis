@@ -162,7 +162,8 @@ void pp_scan(int group = 1){
   }
   else if(fillMu12){
     muPtCut = 15.0;
-    muPtMaxCut = 999.0;
+    muPtMaxCut = 60.0;
+    //muPtMaxCut = 999.0;
   }
   else{};
 
