@@ -29,7 +29,7 @@ bool doJESCorrection = false;
 bool doHadronPtRelReweight = false;
 bool doHadronPtRelReweightToMuon = false;
 bool doDRReweight = false;
-bool doWeightCut = false;
+bool doWeightCut = true;
 bool doJetAxisSmearing = false;
 bool doWDecayFilter = true;
 // shifting the hiBin distribution by this amount
