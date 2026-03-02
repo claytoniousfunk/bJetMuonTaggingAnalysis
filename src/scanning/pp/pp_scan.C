@@ -765,23 +765,34 @@ void pp_scan(int group = 1){
     }
 
     int loopTrigger = 0;
+    double loopJetPtCut = 0.0;
     if(doSingleMuonSample){
       if(fillMu5) loopTrigger = triggerDecision_mu5;
       else if(fillMu7) loopTrigger = triggerDecision_mu7;
       else if(fillMu12) loopTrigger = triggerDecision_mu12;
       else{};
+      loopJetPtCut = 80;
     }
     else if(doHighEGJetSample){
-      if(applyJet60Trigger) loopTrigger = em->HLT_HIAK4PFJet60_v1;
-      else if(applyJet80Trigger) loopTrigger = em->HLT_HIAK4PFJet80_v1;
-      else if(applyJet100Trigger) loopTrigger = em->HLT_HIAK4PFJet100_v1;
+      if(applyJet60Trigger){
+	loopTrigger = em->HLT_HIAK4PFJet60_v1;
+	loopJetPtCut = 100;
+      }
+      else if(applyJet80Trigger){
+	loopTrigger = em->HLT_HIAK4PFJet80_v1;
+	loopJetPtCut = 120;
+      }
+      else if(applyJet100Trigger){
+	loopTrigger = em->HLT_HIAK4PFJet100_v1;
+	loopJetPtCut = 150;
+      }
       else loopTrigger = 1;
     }
     else loopTrigger = 1;
     
     // RECO MUON LOOP
     double leadingMuonPt = 0.0;
-    if(triggerIsOn(loopTrigger,1) && eventHasGoodJet && leadingRecoJetPt > 80){
+    if(triggerIsOn(loopTrigger,1) && eventHasGoodJet && leadingRecoJetPt > loopJetPtCut){
       for(int m = 0; m < em->nMu; m++){
 
 	double muPt_m = em->muPt->at(m);
@@ -829,15 +840,29 @@ void pp_scan(int group = 1){
 
 	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.0) continue;
 
-	  if(!isQualityMuon_tight(em->muChi2NDF->at(k),
-				  em->muInnerD0->at(k),
-				  em->muInnerDz->at(k),
-				  em->muMuonHits->at(k),
-				  em->muPixelHits->at(k),
-				  em->muIsGlobal->at(k),
-				  em->muIsPF->at(k),
-				  em->muStations->at(k),
-				  em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	  // muon quality cuts
+	  if(fillMu12){
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(k),
+				    em->muInnerD0->at(k),
+				    em->muInnerDz->at(k),
+				    em->muMuonHits->at(k),
+				    em->muPixelHits->at(k),
+				    em->muIsGlobal->at(k),
+				    em->muIsPF->at(k),
+				    em->muStations->at(k),
+				    em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	  }
+
+	  else if(fillMu5 || fillMu7){
+	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(k),
+					 em->muInnerD0->at(k),
+					 em->muInnerDz->at(k),
+					 em->muPixelHits->at(k),
+					 em->muIsTracker->at(k),
+					 em->muIsGlobal->at(k),
+					 em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	  }
+	  else{};
 
 	  //double w_mk = w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k));
 	  double w_mk = w;

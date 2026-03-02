@@ -13,12 +13,12 @@ bool doJetTrkMaxFilter = true;
 bool doEtaPhiMask = false;
 bool doWDecayFilter = false;
 bool applyJet60Trigger = false;
-bool applyJet80Trigger = false;
+bool applyJet80Trigger = true;
 bool applyJet100Trigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
 bool fillMu5 = false;
 bool fillMu7 = false;
-bool fillMu12 = true;
+bool fillMu12 = false;
 // spectra alterations
 bool doJESCorrection = false;
 bool doBJetNeutrinoEnergyShift = false;
@@ -28,7 +28,7 @@ bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // select dataset
-bool doSingleMuonSample = true;
+bool doSingleMuonSample = false;
 bool doMinBiasSample = false;
-bool doHighEGJetSample = false;
+bool doHighEGJetSample = true;
 
