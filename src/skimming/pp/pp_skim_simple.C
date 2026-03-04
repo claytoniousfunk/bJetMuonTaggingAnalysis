@@ -2,8 +2,8 @@ void pp_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "";
-  in_file_name = "../../../fileNames/fileNames_pp_HighEGJet_cleanup.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_cleanup/pp_skim_output_%i",group);
+  in_file_name = "../../../fileNames/fileNames_pp_HighEGJet_2026-03-03.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet_2026-03-03/pp_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
@@ -15,7 +15,8 @@ void pp_skim_simple(int group = 1){
   //int endfile = 6033;
   //int endfile = 767;
   //int endfile = 242;
-  int endfile = 6227;  
+  //int endfile = 6227;
+  int endfile = 6420;  
 
   TFile *old_file;
   TString filename_string = "";
@@ -77,6 +78,12 @@ void pp_skim_simple(int group = 1){
     old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet80_v1_Prescl",1);
     old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet100_v1",1);
     old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet100_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet30_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet30_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet40_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet40_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet60_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet60_v1_Prescl",1);
     // jets
     old_jet_tree->SetBranchStatus("jtpt",1);
     old_jet_tree->SetBranchStatus("rawpt",1);
