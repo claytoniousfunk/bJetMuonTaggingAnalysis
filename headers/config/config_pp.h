@@ -12,14 +12,18 @@ std::string eventFilters_MinBias[NeventFilters_MinBias] = {"pprimaryVertexFilter
 bool doJetTrkMaxFilter = true;
 bool doEtaPhiMask = false;
 bool doWDecayFilter = false;
+// triggers
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = true;
 bool applyJet100Trigger = false;
-bool applyMu12TriggerEfficiencyCorrection = false;
+bool applyAntiMu5Jet30Trigger = false;
+bool applyAntiMu5Jet40Trigger = false;
+bool applyAntiMu5Jet60Trigger = false;
 bool fillMu5 = false;
 bool fillMu7 = false;
 bool fillMu12 = true;
 // spectra alterations
+bool applyMu12TriggerEfficiencyCorrection = false;
 bool doJESCorrection = false;
 bool doBJetNeutrinoEnergyShift = false;
 bool doJERCorrection = false;

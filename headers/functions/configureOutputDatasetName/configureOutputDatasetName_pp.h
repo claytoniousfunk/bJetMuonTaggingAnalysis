@@ -6,6 +6,9 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
 				   bool applyJet60Trigger,
 				   bool applyJet80Trigger,
 				   bool applyJet100Trigger,
+				   bool applyAntiMu5Jet30Trigger,
+				   bool applyAntiMu5Jet40Trigger,
+				   bool applyAntiMu5Jet60Trigger,
 				   bool applyMu12TriggerEfficiencyCorrection,
 				   bool doJetTrkMaxFilter,
 				   bool doEtaPhiMask,
@@ -37,6 +40,9 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
   if(applyJet100Trigger) result.Append("_Jet100HLT");
+  if(applyAntiMu5Jet30Trigger) result.Append("_AntiMu5Jet30HLT");
+  if(applyAntiMu5Jet40Trigger) result.Append("_AntiMu5Jet40HLT");
+  if(applyAntiMu5Jet60Trigger) result.Append("_AntiMu5Jet60HLT");
   if(fillMu5) result.Append(Form("_mu5_pTmu-%1.0fto%1.0f_hybridSoft",muPtCut,muPtMaxCut));
   else if(fillMu7) result.Append(Form("_mu7_pTmu-%1.0fto%2.0f_hybridSoft",muPtCut,muPtMaxCut));
   else if(fillMu12){

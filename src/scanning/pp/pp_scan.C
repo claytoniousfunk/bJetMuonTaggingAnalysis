@@ -189,6 +189,9 @@ void pp_scan(int group = 1){
 						 applyJet60Trigger,
 						 applyJet80Trigger,
 						 applyJet100Trigger,
+						 applyAntiMu5Jet30Trigger,
+						 applyAntiMu5Jet40Trigger,
+						 applyAntiMu5Jet60Trigger,
 						 applyMu12TriggerEfficiencyCorrection,
 						 doJetTrkMaxFilter,
 						 doEtaPhiMask,
@@ -497,7 +500,7 @@ void pp_scan(int group = 1){
     
 
 
-    // apply jet-trigger if activated in config
+    // apply trigger if activated in config
     if(applyJet60Trigger){
       if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
     }
@@ -507,6 +510,16 @@ void pp_scan(int group = 1){
     if(applyJet100Trigger){
       if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
     }
+    if(applyAntiMu5Jet30Trigger){
+      if(em->HLT_HIL3Mu5_AK4PFJet30_v1 == 1) continue; // 1 because its an anti-trigger
+    }
+    if(applyAntiMu5Jet40Trigger){
+      if(em->HLT_HIL3Mu5_AK4PFJet40_v1 == 1) continue; // 1 because its an anti-trigger
+    }
+    if(applyAntiMu5Jet60Trigger){
+      if(em->HLT_HIL3Mu5_AK4PFJet60_v1 == 1) continue; // 1 because its an anti-trigger
+    }
+    
 
 
     // set the weight equal to the "gluing" parameter
