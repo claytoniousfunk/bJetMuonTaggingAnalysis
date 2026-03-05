@@ -3,7 +3,7 @@ void PYTHIA_skim_simple(int group = 1){
   string in_file_name;
   string output_file_base = "";
   in_file_name = "../../../fileNames/fileNames_PYTHIA_DiJet_withGS.txt";
-  output_file_base += Form("/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withJetTriggers/PYTHIA_DiJet_skim_output_%i",group);
+  output_file_base += Form("/eos/user/c/cbennett/skims/output_skim_PYTHIA_DiJet_withGS_withExtraJetTriggers/PYTHIA_DiJet_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
@@ -79,6 +79,12 @@ void PYTHIA_skim_simple(int group = 1){
     old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet80_v1_Prescl",1);
     old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet100_v1",1);
     old_hlt_tree->SetBranchStatus("HLT_HIAK4PFJet100_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet30_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet30_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet40_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet40_v1_Prescl",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet60_v1",1);
+    old_hlt_tree->SetBranchStatus("HLT_HIL3Mu5_AK4PFJet60_v1_Prescl",1);
     // jets
     old_jet_tree->SetBranchStatus("jtpt",1);
     old_jet_tree->SetBranchStatus("rawpt",1);
