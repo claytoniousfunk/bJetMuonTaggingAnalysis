@@ -29,6 +29,7 @@ TString configureOutputDatasetName(TString generator,
 				   bool apply_JEU_shift_down,
 				   bool applyJet60Trigger,
 				   bool applyJet80Trigger,
+				   bool applyJet100Trigger,
 				   bool applyMu12TriggerEfficiencyCorrection,
 				   bool applyMu5Jet30Trigger,
 				   bool applyMu5Jet40Trigger,
@@ -48,6 +49,7 @@ TString configureOutputDatasetName(TString generator,
   result.Append(datasetIndicator);
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
+  if(applyJet100Trigger) result.Append("_Jet100HLT");
   if(applyMu5Jet30Trigger) result.Append("_Mu5Jet30HLT");
   if(applyMu5Jet40Trigger) result.Append("_Mu5Jet40HLT");
   if(applyMu5Jet60Trigger) result.Append("_Mu5Jet60HLT");

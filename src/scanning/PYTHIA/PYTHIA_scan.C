@@ -375,6 +375,7 @@ void PYTHIA_scan(int group = 1){
 						 apply_JEU_shift_down,
 						 applyJet60Trigger,
 						 applyJet80Trigger,
+						 applyJet100Trigger,
 						 applyMu12TriggerEfficiencyCorrection,
 						 applyMu5Jet30Trigger,
 						 applyMu5Jet40Trigger,
@@ -911,6 +912,9 @@ void PYTHIA_scan(int group = 1){
     }
     if(applyJet80Trigger){
       if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
+    }
+    if(applyJet100Trigger){
+      if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
     }
     if(applyMu5Jet30Trigger){
       if(em->HLT_HIL3Mu5_AK4PFJet30_v1 == 0) continue;
