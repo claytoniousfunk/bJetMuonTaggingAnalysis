@@ -16,7 +16,7 @@ bool doEtaPhiMask = false;
 bool doWDecayFilter = false;
 // High Level Triggers (HLTs)
 bool applyJet60Trigger = true;
-bool applyJet80Trigger = false;
+bool applyJet80Trigger = true;
 bool applyJet100Trigger = false;
 bool applyMinBiasTrigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
