@@ -16,7 +16,7 @@ bool doEtaPhiMask = false;
 bool doWDecayFilter = false;
 // High Level Triggers (HLTs)
 bool applyJet60Trigger = false;
-bool applyJet80Trigger = true;
+bool applyJet80Trigger = false;
 bool applyJet100Trigger = false;
 bool applyMinBiasTrigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
@@ -34,6 +34,6 @@ bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // select dataset
 bool doSingleMuonSample = false;
-bool doMinBiasSample = false;
-bool doHardProbesSample = true;
+bool doMinBiasSample = true;
+bool doHardProbesSample = false;
 
