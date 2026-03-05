@@ -30,6 +30,9 @@ TString configureOutputDatasetName(TString generator,
 				   bool applyJet60Trigger,
 				   bool applyJet80Trigger,
 				   bool applyMu12TriggerEfficiencyCorrection,
+				   bool applyMu5Jet30Trigger,
+				   bool applyMu5Jet40Trigger,
+				   bool applyMu5Jet60Trigger,
 				   double muPtCut,
 				   double muPtMaxCut,
 				   bool fillMu5,
@@ -45,6 +48,9 @@ TString configureOutputDatasetName(TString generator,
   result.Append(datasetIndicator);
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
+  if(applyMu5Jet30Trigger) result.Append("_Mu5Jet30HLT");
+  if(applyMu5Jet40Trigger) result.Append("_Mu5Jet40HLT");
+  if(applyMu5Jet60Trigger) result.Append("_Mu5Jet60HLT");
   // general information
   result.Append(Form("_pThat-%2.0f",pThat));
   if(fillMu5) result.Append(Form("_mu5_pTmu-%1.0fto%1.0f_hybridSoft",muPtCut,muPtMaxCut));

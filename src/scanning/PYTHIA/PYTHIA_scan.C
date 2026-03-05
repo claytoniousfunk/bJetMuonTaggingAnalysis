@@ -376,6 +376,9 @@ void PYTHIA_scan(int group = 1){
 						 applyJet60Trigger,
 						 applyJet80Trigger,
 						 applyMu12TriggerEfficiencyCorrection,
+						 applyMu5Jet30Trigger,
+						 applyMu5Jet40Trigger,
+						 applyMu5Jet60Trigger,
 						 muPtCut,
 						 muPtMaxCut,
 						 fillMu5,
@@ -909,6 +912,18 @@ void PYTHIA_scan(int group = 1){
     if(applyJet80Trigger){
       if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
     }
+    if(applyMu5Jet30Trigger){
+      if(em->HLT_HIL3Mu5_AK4PFJet30_v1 == 0) continue;
+    }
+    if(applyMu5Jet40Trigger){
+      if(em->HLT_HIL3Mu5_AK4PFJet40_v1 == 0) continue;
+    }
+    if(applyMu5Jet60Trigger){
+      if(em->HLT_HIL3Mu5_AK4PFJet60_v1 == 0) continue;
+    }
+
+
+    
 
     double w_reweight_vz = 1.0;
     if(doVzReweight){
