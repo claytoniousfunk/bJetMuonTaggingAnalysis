@@ -80,7 +80,13 @@ TF1 *fitFxn_jetPt_C1, *fitFxn_jetPt_C2, *fitFxn_jetPt_C3, *fitFxn_jetPt_C4;
 #include "../../../headers/fitFunctions/fitFxn_jetPt_C2.h"
 #include "../../../headers/fitFunctions/fitFxn_jetPt_C3.h"
 #include "../../../headers/fitFunctions/fitFxn_jetPt_C4.h"
-
+// BJetSpectraReweightToData fxn
+#include "../../../headers/fitParameters/BJetSpectraReweightToDataFitParams_PYTHIAHYDJET.h"
+TF1 *fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData_C4;
+TF1 *fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData_C3;
+TF1 *fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData_C2;
+TF1 *fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData_C1;
+#include "../../../headers/fitFunctions/fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData.h"
 // HLT fit params/fxn
 #include "../../../headers/fitParameters/HLTFitParams_PYTHIAHYDJET.h"
 TF1 *fitFxn_PYTHIAHYDJET_HLT_C4, *fitFxn_PYTHIAHYDJET_HLT_C3, *fitFxn_PYTHIAHYDJET_HLT_C2, *fitFxn_PYTHIAHYDJET_HLT_C1;
@@ -402,6 +408,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 doWeightCut,
 						 doJetAxisSmearing,
 						 doWDecayFilter,
+						 doBJetSpectraReweightToData,
 						 mu_phi,
 						 sigma_phi,
 						 mu_eta,
@@ -1196,6 +1203,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   loadFitFxn_hadronPtRel();
   loadFitFxn_dR();
   loadFitFxn_PYTHIAHYDJET_HLT();
+  loadFitFxn_PYTHIAHYDJET_BJetSpectraReweightToData();
 
   TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
   TH2D *neutrino_energy_map;
@@ -1799,7 +1807,8 @@ void PYTHIAHYDJET_scan(int group = 1){
 	if(doWDecayFilter){
 	  if(isWDecayMuon(recoMuonPt_m,recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
 	}
-			
+
+	
 
 	// match to genMuon
 	bool isMatchedRecoMuon = false;
@@ -1905,6 +1914,15 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  else{};
 	}
       }
+
+      if(doBJetSpectraReweightToData){
+	if(CentralityIndex == 4) w_jet = w_jet * fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData_C4->Eval(recoJetPt_i);
+	else if(CentralityIndex == 3) w_jet = w_jet * fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData_C3->Eval(recoJetPt_i);
+	else if(CentralityIndex == 2) w_jet = w_jet * fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData_C2->Eval(recoJetPt_i);
+	else if(CentralityIndex == 1) w_jet = w_jet * fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData_C1->Eval(recoJetPt_i);
+	else{};
+      }
+			
 
 
       // skip enties with large weight

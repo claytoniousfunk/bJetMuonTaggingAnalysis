@@ -33,6 +33,7 @@ TString configureOutputDatasetName(TString generator,
 				   bool doWeightCut,
 				   bool doJetAxisSmearing,
 				   bool doWDecayFilter,
+				   bool doBJetSpectraReweightToData,
 				   double mu_phi,
 				   double sigma_phi,
 				   double mu_eta,
@@ -104,6 +105,7 @@ TString configureOutputDatasetName(TString generator,
   if(doDRReweight) result.Append("_dRReweight");
   if(doJetAxisSmearing) result.Append(Form("_jetAxisSmear_muPhi-%1.3f_sigmaPhi-%1.3f_muEta-%1.3f_sigmaEta-%1.3f",mu_phi,sigma_phi,mu_eta,sigma_eta));
   if(doWDecayFilter) result.Append("_WDecayFilter");
+  if(doBJetSpectraReweightToData) result.Append("_BJetSpectraReweightToData");
   // lesser-likely customizations
   if(doWeightCut) result.Append("_weightCut");
   if(doHadronPtRelReweight) result.Append("_hadronPtRelReweight");

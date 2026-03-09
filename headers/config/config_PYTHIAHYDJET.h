@@ -32,6 +32,7 @@ bool doDRReweight = false;
 bool doWeightCut = true;
 bool doJetAxisSmearing = false;
 bool doWDecayFilter = true;
+bool doBJetSpectraReweightToData = true;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
 // jet-alterations for closure
