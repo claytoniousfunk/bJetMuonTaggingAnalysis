@@ -213,22 +213,6 @@ void pp_scan(int group = 1){
 
   std::cout << "output dataset = " << output << std::endl;
 
-  //TString input = Form("../../../rootFiles/skimmingOutput/pp/output/pp_skim_output_%i.root",group);
-  //TString input = "../../../rootFiles/skimmingOutput/pp/test/testFile.root";
-
-
-  // TString input = Form("../../../rootFiles/skimmingOutput/pp/output_MinBias/pp_MinBias_skim_output_%i.root",group);
-  // TString output = Form("output_SingleMuon_mu7/pp_MinBias_scan_output_%i.root",group);
-
-  // TString input = Form("/eos/user/c/cbennett/skims/output_pp_SingleMuon/pp_SingleMuon_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_SingleMuon_mu12_tight_pTmu-14_projectableTemplates_2025-06-30/pp_SingleMuon_scan_output_%i.root",group);
-
-  // TString input = Form("/eos/user/c/cbennett/skims/output_skims_pp_HIZeroBias1/pp_MinBias_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_MinBias_mu12_tight_pTmu-14_2025-06-30/pp_MinBias_scan_output_%i.root",group);
-
-  // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_pp_HighEGJet/pp_skim_output_%i.root",group);
-  // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_pp_HighEGJet_mu12_tight_pTmu-14_2025-10-13_applyJEUShiftDown/pp_HighEGJet_scan_output_%i.root",group);
-
 
   // JET ENERGY CORRECTIONS
   vector<string> Files;
@@ -497,139 +481,6 @@ void pp_scan(int group = 1){
       }
     }
     else{};
-
-
-    int loopTrigger = 0;
-    double loopJetPtCut = 0.0;
-    // if(doSingleMuonSample){
-    //   if(fillMu5) loopTrigger = triggerDecision_mu5;
-    //   else if(fillMu7) loopTrigger = triggerDecision_mu7;
-    //   else if(fillMu12) loopTrigger = triggerDecision_mu12;
-    //   else{};
-    //   loopJetPtCut = 80;
-    // }
-    // else if(doHighEGJetSample){
-    //   if(applyJet60Trigger){
-    // 	loopTrigger = em->HLT_HIAK4PFJet60_v1;
-    // 	loopJetPtCut = 100;
-    //   }
-    //   else if(applyJet80Trigger){
-    // 	loopTrigger = em->HLT_HIAK4PFJet80_v1;
-    // 	loopJetPtCut = 120;
-    //   }
-    //   else if(applyJet100Trigger){
-    // 	loopTrigger = em->HLT_HIAK4PFJet100_v1;
-    // 	loopJetPtCut = 150;
-    //   }
-    //   else loopTrigger = 1;
-    // }
-    if(fillMu5) loopTrigger = triggerDecision_mu5;
-    else if(fillMu7) loopTrigger = triggerDecision_mu7;
-    else if(fillMu12) loopTrigger = triggerDecision_mu12;
-    else loopTrigger = 1;
-    
-    // RECO MUON LOOP
-    double leadingMuonPt = 0.0;
-    //if(triggerIsOn(loopTrigger,1) && eventHasGoodJet && leadingRecoJetPt > loopJetPtCut){
-    if(triggerIsOn(loopTrigger,1)){
-      for(int m = 0; m < em->nMu; m++){
-
-	double muPt_m = em->muPt->at(m);
-	double muEta_m = em->muEta->at(m);
-	double muPhi_m = em->muPhi->at(m);
-
-	//cout << "(muPt, muEta, muPhi) = (" << muPt_m << ", " << muEta_m << ", " << muPhi_m << ")" << endl;
-
-	// skip if muon has already been matched to a jet in this event
-	// muon kinematic cuts
-	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
-	// muon quality cuts
-	if(fillMu12){
-	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				  em->muInnerD0->at(m),
-				  em->muInnerDz->at(m),
-				  em->muMuonHits->at(m),
-				  em->muPixelHits->at(m),
-				  em->muIsGlobal->at(m),
-				  em->muIsPF->at(m),
-				  em->muStations->at(m),
-				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
-	}
-
-	else if(fillMu5 || fillMu7){
-	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-				       em->muInnerD0->at(m),
-				       em->muInnerDz->at(m),
-				       em->muPixelHits->at(m),
-				       em->muIsTracker->at(m),
-				       em->muIsGlobal->at(m),
-				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
-	}
-	else{};
-
-	if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
-
-	h_inclMuPt->Fill(muPt_m,w);
-
-	for(int k = m+1; k < em->nMu; k++){
-
-	  double muPt_k = em->muPt->at(k);
-	  double muEta_k = em->muEta->at(k);
-	  double muPhi_k = em->muPhi->at(k);
-
-	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.0) continue;
-
-	  // muon quality cuts
-	  if(fillMu12){
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(k),
-				    em->muInnerD0->at(k),
-				    em->muInnerDz->at(k),
-				    em->muMuonHits->at(k),
-				    em->muPixelHits->at(k),
-				    em->muIsGlobal->at(k),
-				    em->muIsPF->at(k),
-				    em->muStations->at(k),
-				    em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
-	  }
-
-	  else if(fillMu5 || fillMu7){
-	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(k),
-					 em->muInnerD0->at(k),
-					 em->muInnerDz->at(k),
-					 em->muPixelHits->at(k),
-					 em->muIsTracker->at(k),
-					 em->muIsGlobal->at(k),
-					 em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
-	  }
-	  else{};
-
-	  //double w_mk = w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k));
-	  double w_mk = w;
-	  
-	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
-
-	    h_dimuonMass->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
-	  
-	  }
-
-	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
-
-	    h_dimuonMass_sameSign->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
-	  
-	  }
-	
-	}
-
-      }
-    }
-
-
-
-
-
-    
-    
-
 
     // apply trigger if activated in config
     if(applyJet60Trigger){
@@ -907,6 +758,137 @@ void pp_scan(int group = 1){
       }
 
     }
+
+    
+    int loopMuonTrigger = 0;
+    int loopJetTrigger = 0;
+    
+    double loopMuonPtCut = 0.0;
+    double loopJetPtCut = 0.0;
+
+    if(applyJet60Trigger){
+
+      loopJetTrigger = em->HLT_HIAK4PFJet60_v1;
+      loopJetPtCut = 100.0;
+
+    }
+    else if(applyJet80Trigger){
+
+      loopJetTrigger = em->HLT_HIAK4PFJet80_v1;
+      loopJetPtCut = 130.0;
+
+    }
+    else if(applyJet100Trigger){
+
+      loopJetTrigger = em->HLT_HIAK4PFJet100_v1;
+      loopJetPtCut = 150.0;
+
+    }
+    else{
+      loopJetTrigger = 1;
+      loopJetPtCut = 0.;
+    }
+
+    if(fillMu5) loopMuonTrigger = triggerDecision_mu5;
+    else if(fillMu7) loopMuonTrigger = triggerDecision_mu7;
+    else if(fillMu12) loopMuonTrigger = triggerDecision_mu12;
+    else loopMuonTrigger = 1;
+    
+    // RECO MUON LOOP
+    double leadingMuonPt = 0.0;
+    //if(triggerIsOn(loopTrigger,1) && eventHasGoodJet && leadingRecoJetPt > loopJetPtCut){
+    if(triggerIsOn(loopMuonTrigger,1) && triggerIsOn(loopJetTrigger,1) && leadingRecoJetPt > loopJetPtCut){
+      for(int m = 0; m < em->nMu; m++){
+
+	double muPt_m = em->muPt->at(m);
+	double muEta_m = em->muEta->at(m);
+	double muPhi_m = em->muPhi->at(m);
+
+	//cout << "(muPt, muEta, muPhi) = (" << muPt_m << ", " << muEta_m << ", " << muPhi_m << ")" << endl;
+
+	// skip if muon has already been matched to a jet in this event
+	// muon kinematic cuts
+	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
+	// muon quality cuts
+	if(fillMu12){
+	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				  em->muInnerD0->at(m),
+				  em->muInnerDz->at(m),
+				  em->muMuonHits->at(m),
+				  em->muPixelHits->at(m),
+				  em->muIsGlobal->at(m),
+				  em->muIsPF->at(m),
+				  em->muStations->at(m),
+				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
+
+	else if(fillMu5 || fillMu7){
+	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				       em->muInnerD0->at(m),
+				       em->muInnerDz->at(m),
+				       em->muPixelHits->at(m),
+				       em->muIsTracker->at(m),
+				       em->muIsGlobal->at(m),
+				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
+	else{};
+
+	if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
+
+	h_inclMuPt->Fill(muPt_m,w);
+
+	for(int k = m+1; k < em->nMu; k++){
+
+	  double muPt_k = em->muPt->at(k);
+	  double muEta_k = em->muEta->at(k);
+	  double muPhi_k = em->muPhi->at(k);
+
+	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.0) continue;
+
+	  // muon quality cuts
+	  if(fillMu12){
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(k),
+				    em->muInnerD0->at(k),
+				    em->muInnerDz->at(k),
+				    em->muMuonHits->at(k),
+				    em->muPixelHits->at(k),
+				    em->muIsGlobal->at(k),
+				    em->muIsPF->at(k),
+				    em->muStations->at(k),
+				    em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	  }
+
+	  else if(fillMu5 || fillMu7){
+	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(k),
+					 em->muInnerD0->at(k),
+					 em->muInnerDz->at(k),
+					 em->muPixelHits->at(k),
+					 em->muIsTracker->at(k),
+					 em->muIsGlobal->at(k),
+					 em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	  }
+	  else{};
+
+	  //double w_mk = w/(fitFxn_pp_HLT->Eval(muPt_m)*fitFxn_pp_HLT->Eval(muPt_k));
+	  double w_mk = w;
+	  
+	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
+
+	    h_dimuonMass->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	  
+	  }
+
+	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
+
+	    h_dimuonMass_sameSign->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	  
+	  }
+	
+	}
+
+      }
+    }
+
 
     
 
