@@ -13,7 +13,7 @@ bool doJetTrkMaxFilter = true;
 bool doEtaPhiMask = false;
 bool doWDecayFilter = false;
 // triggers
-bool applyJet60Trigger = false;
+bool applyJet60Trigger = true;
 bool applyJet80Trigger = false;
 bool applyJet100Trigger = false;
 bool applyAntiMu5Jet30Trigger = false;
