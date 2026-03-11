@@ -1038,9 +1038,9 @@ void PbPb_scan(int group = 1){
       loopJetPtCut = 0.;
     }
     
-    if(fillMu5) loopTrigger = triggerDecision_mu5;
-    else if(fillMu7) loopTrigger = triggerDecision_mu7;
-    else if(fillMu12) loopTrigger = triggerDecision_mu12;
+    if(fillMu5) loopMuonTrigger = triggerDecision_mu5;
+    else if(fillMu7) loopMuonTrigger = triggerDecision_mu7;
+    else if(fillMu12) loopMuonTrigger = triggerDecision_mu12;
     else{};
 
     double leadingMuonPt = 0.0;
