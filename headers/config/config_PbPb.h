@@ -13,11 +13,11 @@ std::string eventFilters_MinBias[NeventFilters_MinBias] = {"pprimaryVertexFilter
 // jet options
 bool doJetTrkMaxFilter = false;
 bool doEtaPhiMask = false;
-bool doWDecayFilter = false;
+bool doWDecayFilter = true;
 // High Level Triggers (HLTs)
-bool applyJet60Trigger = false;
-bool applyJet80Trigger = true;
-bool applyJet100Trigger = true;
+bool applyJet60Trigger = true;
+bool applyJet80Trigger = false;
+bool applyJet100Trigger = false;
 bool applyMinBiasTrigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
 bool fillMu5 = false;
