@@ -611,142 +611,6 @@ void PbPb_scan(int group = 1){
     int triggerDecision_mu12 = em->HLT_HIL3Mu12_v1;
     int triggerDecision_mu12_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
-
-    
-
-    // RECO MUON LOOP
-
-    int loopTrigger = 0;
-    double loopJetPtCut = 0.0;
-    // if(doSingleMuonSample){
-    //   if(fillMu5) loopTrigger = triggerDecision_mu5;
-    //   else if(fillMu7) loopTrigger = triggerDecision_mu7;
-    //   else if(fillMu12) loopTrigger = triggerDecision_mu12;
-    //   else{};
-    //   loopJetPtCut = 80;
-    // }
-    // else if(doHardProbesSample){
-    //   if(applyJet60Trigger){
-    // 	loopTrigger = em->HLT_HICsAK4PFJet60Eta1p5_v1;
-    // 	loopJetPtCut = 100;
-    //   }
-    //   else if(applyJet80Trigger){
-    // 	loopTrigger = em->HLT_HICsAK4PFJet80Eta1p5_v1;
-    // 	loopJetPtCut = 120;
-    //   }
-    //   else if(applyJet100Trigger){
-    // 	loopTrigger = em->HLT_HICsAK4PFJet100Eta1p5_v1;
-    // 	loopJetPtCut = 150;
-    //   }
-    //   else loopTrigger = 1;
-    // }
-    // else loopTrigger = 1;
-    if(fillMu5) loopTrigger = triggerDecision_mu5;
-    else if(fillMu7) loopTrigger = triggerDecision_mu7;
-    else if(fillMu12) loopTrigger = triggerDecision_mu12;
-    else{};
-
-    double leadingMuonPt = 0.0;
-    
-    //if(triggerIsOn(loopTrigger,1) && eventHasGoodJet && leadingRecoJetPt > loopJetPtCut){
-    if(triggerIsOn(loopTrigger,1)){
-      for(int m = 0; m < em->nMu; m++){
-
-	double muPt_m = em->muPt->at(m);
-	double muEta_m = em->muEta->at(m);
-	double muPhi_m = em->muPhi->at(m);
-
-	//cout << "(muPt, muEta, muPhi) = (" << muPt_m << ", " << muEta_m << ", " << muPhi_m << ")" << endl;
-
-	// skip if muon has already been matched to a jet in this event
-	// muon kinematic cuts
-	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
-	// muon quality cuts
-	if(fillMu12){
-	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				  em->muInnerD0->at(m),
-				  em->muInnerDz->at(m),
-				  em->muMuonHits->at(m),
-				  em->muPixelHits->at(m),
-				  em->muIsGlobal->at(m),
-				  em->muIsPF->at(m),
-				  em->muStations->at(m),
-				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
-	}
-
-	else if(fillMu5 || fillMu7){
-	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-				       em->muInnerD0->at(m),
-				       em->muInnerDz->at(m),
-				       em->muPixelHits->at(m),
-				       em->muIsTracker->at(m),
-				       em->muIsGlobal->at(m),
-				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
-	}
-	else{};
-
-	if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
-
-	h_inclMuPt->Fill(muPt_m,w);
-
-	for(int k = m+1; k < em->nMu; k++){
-
-	  double muPt_k = em->muPt->at(k);
-	  double muEta_k = em->muEta->at(k);
-	  double muPhi_k = em->muPhi->at(k);
-
-	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.0) continue;
-
-	  if(fillMu12){
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(k),
-				    em->muInnerD0->at(k),
-				    em->muInnerDz->at(k),
-				    em->muMuonHits->at(k),
-				    em->muPixelHits->at(k),
-				    em->muIsGlobal->at(k),
-				    em->muIsPF->at(k),
-				    em->muStations->at(k),
-				    em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
-	  }
-
-	  else if(fillMu5 || fillMu7){
-	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(k),
-					 em->muInnerD0->at(k),
-					 em->muInnerDz->at(k),
-					 em->muPixelHits->at(k),
-					 em->muIsTracker->at(k),
-					 em->muIsGlobal->at(k),
-					 em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
-	  }
-	  else{};
-
-	  double w_mk = w;
-
-	  // if(CentralityIndex == 4) w_mk = w / (fitFxn_PbPb_HLT_C4->Eval(muPt_m)*fitFxn_PbPb_HLT_C4->Eval(muPt_k));
-	  // else if(CentralityIndex == 3) w_mk = w / (fitFxn_PbPb_HLT_C3->Eval(muPt_m)*fitFxn_PbPb_HLT_C3->Eval(muPt_k));
-	  // else if(CentralityIndex == 2) w_mk = w / (fitFxn_PbPb_HLT_C2->Eval(muPt_m)*fitFxn_PbPb_HLT_C2->Eval(muPt_k));
-	  // else if(CentralityIndex == 1) w_mk = w / (fitFxn_PbPb_HLT_C1->Eval(muPt_m)*fitFxn_PbPb_HLT_C1->Eval(muPt_k));
-	  // else{};
-
-	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
-
-	    h_dimuonMass[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
-	    h_dimuonMass[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
-	  
-	  }
-
-	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
-
-	    h_dimuonMass_sameSign[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
-	    h_dimuonMass_sameSign[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
-	  
-	  }
-	
-	}
-
-      }
-    }
-
     
     // apply jet-trigger if activated in config
     if(applyJet60Trigger){
@@ -758,9 +622,6 @@ void PbPb_scan(int group = 1){
     if(applyJet100Trigger){
       if(em->HLT_HICsAK4PFJet100Eta1p5_v1 == 0) continue;
     }
-
-    
-    
 
  
     if(fillMu5){
@@ -1146,7 +1007,142 @@ void PbPb_scan(int group = 1){
     }
 
 
+        // RECO MUON LOOP
+
+    int loopMuonTrigger = 0;
+    int loopJetTrigger = 0;
     
+    double loopMuonPtCut = 0.0;
+    double loopJetPtCut = 0.0;
+
+    if(applyJet60Trigger){
+
+      loopJetTrigger = em->HLT_HICsAK4PFJet60Eta1p5_v1;
+      loopJetPtCut = 100.0;
+
+    }
+    else if(applyJet80Trigger){
+
+      loopJetTrigger = em->HLT_HICsAK4PFJet80Eta1p5_v1;
+      loopJetPtCut = 130.0;
+
+    }
+    else if(applyJet100Trigger){
+
+      loopJetTrigger = em->HLT_HICsAK4PFJet100Eta1p5_v1;
+      loopJetPtCut = 150.0;
+
+    }
+    else{
+      loopJetTrigger = 1;
+      loopJetPtCut = 0.;
+    }
+    
+    if(fillMu5) loopTrigger = triggerDecision_mu5;
+    else if(fillMu7) loopTrigger = triggerDecision_mu7;
+    else if(fillMu12) loopTrigger = triggerDecision_mu12;
+    else{};
+
+    double leadingMuonPt = 0.0;
+    
+    if(triggerIsOn(loopMuonTrigger,1) && triggerIsOn(loopJetTrigger,1) && leadingRecoJetPt > loopJetPtCut){
+      for(int m = 0; m < em->nMu; m++){
+
+	double muPt_m = em->muPt->at(m);
+	double muEta_m = em->muEta->at(m);
+	double muPhi_m = em->muPhi->at(m);
+
+	//cout << "(muPt, muEta, muPhi) = (" << muPt_m << ", " << muEta_m << ", " << muPhi_m << ")" << endl;
+
+	// skip if muon has already been matched to a jet in this event
+	// muon kinematic cuts
+	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
+	// muon quality cuts
+	if(fillMu12){
+	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				  em->muInnerD0->at(m),
+				  em->muInnerDz->at(m),
+				  em->muMuonHits->at(m),
+				  em->muPixelHits->at(m),
+				  em->muIsGlobal->at(m),
+				  em->muIsPF->at(m),
+				  em->muStations->at(m),
+				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
+
+	else if(fillMu5 || fillMu7){
+	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+				       em->muInnerD0->at(m),
+				       em->muInnerDz->at(m),
+				       em->muPixelHits->at(m),
+				       em->muIsTracker->at(m),
+				       em->muIsGlobal->at(m),
+				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	}
+	else{};
+
+	if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
+
+	h_inclMuPt->Fill(muPt_m,w);
+
+	for(int k = m+1; k < em->nMu; k++){
+
+	  double muPt_k = em->muPt->at(k);
+	  double muEta_k = em->muEta->at(k);
+	  double muPhi_k = em->muPhi->at(k);
+
+	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.0) continue;
+
+	  if(fillMu12){
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(k),
+				    em->muInnerD0->at(k),
+				    em->muInnerDz->at(k),
+				    em->muMuonHits->at(k),
+				    em->muPixelHits->at(k),
+				    em->muIsGlobal->at(k),
+				    em->muIsPF->at(k),
+				    em->muStations->at(k),
+				    em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	  }
+
+	  else if(fillMu5 || fillMu7){
+	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(k),
+					 em->muInnerD0->at(k),
+					 em->muInnerDz->at(k),
+					 em->muPixelHits->at(k),
+					 em->muIsTracker->at(k),
+					 em->muIsGlobal->at(k),
+					 em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	  }
+	  else{};
+
+	  double w_mk = w;
+
+	  // if(CentralityIndex == 4) w_mk = w / (fitFxn_PbPb_HLT_C4->Eval(muPt_m)*fitFxn_PbPb_HLT_C4->Eval(muPt_k));
+	  // else if(CentralityIndex == 3) w_mk = w / (fitFxn_PbPb_HLT_C3->Eval(muPt_m)*fitFxn_PbPb_HLT_C3->Eval(muPt_k));
+	  // else if(CentralityIndex == 2) w_mk = w / (fitFxn_PbPb_HLT_C2->Eval(muPt_m)*fitFxn_PbPb_HLT_C2->Eval(muPt_k));
+	  // else if(CentralityIndex == 1) w_mk = w / (fitFxn_PbPb_HLT_C1->Eval(muPt_m)*fitFxn_PbPb_HLT_C1->Eval(muPt_k));
+	  // else{};
+
+	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
+
+	    h_dimuonMass[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	    h_dimuonMass[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	  
+	  }
+
+	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
+
+	    h_dimuonMass_sameSign[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	    h_dimuonMass_sameSign[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	  
+	  }
+	
+	}
+
+      }
+    }
+
 
 
 
