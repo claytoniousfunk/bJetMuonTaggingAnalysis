@@ -1118,11 +1118,11 @@ void PbPb_scan(int group = 1){
 
 	  double w_mk = w;
 
-	  // if(CentralityIndex == 4) w_mk = w / (fitFxn_PbPb_HLT_C4->Eval(muPt_m)*fitFxn_PbPb_HLT_C4->Eval(muPt_k));
-	  // else if(CentralityIndex == 3) w_mk = w / (fitFxn_PbPb_HLT_C3->Eval(muPt_m)*fitFxn_PbPb_HLT_C3->Eval(muPt_k));
-	  // else if(CentralityIndex == 2) w_mk = w / (fitFxn_PbPb_HLT_C2->Eval(muPt_m)*fitFxn_PbPb_HLT_C2->Eval(muPt_k));
-	  // else if(CentralityIndex == 1) w_mk = w / (fitFxn_PbPb_HLT_C1->Eval(muPt_m)*fitFxn_PbPb_HLT_C1->Eval(muPt_k));
-	  // else{};
+	  if(CentralityIndex == 4) w_mk = w / (1. - (1. - fitFxn_PbPb_HLT_C4->Eval(muPt_m))*(1. - fitFxn_PbPb_HLT_C4->Eval(muPt_k)));
+	  else if(CentralityIndex == 3) w_mk = w / (1. - (1. - fitFxn_PbPb_HLT_C3->Eval(muPt_m))*(1. - fitFxn_PbPb_HLT_C3->Eval(muPt_k)));
+	  else if(CentralityIndex == 2) w_mk = w / (1. - (1. - fitFxn_PbPb_HLT_C2->Eval(muPt_m))*(1. - fitFxn_PbPb_HLT_C2->Eval(muPt_k)));
+	  else if(CentralityIndex == 1) w_mk = w / (1. - (1. - fitFxn_PbPb_HLT_C1->Eval(muPt_m))*(1. - fitFxn_PbPb_HLT_C1->Eval(muPt_k)));
+	  else{};
 
 	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
 
