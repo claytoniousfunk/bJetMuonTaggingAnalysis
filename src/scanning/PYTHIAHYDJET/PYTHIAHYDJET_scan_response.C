@@ -106,6 +106,9 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 
 void PYTHIAHYDJET_scan_response(int group = 1){
 
+  std::cout << "setting pthat cut to 15...\n";
+  pthatcut = 15.;
+
   TString inputDataset = "";
   TString inputFileName = "";
 
@@ -165,7 +168,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
 
   //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_evenEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -403,9 +407,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   // event loop
   int evi_frac = 0;
   for(int evi = 0; evi < NEvents ; evi++){
-    //for(int evi = 0; evi < 10 ; evi++){
+
+
     if(evi==0) cout << "Processing events..." << endl;
 
+    // only take even events
+    if(evi % 2 == 1) continue;
+    
     em->getEvent(evi);
 
     if((100*evi / NEvents) % 5 == 0 && 100*evi / NEvents > evi_frac) cout << "evt frac: " << evi_frac << "%" << endl;
@@ -567,9 +575,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      if(hasRecoJetMatch && hasRecoJetMuon) {
+      //if(hasRecoJetMatch && hasRecoJetMuon) {
       //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
-      // if(hasRecoJetMatch) {
+      if(hasRecoJetMatch) {
 	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
