@@ -869,7 +869,7 @@ void pp_scan(int group = 1){
 	  }
 	  else{};
 
-	  double w_mk = w / (1. - (1. - (fitFxn_pp_HLT->Eval(muPt_m))*(1. - fitFxn_pp_HLT->Eval(muPt_k))));
+	  double w_mk = w / (1. - (1. - fitFxn_pp_HLT->Eval(muPt_m))*(1. - fitFxn_pp_HLT->Eval(muPt_k)));
 	  //double w_mk = w;
 	  
 	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
