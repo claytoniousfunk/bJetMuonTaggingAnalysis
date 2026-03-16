@@ -380,10 +380,19 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   JER_fxn[1]->SetParameter(2,-16.893);
 
   // define vz & hiBin reweighting functions
-  loadFitFxn_vz();
-
-  loadFitFxn_hiBin();
-
+  if(fillMu5){
+    loadFitFxn_vz_mu5();
+    loadFitFxn_hiBin_mu5();
+  }
+  else if(fillMu7){
+    loadFitFxn_vz_mu7();
+    loadFitFxn_hiBin_mu7();
+  }
+  else if(fillMu12){
+    loadFitFxn_vz_mu12();
+    loadFitFxn_hiBin_mu12();
+  }
+  else{};
   // load JER correction fit fxn
   loadFitFxn_PYTHIA_JERCorrection();
 
