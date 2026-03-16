@@ -41,11 +41,13 @@
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
-#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIAHYDJET.h"
 // hiBin-fit parameters
 //#include "../../../headers/fitParameters/hiBinFitParams_mu5.h"
 //#include "../../../headers/fitParameters/hiBinFitParams_mu7.h"
-#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
+//#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
+#include "../../../headers/fitParameters/hiBinFitParams_PYTHIAHYDJET.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
