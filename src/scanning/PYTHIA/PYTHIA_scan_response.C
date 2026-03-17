@@ -204,7 +204,7 @@ void PYTHIA_scan_response(int group = 1){
   TH2D *h_inclGenJetPt_inclRecoMuonTag_flavor;
 
   // debug histograms
-  TH1D *h_weight_jetPT_200to250 = new TH1D("h_weight_jetPT_200to250",10000,0,1);
+  TH1D *h_weight_jetPT_200to250 = new TH1D("h_weight_jetPT_200to250","h_weight_jetPT_200to250",10000,0,1);
   h_weight_jetPT_200to250->Sumw2();
 
   // Define histograms
