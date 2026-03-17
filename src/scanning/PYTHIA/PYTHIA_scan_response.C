@@ -41,7 +41,8 @@
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu7.h"
-#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+//#include "../../../headers/fitParameters/vzFitParams_PYTHIA_mu12.h"
+#include "../../../headers/fitParameters/vzFitParams_PYTHIA.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
@@ -368,7 +369,16 @@ void PYTHIA_scan_response(int group = 1){
   JER_fxn->SetParameter(1,-9.72986e-01);
   JER_fxn->SetParameter(2,3.67352e-04);
 
-  loadFitFxn_vz();
+  if(fillMu5){
+    loadFitFxn_vz_mu5();
+  }
+  else if(fillMu7){
+    loadFitFxn_vz_mu7();
+  }
+  else if(fillMu12){
+    loadFitFxn_vz_mu12();
+  }
+  else{};
   loadFitFxn_PYTHIA_JESb();
   loadFitFxn_PYTHIA_JERCorrection();
 
