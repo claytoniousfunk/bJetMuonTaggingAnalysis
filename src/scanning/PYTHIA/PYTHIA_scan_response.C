@@ -203,6 +203,9 @@ void PYTHIA_scan_response(int group = 1){
   TH2D *h_inclGenJetPt_inclGenMuonTag_flavor;
   TH2D *h_inclGenJetPt_inclRecoMuonTag_flavor;
 
+  // debug histograms
+  TH1D *h_weight_jetPT_200to250 = new TH1D("h_weight_jetPT_200to250",10000,0,1);
+  h_weight_jetPT_200to250->Sumw2();
 
   // Define histograms
   const int N1 = 10;
@@ -642,6 +645,10 @@ void PYTHIA_scan_response(int group = 1){
 	//if(hasRecoJetMatch && hasRecoJetMuon && hasRecoJetNeutrino) { // keep only muon-tagged + neutrino-tagged jets
 
 	//cout << "matchedRecoJetPt = " << matchedRecoJetPt << endl;
+
+	if(matchedRecoJetPt > 200 && matchedRecoJetPt < 250){
+	  h_weight_jetPT_200to250->Fill(w,1);
+	}
 	
 	h_matchedRecoJetPt_genJetPt[0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedNeutrinoPt_recoJetPt[0]->Fill(matchedNeutrinoPt,matchedRecoJetPt,w);
@@ -813,7 +820,7 @@ void PYTHIA_scan_response(int group = 1){
     h_matchedNeutrinoPtOverGenJetPt_recoJetPt[i]->Write();
     h_matchedNeutrinoPtOverRecoJetPt_genJetPt[i]->Write();
   }
-
+  h_weight_jetPT_200to250->Write();
 
 
 
