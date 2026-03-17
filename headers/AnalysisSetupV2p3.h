@@ -158,7 +158,7 @@ const double dimuonMassMax = 120;
 const double weightInputLow = 0.0;
 const double weightInputHigh = 0.1;
 const int NWeightBins = 2000;
-const double weightCut = 0.01;
+const double weightCut = 0.07;
 
 // templates
 const int NTemplateIndices = 4;

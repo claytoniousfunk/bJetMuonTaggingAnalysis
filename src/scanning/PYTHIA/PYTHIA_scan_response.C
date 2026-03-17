@@ -461,6 +461,8 @@ void PYTHIA_scan_response(int group = 1){
 
     double w = w_pthat * w_reweight_vz;
 
+    if(doWeightCut) if(w > weightCut) continue;
+
     // GEN JET LOOP
     for(int i = 0; i < em->ngj ; i++){
 
