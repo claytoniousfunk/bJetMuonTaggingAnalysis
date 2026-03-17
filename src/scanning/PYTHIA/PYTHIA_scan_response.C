@@ -99,7 +99,7 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 void PYTHIA_scan_response(int group = 1){
 
   std::cout << "setting pthat cut to 15...\n";
-  pthatcut = 15.;
+  pthatcut = 20.;
   std::cout << "turning off hiBin & vz reweights...\n";
   doVzReweight = false;
 
