@@ -97,6 +97,11 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 
 void PYTHIA_scan_response(int group = 1){
 
+  std::cout << "setting pthat cut to 15...\n";
+  pthatcut = 15.;
+  std::cout << "turning off hiBin & vz reweights...\n";
+  doVzReweight = false;
+
 
   TString inputDataset = "";
   TString inputFileName = "";
@@ -149,8 +154,9 @@ void PYTHIA_scan_response(int group = 1){
 
   //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_genMuTaggedGenJets/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_oddEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   
 
   std::cout << "output dataset = " << output << std::endl;
@@ -387,8 +393,11 @@ void PYTHIA_scan_response(int group = 1){
   // event loop
   int evi_frac = 0;
   for(int evi = 0; evi < NEvents ; evi++){
-    //for(int evi = 0; evi < 10 ; evi++){
+
     if(evi==0) cout << "Processing events..." << endl;
+
+    // only take odd events
+    if(evi % 2 == 0) continue;
 
     em->getEvent(evi);
 
@@ -608,8 +617,8 @@ void PYTHIA_scan_response(int group = 1){
 			
 			
       // fill response matrix
-      //if(hasRecoJetMatch) {
-      if(hasRecoJetMatch && hasRecoJetMuon) {
+      if(hasRecoJetMatch) {
+      //if(hasRecoJetMatch && hasRecoJetMuon) {
       //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
       //if(hasGenMuonMatch){
       
