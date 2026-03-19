@@ -37,7 +37,8 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p3.h"
+//#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
+#include "../../../headers/AnalysisSetupV2p4.h" // ultra fine cent bins
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
@@ -175,8 +176,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_evenEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_evenEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_oddEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -427,8 +429,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
     if(evi==0) cout << "Processing events..." << endl;
 
-    // only take even events
-    if(evi % 2 == 1) continue;
+    // // only take even events
+    // if(evi % 2 == 1) continue;
 
     // // only take odd events
     // if(evi % 2 == 0) continue;
