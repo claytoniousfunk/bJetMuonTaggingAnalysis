@@ -110,9 +110,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   std::cout << "setting pthat cut to 15...\n";
   pthatcut = 15.;
-  std::cout << "turning off hiBin & vz reweights...\n";
-  doHiBinReweight = false;
-  doVzReweight = false;
+  //std::cout << "turning off hiBin & vz reweights...\n";
+  doHiBinReweight = true;
+  doVzReweight = true;
   
 
   TString inputDataset = "";
