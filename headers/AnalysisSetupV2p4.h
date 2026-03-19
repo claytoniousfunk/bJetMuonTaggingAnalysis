@@ -1,7 +1,5 @@
 
-//const int NCentralityIndices = 3;
-//const int NCentralityIndices = 5;
-const int NCentralityIndices = 6;
+
 const int NJetPtIndices = 7;
 const int NJetFlavorIndices = 7;
 
@@ -16,13 +14,17 @@ int isGJet = 6;
 int isXJet = 7;
 
 
+const int NCentralityIndices = 9;
 const int hiBin_C0_lo = 0;
 const int hiBin_C0_hi = 20;
-const int hiBin_C1_hi = 60;
-const int hiBin_C2_hi = 100;
-const int hiBin_C3_hi = 140;
-const int hiBin_C4_hi = 180;
-int centEdges[NCentralityIndices] = {hiBin_C0_lo, hiBin_C0_hi, hiBin_C1_hi, hiBin_C2_hi, hiBin_C3_hi, hiBin_C4_hi};
+const int hiBin_C1_hi = 40;
+const int hiBin_C2_hi = 60;
+const int hiBin_C3_hi = 80;
+const int hiBin_C4_hi = 100;
+const int hiBin_C5_hi = 120;
+const int hiBin_C6_hi = 140;
+const int hiBin_C7_hi = 160;
+int centEdges[NCentralityIndices] = {hiBin_C0_lo, hiBin_C0_hi, hiBin_C1_hi, hiBin_C2_hi, hiBin_C3_hi, hiBin_C4_hi, hiBin_C5_hi, hiBin_C6_hi, hiBin_C7_hi};
 
 /* const int hiBin_C0_lo = 0; */
 /* const int hiBin_C0_hi = 60; */
@@ -60,18 +62,19 @@ const double deltaRCut = 0.4;  // muon-matching dR
 
 //double muPtCut = 7.0; // mu5 scans
 //double muPtCut = 9.0; // mu7 scans
-double muPtCut = 14.0; // mu12 scans
+double muPtCut = 15.0; // mu12 scans
 
 //double muPtMaxCut = 9.0; // mu5 scans
 //double muPtMaxCut = 14.0; // mu7 scans
-double muPtMaxCut = 1000.0; // mu12 scans
+double muPtMaxCut = 999.0; // mu12 scans
 
 double nuPtCut = 0.0;
 double nuPtMaxCut = 1000.0;
 
-const double pthatcut = 20.0;
+//const double pthatcut = 15.0;
+//const double pthatcut = 20.0;
 //const double pthatcut = 25.0;
-//const double pthatcut = 30.0;
+double pthatcut = 30.0;
 //const double pthatcut = 45.0;
 //const double pthatcut = 40.0;
 //const double pthatcut = 50.0;
@@ -98,8 +101,11 @@ const int NVzBins = 60;
 const double vzMin = -15.0;
 const double vzMax = 15.0;
 
-const double epsilon = 0.1;
+const double epsilon = 0.03;
+
+//const double epsilon_mm = 0.35;
 const double epsilon_mm = 0.4;
+//const double epsilon_mm = 0.45;
 
 const double d0cut = 0.002;
 
@@ -146,16 +152,21 @@ const int NinclParentMassBins = 500;
 const double parentMassMin = 0.0;
 const double parentMassMax = 50.0;
 
-const double massMuon = 0.1056; // mass of muon in GeV
+const double massMuon = 0.1056583755; // mass of muon in GeV
+
+const int NDimuonMassBins = 60;
+const double dimuonMassMin = 60;
+const double dimuonMassMax = 120;
 
 /// weight distributions
 const double weightInputLow = 0.0;
 const double weightInputHigh = 0.1;
 const int NWeightBins = 2000;
-const double weightCut = 0.01;
+const double weightCut = 0.07;
 
 // templates
 const int NTemplateIndices = 4;
 const string templateIndexNames[NTemplateIndices] = {"nominal","JERSmear","JEUShiftUp","JEUShiftDown"};
+
 
 
