@@ -202,6 +202,7 @@ void PYTHIA_scan_response(int group = 1){
   TH2D *h_inclGenJetPt_flavor;
   TH2D *h_inclGenJetPt_inclGenMuonTag_flavor;
   TH2D *h_inclGenJetPt_inclRecoMuonTag_flavor;
+  TH2D *h_leadingRecoJetPtOverPThat_pThat;
 
   // debug histograms
   TH1D *h_weight_jetPT_200to250 = new TH1D("h_weight_jetPT_200to250","h_weight_jetPT_200to250",10000,0,1);
@@ -339,7 +340,10 @@ void PYTHIA_scan_response(int group = 1){
     h_matchedNeutrinoPtOverRecoJetPt_genJetPt[i]->Sumw2();
   }
 
+  h_leadingRecoJetPtOverPThat_pThat = new TH2D("h_leadingRecoJetPtOverPThat_pThat","(leadingRecoJetPt / pThat) vs. pThat",500,0,5,500,0,500);
+  h_leadingRecoJetPtOverPThat_pThat->Sumw2();
 
+  /////////////////////////////////////////////////////////////////////////////////////////
   TFile *f = TFile::Open(input);
   cout << "	File opened!" << endl;
   auto em = new eventMap(f);
@@ -494,6 +498,8 @@ void PYTHIA_scan_response(int group = 1){
       double minDr = 100.0;
       int recoJetFlavorFlag = 0;
       int jetFlavorInt = 19;
+      double leadingMatchedRecoJetPt = 0.;
+      
       // begin recoJet loop
       for(int k = 0; k < em->njet; k++){
 		
@@ -516,6 +522,7 @@ void PYTHIA_scan_response(int group = 1){
 	    JEC.SetJetPhi(em->jetphi[k]);
 	    
 	    matchedRecoJetPt = JEC.GetCorrectedPT();
+	    if(matchedRecoJetPt > leadingMatchedRecoJetPt) leadingMatchedRecoJetPt = matchedRecoJetPt;
 	    //matchedRecoJetPt = em->jetpt[k];
 	    matchedRawJetPt = em->rawpt[k];
 
@@ -665,6 +672,8 @@ void PYTHIA_scan_response(int group = 1){
 	h_matchedNeutrinoPtOverGenJetPt_genJetPt[0]->Fill(matchedNeutrinoPt/x,x,w);
 	h_matchedNeutrinoPtOverGenJetPt_recoJetPt[0]->Fill(matchedNeutrinoPt/x,matchedRecoJetPt,w);
 	h_matchedNeutrinoPtOverRecoJetPt_genJetPt[0]->Fill(matchedNeutrinoPt/matchedRecoJetPt,x,w);
+
+	h_leadingRecoJetPtOverPThat_pThat->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
 
 	if(x>100){
 	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0]->Fill(matchedRecoJetPt/x,y,w);
@@ -823,7 +832,7 @@ void PYTHIA_scan_response(int group = 1){
     h_matchedNeutrinoPtOverRecoJetPt_genJetPt[i]->Write();
   }
   h_weight_jetPT_200to250->Write();
-
+  h_leadingRecoJetPtOverPThat_pThat->Write();
 
 
 
