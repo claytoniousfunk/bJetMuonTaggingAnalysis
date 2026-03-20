@@ -100,9 +100,10 @@ void PYTHIA_scan_response(int group = 1){
 
   std::cout << "setting pthat cut to 15...\n";
   pthatcut = 20.;
-  std::cout << "turning off hiBin & vz reweights...\n";
+  std::cout << "turning off vz reweights...\n";
   doVzReweight = false;
-
+  std::cout << "turning off removeHYDJETjet...\n";
+  doRemoveHYDJETjet = false;
 
   TString inputDataset = "";
   TString inputFileName = "";
