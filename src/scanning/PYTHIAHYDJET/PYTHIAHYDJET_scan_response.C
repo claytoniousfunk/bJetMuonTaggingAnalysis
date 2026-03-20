@@ -37,8 +37,8 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-//#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
-#include "../../../headers/AnalysisSetupV2p4.h" // ultra fine cent bins
+#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
+//#include "../../../headers/AnalysisSetupV2p4.h" // ultra fine cent bins
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
@@ -114,6 +114,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   //std::cout << "turning off hiBin & vz reweights...\n";
   doHiBinReweight = true;
   doVzReweight = true;
+  std::cout << "turning off removeHYDJETjet...\n";
+  doRemoveHYDJETjet = false;
   
 
   TString inputDataset = "";
@@ -174,11 +176,11 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 						 muPtCut);
 
 
-  //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_evenEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_oddEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
@@ -205,6 +207,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   TH2D *h_inclGenJetPt_flavor[NCentralityIndices];
   TH2D *h_inclGenJetPt_inclGenMuonTag_flavor[NCentralityIndices];
   TH2D *h_inclGenJetPt_inclRecoMuonTag_flavor[NCentralityIndices];
+  TH2D *h_leadingRecoJetPtOverPThat_pThat[NCentralityIndices];
 
 
   // Define histograms
@@ -228,6 +231,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       h_inclGenJetPt_flavor[i] = new TH2D(Form("h_inclGenJetPt_flavor_C%i",i),Form("JetFlavorID vs incl. gen p_{T}^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,27,-5,22);
       h_inclGenJetPt_inclGenMuonTag_flavor[i] = new TH2D(Form("h_inclGenJetPt_inclGenMuonTag_flavor_C%i",i),Form("JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. gen muon, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,27,-5,22);
       h_inclGenJetPt_inclRecoMuonTag_flavor[i] = new TH2D(Form("h_inclGenJetPt_inclRecoMuonTag_flavor_C%i",i),Form("JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. reco muon, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,27,-5,22);
+      h_leadingRecoJetPtOverPThat_pThat[i] = new TH2D(Form("h_leadingRecoJetPtOverPThat_pThat_C%i",i),Form("(leadingRecoJetPt / pThat) vs. pThat, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,500,0,500);
     }
     else {
       h_matchedRecoJetPt_genJetPt[i][0] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_allJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, allJets, hiBin %i - %i", centEdges[i-1]-10,centEdges[i]-10),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
@@ -240,6 +244,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       h_inclGenJetPt_flavor[i] = new TH2D(Form("h_inclGenJetPt_flavor_C%i",i),Form("JetFlavorID vs incl. gen p_{T}^{jet}, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,27,-5,22);
       h_inclGenJetPt_inclGenMuonTag_flavor[i] = new TH2D(Form("h_inclGenJetPt_inclGenMuonTag_flavor_C%i",i),Form("JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. gen muon, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,27,-5,22);
       h_inclGenJetPt_inclRecoMuonTag_flavor[i] = new TH2D(Form("h_inclGenJetPt_inclRecoMuonTag_flavor_C%i",i),Form("JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. reco muon, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,27,-5,22);
+      h_leadingRecoJetPtOverPThat_pThat[i] = new TH2D(Form("h_leadingRecoJetPtOverPThat_pThat_C%i",i),Form("(leadingRecoJetPt / pThat) vs. pThat, hiBin %i - %i",centEdges[i-1],centEdges[i]),500,0,5,500,0,500);
     }
 
     h_matchedRecoJetPt_genJetPt[i][0]->Sumw2();
@@ -252,6 +257,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_inclGenJetPt_flavor[i]->Sumw2();
     h_inclGenJetPt_inclGenMuonTag_flavor[i]->Sumw2();
     h_inclGenJetPt_inclRecoMuonTag_flavor[i]->Sumw2();
+    h_leadingRecoJetPtOverPThat_pThat[i]->Sumw2();
 
 
     	
@@ -506,6 +512,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       double minDr = 100.0;
       int recoJetFlavorFlag = 0;
       int jetFlavorInt = 19;
+      double leadingMatchedRecoJetPt = 0.;
 	
       for(int k = 0; k < em->njet; k++){
 		
@@ -527,6 +534,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	    JEC.SetJetPhi(em->jetphi[k]);
 
 	    matchedRecoJetPt = JEC.GetCorrectedPT();
+	    if(matchedRecoJetPt > leadingMatchedRecoJetPt) leadingMatchedRecoJetPt = matchedRecoJetPt;
 	    //matchedRecoJetPt = em->jetpt[k];
 	    matchedRawJetPt = em->rawpt[k];
 	    recoMuonPt = em->mupt[k];
@@ -608,6 +616,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt/x,x,w);
 	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt/x,x,w);
 
+	h_leadingRecoJetPtOverPThat_pThat[0]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
+	h_leadingRecoJetPtOverPThat_pThat[CentralityIndex]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
+	
 	if(x>100){
 	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][0]->Fill(matchedRecoJetPt/x,y,w);
 	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][0]->Fill(matchedRecoJetPt/x,y,w);
@@ -790,6 +801,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_matchedRecoJetPtOverGenJetPt_genJetEta[j][4]->Write();
     h_matchedRecoJetPtOverGenJetPt_genJetEta[j][5]->Write();
     h_matchedRecoJetPtOverGenJetPt_genJetEta[j][6]->Write();
+
+    h_leadingRecoJetPtOverPThat_pThat[j]->Write();
 
 
   }
