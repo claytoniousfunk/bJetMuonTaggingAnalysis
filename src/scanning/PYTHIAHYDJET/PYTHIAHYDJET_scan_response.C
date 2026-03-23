@@ -69,7 +69,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 #include "../../../headers/fitFunctions/fitFxn_jetPt.h"
 // JER-correction function
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_JERCorrection.h"
-
+// pThat correlation
+#include "../../../headers/fitFunctions/fitFxn_PYTHIAHYDJET_pThatCorrelation.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -116,6 +117,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   doVzReweight = true;
   std::cout << "turning off removeHYDJETjet...\n";
   doRemoveHYDJETjet = false;
+  std::cout << "turning on pThat correlation filter...\n";
+  doPThatCorrelationFilter = true;
   
 
   TString inputDataset = "";
@@ -173,7 +176,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 						 hiBinShift,
 						 applyJet60Trigger,
 						 applyJet80Trigger,
-						 muPtCut);
+						 muPtCut,
+						 doPThatCorrelationFilter);
 
 
   TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
@@ -410,7 +414,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   else{};
   // load JER correction fit fxn
   loadFitFxn_PYTHIA_JERCorrection();
-
+  loadFitFxn_PYTHIAHYDJET_pThatCorrelation();
 
   TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
   TH2D *neutrino_energy_fraction_map;
@@ -487,6 +491,34 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     double w = em->weight * w_reweight_vz * w_reweight_hiBin;
 
     double leadingMatchedRecoJetPt = -999.0;
+
+    double leadingRecoJetPt = -999.0;
+    if(doPThatCorrelationFilter){
+      for(int i = 0; i < em->njet; i++){
+	JEC.SetJetPT(em->rawpt[i]);
+	JEC.SetJetEta(em->jeteta[i]);
+	JEC.SetJetPhi(em->jetphi[i]);
+	double test_jetPt = JEC.GetCorrectedPT();
+	double test_jetEta = em->jeteta[i];
+	if(fabs(test_jetEta) > 1.6) continue;
+	if(test_jetPt > leadingRecoJetPt) leadingRecoJetPt = test_jetPt;
+      }
+      if(CentralityIndex == 4){
+	if((leadingRecoJetPt / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->Eval(em->pthat)) continue;
+      }
+      else if(CentralityIndex == 3){
+	if((leadingRecoJetPt / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->Eval(em->pthat)) continue;
+      }
+      else if(CentralityIndex == 2){
+	if((leadingRecoJetPt / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->Eval(em->pthat)) continue;
+      }
+      else if(CentralityIndex == 1){
+	if((leadingRecoJetPt / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->Eval(em->pthat)) continue;
+      }
+      else{continue;};
+
+    }
+      
 
     // GEN JET LOOP
     for(int i = 0; i < em->ngj ; i++){
