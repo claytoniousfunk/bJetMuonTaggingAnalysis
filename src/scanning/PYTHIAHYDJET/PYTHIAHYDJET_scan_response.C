@@ -486,6 +486,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
     double w = em->weight * w_reweight_vz * w_reweight_hiBin;
 
+    double leadingMatchedRecoJetPt = -999.0;
+
     // GEN JET LOOP
     for(int i = 0; i < em->ngj ; i++){
 
@@ -512,7 +514,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       double minDr = 100.0;
       int recoJetFlavorFlag = 0;
       int jetFlavorInt = 19;
-      double leadingMatchedRecoJetPt = 0.;
+
 	
       for(int k = 0; k < em->njet; k++){
 		
@@ -615,9 +617,6 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
 	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt/x,x,w);
 	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt/x,x,w);
-
-	h_leadingRecoJetPtOverPThat_pThat[0]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
-	h_leadingRecoJetPtOverPThat_pThat[CentralityIndex]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
 	
 	if(x>100){
 	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][0]->Fill(matchedRecoJetPt/x,y,w);
@@ -744,17 +743,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
       // begin reco-muon loop
 
-      
-		
-
-		
-
-
-
-
     }
     // END GEN JET LOOP
 
+    if(leadingMatchedRecoJetPt > 0){
+      h_leadingRecoJetPtOverPThat_pThat[0]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
+      h_leadingRecoJetPtOverPThat_pThat[CentralityIndex]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
+    }
 	
 
   } // END EVENT LOOP
