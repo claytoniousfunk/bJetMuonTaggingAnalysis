@@ -781,8 +781,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     // END GEN JET LOOP
 
     if(leadingMatchedRecoJetPt > 0){
-      h_leadingRecoJetPtOverPThat_pThat[0]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
-      h_leadingRecoJetPtOverPThat_pThat[CentralityIndex]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
+      h_leadingRecoJetPtOverPThat_pThat[0]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
+      h_leadingRecoJetPtOverPThat_pThat[CentralityIndex]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
     }
 	
 
