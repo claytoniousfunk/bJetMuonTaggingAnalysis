@@ -117,8 +117,10 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   doVzReweight = true;
   std::cout << "turning off removeHYDJETjet...\n";
   doRemoveHYDJETjet = false;
+  // std::cout << "turning on pThat correlation filter...\n";
+  // doPThatCorrelationFilter = true;
   std::cout << "turning on pThat correlation filter...\n";
-  doPThatCorrelationFilter = true;
+  doPThatCorrelationFilter = false;
   
 
   TString inputDataset = "";
@@ -180,10 +182,10 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 						 doPThatCorrelationFilter);
 
 
-  //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_evenEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_oddEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_oddEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
@@ -248,7 +250,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       h_inclGenJetPt_flavor[i] = new TH2D(Form("h_inclGenJetPt_flavor_C%i",i),Form("JetFlavorID vs incl. gen p_{T}^{jet}, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,27,-5,22);
       h_inclGenJetPt_inclGenMuonTag_flavor[i] = new TH2D(Form("h_inclGenJetPt_inclGenMuonTag_flavor_C%i",i),Form("JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. gen muon, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,27,-5,22);
       h_inclGenJetPt_inclRecoMuonTag_flavor[i] = new TH2D(Form("h_inclGenJetPt_inclRecoMuonTag_flavor_C%i",i),Form("JetFlavorID vs incl. gen p_{T}^{jet}, tagged with incl. reco muon, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,27,-5,22);
-      h_leadingRecoJetPtOverPThat_pThat[i] = new TH2D(Form("h_leadingRecoJetPtOverPThat_pThat_C%i",i),Form("(leadingRecoJetPt / pThat) vs. pThat, hiBin %i - %i",centEdges[i-1],centEdges[i]),500,0,5,500,0,500);
+      h_leadingRecoJetPtOverPThat_pThat[i] = new TH2D(Form("h_leadingRecoJetPtOverPThat_pThat_C%i",i),Form("(leadingRecoJetPt / pThat) vs. pThat, hiBin %i - %i",centEdges[i-1],centEdges[i]),500,0,5,100,0,500);
     }
 
     h_matchedRecoJetPt_genJetPt[i][0]->Sumw2();
@@ -442,8 +444,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     // // only take even events
     // if(evi % 2 == 1) continue;
 
-    // only take odd events
-    if(evi % 2 == 0) continue;
+    // // only take odd events
+    // if(evi % 2 == 0) continue;
     
     em->getEvent(evi);
 
@@ -829,7 +831,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_matchedRecoJetPtOverGenJetPt_genJetEta[j][5]->Write();
     h_matchedRecoJetPtOverGenJetPt_genJetEta[j][6]->Write();
 
-    //h_leadingRecoJetPtOverPThat_pThat[j]->Write();
+    h_leadingRecoJetPtOverPThat_pThat[j]->Write();
 
 
   }
