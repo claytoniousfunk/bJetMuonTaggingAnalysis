@@ -13,37 +13,37 @@ void loadFitFxn_PYTHIAHYDJET_pThatCorrelation(){
   fitFxn_PYTHIAHYDJET_pThatCorrelation_C2 = new TF1("fitFxn_PYTHIAHYDJET_pThatCorrelation_C2","[0] + [1]*exp(-[2]*x) + [3]*exp(-[4]*x) + [5]*exp(-[6]*x)");
   fitFxn_PYTHIAHYDJET_pThatCorrelation_C1 = new TF1("fitFxn_PYTHIAHYDJET_pThatCorrelation_C1","[0] + [1]*exp(-[2]*x) + [3]*exp(-[4]*x) + [5]*exp(-[6]*x)");
 
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(0,39.2182);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(1,-37.6509);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(2,0.00108952);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(3,-2.87353);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(4,-0.00348841);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(5,8.03615);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(6,0.0178147);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(0,2.04789);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(1,-32.92);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(2,0.200712);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(3,0.847653);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(4,0.00766832);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(5,15.8325);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->SetParameter(6,0.100201);
 
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(0,2.34625);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(1,1.51253);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(2,0.0226368);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(3,1.51246);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(4,0.0224515);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(5,1.51241);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(6,0.0226223);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(0,2.1268);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(1,1.62948);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(2,0.0260511);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(3,1.63425);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(4,0.0260048);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(5,1.60643);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->SetParameter(6,0.0260837);
 
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(0,2.18765);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(1,1.34995);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(2,0.0112045);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(3,1.20358);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(4,0.0111311);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(5,1.21566);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(6,0.0111009);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(0,2.05742);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(1,1.41284);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(2,0.0171152);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(3,1.41062);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(4,0.0169273);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(5,1.3924);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->SetParameter(6,0.017028);
 
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(0,1.50201);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(1,1.44542);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(2,0.011139);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(3,1.47793);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(4,0.0111326);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(5,1.33993);
-  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(6,0.00210997);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(0,2.10577);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(1,1.37656);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(2,0.0153566);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(3,1.3767);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(4,0.0153869);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(5,1.34397);
+  fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->SetParameter(6,0.014386);
 
 
 
