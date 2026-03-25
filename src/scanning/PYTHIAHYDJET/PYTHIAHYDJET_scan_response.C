@@ -120,7 +120,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   // std::cout << "turning on pThat correlation filter...\n";
   // doPThatCorrelationFilter = true;
   std::cout << "turning on pThat correlation filter...\n";
-  doPThatCorrelationFilter = false;
+  doPThatCorrelationFilter = true;
   
 
   TString inputDataset = "";
