@@ -161,6 +161,12 @@ TH1D *h_NMuTaggedJetPerEvent[NCentralityIndices];
 TH2D *h_muptrel_hiBin[NJetPtIndices];
 TH1D *h_dimuonMass[NCentralityIndices];
 TH1D *h_dimuonMass_sameSign[NCentralityIndices];
+TH1D *h_Jet60HLT[NCentralityIndices];
+TH1D *h_Jet60HLT_Prescale[NCentralityIndices];
+TH1D *h_Jet80HLT[NCentralityIndices];
+TH1D *h_Jet80HLT_Prescale[NCentralityIndices];
+TH1D *h_Jet100HLT[NCentralityIndices];
+TH1D *h_Jet100HLT_Prescale[NCentralityIndices];
 
 ///////////////////////  start the program
 void PbPb_scan(int group = 1){
@@ -174,8 +180,8 @@ void PbPb_scan(int group = 1){
     muPtMaxCut = 15.0;
   }
   else if(fillMu12){
-    //muPtCut = 15.0;
-    muPtCut = 20.0;
+    muPtCut = 15.0;
+    //muPtCut = 20.0;
     //muPtMaxCut = 60.0;
     muPtMaxCut = 999.0;
   }
@@ -326,6 +332,12 @@ void PbPb_scan(int group = 1){
       h_muJetDr_recoJetPt[i] = new TH2D(Form("h_muJetDr_recoJetPt_C%i",i),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
       h_dimuonMass[i] = new TH1D(Form("h_dimuonMass_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
       h_dimuonMass_sameSign[i] = new TH1D(Form("h_dimuonMass_sameSign_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[0], centEdges[NCentralityIndices-1]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
+      h_Jet60HLT[i] = new TH1D(Form("h_Jet60HLT_C%i",i),Form("Jet60 HLT , %i < hiBin < %i",centEdges[0],centEdges[NCentralityIndices-1]),2,0,1);
+      h_Jet60HLT_Prescale[i] = new TH1D(Form("h_Jet60HLT_Prescale_C%i",i),Form("Jet60 HLT Prescale , %i < hiBin < %i",centEdges[0],centEdges[NCentralityIndices-1]),10,1,10);
+      h_Jet80HLT[i] = new TH1D(Form("h_Jet80HLT_C%i",i),Form("Jet80 HLT , %i < hiBin < %i",centEdges[0],centEdges[NCentralityIndices-1]),2,0,1);
+      h_Jet80HLT_Prescale[i] = new TH1D(Form("h_Jet80HLT_Prescale_C%i",i),Form("Jet80 HLT Prescale , %i < hiBin < %i",centEdges[0],centEdges[NCentralityIndices-1]),10,1,10);
+      h_Jet100HLT[i] = new TH1D(Form("h_Jet100HLT_C%i",i),Form("Jet100 HLT , %i < hiBin < %i",centEdges[0],centEdges[NCentralityIndices-1]),2,0,1);
+      h_Jet100HLT_Prescale[i] = new TH1D(Form("h_Jet100HLT_Prescale_C%i",i),Form("Jet100 HLT Prescale , %i < hiBin < %i",centEdges[0],centEdges[NCentralityIndices-1]),10,1,10);
     }
     else{
       // ---------------------- event histograms --------------------------------
@@ -369,6 +381,12 @@ void PbPb_scan(int group = 1){
       h_muJetDr_recoJetPt[i] = new TH2D(Form("h_muJetDr_recoJetPt_C%i",i),Form("#it{#Delta r}(muon,jet) vs jet #it{p}_{T}, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
       h_dimuonMass[i] = new TH1D(Form("h_dimuonMass_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
       h_dimuonMass_sameSign[i] = new TH1D(Form("h_dimuonMass_sameSign_C%i",i),Form("dimuon mass, %i < hiBin < %i",centEdges[i-1], centEdges[i]),NDimuonMassBins,dimuonMassMin,dimuonMassMax);
+      h_Jet60HLT[i] = new TH1D(Form("h_Jet60HLT_C%i",i),Form("Jet60 HLT , %i < hiBin < %i",centEdges[i-1], centEdges[i]),2,0,1);
+      h_Jet60HLT_Prescale[i] = new TH1D(Form("h_Jet60HLT_Prescale_C%i",i),Form("Jet60 HLT Prescale , %i < hiBin < %i",centEdges[i-1], centEdges[i]),10,1,10);
+      h_Jet80HLT[i] = new TH1D(Form("h_Jet80HLT_C%i",i),Form("Jet80 HLT , %i < hiBin < %i",centEdges[i-1], centEdges[i]),2,0,1);
+      h_Jet80HLT_Prescale[i] = new TH1D(Form("h_Jet80HLT_Prescale_C%i",i),Form("Jet80 HLT Prescale , %i < hiBin < %i",centEdges[i-1], centEdges[i]),10,1,10);
+      h_Jet100HLT[i] = new TH1D(Form("h_Jet100HLT_C%i",i),Form("Jet100 HLT , %i < hiBin < %i",centEdges[i-1], centEdges[i]),2,0,1);
+      h_Jet100HLT_Prescale[i] = new TH1D(Form("h_Jet100HLT_Prescale_C%i",i),Form("Jet100 HLT Prescale , %i < hiBin < %i",centEdges[i-1], centEdges[i]),10,1,10);
     }
     // sumw2 commands
     h_NJetPerEvent[i]->Sumw2();
@@ -406,6 +424,12 @@ void PbPb_scan(int group = 1){
     h_muJetDr_recoJetPt[i]->Sumw2();
     h_dimuonMass[i]->Sumw2();
     h_dimuonMass_sameSign[i]->Sumw2();
+    h_Jet60HLT[i]->Sumw2();
+    h_Jet60HLT_Prescale[i]->Sumw2();
+    h_Jet80HLT[i]->Sumw2();
+    h_Jet80HLT_Prescale[i]->Sumw2();
+    h_Jet100HLT[i]->Sumw2();
+    h_Jet100HLT_Prescale[i]->Sumw2();
     
     // loop through jet pt indices
     for(int j = 0; j < NJetPtIndices; j++){
@@ -603,6 +627,12 @@ void PbPb_scan(int group = 1){
       h_hiBin_jet100->Fill(em->hiBin,w);
     }
 
+    h_Jet60HLT[0]->Fill(em->HLT_HICsAK4PFJet60Eta1p5_v1);
+    h_Jet60HLT_Prescale[0]->Fill(em->HLT_HICsAK4PFJet60Eta1p5_v1_Prescl);
+    h_Jet80HLT[0]->Fill(em->HLT_HICsAK4PFJet80Eta1p5_v1);
+    h_Jet80HLT_Prescale[0]->Fill(em->HLT_HICsAK4PFJet80Eta1p5_v1_Prescl);
+    h_Jet100HLT[0]->Fill(em->HLT_HICsAK4PFJet100Eta1p5_v1);
+    h_Jet100HLT_Prescale[0]->Fill(em->HLT_HICsAK4PFJet100Eta1p5_v1_Prescl);
 
     bool evtTriggerDecision = false;
 
@@ -1048,7 +1078,7 @@ void PbPb_scan(int group = 1){
     else{};
 
     double leadingMuonPt = 0.0;
-    double etaCut_Zloop = 2.4;
+    double etaCut_Zloop = 2.0;
     
     if(triggerIsOn(loopMuonTrigger,1) && triggerIsOn(loopJetTrigger,1) && leadingRecoJetPt > loopJetPtCut){
       for(int m = 0; m < em->nMu; m++){
@@ -1090,8 +1120,8 @@ void PbPb_scan(int group = 1){
 
 	h_inclMuPt->Fill(muPt_m,w);
 
-	//for(int k = m+1; k < em->nMu; k++){
-	for(int k = 0; k < em->nMu; k++){ // double count error (for debugging)
+	for(int k = m+1; k < em->nMu; k++){
+	//for(int k = 0; k < em->nMu; k++){ // double count error (for debugging)
 
 	  double muPt_k = em->muPt->at(k);
 	  double muEta_k = em->muEta->at(k);
@@ -1217,6 +1247,13 @@ void PbPb_scan(int group = 1){
     h_mueta_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
     h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
     h_muJetDr_recoJetPt[i]->Write();
+    h_Jet60HLT[i]->Write();
+    h_Jet60HLT_Prescale[i]->Write();
+    h_Jet80HLT[i]->Write();
+    h_Jet80HLT_Prescale[i]->Write();
+    h_Jet100HLT[i]->Write();
+    h_Jet100HLT_Prescale[i]->Write();
+    
     
     for(int j = 0; j < NJetPtIndices; j++){
 
