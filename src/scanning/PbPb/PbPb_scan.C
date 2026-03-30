@@ -1091,7 +1091,7 @@ void PbPb_scan(int group = 1){
 	h_inclMuPt->Fill(muPt_m,w);
 
 	//for(int k = m+1; k < em->nMu; k++){
-	for(int k = // 0; k < em->nMu; k++){ // double count error (for debugging)
+	for(int k = 0; k < em->nMu; k++){ // double count error (for debugging)
 
 	  double muPt_k = em->muPt->at(k);
 	  double muEta_k = em->muEta->at(k);
