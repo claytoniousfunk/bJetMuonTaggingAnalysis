@@ -634,6 +634,13 @@ void PbPb_scan(int group = 1){
     h_Jet100HLT[0]->Fill(em->HLT_HICsAK4PFJet100Eta1p5_v1);
     h_Jet100HLT_Prescale[0]->Fill(em->HLT_HICsAK4PFJet100Eta1p5_v1_Prescl);
 
+    h_Jet60HLT[CentralityIndex]->Fill(em->HLT_HICsAK4PFJet60Eta1p5_v1);
+    h_Jet60HLT_Prescale[CentralityIndex]->Fill(em->HLT_HICsAK4PFJet60Eta1p5_v1_Prescl);
+    h_Jet80HLT[CentralityIndex]->Fill(em->HLT_HICsAK4PFJet80Eta1p5_v1);
+    h_Jet80HLT_Prescale[CentralityIndex]->Fill(em->HLT_HICsAK4PFJet80Eta1p5_v1_Prescl);
+    h_Jet100HLT[CentralityIndex]->Fill(em->HLT_HICsAK4PFJet100Eta1p5_v1);
+    h_Jet100HLT_Prescale[CentralityIndex]->Fill(em->HLT_HICsAK4PFJet100Eta1p5_v1_Prescl);
+
     bool evtTriggerDecision = false;
 
     int triggerDecision_mu5 = em->HLT_HIL3Mu5_NHitQ10_v1;
