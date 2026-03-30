@@ -225,9 +225,9 @@ void PbPb_scan(int group = 1){
 						 fillMu7,
 						 fillMu12);
 
-  //TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_ZBosonDoubleCountError/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_ZBosonDoubleCountError/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
   
