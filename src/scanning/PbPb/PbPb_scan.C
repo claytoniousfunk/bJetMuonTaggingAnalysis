@@ -37,8 +37,8 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-//#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
-#include "../../../headers/AnalysisSetupV2p4.h" // ultra-fine cent bins
+#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
+//#include "../../../headers/AnalysisSetupV2p4.h" // ultra-fine cent bins
 // JERCorrection params
 #include "../../../headers/fitParameters/JERCorrectionParams_PYTHIA_mu12.h"
 TF1 *fitFxn_PYTHIA_JERCorrection;
@@ -174,7 +174,8 @@ void PbPb_scan(int group = 1){
     muPtMaxCut = 15.0;
   }
   else if(fillMu12){
-    muPtCut = 15.0;
+    //muPtCut = 15.0;
+    muPtCut = 20.0;
     //muPtMaxCut = 60.0;
     muPtMaxCut = 999.0;
   }
@@ -219,7 +220,8 @@ void PbPb_scan(int group = 1){
 						 fillMu12);
 
   //TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_ZBosonDoubleCountError/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
   
@@ -1046,6 +1048,7 @@ void PbPb_scan(int group = 1){
     else{};
 
     double leadingMuonPt = 0.0;
+    double etaCut_Zloop = 2.4;
     
     if(triggerIsOn(loopMuonTrigger,1) && triggerIsOn(loopJetTrigger,1) && leadingRecoJetPt > loopJetPtCut){
       for(int m = 0; m < em->nMu; m++){
@@ -1058,7 +1061,7 @@ void PbPb_scan(int group = 1){
 
 	// skip if muon has already been matched to a jet in this event
 	// muon kinematic cuts
-	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
+	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > etaCut_Zloop) continue;
 	// muon quality cuts
 	if(fillMu12){
 	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
@@ -1087,13 +1090,14 @@ void PbPb_scan(int group = 1){
 
 	h_inclMuPt->Fill(muPt_m,w);
 
-	for(int k = m+1; k < em->nMu; k++){
+	//for(int k = m+1; k < em->nMu; k++){
+	for(int k = // 0; k < em->nMu; k++){ // double count error (for debugging)
 
 	  double muPt_k = em->muPt->at(k);
 	  double muEta_k = em->muEta->at(k);
 	  double muPhi_k = em->muPhi->at(k);
 
-	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.0) continue;
+	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > etaCut_Zloop) continue;
 
 	  if(fillMu12){
 	    if(!isQualityMuon_tight(em->muChi2NDF->at(k),
