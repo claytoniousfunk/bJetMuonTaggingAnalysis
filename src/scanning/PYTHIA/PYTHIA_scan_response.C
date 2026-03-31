@@ -204,6 +204,7 @@ void PYTHIA_scan_response(int group = 1){
   TH2D *h_inclGenJetPt_inclGenMuonTag_flavor;
   TH2D *h_inclGenJetPt_inclRecoMuonTag_flavor;
   TH2D *h_leadingRecoJetPtOverPThat_pThat;
+  TH1D *h_unmatchedRecoJetPt[7];
 
   // debug histograms
   TH1D *h_weight_jetPT_200to250 = new TH1D("h_weight_jetPT_200to250","h_weight_jetPT_200to250",10000,0,1);
@@ -217,7 +218,13 @@ void PYTHIA_scan_response(int group = 1){
 
 
 
-  
+  h_unmatchedRecoJetPt[0] = new TH1D("h_unmatchedRecoJetPt_allJets","unmatchedRecoJetPt, allJets",NPtBins,ptMin,ptMax);
+  h_unmatchedRecoJetPt[1] = new TH1D("h_unmatchedRecoJetPt_bJets","unmatchedRecoJetPt, bJets",NPtBins,ptMin,ptMax);
+  h_unmatchedRecoJetPt[2] = new TH1D("h_unmatchedRecoJetPt_cJets","unmatchedRecoJetPt, cJets",NPtBins,ptMin,ptMax);
+  h_unmatchedRecoJetPt[3] = new TH1D("h_unmatchedRecoJetPt_udJets","unmatchedRecoJetPt, udJets",NPtBins,ptMin,ptMax);
+  h_unmatchedRecoJetPt[4] = new TH1D("h_unmatchedRecoJetPt_sJets","unmatchedRecoJetPt, sJets",NPtBins,ptMin,ptMax);
+  h_unmatchedRecoJetPt[5] = new TH1D("h_unmatchedRecoJetPt_gJets","unmatchedRecoJetPt, gJets",NPtBins,ptMin,ptMax);
+  h_unmatchedRecoJetPt[6] = new TH1D("h_unmatchedRecoJetPt_xJets","unmatchedRecoJetPt, xJets",NPtBins,ptMin,ptMax);
 
   h_matchedRecoJetPt_genJetPt[0] = new TH2D("h_matchedRecoJetPt_genJetPt_allJets","genJetPt vs. matchedRecoJetPt, allJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
   h_matchedRecoJetPt_genJetPt[1] = new TH2D("h_matchedRecoJetPt_genJetPt_bJets","genJetPt vs. matchedRecoJetPt, bJets",NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
@@ -327,6 +334,7 @@ void PYTHIA_scan_response(int group = 1){
   h_inclGenJetPt_inclRecoMuonTag_flavor->Sumw2();
 
   for(int i = 0; i < 6; i++){
+    h_unmatchedRecoJetPt[i]->Sumw2();
     h_matchedRecoJetPt_genJetPt[i]->Sumw2();
     h_matchedRecoJetPt_genNeutrinoTag_genJetPt[i]->Sumw2();
     h_matchedNeutrinoPt_recoJetPt[i]->Sumw2();
@@ -468,6 +476,70 @@ void PYTHIA_scan_response(int group = 1){
 
     if(doWeightCut) if(w > weightCut) continue;
 
+
+
+    double leadingMatchedRecoJetPt = -999.0;
+    double leadingRecoJetPt = -999.0;
+    
+    for(int i = 0; i < em->njet; i++){
+      JEC.SetJetPT(em->rawpt[i]);
+      JEC.SetJetEta(em->jeteta[i]);
+      JEC.SetJetPhi(em->jetphi[i]);
+      double recoJetPt_i = JEC.GetCorrectedPT();
+      double recoJetEta_i = em->jeteta[i];
+      double recoJetPhi_i = em->jetphi[i];
+      int recoJetFlavor_i = em->refparton_flavorForB[i];
+      double minDr_i = 100.0;
+      if(fabs(recoJetEta_i) > 1.6) continue;
+      if(recoJetPt_i > leadingRecoJetPt) leadingRecoJetPt = recoJetPt_i;
+
+      bool hasGenJetMatch_i = false;
+
+      for(int j = 0; j < em->ngj ; j++){
+
+	double genJetPt_j = em->genjetpt[j];
+	double genJetEta_j = em->genjeteta[j];
+	double genJetPhi_j = em->genjetphi[j];
+
+	double dr_ij = getDr(recoJetEta_i,recoJetPhi_i,genJetEta_j,genJetPhi_j);
+
+	if(dr_ij < minDr_i){
+	  minDr_i = dr_ij;
+	  if(minDr_i < epsilon_mm){
+	    hasGenJetMatch_i = true;
+	  }
+	}
+      }
+
+      if(!hasGenJetMatch_i){
+	h_unmatchedRecoJetPt[0]->Fill(recoJetPt_i,w);
+	if(fabs(recoJetFlavor_i) == 5){
+	  h_unmatchedRecoJetPt[1]->Fill(recoJetPt_i,w);
+	}
+	else if(fabs(recoJetFlavor_i) == 4){
+	  h_unmatchedRecoJetPt[2]->Fill(recoJetPt_i,w);
+	}
+	else if(fabs(recoJetFlavor_i) == 1 || fabs(recoJetFlavor_i) == 2){
+	  h_unmatchedRecoJetPt[3]->Fill(recoJetPt_i,w);
+	}
+	else if(fabs(recoJetFlavor_i) == 3){
+	  h_unmatchedRecoJetPt[4]->Fill(recoJetPt_i,w);
+	}
+	else if(recoJetFlavor_i == 21){
+	  h_unmatchedRecoJetPt[5]->Fill(recoJetPt_i,w);
+	}
+	else if(recoJetFlavor_i == 0){
+	  h_unmatchedRecoJetPt[6]->Fill(recoJetPt_i,w);
+	}
+	else{};
+      }
+    }
+
+
+
+
+    
+
     // GEN JET LOOP
     for(int i = 0; i < em->ngj ; i++){
 
@@ -499,7 +571,7 @@ void PYTHIA_scan_response(int group = 1){
       double minDr = 100.0;
       int recoJetFlavorFlag = 0;
       int jetFlavorInt = 19;
-      double leadingMatchedRecoJetPt = 0.;
+      
       
       // begin recoJet loop
       for(int k = 0; k < em->njet; k++){
@@ -674,7 +746,7 @@ void PYTHIA_scan_response(int group = 1){
 	h_matchedNeutrinoPtOverGenJetPt_recoJetPt[0]->Fill(matchedNeutrinoPt/x,matchedRecoJetPt,w);
 	h_matchedNeutrinoPtOverRecoJetPt_genJetPt[0]->Fill(matchedNeutrinoPt/matchedRecoJetPt,x,w);
 
-	h_leadingRecoJetPtOverPThat_pThat->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat);
+	h_leadingRecoJetPtOverPThat_pThat->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
 
 	if(x>100){
 	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0]->Fill(matchedRecoJetPt/x,y,w);
@@ -794,20 +866,10 @@ void PYTHIA_scan_response(int group = 1){
 	}
       }
 			
-
-
-
-		
-
-		
-
-
-
-
     }
     // END GEN JET LOOP
 
-	
+    
 
   } // END EVENT LOOP
   delete f;
@@ -819,6 +881,7 @@ void PYTHIA_scan_response(int group = 1){
   h_inclGenJetPt_inclRecoMuonTag_flavor->Write();
 
   for(int i = 0; i < 6; i++){
+    h_unmatchedRecoJetPt[i]->Write();
     h_matchedRecoJetPt_genJetPt[i]->Write();
     h_matchedRecoJetPt_genNeutrinoTag_genJetPt[i]->Write();
     h_matchedNeutrinoPt_recoJetPt[i]->Write();
