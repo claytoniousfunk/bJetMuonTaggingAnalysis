@@ -524,6 +524,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       JEC.SetJetPhi(em->jetphi[i]);
       double recoJetPt_i = JEC.GetCorrectedPT();
       double recoJetEta_i = em->jeteta[i];
+      double recoJetPhi_i = em->jetphi[i];
       int recoJetFlavor_i = em->refparton_flavorForB[i];
       double minDr_i = 100.0;
       if(fabs(recoJetEta_i) > 1.6) continue;
@@ -542,12 +543,12 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	if(dr_ij < minDr_i){
 	  minDr_i = dr_ij;
 	  if(minDr_i < epsilon_mm){
-	    hasGenJetMatch = true;
+	    hasGenJetMatch_i = true;
 	  }
 	}
       }
 
-      if(!hasGenJetMatch){
+      if(!hasGenJetMatch_i){
 	h_unmatchedRecoJetPt[0][0]->Fill(recoJetPt_i,w);
 	h_unmatchedRecoJetPt[CentralityIndex][0]->Fill(recoJetPt_i,w);
 	if(fabs(recoJetFlavor_i) == 5){
@@ -871,13 +872,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
     h_inclGenJetPt_inclRecoMuonTag_flavor[j]->Write();
 
-    h_unmatchedRecoJetPt[i][0]->Write();
-    h_unmatchedRecoJetPt[i][1]->Write();
-    h_unmatchedRecoJetPt[i][2]->Write();
-    h_unmatchedRecoJetPt[i][3]->Write();
-    h_unmatchedRecoJetPt[i][4]->Write();
-    h_unmatchedRecoJetPt[i][5]->Write();
-    h_unmatchedRecoJetPt[i][6]->Write();
+    h_unmatchedRecoJetPt[j][0]->Write();
+    h_unmatchedRecoJetPt[j][1]->Write();
+    h_unmatchedRecoJetPt[j][2]->Write();
+    h_unmatchedRecoJetPt[j][3]->Write();
+    h_unmatchedRecoJetPt[j][4]->Write();
+    h_unmatchedRecoJetPt[j][5]->Write();
+    h_unmatchedRecoJetPt[j][6]->Write();
     
     h_matchedRecoJetPt_genJetPt[j][0]->Write();
     h_matchedRecoJetPt_genJetPt[j][1]->Write();
