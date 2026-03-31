@@ -209,6 +209,7 @@ void PYTHIA_scan_response(int group = 1){
   TH2D *h_inclGenJetPt_inclRecoMuonTag_flavor;
   TH2D *h_leadingRecoJetPtOverPThat_pThat;
   TH1D *h_unmatchedRecoJetPt[7];
+  TH1D *h_unmatchedGenJetPt;
 
   // debug histograms
   TH1D *h_weight_jetPT_200to250 = new TH1D("h_weight_jetPT_200to250","h_weight_jetPT_200to250",10000,0,1);
@@ -220,7 +221,7 @@ void PYTHIA_scan_response(int group = 1){
   const int N2 = 32;
   double ptAxis2[N2] = {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,500};
 
-
+  h_unmatchedGenJetPt = new TH1D("h_unmatchedGenJetPt","unmatchedGenJetPt",NPtBins,ptMin,ptMax);
 
   h_unmatchedRecoJetPt[0] = new TH1D("h_unmatchedRecoJetPt_allJets","unmatchedRecoJetPt, allJets",NPtBins,ptMin,ptMax);
   h_unmatchedRecoJetPt[1] = new TH1D("h_unmatchedRecoJetPt_bJets","unmatchedRecoJetPt, bJets",NPtBins,ptMin,ptMax);
@@ -337,6 +338,7 @@ void PYTHIA_scan_response(int group = 1){
   h_inclGenJetPt_inclGenMuonTag_flavor->Sumw2();
   h_inclGenJetPt_inclRecoMuonTag_flavor->Sumw2();
 
+  h_unmatchedGenJetPt->Sumw2();
   for(int i = 0; i < 6; i++){
     h_unmatchedRecoJetPt[i]->Sumw2();
     h_matchedRecoJetPt_genJetPt[i]->Sumw2();
@@ -873,6 +875,9 @@ void PYTHIA_scan_response(int group = 1){
 	  h_inclGenJetPt_inclRecoMuonTag_flavor->Fill(x,jetFlavorInt,w);
 	}
       }
+      if(!hasRecoJetMatch){
+	h_unmatchedGenJetPt->Fill(x,w);
+      }
 			
     }
     // END GEN JET LOOP
@@ -887,7 +892,7 @@ void PYTHIA_scan_response(int group = 1){
   h_inclGenJetPt_flavor->Write();
   h_inclGenJetPt_inclGenMuonTag_flavor->Write();
   h_inclGenJetPt_inclRecoMuonTag_flavor->Write();
-
+  h_unmatchedGenJetPt->Write();
   for(int i = 0; i < 6; i++){
     h_unmatchedRecoJetPt[i]->Write();
     h_matchedRecoJetPt_genJetPt[i]->Write();
