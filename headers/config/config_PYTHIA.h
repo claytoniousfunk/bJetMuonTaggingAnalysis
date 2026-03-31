@@ -22,6 +22,7 @@ bool doXdumpReweight = false;
 bool doJetTrkMaxFilter = true;
 bool doRemoveHYDJETjet = true;
 bool doEtaPhiMask = false;
+bool doPThatCorrelationFilter = false;
 // jet-energy alterations
 bool doBJetEnergyShift = false;
 bool doBJetNeutrinoEnergyShift = false;

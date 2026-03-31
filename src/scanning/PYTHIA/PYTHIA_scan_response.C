@@ -61,7 +61,8 @@ TF1 *fitFxn_hiBin, *fitFxn_vz, *fitFxn_jetPt, *fitFxn_PYTHIA_JESb, *fitFxn_PYTHI
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_JESb.h"
 // JER-correction function
 #include "../../../headers/fitFunctions/fitFxn_PYTHIA_JERCorrection.h"
-
+// pThat correlation
+#include "../../../headers/fitFunctions/fitFxn_PYTHIA_pThatCorrelation.h"
 // eta-phi mask function
 #include "../../../headers/functions/etaPhiMask.h"
 // getDr function
@@ -150,7 +151,8 @@ void PYTHIA_scan_response(int group = 1){
 						 apply_JER_smear,
 						 apply_JEU_shift_up,
 						 apply_JEU_shift_down,
-						 muPtCut);
+						 muPtCut,
+						 doPThatCorrelationFilter);
 
   //outputDatasetName.Append("_noNeutrinoInfo");
 
@@ -398,6 +400,7 @@ void PYTHIA_scan_response(int group = 1){
   else{};
   loadFitFxn_PYTHIA_JESb();
   loadFitFxn_PYTHIA_JERCorrection();
+  loadFitFxn_PYTHIA_pThatCorrelation();
 
   TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
   TH2D *neutrino_energy_fraction_map;
@@ -534,7 +537,10 @@ void PYTHIA_scan_response(int group = 1){
 	else{};
       }
     }
-
+    if(doPThatCorrelationFilter){
+     
+      if((leadingRecoJetPt / em->pthat) > fitFxn_PYTHIA_pThatCorrelation->Eval(em->pthat)) continue;     
+    }
 
 
 
