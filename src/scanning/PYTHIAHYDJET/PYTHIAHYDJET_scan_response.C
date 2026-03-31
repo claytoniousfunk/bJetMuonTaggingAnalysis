@@ -530,8 +530,6 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       double recoJetEta_i = em->jeteta[i];
       double recoJetPhi_i = em->jetphi[i];
       double refJetPt_i = em->refpt[i];
-      double refJetEta_i = em->refeta[i];
-      double refJetPhi_i = em->refphi[i];
       int recoJetFlavor_i = em->refparton_flavorForB[i];
       double minDr_i = 100.0;
       if(fabs(recoJetEta_i) > 1.6) continue;
@@ -545,13 +543,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	double genJetEta_j = em->genjeteta[j];
 	double genJetPhi_j = em->genjetphi[j];
 
-	double dr_ij = getDr(refJetEta_i,refJetPhi_i,genJetEta_j,genJetPhi_j);
-
-	if(dr_ij < minDr_i){
-	  minDr_i = dr_ij;
-	  if(minDr_i < epsilon_mm){
-	    hasGenJetMatch_i = true;
-	  }
+	if(refJetPt_i == genJetPt_j){
+	  hasGenJetMatch_i = true;
 	}
       }
 
@@ -633,312 +626,311 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
 	
       for(int k = 0; k < em->njet; k++){
-		
-	double dr = getDr(em->refeta[k],em->refphi[k],y,z);
 
-	if(dr < minDr){ 
+	double recoJetPt_k = em->jetpt[k];
+	double refJetPt_k = em->refpt[k];
+	double recoJetEta_k = em->jeteta[k];
+	double recoJetPhi_k = em->jetphi[k];
 
-	  minDr = dr;
+	if(x == refJetPt_k){ 
 
-	  if(minDr < epsilon_mm){
-				
-	    hasRecoJetMatch = true;
-	    recoJetFlavorFlag = k;
+	  hasRecoJetMatch = true;
+	  recoJetFlavorFlag = k;
 
-	    if(em->mupt[k] > muPtCut && fabs(em->mueta[k]) < 2.) hasRecoJetMuon = true;
+	  if(em->mupt[k] > muPtCut && fabs(em->mueta[k]) < 2.) hasRecoJetMuon = true;
 
-	    JEC.SetJetPT(em->rawpt[k]);
-	    JEC.SetJetEta(em->jeteta[k]);
-	    JEC.SetJetPhi(em->jetphi[k]);
+	  JEC.SetJetPT(em->rawpt[k]);
+	  JEC.SetJetEta(em->jeteta[k]);
+	  JEC.SetJetPhi(em->jetphi[k]);
 
-	    matchedRecoJetPt = JEC.GetCorrectedPT();
-	    if(matchedRecoJetPt > leadingMatchedRecoJetPt) leadingMatchedRecoJetPt = matchedRecoJetPt;
-	    //matchedRecoJetPt = em->jetpt[k];
-	    matchedRawJetPt = em->rawpt[k];
-	    recoMuonPt = em->mupt[k];
-	    recoMuonEta = em->mueta[k];
+	  matchedRecoJetPt = JEC.GetCorrectedPT();
+	  if(matchedRecoJetPt > leadingMatchedRecoJetPt) leadingMatchedRecoJetPt = matchedRecoJetPt;
+	  //matchedRecoJetPt = em->jetpt[k];
+	  matchedRawJetPt = em->rawpt[k];
+	  recoMuonPt = em->mupt[k];
+	  recoMuonEta = em->mueta[k];
 
-	    if(recoMuonPt > muPtCut && fabs(recoMuonEta) < 2.) hasRecoMuon = true;
+	  if(recoMuonPt > muPtCut && fabs(recoMuonEta) < 2.) hasRecoMuon = true;
 
-	    if(doRemoveHYDJETjet){
-	      if(remove_HYDJET_jet(em->pthat, matchedRecoJetPt)) continue;
-	    }
+	  if(doRemoveHYDJETjet){
+	    if(remove_HYDJET_jet(em->pthat, matchedRecoJetPt)) continue;
+	  }
 
-	    JEU.SetJetPT(matchedRecoJetPt);
-	    JEU.SetJetEta(em->jeteta[k]);
-	    JEU.SetJetPhi(em->jetphi[k]);
+	  JEU.SetJetPT(matchedRecoJetPt);
+	  JEU.SetJetEta(em->jeteta[k]);
+	  JEU.SetJetPhi(em->jetphi[k]);
 
-	    // initialize
-	    double correctedPt_down = 1.0;
-	    double correctedPt_up = 1.0;
+	  // initialize
+	  double correctedPt_down = 1.0;
+	  double correctedPt_up = 1.0;
 
-	    if(apply_JEU_shift_up){
-	      correctedPt_up = matchedRecoJetPt * (1 + JEU.GetUncertainty().second);
-	      matchedRecoJetPt = correctedPt_up;
-	    }
-	    else if(apply_JEU_shift_down){
-	      correctedPt_down = matchedRecoJetPt * (1 - JEU.GetUncertainty().first);
-	      matchedRecoJetPt = correctedPt_down;
-	    }
+	  if(apply_JEU_shift_up){
+	    correctedPt_up = matchedRecoJetPt * (1 + JEU.GetUncertainty().second);
+	    matchedRecoJetPt = correctedPt_up;
+	  }
+	  else if(apply_JEU_shift_down){
+	    correctedPt_down = matchedRecoJetPt * (1 - JEU.GetUncertainty().first);
+	    matchedRecoJetPt = correctedPt_down;
+	  }
 
-	    double mu = 1.0;
-	    double sigma = 0.2;
-	    double smear = 0.0;
+	  double mu = 1.0;
+	  double sigma = 0.2;
+	  double smear = 0.0;
 
-	    if(apply_JER_smear){
-	      sigma = 0.663*JER_fxn[CentralityIndex]->Eval(matchedRecoJetPt); // apply a 20% smear
-	      smear = randomGenerator->Gaus(mu,sigma);
-	      matchedRecoJetPt = matchedRecoJetPt * smear;
-	    }
+	  if(apply_JER_smear){
+	    sigma = 0.663*JER_fxn[CentralityIndex]->Eval(matchedRecoJetPt); // apply a 20% smear
+	    smear = randomGenerator->Gaus(mu,sigma);
+	    matchedRecoJetPt = matchedRecoJetPt * smear;
+	  }
 
-	    double mu_JERCorrection = 1.0;
-	    double sigma_JERCorrection = 0.2;
-	    double smear_JERCorrection = 0.0; // smeared pT
-	    double k_JERCorrection = 0.0; // smearing parameter
-	    if(doJERCorrection){
-	      k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
-	      sigma_JERCorrection = k_JERCorrection*JER_fxn[CentralityIndex]->Eval(matchedRecoJetPt);
-	      smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
-	      matchedRecoJetPt = matchedRecoJetPt * smear_JERCorrection;
-	    }
+	  double mu_JERCorrection = 1.0;
+	  double sigma_JERCorrection = 0.2;
+	  double smear_JERCorrection = 0.0; // smeared pT
+	  double k_JERCorrection = 0.0; // smearing parameter
+	  if(doJERCorrection){
+	    k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
+	    sigma_JERCorrection = k_JERCorrection*JER_fxn[CentralityIndex]->Eval(matchedRecoJetPt);
+	    smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
+	    matchedRecoJetPt = matchedRecoJetPt * smear_JERCorrection;
+	  }
 
-	    double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
-	    double smear_doBJetNeutrinoEnergyShift = 0.0;
-	    if(doBJetNeutrinoEnergyShift){
-	      //if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
-	      skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
-	      if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(matchedRecoJetPt))) continue;
-	      neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
-	      smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
-	      matchedRecoJetPt += smear_doBJetNeutrinoEnergyShift;
-	    }
+	  double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
+	  double smear_doBJetNeutrinoEnergyShift = 0.0;
+	  if(doBJetNeutrinoEnergyShift){
+	    //if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
+	    skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
+	    if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(matchedRecoJetPt))) continue;
+	    neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
+	    smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
+	    matchedRecoJetPt += smear_doBJetNeutrinoEnergyShift;
+	  }
 	    
-	  }	
-	}
+	}	
+      }
 
-      } // end recoJet loop
+    } // end recoJet loop
 
-      jetFlavorInt = em->refparton_flavorForB[recoJetFlavorFlag];
+    jetFlavorInt = em->refparton_flavorForB[recoJetFlavorFlag];
 			
 			
-      // fill response matrix
-      //if(hasRecoJetMatch && hasRecoJetMuon) {
-      //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
-      if(hasRecoJetMatch) {
-	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
+    // fill response matrix
+    //if(hasRecoJetMatch && hasRecoJetMuon) {
+    //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
+    if(hasRecoJetMatch) {
+      h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
+      h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
-	h_matchedRecoJetPt_genJetPt_var[0][0]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
+      h_matchedRecoJetPt_genJetPt_var[0][0]->Fill(matchedRecoJetPt,x,w);
+      h_matchedRecoJetPt_genJetPt_var[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt/x,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt/x,x,w);
+      h_matchedRecoJetPtOverGenJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt/x,x,w);
+      h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt/x,x,w);
 	
-	if(x>100){
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][0]->Fill(matchedRecoJetPt/x,y,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][0]->Fill(matchedRecoJetPt/x,y,w);
-	}
+      if(x>100){
+	h_matchedRecoJetPtOverGenJetPt_genJetEta[0][0]->Fill(matchedRecoJetPt/x,y,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][0]->Fill(matchedRecoJetPt/x,y,w);
+      }
 
 
-	if(fabs(jetFlavorInt) == 5){
-	  h_matchedRecoJetPt_genJetPt_var[0][1]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][1]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[0][1]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[CentralityIndex][1]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][1]->Fill(matchedRecoJetPt/x,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][1]->Fill(matchedRecoJetPt/x,x,w);
+      if(fabs(jetFlavorInt) == 5){
+	h_matchedRecoJetPt_genJetPt_var[0][1]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][1]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[0][1]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[CentralityIndex][1]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][1]->Fill(matchedRecoJetPt/x,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][1]->Fill(matchedRecoJetPt/x,x,w);
 				
-	  if(x>100){
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][1]->Fill(matchedRecoJetPt/x,y,w);
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][1]->Fill(matchedRecoJetPt/x,y,w);
-	  }
-	} 
-	if(fabs(jetFlavorInt) == 4){
-	  h_matchedRecoJetPt_genJetPt_var[0][2]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][2]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[0][2]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[CentralityIndex][2]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][2]->Fill(matchedRecoJetPt/x,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][2]->Fill(matchedRecoJetPt/x,x,w);
+	if(x>100){
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][1]->Fill(matchedRecoJetPt/x,y,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][1]->Fill(matchedRecoJetPt/x,y,w);
+	}
+      } 
+      if(fabs(jetFlavorInt) == 4){
+	h_matchedRecoJetPt_genJetPt_var[0][2]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][2]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[0][2]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[CentralityIndex][2]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][2]->Fill(matchedRecoJetPt/x,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][2]->Fill(matchedRecoJetPt/x,x,w);
 
-	  if(x>100){
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][2]->Fill(matchedRecoJetPt/x,y,w);
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][2]->Fill(matchedRecoJetPt/x,y,w);
-	  }
-
-	} 
-	if(fabs(jetFlavorInt) == 1 || fabs(jetFlavorInt) == 2){
-	  h_matchedRecoJetPt_genJetPt_var[0][3]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][3]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[0][3]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[CentralityIndex][3]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][3]->Fill(matchedRecoJetPt/x,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][3]->Fill(matchedRecoJetPt/x,x,w);
-
-	  if(x>100){
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][3]->Fill(matchedRecoJetPt/x,y,w);
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][3]->Fill(matchedRecoJetPt/x,y,w);
-	  }
-	} 
-	if(fabs(jetFlavorInt) == 3){
-	  h_matchedRecoJetPt_genJetPt_var[0][4]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][4]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[0][4]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[CentralityIndex][4]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][4]->Fill(matchedRecoJetPt/x,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][4]->Fill(matchedRecoJetPt/x,x,w);
-
-	  if(x>100){
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][4]->Fill(matchedRecoJetPt/x,y,w);
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][4]->Fill(matchedRecoJetPt/x,y,w);
-	  }
-
-	}  
-	if(jetFlavorInt == 21){
-	  h_matchedRecoJetPt_genJetPt_var[0][5]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][5]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[0][5]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[CentralityIndex][5]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][5]->Fill(matchedRecoJetPt/x,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][5]->Fill(matchedRecoJetPt/x,x,w);
-
-	  if(x>100){
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][5]->Fill(matchedRecoJetPt/x,y,w);
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][5]->Fill(matchedRecoJetPt/x,y,w);
-	  }
-
-	}  
-	if(jetFlavorInt == 0){
-	  h_matchedRecoJetPt_genJetPt_var[0][6]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][6]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[0][6]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPt_genJetPt[CentralityIndex][6]->Fill(matchedRecoJetPt,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][6]->Fill(matchedRecoJetPt/x,x,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][6]->Fill(matchedRecoJetPt/x,x,w);
-
-	  if(x>100){
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][6]->Fill(matchedRecoJetPt/x,y,w);
-	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][6]->Fill(matchedRecoJetPt/x,y,w);
-	  }
-
+	if(x>100){
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][2]->Fill(matchedRecoJetPt/x,y,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][2]->Fill(matchedRecoJetPt/x,y,w);
 	}
 
-	if(hasRecoMuon){
-	  h_inclGenJetPt_inclRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	  h_inclGenJetPt_inclRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+      } 
+      if(fabs(jetFlavorInt) == 1 || fabs(jetFlavorInt) == 2){
+	h_matchedRecoJetPt_genJetPt_var[0][3]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][3]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[0][3]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[CentralityIndex][3]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][3]->Fill(matchedRecoJetPt/x,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][3]->Fill(matchedRecoJetPt/x,x,w);
+
+	if(x>100){
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][3]->Fill(matchedRecoJetPt/x,y,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][3]->Fill(matchedRecoJetPt/x,y,w);
 	}
+      } 
+      if(fabs(jetFlavorInt) == 3){
+	h_matchedRecoJetPt_genJetPt_var[0][4]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][4]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[0][4]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[CentralityIndex][4]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][4]->Fill(matchedRecoJetPt/x,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][4]->Fill(matchedRecoJetPt/x,x,w);
+
+	if(x>100){
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][4]->Fill(matchedRecoJetPt/x,y,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][4]->Fill(matchedRecoJetPt/x,y,w);
+	}
+
+      }  
+      if(jetFlavorInt == 21){
+	h_matchedRecoJetPt_genJetPt_var[0][5]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][5]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[0][5]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[CentralityIndex][5]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][5]->Fill(matchedRecoJetPt/x,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][5]->Fill(matchedRecoJetPt/x,x,w);
+
+	if(x>100){
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][5]->Fill(matchedRecoJetPt/x,y,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][5]->Fill(matchedRecoJetPt/x,y,w);
+	}
+
+      }  
+      if(jetFlavorInt == 0){
+	h_matchedRecoJetPt_genJetPt_var[0][6]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][6]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[0][6]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[CentralityIndex][6]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][6]->Fill(matchedRecoJetPt/x,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][6]->Fill(matchedRecoJetPt/x,x,w);
+
+	if(x>100){
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][6]->Fill(matchedRecoJetPt/x,y,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][6]->Fill(matchedRecoJetPt/x,y,w);
+	}
+
       }
-      if(!hasRecoJetMatch){
-	h_unmatchedGenJetPt[0]->Fill(x,w);
-	h_unmatchedGenJetPt[CentralityIndex]->Fill(x,w);
+
+      if(hasRecoMuon){
+	h_inclGenJetPt_inclRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
+	h_inclGenJetPt_inclRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
       }
+    }
+    if(!hasRecoJetMatch){
+      h_unmatchedGenJetPt[0]->Fill(x,w);
+      h_unmatchedGenJetPt[CentralityIndex]->Fill(x,w);
+    }
 			
-      h_inclGenJetPt_flavor[0]->Fill(x,jetFlavorInt,w);
-      h_inclGenJetPt_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-      // begin gen-muon loop
+    h_inclGenJetPt_flavor[0]->Fill(x,jetFlavorInt,w);
+    h_inclGenJetPt_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+    // begin gen-muon loop
 
-      bool hasGenMuon = false;
+    bool hasGenMuon = false;
       
-      for(int j = 0; j < em->gpptp->size(); j++){
+    for(int j = 0; j < em->gpptp->size(); j++){
 
-	if(hasGenMuon) continue;
+      if(hasGenMuon) continue;
 
-	if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+      if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+      if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
-	double genMuonPt_j = em->gpptp->at(j);
-	double genMuonEta_j = em->gpetap->at(j);
-	double genMuonPhi_j = em->gpphip->at(j);
+      double genMuonPt_j = em->gpptp->at(j);
+      double genMuonEta_j = em->gpetap->at(j);
+      double genMuonPhi_j = em->gpphip->at(j);
 
-	if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;
+      if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;
 
-	if(getDr(genMuonEta_j,genMuonPhi_j,y,z) < deltaRCut){
-	  hasGenMuon = true;
-	  h_inclGenJetPt_inclGenMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	  h_inclGenJetPt_inclGenMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-	}
+      if(getDr(genMuonEta_j,genMuonPhi_j,y,z) < deltaRCut){
+	hasGenMuon = true;
+	h_inclGenJetPt_inclGenMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
+	h_inclGenJetPt_inclGenMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+      }
 
-      } // end gen-muon loop
+    } // end gen-muon loop
 
       // begin reco-muon loop
 
-    }
-    // END GEN JET LOOP
+  }
+  // END GEN JET LOOP
 
-    if(leadingMatchedRecoJetPt > 0){
-      h_leadingRecoJetPtOverPThat_pThat[0]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
-      h_leadingRecoJetPtOverPThat_pThat[CentralityIndex]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
-    }
+  if(leadingMatchedRecoJetPt > 0){
+    h_leadingRecoJetPtOverPThat_pThat[0]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
+    h_leadingRecoJetPtOverPThat_pThat[CentralityIndex]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
+  }
 	
 
-  } // END EVENT LOOP
-  delete f;
-  // WRITE
-  auto wf = TFile::Open(output,"recreate");
+} // END EVENT LOOP
+delete f;
+// WRITE
+auto wf = TFile::Open(output,"recreate");
 
-  for(int j = 0; j < NCentralityIndices; j++){
+for(int j = 0; j < NCentralityIndices; j++){
 
-    h_inclGenJetPt_flavor[j]->Write();
-    h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
-    h_inclGenJetPt_inclRecoMuonTag_flavor[j]->Write();
+  h_inclGenJetPt_flavor[j]->Write();
+  h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
+  h_inclGenJetPt_inclRecoMuonTag_flavor[j]->Write();
 
-    h_unmatchedGenJetPt[j]->Write();
-    h_unmatchedRecoJetPt[j][0]->Write();
-    h_unmatchedRecoJetPt[j][1]->Write();
-    h_unmatchedRecoJetPt[j][2]->Write();
-    h_unmatchedRecoJetPt[j][3]->Write();
-    h_unmatchedRecoJetPt[j][4]->Write();
-    h_unmatchedRecoJetPt[j][5]->Write();
-    h_unmatchedRecoJetPt[j][6]->Write();
+  h_unmatchedGenJetPt[j]->Write();
+  h_unmatchedRecoJetPt[j][0]->Write();
+  h_unmatchedRecoJetPt[j][1]->Write();
+  h_unmatchedRecoJetPt[j][2]->Write();
+  h_unmatchedRecoJetPt[j][3]->Write();
+  h_unmatchedRecoJetPt[j][4]->Write();
+  h_unmatchedRecoJetPt[j][5]->Write();
+  h_unmatchedRecoJetPt[j][6]->Write();
     
-    h_matchedRecoJetPt_genJetPt[j][0]->Write();
-    h_matchedRecoJetPt_genJetPt[j][1]->Write();
-    h_matchedRecoJetPt_genJetPt[j][2]->Write();
-    h_matchedRecoJetPt_genJetPt[j][3]->Write();
-    h_matchedRecoJetPt_genJetPt[j][4]->Write();
-    h_matchedRecoJetPt_genJetPt[j][5]->Write();
-    h_matchedRecoJetPt_genJetPt[j][6]->Write();
+  h_matchedRecoJetPt_genJetPt[j][0]->Write();
+  h_matchedRecoJetPt_genJetPt[j][1]->Write();
+  h_matchedRecoJetPt_genJetPt[j][2]->Write();
+  h_matchedRecoJetPt_genJetPt[j][3]->Write();
+  h_matchedRecoJetPt_genJetPt[j][4]->Write();
+  h_matchedRecoJetPt_genJetPt[j][5]->Write();
+  h_matchedRecoJetPt_genJetPt[j][6]->Write();
 
 
 
-    h_matchedRecoJetPt_genJetPt_var[j][0]->Write();
-    h_matchedRecoJetPt_genJetPt_var[j][1]->Write();
-    h_matchedRecoJetPt_genJetPt_var[j][2]->Write();
-    h_matchedRecoJetPt_genJetPt_var[j][3]->Write();
-    h_matchedRecoJetPt_genJetPt_var[j][4]->Write();
-    h_matchedRecoJetPt_genJetPt_var[j][5]->Write();
-    h_matchedRecoJetPt_genJetPt_var[j][6]->Write();
+  h_matchedRecoJetPt_genJetPt_var[j][0]->Write();
+  h_matchedRecoJetPt_genJetPt_var[j][1]->Write();
+  h_matchedRecoJetPt_genJetPt_var[j][2]->Write();
+  h_matchedRecoJetPt_genJetPt_var[j][3]->Write();
+  h_matchedRecoJetPt_genJetPt_var[j][4]->Write();
+  h_matchedRecoJetPt_genJetPt_var[j][5]->Write();
+  h_matchedRecoJetPt_genJetPt_var[j][6]->Write();
     
-    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][0]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][1]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][2]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][3]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][4]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][5]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][6]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][0]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][1]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][2]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][3]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][4]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][5]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][6]->Write();
 
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][0]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][1]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][2]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][3]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][4]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][5]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][6]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][0]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][1]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][2]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][3]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][4]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][5]->Write();
+  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][6]->Write();
 
-    h_leadingRecoJetPtOverPThat_pThat[j]->Write();
-
-
-  }
+  h_leadingRecoJetPtOverPThat_pThat[j]->Write();
 
 
+ }
 
 
 
 
-  wf->Close();
-  return;
-  // END WRITE
+
+
+wf->Close();
+return;
+// END WRITE
 
 
 
