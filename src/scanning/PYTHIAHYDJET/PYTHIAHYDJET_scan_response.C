@@ -529,6 +529,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       double recoJetPt_i = JEC.GetCorrectedPT();
       double recoJetEta_i = em->jeteta[i];
       double recoJetPhi_i = em->jetphi[i];
+      double refJetPt_i = em->refpt[i];
+      double refJetEta_i = em->refeta[i];
+      double refJetPhi_i = em->refphi[i];
       int recoJetFlavor_i = em->refparton_flavorForB[i];
       double minDr_i = 100.0;
       if(fabs(recoJetEta_i) > 1.6) continue;
@@ -542,7 +545,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	double genJetEta_j = em->genjeteta[j];
 	double genJetPhi_j = em->genjetphi[j];
 
-	double dr_ij = getDr(recoJetEta_i,recoJetPhi_i,genJetEta_j,genJetPhi_j);
+	double dr_ij = getDr(refJetEta_i,refJetPhi_i,genJetEta_j,genJetPhi_j);
 
 	if(dr_ij < minDr_i){
 	  minDr_i = dr_ij;
@@ -631,7 +634,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	
       for(int k = 0; k < em->njet; k++){
 		
-	double dr = getDr(em->jeteta[k],em->jetphi[k],y,z);
+	double dr = getDr(em->refeta[k],em->refphi[k],y,z);
 
 	if(dr < minDr){ 
 
