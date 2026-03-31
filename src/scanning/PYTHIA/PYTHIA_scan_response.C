@@ -105,6 +105,8 @@ void PYTHIA_scan_response(int group = 1){
   doVzReweight = false;
   std::cout << "turning off removeHYDJETjet...\n";
   doRemoveHYDJETjet = false;
+  std::cout << "turning on pThat correlation filter...\n";
+  doPThatCorrelationFilter = true;
 
   TString inputDataset = "";
   TString inputFileName = "";
