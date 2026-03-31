@@ -126,7 +126,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   TString inputDataset = "";
   TString inputFileName = "";
 
-  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withJetTriggers/";
+  //inputDataset = "/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withJetTriggers/";
+  inputDataset = "/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withGenNeutrino_withRefPt/";
   inputFileName = "PYTHIAHYDJET_DiJet_skim_output";
   TString input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
 
