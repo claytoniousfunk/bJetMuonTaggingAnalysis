@@ -214,6 +214,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   TH2D *h_inclGenJetPt_inclGenMuonTag_flavor[NCentralityIndices];
   TH2D *h_inclGenJetPt_inclRecoMuonTag_flavor[NCentralityIndices];
   TH2D *h_leadingRecoJetPtOverPThat_pThat[NCentralityIndices];
+  TH1D *h_unmatchedRecoJetPt[NCentralityIndices][7];
 
 
   // Define histograms
@@ -227,6 +228,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   for(int i = 0; i < NCentralityIndices; i++){
 
     if(i==0) {
+      h_unmatchedRecoJetPt[i][0] = new TH1D(Form("h_unmatchedRecoJetPt_allJets_C%i",i),Form("unmatchedRecoJetPt, allJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][1] = new TH1D(Form("h_unmatchedRecoJetPt_bJets_C%i",i),Form("unmatchedRecoJetPt, bJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][2] = new TH1D(Form("h_unmatchedRecoJetPt_cJets_C%i",i),Form("unmatchedRecoJetPt, cJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][3] = new TH1D(Form("h_unmatchedRecoJetPt_udJets_C%i",i),Form("unmatchedRecoJetPt, udJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][4] = new TH1D(Form("h_unmatchedRecoJetPt_sJets_C%i",i),Form("unmatchedRecoJetPt, sJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][5] = new TH1D(Form("h_unmatchedRecoJetPt_gJets_C%i",i),Form("unmatchedRecoJetPt, gJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][6] = new TH1D(Form("h_unmatchedRecoJetPt_xJets_C%i",i),Form("unmatchedRecoJetPt, xJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
       h_matchedRecoJetPt_genJetPt[i][0] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_allJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, allJets, hiBin %i - %i", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_matchedRecoJetPt_genJetPt[i][1] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_bJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, bJets, hiBin %i - %i", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_matchedRecoJetPt_genJetPt[i][2] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_cJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, cJets, hiBin %i - %i", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
@@ -240,6 +248,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       h_leadingRecoJetPtOverPThat_pThat[i] = new TH2D(Form("h_leadingRecoJetPtOverPThat_pThat_C%i",i),Form("(leadingRecoJetPt / pThat) vs. pThat, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,500,0,500);
     }
     else {
+      h_unmatchedRecoJetPt[i][0] = new TH1D(Form("h_unmatchedRecoJetPt_allJets_C%i",i),Form("unmatchedRecoJetPt, allJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][1] = new TH1D(Form("h_unmatchedRecoJetPt_bJets_C%i",i),Form("unmatchedRecoJetPt, bJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][2] = new TH1D(Form("h_unmatchedRecoJetPt_cJets_C%i",i),Form("unmatchedRecoJetPt, cJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][3] = new TH1D(Form("h_unmatchedRecoJetPt_udJets_C%i",i),Form("unmatchedRecoJetPt, udJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][4] = new TH1D(Form("h_unmatchedRecoJetPt_sJets_C%i",i),Form("unmatchedRecoJetPt, sJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][5] = new TH1D(Form("h_unmatchedRecoJetPt_gJets_C%i",i),Form("unmatchedRecoJetPt, gJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
+      h_unmatchedRecoJetPt[i][6] = new TH1D(Form("h_unmatchedRecoJetPt_xJets_C%i",i),Form("unmatchedRecoJetPt, xJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
       h_matchedRecoJetPt_genJetPt[i][0] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_allJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, allJets, hiBin %i - %i", centEdges[i-1]-10,centEdges[i]-10),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_matchedRecoJetPt_genJetPt[i][1] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_bJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, bJets, hiBin %i - %i", centEdges[i-1]-10,centEdges[i]-10),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
       h_matchedRecoJetPt_genJetPt[i][2] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_cJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, cJets, hiBin %i - %i", centEdges[i-1]-10,centEdges[i]-10),NPtBins,ptMin,ptMax,NPtBins,ptMin,ptMax);
@@ -253,6 +268,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       h_leadingRecoJetPtOverPThat_pThat[i] = new TH2D(Form("h_leadingRecoJetPtOverPThat_pThat_C%i",i),Form("(leadingRecoJetPt / pThat) vs. pThat, hiBin %i - %i",centEdges[i-1],centEdges[i]),500,0,5,100,0,500);
     }
 
+    h_unmatchedRecoJetPt[i][0]->Sumw2();
+    h_unmatchedRecoJetPt[i][1]->Sumw2();
+    h_unmatchedRecoJetPt[i][2]->Sumw2();
+    h_unmatchedRecoJetPt[i][3]->Sumw2();
+    h_unmatchedRecoJetPt[i][4]->Sumw2();
+    h_unmatchedRecoJetPt[i][5]->Sumw2();
+    h_unmatchedRecoJetPt[i][6]->Sumw2();
     h_matchedRecoJetPt_genJetPt[i][0]->Sumw2();
     h_matchedRecoJetPt_genJetPt[i][1]->Sumw2();
     h_matchedRecoJetPt_genJetPt[i][2]->Sumw2();
@@ -269,13 +291,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     	
     if(i==0) {
 
-       h_matchedRecoJetPt_genJetPt_var[i][0] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_allJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, allJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
-       h_matchedRecoJetPt_genJetPt_var[i][1] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_bJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, bJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
-       h_matchedRecoJetPt_genJetPt_var[i][2] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_cJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, cJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
-       h_matchedRecoJetPt_genJetPt_var[i][3] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_udJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, udJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
-       h_matchedRecoJetPt_genJetPt_var[i][4] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_sJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, sJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
-       h_matchedRecoJetPt_genJetPt_var[i][5] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_gJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, gJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
-       h_matchedRecoJetPt_genJetPt_var[i][6] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_xJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, xJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
+      h_matchedRecoJetPt_genJetPt_var[i][0] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_allJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, allJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
+      h_matchedRecoJetPt_genJetPt_var[i][1] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_bJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, bJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
+      h_matchedRecoJetPt_genJetPt_var[i][2] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_cJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, cJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
+      h_matchedRecoJetPt_genJetPt_var[i][3] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_udJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, udJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
+      h_matchedRecoJetPt_genJetPt_var[i][4] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_sJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, sJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
+      h_matchedRecoJetPt_genJetPt_var[i][5] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_gJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, gJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
+      h_matchedRecoJetPt_genJetPt_var[i][6] = new TH2D(Form("h_matchedRecoJetPt_genJetPt_var_xJets_C%i",i),Form("genJetPt vs. matchedRecoJetPt, hiBin %i - %i, xJets, var bins", centEdges[0]-10,centEdges[NCentralityIndices-1]-10),N1-1,ptAxis1,N1-1,ptAxis1);
       
       h_matchedRecoJetPtOverGenJetPt_genJetPt[i][0] = new TH2D(Form("h_matchedRecoJetPtOverGenJetPt_genJetPt_allJets_C%i",i),Form("matchedRecoJetPt/genJetPt vs genJetPt, all flavors, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,NPtBins,ptMin,ptMax);
       h_matchedRecoJetPtOverGenJetPt_genJetPt[i][1] = new TH2D(Form("h_matchedRecoJetPtOverGenJetPt_genJetPt_bJets_C%i",i),Form("matchedRecoJetPt/genJetPt vs genJetPt, bJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,NPtBins,ptMin,ptMax);
@@ -478,7 +500,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
 
     int CentralityIndex = getCentBin(em->hiBin-hiBinShift);
-
+    
     if(CentralityIndex < 0) continue;
 
 
@@ -495,16 +517,67 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     double leadingMatchedRecoJetPt = -999.0;
 
     double leadingRecoJetPt = -999.0;
-    if(doPThatCorrelationFilter){
-      for(int i = 0; i < em->njet; i++){
-	JEC.SetJetPT(em->rawpt[i]);
-	JEC.SetJetEta(em->jeteta[i]);
-	JEC.SetJetPhi(em->jetphi[i]);
-	double test_jetPt = JEC.GetCorrectedPT();
-	double test_jetEta = em->jeteta[i];
-	if(fabs(test_jetEta) > 1.6) continue;
-	if(test_jetPt > leadingRecoJetPt) leadingRecoJetPt = test_jetPt;
+    
+    for(int i = 0; i < em->njet; i++){
+      JEC.SetJetPT(em->rawpt[i]);
+      JEC.SetJetEta(em->jeteta[i]);
+      JEC.SetJetPhi(em->jetphi[i]);
+      double recoJetPt_i = JEC.GetCorrectedPT();
+      double recoJetEta_i = em->jeteta[i];
+      int recoJetFlavor_i = em->refparton_flavorForB[i];
+      double minDr_i = 100.0;
+      if(fabs(recoJetEta_i) > 1.6) continue;
+      if(recoJetPt_i > leadingRecoJetPt) leadingRecoJetPt = recoJetPt_i;
+
+      bool hasGenJetMatch_i = false;
+
+      for(int j = 0; j < em->ngj ; j++){
+
+	double genJetPt_j = em->genjetpt[j];
+	double genJetEta_j = em->genjeteta[j];
+	double genJetPhi_j = em->genjetphi[j];
+
+	double dr_ij = getDr(recoJetEta_i,recoJetPhi_i,genJetEta_j,genJetPhi_j);
+
+	if(dr_ij < minDr_i){
+	  minDr_i = dr_ij;
+	  if(minDr_i < epsilon_mm){
+	    hasGenJetMatch = true;
+	  }
+	}
       }
+
+      if(!hasGenJetMatch){
+	h_unmatchedRecoJetPt[0][0]->Fill(recoJetPt_i,w);
+	h_unmatchedRecoJetPt[CentralityIndex][0]->Fill(recoJetPt_i,w);
+	if(fabs(recoJetFlavor_i) == 5){
+	  h_unmatchedRecoJetPt[0][1]->Fill(recoJetPt_i,w);
+	  h_unmatchedRecoJetPt[CentralityIndex][1]->Fill(recoJetPt_i,w);
+	}
+	else if(fabs(recoJetFlavor_i) == 4){
+	  h_unmatchedRecoJetPt[0][2]->Fill(recoJetPt_i,w);
+	  h_unmatchedRecoJetPt[CentralityIndex][2]->Fill(recoJetPt_i,w);
+	}
+	else if(fabs(recoJetFlavor_i) == 1 || fabs(recoJetFlavor_i) == 2){
+	  h_unmatchedRecoJetPt[0][3]->Fill(recoJetPt_i,w);
+	  h_unmatchedRecoJetPt[CentralityIndex][3]->Fill(recoJetPt_i,w);
+	}
+	else if(fabs(recoJetFlavor_i) == 3){
+	  h_unmatchedRecoJetPt[0][4]->Fill(recoJetPt_i,w);
+	  h_unmatchedRecoJetPt[CentralityIndex][4]->Fill(recoJetPt_i,w);
+	}
+	else if(recoJetFlavor_i == 21){
+	  h_unmatchedRecoJetPt[0][5]->Fill(recoJetPt_i,w);
+	  h_unmatchedRecoJetPt[CentralityIndex][5]->Fill(recoJetPt_i,w);
+	}
+	else if(recoJetFlavor_i == 0){
+	  h_unmatchedRecoJetPt[0][6]->Fill(recoJetPt_i,w);
+	  h_unmatchedRecoJetPt[CentralityIndex][6]->Fill(recoJetPt_i,w);
+	}
+	else{};
+      }
+    }
+    if(doPThatCorrelationFilter){
       if(CentralityIndex == 4){
 	if((leadingRecoJetPt / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->Eval(em->pthat)) continue;
       }
@@ -518,8 +591,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	if((leadingRecoJetPt / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->Eval(em->pthat)) continue;
       }
       else{continue;};
-
     }
+
+    
       
 
     // GEN JET LOOP
@@ -576,7 +650,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	    recoMuonPt = em->mupt[k];
 	    recoMuonEta = em->mueta[k];
 
-	    if(recoMuonPt > 14. && fabs(recoMuonEta) < 2.) hasRecoMuon = true;
+	    if(recoMuonPt > muPtCut && fabs(recoMuonEta) < 2.) hasRecoMuon = true;
 
 	    if(doRemoveHYDJETjet){
 	      if(remove_HYDJET_jet(em->pthat, matchedRecoJetPt)) continue;
@@ -623,7 +697,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	    double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
 	    double smear_doBJetNeutrinoEnergyShift = 0.0;
 	    if(doBJetNeutrinoEnergyShift){
-	    //if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
+	      //if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
 	      skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
 	      if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(matchedRecoJetPt))) continue;
 	      neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt),neutrino_energy_map->GetYaxis()->FindBin(matchedRecoJetPt)+1);
@@ -796,6 +870,14 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_inclGenJetPt_flavor[j]->Write();
     h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
     h_inclGenJetPt_inclRecoMuonTag_flavor[j]->Write();
+
+    h_unmatchedRecoJetPt[i][0]->Write();
+    h_unmatchedRecoJetPt[i][1]->Write();
+    h_unmatchedRecoJetPt[i][2]->Write();
+    h_unmatchedRecoJetPt[i][3]->Write();
+    h_unmatchedRecoJetPt[i][4]->Write();
+    h_unmatchedRecoJetPt[i][5]->Write();
+    h_unmatchedRecoJetPt[i][6]->Write();
     
     h_matchedRecoJetPt_genJetPt[j][0]->Write();
     h_matchedRecoJetPt_genJetPt[j][1]->Write();
