@@ -1,11 +1,11 @@
 
-TF1 *fitFxn_PYTHIAHYDJET_pThatCorrelation;
+TF1 *fitFxn_PYTHIA_pThatCorrelation;
 
-void loadFitFxn_PYTHIAHYDJET_pThatCorrelation(){
+void loadFitFxn_PYTHIA_pThatCorrelation(){
 
   cout << "~~ loading pThatCorrelation fit function ..." << endl;
 
-  fitFxn_PYTHIAHYDJET_pThatCorrelation = new TF1("fitFxn_PYTHIAHYDJET_pThatCorrelation","[0] + [1]*exp(-[2]*x) + [3]*exp(-[4]*x) + [5]*exp(-[6]*x)");
+  fitFxn_PYTHIA_pThatCorrelation = new TF1("fitFxn_PYTHIA_pThatCorrelation","[0] + [1]*exp(-[2]*x) + [3]*exp(-[4]*x) + [5]*exp(-[6]*x)");
 
 
   fitFxn_PYTHIA_pThatCorrelation->SetParameter(0,15.7105);
