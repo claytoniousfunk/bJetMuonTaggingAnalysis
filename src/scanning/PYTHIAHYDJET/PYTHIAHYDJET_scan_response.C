@@ -705,233 +705,232 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	    smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
 	    matchedRecoJetPt += smear_doBJetNeutrinoEnergyShift;
 	  }
-	    
-	}	
-      }
+		
+	}
 
-    } // end recoJet loop
+      } // end recoJet loop
 
-    jetFlavorInt = em->refparton_flavorForB[recoJetFlavorFlag];
+      jetFlavorInt = em->refparton_flavorForB[recoJetFlavorFlag];
 			
 			
-    // fill response matrix
-    //if(hasRecoJetMatch && hasRecoJetMuon) {
-    //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
-    if(hasRecoJetMatch) {
-      h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
-      h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
+      // fill response matrix
+      //if(hasRecoJetMatch && hasRecoJetMuon) {
+      //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
+      if(hasRecoJetMatch) {
+	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
-      h_matchedRecoJetPt_genJetPt_var[0][0]->Fill(matchedRecoJetPt,x,w);
-      h_matchedRecoJetPt_genJetPt_var[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt_var[0][0]->Fill(matchedRecoJetPt,x,w);
+	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
-      h_matchedRecoJetPtOverGenJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt/x,x,w);
-      h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt/x,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt/x,x,w);
+	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt/x,x,w);
 	
-      if(x>100){
-	h_matchedRecoJetPtOverGenJetPt_genJetEta[0][0]->Fill(matchedRecoJetPt/x,y,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][0]->Fill(matchedRecoJetPt/x,y,w);
-      }
+	if(x>100){
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][0]->Fill(matchedRecoJetPt/x,y,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][0]->Fill(matchedRecoJetPt/x,y,w);
+	}
 
 
-      if(fabs(jetFlavorInt) == 5){
-	h_matchedRecoJetPt_genJetPt_var[0][1]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][1]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[0][1]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[CentralityIndex][1]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][1]->Fill(matchedRecoJetPt/x,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][1]->Fill(matchedRecoJetPt/x,x,w);
+	if(fabs(jetFlavorInt) == 5){
+	  h_matchedRecoJetPt_genJetPt_var[0][1]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][1]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[0][1]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[CentralityIndex][1]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][1]->Fill(matchedRecoJetPt/x,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][1]->Fill(matchedRecoJetPt/x,x,w);
 				
-	if(x>100){
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][1]->Fill(matchedRecoJetPt/x,y,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][1]->Fill(matchedRecoJetPt/x,y,w);
+	  if(x>100){
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][1]->Fill(matchedRecoJetPt/x,y,w);
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][1]->Fill(matchedRecoJetPt/x,y,w);
+	  }
+	} 
+	if(fabs(jetFlavorInt) == 4){
+	  h_matchedRecoJetPt_genJetPt_var[0][2]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][2]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[0][2]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[CentralityIndex][2]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][2]->Fill(matchedRecoJetPt/x,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][2]->Fill(matchedRecoJetPt/x,x,w);
+
+	  if(x>100){
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][2]->Fill(matchedRecoJetPt/x,y,w);
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][2]->Fill(matchedRecoJetPt/x,y,w);
+	  }
+
+	} 
+	if(fabs(jetFlavorInt) == 1 || fabs(jetFlavorInt) == 2){
+	  h_matchedRecoJetPt_genJetPt_var[0][3]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][3]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[0][3]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[CentralityIndex][3]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][3]->Fill(matchedRecoJetPt/x,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][3]->Fill(matchedRecoJetPt/x,x,w);
+
+	  if(x>100){
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][3]->Fill(matchedRecoJetPt/x,y,w);
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][3]->Fill(matchedRecoJetPt/x,y,w);
+	  }
+	} 
+	if(fabs(jetFlavorInt) == 3){
+	  h_matchedRecoJetPt_genJetPt_var[0][4]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][4]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[0][4]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[CentralityIndex][4]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][4]->Fill(matchedRecoJetPt/x,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][4]->Fill(matchedRecoJetPt/x,x,w);
+
+	  if(x>100){
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][4]->Fill(matchedRecoJetPt/x,y,w);
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][4]->Fill(matchedRecoJetPt/x,y,w);
+	  }
+
+	}  
+	if(jetFlavorInt == 21){
+	  h_matchedRecoJetPt_genJetPt_var[0][5]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][5]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[0][5]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[CentralityIndex][5]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][5]->Fill(matchedRecoJetPt/x,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][5]->Fill(matchedRecoJetPt/x,x,w);
+
+	  if(x>100){
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][5]->Fill(matchedRecoJetPt/x,y,w);
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][5]->Fill(matchedRecoJetPt/x,y,w);
+	  }
+
+	}  
+	if(jetFlavorInt == 0){
+	  h_matchedRecoJetPt_genJetPt_var[0][6]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt_var[CentralityIndex][6]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[0][6]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPt_genJetPt[CentralityIndex][6]->Fill(matchedRecoJetPt,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[0][6]->Fill(matchedRecoJetPt/x,x,w);
+	  h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][6]->Fill(matchedRecoJetPt/x,x,w);
+
+	  if(x>100){
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[0][6]->Fill(matchedRecoJetPt/x,y,w);
+	    h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][6]->Fill(matchedRecoJetPt/x,y,w);
+	  }
+
 	}
-      } 
-      if(fabs(jetFlavorInt) == 4){
-	h_matchedRecoJetPt_genJetPt_var[0][2]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][2]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[0][2]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[CentralityIndex][2]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][2]->Fill(matchedRecoJetPt/x,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][2]->Fill(matchedRecoJetPt/x,x,w);
 
-	if(x>100){
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][2]->Fill(matchedRecoJetPt/x,y,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][2]->Fill(matchedRecoJetPt/x,y,w);
+	if(hasRecoMuon){
+	  h_inclGenJetPt_inclRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
+	  h_inclGenJetPt_inclRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
 	}
-
-      } 
-      if(fabs(jetFlavorInt) == 1 || fabs(jetFlavorInt) == 2){
-	h_matchedRecoJetPt_genJetPt_var[0][3]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][3]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[0][3]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[CentralityIndex][3]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][3]->Fill(matchedRecoJetPt/x,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][3]->Fill(matchedRecoJetPt/x,x,w);
-
-	if(x>100){
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][3]->Fill(matchedRecoJetPt/x,y,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][3]->Fill(matchedRecoJetPt/x,y,w);
-	}
-      } 
-      if(fabs(jetFlavorInt) == 3){
-	h_matchedRecoJetPt_genJetPt_var[0][4]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][4]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[0][4]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[CentralityIndex][4]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][4]->Fill(matchedRecoJetPt/x,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][4]->Fill(matchedRecoJetPt/x,x,w);
-
-	if(x>100){
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][4]->Fill(matchedRecoJetPt/x,y,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][4]->Fill(matchedRecoJetPt/x,y,w);
-	}
-
-      }  
-      if(jetFlavorInt == 21){
-	h_matchedRecoJetPt_genJetPt_var[0][5]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][5]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[0][5]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[CentralityIndex][5]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][5]->Fill(matchedRecoJetPt/x,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][5]->Fill(matchedRecoJetPt/x,x,w);
-
-	if(x>100){
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][5]->Fill(matchedRecoJetPt/x,y,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][5]->Fill(matchedRecoJetPt/x,y,w);
-	}
-
-      }  
-      if(jetFlavorInt == 0){
-	h_matchedRecoJetPt_genJetPt_var[0][6]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt_var[CentralityIndex][6]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[0][6]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPt_genJetPt[CentralityIndex][6]->Fill(matchedRecoJetPt,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[0][6]->Fill(matchedRecoJetPt/x,x,w);
-	h_matchedRecoJetPtOverGenJetPt_genJetPt[CentralityIndex][6]->Fill(matchedRecoJetPt/x,x,w);
-
-	if(x>100){
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[0][6]->Fill(matchedRecoJetPt/x,y,w);
-	  h_matchedRecoJetPtOverGenJetPt_genJetEta[CentralityIndex][6]->Fill(matchedRecoJetPt/x,y,w);
-	}
-
       }
-
-      if(hasRecoMuon){
-	h_inclGenJetPt_inclRecoMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	h_inclGenJetPt_inclRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+      if(!hasRecoJetMatch){
+	h_unmatchedGenJetPt[0]->Fill(x,w);
+	h_unmatchedGenJetPt[CentralityIndex]->Fill(x,w);
       }
-    }
-    if(!hasRecoJetMatch){
-      h_unmatchedGenJetPt[0]->Fill(x,w);
-      h_unmatchedGenJetPt[CentralityIndex]->Fill(x,w);
-    }
 			
-    h_inclGenJetPt_flavor[0]->Fill(x,jetFlavorInt,w);
-    h_inclGenJetPt_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-    // begin gen-muon loop
+      h_inclGenJetPt_flavor[0]->Fill(x,jetFlavorInt,w);
+      h_inclGenJetPt_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+      // begin gen-muon loop
 
-    bool hasGenMuon = false;
+      bool hasGenMuon = false;
       
-    for(int j = 0; j < em->gpptp->size(); j++){
+      for(int j = 0; j < em->gpptp->size(); j++){
 
-      if(hasGenMuon) continue;
+	if(hasGenMuon) continue;
 
-      if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-      if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
+	if(isWDecayMuon(em->gpptp->at(j),x)) continue; // skip if "WDecay" muon (has majority of jet pt)
 
-      double genMuonPt_j = em->gpptp->at(j);
-      double genMuonEta_j = em->gpetap->at(j);
-      double genMuonPhi_j = em->gpphip->at(j);
+	double genMuonPt_j = em->gpptp->at(j);
+	double genMuonEta_j = em->gpetap->at(j);
+	double genMuonPhi_j = em->gpphip->at(j);
 
-      if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;
+	if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;
 
-      if(getDr(genMuonEta_j,genMuonPhi_j,y,z) < deltaRCut){
-	hasGenMuon = true;
-	h_inclGenJetPt_inclGenMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
-	h_inclGenJetPt_inclGenMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
-      }
+	if(getDr(genMuonEta_j,genMuonPhi_j,y,z) < deltaRCut){
+	  hasGenMuon = true;
+	  h_inclGenJetPt_inclGenMuonTag_flavor[0]->Fill(x,jetFlavorInt,w);
+	  h_inclGenJetPt_inclGenMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
+	}
 
-    } // end gen-muon loop
+      } // end gen-muon loop
 
       // begin reco-muon loop
 
-  }
-  // END GEN JET LOOP
+    }
+    // END GEN JET LOOP
 
-  if(leadingMatchedRecoJetPt > 0){
-    h_leadingRecoJetPtOverPThat_pThat[0]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
-    h_leadingRecoJetPtOverPThat_pThat[CentralityIndex]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
-  }
+    if(leadingMatchedRecoJetPt > 0){
+      h_leadingRecoJetPtOverPThat_pThat[0]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
+      h_leadingRecoJetPtOverPThat_pThat[CentralityIndex]->Fill(leadingMatchedRecoJetPt / em->pthat, em->pthat,w);
+    }
 	
 
-} // END EVENT LOOP
-delete f;
-// WRITE
-auto wf = TFile::Open(output,"recreate");
+  } // END EVENT LOOP
+  delete f;
+  // WRITE
+  auto wf = TFile::Open(output,"recreate");
 
-for(int j = 0; j < NCentralityIndices; j++){
+  for(int j = 0; j < NCentralityIndices; j++){
 
-  h_inclGenJetPt_flavor[j]->Write();
-  h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
-  h_inclGenJetPt_inclRecoMuonTag_flavor[j]->Write();
+    h_inclGenJetPt_flavor[j]->Write();
+    h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
+    h_inclGenJetPt_inclRecoMuonTag_flavor[j]->Write();
 
-  h_unmatchedGenJetPt[j]->Write();
-  h_unmatchedRecoJetPt[j][0]->Write();
-  h_unmatchedRecoJetPt[j][1]->Write();
-  h_unmatchedRecoJetPt[j][2]->Write();
-  h_unmatchedRecoJetPt[j][3]->Write();
-  h_unmatchedRecoJetPt[j][4]->Write();
-  h_unmatchedRecoJetPt[j][5]->Write();
-  h_unmatchedRecoJetPt[j][6]->Write();
+    h_unmatchedGenJetPt[j]->Write();
+    h_unmatchedRecoJetPt[j][0]->Write();
+    h_unmatchedRecoJetPt[j][1]->Write();
+    h_unmatchedRecoJetPt[j][2]->Write();
+    h_unmatchedRecoJetPt[j][3]->Write();
+    h_unmatchedRecoJetPt[j][4]->Write();
+    h_unmatchedRecoJetPt[j][5]->Write();
+    h_unmatchedRecoJetPt[j][6]->Write();
     
-  h_matchedRecoJetPt_genJetPt[j][0]->Write();
-  h_matchedRecoJetPt_genJetPt[j][1]->Write();
-  h_matchedRecoJetPt_genJetPt[j][2]->Write();
-  h_matchedRecoJetPt_genJetPt[j][3]->Write();
-  h_matchedRecoJetPt_genJetPt[j][4]->Write();
-  h_matchedRecoJetPt_genJetPt[j][5]->Write();
-  h_matchedRecoJetPt_genJetPt[j][6]->Write();
+    h_matchedRecoJetPt_genJetPt[j][0]->Write();
+    h_matchedRecoJetPt_genJetPt[j][1]->Write();
+    h_matchedRecoJetPt_genJetPt[j][2]->Write();
+    h_matchedRecoJetPt_genJetPt[j][3]->Write();
+    h_matchedRecoJetPt_genJetPt[j][4]->Write();
+    h_matchedRecoJetPt_genJetPt[j][5]->Write();
+    h_matchedRecoJetPt_genJetPt[j][6]->Write();
 
 
 
-  h_matchedRecoJetPt_genJetPt_var[j][0]->Write();
-  h_matchedRecoJetPt_genJetPt_var[j][1]->Write();
-  h_matchedRecoJetPt_genJetPt_var[j][2]->Write();
-  h_matchedRecoJetPt_genJetPt_var[j][3]->Write();
-  h_matchedRecoJetPt_genJetPt_var[j][4]->Write();
-  h_matchedRecoJetPt_genJetPt_var[j][5]->Write();
-  h_matchedRecoJetPt_genJetPt_var[j][6]->Write();
+    h_matchedRecoJetPt_genJetPt_var[j][0]->Write();
+    h_matchedRecoJetPt_genJetPt_var[j][1]->Write();
+    h_matchedRecoJetPt_genJetPt_var[j][2]->Write();
+    h_matchedRecoJetPt_genJetPt_var[j][3]->Write();
+    h_matchedRecoJetPt_genJetPt_var[j][4]->Write();
+    h_matchedRecoJetPt_genJetPt_var[j][5]->Write();
+    h_matchedRecoJetPt_genJetPt_var[j][6]->Write();
     
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][0]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][1]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][2]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][3]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][4]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][5]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetPt[j][6]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][0]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][1]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][2]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][3]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][4]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][5]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetPt[j][6]->Write();
 
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][0]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][1]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][2]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][3]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][4]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][5]->Write();
-  h_matchedRecoJetPtOverGenJetPt_genJetEta[j][6]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][0]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][1]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][2]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][3]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][4]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][5]->Write();
+    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][6]->Write();
 
-  h_leadingRecoJetPtOverPThat_pThat[j]->Write();
-
-
- }
+    h_leadingRecoJetPtOverPThat_pThat[j]->Write();
 
 
+  }
 
 
 
 
-wf->Close();
-return;
-// END WRITE
+
+
+  wf->Close();
+  return;
+  // END WRITE
 
 
 
