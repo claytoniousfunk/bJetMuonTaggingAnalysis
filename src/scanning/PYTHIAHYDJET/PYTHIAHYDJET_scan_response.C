@@ -215,6 +215,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   TH2D *h_inclGenJetPt_inclRecoMuonTag_flavor[NCentralityIndices];
   TH2D *h_leadingRecoJetPtOverPThat_pThat[NCentralityIndices];
   TH1D *h_unmatchedRecoJetPt[NCentralityIndices][7];
+  TH1D *h_unmatchedGenJetPt[NCentralityIndices];
 
 
   // Define histograms
@@ -228,6 +229,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   for(int i = 0; i < NCentralityIndices; i++){
 
     if(i==0) {
+      h_unmatchedGenJetPt[i] = new TH1D(Form("h_unmatchedGenJetPt_C%i",i),Form("unmatchedGenJetPt, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
       h_unmatchedRecoJetPt[i][0] = new TH1D(Form("h_unmatchedRecoJetPt_allJets_C%i",i),Form("unmatchedRecoJetPt, allJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
       h_unmatchedRecoJetPt[i][1] = new TH1D(Form("h_unmatchedRecoJetPt_bJets_C%i",i),Form("unmatchedRecoJetPt, bJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
       h_unmatchedRecoJetPt[i][2] = new TH1D(Form("h_unmatchedRecoJetPt_cJets_C%i",i),Form("unmatchedRecoJetPt, cJets, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
@@ -248,6 +250,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       h_leadingRecoJetPtOverPThat_pThat[i] = new TH2D(Form("h_leadingRecoJetPtOverPThat_pThat_C%i",i),Form("(leadingRecoJetPt / pThat) vs. pThat, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),500,0,5,500,0,500);
     }
     else {
+      h_unmatchedGenJetPt[i] = new TH1D(Form("h_unmatchedGenJetPt_C%i",i),Form("unmatchedGenJetPt, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
       h_unmatchedRecoJetPt[i][0] = new TH1D(Form("h_unmatchedRecoJetPt_allJets_C%i",i),Form("unmatchedRecoJetPt, allJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
       h_unmatchedRecoJetPt[i][1] = new TH1D(Form("h_unmatchedRecoJetPt_bJets_C%i",i),Form("unmatchedRecoJetPt, bJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
       h_unmatchedRecoJetPt[i][2] = new TH1D(Form("h_unmatchedRecoJetPt_cJets_C%i",i),Form("unmatchedRecoJetPt, cJets, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
@@ -268,6 +271,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       h_leadingRecoJetPtOverPThat_pThat[i] = new TH2D(Form("h_leadingRecoJetPtOverPThat_pThat_C%i",i),Form("(leadingRecoJetPt / pThat) vs. pThat, hiBin %i - %i",centEdges[i-1],centEdges[i]),500,0,5,100,0,500);
     }
 
+    h_unmatchedGenJetPt[i]->Sumw2();
     h_unmatchedRecoJetPt[i][0]->Sumw2();
     h_unmatchedRecoJetPt[i][1]->Sumw2();
     h_unmatchedRecoJetPt[i][2]->Sumw2();
@@ -821,6 +825,10 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 	  h_inclGenJetPt_inclRecoMuonTag_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
 	}
       }
+      if(!hasRecoJetMatch){
+	h_unmatchedGenJetPt[0]->Fill(x,w);
+	h_unmatchedGenJetPt[CentralityIndex]->Fill(x,w);
+      }
 			
       h_inclGenJetPt_flavor[0]->Fill(x,jetFlavorInt,w);
       h_inclGenJetPt_flavor[CentralityIndex]->Fill(x,jetFlavorInt,w);
@@ -872,6 +880,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
     h_inclGenJetPt_inclRecoMuonTag_flavor[j]->Write();
 
+    h_unmatchedGenJetPt[i]->Write();
     h_unmatchedRecoJetPt[j][0]->Write();
     h_unmatchedRecoJetPt[j][1]->Write();
     h_unmatchedRecoJetPt[j][2]->Write();
