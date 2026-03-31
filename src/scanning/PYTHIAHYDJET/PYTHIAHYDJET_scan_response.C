@@ -880,7 +880,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_inclGenJetPt_inclGenMuonTag_flavor[j]->Write();
     h_inclGenJetPt_inclRecoMuonTag_flavor[j]->Write();
 
-    h_unmatchedGenJetPt[i]->Write();
+    h_unmatchedGenJetPt[j]->Write();
     h_unmatchedRecoJetPt[j][0]->Write();
     h_unmatchedRecoJetPt[j][1]->Write();
     h_unmatchedRecoJetPt[j][2]->Write();
