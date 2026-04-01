@@ -29,8 +29,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "RooUnfoldResponse.h"
-#include "RooUnfoldBayes.h"
+// #include "RooUnfoldResponse.h"
+// #include "RooUnfoldBayes.h"
 
 
 // event map
@@ -188,7 +188,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_evenEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_evenEvents_matchedRecoJetPtCut60/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_oddEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
@@ -211,6 +211,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   // JETS
 
   TH2D *h_matchedRecoJetPt_genJetPt[NCentralityIndices][7];
+  //TH2D *h_matchedRecoJetPtWithCut_genJetPt[NCentralityIndices][7];
   TH2D *h_matchedRecoJetPt_genJetPt_var[NCentralityIndices][7];
   TH2D *h_matchedRecoJetPtOverGenJetPt_genJetPt[NCentralityIndices][7];
   TH2D *h_matchedRecoJetPtOverGenJetPt_genJetEta[NCentralityIndices][7];
@@ -719,7 +720,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       // fill response matrix
       //if(hasRecoJetMatch && hasRecoJetMuon) {
       //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
-      if(hasRecoJetMatch) {
+      //if(hasRecoJetMatch) {
+      if(hasRecoJetMatch && matchedRecoJetPt >= 60.0) {
 	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
@@ -880,12 +882,12 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
     h_unmatchedGenJetPt[j]->Write();
     h_unmatchedRecoJetPt[j][0]->Write();
-    h_unmatchedRecoJetPt[j][1]->Write();
-    h_unmatchedRecoJetPt[j][2]->Write();
-    h_unmatchedRecoJetPt[j][3]->Write();
-    h_unmatchedRecoJetPt[j][4]->Write();
-    h_unmatchedRecoJetPt[j][5]->Write();
-    h_unmatchedRecoJetPt[j][6]->Write();
+    // h_unmatchedRecoJetPt[j][1]->Write();
+    // h_unmatchedRecoJetPt[j][2]->Write();
+    // h_unmatchedRecoJetPt[j][3]->Write();
+    // h_unmatchedRecoJetPt[j][4]->Write();
+    // h_unmatchedRecoJetPt[j][5]->Write();
+    // h_unmatchedRecoJetPt[j][6]->Write();
     
     h_matchedRecoJetPt_genJetPt[j][0]->Write();
     h_matchedRecoJetPt_genJetPt[j][1]->Write();
@@ -914,12 +916,12 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     h_matchedRecoJetPtOverGenJetPt_genJetPt[j][6]->Write();
 
     h_matchedRecoJetPtOverGenJetPt_genJetEta[j][0]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][1]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][2]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][3]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][4]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][5]->Write();
-    h_matchedRecoJetPtOverGenJetPt_genJetEta[j][6]->Write();
+    // h_matchedRecoJetPtOverGenJetPt_genJetEta[j][1]->Write();
+    // h_matchedRecoJetPtOverGenJetPt_genJetEta[j][2]->Write();
+    // h_matchedRecoJetPtOverGenJetPt_genJetEta[j][3]->Write();
+    // h_matchedRecoJetPtOverGenJetPt_genJetEta[j][4]->Write();
+    // h_matchedRecoJetPtOverGenJetPt_genJetEta[j][5]->Write();
+    // h_matchedRecoJetPtOverGenJetPt_genJetEta[j][6]->Write();
 
     h_leadingRecoJetPtOverPThat_pThat[j]->Write();
 
