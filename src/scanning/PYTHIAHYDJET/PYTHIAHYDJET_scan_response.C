@@ -950,7 +950,11 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   }
 
-
+  response_C4->Write();
+  response_C3->Write();
+  response_C2->Write();
+  response_C1->Write();
+  response_C0->Write();
 
 
 
