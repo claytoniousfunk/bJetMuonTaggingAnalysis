@@ -189,8 +189,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  //TString output = Form("%s%s_evenEvents_matchedRecoJetPtCut60/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_oddEvents_matchedRecoJetPtCut60/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_evenEvents_matchedRecoJetPtCut60/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_oddEvents_matchedRecoJetPtCut60/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
@@ -480,10 +480,10 @@ void PYTHIAHYDJET_scan_response(int group = 1){
     if(evi==0) cout << "Processing events..." << endl;
 
     // // only take even events
-    //if(evi % 2 == 1) continue;
+    if(evi % 2 == 1) continue;
 
     // // only take odd events
-    if(evi % 2 == 0) continue;
+    //if(evi % 2 == 0) continue;
     
     em->getEvent(evi);
 
