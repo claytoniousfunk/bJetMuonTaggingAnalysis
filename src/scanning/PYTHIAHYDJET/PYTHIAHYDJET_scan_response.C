@@ -222,11 +222,11 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   TH2D *h_leadingRecoJetPtOverPThat_pThat[NCentralityIndices];
   TH1D *h_unmatchedRecoJetPt[NCentralityIndices][7];
   TH1D *h_unmatchedGenJetPt[NCentralityIndices];
-  RooUnfoldResponse response_C4(NPtBins,ptMin,ptMax);
-  RooUnfoldResponse response_C3(NPtBins,ptMin,ptMax);
-  RooUnfoldResponse response_C2(NPtBins,ptMin,ptMax);
-  RooUnfoldResponse response_C1(NPtBins,ptMin,ptMax);
-  RooUnfoldResponse response_C0(NPtBins,ptMin,ptMax);
+  RooUnfoldResponse response_C4(NPtBins,ptMin,ptMax,"response_C4","response_C4");
+  RooUnfoldResponse response_C3(NPtBins,ptMin,ptMax,"response_C3","response_C3");
+  RooUnfoldResponse response_C2(NPtBins,ptMin,ptMax,"response_C2","response_C2");
+  RooUnfoldResponse response_C1(NPtBins,ptMin,ptMax,"response_C1","response_C1");
+  RooUnfoldResponse response_C0(NPtBins,ptMin,ptMax,"response_C0","response_C0");
 
 
 
