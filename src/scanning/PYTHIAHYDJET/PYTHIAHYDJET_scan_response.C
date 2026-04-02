@@ -29,9 +29,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#if !(defined(__CINT__) || defined(__CLING__)) || defined(__ACLIC__)
 #include "RooUnfoldResponse.h"
 #include "RooUnfoldBayes.h"
-
+#endif
 
 // event map
 #include "../../../eventMap/eventMap.h"
