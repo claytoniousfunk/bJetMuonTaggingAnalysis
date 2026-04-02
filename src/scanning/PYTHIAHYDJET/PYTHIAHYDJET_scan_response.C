@@ -222,6 +222,12 @@ void PYTHIAHYDJET_scan_response(int group = 1){
   TH2D *h_leadingRecoJetPtOverPThat_pThat[NCentralityIndices];
   TH1D *h_unmatchedRecoJetPt[NCentralityIndices][7];
   TH1D *h_unmatchedGenJetPt[NCentralityIndices];
+  RooUnfoldResponse response_C4(NPtBins,ptMin,ptMax);
+  RooUnfoldResponse response_C3(NPtBins,ptMin,ptMax);
+  RooUnfoldResponse response_C2(NPtBins,ptMin,ptMax);
+  RooUnfoldResponse response_C1(NPtBins,ptMin,ptMax);
+  RooUnfoldResponse response_C0(NPtBins,ptMin,ptMax);
+
 
 
   // Define histograms
@@ -723,6 +729,14 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
       //if(hasRecoJetMatch) {
       if(hasRecoJetMatch && matchedRecoJetPt >= 60.0) {
+
+	response_C0.Fill(matchedRecoJetPt,x,w);
+	if(CentralityIndex == 4) response_C4.Fill(matchedRecoJetPt,x,w);
+	else if(CentralityIndex == 3) response_C3.Fill(matchedRecoJetPt,x,w);
+	else if(CentralityIndex == 2) response_C2.Fill(matchedRecoJetPt,x,w);
+	else if(CentralityIndex == 1) response_C1.Fill(matchedRecoJetPt,x,w);
+	else{};
+	
 	h_matchedRecoJetPt_genJetPt[0][0]->Fill(matchedRecoJetPt,x,w);
 	h_matchedRecoJetPt_genJetPt[CentralityIndex][0]->Fill(matchedRecoJetPt,x,w);
 
@@ -829,6 +843,13 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       if(!hasRecoJetMatch){
 	h_unmatchedGenJetPt[0]->Fill(x,w);
 	h_unmatchedGenJetPt[CentralityIndex]->Fill(x,w);
+
+	response_C0.Miss(x,w);
+	if(CentralityIndex == 4) response_C4.Miss(x,w);
+	else if(CentralityIndex == 3) response_C3.Miss(x,w);
+	else if(CentralityIndex == 2) response_C2.Miss(x,w);
+	else if(CentralityIndex == 1) response_C1.Miss(x,w);
+	else{};
       }
 			
       h_inclGenJetPt_flavor[0]->Fill(x,jetFlavorInt,w);
