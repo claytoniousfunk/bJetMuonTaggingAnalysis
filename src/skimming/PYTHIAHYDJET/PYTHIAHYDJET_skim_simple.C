@@ -161,14 +161,14 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     old_file->GetObject("hltanalysis/HltTree",old_hlt_tree);
     old_file->GetObject("akCs4PFJetAnalyzer/t",old_jet_tree);
     old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
-    old_file->GetObject("HiGenParticleAna/hi",old_gen_tree);
+    //old_file->GetObject("HiGenParticleAna/hi",old_gen_tree);
     // deactivate all branches                                                                                   
     old_filter_tree->SetBranchStatus("*",0);
     old_evt_tree->SetBranchStatus("*",0);
     old_hlt_tree->SetBranchStatus("*",0);
     old_jet_tree->SetBranchStatus("*",0);
     old_muon_tree->SetBranchStatus("*",0);
-    old_gen_tree->SetBranchStatus("*",0);
+    //old_gen_tree->SetBranchStatus("*",0);
     
     // activate only our variables of interest
 
@@ -246,12 +246,12 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     old_muon_tree->SetBranchStatus("nMu",1);
 
     // gen
-    old_gen_tree->SetBranchStatus("pt",1);
-    old_gen_tree->SetBranchStatus("eta",1);
-    old_gen_tree->SetBranchStatus("phi",1);
-    old_gen_tree->SetBranchStatus("chg",1);
-    old_gen_tree->SetBranchStatus("pdg",1);
-    old_gen_tree->SetBranchStatus("n",1);
+    // old_gen_tree->SetBranchStatus("pt",1);
+    // old_gen_tree->SetBranchStatus("eta",1);
+    // old_gen_tree->SetBranchStatus("phi",1);
+    // old_gen_tree->SetBranchStatus("chg",1);
+    // old_gen_tree->SetBranchStatus("pdg",1);
+    // old_gen_tree->SetBranchStatus("n",1);
     
 
     new_file = (TFile*) TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
@@ -261,21 +261,21 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
     new_hlt_tree = (TTree*) old_hlt_tree->CloneTree(0);
     new_jet_tree = (TTree*) old_jet_tree->CloneTree(0);
     new_muon_tree = (TTree*) old_muon_tree->CloneTree(0);
-    new_gen_tree = (TTree*) old_gen_tree->CloneTree(0);
+    //new_gen_tree = (TTree*) old_gen_tree->CloneTree(0);
 
     new_filter_tree->CopyEntries(old_filter_tree);
     new_evt_tree->CopyEntries(old_evt_tree);
     new_hlt_tree->CopyEntries(old_hlt_tree);
     new_jet_tree->CopyEntries(old_jet_tree);
     new_muon_tree->CopyEntries(old_muon_tree);
-    new_gen_tree->CopyEntries(old_gen_tree);
+    //new_gen_tree->CopyEntries(old_gen_tree);
 
     new_filter_tree->SetName("filterTree");
     new_evt_tree->SetName("evtTree");
     new_hlt_tree->SetName("hltTree");
     new_jet_tree->SetName("jetTree");
     new_muon_tree->SetName("muonTree");
-    new_gen_tree->SetName("genParticleTree");
+    //new_gen_tree->SetName("genParticleTree");
 
     new_file->Write();
 
