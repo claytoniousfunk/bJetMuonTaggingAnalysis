@@ -189,7 +189,7 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 
   //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_evenEvents_matchedRecoJetPtCut60/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_evenEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_oddEvents_matchedRecoJetPtCut60/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
@@ -727,8 +727,8 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       // fill response matrix
       //if(hasRecoJetMatch && hasRecoJetMuon) {
       //if(hasRecoJetMatch && hasRecoJetMuon && triggerIsOn(triggerDecision,triggerDecision_Prescl)) {
-      //if(hasRecoJetMatch) {
-      if(hasRecoJetMatch && matchedRecoJetPt >= 60.0) {
+      if(hasRecoJetMatch) {
+      //if(hasRecoJetMatch && matchedRecoJetPt >= 60.0) {
 
 	// response_C0.Fill(matchedRecoJetPt,x,w);
 	// if(CentralityIndex == 4) response_C4.Fill(matchedRecoJetPt,x,w);
