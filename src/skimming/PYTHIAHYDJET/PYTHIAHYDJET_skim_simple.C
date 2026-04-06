@@ -112,11 +112,15 @@ void PYTHIAHYDJET_skim_simple(int group = 1){
   // output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch15/PYTHIAHYDJET_DiJet_skim_output_%i",group);
 
   // // DiJet, incl, pTjet-5, N = 6754
-  in_file_name = "../../../fileNames/fileNames_PH_DiJet_pTjet-5_withGenNeutrino.txt";
-  output_file_base += Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withGenNeutrino_withRefPt/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+  // in_file_name = "../../../fileNames/fileNames_PH_DiJet_pTjet-5_withGenNeutrino.txt";
+  // output_file_base += Form("/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withGenNeutrino_withRefPt/PYTHIAHYDJET_DiJet_skim_output_%i",group);
+
+  // // DiJet, incl, pTjet-5, N = 253
+  in_file_name = "../../../fileNames/fileNames_HYDJET_MinBias.txt";
+  output_file_base += Form("/eos/user/c/cbennett/skims/output_skim_HYDJET_MinBias/HYDJET_MinBias_skim_output_%i",group);
 
   
-  int endfile = 6754;
+  int endfile = 253;
 
 
 
