@@ -34,6 +34,6 @@ bool apply_JEU_shift_up = false;
 bool apply_JEU_shift_down = false;
 // select dataset
 bool doSingleMuonSample = false;
-bool doMinBiasSample = true;
-bool doHardProbesSample = false;
+bool doMinBiasSample = false;
+bool doHardProbesSample = true;
 
