@@ -90,6 +90,8 @@ TF1 *fitFxn_pp_HLT;
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // ----------------------------------- inclusive events -------------------
+TH1D *h_eventsBeforeSelection;
+TH1D *h_eventsAfterSelection;
 TH1D *h_vz;
 TH1D *h_hiBin;
 // -----------------------------------------events w/ muTrigger----- -------
@@ -227,6 +229,8 @@ void pp_scan(int group = 1){
   readConfig();
   // >>>>>>>>>>>>>>>> define histograms
   // ---------------------- event histograms --------------------------------
+  h_eventsBeforeSelection = new TH1D("h_eventsBeforeSelection","events before selection",2,0,1);
+  h_eventsAfterSelection = new TH1D("h_eventsAfterSelection","events before selection",2,0,1);
   // ------------ hiBin ---------------
   h_hiBin = new TH1D("h_hiBin","hiBin, inclusive events",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_triggerOn = new TH1D("h_hiBin_triggerOn","hiBin, events with triggerOn",NhiBinBins,hiBinMin,hiBinMax);
@@ -280,6 +284,8 @@ void pp_scan(int group = 1){
   
 
   // Sumw2 commands
+  h_eventsBeforeSelection->Sumw2();
+  h_eventsAfterSelection->Sumw2();
   h_hiBin->Sumw2();
   h_hiBin_triggerOn->Sumw2();
   h_hiBin_jet60->Sumw2();
@@ -418,12 +424,15 @@ void pp_scan(int group = 1){
 
     evi_frac = 100*evi / NEvents;
 
+    h_eventsBeforeSelection->Fill(1);
+
     // global event cuts
     if(fabs(em->vz) > 15.0) continue;
 
     // event filters
     if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
 
+    h_eventsAfterSelection->Fill(1);
        
     // In data, event weight = 1
     double w = 1.0;
@@ -903,6 +912,8 @@ void pp_scan(int group = 1){
   // WRITE
   auto wf = TFile::Open(output,"recreate");
 
+  h_eventsBeforeSelection->Write();
+  h_eventsAfterSelection->Write();
   h_hiBin->Write();
   h_hiBin_triggerOn->Write();
   h_hiBin_jet60->Write();

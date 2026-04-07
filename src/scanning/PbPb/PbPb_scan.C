@@ -97,6 +97,8 @@ TF1 *fitFxn_PbPb_HLT_C4, *fitFxn_PbPb_HLT_C3, *fitFxn_PbPb_HLT_C2, *fitFxn_PbPb_
 
 // initialize histograms
 // ~~~~~~~~~ event variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TH1D *h_eventsBeforeSelection;
+TH1D *h_eventsAfterSelection;
 TH1D *h_NEvents;
 // -----------------------------------------inclusive events ------- -------
 TH1D *h_vz[NCentralityIndices];
@@ -252,7 +254,11 @@ void PbPb_scan(int group = 1){
   /// print out some info
   printIntroduction_PbPb_scan_V3p7();
   readConfig();
+
+
   // define histograms
+  h_eventsBeforeSelection = new TH1D("h_eventsBeforeSelection","events before selection",2,0,1);
+  h_eventsAfterSelection = new TH1D("h_eventsAfterSelection","events before selection",2,0,1);
   h_NEvents = new TH1D("h_NEvents","Number of events (L3Mu5 trigger)",100,0,10000);
   h_hiBin = new TH1D("h_hiBin","hiBin, inclusive events",200,0,200);
   h_hiBin_triggerOn = new TH1D("h_hiBin_triggerOn","hiBin, events with triggerOn",200,0,200);
@@ -265,6 +271,8 @@ void PbPb_scan(int group = 1){
   h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",200,0,200);
   h_inclMuPt = new TH1D("h_inclMuPt","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
 
+  h_eventsBeforeSelection->Sumw2();
+  h_eventsAfterSelection->Sumw2();
   h_NEvents->Sumw2();
   h_hiBin->Sumw2();
   h_hiBin_triggerOn->Sumw2();
@@ -555,12 +563,16 @@ void PbPb_scan(int group = 1){
 
     evi_frac = 100*evi / NEvents;
 
+    h_eventsBeforeSelection->Fill(1);
+
     // global event cuts
     if(fabs(em->vz) > 15.0) continue;
     // event filters
     if(em->checkEventFilter()) continue;
     // hiHF cut
     if(em->hiHF > 6000) continue;
+
+    h_eventsAfterSelection->Fill(1);
 
         // In data, event weight = 1
     double w = 1.0;
@@ -1199,7 +1211,9 @@ void PbPb_scan(int group = 1){
   delete f;
   // WRITE
   auto wf = TFile::Open(output,"recreate");
-  
+
+  h_eventsBeforeSelection->Write();
+  h_eventsAfterSelection->Write();
   h_NEvents->Write();
   h_hiBin->Write();
   h_hiBin_triggerOn->Write();
