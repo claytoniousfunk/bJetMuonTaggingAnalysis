@@ -75,6 +75,7 @@ TString configureOutputDatasetName(TString generator,
   /* if(doJetAxisSmearing) result.Append(Form("_jetAxisSmear_muPhi-%1.3f_sigmaPhi-%1.3f_muEta-%1.3f_sigmaEta-%1.3f",mu_phi,sigma_phi,mu_eta,sigma_eta)); */
   // lesser-likely customizations
   if(doWeightCut) result.Append("_weightCut");
+  if(doBJetSpectraReweightToData) result.Append("_BJetSpectraReweightToData");
   if(doHadronPtRelReweight) result.Append("_hadronPtRelReweight");
   if(doBJetEnergyShift) result.Append("_bJetEnergyShift");
   if(doJERCorrection) result.Append("_JERCorrection");
