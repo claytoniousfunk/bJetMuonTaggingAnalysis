@@ -42,7 +42,7 @@ TString configureOutputDatasetName(TString generator,
 
   TString result = "output";
   result.Append(Form("_%s",generator.Data()));
-  result.Append(Form("_pThat-%2.0f",pThat));
+  result.Append("_pThat-unweighted");
   /* if(applyJet60Trigger) result.Append("_Jet60HLT"); */
   /* if(applyJet80Trigger) result.Append("_Jet80HLT"); */
   if(fillMu5) result.Append(Form("_mu5_pTmu-%1.0fto%1.0f_hybridSoft",muPtCut,muPtMaxCut));
