@@ -1,7 +1,7 @@
 TString getInputFileName()
 {
 
-  TString result = "";
+  TString result = "HYDJET_MinBias_skim_output";
 
   return result;
 
