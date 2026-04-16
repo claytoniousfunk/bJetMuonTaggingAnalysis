@@ -118,7 +118,7 @@ TF1 *fitFxn_PYTHIAHYDJET_HLT_C4, *fitFxn_PYTHIAHYDJET_HLT_C3, *fitFxn_PYTHIAHYDJ
 // print introduction
 #include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
-#include "../../../headers/config/config_PYTHIAHYDJET.h"
+#include "../../../headers/config/config_HYDJET.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 // remove HYDJET jets function
