@@ -42,28 +42,6 @@ TString configureOutputDatasetName(TString generator,
 
   TString result = "output";
   result.Append(Form("_%s",generator.Data()));
-
-  TString datasetIndicator = "";
-  if(doMuJetSample) datasetIndicator = "_MuJet";
-  else if(doBJetSample) datasetIndicator = "_BJet";
-  else if(doDiJetSample) datasetIndicator = "_DiJet";
-  else if(doDiJetSample_batch1) datasetIndicator = "_DiJet_batch1";
-  else if(doDiJetSample_batch2) datasetIndicator = "_DiJet_batch2";
-  else if(doDiJetSample_batch3) datasetIndicator = "_DiJet_batch3";
-  else if(doDiJetSample_batch4) datasetIndicator = "_DiJet_batch4";
-  else if(doDiJetSample_batch5) datasetIndicator = "_DiJet_batch5";
-  else if(doDiJetSample_batch6) datasetIndicator = "_DiJet_batch6";
-  else if(doDiJetSample_batch7) datasetIndicator = "_DiJet_batch7";
-  else if(doDiJetSample_batch8) datasetIndicator = "_DiJet_batch8";
-  else if(doDiJetSample_batch9) datasetIndicator = "_DiJet_batch9";
-  else if(doDiJetSample_batch10) datasetIndicator = "_DiJet_batch10";
-  else if(doDiJetSample_batch11) datasetIndicator = "_DiJet_batch11";
-  else if(doDiJetSample_batch12) datasetIndicator = "_DiJet_batch12";
-  else if(doDiJetSample_batch13) datasetIndicator = "_DiJet_batch13";
-  else if(doDiJetSample_batch14) datasetIndicator = "_DiJet_batch14";
-  else if(doDiJetSample_batch15) datasetIndicator = "_DiJet_batch15";
-  else{};
-  result.Append(datasetIndicator);
   result.Append(Form("_pThat-%2.0f",pThat));
   /* if(applyJet60Trigger) result.Append("_Jet60HLT"); */
   /* if(applyJet80Trigger) result.Append("_Jet80HLT"); */
