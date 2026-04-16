@@ -1608,96 +1608,96 @@ void HYDJET_scan(int group = 1){
       }
 
 
-      if(!skipGenParticles){
-	// look for a genMuon match to recoJet
-	for(int j = 0; j < em->gpptp->size(); j++){
+      // if(!skipGenParticles){
+      // 	// look for a genMuon match to recoJet
+      // 	for(int j = 0; j < em->gpptp->size(); j++){
 
                         
-	  bool isMatchedGenMuon = false;
+      // 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+      // 	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	  genMuIndex++;
+      // 	  genMuIndex++;
 
-	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
+      // 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(doWDecayFilter){
-	    if(isWDecayMuon(em->gpptp->at(j),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
-	  }
+      // 	  if(doWDecayFilter){
+      // 	    if(isWDecayMuon(em->gpptp->at(j),recoJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
+      // 	  }
 
-	  double genMuonPt_j = em->gpptp->at(j);
-	  double genMuonPt_matched_j = -1.0;
-	  double genMuonEta_j = em->gpetap->at(j);
-	  double genMuonEta_matched_j = -1.0;
-	  double genMuonPhi_j = em->gpphip->at(j);
-	  double genMuonPhi_matched_j = -1.0;
-	  double genMuonPtRel_j = -999.0;
-	  double genMuonPtRel_matched_j = -999.0;
+      // 	  double genMuonPt_j = em->gpptp->at(j);
+      // 	  double genMuonPt_matched_j = -1.0;
+      // 	  double genMuonEta_j = em->gpetap->at(j);
+      // 	  double genMuonEta_matched_j = -1.0;
+      // 	  double genMuonPhi_j = em->gpphip->at(j);
+      // 	  double genMuonPhi_matched_j = -1.0;
+      // 	  double genMuonPtRel_j = -999.0;
+      // 	  double genMuonPtRel_matched_j = -999.0;
 
-	  if(genMuonPt_j < muPtCut || genMuonPt_j > muPtMaxCut || fabs(genMuonEta_j) > 2.0) continue;                        
+      // 	  if(genMuonPt_j < muPtCut || genMuonPt_j > muPtMaxCut || fabs(genMuonEta_j) > 2.0) continue;                        
 
-	  // look for recoMuon match to genMuon
-	  for(int l = 0; l < em->nMu; l++){
+      // 	  // look for recoMuon match to genMuon
+      // 	  for(int l = 0; l < em->nMu; l++){
 	    
 
-	    if(fillMu12){
-	      if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				      em->muInnerD0->at(l),
-				      em->muInnerDz->at(l),
-				      em->muMuonHits->at(l),
-				      em->muPixelHits->at(l),
-				      em->muIsGlobal->at(l),
-				      em->muIsPF->at(l),
-				      em->muStations->at(l),
-				      em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
-	    }
+      // 	    if(fillMu12){
+      // 	      if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+      // 				      em->muInnerD0->at(l),
+      // 				      em->muInnerDz->at(l),
+      // 				      em->muMuonHits->at(l),
+      // 				      em->muPixelHits->at(l),
+      // 				      em->muIsGlobal->at(l),
+      // 				      em->muIsPF->at(l),
+      // 				      em->muStations->at(l),
+      // 				      em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+      // 	    }
 
-	    else if(fillMu5 || fillMu7){
-	      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
-					   em->muInnerD0->at(l),
-					   em->muInnerDz->at(l),
-					   em->muPixelHits->at(l),
-					   em->muIsTracker->at(l),
-					   em->muIsGlobal->at(l),
-					   em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
-	    }
-	    else{};
+      // 	    else if(fillMu5 || fillMu7){
+      // 	      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
+      // 					   em->muInnerD0->at(l),
+      // 					   em->muInnerDz->at(l),
+      // 					   em->muPixelHits->at(l),
+      // 					   em->muIsTracker->at(l),
+      // 					   em->muIsGlobal->at(l),
+      // 					   em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+      // 	    }
+      // 	    else{};
 
-	    if(doWDecayFilter){
-	      if(isWDecayMuon(em->muPt->at(l),recoJetPt_i)) continue;
-	    }
+      // 	    if(doWDecayFilter){
+      // 	      if(isWDecayMuon(em->muPt->at(l),recoJetPt_i)) continue;
+      // 	    }
 
-	    double recoMuonPt_l = em->muPt->at(l);
-	    double recoMuonEta_l = em->muEta->at(l);
-	    double recoMuonPhi_l = em->muPhi->at(l);
+      // 	    double recoMuonPt_l = em->muPt->at(l);
+      // 	    double recoMuonEta_l = em->muEta->at(l);
+      // 	    double recoMuonPhi_l = em->muPhi->at(l);
 
-	    if(getDr(genMuonEta_j,genMuonPhi_j,recoMuonEta_l,recoMuonPhi_l) < epsilon){
+      // 	    if(getDr(genMuonEta_j,genMuonPhi_j,recoMuonEta_l,recoMuonPhi_l) < epsilon){
 				
-	      isMatchedGenMuon = true;
-	      genMuonPt_matched_j = recoMuonPt_l;
-	      genMuonEta_matched_j = recoMuonEta_l;
-	      genMuonPhi_matched_j = recoMuonPhi_l;
+      // 	      isMatchedGenMuon = true;
+      // 	      genMuonPt_matched_j = recoMuonPt_l;
+      // 	      genMuonEta_matched_j = recoMuonEta_l;
+      // 	      genMuonPhi_matched_j = recoMuonPhi_l;
 			
-	    }
+      // 	    }
 
-	  }
+      // 	  }
 
-	  if(getDr(genMuonEta_j,genMuonPhi_j,recoJetEta_i,recoJetPhi_i) < deltaRCut){
+      // 	  if(getDr(genMuonEta_j,genMuonPhi_j,recoJetEta_i,recoJetPhi_i) < deltaRCut){
 				
-	    matchFlag[genMuIndex] = 1;
-	    hasInclGenMuonTag = true;
-	    if(isMatchedGenMuon) {
-	      hasMatchedGenMuonTag = true;
-	      if(hasGenJetMatch){
-		recoJetRecoMuonPtRel_i = getPtRel(genMuonPt_matched_j,genMuonEta_matched_j,genMuonPhi_matched_j,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
-		genJetGenMuonPtRel_i   = getPtRel(genMuonPt_j,genMuonEta_j,genMuonPhi_j,matchedGenJetPt_i,matchedGenJetEta_i,matchedGenJetPhi_i);
-	      }
-	    }
+      // 	    matchFlag[genMuIndex] = 1;
+      // 	    hasInclGenMuonTag = true;
+      // 	    if(isMatchedGenMuon) {
+      // 	      hasMatchedGenMuonTag = true;
+      // 	      if(hasGenJetMatch){
+      // 		recoJetRecoMuonPtRel_i = getPtRel(genMuonPt_matched_j,genMuonEta_matched_j,genMuonPhi_matched_j,recoJetPt_i,recoJetEta_i,recoJetPhi_i);
+      // 		genJetGenMuonPtRel_i   = getPtRel(genMuonPt_j,genMuonEta_j,genMuonPhi_j,matchedGenJetPt_i,matchedGenJetEta_i,matchedGenJetPhi_i);
+      // 	      }
+      // 	    }
 
-	  } 
+      // 	  } 
 
-	} // end genMuon loop
-      }
+      // 	} // end genMuon loop
+      // }
 	
 
       // look for recoMuon match to recoJet
@@ -1761,20 +1761,20 @@ void HYDJET_scan(int group = 1){
 	// match to genMuon
 	bool isMatchedRecoMuon = false;
 
-	if(!skipGenParticles){
+	// if(!skipGenParticles){
 
-	  for(int j = 0; j < em->gpptp->size(); j++){
+	//   for(int j = 0; j < em->gpptp->size(); j++){
 			
-	    if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+	//     if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 		
-	    if(getDr(recoMuonEta_m,recoMuonPhi_m,em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
+	//     if(getDr(recoMuonEta_m,recoMuonPhi_m,em->gpetap->at(j),em->gpphip->at(j)) < epsilon){
 
-	      isMatchedRecoMuon = true;
+	//       isMatchedRecoMuon = true;
 			
-	    }
+	//     }
 
-	  }
-	}
+	//   }
+	// }
 
 	// match to recoJets
 	if(getDr(recoMuonEta_m,recoMuonPhi_m,recoJetEta_i,recoJetPhi_i) < epsilon_mm){
@@ -2459,93 +2459,93 @@ void HYDJET_scan(int group = 1){
       bool hasMatchedRecoMuonTag = false;
 
       // look for a genMuon match
-      if(!skipGenParticles){
+      // if(!skipGenParticles){
 
-	for(int j = 0; j < em->gpptp->size(); j++){
+      // 	for(int j = 0; j < em->gpptp->size(); j++){
 
-	  //cout << "N_genParticles = " << em->gppdgIDp->size() << endl;
-	  //cout << "pdg of particle " << j <<" = " << em->gppdgIDp->at(j) << endl;
+      // 	  //cout << "N_genParticles = " << em->gppdgIDp->size() << endl;
+      // 	  //cout << "pdg of particle " << j <<" = " << em->gppdgIDp->at(j) << endl;
 
                         
-	  bool isMatchedGenMuon = false;
+      // 	  bool isMatchedGenMuon = false;
 
-	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
+      // 	  if(TMath::Abs(em->gppdgIDp->at(j)) != 13) continue;
 
-	  genMuIndex++;
+      // 	  genMuIndex++;
 
-	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
+      // 	  if(matchFlag[genMuIndex] == 1) continue; // skip if muon has been matched to a jet already
 
-	  if(doWDecayFilter){
-	    if(isWDecayMuon(em->gpptp->at(j),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
-	  }
+      // 	  if(doWDecayFilter){
+      // 	    if(isWDecayMuon(em->gpptp->at(j),genJetPt_i)) continue; // skip if "WDecay" muon (has majority of jet pt)
+      // 	  }
 
-	  double genMuonPt_j = em->gpptp->at(j);
-	  double genMuonPt_matched_j = -1.0;
-	  double genMuonEta_j = em->gpetap->at(j);
-	  double genMuonEta_matched_j = -1.0;
-	  double genMuonPhi_j = em->gpphip->at(j);
-	  double genMuonPhi_matched_j = -1.0;
-
-
-	  if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;
-
-	  //cout << "genMuPt = " << a << ", genMuEta = " << b << endl;
-
-	  for(int l = 0; l < em->nMu; l++){
+      // 	  double genMuonPt_j = em->gpptp->at(j);
+      // 	  double genMuonPt_matched_j = -1.0;
+      // 	  double genMuonEta_j = em->gpetap->at(j);
+      // 	  double genMuonEta_matched_j = -1.0;
+      // 	  double genMuonPhi_j = em->gpphip->at(j);
+      // 	  double genMuonPhi_matched_j = -1.0;
 
 
-	    if(fillMu12){
-	      if(!isQualityMuon_tight(em->muChi2NDF->at(l),
-				      em->muInnerD0->at(l),
-				      em->muInnerDz->at(l),
-				      em->muMuonHits->at(l),
-				      em->muPixelHits->at(l),
-				      em->muIsGlobal->at(l),
-				      em->muIsPF->at(l),
-				      em->muStations->at(l),
-				      em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
-	    }
+      // 	  if(genMuonPt_j < muPtCut || fabs(genMuonEta_j) > 2.0) continue;
 
-	    else if(fillMu5 || fillMu7){
-	      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
-					   em->muInnerD0->at(l),
-					   em->muInnerDz->at(l),
-					   em->muPixelHits->at(l),
-					   em->muIsTracker->at(l),
-					   em->muIsGlobal->at(l),
-					   em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
-	    }
-	    else{};  
+      // 	  //cout << "genMuPt = " << a << ", genMuEta = " << b << endl;
+
+      // 	  for(int l = 0; l < em->nMu; l++){
+
+
+      // 	    if(fillMu12){
+      // 	      if(!isQualityMuon_tight(em->muChi2NDF->at(l),
+      // 				      em->muInnerD0->at(l),
+      // 				      em->muInnerDz->at(l),
+      // 				      em->muMuonHits->at(l),
+      // 				      em->muPixelHits->at(l),
+      // 				      em->muIsGlobal->at(l),
+      // 				      em->muIsPF->at(l),
+      // 				      em->muStations->at(l),
+      // 				      em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts
+      // 	    }
+
+      // 	    else if(fillMu5 || fillMu7){
+      // 	      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(l),
+      // 					   em->muInnerD0->at(l),
+      // 					   em->muInnerDz->at(l),
+      // 					   em->muPixelHits->at(l),
+      // 					   em->muIsTracker->at(l),
+      // 					   em->muIsGlobal->at(l),
+      // 					   em->muTrkLayers->at(l))) continue; // skip if muon doesnt pass quality cuts	
+      // 	    }
+      // 	    else{};  
 	      
-	    //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
+      // 	    //if(isWDecayMuon(em->muPt->at(l),x)) continue; // skip if "WDecay" muon (has majority of jet pt)	
 			
 		
-	    double recoMuonPt_l = em->muPt->at(l);
-	    double recoMuonEta_l = em->muEta->at(l);
-	    double recoMuonPhi_l = em->muPhi->at(l);
+      // 	    double recoMuonPt_l = em->muPt->at(l);
+      // 	    double recoMuonEta_l = em->muEta->at(l);
+      // 	    double recoMuonPhi_l = em->muPhi->at(l);
 			
 
-	    if(getDr(genMuonEta_j,genMuonPhi_j,recoMuonEta_l,recoMuonPhi_l) < epsilon){
+      // 	    if(getDr(genMuonEta_j,genMuonPhi_j,recoMuonEta_l,recoMuonPhi_l) < epsilon){
 				
-	      isMatchedGenMuon = true;
-	      genMuonPt_matched_j = recoMuonPt_l;
-	      genMuonEta_matched_j = recoMuonEta_l;
-	      genMuonPhi_matched_j = recoMuonPhi_l;
+      // 	      isMatchedGenMuon = true;
+      // 	      genMuonPt_matched_j = recoMuonPt_l;
+      // 	      genMuonEta_matched_j = recoMuonEta_l;
+      // 	      genMuonPhi_matched_j = recoMuonPhi_l;
 			
-	    }
+      // 	    }
 
-	  }
+      // 	  }
 
-	  if(getDr(genMuonEta_j,genMuonPhi_j,genJetEta_i,genJetPhi_i) < deltaRCut){
+      // 	  if(getDr(genMuonEta_j,genMuonPhi_j,genJetEta_i,genJetPhi_i) < deltaRCut){
 				
-	    matchFlag[genMuIndex] = 1;
-	    hasInclGenMuonTag = true;
-	    if(isMatchedGenMuon) hasMatchedGenMuonTag = true;
+      // 	    matchFlag[genMuIndex] = 1;
+      // 	    hasInclGenMuonTag = true;
+      // 	    if(isMatchedGenMuon) hasMatchedGenMuonTag = true;
 	
-	  } 
+      // 	  } 
 
-	} // end genMuon loop
-      }
+      // 	} // end genMuon loop
+      // }
 	
 
       // look for recoMuon match		
@@ -2586,25 +2586,25 @@ void HYDJET_scan(int group = 1){
 
 	bool isMatchedRecoMuon = false;
 
-	if(!skipGenParticles){
+	// if(!skipGenParticles){
 
-	  for(int l = 0; l < em->gpptp->size(); l++){
+	//   for(int l = 0; l < em->gpptp->size(); l++){
 
-	    //cout << "genID = " << em->gppdgIDp->at(j) << endl;
+	//     //cout << "genID = " << em->gppdgIDp->at(j) << endl;
 			
-	    if(TMath::Abs(em->gppdgIDp->at(l)) != 13) continue;
+	//     if(TMath::Abs(em->gppdgIDp->at(l)) != 13) continue;
 
-	    if(em->gpptp->at(l) < muPtCut || fabs(em->gpetap->at(l)) > 2.0) continue;                        
+	//     if(em->gpptp->at(l) < muPtCut || fabs(em->gpetap->at(l)) > 2.0) continue;                        
 		
-	    if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(l),em->gpphip->at(l)) < epsilon){
+	//     if(getDr(em->muEta->at(m),em->muPhi->at(m),em->gpetap->at(l),em->gpphip->at(l)) < epsilon){
 
-	      isMatchedRecoMuon = true;
+	//       isMatchedRecoMuon = true;
 			
-	    }
+	//     }
 
-	  }
+	//   }
 
-	}
+	// }
 
 	// match to genJets
 	if(getDr(em->muEta->at(m),em->muPhi->at(m),genJetEta_i,genJetPhi_i) < epsilon_mm){
