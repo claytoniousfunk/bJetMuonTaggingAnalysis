@@ -4,8 +4,8 @@ int AASetup_status = 1;
 TString jetTreeString = "jetTree";
 TString muonTreeString = "muonTree";
 TString hltString = "hltTree";
-const int NeventFilters = 2;
-std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter", "pclusterCompatibilityFilter"};
+const int NeventFilters = 5;
+std::string eventFilters[NeventFilters] = {"pprimaryVertexFilter", "HBHENoiseFilterResultRun2Loose", "collisionEventSelectionAODv2", "phfCoincFilter2Th4", "pclusterCompatibilityFilter"};
 // options for systematic studies
 bool apply_JER_smear = false;
 bool apply_JEU_shift_up = false;
