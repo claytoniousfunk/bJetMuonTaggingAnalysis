@@ -395,6 +395,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 doDiJetSample_batch14,
 						 doDiJetSample_batch15,
 						 pthatcut,
+						 doPThatWeight,
 						 doVzReweight,
 						 doHiBinReweight,
 						 doJetPtReweight,
@@ -1275,7 +1276,11 @@ void PYTHIAHYDJET_scan(int group = 1){
     }
     
 
-    double w_pthat = em->weight;
+    
+    double w_pthat = 1.0;
+    if(doPThatWeight){
+      w_pthat = em->weight;
+    }
     
     double w = w_pthat * w_reweight_hiBin * w_reweight_vz;
 
