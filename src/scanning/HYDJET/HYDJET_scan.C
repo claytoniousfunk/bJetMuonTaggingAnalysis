@@ -142,6 +142,7 @@ TH1D *h_vz_inclRecoMuonTag_triggerOn[NCentralityIndices];
 TH1D *h_vz_matchedRecoMuonTag_triggerOn[NCentralityIndices];
 // >> hiBin
 TH1D *h_hiBin, *h_hiBin_raw;
+TH1D *h_hiBin_jet;
 TH1D *h_hiBin_inclGenMuonTag;
 TH1D *h_hiBin_inclRecoMuonTag;
 TH1D *h_hiBin_matchedRecoMuonTag;
@@ -415,8 +416,9 @@ void HYDJET_scan(int group = 1){
   h_NEvents = new TH1D("h_NEvents","Number of events",1000,0,1000);
   h_delta_muptrel_WTA_nom_flavor = new TH2D("h_delta_muptrel_WTA_nom_flavor","h_delta_muptrel_WTA_nom_flavor",1000,-1,1,27,-5,22);
   // >> hiBin
-  h_hiBin = new TH1D("h_hiBin","hiBin, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin = new TH1D("h_hiBin","hiBin, all events",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_raw = new TH1D("h_hiBin_raw","hiBin, raw (no weight)",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin_jet = new TH1D("h_hiBin_jet","hiBin_jet, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclGenMuonTag = new TH1D("h_hiBin_inclGenMuonTag","hiBin, events with inclRecoJet-inclGenMuonTag",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
@@ -430,6 +432,7 @@ void HYDJET_scan(int group = 1){
   h_delta_muptrel_WTA_nom_flavor->Sumw2();
   h_hiBin->Sumw2();
   h_hiBin_raw->Sumw2();
+  h_hiBin_jet->Sumw2();
   h_hiBin_inclGenMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
@@ -1232,12 +1235,11 @@ void HYDJET_scan(int group = 1){
     if(doWeightCut){
       if(w > weightCut) continue;
     }
-   
-    int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
 
-    int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
-	
+    h_hiBin->Fill(hiBin_shifted,w);
     
+    int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
+    int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
 
     bool evtTriggerDecision = false;
 
@@ -2336,7 +2338,7 @@ void HYDJET_scan(int group = 1){
     
     if(eventHasGoodJet){
 
-      h_hiBin->Fill(hiBin_shifted,w);
+      h_hiBin_jet->Fill(hiBin_shifted,w);
       h_vz[0]->Fill(em->vz,w);
       h_vz[CentralityIndex]->Fill(em->vz,w);
 
@@ -2694,6 +2696,7 @@ void HYDJET_scan(int group = 1){
   //h_delta_muptrel_WTA_nom_flavor->Write();
   h_hiBin->Write();
   h_hiBin_raw->Write();
+  h_hiBin_jet->Write();
   h_hiBin_inclGenMuonTag->Write();
   h_hiBin_inclRecoMuonTag->Write();
   h_hiBin_inclRecoMuonTag_triggerOn->Write();
