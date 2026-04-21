@@ -2,8 +2,8 @@ void PbPb_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "";
-  in_file_name = "../../../fileNames/fileNames_PbPb_HardProbes.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_HardProbes_2026-04-20/PbPb_DiJet_skim_output_%i",group);
+  in_file_name = "../../../fileNames/fileNames_PbPb_SingleMuon_2026-04-20.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_SingleMuon_2026-04-20/PbPb_SingleMuon_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
