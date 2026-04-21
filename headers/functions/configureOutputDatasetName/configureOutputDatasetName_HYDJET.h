@@ -52,7 +52,7 @@ TString configureOutputDatasetName(TString generator,
   if(applyMu12TriggerEfficiencyCorrection) result.Append("_mu12TriggerEfficiencyCorrection");
   // event-based reweights
   if(doVzReweight) result.Append("_vzReweight");
-  if(doHiBinReweight) result.Append("_hiBinReweight");
+  if(doHiBinReweight) result.Append("_hiBinReweightToHardProbesJet80");
   result.Append(Form("_hiBinShift-%i",hiBinShift));
   if(doJetPtReweight) result.Append("_jetPtReweight");
   // jet-based filters

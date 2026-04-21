@@ -45,10 +45,7 @@
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu12.h"
 #include "../../../headers/fitParameters/vzFitParams_PYTHIAHYDJET.h"
 // hiBin-fit parameters
-//#include "../../../headers/fitParameters/hiBinFitParams_mu5.h"
-//#include "../../../headers/fitParameters/hiBinFitParams_mu7.h"
-//#include "../../../headers/fitParameters/hiBinFitParams_mu12.h"
-#include "../../../headers/fitParameters/hiBinFitParams_PYTHIAHYDJET.h"
+#include "../../../headers/fitParameters/hiBinFitParams_HYDJET.h"
 // jetPt-fit parameters
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu5.h"
 //#include "../../../headers/fitParameters/jetPtFitParams_PYTHIA_mu7.h"
@@ -1134,17 +1131,16 @@ void HYDJET_scan(int group = 1){
   // define vz , hiBin, & jetPt reweighting functions
   if(fillMu5){
     loadFitFxn_vz_mu5();
-    loadFitFxn_hiBin_mu5();
   }
   else if(fillMu7){
     loadFitFxn_vz_mu7();
-    loadFitFxn_hiBin_mu7();
   }
   else if(fillMu12){
     loadFitFxn_vz_mu12();
-    loadFitFxn_hiBin_mu12();
   }
   else{};
+
+  loadFitFxn_hiBin();
   
   
   loadFitFxn_jetPt_C1();

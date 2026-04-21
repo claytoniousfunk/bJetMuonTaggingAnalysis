@@ -585,9 +585,6 @@ void PbPb_scan(int group = 1){
     int CentralityIndex = getCentBin(em->hiBin);
     if(CentralityIndex < 0) continue;
 
-    
-
-
     // apply min-bias trigger if activated in config
     if(applyMinBiasTrigger){
       if(em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part1_v1 == 0 &&
