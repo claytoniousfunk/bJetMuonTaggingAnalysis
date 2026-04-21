@@ -69,9 +69,7 @@ TF1 *fitFxn_jetPt_C1, *fitFxn_jetPt_C2, *fitFxn_jetPt_C3, *fitFxn_jetPt_C4;
 // #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu7.h"
 // #include "../../../headers/fitFunctions/fitFxn_vz_PH_mu12.h"
 // hiBin-fit function
-#include "../../../headers/fitFunctions/fitFxn_hiBin.h"
-// #include "../../../headers/fitFunctions/fitFxn_hiBin_mu7.h"
-// #include "../../../headers/fitFunctions/fitFxn_hiBin_mu12.h"
+#include "../../../headers/fitFunctions/fitFxn_hiBin_HYDJET.h"
 // jetPt-fit function
 #include "../../../headers/fitFunctions/fitFxn_jetPt_C1.h"
 #include "../../../headers/fitFunctions/fitFxn_jetPt_C2.h"
