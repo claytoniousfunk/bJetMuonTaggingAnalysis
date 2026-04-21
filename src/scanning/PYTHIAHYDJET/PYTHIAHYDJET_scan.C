@@ -1272,7 +1272,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     // calculate event weight
     
     double w_reweight_hiBin = 1.0;
-    if(doHiBinReweight){
+    if(doHiBinReweight || doHiBinReweightToHardProbesJet80){
       w_reweight_hiBin = fitFxn_hiBin->Eval(hiBin_shifted);
     }
 
