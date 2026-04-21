@@ -15,6 +15,7 @@ bool skipGenParticles = false; // set TRUE for MuJet and BJet datasets
 // reweighting functions
 bool doPThatWeight = false;
 bool doHiBinReweight = false;
+bool doHiBinReweightToHardProbesJet80 = true;
 bool doVzReweight = false;
 bool doJetPtReweight = false;
 // jet-based filters
@@ -73,4 +74,4 @@ bool applyJet80Trigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
 bool fillMu5 = false;
 bool fillMu7 = false;
-bool fillMu12 = true;
+bool fillMu12 = false;

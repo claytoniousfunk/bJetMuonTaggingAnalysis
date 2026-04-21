@@ -23,6 +23,7 @@ TString configureOutputDatasetName(TString generator,
 				   bool doPThatWeight,
 				   bool doVzReweight,
 				   bool doHiBinReweight,
+				   bool doHiBinReweightToHardProbesJet80,
 				   bool doJetPtReweight,
 				   bool doGenJetPthatFilter,
 				   bool doLeadingXjetDumpFilter,
@@ -96,6 +97,7 @@ TString configureOutputDatasetName(TString generator,
   // event-based reweights
   if(doVzReweight) result.Append("_vzReweight");
   if(doHiBinReweight) result.Append("_hiBinReweight");
+  if(doHiBinReweightToHardProbesJet80) result.Append("_hiBinReweightToHardProbesJet80");
   result.Append(Form("_hiBinShift-%i",hiBinShift));
   if(doJetPtReweight) result.Append("_jetPtReweight");
   // jet-based filters

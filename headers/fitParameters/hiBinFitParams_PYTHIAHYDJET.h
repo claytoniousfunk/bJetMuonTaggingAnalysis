@@ -36,3 +36,15 @@ double e_hiBinFitParam_mu12_1 = 0.00273216;
 double e_hiBinFitParam_mu12_2 = 2.47368e-05;
 double e_hiBinFitParam_mu12_3 = 7.23575e-08;
 
+////////////////////////////////////////////
+
+double hiBinFitParam_jet80_0 = 3.82921;
+double hiBinFitParam_jet80_1 = -0.0619206;
+double hiBinFitParam_jet80_2 = 0.000325971;
+double hiBinFitParam_jet80_3 = -5.48669e-07;
+
+double e_hiBinFitParam_jet80_0 = 0.00361472;
+double e_hiBinFitParam_jet80_1 = 0.000126704;
+double e_hiBinFitParam_jet80_2 = 1.36041e-06;
+double e_hiBinFitParam_jet80_3 = 4.47245e-09;
+

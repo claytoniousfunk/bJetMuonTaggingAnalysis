@@ -398,6 +398,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 doPThatWeight,
 						 doVzReweight,
 						 doHiBinReweight,
+						 doHiBinReweightToHardProbesJet80,
 						 doJetPtReweight,
 						 doGenJetPthatFilter,
 						 doLeadingXjetDumpFilter,
@@ -1194,7 +1195,12 @@ void PYTHIAHYDJET_scan(int group = 1){
     loadFitFxn_vz_mu12();
     loadFitFxn_hiBin_mu12();
   }
-  else{};
+  else{
+    if(doHiBinReweightToHardProbesJet80){
+      loadFitFxn_hiBin_jet80();
+    }
+  };
+
   
   
   loadFitFxn_jetPt_C1();
