@@ -3,7 +3,7 @@ void PbPb_skim_simple(int group = 1){
   string in_file_name;
   string output_file_base = "";
   in_file_name = "../../../fileNames/fileNames_PbPb_SingleMuon_2026-04-20.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_SingleMuon_2026-04-20/PbPb_SingleMuon_skim_output_%i",group);
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_PbPb_SingleMuon_2026-04-22/PbPb_SingleMuon_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
@@ -41,8 +41,8 @@ void PbPb_skim_simple(int group = 1){
     old_file->GetObject("hiEvtAnalyzer/HiTree",old_evt_tree);
     old_file->GetObject("hltanalysis/HltTree",old_hlt_tree);
     old_file->GetObject("akCs4PFJetAnalyzer/t",old_jet_tree);
-    //old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
-    old_file->GetObject("ggHiNtuplizer/EventTree",old_muon_tree);
+    old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
+    //old_file->GetObject("ggHiNtuplizer/EventTree",old_muon_tree);
     // deactivate all branches                                                                                   
     old_filter_tree->SetBranchStatus("*",0);
     old_evt_tree->SetBranchStatus("*",0);
