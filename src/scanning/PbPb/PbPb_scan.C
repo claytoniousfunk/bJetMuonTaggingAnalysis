@@ -182,8 +182,8 @@ void PbPb_scan(int group = 1){
     muPtMaxCut = 15.0;
   }
   else if(fillMu12){
-    //muPtCut = 15.0;
-    muPtCut = 20.0;
+    muPtCut = 15.0;
+    //muPtCut = 20.0;
     //muPtMaxCut = 60.0;
     muPtMaxCut = 999.0;
   }
@@ -227,9 +227,9 @@ void PbPb_scan(int group = 1){
 						 fillMu7,
 						 fillMu12);
 
-  //TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_ZBosonDoubleCountError/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_ZBosonDoubleCountError/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
   
@@ -1136,8 +1136,8 @@ void PbPb_scan(int group = 1){
 
 	h_inclMuPt->Fill(muPt_m,w);
 
-	//for(int k = m+1; k < em->nMu; k++){
-	for(int k = 0; k < em->nMu; k++){ // double count error (for debugging)
+	for(int k = m+1; k < em->nMu; k++){
+	//for(int k = 0; k < em->nMu; k++){ // double count error (for debugging)
 
 	  double muPt_k = em->muPt->at(k);
 	  double muEta_k = em->muEta->at(k);
