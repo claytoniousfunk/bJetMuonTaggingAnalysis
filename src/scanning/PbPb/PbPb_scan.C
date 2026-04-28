@@ -556,9 +556,6 @@ void PbPb_scan(int group = 1){
     
     if(evi == 0) {
       std::cout << "Processing events...\n";
-      std::cout << "Run = " << em->runNumber << "\n";
-      std::cout << "Event = " << em->evtNumber << "\n";
-      std::cout << "Lumisection = " << em->lumiSection << "\n";
     }
 
     if((100*evi / NEvents) % 5 == 0 && (100*evi / NEvents) > evi_frac){
@@ -1184,15 +1181,15 @@ void PbPb_scan(int group = 1){
 
 	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
 
-	    h_dimuonMass[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
-	    h_dimuonMass[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	    h_dimuonMass[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k,em->runNumber,em->lumiSection,em->evtNumber),w_mk);
+	    h_dimuonMass[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k,em->runNumber,em->lumiSection,em->evtNumber),w_mk);
 	  
 	  }
 
 	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
 
-	    h_dimuonMass_sameSign[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
-	    h_dimuonMass_sameSign[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	    h_dimuonMass_sameSign[0]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k,em->runNumber,em->lumiSection,em->evtNumber),w_mk);
+	    h_dimuonMass_sameSign[CentralityIndex]->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k,em->runNumber,em->lumiSection,em->evtNumber),w_mk);
 	  
 	  }
 	

@@ -1,7 +1,11 @@
 
 
-double calculateDimuonMass(double pt1, double eta1, double phi1, double pt2, double eta2, double phi2){
+double calculateDimuonMass(double pt1, double eta1, double phi1, double pt2, double eta2, double phi2, UInt_t runNumber, UInt_t lumiSection, ULong64_t evtNumber){
 
+  std::cout << "Run = " << runNumber << "\n";
+  std::cout << "Lumisection = " << lumiSection << "\n";
+  std::cout << "Event = " << evtNumber << "\n";
+    
   double result = -1.0;
 
   double m_mu = 0.105658; // muon mass in GeV
