@@ -551,16 +551,15 @@ void PbPb_scan(int group = 1){
   int evi_frac = 0;
   for(int evi = 0; evi < NEvents; evi++){
 
+
+    em->getEvent(evi); // load event info from eventMap
+    
     if(evi == 0) {
       std::cout << "Processing events...\n";
       std::cout << "Run = " << em->runNumber << "\n";
       std::cout << "Event = " << em->evtNumber << "\n";
       std::cout << "Lumisection = " << em->lumiSection << "\n";
     }
-
-    
-
-    em->getEvent(evi); // load event info from eventMap
 
     if((100*evi / NEvents) % 5 == 0 && (100*evi / NEvents) > evi_frac){
 
