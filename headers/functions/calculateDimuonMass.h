@@ -8,6 +8,8 @@ double calculateDimuonMass(double pt1, double eta1, double phi1, double pt2, dou
 
   result = TMath::Sqrt(2*m_mu*m_mu + 2*pt1*pt2*(TMath::CosH(eta1-eta2) - TMath::Cos(phi1-phi2)));
 
+  std::cout << "calculated dimuon mass = " << result << "\n";
+
   return result;
 
 
