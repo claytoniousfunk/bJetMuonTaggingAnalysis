@@ -551,11 +551,14 @@ void PbPb_scan(int group = 1){
   int evi_frac = 0;
   for(int evi = 0; evi < NEvents; evi++){
 
-    if(evi == 0) cout << "Processing events..." << endl;
+    if(evi == 0) {
+      std::cout << "Processing events...\n";
+      std::cout << "Run = " << em->runNumber << "\n";
+      std::cout << "Event = " << em->evtNumber << "\n";
+      std::cout << "Lumisection = " << em->lumiSection << "\n";
+    }
 
-    std::cout << "Run = " << em->runNumber << "\n";
-    std::cout << "Event = " << em->evtNumber << "\n";
-    std::cout << "Lumisection = " << em->lumiSection << "\n";
+    
 
     em->getEvent(evi); // load event info from eventMap
 
