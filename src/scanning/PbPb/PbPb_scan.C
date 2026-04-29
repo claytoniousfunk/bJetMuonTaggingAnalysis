@@ -271,6 +271,7 @@ void PbPb_scan(int group = 1){
   h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",200,0,200);
   h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",200,0,200);
   h_inclMuPt = new TH1D("h_inclMuPt","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
+  h_nMu_triggerOn = new TH1D("h_nMu_triggerOn","nMu in triggered events",10,0,10);
 
   h_eventsBeforeSelection->Sumw2();
   h_eventsAfterSelection->Sumw2();
@@ -285,6 +286,7 @@ void PbPb_scan(int group = 1){
   h_hiBin_inclRecoMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
   h_inclMuPt->Sumw2();
+  h_nMu_triggerOn->Sumw2();
 
   for(int j = 0; j < NJetPtIndices; j++){
     if(j==0){
@@ -684,6 +686,7 @@ void PbPb_scan(int group = 1){
 	// h_vz_triggerOn->Fill(em->vz,w);
 	// h_hiBin_triggerOn->Fill(em->hiBin,w);
 	eventCounter++;
+	h_nMu_triggerOn->Fill(em->nMu,w);
       }
     }
     else if(fillMu7){
@@ -692,6 +695,7 @@ void PbPb_scan(int group = 1){
 	// h_vz_triggerOn->Fill(em->vz,w);
 	// h_hiBin_triggerOn->Fill(em->hiBin,w);
 	eventCounter++;
+	h_nMu_triggerOn->Fill(em->nMu,w);
       }
     }
     else if(fillMu12){
@@ -700,6 +704,7 @@ void PbPb_scan(int group = 1){
 	// h_vz_triggerOn->Fill(em->vz,w);
 	// h_hiBin_triggerOn->Fill(em->hiBin,w);
 	eventCounter++;
+	h_nMu_triggerOn->Fill(em->nMu,w);
       }
     }
     else{};
@@ -1225,6 +1230,7 @@ void PbPb_scan(int group = 1){
   h_hiBin_inclRecoMuonTag->Write();
   h_hiBin_inclRecoMuonTag_triggerOn->Write();
   h_inclMuPt->Write();
+  h_nMu_triggerOn->Write();
 
   for(int i = 0; i < NCentralityIndices; i++){
 
