@@ -112,7 +112,7 @@ public :
   int nMu=0;
   int nInner = 0;
   vector<Float_t> *muPt=0, *muEta=0, *muPhi=0, *muChi2NDF=0, *muInnerD0=0, *muInnerDz=0;
-  vector<Int_t> *muIsPF=0, *muIsGlobal=0, *muIsTracker=0, *muMuonHits=0, *muStations=0, *muTrkLayers=0, *muPixelHits=0, *muCharge=0, *muTightID=0;
+  vector<Int_t> *muIsPF=0, *muIsGlobal=0, *muIsTracker=0, *muMuonHits=0, *muStations=0, *muTrkLayers=0, *muPixelHits=0, *muCharge=0, *muIDTight=0;
   vector <int> *innerNTrkHits=0;
 
   // muon trigger info
@@ -372,7 +372,7 @@ void eventMap::loadMuon(const char* name){
   evtTree->SetBranchAddress("muTrkLayers",&muTrkLayers);
   evtTree->SetBranchAddress("muPixelHits",&muPixelHits);
   evtTree->SetBranchAddress("muCharge",&muCharge);
-  evtTree->SetBranchAddress("muTightID",&muTightID);
+  evtTree->SetBranchAddress("muIDTight",&muIDTight);
 
 }
 

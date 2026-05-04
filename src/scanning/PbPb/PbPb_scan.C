@@ -860,7 +860,7 @@ void PbPb_scan(int group = 1){
 				  em->muIsPF->at(m),
 				  em->muStations->at(m),
 				  em->muTrkLayers->at(m),
-				  em->muTightID->at(m))) continue; // skip if muon doesnt pass quality cuts
+				  em->muIDTight->at(m))) continue; // skip if muon doesnt pass quality cuts
 	}
 	else if(fillMu5 || fillMu7){
 	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
@@ -1130,7 +1130,7 @@ void PbPb_scan(int group = 1){
 				  em->muIsPF->at(m),
 				  em->muStations->at(m),
 				  em->muTrkLayers->at(m),
-				  em->muTightID->at(m))) continue; // skip if muon doesnt pass quality cuts
+				  em->muIDTight->at(m))) continue; // skip if muon doesnt pass quality cuts
 	}
 
 	else if(fillMu5 || fillMu7){
@@ -1167,7 +1167,7 @@ void PbPb_scan(int group = 1){
 				    em->muIsPF->at(k),
 				    em->muStations->at(k),
 				    em->muTrkLayers->at(k),
-				    em->muTightID->at(k))) continue; // skip if muon doesnt pass quality cuts
+				    em->muIDTight->at(k))) continue; // skip if muon doesnt pass quality cuts
 	  }
 
 	  else if(fillMu5 || fillMu7){
