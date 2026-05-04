@@ -3,7 +3,7 @@ void PbPb_skim_simple(int group = 1){
   string in_file_name;
   string output_file_base = "";
   in_file_name = "../../../fileNames/fileNames_HISingleMuon_HIRun2018A-04Apr2019-v1.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_HISingleMuon_HIRun2018A-04Apr2019-v1_2026-04-28/PbPb_SingleMuon_skim_output_%i",group);
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_HISingleMuon_HIRun2018A-04Apr2019-v1_2026-05-04/PbPb_SingleMuon_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
@@ -142,6 +142,7 @@ void PbPb_skim_simple(int group = 1){
     old_muon_tree->SetBranchStatus("muPixelHits",1);
     old_muon_tree->SetBranchStatus("muCharge",1);
     old_muon_tree->SetBranchStatus("nMu",1);
+    old_muon_tree->SetBranchStatus("muIDTight",1);
 
     new_file = (TFile*) TFile::Open((TString) (output_file_base+output_file_extension),"recreate");
     
