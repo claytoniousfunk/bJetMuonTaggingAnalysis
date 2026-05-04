@@ -22,7 +22,7 @@ bool isQualityMuon_tight(int muChi2NDF,
   /*    muTrkLayers <= 5) */
   /*   result = false; */
 
-  if(muTightID != 1) continue;
+  if(muTightID != 1) result = false;
 
   return result;
 }
