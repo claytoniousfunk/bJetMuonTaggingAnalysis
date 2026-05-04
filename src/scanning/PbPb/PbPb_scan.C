@@ -1107,7 +1107,8 @@ void PbPb_scan(int group = 1){
     double leadingMuonPt = 0.0;
     double etaCut_Zloop = 2.4;
     
-    if(triggerIsOn(loopMuonTrigger,1) && triggerIsOn(loopJetTrigger,1) && leadingRecoJetPt > loopJetPtCut){
+    //if(triggerIsOn(loopMuonTrigger,1) && triggerIsOn(loopJetTrigger,1) && leadingRecoJetPt > loopJetPtCut){
+    if(triggerIsOn(loopMuonTrigger,1)){
       for(int m = 0; m < em->nMu; m++){
 
 	double muPt_m = em->muPt->at(m);
