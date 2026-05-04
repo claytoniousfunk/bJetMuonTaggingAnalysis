@@ -805,6 +805,7 @@ void pp_scan(int group = 1){
     
     // RECO MUON LOOP
     double leadingMuonPt = 0.0;
+    double etaCut_Zloop = 2.4;
     //if(triggerIsOn(loopTrigger,1) && eventHasGoodJet && leadingRecoJetPt > loopJetPtCut){
     if(triggerIsOn(loopMuonTrigger,1)){
       for(int m = 0; m < em->nMu; m++){
@@ -817,7 +818,7 @@ void pp_scan(int group = 1){
 
 	// skip if muon has already been matched to a jet in this event
 	// muon kinematic cuts
-	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
+	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > etaCut_Zloop) continue;
 	// muon quality cuts
 	if(fillMu12){
 	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
@@ -852,7 +853,7 @@ void pp_scan(int group = 1){
 	  double muEta_k = em->muEta->at(k);
 	  double muPhi_k = em->muPhi->at(k);
 
-	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.0) continue;
+	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.4) continue;
 
 	  // muon quality cuts
 	  if(fillMu12){
