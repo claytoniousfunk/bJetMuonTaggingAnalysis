@@ -12,7 +12,7 @@ void PbPb_skim_simple(int group = 1){
   std::string filename;
   Int_t ifile = 0;
 
-  int endfile = 5157;
+  int endfile = 7616;
 
   TFile *old_file;
   TString filename_string = "";
