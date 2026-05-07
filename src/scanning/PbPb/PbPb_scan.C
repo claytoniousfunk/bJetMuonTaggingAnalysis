@@ -38,7 +38,8 @@
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
 //#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
-#include "../../../headers/AnalysisSetupV2p4.h" // ultra-fine cent bins
+//#include "../../../headers/AnalysisSetupV2p4.h" // ultra-fine cent bins
+#include "../../../headers/AnalysisSetupV2p5.h" // nominal cent bins with periph out to 90
 // JERCorrection params
 #include "../../../headers/fitParameters/JERCorrectionParams_PYTHIA_mu12.h"
 TF1 *fitFxn_PYTHIA_JERCorrection;
@@ -230,7 +231,8 @@ void PbPb_scan(int group = 1){
 
   //TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_HISingleMuon/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_periphTo90/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_ZBosonDoubleCountError/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
