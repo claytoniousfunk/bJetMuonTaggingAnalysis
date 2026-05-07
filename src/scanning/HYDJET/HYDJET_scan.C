@@ -1200,12 +1200,12 @@ void HYDJET_scan(int group = 1){
 
     if(CentralityIndex < 0) continue;
 
-    // if(applyJet60Trigger){
-    //   if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
-    // }
-    // if(applyJet80Trigger){
-    //   if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
-    // }
+    if(applyJet60Trigger){
+      if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    }
+    if(applyJet80Trigger){
+      if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
+    }
 
     // calculate event weight
     
