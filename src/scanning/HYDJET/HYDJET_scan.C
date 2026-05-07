@@ -38,7 +38,8 @@
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
 //#include "../../../headers/AnalysisSetupV2p2.h" // coarse centrality bins
-#include "../../../headers/AnalysisSetupV2p3.h" // fine centrality bins
+//#include "../../../headers/AnalysisSetupV2p3.h" // nominal centrality bins
+#include "../../../headers/AnalysisSetupV2p4.h" // fine centrality bins
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
