@@ -37,8 +37,8 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
-//#include "../../../headers/AnalysisSetupV2p4.h" // ultra-fine cent bins
+//#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
+#include "../../../headers/AnalysisSetupV2p4.h" // ultra-fine cent bins
 // JERCorrection params
 #include "../../../headers/fitParameters/JERCorrectionParams_PYTHIA_mu12.h"
 TF1 *fitFxn_PYTHIA_JERCorrection;
@@ -183,8 +183,8 @@ void PbPb_scan(int group = 1){
     muPtMaxCut = 15.0;
   }
   else if(fillMu12){
-    //muPtCut = 15.0;
-    muPtCut = 20.0;
+    muPtCut = 15.0;
+    //muPtCut = 20.0;
     //muPtMaxCut = 60.0;
     muPtMaxCut = 999.0;
   }
@@ -228,9 +228,9 @@ void PbPb_scan(int group = 1){
 						 fillMu7,
 						 fillMu12);
 
-  TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_HISingleMuon/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  //TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_ZBosonDoubleCountError/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
