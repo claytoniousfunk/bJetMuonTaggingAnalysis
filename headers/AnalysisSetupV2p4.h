@@ -16,14 +16,14 @@ int isXJet = 7;
 
 const int NCentralityIndices = 9;
 const int hiBin_C0_lo = 0;
-const int hiBin_C0_hi = 20;
-const int hiBin_C1_hi = 40;
-const int hiBin_C2_hi = 60;
-const int hiBin_C3_hi = 80;
-const int hiBin_C4_hi = 100;
-const int hiBin_C5_hi = 120;
-const int hiBin_C6_hi = 140;
-const int hiBin_C7_hi = 160;
+const int hiBin_C0_hi = 10;
+const int hiBin_C1_hi = 20;
+const int hiBin_C2_hi = 30;
+const int hiBin_C3_hi = 40;
+const int hiBin_C4_hi = 50;
+const int hiBin_C5_hi = 60;
+const int hiBin_C6_hi = 70;
+const int hiBin_C7_hi = 80;
 int centEdges[NCentralityIndices] = {hiBin_C0_lo, hiBin_C0_hi, hiBin_C1_hi, hiBin_C2_hi, hiBin_C3_hi, hiBin_C4_hi, hiBin_C5_hi, hiBin_C6_hi, hiBin_C7_hi};
 
 /* const int hiBin_C0_lo = 0; */
