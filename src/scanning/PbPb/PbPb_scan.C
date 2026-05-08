@@ -37,8 +37,8 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-//#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
-#include "../../../headers/AnalysisSetupV2p4.h" // ultra-fine cent bins
+#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
+//#include "../../../headers/AnalysisSetupV2p4.h" // ultra-fine cent bins
 //#include "../../../headers/AnalysisSetupV2p5.h" // nominal cent bins with periph out to 90
 // JERCorrection params
 #include "../../../headers/fitParameters/JERCorrectionParams_PYTHIA_mu12.h"
@@ -59,8 +59,8 @@ TF1 *fitFxn_PbPb_HLT_C4, *fitFxn_PbPb_HLT_C3, *fitFxn_PbPb_HLT_C2, *fitFxn_PbPb_
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
 //#include "../../../headers/functions/getCentBin_v2.h"
-//#include "../../../headers/functions/getCentBin.h"
-#include "../../../headers/functions/getCentBin_V2p4.h"
+#include "../../../headers/functions/getCentBin.h"
+//#include "../../../headers/functions/getCentBin_V2p4.h"
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
 // isQualityMuon_hybridSoft function
@@ -230,9 +230,9 @@ void PbPb_scan(int group = 1){
 						 fillMu7,
 						 fillMu12);
 
-  //TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_HISingleMuon/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_periphTo90/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_ZBosonDoubleCountError/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
