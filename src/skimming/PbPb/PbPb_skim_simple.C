@@ -2,8 +2,8 @@ void PbPb_skim_simple(int group = 1){
 
   string in_file_name;
   string output_file_base = "";
-  in_file_name = "../../../fileNames/fileNames_HISingleMuon_HIRun2018A-04Apr2019-v1.txt";
-  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_HISingleMuon_HIRun2018A-04Apr2019-v1_2026-04-28/PbPb_SingleMuon_skim_output_%i",group);
+  in_file_name = "../../../fileNames/fileNames_HIHardProbes_HIRun2018A-04Apr2019-v1_103X_dataRun2_Prompt_fixEcalADCToGeV_v1.txt";
+  output_file_base += Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/output_skims_HIHardProbes_HIRun2018A-04Apr2019-v1_103X_dataRun2_Prompt_fixEcalADCToGeV_v1_2026-05-04/PbPb_DiJet_skim_output_%i",group);
   string output_file_extension = "";
   output_file_extension += ".root";
 
@@ -12,7 +12,7 @@ void PbPb_skim_simple(int group = 1){
   std::string filename;
   Int_t ifile = 0;
 
-  int endfile = 7616;
+  int endfile = 7642;
 
   TFile *old_file;
   TString filename_string = "";
@@ -42,7 +42,6 @@ void PbPb_skim_simple(int group = 1){
     old_file->GetObject("hltanalysis/HltTree",old_hlt_tree);
     old_file->GetObject("akCs4PFJetAnalyzer/t",old_jet_tree);
     old_file->GetObject("ggHiNtuplizerGED/EventTree",old_muon_tree);
-    //old_file->GetObject("ggHiNtuplizer/EventTree",old_muon_tree);
     // deactivate all branches                                                                                   
     old_filter_tree->SetBranchStatus("*",0);
     old_evt_tree->SetBranchStatus("*",0);
@@ -55,7 +54,6 @@ void PbPb_skim_simple(int group = 1){
     old_filter_tree->SetBranchStatus("HBHENoiseFilterResultRun2Loose",1);
     old_filter_tree->SetBranchStatus("collisionEventSelectionAODv2",1);
     old_filter_tree->SetBranchStatus("phfCoincFilter3Th4",1);
-    old_filter_tree->SetBranchStatus("phfCoincFilter2Th4",1);
     old_filter_tree->SetBranchStatus("phfCoincFilter2Th4",1);
     old_filter_tree->SetBranchStatus("pclusterCompatibilityFilter",1);
     // evt
