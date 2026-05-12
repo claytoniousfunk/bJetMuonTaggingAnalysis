@@ -17,6 +17,22 @@ const int getCentBin(int hiBin)
     result = 7;
   else if (hiBin > hiBin_C6_hi && hiBin <= hiBin_C7_hi)
     result = 8;
+  else if (hiBin > hiBin_C7_hi && hiBin <= hiBin_C8_hi)
+    result = 9;
+  else if (hiBin > hiBin_C8_hi && hiBin <= hiBin_C9_hi)
+    result = 10;
+  else if (hiBin > hiBin_C9_hi && hiBin <= hiBin_C10_hi)
+    result = 11;
+  else if (hiBin > hiBin_C10_hi && hiBin <= hiBin_C11_hi)
+    result = 12;
+  else if (hiBin > hiBin_C11_hi && hiBin <= hiBin_C12_hi)
+    result = 13;
+  else if (hiBin > hiBin_C12_hi && hiBin <= hiBin_C13_hi)
+    result = 14;
+  else if (hiBin > hiBin_C13_hi && hiBin <= hiBin_C14_hi)
+    result = 15;
+  else if (hiBin > hiBin_C14_hi && hiBin <= hiBin_C15_hi)
+    result = 16;
   else
     ;
   return result;
