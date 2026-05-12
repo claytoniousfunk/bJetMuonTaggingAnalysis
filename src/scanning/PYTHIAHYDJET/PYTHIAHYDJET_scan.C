@@ -57,6 +57,8 @@
 #include "../../../headers/fitParameters/jetPtFitParams_C3_mu12.h"
 #include "../../../headers/fitParameters/jetPtFitParams_C2_mu12.h"
 #include "../../../headers/fitParameters/jetPtFitParams_C1_mu12.h"
+// pThat correlation
+#include "../../../headers/fitFunctions/fitFxn_PYTHIAHYDJET_pThatCorrelation.h"
 // hadronPtRel parameters
 #include "../../../headers/fitParameters/hadronPtRelFitParams_PbPb.h"
 // dR parameters
