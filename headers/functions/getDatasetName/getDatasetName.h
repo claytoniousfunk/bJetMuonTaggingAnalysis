@@ -21,7 +21,8 @@ TString getDatasetName(bool doDiJetSample = true,
 
   TString result = "";
   
-  if(doDiJetSample) result = "/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/";
+  //if(doDiJetSample) result = "/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/";
+  if(doDiJetSample) result = "/eos/user/c/cbennett/skims/output_skim_PH_DiJet_pTjet-5_withGenNeutrino_withRefPt/";
   else if(doMuJetSample) result = "/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/";
   else if(doBJetSample) result = "/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_BJet_withGS_withWTA_2/";
   else if(doDiJetSample_batch1) result = "/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch1/";
