@@ -41,8 +41,8 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
-//#include "../../../headers/AnalysisSetupV2p4.h" // ultra fine cent bins
+//#include "../../../headers/AnalysisSetupV2p3.h" // nominal cent bins
+#include "../../../headers/AnalysisSetupV2p4.h" // ultra fine cent bins
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
@@ -89,7 +89,8 @@ TF1 *fitFxn_PYTHIAHYDJET_BJetSpectraReweightToData_C1;
 // getJetPtBin function
 #include "../../../headers/functions/getJetPtBin.h"
 // getCentBin function
-#include "../../../headers/functions/getCentBin.h" // fine cent bins
+//#include "../../../headers/functions/getCentBin.h" // nominal cent bins
+#include "../../../headers/functions/getCentBin_V2p4.h" // ultra-fine cent bins
 //#include "../../../headers/functions/getCentBin_v2.h" // course cent bins
 // getPtRel function
 #include "../../../headers/functions/getPtRel.h"
@@ -195,11 +196,11 @@ void PYTHIAHYDJET_scan_response(int group = 1){
 						 doPThatCorrelationFilter);
 
 
-  TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_muTaggedJetsNoTrigger/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_evenEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   //TString output = Form("%s%s_oddEvents/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  //TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+  TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
   std::cout << "output dataset = " << output << std::endl;
 
