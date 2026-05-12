@@ -1468,7 +1468,7 @@ void HYDJET_scan(int group = 1){
       double smear = 0.0;
 
 
-      sigma = 0.663*JER_fxn[CentralityIndex]->Eval(recoJetPt_i); // apply a 20% smear
+      if(CentralityIndex <= 4) sigma = 0.663*JER_fxn[CentralityIndex]->Eval(recoJetPt_i); // apply a 20% smear
       smear = randomGenerator->Gaus(mu,sigma);
       recoJetPt_JERSmear_i = recoJetPt_i * smear;
 
