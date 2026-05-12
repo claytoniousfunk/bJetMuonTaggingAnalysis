@@ -612,7 +612,9 @@ void PYTHIAHYDJET_scan_response(int group = 1){
       else if(CentralityIndex == 1){
 	if((leadingRecoJetPt / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->Eval(em->pthat)) continue;
       }
-      else{continue;};
+      else{
+	if((leadingRecoJetPt / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->Eval(em->pthat)) continue; // default to C4 if we have more centrality bins
+      };
     }
 
     

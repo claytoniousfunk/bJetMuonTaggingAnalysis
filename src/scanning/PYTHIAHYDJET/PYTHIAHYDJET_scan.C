@@ -434,7 +434,8 @@ void PYTHIAHYDJET_scan(int group = 1){
 						 muPtMaxCut,
 						 fillMu5,
 						 fillMu7,
-						 fillMu12);
+						 fillMu12,
+						 doPThatCorrelationFilter);
 
   //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
   TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
