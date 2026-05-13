@@ -1325,11 +1325,11 @@ void PYTHIAHYDJET_scan(int group = 1){
     h_vz[CentralityIndex]->Fill(em->vz,w);
     h_hiBin->Fill(em->hiBin,w);
 
-    if(em->HLT_HIL3Mu12_v1 == 1){
-      h_vz_triggerOn[0]->Fill(em->vz,w);
-      h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
-      h_hiBin_triggerOn->Fill(em->hiBin,w);
-    }
+    // if(em->HLT_HIL3Mu12_v1 == 1){
+    //   h_vz_triggerOn[0]->Fill(em->vz,w);
+    //   h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
+    //   h_hiBin_triggerOn->Fill(em->hiBin,w);
+    // }
 
     if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 1){
       h_vz_jet60[0]->Fill(em->vz,w);
@@ -1377,24 +1377,30 @@ void PYTHIAHYDJET_scan(int group = 1){
     if(fillMu5){
       if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl)){
 	evtTriggerDecision = true;
-	h_vz_triggerOn->Fill(em->vz,w);
-	h_hiBin_triggerOn->Fill(em->hiBin,w);
+	h_vz_triggerOn[0]->Fill(em->vz,w);
+	h_hiBin_triggerOn[0]->Fill(em->hiBin,w);
+	h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
+	h_hiBin_triggerOn[CentralityIndex]->Fill(em->hiBin,w);
 	eventCounter++;
       }
     }
     else if(fillMu7){
       if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
 	evtTriggerDecision = true;
-	h_vz_triggerOn->Fill(em->vz,w);
-	h_hiBin_triggerOn->Fill(em->hiBin,w);
+	h_vz_triggerOn[0]->Fill(em->vz,w);
+	h_hiBin_triggerOn[0]->Fill(em->hiBin,w);
+	h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
+	h_hiBin_triggerOn[CentralityIndex]->Fill(em->hiBin,w);
 	eventCounter++;
       }
     }
     else if(fillMu12){
       if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
 	evtTriggerDecision = true;
-	h_vz_triggerOn->Fill(em->vz,w);
-	h_hiBin_triggerOn->Fill(em->hiBin,w);
+	h_vz_triggerOn[0]->Fill(em->vz,w);
+	h_hiBin_triggerOn[0]->Fill(em->hiBin,w);
+	h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
+	h_hiBin_triggerOn[CentralityIndex]->Fill(em->hiBin,w);
 	eventCounter++;
       }
     }
