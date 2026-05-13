@@ -139,6 +139,11 @@ TF1 *fitFxn_PYTHIAHYDJET_HLT_C4, *fitFxn_PYTHIAHYDJET_HLT_C3, *fitFxn_PYTHIAHYDJ
 TH1D *h_NEvents;
 // >> vz
 TH1D *h_vz[NCentralityIndices];
+TH1D *h_vz_jet[NCentralityIndices];
+TH1D *h_vz_jet60[NCentralityIndices];
+TH1D *h_vz_jet80[NCentralityIndices];
+TH1D *h_vz_jet100[NCentralityIndices];
+TH1D *h_vz_triggerOn[NCentralityIndices];
 TH1D *h_vz_inclGenMuonTag[NCentralityIndices];
 TH1D *h_vz_inclRecoMuonTag[NCentralityIndices];
 TH1D *h_vz_matchedRecoMuonTag[NCentralityIndices];
@@ -146,6 +151,9 @@ TH1D *h_vz_inclRecoMuonTag_triggerOn[NCentralityIndices];
 TH1D *h_vz_matchedRecoMuonTag_triggerOn[NCentralityIndices];
 // >> hiBin
 TH1D *h_hiBin, *h_hiBin_raw;
+TH1D *h_hiBin_jet;
+TH1D *h_hiBin_jet60, *h_hiBin_jet80, *h_hiBin_jet100;
+TH1D *h_hiBin_triggerOn;
 TH1D *h_hiBin_inclGenMuonTag;
 TH1D *h_hiBin_inclRecoMuonTag;
 TH1D *h_hiBin_matchedRecoMuonTag;
@@ -475,8 +483,13 @@ void PYTHIAHYDJET_scan(int group = 1){
   h_NEvents = new TH1D("h_NEvents","Number of events",1000,0,1000);
   h_delta_muptrel_WTA_nom_flavor = new TH2D("h_delta_muptrel_WTA_nom_flavor","h_delta_muptrel_WTA_nom_flavor",1000,-1,1,27,-5,22);
   // >> hiBin
-  h_hiBin = new TH1D("h_hiBin","hiBin, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin = new TH1D("h_hiBin","hiBin, all events",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_raw = new TH1D("h_hiBin_raw","hiBin, raw (no weight)",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin_jet = new TH1D("h_hiBin_jet","hiBin, events with good recoJet",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin_jet60 = new TH1D("h_hiBin_jet60","hiBin, events with jet60",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin_jet80 = new TH1D("h_hiBin_jet80","hiBin, events with jet80",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin_jet100 = new TH1D("h_hiBin_jet100","hiBin, events with jet100",NhiBinBins,hiBinMin,hiBinMax);
+  h_hiBin_triggerOn = new TH1D("h_hiBin_triggerOn","hiBin, events with triggerOn",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclGenMuonTag = new TH1D("h_hiBin_inclGenMuonTag","hiBin, events with inclRecoJet-inclGenMuonTag",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",NhiBinBins,hiBinMin,hiBinMax);
   h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
@@ -490,6 +503,11 @@ void PYTHIAHYDJET_scan(int group = 1){
   h_delta_muptrel_WTA_nom_flavor->Sumw2();
   h_hiBin->Sumw2();
   h_hiBin_raw->Sumw2();
+  h_hiBin_jet->Sumw2();
+  h_hiBin_jet60->Sumw2();
+  h_hiBin_jet80->Sumw2();
+  h_hiBin_jet100->Sumw2();
+  h_hiBin_triggerOn->Sumw2();
   h_hiBin_inclGenMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag->Sumw2();
   h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
@@ -525,7 +543,12 @@ void PYTHIAHYDJET_scan(int group = 1){
     if(i==0){
       // ----------------------------------------- event histograms -----------------
       // >> vz
-      h_vz[i] = new TH1D(Form("h_vz_C%i",i),Form("vz, events with inclRecoJet, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz[i] = new TH1D(Form("h_vz_C%i",i),Form("vz, all events, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz_jet[i] = new TH1D(Form("h_vz_jet_C%i",i),Form("vz, events with good recoJet, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz_jet60[i] = new TH1D(Form("h_vz_jet60_jet_C%i",i),Form("vz, events with jet60, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz_jet80[i] = new TH1D(Form("h_vz_jet80_jet_C%i",i),Form("vz, events with jet80, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz_jet100[i] = new TH1D(Form("h_vz_jet100_jet_C%i",i),Form("vz, events with jet100, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
+      h_vz_triggerOn[i] = new TH1D(Form("h_vz_triggerOn_jet_C%i",i),Form("vz, events with triggerOn, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
       h_vz_inclGenMuonTag[i] = new TH1D(Form("h_vz_inclGenMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclGenMuonTag, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag[i] = new TH1D(Form("h_vz_inclRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
       h_vz_matchedRecoMuonTag[i] = new TH1D(Form("h_vz_matchedRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-matchedRecoMuonTag, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NVzBins,vzMin,vzMax);
@@ -662,7 +685,12 @@ void PYTHIAHYDJET_scan(int group = 1){
     }
     else{
       // ----------------------------------------- event histograms -----------------
-      h_vz[i] = new TH1D(Form("h_vz_C%i",i),Form("vz, events with inclRecoJet, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz[i] = new TH1D(Form("h_vz_C%i",i),Form("vz, all events, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz_jet[i] = new TH1D(Form("h_vz_jet_C%i",i),Form("vz, events with good recoJet, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz_jet60[i] = new TH1D(Form("h_vz_jet60_C%i",i),Form("vz, events with jet60, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz_jet80[i] = new TH1D(Form("h_vz_jet80_C%i",i),Form("vz, events with jet80, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz_jet100[i] = new TH1D(Form("h_vz_jet100_C%i",i),Form("vz, events with jet100, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
+      h_vz_triggerOn[i] = new TH1D(Form("h_vz_triggerOn_C%i",i),Form("vz, events with triggerOn, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
       h_vz_inclGenMuonTag[i] = new TH1D(Form("h_vz_inclGenMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclGenMuonTag, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
       h_vz_inclRecoMuonTag[i] = new TH1D(Form("h_vz_inclRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-inclRecoMuonTag, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
       h_vz_matchedRecoMuonTag[i] = new TH1D(Form("h_vz_matchedRecoMuonTag_C%i",i),Form("vz, events with inclRecoJet-matchedRecoMuonTag, hiBin %i - %i",centEdges[i-1],centEdges[i]),NVzBins,vzMin,vzMax);
@@ -801,6 +829,11 @@ void PYTHIAHYDJET_scan(int group = 1){
     h_NMuTaggedJetPerEvent[i]->Sumw2();
     
     h_vz[i]->Sumw2();
+    h_vz_jet[i]->Sumw2();
+    h_vz_jet60[i]->Sumw2();
+    h_vz_jet80[i]->Sumw2();
+    h_vz_jet100[i]->Sumw2();
+    h_vz_triggerOn[i]->Sumw2();
     h_vz_inclGenMuonTag[i]->Sumw2();
     h_vz_inclRecoMuonTag[i]->Sumw2();
     h_vz_matchedRecoMuonTag[i]->Sumw2();
@@ -1268,13 +1301,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     if(CentralityIndex < 0) continue;
 
-    if(applyJet60Trigger){
-      if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
-    }
-    if(applyJet80Trigger){
-      if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
-    }
-
+    
     // calculate event weight
     
     double w_reweight_hiBin = 1.0;
@@ -1286,15 +1313,43 @@ void PYTHIAHYDJET_scan(int group = 1){
     if(doVzReweight){
       w_reweight_vz = fitFxn_vz->Eval(em->vz);
     }
-    
-
-    
+       
     double w_pthat = 1.0;
     if(doPThatWeight){
       w_pthat = em->weight;
     }
     
     double w = w_pthat * w_reweight_hiBin * w_reweight_vz;
+
+    h_vz[0]->Fill(em->vz,w);
+    h_vz[CentralityIndex]->Fill(em->vz,w);
+    h_hiBin->Fill(em->hiBin,w);
+
+    if(em->HLT_HIL3Mu12_v1 == 1){
+      h_vz_triggerOn[0]->Fill(em->vz,w);
+      h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin_triggerOn->Fill(em->hiBin,w);
+    }
+
+    if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 1){
+      h_vz_jet60[0]->Fill(em->vz,w);
+      h_vz_jet60[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin_jet60->Fill(em->hiBin,w);
+    }
+
+    if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 1){
+      h_vz_jet80[0]->Fill(em->vz,w);
+      h_vz_jet80[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin_jet80->Fill(em->hiBin,w);
+    }
+
+    if(em->HLT_HICsAK4PFJet100Eta1p5_v1 == 1){
+      h_vz_jet100[0]->Fill(em->vz,w);
+      h_vz_jet100[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin_jet100->Fill(em->hiBin,w);
+    }
+
+
 
     
     if(w <= 0.0) continue;
@@ -1322,29 +1377,37 @@ void PYTHIAHYDJET_scan(int group = 1){
     if(fillMu5){
       if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl)){
 	evtTriggerDecision = true;
-	// h_vz_triggerOn->Fill(em->vz,w);
-	// h_hiBin_triggerOn->Fill(em->hiBin,w);
+	h_vz_triggerOn->Fill(em->vz,w);
+	h_hiBin_triggerOn->Fill(em->hiBin,w);
 	eventCounter++;
       }
     }
     else if(fillMu7){
       if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
 	evtTriggerDecision = true;
-	// h_vz_triggerOn->Fill(em->vz,w);
-	// h_hiBin_triggerOn->Fill(em->hiBin,w);
+	h_vz_triggerOn->Fill(em->vz,w);
+	h_hiBin_triggerOn->Fill(em->hiBin,w);
 	eventCounter++;
       }
     }
     else if(fillMu12){
       if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
 	evtTriggerDecision = true;
-	// h_vz_triggerOn->Fill(em->vz,w);
-	// h_hiBin_triggerOn->Fill(em->hiBin,w);
+	h_vz_triggerOn->Fill(em->vz,w);
+	h_hiBin_triggerOn->Fill(em->hiBin,w);
 	eventCounter++;
       }
     }
     else{};
-   
+
+    if(applyJet60Trigger){
+      if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
+    }
+    if(applyJet80Trigger){
+      if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 0) continue;
+    }
+
+    
     bool eventHasGoodJet = false;
     bool eventHasInclRecoMuonTag = false;
     bool eventHasInclRecoMuonTagPlusTrigger = false;
@@ -2405,9 +2468,9 @@ void PYTHIAHYDJET_scan(int group = 1){
     
     if(eventHasGoodJet){
 
-      h_hiBin->Fill(hiBin_shifted,w);
-      h_vz[0]->Fill(em->vz,w);
-      h_vz[CentralityIndex]->Fill(em->vz,w);
+      h_hiBin_jet->Fill(hiBin_shifted,w);
+      h_vz_jet[0]->Fill(em->vz,w);
+      h_vz_jet[CentralityIndex]->Fill(em->vz,w);
 
       if(eventHasInclRecoMuonTag){
 
@@ -2763,6 +2826,11 @@ void PYTHIAHYDJET_scan(int group = 1){
   //h_delta_muptrel_WTA_nom_flavor->Write();
   h_hiBin->Write();
   h_hiBin_raw->Write();
+  h_hiBin_jet->Write();
+  h_hiBin_jet60->Write();
+  h_hiBin_jet80->Write();
+  h_hiBin_jet100->Write();
+  h_hiBin_triggerOn->Write();
   h_hiBin_inclGenMuonTag->Write();
   h_hiBin_inclRecoMuonTag->Write();
   h_hiBin_inclRecoMuonTag_triggerOn->Write();
@@ -2779,6 +2847,11 @@ void PYTHIAHYDJET_scan(int group = 1){
     h_NMuTaggedJetPerEvent[i]->Write();
     
     h_vz[i]->Write();
+    h_vz_jet[i]->Write();
+    h_vz_jet60[i]->Write();
+    h_vz_jet80[i]->Write();
+    h_vz_jet100[i]->Write();
+    h_vz_triggerOn[i]->Write();
     h_vz_inclGenMuonTag[i]->Write();
     h_vz_inclRecoMuonTag[i]->Write();
     h_vz_matchedRecoMuonTag[i]->Write();
