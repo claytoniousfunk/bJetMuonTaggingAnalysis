@@ -1378,9 +1378,8 @@ void PYTHIAHYDJET_scan(int group = 1){
       if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl)){
 	evtTriggerDecision = true;
 	h_vz_triggerOn[0]->Fill(em->vz,w);
-	h_hiBin_triggerOn[0]->Fill(em->hiBin,w);
 	h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
-	h_hiBin_triggerOn[CentralityIndex]->Fill(em->hiBin,w);
+	h_hiBin_triggerOn->Fill(em->hiBin,w);
 	eventCounter++;
       }
     }
@@ -1388,9 +1387,8 @@ void PYTHIAHYDJET_scan(int group = 1){
       if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
 	evtTriggerDecision = true;
 	h_vz_triggerOn[0]->Fill(em->vz,w);
-	h_hiBin_triggerOn[0]->Fill(em->hiBin,w);
 	h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
-	h_hiBin_triggerOn[CentralityIndex]->Fill(em->hiBin,w);
+	h_hiBin_triggerOn->Fill(em->hiBin,w);
 	eventCounter++;
       }
     }
@@ -1398,9 +1396,8 @@ void PYTHIAHYDJET_scan(int group = 1){
       if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
 	evtTriggerDecision = true;
 	h_vz_triggerOn[0]->Fill(em->vz,w);
-	h_hiBin_triggerOn[0]->Fill(em->hiBin,w);
 	h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
-	h_hiBin_triggerOn[CentralityIndex]->Fill(em->hiBin,w);
+	h_hiBin_triggerOn->Fill(em->hiBin,w);
 	eventCounter++;
       }
     }
