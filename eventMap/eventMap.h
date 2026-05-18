@@ -202,8 +202,8 @@ public :
 
 void eventMap::init(){
   //evtTree = (TTree*) _file->Get("jetTree");
-  evtTree = (TTree*) _file->Get("evtTree");
-  //evtTree = (TTree*) _file->Get("hiEvtAnalyzer/HiTree");
+  //evtTree = (TTree*) _file->Get("evtTree");
+  evtTree = (TTree*) _file->Get("hiEvtAnalyzer/HiTree");
   //evtTree = (TTree*) _file->Get(Form("%s",name));
   evtTree->SetBranchAddress("vz", &vz);
   evtTree->SetBranchAddress("hiBin", &hiBin);
@@ -218,8 +218,8 @@ void eventMap::init(){
 }
 
 void eventMap::regEventFilter(int nfilter, std::string *filtername){
-  filterTree = (TTree*) _file->Get("filterTree");
-  //filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
+  //filterTree = (TTree*) _file->Get("filterTree");
+  filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
   evtTree->AddFriend(filterTree);
   filters.clear();
   filters.resize(nfilter);
@@ -234,7 +234,8 @@ void eventMap::regEventFilter(int nfilter, std::string *filtername){
 }
 
 void eventMap::regEventFilter(std::vector<std::string> &filtername){
-  filterTree = (TTree*) _file->Get("filterTree");
+  //filterTree = (TTree*) _file->Get("filterTree");
+  filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
   evtTree->AddFriend(filterTree);
   filters.clear();
   filters.resize(filtername.size());
@@ -271,8 +272,8 @@ void eventMap::loadTrack(const char* name){
   evtTree->SetBranchAddress("pfHcal", 	&pfHcal);
 }
 
-void eventMap::loadGenParticle(){
-  genParticleTree = (TTree*) _file->Get("genParticleTree");
+void eventMap::loadGenParticle(const char* name){
+  genParticleTree = (TTree*) _file->Get(Form("%s",name));;
   evtTree->AddFriend(genParticleTree);
   evtTree->SetBranchAddress("pt",  &gpptp);
   evtTree->SetBranchAddress("eta", &gpetap);
@@ -353,7 +354,8 @@ void eventMap::loadJet(const char* name){
 }
 
 void eventMap::loadMuon(const char* name){
-  muonTree = (TTree*) _file->Get("muonTree");
+  //muonTree = (TTree*) _file->Get("muonTree");
+  muonTree = (TTree*) _file->Get(Form("%s",name));
   //muonEvtTree = (TTree*) _file->Get("muonEvtTree");
   evtTree->AddFriend(muonTree);
   evtTree->AddFriend(muonEvtTree);
@@ -385,8 +387,8 @@ void eventMap::loadMuonAnalyzer(const char* name){
 
 }
 
-void eventMap::loadMuonTrigger(const char* name){
-  muonTriggerTree = (TTree*) _file->Get("hltTree");
+void eventMap::loadHLT(const char* name){
+  muonTriggerTree = (TTree*) _file->Get("hltanalysis/HltTree");
   evtTree->AddFriend(muonTriggerTree);
   //evtTree->SetBranchAddress("HLT_HIL3Mu5_v1",&HLT_HIL3Mu5_v1);
   //evtTree->SetBranchAddress("HLT_HIL3Mu5_v1_Prescl",&HLT_HIL3Mu5_v1_Prescl);
