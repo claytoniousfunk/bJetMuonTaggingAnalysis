@@ -28,12 +28,12 @@ public :
   void loadJet(const char* name);
   void loadMuon(const char* name);
   void loadMuonAnalyzer(const char* name);
-  void loadMuonTrigger(const char* name);
+  void loadHLT(const char* name);
   void loadBTagger();
   void loadBTaggerInputVariables();
   void getEvent(Long64_t j){evtTree->GetEntry(j);};
   void loadTrack(const char* name);
-  void loadGenParticle();
+  void loadGenParticle(const char* name);
   void unloadGP();
   void regEventFilter(int nfilter, std::string *filtername);
   void regEventFilter(std::vector<std::string> &filtername);
