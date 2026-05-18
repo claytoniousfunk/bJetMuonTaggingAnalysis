@@ -1278,6 +1278,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     loadFitFxn_dR();
     loadFitFxn_PYTHIAHYDJET_HLT();
     loadFitFxn_PYTHIAHYDJET_BJetSpectraReweightToData();
+    loadFitFxn_PYTHIAHYDJET_pThatCorrelation();
 
     TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
     TH2D *neutrino_energy_map;
