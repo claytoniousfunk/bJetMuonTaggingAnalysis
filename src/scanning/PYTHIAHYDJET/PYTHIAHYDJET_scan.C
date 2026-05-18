@@ -131,6 +131,8 @@ TF1 *fitFxn_PYTHIAHYDJET_HLT_C4, *fitFxn_PYTHIAHYDJET_HLT_C3, *fitFxn_PYTHIAHYDJ
 #include "../../../headers/functions/getDatasetName/getDatasetName.h"
 #include "../../../headers/functions/getInputFileName/getInputFileName.h"
 #include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIAHYDJET.h"
+// pThat correlation
+#include "../../../headers/fitFunctions/fitFxn_PYTHIAHYDJET_pThatCorrelation.h"
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // >>>>>>>>>> Reco jets
@@ -1586,11 +1588,31 @@ void PYTHIAHYDJET_scan(int group = 1){
 	JEC.SetJetPhi(em->jetphi[i]);
 
 	double recoJetPt_i = JEC.GetCorrectedPT();  // recoJetPt
+	double refJetPt_i = em->refpt[i];
 	double recoJetPt_JERSmear_i = recoJetPt_i;
 	double recoJetPt_JEUShiftUp_i = recoJetPt_i;
 	double recoJetPt_JEUShiftDown_i = recoJetPt_i;
 	double recoJetEta_i = em->jeteta[i]; // recoJetEta
 	double recoJetPhi_i = em->jetphi[i]; // recoJetPhi
+
+	if(doPThatCorrelationFilter){
+	  if(CentralityIndex == 4){
+	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->Eval(em->pthat)) continue;
+	  }
+	  else if(CentralityIndex == 3){
+	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->Eval(em->pthat)) continue;
+	  }
+	  else if(CentralityIndex == 2){
+	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->Eval(em->pthat)) continue;
+	  }
+	  else if(CentralityIndex == 1){
+	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->Eval(em->pthat)) continue;
+	  }
+	  else{
+	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->Eval(em->pthat)) continue; // default to C4 if we have more centrality bins
+	  };
+	}
+	
 
 	// experimental jet-axis smearing
 	double val_etaSmear = randomGenerator->Gaus(mu_eta,sigma_eta);
