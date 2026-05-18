@@ -472,6 +472,11 @@ void PYTHIAHYDJET_scan(int group = 1){
     TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
 
     std::cout << "output dataset = " << output << std::endl;
+
+    if(gSystem->AccessPathName(output.Data())){
+      std::cout << "Output directory not found: " << outputDir << std::endl;
+      return 1;
+    }
   
     // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
     // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_vzReweight_hiBinReweight_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_noHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);
