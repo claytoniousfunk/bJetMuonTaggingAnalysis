@@ -475,7 +475,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     if(gSystem->AccessPathName(output.Data())){
       std::cout << "Output directory not found: " << output << std::endl;
-      return 1;
+      return;
     }
   
     // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
