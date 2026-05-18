@@ -131,8 +131,6 @@ TF1 *fitFxn_PYTHIAHYDJET_HLT_C4, *fitFxn_PYTHIAHYDJET_HLT_C3, *fitFxn_PYTHIAHYDJ
 #include "../../../headers/functions/getDatasetName/getDatasetName.h"
 #include "../../../headers/functions/getInputFileName/getInputFileName.h"
 #include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_PYTHIAHYDJET.h"
-// pThat correlation
-#include "../../../headers/fitFunctions/fitFxn_PYTHIAHYDJET_pThatCorrelation.h"
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // >>>>>>>>>> Reco jets
