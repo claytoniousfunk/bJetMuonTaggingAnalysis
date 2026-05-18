@@ -337,7 +337,7 @@ void PYTHIAHYDJET_scan(int group = 1){
   else{};
 
   
-  TString inputFileList = "";
+  std::string inputFileList = "";
   if(doDiJetSample) inputFileList = "../../../fileNames/";
   else if(doMuJetSample) inputFileList = "../../../fileNames/fileNames_MuJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8.txt";
   else if(doBJetSample) inputFileList = "../../../fileNames/fileNames_BJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8.txt";
@@ -357,7 +357,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     if(ifile != group) continue;
 
-    TString input = filename.c_str();
+    std::string input = filename.c_str();
   
     // TString inputDataset = "";
     // TString inputFileName = "";
@@ -1186,7 +1186,7 @@ void PYTHIAHYDJET_scan(int group = 1){
     }
 
 
-    TFile *f = TFile::Open(input);
+    TFile *f = TFile::Open(input.c_str());
     cout << "	File opened!" << endl;
     auto em = new eventMap(f);
     em->isMC = isMC_status;
