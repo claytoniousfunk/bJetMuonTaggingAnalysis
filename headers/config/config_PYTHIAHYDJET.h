@@ -14,8 +14,8 @@ bool apply_JEU_shift_down = false;
 bool skipGenParticles = false; // set TRUE for MuJet and BJet datasets
 // reweighting functions
 bool doPThatWeight = false;
-bool doHiBinReweight = false;
-bool doHiBinReweightToHardProbesJet80 = true;
+bool doHiBinReweight = true;
+bool doHiBinReweightToHardProbesJet80 = false;
 bool doVzReweight = true;
 bool doJetPtReweight = false;
 // jet-based filters
@@ -35,7 +35,7 @@ bool doWeightCut = false;
 bool doJetAxisSmearing = false;
 bool doWDecayFilter = true;
 bool doBJetSpectraReweightToData = false;
-bool doPThatCorrelationFilter = false;
+bool doPThatCorrelationFilter = true;
 // shifting the hiBin distribution by this amount
 int hiBinShift = 10;
 // jet-alterations for closure
