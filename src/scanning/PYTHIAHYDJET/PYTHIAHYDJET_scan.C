@@ -473,7 +473,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
     std::cout << "output dataset = " << output << std::endl;
 
-    if(gSystem->AccessPathName(output.Data())){
+    if(gSystem->AccessPathName(Form("%s%s",outputBaseDir.Data(),outputDatasetName.Data()))){
       std::cout << "Output directory not found: " << output << std::endl;
       return;
     }
