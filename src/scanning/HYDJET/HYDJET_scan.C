@@ -147,6 +147,7 @@ TH1D *h_hiBin_inclRecoMuonTag_triggerOn;
 TH1D *h_hiBin_matchedRecoMuonTag_triggerOn;
 // ------------------------------- incl. reco jets per flavor -----------------
 TH2D *h_inclRecoJetPt_flavor[NCentralityIndices];
+TH2D *h_inclRecoJetPtNoSubleading_flavor[NCentralityIndices];
 TH2D *h_inclRecoJetEta_flavor[NCentralityIndices];
 TH2D *h_inclRecoJetPhi_flavor[NCentralityIndices];
 TH2D *h_inclRecoJetPt_inclRecoJetEta[NCentralityIndices];
@@ -498,6 +499,7 @@ void HYDJET_scan(int group = 1){
 	h_NMuTaggedJetPerEvent[i] = new TH1D(Form("h_NMuTaggedJetPerEvent_C%i",i),Form("Number of #it{#mu}-tagged jets per event, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),100,0,100);
 	// ------------------------------- incl. reco jets per flavor -----------------
 	h_inclRecoJetPt_flavor[i] = new TH2D(Form("h_inclRecoJetPt_flavor_C%i",i),Form("JetFlavorID vs incl. reco p_{T}^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,27,-5,22);
+	h_inclRecoJetPtNoSubleading_flavor[i] = new TH2D(Form("h_inclRecoJetPtNoSubleading_flavor_C%i",i),Form("JetFlavorID vs incl. reco p_{T}^{jet} (no subleading jet), hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,27,-5,22);
 	h_inclRecoJetEta_flavor[i] = new TH2D(Form("h_inclRecoJetEta_flavor_C%i",i),Form("JetFlavorID vs incl. reco #eta^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NEtaBins,etaMin,etaMax,27,-5,22);
 	h_inclRecoJetPhi_flavor[i] = new TH2D(Form("h_inclRecoJetPhi_flavor_C%i",i),Form("JetFlavorID vs incl. reco #phi^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPhiBins,phiMin,phiMax,27,-5,22);
 	h_inclRecoJetPt_inclRecoJetEta[i] = new TH2D(Form("h_inclRecoJetPt_inclRecoJetEta_C%i",i),Form("incl. reco #eta^{jet} vs. incl reco p_{T}^{jet}, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
@@ -635,6 +637,7 @@ void HYDJET_scan(int group = 1){
 	h_NMuTaggedJetPerEvent[i] = new TH1D(Form("h_NMuTaggedJetPerEvent_C%i",i),Form("Number of #it{#mu}-tagged jets per event, hiBin %i - %i",centEdges[i-1],centEdges[i]),100,0,100);
 	// ------------------------------- incl. reco jets per flavor -----------------
 	h_inclRecoJetPt_flavor[i] = new TH2D(Form("h_inclRecoJetPt_flavor_C%i",i),Form("JetFlavorID vs incl. reco p_{T}^{jet}, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,27,-5,22);
+	h_inclRecoJetPtNoSubleading_flavor[i] = new TH2D(Form("h_inclRecoJetPtNoSubleading_flavor_C%i",i),Form("JetFlavorID vs incl. reco p_{T}^{jet} (no subleading), hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,27,-5,22);
 	h_inclRecoJetEta_flavor[i] = new TH2D(Form("h_inclRecoJetEta_flavor_C%i",i),Form("JetFlavorID vs incl. reco #eta^{jet}, hiBin %i - %i",centEdges[i-1],centEdges[i]),NEtaBins,etaMin,etaMax,27,-5,22);
 	h_inclRecoJetPhi_flavor[i] = new TH2D(Form("h_inclRecoJetPhi_flavor_C%i",i),Form("JetFlavorID vs incl. reco #phi^{jet}, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPhiBins,phiMin,phiMax,27,-5,22);
 	h_inclRecoJetPt_inclRecoJetEta[i] = new TH2D(Form("h_inclRecoJetPt_inclRecoJetEta_C%i",i),Form("incl. reco #eta^{jet} vs. incl reco p_{T}^{jet}, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
@@ -771,6 +774,7 @@ void HYDJET_scan(int group = 1){
       h_vz_matchedRecoMuonTag_triggerOn[i]->Sumw2();
   
       h_inclRecoJetPt_flavor[i]->Sumw2();
+      h_inclRecoJetPtNoSubleading_flavor[i]->Sumw2();
       h_inclRecoJetEta_flavor[i]->Sumw2();
       h_inclRecoJetPhi_flavor[i]->Sumw2();
       h_inclRecoJetPt_inclRecoJetEta[i]->Sumw2();
@@ -1549,6 +1553,24 @@ void HYDJET_scan(int group = 1){
 		        
 	int jetPtIndex = getJetPtBin(recoJetPt_i);
 
+	bool hasSubleadingJet = false;
+	// find subleading
+	for(int k = i+1; k < em->njet; k++){
+	  JEC.SetJetPT(em->rawpt[k]);
+	  JEC.SetJetEta(em->jeteta[k]);
+	  JEC.SetJetPhi(em->jetphi[k]);
+
+	  double recoJetPt_k = JEC.GetCorrectedPT();  // recoJetPt
+	  double recoJetEta_k = em->jeteta[k]; // recoJetEta
+	  double recoJetPhi_k = em->jetphi[k]; // recoJetPhi
+
+	  double dPhi_ik = acos(cos(recoJetPhi_k - recoJetPhi_i));
+
+	  if((dPhi_ik > 2.*TMath::Pi() / 3.) && (TMath::Abs(recoJetPt_k - recoJetPt_i)/(0.5*(recoJetPt_k + recoJetPt_i))  < 0.42) ) hasSubleadingJet = true;
+	  
+	}
+	
+
 	//if(jetPtIndex < 0) continue;
       
 	// fill genJetPt vs pthat
@@ -1830,6 +1852,10 @@ void HYDJET_scan(int group = 1){
 	inclJetCounter++;
 	h_inclRecoJetPt_flavor[0]->Fill(recoJetPt_i,jetFlavorInt,w);
 	h_inclRecoJetPt_flavor[CentralityIndex]->Fill(recoJetPt_i,jetFlavorInt,w);
+	if(!hasSubleadingJet){
+	  h_inclRecoJetPtNoSubleading_flavor[0]->Fill(recoJetPt_i,jetFlavorInt,w);
+	  h_inclRecoJetPtNoSubleading_flavor[CentralityIndex]->Fill(recoJetPt_i,jetFlavorInt,w);
+	}
 	h_inclRecoJetEta_flavor[0]->Fill(recoJetEta_i,jetFlavorInt,w);
 	h_inclRecoJetEta_flavor[CentralityIndex]->Fill(recoJetEta_i,jetFlavorInt,w);
 	h_inclRecoJetPhi_flavor[0]->Fill(recoJetPhi_i,jetFlavorInt,w);
@@ -2739,6 +2765,7 @@ void HYDJET_scan(int group = 1){
       h_vz_matchedRecoMuonTag_triggerOn[i]->Write();
 
       h_inclRecoJetPt_flavor[i]->Write();
+      h_inclRecoJetPtNoSubleading_flavor[i]->Write();
       h_inclRecoJetEta_flavor[i]->Write();
       h_inclRecoJetPhi_flavor[i]->Write();
       h_inclRecoJetPt_inclRecoJetEta[i]->Write();
