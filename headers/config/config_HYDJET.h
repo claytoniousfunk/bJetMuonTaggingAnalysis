@@ -48,7 +48,7 @@ double sigma_eta = 0.005;
 // stuff for dataset naming
 TString generator = "HYDJET";
 // jet triggers
-bool applyJet60Trigger = true;
+bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
 bool applyJet100Trigger = false;
 bool applyMu12TriggerEfficiencyCorrection = false;
