@@ -1350,7 +1350,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
       h_vz[0]->Fill(em->vz,w);
       h_vz[CentralityIndex]->Fill(em->vz,w);
-      h_hiBin->Fill(em->hiBin,w);
+      h_hiBin->Fill(hiBin_shifted,w);
 
       // if(em->HLT_HIL3Mu12_v1 == 1){
       //   h_vz_triggerOn[0]->Fill(em->vz,w);
@@ -1361,19 +1361,19 @@ void PYTHIAHYDJET_scan(int group = 1){
       if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 1){
 	h_vz_jet60[0]->Fill(em->vz,w);
 	h_vz_jet60[CentralityIndex]->Fill(em->vz,w);
-	h_hiBin_jet60->Fill(em->hiBin,w);
+	h_hiBin_jet60->Fill(hiBin_shifted,w);
       }
 
       if(em->HLT_HICsAK4PFJet80Eta1p5_v1 == 1){
 	h_vz_jet80[0]->Fill(em->vz,w);
 	h_vz_jet80[CentralityIndex]->Fill(em->vz,w);
-	h_hiBin_jet80->Fill(em->hiBin,w);
+	h_hiBin_jet80->Fill(hiBin_shifted,w);
       }
 
       if(em->HLT_HICsAK4PFJet100Eta1p5_v1 == 1){
 	h_vz_jet100[0]->Fill(em->vz,w);
 	h_vz_jet100[CentralityIndex]->Fill(em->vz,w);
-	h_hiBin_jet100->Fill(em->hiBin,w);
+	h_hiBin_jet100->Fill(hiBin_shifted,w);
       }
 
 
@@ -1406,7 +1406,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  evtTriggerDecision = true;
 	  h_vz_triggerOn[0]->Fill(em->vz,w);
 	  h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
-	  h_hiBin_triggerOn->Fill(em->hiBin,w);
+	  h_hiBin_triggerOn->Fill(hiBin_shifted,w);
 	  eventCounter++;
 	}
       }
@@ -1415,7 +1415,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  evtTriggerDecision = true;
 	  h_vz_triggerOn[0]->Fill(em->vz,w);
 	  h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
-	  h_hiBin_triggerOn->Fill(em->hiBin,w);
+	  h_hiBin_triggerOn->Fill(hiBin_shifted,w);
 	  eventCounter++;
 	}
       }
@@ -1424,7 +1424,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 	  evtTriggerDecision = true;
 	  h_vz_triggerOn[0]->Fill(em->vz,w);
 	  h_vz_triggerOn[CentralityIndex]->Fill(em->vz,w);
-	  h_hiBin_triggerOn->Fill(em->hiBin,w);
+	  h_hiBin_triggerOn->Fill(hiBin_shifted,w);
 	  eventCounter++;
 	}
       }
