@@ -338,7 +338,7 @@ void PYTHIAHYDJET_scan(int group = 1){
 
   
   std::string inputFileList = "";
-  if(doDiJetSample) inputFileList = "../../../fileNames/";
+  if(doDiJetSample) inputFileList = "../../../fileNames/fileNames_DiJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8.txt";
   else if(doMuJetSample) inputFileList = "../../../fileNames/fileNames_MuJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8.txt";
   else if(doBJetSample) inputFileList = "../../../fileNames/fileNames_BJet_pThat-15_TuneCP5_HydjetDrumMB_5p02TeV_Pythia8.txt";
   else{};
