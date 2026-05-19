@@ -1095,7 +1095,7 @@ void HYDJET_scan(int group = 1){
     }
 
 
-    TFile *f = TFile::Open(input);
+    TFile *f = TFile::Open(input.c_str());
     cout << "	File opened!" << endl;
     auto em = new eventMap(f);
     em->isMC = isMC_status;
