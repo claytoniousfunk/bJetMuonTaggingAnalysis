@@ -1596,19 +1596,19 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 	if(doPThatCorrelationFilter){
 	  if(CentralityIndex == 4){
-	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->Eval(em->pthat)) continue;
+	    if((recoJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->Eval(em->pthat)) continue;
 	  }
 	  else if(CentralityIndex == 3){
-	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->Eval(em->pthat)) continue;
+	    if((recoJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C3->Eval(em->pthat)) continue;
 	  }
 	  else if(CentralityIndex == 2){
-	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->Eval(em->pthat)) continue;
+	    if((recoJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C2->Eval(em->pthat)) continue;
 	  }
 	  else if(CentralityIndex == 1){
-	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->Eval(em->pthat)) continue;
+	    if((recoJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C1->Eval(em->pthat)) continue;
 	  }
 	  else{
-	    if((refJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->Eval(em->pthat)) continue; // default to C4 if we have more centrality bins
+	    if((recoJetPt_i / em->pthat) > fitFxn_PYTHIAHYDJET_pThatCorrelation_C4->Eval(em->pthat)) continue; // default to C4 if we have more centrality bins
 	  };
 	}
 	
