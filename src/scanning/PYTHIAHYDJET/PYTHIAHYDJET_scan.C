@@ -1700,7 +1700,8 @@ void PYTHIAHYDJET_scan(int group = 1){
 
 	int jetFlavorInt = matchedPartonFlavor;
 
-	if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting 
+	if(fabs(jetFlavorInt) == 5 && bHadronNumber == 2) jetFlavorInt = 17; // 17 = bJet from gluon-splitting
+	if(jetFlavorInt == 0 && refJetPt_i < 0) jetFlavorInt = 18; // 18 = unmatched x-jet
 		
 	// jet kinematic cuts
 	if(TMath::Abs(recoJetEta_i) > etaMax || recoJetPt_i < jetPtCut) continue;
