@@ -468,13 +468,16 @@ void PYTHIAHYDJET_scan(int group = 1){
 						   fillMu12,
 						   doPThatCorrelationFilter);
 
-    //TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-    TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+    TString suffixEdit = "_ultraFineCentBins";
+    
+    TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+    //TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+    output.Append(suffixEdit.Data());
 
     std::cout << "output dataset = " << output << std::endl;
 
-    if(gSystem->AccessPathName(Form("%s%s",outputBaseDir.Data(),outputDatasetName.Data()))){
-      std::cout << "\033[1;31m Output directory not found: \033[0m " << Form("%s%s",outputBaseDir.Data(),outputDatasetName.Data()) << std::endl;
+    if(gSystem->AccessPathName(Form("%s%s%s",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data()))){
+      std::cout << "\033[1;31m Output directory not found: \033[0m " << Form("%s%s%s",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data()) << std::endl;
       return;
     }
   
