@@ -468,11 +468,12 @@ void PYTHIAHYDJET_scan(int group = 1){
 						   fillMu12,
 						   doPThatCorrelationFilter);
 
+    //TString suffixEdit = "";
     TString suffixEdit = "_ultraFineCentBins";
     
-    TString output = Form("%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+    TString output = Form("%s%s%s/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
     //TString output = Form("%s%s_ultraFineCentBins/PYTHIAHYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-    output.Append(suffixEdit.Data());
+    //output.Append(suffixEdit.Data());
 
     std::cout << "output dataset = " << output << std::endl;
 
