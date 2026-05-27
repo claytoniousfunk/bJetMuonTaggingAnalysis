@@ -324,7 +324,7 @@ void HYDJET_scan(int group = 1){
   }
   else{};
 
-  std::string inputFileList = "../../../fileNames/fileNames_HYDJET_MinBias.txt";
+  std::string inputFileList = "../../../fileNames/fileNames_MinBias_Hydjet_Drum5F_2018_5p02TeV.txt";
 
   std::ifstream instr(inputFileList.c_str(), std::ifstream::in);
   if(!instr.is_open()){
