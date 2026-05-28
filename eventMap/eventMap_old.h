@@ -203,8 +203,8 @@ public :
 
 void eventMap::init(){
   //evtTree = (TTree*) _file->Get("jetTree");
-  //evtTree = (TTree*) _file->Get("evtTree");
-  evtTree = (TTree*) _file->Get("hiEvtAnalyzer/HiTree");
+  evtTree = (TTree*) _file->Get("evtTree");
+  //evtTree = (TTree*) _file->Get("hiEvtAnalyzer/HiTree");
   //evtTree = (TTree*) _file->Get(Form("%s",name));
   evtTree->SetBranchAddress("vz", &vz);
   evtTree->SetBranchAddress("hiBin", &hiBin);
@@ -218,22 +218,6 @@ void eventMap::init(){
   }
 }
 
-void eventMap::init(const char* name){
-  //evtTree = (TTree*) _file->Get("jetTree");
-  //evtTree = (TTree*) _file->Get("evtTree");
-  //evtTree = (TTree*) _file->Get("hiEvtAnalyzer/HiTree");
-  evtTree = (TTree*) _file->Get(Form("%s",name));
-  evtTree->SetBranchAddress("vz", &vz);
-  evtTree->SetBranchAddress("hiBin", &hiBin);
-  evtTree->SetBranchAddress("hiHF", &hiHF);
-  evtTree->SetBranchAddress("evt", &evtNumber);
-  evtTree->SetBranchAddress("run", &runNumber);
-  evtTree->SetBranchAddress("lumi", &lumiSection);
-  if(isMC){
-    evtTree->SetBranchAddress("pthat", &pthat);
-    evtTree->SetBranchAddress("weight", &weight);
-  }
-}
 
 void eventMap::regEventFilter(int nfilter, std::string *filtername){
   //filterTree = (TTree*) _file->Get("filterTree");
