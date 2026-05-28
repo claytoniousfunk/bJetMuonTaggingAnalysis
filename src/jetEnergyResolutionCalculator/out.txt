@@ -1,0 +1,78 @@
+
+Processing JER_evolution.C...
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Error in <TH1D::Divide>: Histograms have different number of bins
+Info in <TCanvas::Print>: pdf file ./figures/JER_evolution_inclJets.pdf has been created
+Info in <TCanvas::Print>: pdf file ./figures/JER_evolution_bJets.pdf has been created
+Info in <TCanvas::Print>: pdf file ./figures/JES_evolution_inclJets.pdf has been created
+Info in <TCanvas::Print>: pdf file ./figures/JES_evolution_bJets.pdf has been created
+
+ fitting pp: 
+****************************************
+Minimizer is Minuit / MigradImproved
+MinFCN                    =  0.000664883
+Chi2                      =   0.00132977
+NDf                       =           22
+Edm                       =  4.19642e-07
+NCalls                    =         1572
+p0                        =    0.0640995   +/-   1.25606e-05 
+p1                        =     0.917851   +/-   0.000116477 
+p2                        =  -0.00211695   +/-   0.0136397   
+
+ fitting C4: 
+****************************************
+Minimizer is Minuit / MigradImproved
+MinFCN                    =  3.46913e-05
+Chi2                      =  6.93826e-05
+NDf                       =           19
+Edm                       =  2.16386e-06
+NCalls                    =         1568
+p0                        =    0.0606347   +/-   0.000100432 
+p1                        =      1.08087   +/-   0.00151792  
+p2                        =    -0.374138   +/-   0.274156    
+
+ fitting C3: 
+****************************************
+Minimizer is Minuit / MigradImproved
+MinFCN                    =  1.73987e-05
+Chi2                      =  3.47973e-05
+NDf                       =           19
+Edm                       =   2.1544e-06
+NCalls                    =         1495
+p0                        =    0.0576787   +/-   0.00073632  
+p1                        =       1.1762   +/-   0.0121551   
+p2                        =     -5.67268   +/-   0.168898    
+
+ fitting C2: 
+****************************************
+Minimizer is Minuit / MigradImproved
+MinFCN                    =  3.39018e-05
+Chi2                      =  6.78036e-05
+NDf                       =           19
+Edm                       =  1.35738e-06
+NCalls                    =         1495
+p0                        =    0.0547384   +/-   0.00172888  
+p1                        =        1.306   +/-   0.0255705   
+p2                        =     -11.1249   +/-   0.20918     
+
+ fitting C1: 
+****************************************
+Minimizer is Minuit / MigradImproved
+MinFCN                    =  0.000130681
+Chi2                      =  0.000261362
+NDf                       =           22
+Edm                       =  1.42517e-06
+NCalls                    =          184
+p0                        =    0.0598659   +/-   0.00981983  
+p1                        =      1.30631   +/-   0.141707    
+p2                        =      -16.893   +/-   0.584239    
