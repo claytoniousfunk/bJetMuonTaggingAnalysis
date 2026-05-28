@@ -30,8 +30,10 @@ TString configureOutputDatasetName(TString generator,
 				   bool apply_JEU_shift_up,
 				   bool apply_JEU_shift_down,
 				   int hiBinShift,
+				   bool applyMinBiasTrigger,
 				   bool applyJet60Trigger,
 				   bool applyJet80Trigger,
+				   bool applyJet100Trigger,
 				   bool applyMu12TriggerEfficiencyCorrection,
 				   double muPtCut,
 				   double muPtMaxCut,
@@ -43,8 +45,10 @@ TString configureOutputDatasetName(TString generator,
   TString result = "output";
   result.Append(Form("_%s",generator.Data()));
   result.Append("_pThat-unweighted");
+  if(applyMinBiasTrigger) result.Append("_MinBiasHLT");
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
+  if(applyJet100Trigger) result.Append("_Jet100HLT");
   if(fillMu5) result.Append(Form("_mu5_pTmu-%1.0fto%1.0f_hybridSoft",muPtCut,muPtMaxCut));
   else if(fillMu7) result.Append(Form("_mu7_pTmu-%1.0fto%2.0f_hybridSoft",muPtCut,muPtMaxCut));
   else if(fillMu12) result.Append(Form("_mu12_pTmu-%2.0fto%3.0f_tight",muPtCut,muPtMaxCut));

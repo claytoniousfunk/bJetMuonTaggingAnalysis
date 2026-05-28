@@ -1229,6 +1229,29 @@ void HYDJET_scan(int group = 1){
 
       if(CentralityIndex < 0) continue;
 
+      if(applyMinBiasTrigger){
+	if(em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part1_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part2_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part3_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part4_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part5_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part6_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part7_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part8_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part9_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part10_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part11_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part12_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part13_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part14_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part15_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part16_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part17_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part18_v1 == 0 &&
+	   em->HLT_HIMinimumBias_SinglePixelTrack_NpixBypass_part19_v1 == 0) continue;	
+      }
+
+      
       if(applyJet60Trigger){
 	if(em->HLT_HICsAK4PFJet60Eta1p5_v1 == 0) continue;
       }
