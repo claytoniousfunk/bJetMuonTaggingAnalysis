@@ -220,8 +220,8 @@ void eventMap::init(){
 
 
 void eventMap::regEventFilter(int nfilter, std::string *filtername){
-  //filterTree = (TTree*) _file->Get("filterTree");
-  filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
+  filterTree = (TTree*) _file->Get("filterTree");
+  //filterTree = (TTree*) _file->Get("skimanalysis/HltTree");
   evtTree->AddFriend(filterTree);
   filters.clear();
   filters.resize(nfilter);
