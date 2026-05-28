@@ -38,7 +38,7 @@ double func_temp(double *x, double *par){
   //double fitval = par[0] + par[1]*r->GetBinContent(bin) + par[2]*TMath::Exp(-1*par[3]*r->GetBinContent(bin));
   //double fitval = par[0] + par[1]*pt + par[2]*TMath::Exp(par[3]*pt);
   //double fitval = par[0] + par[1]*vz + par[2]*vz*vz + par[3]*vz*vz*vz + par[4]*vz*vz*vz*vz + par[5]*vz*vz*vz*vz*vz + par[6]*vz*vz*vz*vz*vz*vz + par[7]*vz*vz*vz*vz*vz*vz*vz;
-  double fitval = par[0] + par[1]*vz + par[2]*vz*vz + par[3]*vz*vz*vz + par[4]*vz*vz*vz*vz + par[5]*vz*vz*vz*vz*vz;
+  double fitval = par[0] + par[1]*vz + par[2]*vz*vz + par[3]*vz*vz*vz;
   return fitval;
 }
 
@@ -46,62 +46,63 @@ double func_temp(double *x, double *par){
 
 void plot_and_reweight_vz(bool isPP   = 1,
 			  bool isPbPb = 0,
-			  bool ismu5  = 0,
-			  bool ismu7  = 0,
-			  bool ismu12 = 1){
+			  bool isMu5  = 1,
+			  bool isMu7  = 0,
+			  bool isMu12 = 0){
   
   TFile *f_data, *f_pythia, *f_pythia_weighted;
 
   if(isPP){
-    if(ismu5){
-      f_data = TFile::Open(goldenFile_pp_SingleMuon_mu5);
-      f_pythia = TFile::Open(goldenFile_PYTHIA_mu5_RAW);
-      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_mu5_pThat15);
-    }
-    else if(ismu7){
-      f_data = TFile::Open(goldenFile_pp_SingleMuon_mu7);
-      f_pythia = TFile::Open(goldenFile_PYTHIA_mu7_RAW);
-      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_mu7_pThat30);
-    }
-    else if(ismu12){
-      f_data = TFile::Open(goldenFile_pp_SingleMuon_mu12_newJetBins);
-      f_pythia = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_newJetBins.root");
-      f_pythia_weighted = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_newJetBins.root");
-    }
-    else{};
-  }
-  if(isPbPb){
-    if(ismu5){
-      f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu5);
-      f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_RAW);
-      f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu5_pThat30);
-    }
-    else if(ismu7){
-      f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu7);
-      f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_RAW);
-      f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30);
-    }
-    else if(ismu12){
-      f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu12_newJetBins);
-      f_pythia = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/correctHiBinShift/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_correctHiBinShift.root");
-      f_pythia_weighted = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-45_hiHFcut_leadingXjetDump_removeHYDJETjet_jetTrkMaxFilter_vzReweight_newJetBins.root");
-    }
-    else{};
-  }
 
-  // PYTHIA
-  if(isPP){
+    if(isMu5){
+      f_data = TFile::Open(goldenFile_pp_SingleMuon_mu5);
+      f_pythia = TFile::Open(goldenFile_PYTHIA_pThat30_mu5_RAW);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_pThat30_mu5_vzReweight);
+    }
+    else if(isMu7){
+      f_data = TFile::Open(goldenFile_pp_SingleMuon_mu7);
+      f_pythia = TFile::Open(goldenFile_PYTHIA_pThat30_mu7_RAW);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_pThat30_mu7_vzReweight);
+    }
+    else if(isMu12){
+      f_data = TFile::Open(goldenFile_pp_SingleMuon_mu12);
+      f_pythia = TFile::Open(goldenFile_PYTHIA_pThat30_mu12_RAW);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIA_pThat30_mu12_vzReweight);
+    }
+
+    else{};
+
     f_pythia->GetObject("h_vz_inclRecoMuonTag_triggerOn",pythia_vz);
     f_pythia_weighted->GetObject("h_vz_inclRecoMuonTag_triggerOn",pythia_w_vz);
     f_data->GetObject("h_vz_inclRecoMuonTag_triggerOn",data_vz);
+    
   }
-  else if(isPbPb){
+  if(isPbPb){
+
+    if(isMu5){
+      f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu5);
+      f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_pThat30_mu5_hiBinReweight);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_pThat30_mu5_hiBinReweight_vzReweight);
+    }
+    else if(isMu7){
+      f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu7);
+      f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_pThat30_mu7_hiBinReweight);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_pThat30_mu7_hiBinReweight_vzReweight);
+    }
+    else if(isMu12){
+      f_data = TFile::Open(goldenFile_PbPb_SingleMuon_mu12);
+      f_pythia = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_pThat30_mu12_hiBinReweight);
+      f_pythia_weighted = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_pThat30_mu12_hiBinReweight_vzReweight);
+    }
+    else{};
+
     f_pythia->GetObject("h_vz_inclRecoMuonTag_triggerOn_C0",pythia_vz);
     f_pythia_weighted->GetObject("h_vz_inclRecoMuonTag_triggerOn_C0",pythia_w_vz);
     f_data->GetObject("h_vz_inclRecoMuonTag_triggerOn_C0",data_vz);
+
   }
     
-  TF1 *func = new TF1("func",func_temp,-15.0,15.0,6);
+  TF1 *func = new TF1("func",func_temp,-15.,15.,4);
   
   // normalize
   pythia_vz->Scale(1.0/pythia_vz->Integral());
@@ -109,11 +110,11 @@ void plot_and_reweight_vz(bool isPP   = 1,
   data_vz->Scale(1.0/data_vz->Integral());
 
 
-  //const int N = 12;
-  //double vz_axis[N] = {-15.0,-10.0,-7.0,-5.0,-3.0,-1.0,1.0,3.0,5.0,7.0,10.0,15.0}; // N = 12
+  const int N = 12;
+  double vz_axis[N] = {-15.0,-10.0,-7.0,-5.0,-3.0,-1.0,1.0,3.0,5.0,7.0,10.0,15.0}; // N = 12
 
-  const int N = 25;
-  double vz_axis[N] = {-15.,-13.,-11.,-9.,-8.,-7.,-6.,-5.,-4.,-3.,-2.,-1.,0.,1.,2.,3.,4.,5.,6.,7.,8.,9.,11.,13.,15.}; // N = 25
+  // const int N = 31;
+  // double vz_axis[N] = {-15.,-14,-13.,-12,-11.,-10,-9.,-8.,-7.,-6.,-5.,-4.,-3.,-2.,-1.,0.,1.,2.,3.,4.,5.,6.,7.,8.,9.,10,11.,12,13.,14,15.}; // N = 25
   
 
   
@@ -287,47 +288,58 @@ void plot_and_reweight_vz(bool isPP   = 1,
 
   TLatex *la = new TLatex();
   la->SetTextFont(42);
-  la->SetTextSize(0.06);
+  la->SetTextSize(0.055);
   double la_y_pos = 0.63; // latex y position variable
   double la_x_pos = 0.30; // latex x position variable
   double la_y_off = 0.08; // latex y offset variable
   TString jet_info_string_pp = "anti-#font[52]{k}_{T} PF jets, #font[52]{p}_{T}^{jet} > 80 GeV, |#it{#eta}^{jet}| < 1.6";
   TString jet_info_string_PbPb = "anti-#font[52]{k}_{T} CsPF jets, #font[52]{p}_{T}^{jet} > 80 GeV, |#it{#eta}^{jet}| < 1.6";
-  la->DrawLatexNDC(la_x_pos,la_y_pos,"#it{#mu}-triggered events w/ #it{#mu}-tagged jet, #hat{#it{p}}_{T} > 45 GeV");
+  if(isMu5){
+    la->DrawLatexNDC(la_x_pos,la_y_pos,"mu5-triggered events w/ #it{#mu}-tagged jet, #hat{#it{p}}_{T} > 30 GeV");
+  }
+  else if(isMu7){
+    la->DrawLatexNDC(la_x_pos,la_y_pos,"mu7-triggered events w/ #it{#mu}-tagged jet, #hat{#it{p}}_{T} > 30 GeV");
+  }
+  else if(isMu12){
+    la->DrawLatexNDC(la_x_pos,la_y_pos,"mu12-triggered events w/ #it{#mu}-tagged jet, #hat{#it{p}}_{T} > 30 GeV");
+  }
+  else{};
   if(isPP)  la->DrawLatexNDC(la_x_pos,la_y_pos - 1*la_y_off, jet_info_string_pp);
   else la->DrawLatexNDC(la_x_pos,la_y_pos - 1*la_y_off, jet_info_string_PbPb);
 
 
 
-  if(ismu5){
-    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"hybrid-soft muon ID, #font[52]{p}_{T}^{#it{#mu}} > 7 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
-    la->DrawLatexNDC(la_x_pos,la_y_pos - 3*la_y_off,"mu5 trigger");
+
+  if(isMu5){
+    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"hybrid-soft muon ID, 7 < #it{p}_{T}^{#it{#mu}} (GeV) < 9, |#it{#eta}^{#it{#mu}}| < 2.0");
   }
-  else if(ismu7){
-    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"hybrid-soft muon ID, #font[52]{p}_{T}^{#it{#mu}} > 9 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
-    la->DrawLatexNDC(la_x_pos,la_y_pos - 3*la_y_off,"mu7 trigger");
+  else if(isMu7){
+    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"hybrid-soft muon ID, 9 < #it{p}_{T}^{#it{#mu}} (GeV) < 15, |#it{#eta}^{#it{#mu}}| < 2.0");
   }
-  else if(ismu12){
-    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"tight muon ID, #font[52]{p}_{T}^{#it{#mu}} > 14 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
-    la->DrawLatexNDC(la_x_pos,la_y_pos - 3*la_y_off,"mu12 trigger");
+  else if(isMu12){
+    la->DrawLatexNDC(la_x_pos,la_y_pos - 2*la_y_off,"tight muon ID, #it{p}_{T}^{#it{#mu}} > 15 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
   }
-  else {};
+  else{};
+  
+  //la->DrawLatexNDC(la_x_pos,la_y_pos - 3*la_y_off,"mu12 trigger");
+  if(isPbPb) la->DrawLatexNDC(la_x_pos,la_y_pos - 4*la_y_off,"Cent. 0-80%");
 
   la->SetTextSize(0.07);
   la->DrawLatexNDC(0.26,0.92,"#font[62]{CMS }#font[52]{#scale[0.8]{Preliminary}}");
   la->SetTextSize(0.065);;
   if(isPP){
-    if(ismu5) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (99 pb^{-1})");
-    else if(ismu7) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (274 pb^{-1})");
-    else if(ismu12) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (301 pb^{-1})");
+    if(isMu5) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (99 pb^{-1})");
+    else if(isMu7) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (274 pb^{-1})");
+    else if(isMu12) la->DrawLatexNDC(0.6,0.92,"pp 5.02 TeV (301 pb^{-1})");
     else{};
   }
   else if(isPbPb){
-    if(ismu5) la->DrawLatexNDC(0.56,0.92,"PbPb 5.02 TeV (323 #mub^{-1})");
-    else if(ismu7) la->DrawLatexNDC(0.56,0.92,"PbPb 5.02 TeV (787 #mub^{-1})");
-    else if(ismu12) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (1689 #mub^{-1})");
+    if(isMu5) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (323 #mub^{-1})");
+    else if(isMu7) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (787 #mub^{-1})");
+    else if(isMu12) la->DrawLatexNDC(0.55,0.92,"PbPb 5.02 TeV (1689 #mub^{-1})");
     else{};
   }
+  else{};
   
   ///////////////////////////////////////////////////////////////////////////  ratio plot  ////////////////////////////////////////////////////////////////////////////
 
@@ -386,15 +398,15 @@ void plot_and_reweight_vz(bool isPP   = 1,
   legend2->SetTextSize(0.065);
   //legend2->Draw();
   if(isPP){
-    if(ismu5) c2->SaveAs("/home/clayton/Analysis/ANDraft/figures/vz_spectra/pp_mu5.pdf");
-    else if(ismu7) c2->SaveAs("/home/clayton/Analysis/ANDraft/figures/vz_spectra/pp_mu7.pdf");
-    else if(ismu12) c2->SaveAs("/home/clayton/Analysis/ANDraft/figures/vz_spectra/pp_mu12.pdf");
+    if(isMu5) c2->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/vzReweight/PYTHIA/vzReweight_pp_mu5.pdf");
+    else if(isMu7) c2->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/vzReweight/PYTHIA/vzReweight_pp_mu7.pdf");
+    else if(isMu12) c2->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/vzReweight/PYTHIA/vzReweight_pp_mu12.pdf");
     else{};
   }
   if(isPbPb){
-    if(ismu5) c2->SaveAs("/home/clayton/Analysis/ANDraft/figures/vz_spectra/PbPb_mu5.pdf");
-    else if(ismu7) c2->SaveAs("/home/clayton/Analysis/ANDraft/figures/vz_spectra/PbPb_mu7.pdf");
-    else if(ismu12) c2->SaveAs("/home/clayton/Analysis/ANDraft/figures/vz_spectra/PbPb_mu12.pdf");
+    if(isMu5) c2->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/vzReweight/PYTHIAHYDJET/vzReweight_PbPb_mu5.pdf");
+    else  if(isMu7) c2->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/vzReweight/PYTHIAHYDJET/vzReweight_PbPb_mu7.pdf");
+    else if(isMu12) c2->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/vzReweight/PYTHIAHYDJET/vzReweight_PbPb_mu12.pdf");
     else{};
   }
     

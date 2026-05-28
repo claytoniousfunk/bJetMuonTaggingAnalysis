@@ -11,14 +11,14 @@ double lowPTFitFxn(double *x, double *par){
 
 
 void plotJetPt_fineCentBins(bool isPP = 0,
-			    bool isC4 = 0,
+			    bool isC4 = 1,
 			    bool isC3 = 0,
 			    bool isC2 = 0,
-			    bool isC1 = 1,
-			    bool isSingleMuon = 1,
-			    bool isMinBias = 0,
-			    bool isMu7 = 0,
-			    bool isMu12 = 1){
+			    bool isC1 = 0,
+			    bool isSingleMuon = 0,
+			    bool isMinBias = 1,
+			    bool isHardProbes = 0
+			    ){
 
   
 
@@ -33,74 +33,46 @@ void plotJetPt_fineCentBins(bool isPP = 0,
   if(isPP){
 
     if(isSingleMuon){
-      if(isMu7){
-	f1 = TFile::Open(goldenFile_pp_SingleMuon_mu7);
-      }
-      else if(isMu12){
-	f1 = TFile::Open(goldenFile_pp_SingleMuon_mu12_newJetBins);
-      }
-      else{};
-    }
-    else if(isMinBias){
+      
+      f1 = TFile::Open(goldenFile_pp_SingleMuon_mu12_pTmu15);
       
     }
-    else{};
+    else if(isMinBias){
 
-    //f2 = TFile::Open(goldenFile_PYTHIA_mu12_pThat15_JERsmear);
-    if(isMu7){
-      f2 = TFile::Open(goldenFile_PYTHIA_mu7_pThat30);
+      f1 = TFile::Open(goldenFile_pp_MinBias_mu12);
+      
     }
-    else if(isMu12){
-      f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-45_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_newJetBins.root");
+    else if(isHardProbes){
+
+      f1 = TFile::Open(goldenFile_pp_HighEGJet_jet80_mu12);
+
     }
     else{};
+    
+    f2 = TFile::Open(goldenFile_PYTHIA_pThat30_mu12_pTmu15_vzReweight);
      
   }
 
   else if(isC1 || isC2 || isC3 || isC4){
-
-    //f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/fineCentBins/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates.root");
-    //f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_noWeightCut_fineCentBins_projectableTemplates_allTemplates.root");	
-    //f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_noWeightCut_fineCentBins_projectableTemplates_allTemplates.root");
-    //f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_noWeightCut_removeHYDJETjet_fineCentBins_projectableTemplates_allTemplates.root");
-    //f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_noWeightCut_removeHYDJETjet0p4_fineCentBins_projectableTemplates_allTemplates.root");
-    //f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_noWeightCut_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates.root");
-    f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCutOnLightJetTemplate_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates.root");
     
     if(isSingleMuon){
-      if(isMu7){
-	f1 = TFile::Open(goldenFile_PbPb_SingleMuon_mu7);
-	f2 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu7_pThat30);
-      }
-      else if(isMu12){
-	//f1 = TFile::Open(goldenFile_PbPb_SingleMuon_mu12_newJetBins);
-	//f2 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_mu12_pThat15_newJetBins);
-
-	//f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/final/PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates.root");
-	f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/final/PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates.root");
-	//f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/fineCentBins/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates.root");
-	
-	//f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_fineCentBins_projectableTemplates_allTemplates.root");
-
-	// f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/final/PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates_onlyOneMuonTaggedJetPerEvent.root");
-	//f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_fineCentBins_projectableTemplates_onlyOneMuonTaggedJetPerEvent_allTemplates.root");
-	//f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/fineCentBins/pThat-40/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-40_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_fineCentBins_projectableTemplates.root");
-	//f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/fineCentBins/jetPtReweight/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_jetPtReweight_weightCut0p005_fineCentBins_projectableTemplates.root");
-      }
-      else{};
+      	
+      f1 = TFile::Open(goldenFile_PbPb_SingleMuon_mu12_pTmu15);
+      	
     }
     else if(isMinBias){
-      if(isMu12){
-	f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/final/PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates.root");
-	// f2 = TFile::Open();
-	// f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/fineCentBins/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates.root");
-	//f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_noWeightCut_removeHYDJETjet_fineCentBins_projectableTemplates_allTemplates.root");
-      }
-      else{};
+    	
+      f1 = TFile::Open(goldenFile_PbPb_MinBias_mu12);
+	
+    }
+    else if(isHardProbes){
+
+      f1 = TFile::Open(goldenFile_PbPb_HardProbes_jet80_mu12);
+      
     }
     else{};
 
-     
+    f2 = TFile::Open(goldenFile_PYTHIAHYDJET_DiJet_pThat30_mu12_pTmu15_hiBinReweight_vzReweight);
      
   }
 
@@ -117,7 +89,7 @@ void plotJetPt_fineCentBins(bool isPP = 0,
       f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h1);
       f2->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor",H2);
     }
-    else if(isMinBias){
+    else if(isMinBias || isHardProbes){
       f1->GetObject("h_inclRecoJetPt",h1);
       f2->GetObject("h_inclRecoJetPt_flavor",H2);
     }
@@ -129,7 +101,7 @@ void plotJetPt_fineCentBins(bool isPP = 0,
       f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C4",h1);
       f2->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4",H2);
     }
-    else if(isMinBias){
+    else if(isMinBias || isHardProbes){
       f1->GetObject("h_inclRecoJetPt_C4",h1);
       f2->GetObject("h_inclRecoJetPt_flavor_C4",H2);
     }
@@ -141,7 +113,7 @@ void plotJetPt_fineCentBins(bool isPP = 0,
       f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C3",h1);
       f2->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C3",H2);
     }
-    else if(isMinBias){
+    else if(isMinBias || isHardProbes){
       f1->GetObject("h_inclRecoJetPt_C3",h1);
       f2->GetObject("h_inclRecoJetPt_flavor_C3",H2);
     }
@@ -153,7 +125,7 @@ void plotJetPt_fineCentBins(bool isPP = 0,
       f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C2",h1);
       f2->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C2",H2);
     }
-    else if(isMinBias){
+    else if(isMinBias || isHardProbes){
       f1->GetObject("h_inclRecoJetPt_C2",h1);
       f2->GetObject("h_inclRecoJetPt_flavor_C2",H2);
     }
@@ -163,13 +135,10 @@ void plotJetPt_fineCentBins(bool isPP = 0,
   if(isC1){
     if(isSingleMuon){
       f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C1",h1);
-      //f2->GetObject("h_inclGenJetPt_inclRecoMuonTag_triggerOn_flavor_C1",H1);
-      //f2->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C1",H2);
       f2->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C1",H2);
     }
-    else if(isMinBias){
+    else if(isMinBias || isHardProbes){
       f1->GetObject("h_inclRecoJetPt_C1",h1);
-      //f2->GetObject("h_inclGenJetPt_inclRecoMuonTag_triggerOn_flavor_C1",H1);
       f2->GetObject("h_inclRecoJetPt_flavor_C1",H2);
     }
     else{}
@@ -230,8 +199,11 @@ void plotJetPt_fineCentBins(bool isPP = 0,
   //const int M = 9;
   //double muRelPtAxis[M] = {60,70,80,90,100,115,130,150,200};
 
-  const int M = 17;
-  double muRelPtAxis[M] = {80,85,90,95,100,110,120,130,140,150,160,180,200,250,320,400,500};
+  // const int M = 21;
+  // double muRelPtAxis[M] = {60,65,70,75,80,85,90,95,100,110,120,130,140,150,160,180,200,250,320,400,500};
+
+  const int M = 15;
+  double muRelPtAxis[M] = {80,90,100,110,120,130,140,150,160,180,200,250,320,400,500};
 
   // const int M = 11;
   // double muRelPtAxis[M] = {120,130,140,150,160,180,200,250,320,400,500};
@@ -262,8 +234,8 @@ void plotJetPt_fineCentBins(bool isPP = 0,
 
 
    
-  N1 = h1->Integral(h1->FindBin(200.0+smallShift),h1->FindBin(muRelPtAxis[M-1]-smallShift));
-  N2 = h2->Integral(h2->FindBin(200.0+smallShift),h2->FindBin(muRelPtAxis[M-1]-smallShift));
+  N1 = h1->Integral(h1->FindBin(muRelPtAxis[0]+smallShift),h1->FindBin(muRelPtAxis[M-1]-smallShift));
+  N2 = h2->Integral(h2->FindBin(muRelPtAxis[0]+smallShift),h2->FindBin(muRelPtAxis[M-1]-smallShift));
 
   cout << "muRelPtAxis[0] = " << muRelPtAxis[0] << endl;
   cout << "muRelPtAxis[M-1] = " << muRelPtAxis[M-1] << endl;
@@ -315,10 +287,10 @@ void plotJetPt_fineCentBins(bool isPP = 0,
   h1r->GetXaxis()->SetLabelSize(0);
   h1r->GetYaxis()->SetTitleOffset(1.15);
   //h1r->GetYaxis()->SetTitle("1/#font[52]{N}^{jet}_{tot} d#font[52]{N}^{jet}/d#font[52]{p}_{T}^{jet} [GeV^{-1}]");
-  h1r->GetYaxis()->SetTitle("1/#font[52]{N}^{jet}_{#font[52]{p}_{T}^{jet} > 200 GeV} d#font[52]{N}^{jet}/d#font[52]{p}_{T}^{jet} [GeV^{-1}]");
+  h1r->GetYaxis()->SetTitle("1/#it{N}^{jet}_{tot} d#font[52]{N}^{jet}/d#it{p}_{T}^{jet} [GeV^{-1}]");
   h1r->SetStats(0);
-  h1r->GetYaxis()->SetLabelSize(0.057);
-  h1r->GetYaxis()->SetTitleSize(0.068);
+  h1r->GetYaxis()->SetLabelSize(0.054);
+  h1r->GetYaxis()->SetTitleSize(0.063);
 
 
   TH1D *r1, *r2;
@@ -327,14 +299,14 @@ void plotJetPt_fineCentBins(bool isPP = 0,
   r1->Divide(h1r,h2r,1,1,"");
   r1->GetXaxis()->SetTitle("#font[52]{p}_{T}^{jet} [GeV]");
   r1->GetYaxis()->SetTitleOffset(0.66);
-  r1->GetYaxis()->SetTitle("DATA / MC   ");
+  r1->GetYaxis()->SetTitle("   Data / MC ");
   //r1->GetYaxis()->SetTitle("PbPb / pp    ");
   //r1->GetYaxis()->SetTitle("unsmeared / smeared "); 
-  r1->GetXaxis()->SetLabelSize(0.11);
-  r1->GetYaxis()->SetLabelSize(0.11);
+  r1->GetXaxis()->SetLabelSize(0.10);
+  r1->GetYaxis()->SetLabelSize(0.10);
   //r1->GetYaxis()->SetTitleSize(0.09);          
-  r1->GetYaxis()->SetTitleSize(0.12);
-  r1->GetXaxis()->SetTitleSize(0.12);
+  r1->GetYaxis()->SetTitleSize(0.11);
+  r1->GetXaxis()->SetTitleSize(0.11);
   r1->GetYaxis()->SetNdivisions(606);
   r1->SetTitle("");
   r1->SetStats(0);
@@ -352,27 +324,29 @@ void plotJetPt_fineCentBins(bool isPP = 0,
     else if(isMinBias){
       leg->AddEntry(h1r,"pp MinBias","p");
     }
+    else if(isHardProbes){
+      leg->AddEntry(h1r,"pp HighEGJet","p");
+    }
     else{};
     leg->AddEntry(h2r,"PYTHIA","p");
   }
 
-  if(isC2 || isC1){
+  else{
     if(isSingleMuon){
       leg->AddEntry(h1r,"PbPb SingleMuon","p");
-      //leg->AddEntry(h1r,"PYTHIA+HYDJET Gen","p");
-      leg->AddEntry(h2r,"PYTHIA+HYDJET Reco","p");
     }
     else if(isMinBias){
       leg->AddEntry(h1r,"PbPb MinBias","p");
-      //leg->AddEntry(h1r,"HYDJET Gen","p");
-      leg->AddEntry(h2r,"HYDJET Reco","p");
+    }
+    else if(isHardProbes){
+      leg->AddEntry(h1r,"PbPb HardProbes","p");
     }
     else{};
-     
+    leg->AddEntry(h2r,"PYTHIA+HYDJET","p");
   }
 
   h1r->GetXaxis()->SetRangeUser(muRelPtAxis[0]+smallShift,muRelPtAxis[M-1]-smallShift);
-  h1r->GetYaxis()->SetRangeUser(1e-5,0.5e2);
+  //h1r->GetYaxis()->SetRangeUser(1e-5,0.5e2);
    
   h1r->Draw();
   h2r->Draw("same");
@@ -386,34 +360,38 @@ void plotJetPt_fineCentBins(bool isPP = 0,
   la->DrawLatexNDC(0.22,0.92,"CMS");
   la->SetTextFont(42);
   la->SetTextSize(0.045);
-  if(isMinBias){
-    la->DrawLatexNDC(0.32,0.92,"#sqrt{#font[52]{s}_{NN}} = 5.02 TeV, inclusive jets");
-  }
-  else if(isSingleMuon){
-    la->DrawLatexNDC(0.32,0.92,"#sqrt{#font[52]{s}_{NN}} = 5.02 TeV, muon-tagged jets");
-  }
-
+  la->DrawLatexNDC(0.32,0.92,"#sqrt{#font[52]{s}_{NN}} = 5.02 TeV");
   la->SetTextSize(0.044);
    
-  if(isC2 || isC1){
-    la->DrawLatexNDC(0.58,0.6,"akCs4PF jets, |#it{#eta}^{jet}| < 1.6");
+  if(isC4 || isC3 || isC2 || isC1){
+    if(isSingleMuon){
+      la->DrawLatexNDC(0.51,0.6,"#it{#mu}-tagged akCs4PF jets, |#it{#eta}^{jet}| < 1.6");
+      la->DrawLatexNDC(0.58,0.52,"mu12 trigger");
+      la->DrawLatexNDC(0.58,0.44,"#font[52]{p}_{T}^{#it{#mu}} > 15 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
+    }
+    else la->DrawLatexNDC(0.58,0.6,"akCs4PF jets, |#it{#eta}^{jet}| < 1.6");
+    
+    
   }
   else if(isPP){
-    la->DrawLatexNDC(0.58,0.6,"ak4PF jets, |#it{#eta}^{jet}| < 1.6");
+    if(isSingleMuon){
+      la->DrawLatexNDC(0.53,0.6,"#it{#mu}-tagged ak4PF jets, |#it{#eta}^{jet}| < 1.6");
+      la->DrawLatexNDC(0.58,0.52,"mu12 trigger");
+      la->DrawLatexNDC(0.58,0.44,"#font[52]{p}_{T}^{#it{#mu}} > 15 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
+    }
+    else la->DrawLatexNDC(0.58,0.6,"ak4PF jets, |#it{#eta}^{jet}| < 1.6");
+    
   }
 
    
 
   if(isSingleMuon){
-
-    //la->DrawLatexNDC(0.58,0.5,"#font[52]{p}_{T}^{#mu} > 7 GeV, |#eta^{#mu}| < 2.0");
-    if(isMu7) la->DrawLatexNDC(0.58,0.5,"9 < #font[52]{p}_{T}^{#mu} (GeV) < 14, |#it{#eta}^{#mu}| < 2.0");
-    if(isMu12) la->DrawLatexNDC(0.58,0.5,"#font[52]{p}_{T}^{#it{#mu}} > 14 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
+    
   }
 
   la->SetTextSize(0.05);
   if(isC4){
-    la->DrawLatexNDC(0.32,0.8,"Cent. 50-90%");
+    la->DrawLatexNDC(0.32,0.8,"Cent. 50-80%");
   }
   else if(isC3){
     la->DrawLatexNDC(0.32,0.8,"Cent. 30-50%");
@@ -428,8 +406,8 @@ void plotJetPt_fineCentBins(bool isPP = 0,
 
 
   p2->cd();
-  double ratio_low = 0.0;
-  double ratio_high = 2.5;
+  double ratio_low = 0.4;
+  double ratio_high = 1.6;
   r1->GetYaxis()->SetRangeUser(ratio_low,ratio_high);
   r1->GetXaxis()->SetRangeUser(muRelPtAxis[0]+smallShift,muRelPtAxis[M-1]-smallShift);
   r1->SetMarkerSize(0.8);
@@ -449,39 +427,67 @@ void plotJetPt_fineCentBins(bool isPP = 0,
 
   if(isPP){
     if(isSingleMuon){
-      if(isMu7){
-	c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/SingleMuon/pp/jetPt_SingleMuon_pp_mu7.pdf");
-      }
-      else if(isMu12){
-	c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/SingleMuon/pp/jetPt_SingleMuon_pp_mu12.pdf");
-      }
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/SingleMuon/pp/jetPt_SingleMuon_pp_mu12.pdf");
     }
-    if(isMinBias){
-      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt");
+    else if(isMinBias){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/MinBias/pp/jetPt_MinBias_pp_mu12.pdf");
     }
+    else if(isHardProbes){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/HardProbes/pp/jetPt_HardProbes_pp_mu12.pdf");
+    }
+    else{};
   }
 
+  if(isC4){
+    if(isSingleMuon){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/SingleMuon/C4/jetPt_SingleMuon_C4_mu12.pdf");
+    }
+    else if(isMinBias){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/MinBias/C4/jetPt_MinBias_C4_mu12.pdf");
+    }
+    else if(isHardProbes){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/HardProbes/C4/jetPt_HardProbes_C4_mu12.pdf");
+    }
+    else{};
+  }
+
+  if(isC3){
+    if(isSingleMuon){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/SingleMuon/C3/jetPt_SingleMuon_C3_mu12.pdf");
+    }
+    else if(isMinBias){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/MinBias/C3/jetPt_MinBias_C3_mu12.pdf");
+    }
+    else if(isHardProbes){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/HardProbes/C3/jetPt_HardProbes_C3_mu12.pdf");
+    }
+    else{};
+  }
+  
   if(isC2){
     if(isSingleMuon){
-      if(isMu7){
-	c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/jetPt/SingleMuon/C2/jetPt_SingleMuon_C2_mu7.pdf");
-      }
-      else if(isMu12){
-	c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/jetPt/SingleMuon/C2/jetPt_SingleMuon_C2_mu12.pdf");
-      }
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/SingleMuon/C2/jetPt_SingleMuon_C2_mu12.pdf");
     }
-    if(isMinBias){
-      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/jetPt");
+    else if(isMinBias){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/MinBias/C2/jetPt_MinBias_C2_mu12.pdf");
     }
+    else if(isHardProbes){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/HardProbes/C2/jetPt_HardProbes_C2_mu12.pdf");
+    }
+    else{};
   }
 
   if(isC1){
     if(isSingleMuon){
-      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/jetPt/SingleMuon/C1/jetPt_SingleMuon_C1_mu7.pdf");
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/SingleMuon/C1/jetPt_SingleMuon_C1_mu12.pdf");
     }
-    if(isMinBias){
-      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/jetPt/SingleMuon/C1/jetPt_SingleMuon_C1_mu12.pdf");
+    else if(isMinBias){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/MinBias/C1/jetPt_MinBias_C1_mu12.pdf");
     }
+    else if(isHardProbes){
+      c1->SaveAs("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/figures/jetPt/HardProbes/C1/jetPt_HardProbes_C1_mu12.pdf");
+    }
+    else{};
   }
 
 

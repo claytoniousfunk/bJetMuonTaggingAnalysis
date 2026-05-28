@@ -23,3 +23,25 @@ cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCa
 root -l -q '../jetEnergyResolutionCalculator/jetEnergyResolutionCalculator_pt.C(0,0,0,0,1)'
 cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/sigma_C1.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JER/JER_muTaggedJets_C1_pt.pdf
 cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/mu_C1.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JES/JES_muTaggedJets_C1_pt.pdf
+
+
+
+root -l -q '../jetEnergyResolutionCalculator/jetEnergyResolutionCalculator_eta.C(1,0,0,0,0)'
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/sigma_eta_pp.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JER/JER_muTaggedJets_pp_eta.pdf
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/mu_eta_pp.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JES/JES_muTaggedJets_pp_eta.pdf
+
+root -l -q '../jetEnergyResolutionCalculator/jetEnergyResolutionCalculator_eta.C(0,1,0,0,0)'
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/sigma_eta_C4.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JER/JER_muTaggedJets_C4_eta.pdf
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/mu_eta_C4.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JES/JES_muTaggedJets_C4_eta.pdf
+
+root -l -q '../jetEnergyResolutionCalculator/jetEnergyResolutionCalculator_eta.C(0,0,1,0,0)'
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/sigma_eta_C3.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JER/JER_muTaggedJets_C3_eta.pdf
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/mu_eta_C3.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JES/JES_muTaggedJets_C3_eta.pdf
+
+root -l -q '../jetEnergyResolutionCalculator/jetEnergyResolutionCalculator_eta.C(0,0,0,1,0)'
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/sigma_eta_C2.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JER/JER_muTaggedJets_C2_eta.pdf
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/mu_eta_C2.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JES/JES_muTaggedJets_C2_eta.pdf
+
+root -l -q '../jetEnergyResolutionCalculator/jetEnergyResolutionCalculator_eta.C(0,0,0,0,1)'
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/sigma_eta_C1.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JER/JER_muTaggedJets_C1_eta.pdf
+cp /home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/mu_eta_C1.pdf /home/clayton/Analysis/AN-23-055/figures_updated/JES/JES_muTaggedJets_C1_eta.pdf

@@ -276,15 +276,10 @@ void plotJetTrkMax_ultraFineCentBins(int j = 1){
 
   TFile *file_PbPb_mc, *file_PbPb_data;
 
-  if(j < 3){
-    file_PbPb_mc = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/jetTrkMax/PYTHIAHYDJET_DiJet_jetTrkMax_ultraFineCentBins_jet60_pThat-15_doubleDRBins.root");
-    file_PbPb_data = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/obsidian/jetTrkMax/PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_ultraFineCentBins_jet60_doubleDRBins.root");
-  }
-  else{
-    file_PbPb_mc = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/jetTrkMax/PYTHIAHYDJET_DiJet_jetTrkMax_ultraFineCentBins_jet80_pThat-15_doubleDRBins.root");
-    file_PbPb_data = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/obsidian/jetTrkMax/PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_ultraFineCentBins_jet80_doubleDRBins.root");
-  }
-
+ 
+  file_PbPb_mc = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/jetTrkMax/PYTHIAHYDJET_DiJet_jetTrkMax_pThat-20_trkpT-14_hiBinShift-10_ultraFineCentBins_2025-07-14.root");
+  file_PbPb_data = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/latest/jetTrkMax/PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_jet60_ultraFineCentBins_2025-07-14.root");
+ 
   // jetPt
   TH1D *h_jetPt_C4_mc, *h_jetPt_C4_data;
   TH1D *h_jetPt_C3_mc, *h_jetPt_C3_data;
@@ -321,8 +316,8 @@ void plotJetTrkMax_ultraFineCentBins(int j = 1){
   file_PbPb_mc->GetObject("h_jetPt_C5",h_jetPt_C5_mc);
   file_PbPb_data->GetObject("h_jetPt_C5",h_jetPt_C5_data);
 
-  h_jetPt_C5_mc->Add(h_jetPt_C4_mc);
-  h_jetPt_C5_data->Add(h_jetPt_C4_data);
+  // h_jetPt_C5_mc->Add(h_jetPt_C4_mc);
+  // h_jetPt_C5_data->Add(h_jetPt_C4_data);
   
   
   // retrieve dR
@@ -343,11 +338,11 @@ void plotJetTrkMax_ultraFineCentBins(int j = 1){
   file_PbPb_mc->GetObject(Form("h_jetTrkMaxDR_C5J%i",j),h_dR_C5_mc);
   file_PbPb_data->GetObject(Form("h_jetTrkMaxDR_C5J%i",j),h_dR_C5_data);
 
-  h_dR_C5_mc->Add(h_dR_C4_mc);
-  h_dR_C5_data->Add(h_dR_C4_data);
+  // h_dR_C5_mc->Add(h_dR_C4_mc);
+  // h_dR_C5_data->Add(h_dR_C4_data);
   // make 0-30% bin (temporary!)
-  h_dR_C1_mc->Add(h_dR_C2_mc);
-  h_dR_C1_data->Add(h_dR_C2_data);
+  // h_dR_C1_mc->Add(h_dR_C2_mc);
+  // h_dR_C1_data->Add(h_dR_C2_data);
   
   // retrieve pTrel
   file_PbPb_mc->GetObject(Form("h_jetTrkMaxPtRel_C4J%i",j),h_pTrel_C4_mc);
@@ -367,8 +362,8 @@ void plotJetTrkMax_ultraFineCentBins(int j = 1){
   file_PbPb_mc->GetObject(Form("h_jetTrkMaxPtRel_C5J%i",j),h_pTrel_C5_mc);
   file_PbPb_data->GetObject(Form("h_jetTrkMaxPtRel_C5J%i",j),h_pTrel_C5_data);
 
-  h_pTrel_C5_mc->Add(h_pTrel_C4_mc);
-  h_pTrel_C5_data->Add(h_pTrel_C4_data);
+  // h_pTrel_C5_mc->Add(h_pTrel_C4_mc);
+  // h_pTrel_C5_data->Add(h_pTrel_C4_data);
 
 
   stylize_data(h_jetPt_C5_data,h_jetPt_C4_data,h_jetPt_C3_data,h_jetPt_C2_data, h_jetPt_C1_data);

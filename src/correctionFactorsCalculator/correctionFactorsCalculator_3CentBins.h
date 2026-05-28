@@ -16,9 +16,9 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC3 = 0, bool isC2 = 0, bo
   }
   else{
     f0 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/response/PH_DiJet_pTjet-5_pThat-15_response_fineCentBins.root");
-    f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/fineCentBins/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates.root");
+    f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_pThat-20_mu12_pTmu-14_tight_hiBinReweight_hiBinShift-10_jetTrkMaxFilter_removeHYDJETjet0p45_2025-6-2.root");
+    //f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-25_hiHFcut_jetTrkMaxFilter_vzReweight_hiBinReweight_noWeightCut_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates.root");
     f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/final/PbPb_HardProbes_scan_jet60_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates.root");
-    
   }
   
   TH2D *h0, *h1, *h2, *h3, *h4; // 2d flavor-pt maps
@@ -96,6 +96,18 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC3 = 0, bool isC2 = 0, bo
     f2->GetObject("h_inclRecoJetPt_inclRecoMuonTag_C4",JJ1_incl);
     f2->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C4",JJ2_incl);
 
+    cout << "Int(h0) = " << h0->Integral() << endl;
+    cout << "Int(j0) = " << j0->Integral() << endl;
+    cout << "Int(j1) = " << j1->Integral() << endl;
+    cout << "Int(j2) = " << j2->Integral() << endl;
+    cout << "Int(j3) = " << j3->Integral() << endl;
+
+    cout << "Int(hh0) = " << hh0->Integral() << endl;
+    cout << "Int(jj0) = " << jj0->Integral() << endl;
+    cout << "Int(jj1) = " << jj1->Integral() << endl;
+    cout << "Int(jj2) = " << jj2->Integral() << endl;
+    cout << "Int(jj3) = " << jj3->Integral() << endl;
+    
     h0->Add(hh0);
     j0->Add(jj0);
     j1->Add(jj1);
@@ -103,6 +115,18 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC3 = 0, bool isC2 = 0, bo
     j3->Add(jj3);
     J1_incl->Add(JJ1_incl);
     J2_incl->Add(JJ2_incl);
+
+    cout << "Int(h0) = " << h0->Integral() << endl;
+    cout << "Int(j0) = " << j0->Integral() << endl;
+    cout << "Int(j1) = " << j1->Integral() << endl;
+    cout << "Int(j2) = " << j2->Integral() << endl;
+    cout << "Int(j3) = " << j3->Integral() << endl;
+    
+    /* cout << "h0 entries = " << h0->GetEntries() << endl; */
+    /* cout << "j0 entries = " << j0->GetEntries() << endl; */
+    /* cout << "j1 entries = " << j1->GetEntries() << endl; */
+    /* cout << "j2 entries = " << j2->GetEntries() << endl; */
+    /* cout << "j3 entries = " << j3->GetEntries() << endl; */
     
   }
   else if(isC2){
@@ -238,6 +262,7 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC3 = 0, bool isC2 = 0, bo
   j3_ubar = (TH1D*) j3->ProjectionX("j3_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
   j3_ghost = (TH1D*) j3->ProjectionX("j3_ghost",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
   j3_noFlavor = (TH1D*) j3->ProjectionX("j3_noFlavor",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
+
   // COMBINE QUARK AND ANTI-QUARK HISTOGRAMS
 	
   // PT
@@ -249,16 +274,13 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC3 = 0, bool isC2 = 0, bo
   h0_s->Add(h0_sbar);
   h0_u->Add(h0_ubar);
 
-
-  // ETA
-  // CENT BIN 0
   j0_b->Add(j0_bbar);
   j0_b->Add(j0_bGS);
   j0_c->Add(j0_cbar);
   j0_d->Add(j0_dbar);
   j0_s->Add(j0_sbar);
   j0_u->Add(j0_ubar);
-	
+
 	
   j1_b->Add(j1_bbar);
   j1_b->Add(j1_bGS);
@@ -327,15 +349,21 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC3 = 0, bool isC2 = 0, bo
   j3_l->Add(j3_ghost);
 	
 	
-	
+  /* cout << "compare b-jet integrals..." << endl; */
+  /* cout << "Int(h0_b) = " << h0_b->Integral() << endl; */
+  /* cout << "Int(j0_b) = " << j0_b->Integral() << endl; */
+  /* cout << "Int(j1_b) = " << j1_b->Integral() << endl; */
+  /* cout << "Int(j2_b) = " << j2_b->Integral() << endl; */
+  /* cout << "Int(j3_b) = " << j3_b->Integral() << endl; */
+    
 	
 	
   // REBIN 
   //const int N_jetPtBins = 14;
   //double jetPtAxis[N_jetPtBins] = {50,60,70,80,90,100,120,140,160,200,250,320,400,500};
 
-  const int N_jetPtBins = 5;
-  double jetPtAxis[N_jetPtBins] = {80,100,120,150,200};
+  const int N_jetPtBins = 6;
+  double jetPtAxis[N_jetPtBins] = {80,90,100,120,150,200};
 
    
     
@@ -1048,7 +1076,7 @@ void correctionFactorsCalculator(bool ispp = 1, bool isC3 = 0, bool isC2 = 0, bo
 
   wf->Close();	
 	
-
+  
   
 
 }

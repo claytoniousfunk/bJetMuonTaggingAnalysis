@@ -29,6 +29,8 @@ double fitfxn(double *x, double *par){
 
 
 void jetEnergyResolutionCalculator_eta(bool ispp = 1,
+				       bool isC4 = 0,
+				       bool isC3 = 0,
 				       bool isC2 = 0,
 				       bool isC1 = 0){
 
@@ -41,18 +43,27 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
   bool isPeriph = 0;
   bool isNom = 0;
   
-  bool isC3 = 0;
-  bool isC4 = 0;
+  
 
   bool isCent = 0;
 
   TFile *f1, *f2;
 
+  TString saveSuffix = "";
+  if(ispp) saveSuffix = "pp";
+  else if(isC4) saveSuffix = "C4";
+  else if(isC3) saveSuffix = "C3";
+  else if(isC2) saveSuffix = "C2";
+  else if(isC1) saveSuffix = "C1";
+  else{};
+
 
 
   //if(ispp) f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_mu12_response_doBJetEnergyShift.root");
   //if(ispp) f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_mu7_response.root");
-  if (ispp) f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_mu12_response_withReco_muTaggedJets_moreFlavors.root");
+
+
+
   //if(ispp) f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_mu12_response_withReco_allJets.root");
   //if(ispp) f1 = TFile::Open("~/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/PYTHIA/PYTHIA_response_JEU_up.root");
   //if(ispp) f1 = TFile::Open("~/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/PYTHIA/PYTHIA_response_JEU_down.root");
@@ -76,7 +87,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
   //else f1 = TFile::Open("~/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/PYTHIAHYDJET_DiJet_response_pthat30.root"); // chirs ecalTest forest
   //else f1 = TFile::Open("~/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/PYTHIAHYDJET_DiJet_response_pthat50.root"); // chirs ecalTest forest
   //else f1 = TFile::Open("~/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/PYTHIAHYDJET_DiJet_response_pthat50.root"); // chirs ecalTest forest
-  else f1 = TFile::Open("~/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/official/PYTHIAHYDJET_DiJet_response_mu12_tight_pTmu-14_pThat-30.root"); 
+  
 
   
   //else f1 = TFile::Open("/home/clayton/Analysis/code/skimming/PYTHIAHYDJET_scan/rootFiles/response/PYTHIAHYDJET_DiJet_MuJetsOnly_CsJets_response_12June23.root"); // neutrinos included in genJets
@@ -88,7 +99,13 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
   
   //else f1 = TFile::Open("/home/clayton/Analysis/code/skimming/muJetForest_scan/MC/rootFiles/jetsAndMuons/PH_bJet_matchedPartonFlavor_pthatFilter_newCent_addMuToJet.root");
   //else f1 = TFile::Open("/home/clayton/Analysis/code/skimming/PYTHIAHYDJET_scan/rootFiles/response/PYTHIAHYDJET_response_17Jan23.root");  // neutrinos excluded from genJets
-    
+
+  // if (ispp) f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_mu12_response_withReco_muTaggedJets_moreFlavors.root");
+  // else f1 = TFile::Open("~/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/official/PYTHIAHYDJET_DiJet_response_mu12_tight_pTmu-14_pThat-30.root"); 
+  
+  if(ispp) f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/latest/response/PYTHIA_DiJet_response_pThat-30_mu12_pTmu-15_tight_vzReweight_jetTrkMaxFilter_removeHYDJETjet0p35CutOnGen_2026-2-4_muTaggedJetsNoTrigger.root");
+  else f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/response/PYTHIAHYDJET_response_DiJet_pThat-30_mu12_pTmu-15_tight_vzReweight_hiBinReweight_hiBinShift-10_leadingXjetDumpFilter_jetTrkMaxFilter_removeHYDJETjet0p35CutOnGen_2026-2-4_muTaggedJets.root");
+  
   TH2D *h1, *h2, *h3, *h4, *h5, *h6, *h7;
   TH2D *a1, *a2, *a3, *a4, *a5, *a6, *a7; // for merging
 
@@ -98,7 +115,8 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
     
   bool mergeLights = 1; 
 
-  if(ispp){
+if(ispp){
+
     f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_allJets",h1);
     f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_udJets",h2);
     f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_sJets",h3);
@@ -114,38 +132,37 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
     // f1->GetObject("h_matchedRecoJetPtOverGenJetPt_recoJetPt_cJets",h5);
     // f1->GetObject("h_matchedRecoJetPtOverGenJetPt_recoJetPt_bJets",h6);
     // f1->GetObject("h_matchedRecoJetPtOverGenJetPt_recoJetPt_bJets",h7);
-
-    // f1->GetObject("H_hlt_forest_pt",h1);
-    // f1->GetObject("H_hlt_forest_pt",h2);
-    // f1->GetObject("H_hlt_forest_pt",h3);
-    // f1->GetObject("H_hlt_forest_pt",h4);
-    // f1->GetObject("H_hlt_forest_pt",h5);
-    // f1->GetObject("H_hlt_forest_pt",h6);
-    // f1->GetObject("H_hlt_forest_pt",h7);
-
     
   }
+  else if(isC4){
+
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_allJets_C4",h1);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_udJets_C4",h2);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_sJets_C4",h3);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_gJets_C4",h4);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_cJets_C4",h5);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C4",h6);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C4",h7); // bJets from neutrino-excluded forest
+
   
-  else if(isC1){
-
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_allJets_C1",h1);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_udJets_C1",h2);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_sJets_C1",h3);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_gJets_C1",h4);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_cJets_C1",h5);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C1",h6);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C1",h7); // bJets from neutrino-excluded forest
-
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_allJets_C2",a1);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_udJets_C2",a2);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_sJets_C2",a3);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_gJets_C2",a4);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_cJets_C2",a5);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C2",a6);
-    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C2",a7); // bJets from neutrino-excluded forest
       
   }
+  else if(isC3){
+
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_allJets_C3",h1);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_udJets_C3",h2);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_sJets_C3",h3);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_gJets_C3",h4);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_cJets_C3",h5);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C3",h6);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C3",h7); // bJets from neutrino-excluded forest
+
+  
+      
+  }
+  
   else if(isC2){
+
 
     f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_allJets_C2",h1);
     f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_udJets_C2",h2);
@@ -155,18 +172,22 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
     f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C2",h6);
     f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C2",h7); // bJets from neutrino-excluded forest
 
-    //f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetPt_allJets_C4",a1);
-    //f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetPt_udJets_C4",a2);
-    //f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetPt_sJets_C4",a3);
-    //f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetPt_gJets_C4",a4);
-    //f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetPt_cJets_C4",a5);
-    //f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetPt_bJets_C4",a6);
-    //f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetPt_bJets_C4",a7); // bJets from neutrino-excluded forest
-    
+       
+  }
+  else if(isC1){
+
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_allJets_C1",h1);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_udJets_C1",h2);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_sJets_C1",h3);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_gJets_C1",h4);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_cJets_C1",h5);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C1",h6);
+    f1->GetObject("h_matchedRecoJetPtOverGenJetPt_genJetEta_bJets_C1",h7); // bJets from neutrino-excluded forest
+      
   }
  
   else{} ;
-  
+    
 
   if(mergeCentralities && (isC1 || isC2)){
     h1->Add(a1);
@@ -185,7 +206,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
   }
   if(mergeLights){
     h2->Add(h3);
-    //h2->Add(h4);
+    h2->Add(h4);
   }
   
 
@@ -461,6 +482,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
     la->DrawLatexNDC(0.65,0.46,Form("#it{a}_{#it{G}} = %3.3f",fxn7->GetParameter(0)));
     //la->DrawLatexNDC(0.65,0.39,Form("#it{a}_{#it{L}} = %3.3f",fxn7->GetParameter(3)));
     la->DrawLatexNDC(0.3,0.85,Form("%3.1f < #it{#eta}^{genJet}< %3.1f, #it{b}-jets",pt_axis[i],pt_axis[i+1]));
+    la->DrawLatexNDC(0.3,0.78,"#it{p}_{T}^{genJet} > 100 GeV");
     fxn7->SetLineColor(kRed-4);
     fxn7->Draw("same");
     TF1 *fxn7_gaus = new TF1("fxn7_gaus","[0]*TMath::Gaus(x,[1],[2])",0,5);
@@ -479,7 +501,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
     fxn7_landau->Draw("same");
     //h7_y->SetTitle(Form("%3.0f < p_{T}^{genJet} < %3.0f, bJets",pt_axis[i],pt_axis[i+1]));
     //h7_y->SetTitle(Form("%3.0f < p_{T}^{recoJet} < %3.0f, bJets",pt_axis[i],pt_axis[i+1]));
-    ctmp->SaveAs(Form("tmp/bJets/tmp_%3.0f_%3.0f.pdf",pt_axis[i],pt_axis[i+1]));
+    ctmp->SaveAs(Form("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/tmp/bJets/tmp_eta_%3.0f_%3.0f.pdf",pt_axis[i],pt_axis[i+1]));
 
 
     // h1_y->GetXaxis()->SetTitle("p_{T}^{recoJet} / p_{T}^{genJet}");
@@ -552,7 +574,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
 
   TGraphErrors *gr1 = new TGraphErrors(Nbins-1,x,M1,ept_axis,eM1);
     
-  gr1->SetMarkerStyle(20);
+  gr1->SetMarkerStyle(24);
   gr1->SetMarkerColor(kBlack);
   gr1->SetLineColor(kBlack);
   //gr1->SetLineStyle(2);
@@ -566,7 +588,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
 
   TGraphErrors *gr2 = new TGraphErrors(Nbins-1,x,M2,ept_axis,eM2);
     
-  gr2->SetMarkerStyle(20);
+  gr2->SetMarkerStyle(54);
   gr2->SetMarkerColor(kBlue-4);
   gr2->SetLineColor(kBlue-4);
   gr2->SetMarkerSize(markerSize);
@@ -580,28 +602,28 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
 
   TGraphErrors *gr4 = new TGraphErrors(Nbins-1,x,M4,ept_axis,eM4);
     
-  gr4->SetMarkerStyle(21);
+  gr4->SetMarkerStyle(56);
   gr4->SetMarkerColor(kOrange);
   gr4->SetLineColor(kOrange);
   gr4->SetMarkerSize(markerSize);
 
   TGraphErrors *gr5 = new TGraphErrors(Nbins-1,x,M5,ept_axis,eM5);
     
-  gr5->SetMarkerStyle(28);
+  gr5->SetMarkerStyle(57);
   gr5->SetMarkerColor(kGreen+2);
   gr5->SetLineColor(kGreen+2);
   gr5->SetMarkerSize(markerSize);
 
   TGraphErrors *gr6 = new TGraphErrors(Nbins-1,x,M6,ept_axis,eM6);
     
-  gr6->SetMarkerStyle(23);
+  gr6->SetMarkerStyle(67);
   gr6->SetMarkerColor(kRed-4);
   gr6->SetLineColor(kRed-4);
   gr6->SetMarkerSize(markerSize);
 
   TGraphErrors *gr7 = new TGraphErrors(Nbins-1,x,M7,ept_axis,eM7);
     
-  gr7->SetMarkerStyle(23);
+  gr7->SetMarkerStyle(67);
   gr7->SetMarkerColor(kRed-4);
   gr7->SetLineColor(kRed-4);
   gr7->SetMarkerSize(markerSize);
@@ -615,7 +637,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
 
   TGraphErrors *Gr1 = new TGraphErrors(Nbins-1,x,S1,ept_axis,eS1);
     
-  Gr1->SetMarkerStyle(20);
+  Gr1->SetMarkerStyle(24);
   Gr1->SetMarkerColor(kBlack);
   Gr1->SetLineColor(kBlack);
   //Gr1->SetLineStyle(2);
@@ -641,7 +663,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
 
   TGraphErrors *Gr2 = new TGraphErrors(Nbins-1,x,S2,ept_axis,eS2);
     
-  Gr2->SetMarkerStyle(20);
+  Gr2->SetMarkerStyle(54);
   Gr2->SetMarkerColor(kBlue-4);
   Gr2->SetLineColor(kBlue-4);
   Gr2->SetMarkerSize(markerSize);
@@ -655,28 +677,28 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
 
   TGraphErrors *Gr4 = new TGraphErrors(Nbins-1,x,S4,ept_axis,eS4);
     
-  Gr4->SetMarkerStyle(21);
+  Gr4->SetMarkerStyle(56);
   Gr4->SetMarkerColor(kOrange);
   Gr4->SetLineColor(kOrange);
   Gr4->SetMarkerSize(markerSize);
 
   TGraphErrors *Gr5 = new TGraphErrors(Nbins-1,x,S5,ept_axis,eS5);
     
-  Gr5->SetMarkerStyle(28);
+  Gr5->SetMarkerStyle(57);
   Gr5->SetMarkerColor(kGreen+2);
   Gr5->SetLineColor(kGreen+2);
   Gr5->SetMarkerSize(markerSize);
 
   TGraphErrors *Gr6 = new TGraphErrors(Nbins-1,x,S6,ept_axis,eS6);
     
-  Gr6->SetMarkerStyle(23);
+  Gr6->SetMarkerStyle(67);
   Gr6->SetMarkerColor(kRed-4);
   Gr6->SetLineColor(kRed-4);
   Gr6->SetMarkerSize(markerSize);
 
   TGraphErrors *Gr7 = new TGraphErrors(Nbins-1,x,S7,ept_axis,eS7);
     
-  Gr7->SetMarkerStyle(23);
+  Gr7->SetMarkerStyle(67);
   Gr7->SetMarkerColor(kRed-4);
   Gr7->SetLineColor(kRed-4);
   Gr7->SetMarkerSize(markerSize);
@@ -704,7 +726,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
   
   mg->Add(gr1,"p");
   
-  mg->Add(gr4,"p");
+  //mg->Add(gr4,"p");
   mg->Add(gr2,"p");
   //mg->Add(gr3,"p");
   mg->Add(gr5,"p");
@@ -737,13 +759,14 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
   l->SetTextFont(42);
   l->SetTextSize(0.036);
   l->SetFillStyle(0);
-  l->AddEntry(gr1,"#it{#mu}-tagged jets","p");
+  l->AddEntry(gr1,"all flavors","p");
   //l->AddEntry(gr1,"incl. jets","p");
   //l->AddEntry(gr1,"jets with added muon","l");
   //l->AddEntry(gr2,"quark jets","p");
-  l->AddEntry(gr2,"#font[52]{uds} jets","p");
+  //l->AddEntry(gr2,"#font[52]{uds} jets","p");
+  l->AddEntry(gr2,"#font[52]{udsg} jets","p");
   //l->AddEntry(gr3,"#font[52]{s} jets","p");
-  l->AddEntry(gr4,"#font[52]{g} jets","p");
+  //l->AddEntry(gr4,"#font[52]{g} jets","p");
   l->AddEntry(gr5,"#font[52]{c} jets","p");
   //l->AddEntry(gr6,"#font[52]{b} jets","p");
   l->AddEntry(gr7,"#font[52]{b} jets","p");
@@ -811,18 +834,20 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
     if(isC1) t1->DrawLatexNDC(x_t1,y_t2,"PYTHIA+HYDJET 0-30%");
     else if(isC2) t1->DrawLatexNDC(x_t1,y_t2,"PYTHIA+HYDJET 30-90%");
     else if(isC3) t1->DrawLatexNDC(x_t1,y_t2,"PYTHIA+HYDJET 30-50%");
-    else if(isC4) t1->DrawLatexNDC(x_t1,y_t2,"PYTHIA+HYDJET 50-90%");
+    else if(isC4) t1->DrawLatexNDC(x_t1,y_t2,"PYTHIA+HYDJET 50-80%");
   }
   else t1->DrawLatexNDC(x_t1,y_t2,"PYTHIA");
 
   t1->DrawLatexNDC(x_t1,y_t3,"#it{#mu}-tagged jets");
-  t1->DrawLatexNDC(x_t1,y_t4,"#it{p}_{T}^{genJet} > 60 GeV");
+  t1->DrawLatexNDC(x_t1,y_t4,"#it{p}_{T}^{genJet} > 100 GeV");
   //t1->DrawLatexNDC(x_t1,y_t3,"inclusive jets, |#eta^{jet}| < 1.6");
-  //t1->DrawLatexNDC(x_t1,y_t4,"9 < #font[52]{p}_{T}^{#mu} < 14 GeV, |#eta^{#mu}| < 2.0");
-  t1->DrawLatexNDC(x_t1,y_t5,"#font[52]{p}_{T}^{#mu} > 14 GeV, |#eta^{#mu}| < 2.0");
+  //t1->DrawLatexNDC(x_t1,y_t4,"9 < #font[52]{p}_{T}^{#mu} < 15 GeV, |#eta^{#mu}| < 2.0");
+  t1->DrawLatexNDC(x_t1,y_t5,"#font[52]{p}_{T}^{#mu} > 15 GeV, |#it{#eta}^{#it{#mu}}| < 2.0");
   //t1->DrawLatexNDC(x_t1,y_t5,"#nu's excluded from genJets");
    
   //c1->SaveAs("/home/clayton/Documents/nuclear/GroupMeeting/figures/01-31-23/JES-bJet.pdf");
+
+  c1->SaveAs(Form("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/mu_eta_%s.pdf",saveSuffix.Data()));
     
   for(int i = 0; i < Nbins; i++){
     double bin_i_i = gr1->GetPointY(i);
@@ -860,7 +885,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
   
   mg2->Add(Gr1,"p");
   
-  mg2->Add(Gr4,"p");
+  //mg2->Add(Gr4,"p");
   mg2->Add(Gr2,"p");
   //mg2->Add(Gr3,"p");
   mg2->Add(Gr5,"p");
@@ -902,12 +927,12 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
   else t1->DrawLatexNDC(x_t1,y_t2,"PYTHIA");
   //t1->DrawLatexNDC(x_t1,y_t3,"|#eta^{jet}| < 1.6");
   t1->DrawLatexNDC(x_t1,y_t3,"#it{#mu}-tagged jets");
-  t1->DrawLatexNDC(x_t1,y_t4,"#it{p}_{T}^{genJet} > 60 GeV");
+  t1->DrawLatexNDC(x_t1,y_t4,"#it{p}_{T}^{genJet} > 100 GeV");
   //t1->DrawLatexNDC(x_t1,y_t3,"inclusive jets, |#eta^{jet}| < 1.6");
   //t1->DrawLatexNDC(x_t1,y_t4,"#font[52]{p}_{T}^{#mu} > 7 GeV, |#eta^{#mu}| < 2.0");
-  t1->DrawLatexNDC(x_t1,y_t5,"#font[52]{p}_{T}^{#mu} > 14 GeV, |#eta^{#mu}| < 2.0");
+  t1->DrawLatexNDC(x_t1,y_t5,"#font[52]{p}_{T}^{#mu} > 15 GeV, |#eta^{#mu}| < 2.0");
 
-
+  c2->SaveAs(Form("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/src/jetEnergyResolutionCalculator/figures/sigma_eta_%s.pdf",saveSuffix.Data()));
   
   TH1D *JER_result_b = new TH1D("JER_result_b","JER_result_b",Nbins-1,pt_axis);
   TH1D *JES_result_b = new TH1D("JES_result_b","JES_result_b",Nbins-1,pt_axis);
@@ -972,7 +997,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
   
   
   
-  TFile *JER_result_file = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/JER/JER_C0_pthat15.root","recreate");
+  TFile *JER_result_file = TFile::Open(Form("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/JER/JER_eta_%s.root",saveSuffix.Data()),"recreate");
 
   JER_result_b->Write();
   JER_result_i->Write();
@@ -982,7 +1007,7 @@ void jetEnergyResolutionCalculator_eta(bool ispp = 1,
 
 
 
-  TFile *JES_result_file = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/JES/JES_C0_pthat15.root","recreate");
+  TFile *JES_result_file = TFile::Open(Form("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/JES/JES_eta_%s.root",saveSuffix.Data()),"recreate");
   
   JES_result_b->Write();
   JES_result_i->Write();

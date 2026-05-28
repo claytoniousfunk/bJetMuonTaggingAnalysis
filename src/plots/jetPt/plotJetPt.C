@@ -6,7 +6,12 @@
 
 
 
-void plotJetPt(bool isPP = 1, bool isC2 = 0, bool isC1 = 0, bool isSingleMuon = 1, bool isMinBias = 0, bool isMu7 = 0, bool isMu12 = 1){
+void plotJetPt(bool isPP = 1,
+	       bool isC2 = 0,
+	       bool isC2 = 0,
+	       bool isC1 = 0,
+	       bool isSingleMuon = 1,
+	       bool isMinBias = 0){
 
   
 

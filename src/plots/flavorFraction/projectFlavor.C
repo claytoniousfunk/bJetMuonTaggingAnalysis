@@ -6,7 +6,8 @@ void projectFlavor(){
 
 
 
-  TFile *f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_pThat-15_mu12_pTmu-15to999_tight_vzReweight_hiBinReweightToHardProbesJet80_hiBinShift-10_jetTrkMaxFilter_doPThatCorrelationFilterTight_WDecayFilter_2026-5-12_ultraFineCentBins.root");
+  TFile *f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/canonical/PYTHIAHYDJET_DiJet_pThat-15_mu12_pTmu-15to999_tight_vzReweight_hiBinReweightToHardProbesJet80_hiBinShift-10_jetTrkMaxFilter_doPThatCorrelationFilterTight_WDecayFilter_2026-5-27.root");
+  //TFile *f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/canonical/PYTHIAHYDJET_DiJet_pThat-15_mu12_pTmu-15to999_tight_vzReweight_hiBinReweightToHardProbesJet80_hiBinShift-10_jetTrkMaxFilter_doPThatCorrelationFilterTight_WDecayFilter_2026-5-26.root");
   //TFile *f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_pThat-unweighted_mu12_pTmu-15to999_tight_vzReweight_hiBinReweightToHardProbesJet80_hiBinShift-10_jetTrkMaxFilter_WDecayFilter_2026-5-13_ultraFineCentBins.root");
   //TFile *f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_pThat-30_mu12_pTmu-14_tight_hiBinReweight_hiBinShift-10_jetTrkMaxFilter_removeHYDJETjet0p35_2026-1-8.root");
 
@@ -20,6 +21,7 @@ void projectFlavor(){
   TH1D *h0_bGS;
   TH1D *h0_ghost;
   TH1D *h0_noFlavor;
+  TH1D *h0_unmatched;
 	
   // RETRIEVE 2D MAPS
 
@@ -35,20 +37,21 @@ void projectFlavor(){
   //TH1D *h0_incl_add = (TH1D*) h0->ProjectionX("h0_incl_add",binFinder->FindBin(1+smallShift),binFinder->FindBin(22-smallShift));
   //h0_incl->Add(h0_incl_add);
 
-  h0_b = (TH1D*) h0->ProjectionX("h0_b",binFinder->FindBin(5+smallShift),binFinder->FindBin(6-smallShift));
-  h0_bGS = (TH1D*) h0->ProjectionX("h0_bGS",binFinder->FindBin(17+smallShift),binFinder->FindBin(18-smallShift));
-  h0_c = (TH1D*) h0->ProjectionX("h0_c",binFinder->FindBin(4+smallShift),binFinder->FindBin(5-smallShift));
-  h0_d = (TH1D*) h0->ProjectionX("h0_d",binFinder->FindBin(1+smallShift),binFinder->FindBin(2-smallShift));
-  h0_g = (TH1D*) h0->ProjectionX("h0_g",binFinder->FindBin(21+smallShift),binFinder->FindBin(22-smallShift));
-  h0_s = (TH1D*) h0->ProjectionX("h0_s",binFinder->FindBin(3+smallShift),binFinder->FindBin(4-smallShift));
-  h0_u = (TH1D*) h0->ProjectionX("h0_u",binFinder->FindBin(2+smallShift),binFinder->FindBin(3-smallShift));
-  h0_bbar = (TH1D*) h0->ProjectionX("h0_bbar",binFinder->FindBin(-5+smallShift),binFinder->FindBin(-4-smallShift));
-  h0_cbar = (TH1D*) h0->ProjectionX("h0_cbar",binFinder->FindBin(-4+smallShift),binFinder->FindBin(-3-smallShift));
-  h0_dbar = (TH1D*) h0->ProjectionX("h0_dbar",binFinder->FindBin(-1+smallShift),binFinder->FindBin(0-smallShift));
-  h0_sbar = (TH1D*) h0->ProjectionX("h0_sbar",binFinder->FindBin(-3+smallShift),binFinder->FindBin(-2-smallShift));
-  h0_ubar = (TH1D*) h0->ProjectionX("h0_ubar",binFinder->FindBin(-2+smallShift),binFinder->FindBin(-1-smallShift));
-  h0_ghost = (TH1D*) h0->ProjectionX("h0_ghost",binFinder->FindBin(0+smallShift),binFinder->FindBin(1-smallShift));
-  h0_noFlavor = (TH1D*) h0->ProjectionX("h0_noFlavor",binFinder->FindBin(19+smallShift),binFinder->FindBin(20-smallShift));
+  h0_b = (TH1D*) h0->ProjectionX("h0_b",binFinder->FindBin(5.+smallShift),binFinder->FindBin(6.-smallShift));
+  h0_bGS = (TH1D*) h0->ProjectionX("h0_bGS",binFinder->FindBin(17.+smallShift),binFinder->FindBin(18.-smallShift));
+  h0_c = (TH1D*) h0->ProjectionX("h0_c",binFinder->FindBin(4.+smallShift),binFinder->FindBin(5.-smallShift));
+  h0_d = (TH1D*) h0->ProjectionX("h0_d",binFinder->FindBin(1.+smallShift),binFinder->FindBin(2.-smallShift));
+  h0_g = (TH1D*) h0->ProjectionX("h0_g",binFinder->FindBin(21.+smallShift),binFinder->FindBin(22.-smallShift));
+  h0_s = (TH1D*) h0->ProjectionX("h0_s",binFinder->FindBin(3.+smallShift),binFinder->FindBin(4.-smallShift));
+  h0_u = (TH1D*) h0->ProjectionX("h0_u",binFinder->FindBin(2.+smallShift),binFinder->FindBin(3.-smallShift));
+  h0_bbar = (TH1D*) h0->ProjectionX("h0_bbar",binFinder->FindBin(-5.+smallShift),binFinder->FindBin(-4.-smallShift));
+  h0_cbar = (TH1D*) h0->ProjectionX("h0_cbar",binFinder->FindBin(-4.+smallShift),binFinder->FindBin(-3.-smallShift));
+  h0_dbar = (TH1D*) h0->ProjectionX("h0_dbar",binFinder->FindBin(-1.+smallShift),binFinder->FindBin(0.-smallShift));
+  h0_sbar = (TH1D*) h0->ProjectionX("h0_sbar",binFinder->FindBin(-3.+smallShift),binFinder->FindBin(-2.-smallShift));
+  h0_ubar = (TH1D*) h0->ProjectionX("h0_ubar",binFinder->FindBin(-2.+smallShift),binFinder->FindBin(-1.-smallShift));
+  h0_ghost = (TH1D*) h0->ProjectionX("h0_ghost",binFinder->FindBin(0.+smallShift),binFinder->FindBin(1.-smallShift));
+  h0_noFlavor = (TH1D*) h0->ProjectionX("h0_noFlavor",binFinder->FindBin(19.+smallShift),binFinder->FindBin(20.-smallShift));
+  h0_unmatched = (TH1D*) h0->ProjectionX("h0_unmatched",binFinder->FindBin(18.+smallShift),binFinder->FindBin(19.-smallShift));
 	
   h0_b->Add(h0_bbar);
   h0_b->Add(h0_bGS);
@@ -111,6 +114,10 @@ void projectFlavor(){
   h0_noFlavor->SetLineWidth(2);
   h0_noFlavor->SetLineColor(kCyan+2);
 
+  h0_unmatched->SetLineWidth(2);
+  h0_unmatched->SetLineColor(kRed-8);
+  h0_unmatched->SetFillColor(kRed-8);
+
   h0_b->SetStats(0);
   h0_b->SetTitle("Jet spectra by flavor, PYTHIA+HYDJET 0-90%");
   //h0_b->SetTitle("Jet spectra by flavor, HYDJET 0-90%");
@@ -136,6 +143,7 @@ void projectFlavor(){
   h0_s->Draw("same");
   h0_g->Draw("same");
   h0_ghost->Draw("same");
+  h0_unmatched->Draw("same");
 	
   //h0_noFlavor->Draw("same");
 
@@ -144,12 +152,14 @@ void projectFlavor(){
   leg->SetBorderSize(0);
   leg->SetTextSize(0.035);
   leg->AddEntry(h0_ghost,"#font[52]{x} jets");
+  leg->AddEntry(h0_unmatched,"#font[52]{x} jets (unmatched)");
   leg->AddEntry(h0_g,"#font[52]{g} jets");
   leg->AddEntry(h0_s,"#font[52]{s} jets");
   leg->AddEntry(h0_d,"#font[52]{d} jets");
   leg->AddEntry(h0_u,"#font[52]{u} jets");
   leg->AddEntry(h0_c,"#font[52]{c} jets");
   leg->AddEntry(h0_b,"#font[52]{b} jets");
+  
   //leg->AddEntry(h0_noFlavor,"noFlavor jets");
 
   leg->Draw();
@@ -172,7 +182,7 @@ void projectFlavor(){
 
   // Create the stack
   THStack *hs = new THStack("hs","");
-  TH1D *hsb, *hsc, *hsu, *hsd, *hss, *hsg, *hsx;
+  TH1D *hsb, *hsc, *hsu, *hsd, *hss, *hsg, *hsx, *hsxu;
   hsb = (TH1D*) h0_b->Clone("hsb");
   hsc = (TH1D*) h0_c->Clone("hsc");
   hsu = (TH1D*) h0_u->Clone("hsu");
@@ -180,6 +190,7 @@ void projectFlavor(){
   hss = (TH1D*) h0_s->Clone("hss");
   hsg = (TH1D*) h0_g->Clone("hsg");
   hsx = (TH1D*) h0_ghost->Clone("hsx");
+  hsxu = (TH1D*) h0_unmatched->Clone("hsxu");
 
 	
   hsb->Divide(h0_incl);
@@ -189,6 +200,7 @@ void projectFlavor(){
   hss->Divide(h0_incl);
   hsg->Divide(h0_incl);
   hsx->Divide(h0_incl);
+  hsxu->Divide(h0_incl);
 
 
 	
@@ -199,10 +211,12 @@ void projectFlavor(){
   hs->Add(hss);
   hs->Add(hsg);
   hs->Add(hsx);
+  hs->Add(hsxu);
 
   TLegend *ls = new TLegend(0.71,0.5,0.98,0.9);
   ls->SetBorderSize(0);
   ls->SetTextSize(0.055);
+  ls->AddEntry(hsxu,"#font[52]{x} jets (unmatched)");
   ls->AddEntry(hsx,"#font[52]{x} jets");
   ls->AddEntry(hsg,"#font[52]{g} jets");
   ls->AddEntry(hss,"#font[52]{s} jets");

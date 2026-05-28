@@ -22,20 +22,20 @@ void bPurityCalculator_projectableTemplates_3CentBins_oneOff(){
 
   int do_data = 1;
 
-  int do_pp = 0;
+  int do_pp = 1;
   int do_C3 = 0;
   int do_C2 = 0;
-  int do_C1 = 1;
+  int do_C1 = 0;
 
   double low_jetPt = 80.;
-  double high_jetPt = 100.;
+  double high_jetPt = 90.;
   
-  int do_mergeB = 1;
-  int do_mergeC = 1;
+  int do_mergeB = 0;
+  int do_mergeC = 0;
 
   // one has to be 1, one has to be 0 for the fit integers
-  int do_2tempFit = 0;
-  int do_3tempFit = 1; 
+  int do_2tempFit = 1;
+  int do_3tempFit = 0; 
 
   
   double pTrel_fit_low  = 0.0;

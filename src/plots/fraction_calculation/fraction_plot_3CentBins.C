@@ -9,14 +9,25 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
 
 
   /*
-  TFile *file_RAA_incl = TFile::Open("./RAAData/HEPData-ins1673184-v1-Table_19.root");
-  TH1D *RAA_incl;
-  TDirectoryFile *dir = (TDirectoryFile*) file_RAA_incl->Get("Table 19");
-  //file_RAA_incl->GetObject("Table 19/Hist1D_y1",RAA_incl);
-  RAA_incl = (TH1D*) dir->Get("Hist1D_y1");
-  //RAA_incl->Draw();
-  RAA_incl->Fit("pol1","","",100,200);
+    TFile *file_RAA_incl = TFile::Open("./RAAData/HEPData-ins1673184-v1-Table_19.root");
+    TH1D *RAA_incl;
+    TDirectoryFile *dir = (TDirectoryFile*) file_RAA_incl->Get("Table 19");
+    //file_RAA_incl->GetObject("Table 19/Hist1D_y1",RAA_incl);
+    RAA_incl = (TH1D*) dir->Get("Hist1D_y1");
+    //RAA_incl->Draw();
+    RAA_incl->Fit("pol1","","",100,200);
   */
+
+  TFile *file_bFrac_CMS_pp_7TeV = TFile::Open("../../../rootFiles/HEPData/JHEP042012084/bFrac.root");
+  TH1F *bFrac_CMS_pp_7TeV;
+  file_bFrac_CMS_pp_7TeV->GetObject("bFrac",bFrac_CMS_pp_7TeV);
+
+
+  bFrac_CMS_pp_7TeV->SetLineColor(kPink-9);
+  bFrac_CMS_pp_7TeV->SetMarkerColor(kPink-9);
+  bFrac_CMS_pp_7TeV->SetMarkerStyle(33);
+  bFrac_CMS_pp_7TeV->SetMarkerSize(2.5);
+  bFrac_CMS_pp_7TeV->SetLineWidth(4);
 
 
   
@@ -61,7 +72,7 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
     input_pp_MinBias      = goldenFile_pp_MinBias_mu12_newJetBins;
     input_PbPb_MinBias    = goldenFile_PbPb_MinBias_mu12_newJetBins;
     input_PYTHIA          = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/final/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_dRReweight_projectableTemplates.root";
-    input_PYTHIAHYDJET    = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/fineCentBins/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates.root";
+    input_PYTHIAHYDJET    = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_pThat-20_mu12_pTmu-14_tight_hiBinReweight_hiBinShift-10_jetTrkMaxFilter_removeHYDJETjet0p45_2025-6-2.root";
 
   }
   else{};
@@ -104,8 +115,13 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   TH1D *bbbbb1_add2, *bbbbb2_add2, *bbbbb3_add2, *bbbbb4_add2;
 
   TH1D *genb, *geni;
+  TH1D *genb2, *genb3, *genb4;
+  TH1D *geni2, *geni3, *geni4;
   TH1D *genb_add, *genb_add2;
-  TH2D *G;
+  TH1D *genb2_add, *genb2_add2;
+  TH1D *genb3_add, *genb3_add2;
+  TH1D *genb4_add, *genb4_add2;
+  TH2D *G, *G2, *G3, *G4, *G5;
 
   x1->GetObject("h_inclRecoJetPt_flavor",Y1);
   x1->GetObject("h_inclGenJetPt_flavor",G);
@@ -118,7 +134,12 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   x2->GetObject("h_inclRecoJetPt_flavor_C2",Y3);
   x2->GetObject("h_inclRecoJetPt_flavor_C3",Y4);
   x2->GetObject("h_inclRecoJetPt_flavor_C4",Y5);
+  x2->GetObject("h_inclGenJetPt_flavor_C1",G2);
+  x2->GetObject("h_inclGenJetPt_flavor_C2",G3);
+  x2->GetObject("h_inclGenJetPt_flavor_C3",G4);
+  x2->GetObject("h_inclGenJetPt_flavor_C4",G5);
   Y4->Add(Y5);
+  G4->Add(G5);
 
   geni = (TH1D*) G->ProjectionX();
   y1 = (TH1D*) Y1->ProjectionX();
@@ -131,6 +152,9 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   y2 = (TH1D*) Y2->ProjectionX();
   y3 = (TH1D*) Y3->ProjectionX();
   y4 = (TH1D*) Y4->ProjectionX();
+  geni2 = (TH1D*) G2->ProjectionX();
+  geni3 = (TH1D*) G3->ProjectionX();
+  geni4 = (TH1D*) G4->ProjectionX();
 
   TH1D *binFinder = Y1->ProjectionY();
   double smallShift = 0.01;
@@ -140,6 +164,29 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   genb_add2 = (TH1D*) G->ProjectionX("genb_add2",binFinder->FindBin(17.+smallShift),binFinder->FindBin(18.-smallShift));
   genb->Add(genb_add);
   genb->Add(genb_add2);
+
+  genb2 = (TH1D*) G2->ProjectionX("genb2",binFinder->FindBin(-5+smallShift),binFinder->FindBin(-4-smallShift));
+  genb2_add = (TH1D*) G2->ProjectionX("genb2_add",binFinder->FindBin(5+smallShift),binFinder->FindBin(6-smallShift));
+  genb2_add2 = (TH1D*) G2->ProjectionX("genb2_add2",binFinder->FindBin(17.+smallShift),binFinder->FindBin(18.-smallShift));
+  genb2->Add(genb2_add);
+  genb2->Add(genb2_add2);
+
+  genb3 = (TH1D*) G3->ProjectionX("genb3",binFinder->FindBin(-5+smallShift),binFinder->FindBin(-4-smallShift));
+  genb3_add = (TH1D*) G3->ProjectionX("genb3_add",binFinder->FindBin(5+smallShift),binFinder->FindBin(6-smallShift));
+  genb3_add2 = (TH1D*) G3->ProjectionX("genb3_add2",binFinder->FindBin(17.+smallShift),binFinder->FindBin(18.-smallShift));
+  genb3->Add(genb3_add);
+  genb3->Add(genb3_add2);
+
+  genb4 = (TH1D*) G4->ProjectionX("genb4",binFinder->FindBin(-5+smallShift),binFinder->FindBin(-4-smallShift));
+  genb4_add = (TH1D*) G4->ProjectionX("genb4_add",binFinder->FindBin(5+smallShift),binFinder->FindBin(6-smallShift));
+  genb4_add2 = (TH1D*) G4->ProjectionX("genb4_add2",binFinder->FindBin(17.+smallShift),binFinder->FindBin(18.-smallShift));
+  genb4->Add(genb4_add);
+  genb4->Add(genb4_add2);
+
+
+
+
+  
   
   b1 = (TH1D*) Y1->ProjectionX("b1",binFinder->FindBin(-5+smallShift),binFinder->FindBin(-4-smallShift));
   b1_add = (TH1D*) Y1->ProjectionX("b1_add",binFinder->FindBin(5+smallShift),binFinder->FindBin(6-smallShift));
@@ -198,6 +245,24 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
 
   TH1D *geni_R = (TH1D*) geni->Rebin(M-1,"geni_R",new_axis);
   divideByBinwidth(geni_R); geni_R->Scale(5.0);
+
+  TH1D *genb2_R = (TH1D*) genb2->Rebin(M-1,"genb2_R",new_axis);
+  divideByBinwidth(genb2_R); genb2_R->Scale(5.0);
+
+  TH1D *geni2_R = (TH1D*) geni2->Rebin(M-1,"geni2_R",new_axis);
+  divideByBinwidth(geni2_R); geni2_R->Scale(5.0);
+
+  TH1D *genb3_R = (TH1D*) genb3->Rebin(M-1,"genb3_R",new_axis);
+  divideByBinwidth(genb3_R); genb3_R->Scale(5.0);
+
+  TH1D *geni3_R = (TH1D*) geni3->Rebin(M-1,"geni3_R",new_axis);
+  divideByBinwidth(geni3_R); geni3_R->Scale(5.0);
+
+  TH1D *genb4_R = (TH1D*) genb4->Rebin(M-1,"genb4_R",new_axis);
+  divideByBinwidth(genb4_R); genb4_R->Scale(5.0);
+
+  TH1D *geni4_R = (TH1D*) geni4->Rebin(M-1,"geni4_R",new_axis);
+  divideByBinwidth(geni4_R); geni4_R->Scale(5.0);
   
   TH1D *b1_R = (TH1D*) b1->Rebin(M-1,"b1_R",new_axis);
   divideByBinwidth(b1_R); b1_R->Scale(5.0);
@@ -253,6 +318,15 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
 
   TH1D *b_truth_gen_R = (TH1D*) genb_R->Clone("b_truth_gen_R");
   b_truth_gen_R->Divide(genb_R,geni_R,1,1,"B");
+
+  TH1D *b_truth_gen_C1_R = (TH1D*) genb4_R->Clone("b_truth_gen_C1_R");
+  b_truth_gen_C1_R->Divide(genb4_R,geni4_R,1,1,"B");
+
+  TH1D *b_truth_gen_C2_R = (TH1D*) genb3_R->Clone("b_truth_gen_C2_R");
+  b_truth_gen_C2_R->Divide(genb3_R,geni3_R,1,1,"B");
+
+  TH1D *b_truth_gen_C3_R = (TH1D*) genb2_R->Clone("b_truth_gen_C3_R");
+  b_truth_gen_C3_R->Divide(genb2_R,geni2_R,1,1,"B");
   
   TH1D *b_truth_pp = (TH1D*) b1->Clone("b_truth_pp");
   b_truth_pp->Divide(b1,y1,1,1,"B");
@@ -326,7 +400,7 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
 
   if(do_mu5) b_purity_file_string = "../../../rootFiles/bPurityResults/bPurityResults_DATA-1_mu5-1_mu7-0_mu12-0_mergeB-1_mergeC-1_pTrel-0.0-5.0_cMult-1.0_bMult-1.2-JERsmear-1.root";
   else if(do_mu7) b_purity_file_string = "../../../rootFiles/bPurityResults/golden//bPurityResults_DATA-0_mu5-0_mu7-1_mu12-0_mergeB-0_mergeC-0_pTrel-0.0to5.0_cMult-1.0_bMult-1.0_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0_bJetEnergyShift-0.root";
-  else if(do_mu12) b_purity_file_string = "../../../rootFiles/bPurityResults/final/bPurityResults_DATA-1_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.0_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0_bJetEnergyShift-0.root";
+  else if(do_mu12) b_purity_file_string = "../../../rootFiles/bPurityResults/latest/bPurityResults_DATA-1_mergeB-1_mergeC-1_pTrel-0.0to5.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0_bJetEnergyShift-0.root";
   //else if(do_mu12) b_purity_file_string = "../../../rootFiles/bPurityResults/golden/bPurityResults_DATA-0_mu5-0_mu7-0_mu12-1_mergeB-1_mergeC-1_pTrel-0.0to3.0_cMult-1.0_bMult-1.2_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0_bJetEnergyShift-0.root";
 
   else{};
@@ -672,6 +746,13 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   double sys_input_pp_J5 = 0.0;
   double sys_input_pp_J6 = 0.0;
 
+  double sys_input_C3_J1 = 0.0;
+  double sys_input_C3_J2 = 0.0;
+  double sys_input_C3_J3 = 0.0;
+  double sys_input_C3_J4 = 0.0;
+  double sys_input_C3_J5 = 0.0;
+  double sys_input_C3_J6 = 0.0;
+
   double sys_input_C2_J1 = 0.0;
   double sys_input_C2_J2 = 0.0;
   double sys_input_C2_J3 = 0.0;
@@ -686,492 +767,341 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   double sys_input_C1_J5 = 0.0;
   double sys_input_C1_J6 = 0.0;
 
+  double sys_input_X_J1 = 0.0;
   double sys_input_X_J2 = 0.0;
   double sys_input_X_J3 = 0.0;
   double sys_input_X_J4 = 0.0;
+  double sys_input_X_J5 = 0.0;
+  double sys_input_X_J6 = 0.0;
 
+  double sys_input_pp_X_J1 = 0.0;
   double sys_input_pp_X_J2 = 0.0;
   double sys_input_pp_X_J3 = 0.0;
   double sys_input_pp_X_J4 = 0.0;
+  double sys_input_pp_X_J5 = 0.0;
+  double sys_input_pp_X_J6 = 0.0;
 
-  double sys_input_pp_U_J2 = 0.0;
+  double sys_input_pp_U_J1 = 0.0;
+  double sys_input_pp_U_J2 = 0.0;  
   double sys_input_pp_U_J3 = 0.0;
   double sys_input_pp_U_J4 = 0.0;
+  double sys_input_pp_U_J5 = 0.0;
+  double sys_input_pp_U_J6 = 0.0;
 
+  double sys_input_C3_X_J1 = 0.0;
+  double sys_input_C3_X_J2 = 0.0;
+  double sys_input_C3_X_J3 = 0.0;
+  double sys_input_C3_X_J4 = 0.0;
+  double sys_input_C3_X_J5 = 0.0;
+  double sys_input_C3_X_J6 = 0.0;
+
+  double sys_input_C3_U_J1 = 0.0;
+  double sys_input_C3_U_J2 = 0.0;
+  double sys_input_C3_U_J3 = 0.0;
+  double sys_input_C3_U_J4 = 0.0;
+  double sys_input_C3_U_J5 = 0.0;
+  double sys_input_C3_U_J6 = 0.0;
+
+  double sys_input_C2_X_J1 = 0.0;
   double sys_input_C2_X_J2 = 0.0;
   double sys_input_C2_X_J3 = 0.0;
   double sys_input_C2_X_J4 = 0.0;
+  double sys_input_C2_X_J5 = 0.0;
+  double sys_input_C2_X_J6 = 0.0;
 
+  double sys_input_C2_U_J1 = 0.0;
   double sys_input_C2_U_J2 = 0.0;
   double sys_input_C2_U_J3 = 0.0;
   double sys_input_C2_U_J4 = 0.0;
+  double sys_input_C2_U_J5 = 0.0;
+  double sys_input_C2_U_J6 = 0.0;
 
+  double sys_input_C1_X_J1 = 0.0;
   double sys_input_C1_X_J2 = 0.0;
   double sys_input_C1_X_J3 = 0.0;
   double sys_input_C1_X_J4 = 0.0;
+  double sys_input_C1_X_J5 = 0.0;
+  double sys_input_C1_X_J6 = 0.0;
 
+  double sys_input_C1_U_J1 = 0.0;
   double sys_input_C1_U_J2 = 0.0;
   double sys_input_C1_U_J3 = 0.0;
   double sys_input_C1_U_J4 = 0.0;
+  double sys_input_C1_U_J5 = 0.0;
+  double sys_input_C1_U_J6 = 0.0;
+
+
+  // pp
+  sys_input_pp_J1 = TMath::Sqrt(sys_cFraction_pp_mu12_J1*sys_cFraction_pp_mu12_J1 +
+				sys_lowerBound_pp_mu12_J1*sys_lowerBound_pp_mu12_J1 +
+				sys_bEnhance_pp_mu12_J1*sys_bEnhance_pp_mu12_J1 +
+				sys_cEnhance_pp_mu12_J1*sys_cEnhance_pp_mu12_J1 +
+				sys_JERsmear_pp_mu12_J1*sys_JERsmear_pp_mu12_J1 +
+				sys_bGS_pp_mu12_J1*sys_bGS_pp_mu12_J1 +
+				sys_JEUShiftUp_pp_mu12_J1*sys_JEUShiftUp_pp_mu12_J1 +
+				sys_JEUShiftDown_pp_mu12_J1*sys_JEUShiftDown_pp_mu12_J1+
+				sys_centShiftUp_pp_mu12_J1*sys_centShiftUp_pp_mu12_J1+
+				sys_centShiftDown_pp_mu12_J1*sys_centShiftDown_pp_mu12_J1);
+
+  sys_input_pp_J2 = TMath::Sqrt(sys_cFraction_pp_mu12_J2*sys_cFraction_pp_mu12_J2 +
+				sys_lowerBound_pp_mu12_J2*sys_lowerBound_pp_mu12_J2 +
+				sys_bEnhance_pp_mu12_J2*sys_bEnhance_pp_mu12_J2 +
+				sys_cEnhance_pp_mu12_J2*sys_cEnhance_pp_mu12_J2 +
+				sys_JERsmear_pp_mu12_J2*sys_JERsmear_pp_mu12_J2 +
+				sys_bGS_pp_mu12_J2*sys_bGS_pp_mu12_J2 +
+				sys_JEUShiftUp_pp_mu12_J2*sys_JEUShiftUp_pp_mu12_J2 +
+				sys_JEUShiftDown_pp_mu12_J2*sys_JEUShiftDown_pp_mu12_J2+
+				sys_centShiftUp_pp_mu12_J2*sys_centShiftUp_pp_mu12_J2+
+				sys_centShiftDown_pp_mu12_J2*sys_centShiftDown_pp_mu12_J2);
+    
+  sys_input_pp_J3 = TMath::Sqrt(sys_cFraction_pp_mu12_J3*sys_cFraction_pp_mu12_J3 +
+				sys_lowerBound_pp_mu12_J3*sys_lowerBound_pp_mu12_J3 +
+				sys_bEnhance_pp_mu12_J3*sys_bEnhance_pp_mu12_J3 +
+				sys_cEnhance_pp_mu12_J3*sys_cEnhance_pp_mu12_J3 +
+				sys_JERsmear_pp_mu12_J3*sys_JERsmear_pp_mu12_J3 +
+				sys_bGS_pp_mu12_J3*sys_bGS_pp_mu12_J3 +
+				sys_JEUShiftUp_pp_mu12_J3*sys_JEUShiftUp_pp_mu12_J3 +
+				sys_JEUShiftDown_pp_mu12_J3*sys_JEUShiftDown_pp_mu12_J3+
+				sys_centShiftUp_pp_mu12_J3*sys_centShiftUp_pp_mu12_J3+
+				sys_centShiftDown_pp_mu12_J3*sys_centShiftDown_pp_mu12_J3);
+ 
+  sys_input_pp_J4 = TMath::Sqrt(sys_cFraction_pp_mu12_J4*sys_cFraction_pp_mu12_J4 +
+				sys_lowerBound_pp_mu12_J4*sys_lowerBound_pp_mu12_J4 +
+				sys_bEnhance_pp_mu12_J4*sys_bEnhance_pp_mu12_J4 +
+				sys_cEnhance_pp_mu12_J4*sys_cEnhance_pp_mu12_J4 +
+				sys_JERsmear_pp_mu12_J4*sys_JERsmear_pp_mu12_J4 +
+				sys_bGS_pp_mu12_J4*sys_bGS_pp_mu12_J4 +
+				sys_JEUShiftUp_pp_mu12_J4*sys_JEUShiftUp_pp_mu12_J4 +
+				sys_JEUShiftDown_pp_mu12_J4*sys_JEUShiftDown_pp_mu12_J4+
+				sys_centShiftUp_pp_mu12_J4*sys_centShiftUp_pp_mu12_J4+
+				sys_centShiftDown_pp_mu12_J4*sys_centShiftDown_pp_mu12_J4);
+
+  sys_input_pp_J5 = TMath::Sqrt(sys_cFraction_pp_mu12_J5*sys_cFraction_pp_mu12_J5 +
+				sys_lowerBound_pp_mu12_J5*sys_lowerBound_pp_mu12_J5 +
+				sys_bEnhance_pp_mu12_J5*sys_bEnhance_pp_mu12_J5 +
+				sys_cEnhance_pp_mu12_J5*sys_cEnhance_pp_mu12_J5 +
+				sys_JERsmear_pp_mu12_J5*sys_JERsmear_pp_mu12_J5 +
+				sys_bGS_pp_mu12_J5*sys_bGS_pp_mu12_J5 +
+				sys_JEUShiftUp_pp_mu12_J5*sys_JEUShiftUp_pp_mu12_J5 +
+				sys_JEUShiftDown_pp_mu12_J5*sys_JEUShiftDown_pp_mu12_J5+
+				sys_centShiftUp_pp_mu12_J5*sys_centShiftUp_pp_mu12_J5+
+				sys_centShiftDown_pp_mu12_J5*sys_centShiftDown_pp_mu12_J5);
+
+  sys_input_pp_J6 = TMath::Sqrt(sys_cFraction_pp_mu12_J6*sys_cFraction_pp_mu12_J6 +
+				sys_lowerBound_pp_mu12_J6*sys_lowerBound_pp_mu12_J6 +
+				sys_bEnhance_pp_mu12_J6*sys_bEnhance_pp_mu12_J6 +
+				sys_cEnhance_pp_mu12_J6*sys_cEnhance_pp_mu12_J6 +
+				sys_JERsmear_pp_mu12_J6*sys_JERsmear_pp_mu12_J6 +
+				sys_bGS_pp_mu12_J6*sys_bGS_pp_mu12_J6 +
+				sys_JEUShiftUp_pp_mu12_J6*sys_JEUShiftUp_pp_mu12_J6 +
+				sys_JEUShiftDown_pp_mu12_J6*sys_JEUShiftDown_pp_mu12_J6+
+				sys_centShiftUp_pp_mu12_J6*sys_centShiftUp_pp_mu12_J6+
+				sys_centShiftDown_pp_mu12_J6*sys_centShiftDown_pp_mu12_J6);    
+
+
+  // C3
+  sys_input_C3_J1 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C3_J1*sys_cFraction_PbPb_mu12_C3_J1 +
+				sys_lowerBound_PbPb_mu12_C3_J1*sys_lowerBound_PbPb_mu12_C3_J1 +
+				sys_JERsmear_PbPb_mu12_C3_J1*sys_JERsmear_PbPb_mu12_C3_J1 +
+				sys_bGS_PbPb_mu12_C3_J1*sys_bGS_PbPb_mu12_C3_J1 +
+				sys_JEUShiftUp_PbPb_mu12_C3_J1*sys_JEUShiftUp_PbPb_mu12_C3_J1 +
+				sys_JEUShiftDown_PbPb_mu12_C3_J1*sys_JEUShiftDown_PbPb_mu12_C3_J1+
+				sys_centShiftUp_PbPb_mu12_C3_J1*sys_centShiftUp_PbPb_mu12_C3_J1+
+				sys_centShiftDown_PbPb_mu12_C3_J1*sys_centShiftDown_PbPb_mu12_C3_J1);
+
+  sys_input_C3_J2 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C3_J2*sys_cFraction_PbPb_mu12_C3_J2 +
+				sys_lowerBound_PbPb_mu12_C3_J2*sys_lowerBound_PbPb_mu12_C3_J2 +
+				sys_JERsmear_PbPb_mu12_C3_J2*sys_JERsmear_PbPb_mu12_C3_J2 +
+				sys_bGS_PbPb_mu12_C3_J2*sys_bGS_PbPb_mu12_C3_J2 +
+				sys_JEUShiftUp_PbPb_mu12_C3_J2*sys_JEUShiftUp_PbPb_mu12_C3_J2 +
+				sys_JEUShiftDown_PbPb_mu12_C3_J2*sys_JEUShiftDown_PbPb_mu12_C3_J2+
+				sys_centShiftUp_PbPb_mu12_C3_J2*sys_centShiftUp_PbPb_mu12_C3_J2+
+				sys_centShiftDown_PbPb_mu12_C3_J2*sys_centShiftDown_PbPb_mu12_C3_J2);
+    
+  sys_input_C3_J3 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C3_J3*sys_cFraction_PbPb_mu12_C3_J3 +
+				sys_lowerBound_PbPb_mu12_C3_J3*sys_lowerBound_PbPb_mu12_C3_J3 +
+				sys_JERsmear_PbPb_mu12_C3_J3*sys_JERsmear_PbPb_mu12_C3_J3 +
+				sys_bGS_PbPb_mu12_C3_J3*sys_bGS_PbPb_mu12_C3_J3 +
+				sys_JEUShiftUp_PbPb_mu12_C3_J3*sys_JEUShiftUp_PbPb_mu12_C3_J3 +
+				sys_JEUShiftDown_PbPb_mu12_C3_J3*sys_JEUShiftDown_PbPb_mu12_C3_J3+
+				sys_centShiftUp_PbPb_mu12_C3_J3*sys_centShiftUp_PbPb_mu12_C3_J3+
+				sys_centShiftDown_PbPb_mu12_C3_J3*sys_centShiftDown_PbPb_mu12_C3_J3);
+ 
+  sys_input_C3_J4 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C3_J4*sys_cFraction_PbPb_mu12_C3_J4 +
+				sys_lowerBound_PbPb_mu12_C3_J4*sys_lowerBound_PbPb_mu12_C3_J4 +
+				sys_JERsmear_PbPb_mu12_C3_J4*sys_JERsmear_PbPb_mu12_C3_J4 +
+				sys_bGS_PbPb_mu12_C3_J4*sys_bGS_PbPb_mu12_C3_J4 +
+				sys_JEUShiftUp_PbPb_mu12_C3_J4*sys_JEUShiftUp_PbPb_mu12_C3_J4 +
+				sys_JEUShiftDown_PbPb_mu12_C3_J4*sys_JEUShiftDown_PbPb_mu12_C3_J4+
+				sys_centShiftUp_PbPb_mu12_C3_J4*sys_centShiftUp_PbPb_mu12_C3_J4+
+				sys_centShiftDown_PbPb_mu12_C3_J4*sys_centShiftDown_PbPb_mu12_C3_J4);
+
+  sys_input_C3_J5 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C3_J5*sys_cFraction_PbPb_mu12_C3_J5 +
+				sys_lowerBound_PbPb_mu12_C3_J5*sys_lowerBound_PbPb_mu12_C3_J5 +
+				sys_JERsmear_PbPb_mu12_C3_J5*sys_JERsmear_PbPb_mu12_C3_J5 +
+				sys_bGS_PbPb_mu12_C3_J5*sys_bGS_PbPb_mu12_C3_J5 +
+				sys_JEUShiftUp_PbPb_mu12_C3_J5*sys_JEUShiftUp_PbPb_mu12_C3_J5 +
+				sys_JEUShiftDown_PbPb_mu12_C3_J5*sys_JEUShiftDown_PbPb_mu12_C3_J5+
+				sys_centShiftUp_PbPb_mu12_C3_J5*sys_centShiftUp_PbPb_mu12_C3_J5+
+				sys_centShiftDown_PbPb_mu12_C3_J5*sys_centShiftDown_PbPb_mu12_C3_J5);
+
+  sys_input_C3_J6 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C3_J6*sys_cFraction_PbPb_mu12_C3_J6 +
+				sys_lowerBound_PbPb_mu12_C3_J6*sys_lowerBound_PbPb_mu12_C3_J6 +
+				sys_JERsmear_PbPb_mu12_C3_J6*sys_JERsmear_PbPb_mu12_C3_J6 +
+				sys_bGS_PbPb_mu12_C3_J6*sys_bGS_PbPb_mu12_C3_J6 +
+				sys_JEUShiftUp_PbPb_mu12_C3_J6*sys_JEUShiftUp_PbPb_mu12_C3_J6 +
+				sys_JEUShiftDown_PbPb_mu12_C3_J6*sys_JEUShiftDown_PbPb_mu12_C3_J6+
+				sys_centShiftUp_PbPb_mu12_C3_J6*sys_centShiftUp_PbPb_mu12_C3_J6+
+				sys_centShiftDown_PbPb_mu12_C3_J6*sys_centShiftDown_PbPb_mu12_C3_J6);    
+
+
+  // C2
+  sys_input_C2_J1 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J1*sys_cFraction_PbPb_mu12_C2_J1 +
+				sys_lowerBound_PbPb_mu12_C2_J1*sys_lowerBound_PbPb_mu12_C2_J1 +
+				sys_JERsmear_PbPb_mu12_C2_J1*sys_JERsmear_PbPb_mu12_C2_J1 +
+				sys_bGS_PbPb_mu12_C2_J1*sys_bGS_PbPb_mu12_C2_J1 +
+				sys_JEUShiftUp_PbPb_mu12_C2_J1*sys_JEUShiftUp_PbPb_mu12_C2_J1 +
+				sys_JEUShiftDown_PbPb_mu12_C2_J1*sys_JEUShiftDown_PbPb_mu12_C2_J1+
+				sys_centShiftUp_PbPb_mu12_C2_J1*sys_centShiftUp_PbPb_mu12_C2_J1+
+				sys_centShiftDown_PbPb_mu12_C2_J1*sys_centShiftDown_PbPb_mu12_C2_J1);
+
+  sys_input_C2_J2 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J2*sys_cFraction_PbPb_mu12_C2_J2 +
+				sys_lowerBound_PbPb_mu12_C2_J2*sys_lowerBound_PbPb_mu12_C2_J2 +
+				sys_JERsmear_PbPb_mu12_C2_J2*sys_JERsmear_PbPb_mu12_C2_J2 +
+				sys_bGS_PbPb_mu12_C2_J2*sys_bGS_PbPb_mu12_C2_J2 +
+				sys_JEUShiftUp_PbPb_mu12_C2_J2*sys_JEUShiftUp_PbPb_mu12_C2_J2 +
+				sys_JEUShiftDown_PbPb_mu12_C2_J2*sys_JEUShiftDown_PbPb_mu12_C2_J2+
+				sys_centShiftUp_PbPb_mu12_C2_J2*sys_centShiftUp_PbPb_mu12_C2_J2+
+				sys_centShiftDown_PbPb_mu12_C2_J2*sys_centShiftDown_PbPb_mu12_C2_J2);
+    
+  sys_input_C2_J3 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J3*sys_cFraction_PbPb_mu12_C2_J3 +
+				sys_lowerBound_PbPb_mu12_C2_J3*sys_lowerBound_PbPb_mu12_C2_J3 +
+				sys_JERsmear_PbPb_mu12_C2_J3*sys_JERsmear_PbPb_mu12_C2_J3 +
+				sys_bGS_PbPb_mu12_C2_J3*sys_bGS_PbPb_mu12_C2_J3 +
+				sys_JEUShiftUp_PbPb_mu12_C2_J3*sys_JEUShiftUp_PbPb_mu12_C2_J3 +
+				sys_JEUShiftDown_PbPb_mu12_C2_J3*sys_JEUShiftDown_PbPb_mu12_C2_J3+
+				sys_centShiftUp_PbPb_mu12_C2_J3*sys_centShiftUp_PbPb_mu12_C2_J3+
+				sys_centShiftDown_PbPb_mu12_C2_J3*sys_centShiftDown_PbPb_mu12_C2_J3);
+ 
+  sys_input_C2_J4 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J4*sys_cFraction_PbPb_mu12_C2_J4 +
+				sys_lowerBound_PbPb_mu12_C2_J4*sys_lowerBound_PbPb_mu12_C2_J4 +
+				sys_JERsmear_PbPb_mu12_C2_J4*sys_JERsmear_PbPb_mu12_C2_J4 +
+				sys_bGS_PbPb_mu12_C2_J4*sys_bGS_PbPb_mu12_C2_J4 +
+				sys_JEUShiftUp_PbPb_mu12_C2_J4*sys_JEUShiftUp_PbPb_mu12_C2_J4 +
+				sys_JEUShiftDown_PbPb_mu12_C2_J4*sys_JEUShiftDown_PbPb_mu12_C2_J4+
+				sys_centShiftUp_PbPb_mu12_C2_J4*sys_centShiftUp_PbPb_mu12_C2_J4+
+				sys_centShiftDown_PbPb_mu12_C2_J4*sys_centShiftDown_PbPb_mu12_C2_J4);
+
+  sys_input_C2_J5 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J5*sys_cFraction_PbPb_mu12_C2_J5 +
+				sys_lowerBound_PbPb_mu12_C2_J5*sys_lowerBound_PbPb_mu12_C2_J5 +
+				sys_JERsmear_PbPb_mu12_C2_J5*sys_JERsmear_PbPb_mu12_C2_J5 +
+				sys_bGS_PbPb_mu12_C2_J5*sys_bGS_PbPb_mu12_C2_J5 +
+				sys_JEUShiftUp_PbPb_mu12_C2_J5*sys_JEUShiftUp_PbPb_mu12_C2_J5 +
+				sys_JEUShiftDown_PbPb_mu12_C2_J5*sys_JEUShiftDown_PbPb_mu12_C2_J5+
+				sys_centShiftUp_PbPb_mu12_C2_J5*sys_centShiftUp_PbPb_mu12_C2_J5+
+				sys_centShiftDown_PbPb_mu12_C2_J5*sys_centShiftDown_PbPb_mu12_C2_J5);
+
+  sys_input_C2_J6 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J6*sys_cFraction_PbPb_mu12_C2_J6 +
+				sys_lowerBound_PbPb_mu12_C2_J6*sys_lowerBound_PbPb_mu12_C2_J6 +
+				sys_JERsmear_PbPb_mu12_C2_J6*sys_JERsmear_PbPb_mu12_C2_J6 +
+				sys_bGS_PbPb_mu12_C2_J6*sys_bGS_PbPb_mu12_C2_J6 +
+				sys_JEUShiftUp_PbPb_mu12_C2_J6*sys_JEUShiftUp_PbPb_mu12_C2_J6 +
+				sys_JEUShiftDown_PbPb_mu12_C2_J6*sys_JEUShiftDown_PbPb_mu12_C2_J6+
+				sys_centShiftUp_PbPb_mu12_C2_J6*sys_centShiftUp_PbPb_mu12_C2_J6+
+				sys_centShiftDown_PbPb_mu12_C2_J6*sys_centShiftDown_PbPb_mu12_C2_J6);    
+
+    // C1
+  sys_input_C1_J1 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J1*sys_cFraction_PbPb_mu12_C1_J1 +
+				sys_lowerBound_PbPb_mu12_C1_J1*sys_lowerBound_PbPb_mu12_C1_J1 +
+				sys_JERsmear_PbPb_mu12_C1_J1*sys_JERsmear_PbPb_mu12_C1_J1 +
+				sys_bGS_PbPb_mu12_C1_J1*sys_bGS_PbPb_mu12_C1_J1 +
+				sys_JEUShiftUp_PbPb_mu12_C1_J1*sys_JEUShiftUp_PbPb_mu12_C1_J1 +
+				sys_JEUShiftDown_PbPb_mu12_C1_J1*sys_JEUShiftDown_PbPb_mu12_C1_J1+
+				sys_centShiftUp_PbPb_mu12_C1_J1*sys_centShiftUp_PbPb_mu12_C1_J1+
+				sys_centShiftDown_PbPb_mu12_C1_J1*sys_centShiftDown_PbPb_mu12_C1_J1);
+
+  sys_input_C1_J2 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J2*sys_cFraction_PbPb_mu12_C1_J2 +
+				sys_lowerBound_PbPb_mu12_C1_J2*sys_lowerBound_PbPb_mu12_C1_J2 +
+				sys_JERsmear_PbPb_mu12_C1_J2*sys_JERsmear_PbPb_mu12_C1_J2 +
+				sys_bGS_PbPb_mu12_C1_J2*sys_bGS_PbPb_mu12_C1_J2 +
+				sys_JEUShiftUp_PbPb_mu12_C1_J2*sys_JEUShiftUp_PbPb_mu12_C1_J2 +
+				sys_JEUShiftDown_PbPb_mu12_C1_J2*sys_JEUShiftDown_PbPb_mu12_C1_J2+
+				sys_centShiftUp_PbPb_mu12_C1_J2*sys_centShiftUp_PbPb_mu12_C1_J2+
+				sys_centShiftDown_PbPb_mu12_C1_J2*sys_centShiftDown_PbPb_mu12_C1_J2);
+    
+  sys_input_C1_J3 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J3*sys_cFraction_PbPb_mu12_C1_J3 +
+				sys_lowerBound_PbPb_mu12_C1_J3*sys_lowerBound_PbPb_mu12_C1_J3 +
+				sys_JERsmear_PbPb_mu12_C1_J3*sys_JERsmear_PbPb_mu12_C1_J3 +
+				sys_bGS_PbPb_mu12_C1_J3*sys_bGS_PbPb_mu12_C1_J3 +
+				sys_JEUShiftUp_PbPb_mu12_C1_J3*sys_JEUShiftUp_PbPb_mu12_C1_J3 +
+				sys_JEUShiftDown_PbPb_mu12_C1_J3*sys_JEUShiftDown_PbPb_mu12_C1_J3+
+				sys_centShiftUp_PbPb_mu12_C1_J3*sys_centShiftUp_PbPb_mu12_C1_J3+
+				sys_centShiftDown_PbPb_mu12_C1_J3*sys_centShiftDown_PbPb_mu12_C1_J3);
+ 
+  sys_input_C1_J4 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J4*sys_cFraction_PbPb_mu12_C1_J4 +
+				sys_lowerBound_PbPb_mu12_C1_J4*sys_lowerBound_PbPb_mu12_C1_J4 +
+				sys_JERsmear_PbPb_mu12_C1_J4*sys_JERsmear_PbPb_mu12_C1_J4 +
+				sys_bGS_PbPb_mu12_C1_J4*sys_bGS_PbPb_mu12_C1_J4 +
+				sys_JEUShiftUp_PbPb_mu12_C1_J4*sys_JEUShiftUp_PbPb_mu12_C1_J4 +
+				sys_JEUShiftDown_PbPb_mu12_C1_J4*sys_JEUShiftDown_PbPb_mu12_C1_J4+
+				sys_centShiftUp_PbPb_mu12_C1_J4*sys_centShiftUp_PbPb_mu12_C1_J4+
+				sys_centShiftDown_PbPb_mu12_C1_J4*sys_centShiftDown_PbPb_mu12_C1_J4);
+
+  sys_input_C1_J5 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J5*sys_cFraction_PbPb_mu12_C1_J5 +
+				sys_lowerBound_PbPb_mu12_C1_J5*sys_lowerBound_PbPb_mu12_C1_J5 +
+				sys_JERsmear_PbPb_mu12_C1_J5*sys_JERsmear_PbPb_mu12_C1_J5 +
+				sys_bGS_PbPb_mu12_C1_J5*sys_bGS_PbPb_mu12_C1_J5 +
+				sys_JEUShiftUp_PbPb_mu12_C1_J5*sys_JEUShiftUp_PbPb_mu12_C1_J5 +
+				sys_JEUShiftDown_PbPb_mu12_C1_J5*sys_JEUShiftDown_PbPb_mu12_C1_J5+
+				sys_centShiftUp_PbPb_mu12_C1_J5*sys_centShiftUp_PbPb_mu12_C1_J5+
+				sys_centShiftDown_PbPb_mu12_C1_J5*sys_centShiftDown_PbPb_mu12_C1_J5);
+
+  sys_input_C1_J6 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J6*sys_cFraction_PbPb_mu12_C1_J6 +
+				sys_lowerBound_PbPb_mu12_C1_J6*sys_lowerBound_PbPb_mu12_C1_J6 +
+				sys_JERsmear_PbPb_mu12_C1_J6*sys_JERsmear_PbPb_mu12_C1_J6 +
+				sys_bGS_PbPb_mu12_C1_J6*sys_bGS_PbPb_mu12_C1_J6 +
+				sys_JEUShiftUp_PbPb_mu12_C1_J6*sys_JEUShiftUp_PbPb_mu12_C1_J6 +
+				sys_JEUShiftDown_PbPb_mu12_C1_J6*sys_JEUShiftDown_PbPb_mu12_C1_J6+
+				sys_centShiftUp_PbPb_mu12_C1_J6*sys_centShiftUp_PbPb_mu12_C1_J6+
+				sys_centShiftDown_PbPb_mu12_C1_J6*sys_centShiftDown_PbPb_mu12_C1_J6);    
+
 
 
   
+  // correlated errors
 
-  // if(do_mu5){
-
-  //   // pp
-  //   sys_input_pp_J2 = TMath::Sqrt(sys_cFraction_pp_mu5_J2*sys_cFraction_pp_mu5_J2 +
-  // 				  sys_lowerBound_pp_mu5_J2*sys_lowerBound_pp_mu5_J2 +
-  // 				  sys_bEnhance_pp_mu5_J2*sys_bEnhance_pp_mu5_J2 +
-  // 				  sys_cEnhance_pp_mu5_J2*sys_cEnhance_pp_mu5_J2 +
-  // 				  sys_JERsmear_pp_mu5_J2*sys_JERsmear_pp_mu5_J2 +
-  // 				  sys_bGS_pp_mu5_J2*sys_bGS_pp_mu5_J2 +
-  // 				  sys_JEUShiftUp_pp_mu5_J2*sys_JEUShiftUp_pp_mu5_J2 +
-  // 				  sys_JEUShiftDown_pp_mu5_J2*sys_JEUShiftDown_pp_mu5_J2);
-    
-  //   sys_input_pp_J3 = TMath::Sqrt(sys_cFraction_pp_mu5_J3*sys_cFraction_pp_mu5_J3 +
-  // 				  sys_lowerBound_pp_mu5_J3*sys_lowerBound_pp_mu5_J3 +
-  // 				  sys_bEnhance_pp_mu5_J3*sys_bEnhance_pp_mu5_J3 +
-  // 				  sys_cEnhance_pp_mu5_J3*sys_cEnhance_pp_mu5_J3 +
-  // 				  sys_JERsmear_pp_mu5_J3*sys_JERsmear_pp_mu5_J3 +
-  // 				  sys_bGS_pp_mu5_J3*sys_bGS_pp_mu5_J3 +
-  // 				  sys_JEUShiftUp_pp_mu5_J3*sys_JEUShiftUp_pp_mu5_J3 +
-  // 				  sys_JEUShiftDown_pp_mu5_J3*sys_JEUShiftDown_pp_mu5_J3);
-
-  //   sys_input_pp_J4 = TMath::Sqrt(sys_cFraction_pp_mu5_J4*sys_cFraction_pp_mu5_J4 +
-  // 				  sys_lowerBound_pp_mu5_J4*sys_lowerBound_pp_mu5_J4 +
-  // 				  sys_bEnhance_pp_mu5_J4*sys_bEnhance_pp_mu5_J4 +
-  // 				  sys_cEnhance_pp_mu5_J4*sys_cEnhance_pp_mu5_J4 +
-  // 				  sys_JERsmear_pp_mu5_J4*sys_JERsmear_pp_mu5_J4 +
-  // 				  sys_bGS_pp_mu5_J4*sys_bGS_pp_mu5_J4 +
-  // 				  sys_JEUShiftUp_pp_mu5_J4*sys_JEUShiftUp_pp_mu5_J4 +
-  // 				  sys_JEUShiftDown_pp_mu5_J4*sys_JEUShiftDown_pp_mu5_J4);
-
-  //   // C2
-  //   sys_input_C2_J2 = TMath::Sqrt(sys_cFraction_PbPb_mu5_C2_J2*sys_cFraction_PbPb_mu5_C2_J2 +
-  // 				  sys_lowerBound_PbPb_mu5_C2_J2*sys_lowerBound_PbPb_mu5_C2_J2 +
-  // 				  sys_bEnhance_PbPb_mu5_C2_J2*sys_bEnhance_PbPb_mu5_C2_J2 +
-  // 				  sys_cEnhance_PbPb_mu5_C2_J2*sys_cEnhance_PbPb_mu5_C2_J2 +
-  // 				  sys_JERsmear_PbPb_mu5_C2_J2*sys_JERsmear_PbPb_mu5_C2_J2 +
-  // 				  sys_bGS_PbPb_mu5_C2_J2*sys_bGS_PbPb_mu5_C2_J2 +
-  // 				  sys_JEUShiftUp_PbPb_mu5_C2_J2*sys_JEUShiftUp_PbPb_mu5_C2_J2 +
-  // 				  sys_JEUShiftDown_PbPb_mu5_C2_J2*sys_JEUShiftDown_PbPb_mu5_C2_J2);
-    
-  //   sys_input_C2_J3 = TMath::Sqrt(sys_cFraction_PbPb_mu5_C2_J3*sys_cFraction_PbPb_mu5_C2_J3 +
-  // 				  sys_lowerBound_PbPb_mu5_C2_J3*sys_lowerBound_PbPb_mu5_C2_J3 +
-  // 				  sys_bEnhance_PbPb_mu5_C2_J3*sys_bEnhance_PbPb_mu5_C2_J3 +
-  // 				  sys_cEnhance_PbPb_mu5_C2_J3*sys_cEnhance_PbPb_mu5_C2_J3 +
-  // 				  sys_JERsmear_PbPb_mu5_C2_J3*sys_JERsmear_PbPb_mu5_C2_J3 +
-  // 				  sys_bGS_PbPb_mu5_C2_J3*sys_bGS_PbPb_mu5_C2_J3 +
-  // 				  sys_JEUShiftUp_PbPb_mu5_C2_J3*sys_JEUShiftUp_PbPb_mu5_C2_J3 +
-  // 				  sys_JEUShiftDown_PbPb_mu5_C2_J3*sys_JEUShiftDown_PbPb_mu5_C2_J3);
-
-  //   sys_input_C2_J4 = TMath::Sqrt(sys_cFraction_PbPb_mu5_C2_J4*sys_cFraction_PbPb_mu5_C2_J4 +
-  // 				  sys_lowerBound_PbPb_mu5_C2_J4*sys_lowerBound_PbPb_mu5_C2_J4 +
-  // 				  sys_bEnhance_PbPb_mu5_C2_J4*sys_bEnhance_PbPb_mu5_C2_J4 +
-  // 				  sys_cEnhance_PbPb_mu5_C2_J4*sys_cEnhance_PbPb_mu5_C2_J4 +
-  // 				  sys_JERsmear_PbPb_mu5_C2_J4*sys_JERsmear_PbPb_mu5_C2_J4 +
-  // 				  sys_bGS_PbPb_mu5_C2_J4*sys_bGS_PbPb_mu5_C2_J4 +
-  // 				  sys_JEUShiftUp_PbPb_mu5_C2_J4*sys_JEUShiftUp_PbPb_mu5_C2_J4 +
-  // 				  sys_JEUShiftDown_PbPb_mu5_C2_J4*sys_JEUShiftDown_PbPb_mu5_C2_J4);
-
-  //   // C1
-  //   sys_input_C1_J2 = TMath::Sqrt(sys_cFraction_PbPb_mu5_C1_J2*sys_cFraction_PbPb_mu5_C1_J2 +
-  // 				  sys_lowerBound_PbPb_mu5_C1_J2*sys_lowerBound_PbPb_mu5_C1_J2 +
-  // 				  sys_bEnhance_PbPb_mu5_C1_J2*sys_bEnhance_PbPb_mu5_C1_J2 +
-  // 				  sys_cEnhance_PbPb_mu5_C1_J2*sys_cEnhance_PbPb_mu5_C1_J2 +
-  // 				  sys_JERsmear_PbPb_mu5_C1_J2*sys_JERsmear_PbPb_mu5_C1_J2 +
-  // 				  sys_bGS_PbPb_mu5_C1_J2*sys_bGS_PbPb_mu5_C1_J2 +
-  // 				  sys_JEUShiftUp_PbPb_mu5_C1_J2*sys_JEUShiftUp_PbPb_mu5_C1_J2 +
-  // 				  sys_JEUShiftDown_PbPb_mu5_C1_J2*sys_JEUShiftDown_PbPb_mu5_C1_J2);
-    
-  //   sys_input_C1_J3 = TMath::Sqrt(sys_cFraction_PbPb_mu5_C1_J3*sys_cFraction_PbPb_mu5_C1_J3 +
-  // 				  sys_lowerBound_PbPb_mu5_C1_J3*sys_lowerBound_PbPb_mu5_C1_J3 +
-  // 				  sys_bEnhance_PbPb_mu5_C1_J3*sys_bEnhance_PbPb_mu5_C1_J3 +
-  // 				  sys_cEnhance_PbPb_mu5_C1_J3*sys_cEnhance_PbPb_mu5_C1_J3 +
-  // 				  sys_JERsmear_PbPb_mu5_C1_J3*sys_JERsmear_PbPb_mu5_C1_J3 +
-  // 				  sys_bGS_PbPb_mu5_C1_J3*sys_bGS_PbPb_mu5_C1_J3 +
-  // 				  sys_JEUShiftUp_PbPb_mu5_C1_J3*sys_JEUShiftUp_PbPb_mu5_C1_J3 +
-  // 				  sys_JEUShiftDown_PbPb_mu5_C1_J3*sys_JEUShiftDown_PbPb_mu5_C1_J3);
-
-  //   sys_input_C1_J4 = TMath::Sqrt(sys_cFraction_PbPb_mu5_C1_J4*sys_cFraction_PbPb_mu5_C1_J4 +
-  // 				  sys_lowerBound_PbPb_mu5_C1_J4*sys_lowerBound_PbPb_mu5_C1_J4 +
-  // 				  sys_bEnhance_PbPb_mu5_C1_J4*sys_bEnhance_PbPb_mu5_C1_J4 +
-  // 				  sys_cEnhance_PbPb_mu5_C1_J4*sys_cEnhance_PbPb_mu5_C1_J4 +
-  // 				  sys_JERsmear_PbPb_mu5_C1_J4*sys_JERsmear_PbPb_mu5_C1_J4 +
-  // 				  sys_bGS_PbPb_mu5_C1_J4*sys_bGS_PbPb_mu5_C1_J4 +
-  // 				  sys_JEUShiftUp_PbPb_mu5_C1_J4*sys_JEUShiftUp_PbPb_mu5_C1_J4 +
-  // 				  sys_JEUShiftDown_PbPb_mu5_C1_J4*sys_JEUShiftDown_PbPb_mu5_C1_J4);
-
-  //   // periph / central correlated systematic errors
-  //   sys_input_X_J2 = TMath::Sqrt((sys_cFraction_PbPb_mu5_C1_J2 - sys_cFraction_PbPb_mu5_C2_J2)*(sys_cFraction_PbPb_mu5_C1_J2 - sys_cFraction_PbPb_mu5_C2_J2) +
-  // 				  (sys_lowerBound_PbPb_mu5_C1_J2 - sys_lowerBound_PbPb_mu5_C2_J2)*(sys_lowerBound_PbPb_mu5_C1_J2 - sys_lowerBound_PbPb_mu5_C2_J2) +
-  // 				  (sys_bEnhance_PbPb_mu5_C1_J2 - sys_bEnhance_PbPb_mu5_C2_J2)*(sys_bEnhance_PbPb_mu5_C1_J2 - sys_bEnhance_PbPb_mu5_C2_J2) +
-  // 				  (sys_cEnhance_PbPb_mu5_C1_J2 - sys_cEnhance_PbPb_mu5_C2_J2)*(sys_cEnhance_PbPb_mu5_C1_J2 - sys_cEnhance_PbPb_mu5_C2_J2) +
-  // 				  (sys_JERsmear_PbPb_mu5_C1_J2 - sys_JERsmear_PbPb_mu5_C2_J2)*(sys_JERsmear_PbPb_mu5_C1_J2 - sys_JERsmear_PbPb_mu5_C2_J2) +
-  // 				  (sys_bGS_PbPb_mu5_C1_J2 - sys_bGS_PbPb_mu5_C2_J2)*(sys_bGS_PbPb_mu5_C1_J2 - sys_bGS_PbPb_mu5_C2_J2));
-
-  //   sys_input_X_J3 = TMath::Sqrt((sys_cFraction_PbPb_mu5_C1_J3 - sys_cFraction_PbPb_mu5_C2_J3)*(sys_cFraction_PbPb_mu5_C1_J3 - sys_cFraction_PbPb_mu5_C2_J3) +
-  // 				  (sys_lowerBound_PbPb_mu5_C1_J3 - sys_lowerBound_PbPb_mu5_C2_J3)*(sys_lowerBound_PbPb_mu5_C1_J3 - sys_lowerBound_PbPb_mu5_C2_J3) +
-  // 				  (sys_bEnhance_PbPb_mu5_C1_J3 - sys_bEnhance_PbPb_mu5_C2_J3)*(sys_bEnhance_PbPb_mu5_C1_J3 - sys_bEnhance_PbPb_mu5_C2_J3) +
-  // 				  (sys_cEnhance_PbPb_mu5_C1_J3 - sys_cEnhance_PbPb_mu5_C2_J3)*(sys_cEnhance_PbPb_mu5_C1_J3 - sys_cEnhance_PbPb_mu5_C2_J3) +
-  // 				  (sys_JERsmear_PbPb_mu5_C1_J3 - sys_JERsmear_PbPb_mu5_C2_J3)*(sys_JERsmear_PbPb_mu5_C1_J3 - sys_JERsmear_PbPb_mu5_C2_J3) +
-  // 				  (sys_bGS_PbPb_mu5_C1_J3 - sys_bGS_PbPb_mu5_C2_J3)*(sys_bGS_PbPb_mu5_C1_J3 - sys_bGS_PbPb_mu5_C2_J3));
-
-  //   sys_input_X_J4 = TMath::Sqrt((sys_cFraction_PbPb_mu5_C1_J4 - sys_cFraction_PbPb_mu5_C2_J4)*(sys_cFraction_PbPb_mu5_C1_J4 - sys_cFraction_PbPb_mu5_C2_J4) +
-  // 				 (sys_lowerBound_PbPb_mu5_C1_J4 - sys_lowerBound_PbPb_mu5_C2_J4)*(sys_lowerBound_PbPb_mu5_C1_J4 - sys_lowerBound_PbPb_mu5_C2_J4) +
-  // 				 (sys_bEnhance_PbPb_mu5_C1_J4 - sys_bEnhance_PbPb_mu5_C2_J4)*(sys_bEnhance_PbPb_mu5_C1_J4 - sys_bEnhance_PbPb_mu5_C2_J4) +
-  // 				 (sys_cEnhance_PbPb_mu5_C1_J4 - sys_cEnhance_PbPb_mu5_C2_J4)*(sys_cEnhance_PbPb_mu5_C1_J4 - sys_cEnhance_PbPb_mu5_C2_J4) +
-  // 				 (sys_JERsmear_PbPb_mu5_C1_J4 - sys_JERsmear_PbPb_mu5_C2_J4)*(sys_JERsmear_PbPb_mu5_C1_J4 - sys_JERsmear_PbPb_mu5_C2_J4) +
-  // 				 (sys_bGS_PbPb_mu5_C1_J4 - sys_bGS_PbPb_mu5_C2_J4)*(sys_bGS_PbPb_mu5_C1_J4 - sys_bGS_PbPb_mu5_C2_J4));
-    
-  // }
-
-
-  // else if(do_mu7){
-
-  //   // pp
-  //   sys_input_pp_J2 = TMath::Sqrt(sys_cFraction_pp_mu7_J2*sys_cFraction_pp_mu7_J2 +
-  // 				  sys_lowerBound_pp_mu7_J2*sys_lowerBound_pp_mu7_J2 +
-  // 				  sys_bEnhance_pp_mu7_J2*sys_bEnhance_pp_mu7_J2 +
-  // 				  sys_cEnhance_pp_mu7_J2*sys_cEnhance_pp_mu7_J2 +
-  // 				  sys_JERsmear_pp_mu7_J2*sys_JERsmear_pp_mu7_J2 +
-  // 				  sys_bGS_pp_mu7_J2*sys_bGS_pp_mu7_J2 +
-  // 				  sys_JEUShiftUp_pp_mu7_J2*sys_JEUShiftUp_pp_mu7_J2 +
-  // 				  sys_JEUShiftDown_pp_mu7_J2*sys_JEUShiftDown_pp_mu7_J2);
-    
-  //   sys_input_pp_J3 = TMath::Sqrt(sys_cFraction_pp_mu7_J3*sys_cFraction_pp_mu7_J3 +
-  // 				  sys_lowerBound_pp_mu7_J3*sys_lowerBound_pp_mu7_J3 +
-  // 				  sys_bEnhance_pp_mu7_J3*sys_bEnhance_pp_mu7_J3 +
-  // 				  sys_cEnhance_pp_mu7_J3*sys_cEnhance_pp_mu7_J3 +
-  // 				  sys_JERsmear_pp_mu7_J3*sys_JERsmear_pp_mu7_J3 +
-  // 				  sys_bGS_pp_mu7_J3*sys_bGS_pp_mu7_J3 +
-  // 				  sys_JEUShiftUp_pp_mu7_J3*sys_JEUShiftUp_pp_mu7_J3 +
-  // 				  sys_JEUShiftDown_pp_mu7_J3*sys_JEUShiftDown_pp_mu7_J3);
-
-  //   sys_input_pp_J4 = TMath::Sqrt(sys_cFraction_pp_mu7_J4*sys_cFraction_pp_mu7_J4 +
-  // 				  sys_lowerBound_pp_mu7_J4*sys_lowerBound_pp_mu7_J4 +
-  // 				  sys_bEnhance_pp_mu7_J4*sys_bEnhance_pp_mu7_J4 +
-  // 				  sys_cEnhance_pp_mu7_J4*sys_cEnhance_pp_mu7_J4 +
-  // 				  sys_JERsmear_pp_mu7_J4*sys_JERsmear_pp_mu7_J4 +
-  // 				  sys_bGS_pp_mu7_J4*sys_bGS_pp_mu7_J4 +
-  // 				  sys_JEUShiftUp_pp_mu7_J4*sys_JEUShiftUp_pp_mu7_J4 +
-  // 				  sys_JEUShiftDown_pp_mu7_J4*sys_JEUShiftDown_pp_mu7_J4);
-
-  //   // C2
-  //   sys_input_C2_J2 = TMath::Sqrt(sys_cFraction_PbPb_mu7_C2_J2*sys_cFraction_PbPb_mu7_C2_J2 +
-  // 				  sys_lowerBound_PbPb_mu7_C2_J2*sys_lowerBound_PbPb_mu7_C2_J2 +
-  // 				  sys_bEnhance_PbPb_mu7_C2_J2*sys_bEnhance_PbPb_mu7_C2_J2 +
-  // 				  sys_cEnhance_PbPb_mu7_C2_J2*sys_cEnhance_PbPb_mu7_C2_J2 +
-  // 				  sys_JERsmear_PbPb_mu7_C2_J2*sys_JERsmear_PbPb_mu7_C2_J2 +
-  // 				  sys_bGS_PbPb_mu7_C2_J2*sys_bGS_PbPb_mu7_C2_J2 +
-  // 				  sys_JEUShiftUp_PbPb_mu7_C2_J2*sys_JEUShiftUp_PbPb_mu7_C2_J2 +
-  // 				  sys_JEUShiftDown_PbPb_mu7_C2_J2*sys_JEUShiftDown_PbPb_mu7_C2_J2);
-    
-  //   sys_input_C2_J3 = TMath::Sqrt(sys_cFraction_PbPb_mu7_C2_J3*sys_cFraction_PbPb_mu7_C2_J3 +
-  // 				  sys_lowerBound_PbPb_mu7_C2_J3*sys_lowerBound_PbPb_mu7_C2_J3 +
-  // 				  sys_bEnhance_PbPb_mu7_C2_J3*sys_bEnhance_PbPb_mu7_C2_J3 +
-  // 				  sys_cEnhance_PbPb_mu7_C2_J3*sys_cEnhance_PbPb_mu7_C2_J3 +
-  // 				  sys_JERsmear_PbPb_mu7_C2_J3*sys_JERsmear_PbPb_mu7_C2_J3 +
-  // 				  sys_bGS_PbPb_mu7_C2_J3*sys_bGS_PbPb_mu7_C2_J3 +
-  // 				  sys_JEUShiftUp_PbPb_mu7_C2_J3*sys_JEUShiftUp_PbPb_mu7_C2_J3 +
-  // 				  sys_JEUShiftDown_PbPb_mu7_C2_J3*sys_JEUShiftDown_PbPb_mu7_C2_J3);
-
-  //   sys_input_C2_J4 = TMath::Sqrt(sys_cFraction_PbPb_mu7_C2_J4*sys_cFraction_PbPb_mu7_C2_J4 +
-  // 				  sys_lowerBound_PbPb_mu7_C2_J4*sys_lowerBound_PbPb_mu7_C2_J4 +
-  // 				  sys_bEnhance_PbPb_mu7_C2_J4*sys_bEnhance_PbPb_mu7_C2_J4 +
-  // 				  sys_cEnhance_PbPb_mu7_C2_J4*sys_cEnhance_PbPb_mu7_C2_J4 +
-  // 				  sys_JERsmear_PbPb_mu7_C2_J4*sys_JERsmear_PbPb_mu7_C2_J4 +
-  // 				  sys_bGS_PbPb_mu7_C2_J4*sys_bGS_PbPb_mu7_C2_J4 +
-  // 				  sys_JEUShiftUp_PbPb_mu7_C2_J4*sys_JEUShiftUp_PbPb_mu7_C2_J4 +
-  // 				  sys_JEUShiftDown_PbPb_mu7_C2_J4*sys_JEUShiftDown_PbPb_mu7_C2_J4);
-
-  //   // C1
-  //   sys_input_C1_J2 = TMath::Sqrt(sys_cFraction_PbPb_mu7_C1_J2*sys_cFraction_PbPb_mu7_C1_J2 +
-  // 				  sys_lowerBound_PbPb_mu7_C1_J2*sys_lowerBound_PbPb_mu7_C1_J2 +
-  // 				  sys_bEnhance_PbPb_mu7_C1_J2*sys_bEnhance_PbPb_mu7_C1_J2 +
-  // 				  sys_cEnhance_PbPb_mu7_C1_J2*sys_cEnhance_PbPb_mu7_C1_J2 +
-  // 				  sys_JERsmear_PbPb_mu7_C1_J2*sys_JERsmear_PbPb_mu7_C1_J2 +
-  // 				  sys_bGS_PbPb_mu7_C1_J2*sys_bGS_PbPb_mu7_C1_J2 +
-  // 				  sys_JEUShiftUp_PbPb_mu7_C1_J2*sys_JEUShiftUp_PbPb_mu7_C1_J2 +
-  // 				  sys_JEUShiftDown_PbPb_mu7_C1_J2*sys_JEUShiftDown_PbPb_mu7_C1_J2);
-    
-  //   sys_input_C1_J3 = TMath::Sqrt(sys_cFraction_PbPb_mu7_C1_J3*sys_cFraction_PbPb_mu7_C1_J3 +
-  // 				  sys_lowerBound_PbPb_mu7_C1_J3*sys_lowerBound_PbPb_mu7_C1_J3 +
-  // 				  sys_bEnhance_PbPb_mu7_C1_J3*sys_bEnhance_PbPb_mu7_C1_J3 +
-  // 				  sys_cEnhance_PbPb_mu7_C1_J3*sys_cEnhance_PbPb_mu7_C1_J3 +
-  // 				  sys_JERsmear_PbPb_mu7_C1_J3*sys_JERsmear_PbPb_mu7_C1_J3 +
-  // 				  sys_bGS_PbPb_mu7_C1_J3*sys_bGS_PbPb_mu7_C1_J3 +
-  // 				  sys_JEUShiftUp_PbPb_mu7_C1_J3*sys_JEUShiftUp_PbPb_mu7_C1_J3 +
-  // 				  sys_JEUShiftDown_PbPb_mu7_C1_J3*sys_JEUShiftDown_PbPb_mu7_C1_J3);
-
-  //   sys_input_C1_J4 = TMath::Sqrt(sys_cFraction_PbPb_mu7_C1_J4*sys_cFraction_PbPb_mu7_C1_J4 +
-  // 				  sys_lowerBound_PbPb_mu7_C1_J4*sys_lowerBound_PbPb_mu7_C1_J4 +
-  // 				  sys_bEnhance_PbPb_mu7_C1_J4*sys_bEnhance_PbPb_mu7_C1_J4 +
-  // 				  sys_cEnhance_PbPb_mu7_C1_J4*sys_cEnhance_PbPb_mu7_C1_J4 +
-  // 				  sys_JERsmear_PbPb_mu7_C1_J4*sys_JERsmear_PbPb_mu7_C1_J4 +
-  // 				  sys_bGS_PbPb_mu7_C1_J4*sys_bGS_PbPb_mu7_C1_J4 +
-  // 				  sys_JEUShiftUp_PbPb_mu7_C1_J4*sys_JEUShiftUp_PbPb_mu7_C1_J4 +
-  // 				  sys_JEUShiftDown_PbPb_mu7_C1_J4*sys_JEUShiftDown_PbPb_mu7_C1_J4);
-
-
-  //   // periph / central correlated systematic errors
-  //   sys_input_X_J2 = TMath::Sqrt((sys_cFraction_PbPb_mu7_C1_J2 - sys_cFraction_PbPb_mu7_C2_J2)*(sys_cFraction_PbPb_mu7_C1_J2 - sys_cFraction_PbPb_mu7_C2_J2) +
-  // 				  (sys_lowerBound_PbPb_mu7_C1_J2 - sys_lowerBound_PbPb_mu7_C2_J2)*(sys_lowerBound_PbPb_mu7_C1_J2 - sys_lowerBound_PbPb_mu7_C2_J2) +
-  // 				  (sys_bEnhance_PbPb_mu7_C1_J2 - sys_bEnhance_PbPb_mu7_C2_J2)*(sys_bEnhance_PbPb_mu7_C1_J2 - sys_bEnhance_PbPb_mu7_C2_J2) +
-  // 				  (sys_cEnhance_PbPb_mu7_C1_J2 - sys_cEnhance_PbPb_mu7_C2_J2)*(sys_cEnhance_PbPb_mu7_C1_J2 - sys_cEnhance_PbPb_mu7_C2_J2) +
-  // 				  (sys_JERsmear_PbPb_mu7_C1_J2 - sys_JERsmear_PbPb_mu7_C2_J2)*(sys_JERsmear_PbPb_mu7_C1_J2 - sys_JERsmear_PbPb_mu7_C2_J2) +
-  // 				  (sys_bGS_PbPb_mu7_C1_J2 - sys_bGS_PbPb_mu7_C2_J2)*(sys_bGS_PbPb_mu7_C1_J2 - sys_bGS_PbPb_mu7_C2_J2));
-
-  //   sys_input_X_J3 = TMath::Sqrt((sys_cFraction_PbPb_mu7_C1_J3 - sys_cFraction_PbPb_mu7_C2_J3)*(sys_cFraction_PbPb_mu7_C1_J3 - sys_cFraction_PbPb_mu7_C2_J3) +
-  // 				  (sys_lowerBound_PbPb_mu7_C1_J3 - sys_lowerBound_PbPb_mu7_C2_J3)*(sys_lowerBound_PbPb_mu7_C1_J3 - sys_lowerBound_PbPb_mu7_C2_J3) +
-  // 				  (sys_bEnhance_PbPb_mu7_C1_J3 - sys_bEnhance_PbPb_mu7_C2_J3)*(sys_bEnhance_PbPb_mu7_C1_J3 - sys_bEnhance_PbPb_mu7_C2_J3) +
-  // 				  (sys_cEnhance_PbPb_mu7_C1_J3 - sys_cEnhance_PbPb_mu7_C2_J3)*(sys_cEnhance_PbPb_mu7_C1_J3 - sys_cEnhance_PbPb_mu7_C2_J3) +
-  // 				  (sys_JERsmear_PbPb_mu7_C1_J3 - sys_JERsmear_PbPb_mu7_C2_J3)*(sys_JERsmear_PbPb_mu7_C1_J3 - sys_JERsmear_PbPb_mu7_C2_J3) +
-  // 				  (sys_bGS_PbPb_mu7_C1_J3 - sys_bGS_PbPb_mu7_C2_J3)*(sys_bGS_PbPb_mu7_C1_J3 - sys_bGS_PbPb_mu7_C2_J3));
-
-  //   sys_input_X_J4 = TMath::Sqrt((sys_cFraction_PbPb_mu7_C1_J4 - sys_cFraction_PbPb_mu7_C2_J4)*(sys_cFraction_PbPb_mu7_C1_J4 - sys_cFraction_PbPb_mu7_C2_J4) +
-  // 				 (sys_lowerBound_PbPb_mu7_C1_J4 - sys_lowerBound_PbPb_mu7_C2_J4)*(sys_lowerBound_PbPb_mu7_C1_J4 - sys_lowerBound_PbPb_mu7_C2_J4) +
-  // 				 (sys_bEnhance_PbPb_mu7_C1_J4 - sys_bEnhance_PbPb_mu7_C2_J4)*(sys_bEnhance_PbPb_mu7_C1_J4 - sys_bEnhance_PbPb_mu7_C2_J4) +
-  // 				 (sys_cEnhance_PbPb_mu7_C1_J4 - sys_cEnhance_PbPb_mu7_C2_J4)*(sys_cEnhance_PbPb_mu7_C1_J4 - sys_cEnhance_PbPb_mu7_C2_J4) +
-  // 				 (sys_JERsmear_PbPb_mu7_C1_J4 - sys_JERsmear_PbPb_mu7_C2_J4)*(sys_JERsmear_PbPb_mu7_C1_J4 - sys_JERsmear_PbPb_mu7_C2_J4) +
-  // 				 (sys_bGS_PbPb_mu7_C1_J4 - sys_bGS_PbPb_mu7_C2_J4)*(sys_bGS_PbPb_mu7_C1_J4 - sys_bGS_PbPb_mu7_C2_J4));
-    
-
-
-
-  // }
-
-  // else if(do_mu12){
-
-  //   // pp
-  //   sys_input_pp_J1 = TMath::Sqrt(sys_cFraction_pp_mu12_J1*sys_cFraction_pp_mu12_J1 +
-  // 				  sys_lowerBound_pp_mu12_J1*sys_lowerBound_pp_mu12_J1 +
-  // 				  sys_bEnhance_pp_mu12_J1*sys_bEnhance_pp_mu12_J1 +
-  // 				  sys_cEnhance_pp_mu12_J1*sys_cEnhance_pp_mu12_J1 +
-  // 				  sys_JERsmear_pp_mu12_J1*sys_JERsmear_pp_mu12_J1 +
-  // 				  sys_bGS_pp_mu12_J1*sys_bGS_pp_mu12_J1 +
-  // 				  sys_JEUShiftUp_pp_mu12_J1*sys_JEUShiftUp_pp_mu12_J1 +
-  // 				  sys_JEUShiftDown_pp_mu12_J1*sys_JEUShiftDown_pp_mu12_J1+
-  // 				  sys_residual_pp_mu12_J1*sys_residual_pp_mu12_J1);
-
-  //   sys_input_pp_J2 = TMath::Sqrt(sys_cFraction_pp_mu12_J2*sys_cFraction_pp_mu12_J2 +
-  // 				  sys_lowerBound_pp_mu12_J2*sys_lowerBound_pp_mu12_J2 +
-  // 				  sys_bEnhance_pp_mu12_J2*sys_bEnhance_pp_mu12_J2 +
-  // 				  sys_cEnhance_pp_mu12_J2*sys_cEnhance_pp_mu12_J2 +
-  // 				  sys_JERsmear_pp_mu12_J2*sys_JERsmear_pp_mu12_J2 +
-  // 				  sys_bGS_pp_mu12_J2*sys_bGS_pp_mu12_J2 +
-  // 				  sys_JEUShiftUp_pp_mu12_J2*sys_JEUShiftUp_pp_mu12_J2 +
-  // 				  sys_JEUShiftDown_pp_mu12_J2*sys_JEUShiftDown_pp_mu12_J2+
-  // 				  sys_residual_pp_mu12_J2*sys_residual_pp_mu12_J2);
-    
-  //   sys_input_pp_J3 = TMath::Sqrt(sys_cFraction_pp_mu12_J3*sys_cFraction_pp_mu12_J3 +
-  // 				  sys_lowerBound_pp_mu12_J3*sys_lowerBound_pp_mu12_J3 +
-  // 				  sys_bEnhance_pp_mu12_J3*sys_bEnhance_pp_mu12_J3 +
-  // 				  sys_cEnhance_pp_mu12_J3*sys_cEnhance_pp_mu12_J3 +
-  // 				  sys_JERsmear_pp_mu12_J3*sys_JERsmear_pp_mu12_J3 +
-  // 				  sys_bGS_pp_mu12_J3*sys_bGS_pp_mu12_J3 +
-  // 				  sys_JEUShiftUp_pp_mu12_J3*sys_JEUShiftUp_pp_mu12_J3 +
-  // 				  sys_JEUShiftDown_pp_mu12_J3*sys_JEUShiftDown_pp_mu12_J3+
-  // 				  sys_residual_pp_mu12_J3*sys_residual_pp_mu12_J3);
-
-  //   sys_input_pp_J4 = TMath::Sqrt(sys_cFraction_pp_mu12_J4*sys_cFraction_pp_mu12_J4 +
-  // 				  sys_lowerBound_pp_mu12_J4*sys_lowerBound_pp_mu12_J4 +
-  // 				  sys_bEnhance_pp_mu12_J4*sys_bEnhance_pp_mu12_J4 +
-  // 				  sys_cEnhance_pp_mu12_J4*sys_cEnhance_pp_mu12_J4 +
-  // 				  sys_JERsmear_pp_mu12_J4*sys_JERsmear_pp_mu12_J4 +
-  // 				  sys_bGS_pp_mu12_J4*sys_bGS_pp_mu12_J4 +
-  // 				  sys_JEUShiftUp_pp_mu12_J4*sys_JEUShiftUp_pp_mu12_J4 +
-  // 				  sys_JEUShiftDown_pp_mu12_J4*sys_JEUShiftDown_pp_mu12_J4+
-  // 				  sys_residual_pp_mu12_J4*sys_residual_pp_mu12_J4);
-
-  //   sys_input_pp_J5 = TMath::Sqrt(sys_cFraction_pp_mu12_J5*sys_cFraction_pp_mu12_J5 +
-  // 				  sys_lowerBound_pp_mu12_J5*sys_lowerBound_pp_mu12_J5 +
-  // 				  sys_bEnhance_pp_mu12_J5*sys_bEnhance_pp_mu12_J5 +
-  // 				  sys_cEnhance_pp_mu12_J5*sys_cEnhance_pp_mu12_J5 +
-  // 				  sys_JERsmear_pp_mu12_J5*sys_JERsmear_pp_mu12_J5 +
-  // 				  sys_bGS_pp_mu12_J5*sys_bGS_pp_mu12_J5 +
-  // 				  sys_JEUShiftUp_pp_mu12_J5*sys_JEUShiftUp_pp_mu12_J5 +
-  // 				  sys_JEUShiftDown_pp_mu12_J5*sys_JEUShiftDown_pp_mu12_J5+
-  // 				  sys_residual_pp_mu12_J5*sys_residual_pp_mu12_J5);
-
-  //   sys_input_pp_J6 = TMath::Sqrt(sys_cFraction_pp_mu12_J6*sys_cFraction_pp_mu12_J6 +
-  // 				  sys_lowerBound_pp_mu12_J6*sys_lowerBound_pp_mu12_J6 +
-  // 				  sys_bEnhance_pp_mu12_J6*sys_bEnhance_pp_mu12_J6 +
-  // 				  sys_cEnhance_pp_mu12_J6*sys_cEnhance_pp_mu12_J6 +
-  // 				  sys_JERsmear_pp_mu12_J6*sys_JERsmear_pp_mu12_J6 +
-  // 				  sys_bGS_pp_mu12_J6*sys_bGS_pp_mu12_J6 +
-  // 				  sys_JEUShiftUp_pp_mu12_J6*sys_JEUShiftUp_pp_mu12_J6 +
-  // 				  sys_JEUShiftDown_pp_mu12_J6*sys_JEUShiftDown_pp_mu12_J6+
-  // 				  sys_residual_pp_mu12_J6*sys_residual_pp_mu12_J6);    
-
-  //   // C2
-  //   sys_input_C2_J1 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J1*sys_cFraction_PbPb_mu12_C2_J1 +
-  // 				  sys_lowerBound_PbPb_mu12_C2_J1*sys_lowerBound_PbPb_mu12_C2_J1 +
-  // 				  sys_bEnhance_PbPb_mu12_C2_J1*sys_bEnhance_PbPb_mu12_C2_J1 +
-  // 				  sys_cEnhance_PbPb_mu12_C2_J1*sys_cEnhance_PbPb_mu12_C2_J1 +
-  // 				  sys_JERsmear_PbPb_mu12_C2_J1*sys_JERsmear_PbPb_mu12_C2_J1 +
-  // 				  sys_bGS_PbPb_mu12_C2_J1*sys_bGS_PbPb_mu12_C2_J1 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C2_J1*sys_JEUShiftUp_PbPb_mu12_C2_J1 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C2_J1*sys_JEUShiftDown_PbPb_mu12_C2_J1+
-  // 				  sys_residual_pp_mu12_J1*sys_residual_pp_mu12_J1);
-
-  //   sys_input_C2_J2 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J2*sys_cFraction_PbPb_mu12_C2_J2 +
-  // 				  sys_lowerBound_PbPb_mu12_C2_J2*sys_lowerBound_PbPb_mu12_C2_J2 +
-  // 				  sys_bEnhance_PbPb_mu12_C2_J2*sys_bEnhance_PbPb_mu12_C2_J2 +
-  // 				  sys_cEnhance_PbPb_mu12_C2_J2*sys_cEnhance_PbPb_mu12_C2_J2 +
-  // 				  sys_JERsmear_PbPb_mu12_C2_J2*sys_JERsmear_PbPb_mu12_C2_J2 +
-  // 				  sys_bGS_PbPb_mu12_C2_J2*sys_bGS_PbPb_mu12_C2_J2 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C2_J2*sys_JEUShiftUp_PbPb_mu12_C2_J2 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C2_J2*sys_JEUShiftDown_PbPb_mu12_C2_J2+
-  // 				  sys_residual_pp_mu12_J2*sys_residual_pp_mu12_J2);    
-    
-  //   sys_input_C2_J3 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J3*sys_cFraction_PbPb_mu12_C2_J3 +
-  // 				  sys_lowerBound_PbPb_mu12_C2_J3*sys_lowerBound_PbPb_mu12_C2_J3 +
-  // 				  sys_bEnhance_PbPb_mu12_C2_J3*sys_bEnhance_PbPb_mu12_C2_J3 +
-  // 				  sys_cEnhance_PbPb_mu12_C2_J3*sys_cEnhance_PbPb_mu12_C2_J3 +
-  // 				  sys_JERsmear_PbPb_mu12_C2_J3*sys_JERsmear_PbPb_mu12_C2_J3 +
-  // 				  sys_bGS_PbPb_mu12_C2_J3*sys_bGS_PbPb_mu12_C2_J3 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C2_J3*sys_JEUShiftUp_PbPb_mu12_C2_J3 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C2_J3*sys_JEUShiftDown_PbPb_mu12_C2_J3+
-  // 				  sys_residual_pp_mu12_J3*sys_residual_pp_mu12_J3);
-
-  //   sys_input_C2_J4 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J4*sys_cFraction_PbPb_mu12_C2_J4 +
-  // 				  sys_lowerBound_PbPb_mu12_C2_J4*sys_lowerBound_PbPb_mu12_C2_J4 +
-  // 				  sys_bEnhance_PbPb_mu12_C2_J4*sys_bEnhance_PbPb_mu12_C2_J4 +
-  // 				  sys_cEnhance_PbPb_mu12_C2_J4*sys_cEnhance_PbPb_mu12_C2_J4 +
-  // 				  sys_JERsmear_PbPb_mu12_C2_J4*sys_JERsmear_PbPb_mu12_C2_J4 +
-  // 				  sys_bGS_PbPb_mu12_C2_J4*sys_bGS_PbPb_mu12_C2_J4 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C2_J4*sys_JEUShiftUp_PbPb_mu12_C2_J4 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C2_J4*sys_JEUShiftDown_PbPb_mu12_C2_J4+
-  // 				  sys_residual_pp_mu12_J4*sys_residual_pp_mu12_J4);
-
-  //   sys_input_C2_J5 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J5*sys_cFraction_PbPb_mu12_C2_J5 +
-  // 				  sys_lowerBound_PbPb_mu12_C2_J5*sys_lowerBound_PbPb_mu12_C2_J5 +
-  // 				  sys_bEnhance_PbPb_mu12_C2_J5*sys_bEnhance_PbPb_mu12_C2_J5 +
-  // 				  sys_cEnhance_PbPb_mu12_C2_J5*sys_cEnhance_PbPb_mu12_C2_J5 +
-  // 				  sys_JERsmear_PbPb_mu12_C2_J5*sys_JERsmear_PbPb_mu12_C2_J5 +
-  // 				  sys_bGS_PbPb_mu12_C2_J5*sys_bGS_PbPb_mu12_C2_J5 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C2_J5*sys_JEUShiftUp_PbPb_mu12_C2_J5 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C2_J5*sys_JEUShiftDown_PbPb_mu12_C2_J5+
-  // 				  sys_residual_pp_mu12_J5*sys_residual_pp_mu12_J5);
-
-  //   sys_input_C2_J6 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C2_J6*sys_cFraction_PbPb_mu12_C2_J6 +
-  // 				  sys_lowerBound_PbPb_mu12_C2_J6*sys_lowerBound_PbPb_mu12_C2_J6 +
-  // 				  sys_bEnhance_PbPb_mu12_C2_J6*sys_bEnhance_PbPb_mu12_C2_J6 +
-  // 				  sys_cEnhance_PbPb_mu12_C2_J6*sys_cEnhance_PbPb_mu12_C2_J6 +
-  // 				  sys_JERsmear_PbPb_mu12_C2_J6*sys_JERsmear_PbPb_mu12_C2_J6 +
-  // 				  sys_bGS_PbPb_mu12_C2_J6*sys_bGS_PbPb_mu12_C2_J6 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C2_J6*sys_JEUShiftUp_PbPb_mu12_C2_J6 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C2_J6*sys_JEUShiftDown_PbPb_mu12_C2_J6+
-  // 				  sys_residual_pp_mu12_J6*sys_residual_pp_mu12_J6);
-
-
-  //   // C1
-  //   sys_input_C1_J1 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J1*sys_cFraction_PbPb_mu12_C1_J1 +
-  // 				  sys_lowerBound_PbPb_mu12_C1_J1*sys_lowerBound_PbPb_mu12_C1_J1 +
-  // 				  sys_bEnhance_PbPb_mu12_C1_J1*sys_bEnhance_PbPb_mu12_C1_J1 +
-  // 				  sys_cEnhance_PbPb_mu12_C1_J1*sys_cEnhance_PbPb_mu12_C1_J1 +
-  // 				  sys_JERsmear_PbPb_mu12_C1_J1*sys_JERsmear_PbPb_mu12_C1_J1 +
-  // 				  sys_bGS_PbPb_mu12_C1_J1*sys_bGS_PbPb_mu12_C1_J1 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C1_J1*sys_JEUShiftUp_PbPb_mu12_C1_J1 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C1_J1*sys_JEUShiftDown_PbPb_mu12_C1_J1+
-  // 				  sys_residual_pp_mu12_J1*sys_residual_pp_mu12_J1);
-
-  //   sys_input_C1_J2 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J2*sys_cFraction_PbPb_mu12_C1_J2 +
-  // 				  sys_lowerBound_PbPb_mu12_C1_J2*sys_lowerBound_PbPb_mu12_C1_J2 +
-  // 				  sys_bEnhance_PbPb_mu12_C1_J2*sys_bEnhance_PbPb_mu12_C1_J2 +
-  // 				  sys_cEnhance_PbPb_mu12_C1_J2*sys_cEnhance_PbPb_mu12_C1_J2 +
-  // 				  sys_JERsmear_PbPb_mu12_C1_J2*sys_JERsmear_PbPb_mu12_C1_J2 +
-  // 				  sys_bGS_PbPb_mu12_C1_J2*sys_bGS_PbPb_mu12_C1_J2 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C1_J2*sys_JEUShiftUp_PbPb_mu12_C1_J2 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C1_J2*sys_JEUShiftDown_PbPb_mu12_C1_J2+
-  // 				  sys_residual_pp_mu12_J2*sys_residual_pp_mu12_J2);
-    
-    
-  //   sys_input_C1_J3 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J3*sys_cFraction_PbPb_mu12_C1_J3 +
-  // 				  sys_lowerBound_PbPb_mu12_C1_J3*sys_lowerBound_PbPb_mu12_C1_J3 +
-  // 				  sys_bEnhance_PbPb_mu12_C1_J3*sys_bEnhance_PbPb_mu12_C1_J3 +
-  // 				  sys_cEnhance_PbPb_mu12_C1_J3*sys_cEnhance_PbPb_mu12_C1_J3 +
-  // 				  sys_JERsmear_PbPb_mu12_C1_J3*sys_JERsmear_PbPb_mu12_C1_J3 +
-  // 				  sys_bGS_PbPb_mu12_C1_J3*sys_bGS_PbPb_mu12_C1_J3 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C1_J3*sys_JEUShiftUp_PbPb_mu12_C1_J3 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C1_J3*sys_JEUShiftDown_PbPb_mu12_C1_J3+
-  // 				  sys_residual_pp_mu12_J3*sys_residual_pp_mu12_J3);
-
-  //   sys_input_C1_J4 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J4*sys_cFraction_PbPb_mu12_C1_J4 +
-  // 				  sys_lowerBound_PbPb_mu12_C1_J4*sys_lowerBound_PbPb_mu12_C1_J4 +
-  // 				  sys_bEnhance_PbPb_mu12_C1_J4*sys_bEnhance_PbPb_mu12_C1_J4 +
-  // 				  sys_cEnhance_PbPb_mu12_C1_J4*sys_cEnhance_PbPb_mu12_C1_J4 +
-  // 				  sys_JERsmear_PbPb_mu12_C1_J4*sys_JERsmear_PbPb_mu12_C1_J4 +
-  // 				  sys_bGS_PbPb_mu12_C1_J4*sys_bGS_PbPb_mu12_C1_J4 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C1_J4*sys_JEUShiftUp_PbPb_mu12_C1_J4 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C1_J4*sys_JEUShiftDown_PbPb_mu12_C1_J4+
-  // 				  sys_residual_pp_mu12_J4*sys_residual_pp_mu12_J4);
-
-  //   sys_input_C1_J5 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J5*sys_cFraction_PbPb_mu12_C1_J5 +
-  // 				  sys_lowerBound_PbPb_mu12_C1_J5*sys_lowerBound_PbPb_mu12_C1_J5 +
-  // 				  sys_bEnhance_PbPb_mu12_C1_J5*sys_bEnhance_PbPb_mu12_C1_J5 +
-  // 				  sys_cEnhance_PbPb_mu12_C1_J5*sys_cEnhance_PbPb_mu12_C1_J5 +
-  // 				  sys_JERsmear_PbPb_mu12_C1_J5*sys_JERsmear_PbPb_mu12_C1_J5 +
-  // 				  sys_bGS_PbPb_mu12_C1_J5*sys_bGS_PbPb_mu12_C1_J5 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C1_J5*sys_JEUShiftUp_PbPb_mu12_C1_J5 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C1_J5*sys_JEUShiftDown_PbPb_mu12_C1_J5+
-  // 				  sys_residual_pp_mu12_J5*sys_residual_pp_mu12_J5);
-
-  //   sys_input_C1_J6 = TMath::Sqrt(sys_cFraction_PbPb_mu12_C1_J6*sys_cFraction_PbPb_mu12_C1_J6 +
-  // 				  sys_lowerBound_PbPb_mu12_C1_J6*sys_lowerBound_PbPb_mu12_C1_J6 +
-  // 				  sys_bEnhance_PbPb_mu12_C1_J6*sys_bEnhance_PbPb_mu12_C1_J6 +
-  // 				  sys_cEnhance_PbPb_mu12_C1_J6*sys_cEnhance_PbPb_mu12_C1_J6 +
-  // 				  sys_JERsmear_PbPb_mu12_C1_J6*sys_JERsmear_PbPb_mu12_C1_J6 +
-  // 				  sys_bGS_PbPb_mu12_C1_J6*sys_bGS_PbPb_mu12_C1_J6 +
-  // 				  sys_JEUShiftUp_PbPb_mu12_C1_J6*sys_JEUShiftUp_PbPb_mu12_C1_J6 +
-  // 				  sys_JEUShiftDown_PbPb_mu12_C1_J6*sys_JEUShiftDown_PbPb_mu12_C1_J6+
-  // 				  sys_residual_pp_mu12_J6*sys_residual_pp_mu12_J6);    
-
-
-
-  //   // correlated errors
-
-  //   sys_input_pp_X_J2 = TMath::Sqrt(sys_cFraction_pp_mu12_J2*sys_cFraction_pp_mu12_J2 +
-  // 				    sys_bGS_pp_mu12_J2*sys_bGS_pp_mu12_J2);
-  //   sys_input_pp_X_J3 = TMath::Sqrt(sys_cFraction_pp_mu12_J3*sys_cFraction_pp_mu12_J3 +
-  // 				    sys_bGS_pp_mu12_J3*sys_bGS_pp_mu12_J3);
-  //   sys_input_pp_X_J4 = TMath::Sqrt(sys_cFraction_pp_mu12_J4*sys_cFraction_pp_mu12_J4 +
-  // 				    sys_bGS_pp_mu12_J4*sys_bGS_pp_mu12_J4);
+  sys_input_pp_X_J2 = TMath::Sqrt(sys_cFraction_pp_mu12_J2*sys_cFraction_pp_mu12_J2 +
+				  sys_bGS_pp_mu12_J2*sys_bGS_pp_mu12_J2);
+  sys_input_pp_X_J3 = TMath::Sqrt(sys_cFraction_pp_mu12_J3*sys_cFraction_pp_mu12_J3 +
+				  sys_bGS_pp_mu12_J3*sys_bGS_pp_mu12_J3);
+  sys_input_pp_X_J4 = TMath::Sqrt(sys_cFraction_pp_mu12_J4*sys_cFraction_pp_mu12_J4 +
+				  sys_bGS_pp_mu12_J4*sys_bGS_pp_mu12_J4);
 
     
 
-  //   // periph / central correlated systematic errors
-  //   sys_input_X_J2 = TMath::Sqrt((sys_cFraction_PbPb_mu12_C1_J2 - sys_cFraction_PbPb_mu12_C2_J2)*(sys_cFraction_PbPb_mu12_C1_J2 - sys_cFraction_PbPb_mu12_C2_J2) +
-  // 				  (sys_lowerBound_PbPb_mu12_C1_J2 - sys_lowerBound_PbPb_mu12_C2_J2)*(sys_lowerBound_PbPb_mu12_C1_J2 - sys_lowerBound_PbPb_mu12_C2_J2) +
-  // 				  (sys_bEnhance_PbPb_mu12_C1_J2 - sys_bEnhance_PbPb_mu12_C2_J2)*(sys_bEnhance_PbPb_mu12_C1_J2 - sys_bEnhance_PbPb_mu12_C2_J2) +
-  // 				  (sys_cEnhance_PbPb_mu12_C1_J2 - sys_cEnhance_PbPb_mu12_C2_J2)*(sys_cEnhance_PbPb_mu12_C1_J2 - sys_cEnhance_PbPb_mu12_C2_J2) +
-  // 				  (sys_JERsmear_PbPb_mu12_C1_J2 - sys_JERsmear_PbPb_mu12_C2_J2)*(sys_JERsmear_PbPb_mu12_C1_J2 - sys_JERsmear_PbPb_mu12_C2_J2) +
-  // 				  (sys_bGS_PbPb_mu12_C1_J2 - sys_bGS_PbPb_mu12_C2_J2)*(sys_bGS_PbPb_mu12_C1_J2 - sys_bGS_PbPb_mu12_C2_J2));
+  // periph / central correlated systematic errors
+  sys_input_X_J2 = TMath::Sqrt((sys_cFraction_PbPb_mu12_C1_J2 - sys_cFraction_PbPb_mu12_C2_J2)*(sys_cFraction_PbPb_mu12_C1_J2 - sys_cFraction_PbPb_mu12_C2_J2) +
+			       (sys_lowerBound_PbPb_mu12_C1_J2 - sys_lowerBound_PbPb_mu12_C2_J2)*(sys_lowerBound_PbPb_mu12_C1_J2 - sys_lowerBound_PbPb_mu12_C2_J2) +
+			       (sys_bEnhance_PbPb_mu12_C1_J2 - sys_bEnhance_PbPb_mu12_C2_J2)*(sys_bEnhance_PbPb_mu12_C1_J2 - sys_bEnhance_PbPb_mu12_C2_J2) +
+			       (sys_cEnhance_PbPb_mu12_C1_J2 - sys_cEnhance_PbPb_mu12_C2_J2)*(sys_cEnhance_PbPb_mu12_C1_J2 - sys_cEnhance_PbPb_mu12_C2_J2) +
+			       (sys_JERsmear_PbPb_mu12_C1_J2 - sys_JERsmear_PbPb_mu12_C2_J2)*(sys_JERsmear_PbPb_mu12_C1_J2 - sys_JERsmear_PbPb_mu12_C2_J2) +
+			       (sys_bGS_PbPb_mu12_C1_J2 - sys_bGS_PbPb_mu12_C2_J2)*(sys_bGS_PbPb_mu12_C1_J2 - sys_bGS_PbPb_mu12_C2_J2));
 
-  //   sys_input_X_J3 = TMath::Sqrt((sys_cFraction_PbPb_mu12_C1_J3 - sys_cFraction_PbPb_mu12_C2_J3)*(sys_cFraction_PbPb_mu12_C1_J3 - sys_cFraction_PbPb_mu12_C2_J3) +
-  // 				  (sys_lowerBound_PbPb_mu12_C1_J3 - sys_lowerBound_PbPb_mu12_C2_J3)*(sys_lowerBound_PbPb_mu12_C1_J3 - sys_lowerBound_PbPb_mu12_C2_J3) +
-  // 				  (sys_bEnhance_PbPb_mu12_C1_J3 - sys_bEnhance_PbPb_mu12_C2_J3)*(sys_bEnhance_PbPb_mu12_C1_J3 - sys_bEnhance_PbPb_mu12_C2_J3) +
-  // 				  (sys_cEnhance_PbPb_mu12_C1_J3 - sys_cEnhance_PbPb_mu12_C2_J3)*(sys_cEnhance_PbPb_mu12_C1_J3 - sys_cEnhance_PbPb_mu12_C2_J3) +
-  // 				  (sys_JERsmear_PbPb_mu12_C1_J3 - sys_JERsmear_PbPb_mu12_C2_J3)*(sys_JERsmear_PbPb_mu12_C1_J3 - sys_JERsmear_PbPb_mu12_C2_J3) +
-  // 				  (sys_bGS_PbPb_mu12_C1_J3 - sys_bGS_PbPb_mu12_C2_J3)*(sys_bGS_PbPb_mu12_C1_J3 - sys_bGS_PbPb_mu12_C2_J3));
+  sys_input_X_J3 = TMath::Sqrt((sys_cFraction_PbPb_mu12_C1_J3 - sys_cFraction_PbPb_mu12_C2_J3)*(sys_cFraction_PbPb_mu12_C1_J3 - sys_cFraction_PbPb_mu12_C2_J3) +
+			       (sys_lowerBound_PbPb_mu12_C1_J3 - sys_lowerBound_PbPb_mu12_C2_J3)*(sys_lowerBound_PbPb_mu12_C1_J3 - sys_lowerBound_PbPb_mu12_C2_J3) +
+			       (sys_bEnhance_PbPb_mu12_C1_J3 - sys_bEnhance_PbPb_mu12_C2_J3)*(sys_bEnhance_PbPb_mu12_C1_J3 - sys_bEnhance_PbPb_mu12_C2_J3) +
+			       (sys_cEnhance_PbPb_mu12_C1_J3 - sys_cEnhance_PbPb_mu12_C2_J3)*(sys_cEnhance_PbPb_mu12_C1_J3 - sys_cEnhance_PbPb_mu12_C2_J3) +
+			       (sys_JERsmear_PbPb_mu12_C1_J3 - sys_JERsmear_PbPb_mu12_C2_J3)*(sys_JERsmear_PbPb_mu12_C1_J3 - sys_JERsmear_PbPb_mu12_C2_J3) +
+			       (sys_bGS_PbPb_mu12_C1_J3 - sys_bGS_PbPb_mu12_C2_J3)*(sys_bGS_PbPb_mu12_C1_J3 - sys_bGS_PbPb_mu12_C2_J3));
 
-  //   sys_input_X_J4 = TMath::Sqrt((sys_cFraction_PbPb_mu12_C1_J4 - sys_cFraction_PbPb_mu12_C2_J4)*(sys_cFraction_PbPb_mu12_C1_J4 - sys_cFraction_PbPb_mu12_C2_J4) +
-  // 				 (sys_lowerBound_PbPb_mu12_C1_J4 - sys_lowerBound_PbPb_mu12_C2_J4)*(sys_lowerBound_PbPb_mu12_C1_J4 - sys_lowerBound_PbPb_mu12_C2_J4) +
-  // 				 (sys_bEnhance_PbPb_mu12_C1_J4 - sys_bEnhance_PbPb_mu12_C2_J4)*(sys_bEnhance_PbPb_mu12_C1_J4 - sys_bEnhance_PbPb_mu12_C2_J4) +
-  // 				 (sys_cEnhance_PbPb_mu12_C1_J4 - sys_cEnhance_PbPb_mu12_C2_J4)*(sys_cEnhance_PbPb_mu12_C1_J4 - sys_cEnhance_PbPb_mu12_C2_J4) +
-  // 				 (sys_JERsmear_PbPb_mu12_C1_J4 - sys_JERsmear_PbPb_mu12_C2_J4)*(sys_JERsmear_PbPb_mu12_C1_J4 - sys_JERsmear_PbPb_mu12_C2_J4) +
-  // 				 (sys_bGS_PbPb_mu12_C1_J4 - sys_bGS_PbPb_mu12_C2_J4)*(sys_bGS_PbPb_mu12_C1_J4 - sys_bGS_PbPb_mu12_C2_J4));
-    
-  // }
-  
+  sys_input_X_J4 = TMath::Sqrt((sys_cFraction_PbPb_mu12_C1_J4 - sys_cFraction_PbPb_mu12_C2_J4)*(sys_cFraction_PbPb_mu12_C1_J4 - sys_cFraction_PbPb_mu12_C2_J4) +
+			       (sys_lowerBound_PbPb_mu12_C1_J4 - sys_lowerBound_PbPb_mu12_C2_J4)*(sys_lowerBound_PbPb_mu12_C1_J4 - sys_lowerBound_PbPb_mu12_C2_J4) +
+			       (sys_bEnhance_PbPb_mu12_C1_J4 - sys_bEnhance_PbPb_mu12_C2_J4)*(sys_bEnhance_PbPb_mu12_C1_J4 - sys_bEnhance_PbPb_mu12_C2_J4) +
+			       (sys_cEnhance_PbPb_mu12_C1_J4 - sys_cEnhance_PbPb_mu12_C2_J4)*(sys_cEnhance_PbPb_mu12_C1_J4 - sys_cEnhance_PbPb_mu12_C2_J4) +
+			       (sys_JERsmear_PbPb_mu12_C1_J4 - sys_JERsmear_PbPb_mu12_C2_J4)*(sys_JERsmear_PbPb_mu12_C1_J4 - sys_JERsmear_PbPb_mu12_C2_J4) +
+			       (sys_bGS_PbPb_mu12_C1_J4 - sys_bGS_PbPb_mu12_C2_J4)*(sys_bGS_PbPb_mu12_C1_J4 - sys_bGS_PbPb_mu12_C2_J4));
     
   
-
-  
-  // else{};
-
   
   s1->SetBinError(1,sys_input_pp_J1*s1->GetBinContent(1));
   s1->SetBinError(2,sys_input_pp_J2*s1->GetBinContent(2));
@@ -1192,14 +1122,22 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   s3->SetBinError(3,sys_input_C1_J3*s3->GetBinContent(3));
   s3->SetBinError(4,sys_input_C1_J4*s3->GetBinContent(4));
   s3->SetBinError(5,sys_input_C1_J5*s3->GetBinContent(5));
-  s3->SetBinError(6,sys_input_C1_J6*s3->GetBinContent(6));      
+  s3->SetBinError(6,sys_input_C1_J6*s3->GetBinContent(6));
+
+  s4->SetBinError(1,sys_input_C3_J1*s4->GetBinContent(1));
+  s4->SetBinError(2,sys_input_C3_J2*s4->GetBinContent(2));
+  s4->SetBinError(3,sys_input_C3_J3*s4->GetBinContent(3));
+  s4->SetBinError(4,sys_input_C3_J4*s4->GetBinContent(4));
+  s4->SetBinError(5,sys_input_C3_J5*s4->GetBinContent(5));
+  s4->SetBinError(6,sys_input_C3_J6*s4->GetBinContent(6));
 
   s1->SetFillColorAlpha(kBlack,1.0);
   //s1->SetFillColorAlpha(kMagenta,1.0);
   //s1->SetLineColor(kMagenta);
   s1->SetFillStyle(3345);
   s2->SetFillColorAlpha(kRed-4,0.5);
-  s3->SetFillColorAlpha(kBlue-4,0.5);
+  s3->SetFillColorAlpha(kGreen+2,0.5);
+  s4->SetFillColorAlpha(kMagenta-9,0.5);
   
   // dont include last point in PbPb (stats too low)
   // r2->SetBinContent(6,100);
@@ -1221,26 +1159,30 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   pad->Draw();
   pad->cd();
   //r2->GetYaxis()->SetTitle("#it{f}_{#it{b}}(PbPb) / #it{f}_{#it{b}}(pp)");
-  r1->GetYaxis()->SetTitle("inclusive #font[52]{b}-jet fraction");
-  r1->GetXaxis()->SetTitle("#font[52]{p}_{T}^{jet} [GeV]");
-  r1->GetXaxis()->SetRangeUser(80,300);
+  s1->GetYaxis()->SetTitle("inclusive #font[52]{b}-jet fraction");
+  s1->GetXaxis()->SetTitle("#font[52]{p}_{T}^{jet} [GeV]");
+  s1->GetXaxis()->SetRangeUser(80,280);
+
+
   //r2->GetYaxis()->SetRangeUser(0,2);
   //s1->GetYaxis()->SetRangeUser(0,0.14);
   //r1->GetYaxis()->SetRangeUser(0.00,0.10);
-  r1->GetYaxis()->SetRangeUser(0.02,0.07);
-  r1->SetTitle("");
-  r1->SetStats(0);
-  //s1->Draw("e2");
+  s1->GetYaxis()->SetRangeUser(0.02,0.07);
+  s1->SetTitle("");
+  s1->SetStats(0);
+  s1->Draw("e2");
   //s2->Draw("e2 same");
   //s3->Draw("e2 same");
-  //r1->Draw("same");
-  r1->Draw();
-  r2->Draw("same");
-  r3->Draw("same");
+  s4->Draw("e2 same");
+  r1->Draw("same");
+  //r1->Draw();
+  //r2->Draw("same");
+  //r3->Draw("same");
   r4->Draw("same");
+  //bFrac_CMS_pp_7TeV->Draw("same");
 
 
-  TString jet_pt_cout[7] = {"null","80 < pT,jet (GeV) < 100","100 < pT,jet (GeV) < 120","120 < pT,jet (GeV) < 150","150 < pT,jet (GeV) < 200", "200 < pT,jet (GeV) < 300", "300 < pT,jet (GeV) < 500"};
+  TString jet_pt_cout[7] = {"null","80 < pT,jet (GeV) < 90","90 < pT,jet (GeV) < 100","100 < pT,jet (GeV) < 120","120 < pT,jet (GeV) < 150", "150 < pT,jet (GeV) < 200", "200 < pT,jet (GeV) < 300"};
   cout << " ~~~~~~ pp ~~~~~~ " << endl;
   for(int i = 0; i < 7; i++){
     cout << jet_pt_cout[i] << " | f_b^incl = " << 100.*r1->GetBinContent(i) << "+/- " << 100.*r1->GetBinError(i) << " (stat.) +/- " << 100.*s1->GetBinError(i) << " (sys.) "   << endl ;
@@ -1258,10 +1200,11 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
 
   TLegend *leg = new TLegend(0.62,0.75,0.85,0.88);
   leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
   leg->SetTextSize(0.028);
   leg->AddEntry(h1,"pp","p");
-  leg->AddEntry(h2,"PbPb 30-90%","p");
-  leg->AddEntry(h3,"PbPb 10-30%","p");
+  // leg->AddEntry(h2,"PbPb 30-90%","p");
+  // leg->AddEntry(h3,"PbPb 10-30%","p");
   leg->AddEntry(h4,"PbPb 0-10%","p");
 
   // leg->AddEntry(h1,"PYTHIA","p");
@@ -1290,10 +1233,12 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   //b_truth_C1->Draw("hist same");
 
   TLegend *leg2 = new TLegend(0.22,0.75,0.5,0.88);
+  leg2->SetFillStyle(0);
   leg2->SetBorderSize(0);
   leg2->SetTextSize(0.028);
   //leg2->AddEntry(b_truth_pp,"PYTHIA Reco","l");
   leg2->AddEntry(b_truth_gen,"PYTHIA","l");
+  // leg2->AddEntry(bFrac_CMS_pp_7TeV,"CMS pp 7 TeV","l");
   // leg2->AddEntry(b_truth_C2,"PYTHIA+HYDJET 30-90%","l");
   // leg2->AddEntry(b_truth_C1,"PYTHIA+HYDJET 0-30%","l");
   leg2->Draw();
@@ -1391,6 +1336,56 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   
   //leg_cl->Draw();
 
+  // C3 closure
+  TCanvas *canv_cl_C3 = new TCanvas("canv_cl_C3","canv_cl_C3",600,600);
+  canv_cl_C3->cd();
+  TPad *pad_cl_C3 = new TPad("pad_cl_C3","pad_cl_C3",0,0,1,1);
+  pad_cl_C3->SetLeftMargin(0.2);
+  pad_cl_C3->SetBottomMargin(0.2);
+  pad_cl_C3->Draw();
+  pad_cl_C3->cd();
+  
+  TH1D *h_closure_C3 = (TH1D*) r2->Clone("h_closure_C3");
+  h_closure_C3->Divide(r2,b_truth_gen_C3_R,1,1,"B");
+  // TH2D *h_closure_C3_inclGenMuTag = (TH2D*) h2_3->Clone("h_closure_C3_inclGenMuTag");
+  // h_closure_C3_inclGenMuTag->Divide(h2_3,b_truth_C3_inclGenMuTag_R,1,1,"B");
+  // TH2D *h_closure_C3_matchedRecoMuTag = (TH2D*) h2_2->Clone("h_closure_C3_matchedRecoMuTag");
+  // h_closure_C3_matchedRecoMuTag->Divide(h2_2,b_truth_C3_matchedRecoMuTag_R,1,1,"B");
+  // TH2D *h_closure_C3_inclRecoMuTag = (TH2D*) h2_1->Clone("h_closure_C3_inclRecoMuTag");
+  // h_closure_C3_inclRecoMuTag->Divide(h2_1,b_truth_C3_inclRecoMuTag_R,1,1,"B");
+  // TH2D *h_closure_C3_inclRecoMuTag_triggerOn = (TH2D*) h2_0->Clone("h_closure_C3_inclRecoMuTag_triggerOn");
+  // h_closure_C3_inclRecoMuTag_triggerOn->Divide(h2_0,b_truth_C3_inclRecoMuTag_triggerOn_R,1,1,"B");
+
+  // h_closure_C3->SetLineColor(kBlack);
+  // h_closure_C3_inclGenMuTag->SetLineColor(kRed-4);
+  // h_closure_C3_matchedRecoMuTag->SetLineColor(kBlue-4);
+  // h_closure_C3_inclRecoMuTag->SetLineColor(kGreen+2);
+  // h_closure_C3_inclRecoMuTag_triggerOn->SetLineColor(kMagenta);
+
+  // h_closure_C3_inclGenMuTag->SetLineWidth(3);
+  // h_closure_C3_matchedRecoMuTag->SetLineWidth(3);
+  // h_closure_C3_inclRecoMuTag->SetLineWidth(3);
+  // h_closure_C3_inclRecoMuTag_triggerOn->SetLineWidth(3);
+
+  // h_closure_C3_inclGenMuTag->SetLineStyle(2);
+  // h_closure_C3_matchedRecoMuTag->SetLineStyle(3);
+  // h_closure_C3_inclRecoMuTag->SetLineStyle(4);
+  // h_closure_C3_inclRecoMuTag_triggerOn->SetLineStyle(5);
+
+  for(int i = 0; i < h_closure_C3->GetSize(); i++){
+    cout << "|1 - h_closure_C3(" << i << ")| = " << TMath::Abs(1. - h_closure_C3->GetBinContent(i)) << endl;
+  }
+  
+  h_closure_C3->SetTitle("Closure in PbPb 30-80%");
+  h_closure_C3->GetXaxis()->SetTitle("#it{p}_{T}^{jet} [GeV]");
+  h_closure_C3->GetYaxis()->SetTitle("#it{f}_{#it{b}}(Corrected MC) / #it{f}_{#it{b}}(truth)");
+  h_closure_C3->GetYaxis()->SetRangeUser(0.35,1.65);
+  h_closure_C3->SetStats(0);
+  h_closure_C3->SetMarkerSize(0);
+  h_closure_C3->Draw();
+  li->DrawLine(80,1,300,1);
+
+  
 
   // C2 closure
   TCanvas *canv_cl_C2 = new TCanvas("canv_cl_C2","canv_cl_C2",600,600);
@@ -1401,8 +1396,8 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   pad_cl_C2->Draw();
   pad_cl_C2->cd();
   
-  TH1D *h_closure_C2 = (TH1D*) r2->Clone("h_closure_C2");
-  h_closure_C2->Divide(r2,b_truth_gen_R,1,1,"B");
+  TH1D *h_closure_C2 = (TH1D*) r3->Clone("h_closure_C2");
+  h_closure_C2->Divide(r3,b_truth_gen_C2_R,1,1,"B");
   // TH2D *h_closure_C2_inclGenMuTag = (TH2D*) h2_3->Clone("h_closure_C2_inclGenMuTag");
   // h_closure_C2_inclGenMuTag->Divide(h2_3,b_truth_C2_inclGenMuTag_R,1,1,"B");
   // TH2D *h_closure_C2_matchedRecoMuTag = (TH2D*) h2_2->Clone("h_closure_C2_matchedRecoMuTag");
@@ -1432,7 +1427,7 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
     cout << "|1 - h_closure_C2(" << i << ")| = " << TMath::Abs(1. - h_closure_C2->GetBinContent(i)) << endl;
   }
   
-  h_closure_C2->SetTitle("Closure in PbPb 30-90%");
+  h_closure_C2->SetTitle("Closure in PbPb 10-30%");
   h_closure_C2->GetXaxis()->SetTitle("#it{p}_{T}^{jet} [GeV]");
   h_closure_C2->GetYaxis()->SetTitle("#it{f}_{#it{b}}(Corrected MC) / #it{f}_{#it{b}}(truth)");
   h_closure_C2->GetYaxis()->SetRangeUser(0.35,1.65);
@@ -1441,7 +1436,7 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   h_closure_C2->Draw();
   li->DrawLine(80,1,300,1);
 
-   // C1 closure
+  // C1 closure
   TCanvas *canv_cl_C1 = new TCanvas("canv_cl_C1","canv_cl_C1",600,600);
   canv_cl_C1->cd();
   TPad *pad_cl_C1 = new TPad("pad_cl_C1","pad_cl_C1",0,0,1,1);
@@ -1450,8 +1445,8 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   pad_cl_C1->Draw();
   pad_cl_C1->cd();
   
-  TH1D *h_closure_C1 = (TH1D*) r3->Clone("h_closure_C1");
-  h_closure_C1->Divide(r3,b_truth_gen_R,1,1,"B");
+  TH1D *h_closure_C1 = (TH1D*) r4->Clone("h_closure_C1");
+  h_closure_C1->Divide(r4,b_truth_gen_C1_R,1,1,"B");
   //h_closure_C1->Divide(r3,b_truth_C1_R,1,1,"B");
   // TH3D *h_closure_C1_inclGenMuTag = (TH3D*) h3_3->Clone("h_closure_C1_inclGenMuTag");
   // h_closure_C1_inclGenMuTag->Divide(h3_3,b_truth_C1_inclGenMuTag_R,1,1,"B");
@@ -1483,7 +1478,7 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   }
 
   
-  h_closure_C1->SetTitle("Closure in PbPb 0-30%");
+  h_closure_C1->SetTitle("Closure in PbPb 0-10%");
   h_closure_C1->GetXaxis()->SetTitle("#it{p}_{T}^{jet} [GeV]");
   h_closure_C1->GetYaxis()->SetTitle("#it{f}_{b}(Corrected MC) / #it{f}_{b}(truth)");
   h_closure_C1->GetYaxis()->SetRangeUser(0.65,1.35);
@@ -1511,13 +1506,14 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   TH1D *S1 = (TH1D*) R1->Clone("S1");
   TH1D *S2 = (TH1D*) R2->Clone("S2");
   TH1D *S3 = (TH1D*) R3->Clone("S3");
+  TH1D *S4 = (TH1D*) R4->Clone("S4");
 
   S1->SetBinError(1,sys_input_pp_J1*S1->GetBinContent(1));
   S1->SetBinError(2,sys_input_pp_J2*S1->GetBinContent(2));
   S1->SetBinError(3,sys_input_pp_J3*S1->GetBinContent(3));
-  S1->SetBinError(4,sys_input_pp_J3*S1->GetBinContent(4));
-  S1->SetBinError(5,sys_input_pp_J3*S1->GetBinContent(5));
-  S1->SetBinError(6,sys_input_pp_J3*S1->GetBinContent(6));
+  S1->SetBinError(4,sys_input_pp_J4*S1->GetBinContent(4));
+  S1->SetBinError(5,sys_input_pp_J5*S1->GetBinContent(5));
+  S1->SetBinError(6,sys_input_pp_J6*S1->GetBinContent(6));
   
   
   S2->SetBinError(1,TMath::Sqrt(sys_input_C2_J1*S2->GetBinContent(1)*sys_input_C2_J1*S2->GetBinContent(1) + sys_input_pp_J1*S1->GetBinContent(1)*sys_input_pp_J1*S1->GetBinContent(1)));
@@ -1525,7 +1521,7 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   S2->SetBinError(3,TMath::Sqrt(sys_input_C2_J3*S2->GetBinContent(1)*sys_input_C2_J3*S2->GetBinContent(1) + sys_input_pp_J3*S1->GetBinContent(1)*sys_input_pp_J3*S1->GetBinContent(1)));
   S2->SetBinError(4,TMath::Sqrt(sys_input_C2_J4*S2->GetBinContent(1)*sys_input_C2_J4*S2->GetBinContent(1) + sys_input_pp_J4*S1->GetBinContent(1)*sys_input_pp_J4*S1->GetBinContent(1)));
   S2->SetBinError(5,TMath::Sqrt(sys_input_C2_J5*S2->GetBinContent(1)*sys_input_C2_J5*S2->GetBinContent(1) + sys_input_pp_J5*S1->GetBinContent(1)*sys_input_pp_J5*S1->GetBinContent(1)));
-  //S2->SetBinError(6,TMath::Sqrt(sys_input_C2_J6*S2->GetBinContent(1)*sys_input_C2_J6*S2->GetBinContent(1) + sys_input_pp_J6*S1->GetBinContent(1)*sys_input_pp_J6*S1->GetBinContent(1)));
+  S2->SetBinError(6,TMath::Sqrt(sys_input_C2_J6*S2->GetBinContent(1)*sys_input_C2_J6*S2->GetBinContent(1) + sys_input_pp_J6*S1->GetBinContent(1)*sys_input_pp_J6*S1->GetBinContent(1)));
   S2->SetBinError(6,0.0);
   // put the last point off the map
   // S2->SetBinContent(6,100);
@@ -1537,17 +1533,26 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   S3->SetBinError(3,TMath::Sqrt(sys_input_C1_J3*S3->GetBinContent(1)*sys_input_C1_J3*S3->GetBinContent(1) + sys_input_pp_J3*S1->GetBinContent(1)*sys_input_pp_J3*S1->GetBinContent(1)));
   S3->SetBinError(4,TMath::Sqrt(sys_input_C1_J4*S3->GetBinContent(1)*sys_input_C1_J4*S3->GetBinContent(1) + sys_input_pp_J4*S1->GetBinContent(1)*sys_input_pp_J4*S1->GetBinContent(1)));
   S3->SetBinError(5,TMath::Sqrt(sys_input_C1_J5*S3->GetBinContent(1)*sys_input_C1_J5*S3->GetBinContent(1) + sys_input_pp_J5*S1->GetBinContent(1)*sys_input_pp_J5*S1->GetBinContent(1)));
-  //S3->SetBinError(6,TMath::Sqrt(sys_input_C1_J6*S3->GetBinContent(1)*sys_input_C1_J6*S3->GetBinContent(1) + sys_input_pp_J6*S1->GetBinContent(1)*sys_input_pp_J6*S1->GetBinContent(1)));
+  S3->SetBinError(6,TMath::Sqrt(sys_input_C1_J6*S3->GetBinContent(1)*sys_input_C1_J6*S3->GetBinContent(1) + sys_input_pp_J6*S1->GetBinContent(1)*sys_input_pp_J6*S1->GetBinContent(1)));
   // S3->SetBinError(6,0.0);
   // // put the last point off the map
   // S3->SetBinContent(6,100);
   // R3->SetBinError(6,0.0);
   // R3->SetBinContent(6,100)
-    ;
+
+
+  S4->SetBinError(1,TMath::Sqrt(sys_input_C3_J1*S4->GetBinContent(1)*sys_input_C3_J1*S4->GetBinContent(1) + sys_input_pp_J1*S1->GetBinContent(1)*sys_input_pp_J1*S1->GetBinContent(1)));
+  S4->SetBinError(2,TMath::Sqrt(sys_input_C3_J2*S4->GetBinContent(1)*sys_input_C3_J2*S4->GetBinContent(1) + sys_input_pp_J2*S1->GetBinContent(1)*sys_input_pp_J2*S1->GetBinContent(1)));
+  S4->SetBinError(3,TMath::Sqrt(sys_input_C3_J3*S4->GetBinContent(1)*sys_input_C3_J3*S4->GetBinContent(1) + sys_input_pp_J3*S1->GetBinContent(1)*sys_input_pp_J3*S1->GetBinContent(1)));
+  S4->SetBinError(4,TMath::Sqrt(sys_input_C3_J4*S4->GetBinContent(1)*sys_input_C3_J4*S4->GetBinContent(1) + sys_input_pp_J4*S1->GetBinContent(1)*sys_input_pp_J4*S1->GetBinContent(1)));
+  S4->SetBinError(5,TMath::Sqrt(sys_input_C3_J5*S4->GetBinContent(1)*sys_input_C3_J5*S4->GetBinContent(1) + sys_input_pp_J5*S1->GetBinContent(1)*sys_input_pp_J5*S1->GetBinContent(1)));
+  S4->SetBinError(6,TMath::Sqrt(sys_input_C3_J6*S4->GetBinContent(1)*sys_input_C3_J6*S4->GetBinContent(1) + sys_input_pp_J6*S1->GetBinContent(1)*sys_input_pp_J6*S1->GetBinContent(1)));
+  
 
   S1->SetFillColorAlpha(kGray,0.25);
   S2->SetFillColorAlpha(kRed-4,0.5);
-  S3->SetFillColorAlpha(kBlue-4,0.5);
+  S3->SetFillColorAlpha(kGreen+2,0.5);
+  S4->SetFillColorAlpha(kMagenta-9,0.5);
 
   TCanvas *canv2 = new TCanvas("canv2","canv2",600,600);
   canv2->cd();
@@ -1556,17 +1561,19 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   pad2->SetBottomMargin(0.2);
   pad2->Draw();
   pad2->cd();
-  R2->GetYaxis()->SetTitle("#it{f}_{#it{b}}^{incl}(PbPb) / #it{f}_{#it{b}}^{incl}(pp)");
-  R2->GetXaxis()->SetTitle("#font[52]{p}_{T}^{recoJet} [GeV]");
-  R2->GetXaxis()->SetRangeUser(80,300);
-  R2->GetYaxis()->SetRangeUser(0,2);
-  R2->SetTitle("");
-  R2->SetStats(0);
-  //S2->Draw("e2");
-  R2->Draw();
-  //S3->Draw("e2 same");
-  //R2->Draw("same");
-  R3->Draw("same");
+  // replacing with S3/S4 for isolated drawing
+  S4->GetYaxis()->SetTitle("#it{f}_{#it{b}}^{incl}(PbPb) / #it{f}_{#it{b}}^{incl}(pp)");
+  S4->GetXaxis()->SetTitle("#font[52]{p}_{T}^{recoJet} [GeV]");
+  S4->GetXaxis()->SetRangeUser(80,280);
+  S4->GetYaxis()->SetRangeUser(0.5,1.9);
+  S4->SetTitle("");
+  S4->SetStats(0);
+  S4->Draw("e2");
+  //R2->Draw();
+  // S3->Draw("e2 same");
+  // S4->Draw("e2 same");
+  // R2->Draw("same");
+  // R3->Draw("same");
   R4->Draw("same");
   la->SetTextSize(0.03);
   la->DrawLatexNDC(0.21,0.92,"#font[62]{CMS }#scale[0.8]{#font[52]{Preliminary}}");
@@ -1579,12 +1586,13 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   
 
   li->SetLineStyle(7);
-  li->DrawLine(80,1,300,1);
+  li->DrawLine(80,1,200,1);
   TLegend *leg3 = new TLegend(0.62,0.75,0.85,0.88);
+  leg3->SetFillStyle(0);
   leg3->SetBorderSize(0);
   leg3->SetTextSize(0.028);
-  leg3->AddEntry(R2,"PbPb 30-90%","p");
-  leg3->AddEntry(R3,"PbPb 10-30%","p");
+  // leg3->AddEntry(R2,"PbPb 30-90%","p");
+  // leg3->AddEntry(R3,"PbPb 10-30%","p");
   leg3->AddEntry(R4,"PbPb 0-10%","p");
   leg3->Draw();
 
@@ -1624,6 +1632,6 @@ void fraction_plot_3CentBins(bool do_mu5 = 0,
   // bFracRatioSave->Close();
 
 
-  
+
   
 }

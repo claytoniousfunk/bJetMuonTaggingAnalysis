@@ -16,23 +16,30 @@ void bPurityCalculator_projectableTemplates_3CentBins(){
   // double jetPtAxisEdges[N_jetPtAxisEdges] = {120,130,140,150,170,200,300};
   // const int N_jetPtAxisEdges = 10;
   // double jetPtAxisEdges[N_jetPtAxisEdges] = {80,85,90,100,110,120,130,150,200,300};
-  // const int N_jetPtAxisEdges = 14;
-  // double jetPtAxisEdges[N_jetPtAxisEdges] = {80,85,90,95,100,105,110,120,130,140,150,170,200,300};
+  // const int N_jetPtAxisEdges = 13;
+  // double jetPtAxisEdges[N_jetPtAxisEdges] = {80,85,90,95,100,105,110,120,130,140,150,170,200};
 
   // const int N_jetPtAxisEdges = 8;
   // double jetPtAxisEdges[N_jetPtAxisEdges] = {80,85,90,100,120,150,200,500};
 
-  // const int N_jetPtAxisEdges = 9;
-  // double jetPtAxisEdges[N_jetPtAxisEdges] = {80,85,90,95,100,105,110,130,200};
+  // const int N_jetPtAxisEdges = 11;
+  // double jetPtAxisEdges[N_jetPtAxisEdges] = {80,85,90,95,100,105,110,130,150,170,200};
 
   // const int N_jetPtAxisEdges = 3;
   // double jetPtAxisEdges[N_jetPtAxisEdges] = {120,150,200};
 
-  // const int N_jetPtAxisEdges = 6;
-  // double jetPtAxisEdges[N_jetPtAxisEdges] = {80,90,100,120,150,200};
+  const int N_jetPtAxisEdges = 6;
+  double jetPtAxisEdges[N_jetPtAxisEdges] = {80,90,100,120,150,200};
 
-  const int N_jetPtAxisEdges = 5;
-  double jetPtAxisEdges[N_jetPtAxisEdges] = {80,100,120,150,200};
+  // const int N_jetPtAxisEdges = 5;
+  // double jetPtAxisEdges[N_jetPtAxisEdges] = {80,100,120,150,200};
+
+  // const int N_jetPtAxisEdges = 10;
+  // double jetPtAxisEdges[N_jetPtAxisEdges] = {100,110,120,130,140,150,170,200,250,300};
+
+  // const int N_jetPtAxisEdges = 4;
+  // double jetPtAxisEdges[N_jetPtAxisEdges] = {100,120,150,200};
+
   
   double jetPtCenters[N_jetPtAxisEdges-1];
   double jetPtWidths[N_jetPtAxisEdges-1];
@@ -71,15 +78,15 @@ void bPurityCalculator_projectableTemplates_3CentBins(){
   double pTrel_fit_high = 5.0;
 
   double c_multiplier = 1.0;
-  double bGS_multiplier = 1.0;
+  double bGS_multiplier = 1.2;
 
   int do_JER_smear = 0;
   int do_JEU_up = 0;
   int do_JEU_down = 0;
 
-  int do_bJetEnergyShift = 0;
+  int do_bJetEnergyShift = 2; // centrality shift... prob should rename
 
-  string output_file_string = Form("../../rootFiles/bPurityResults/final/bPurityResults_DATA-%i_mergeB-%i_mergeC-%i_pTrel-%1.1fto%1.1f_cMult-%1.1f_bMult-%1.1f_JERsmear-%i_JEUShiftUp-%i_JEUShiftDown-%i_bJetEnergyShift-%i.root",do_data,do_mergeB,do_mergeC,pTrel_fit_low,pTrel_fit_high,c_multiplier,bGS_multiplier,do_JER_smear,do_JEU_up,do_JEU_down,do_bJetEnergyShift);
+  string output_file_string = Form("../../rootFiles/bPurityResults/latest/bPurityResults_DATA-%i_mergeB-%i_mergeC-%i_pTrel-%1.1fto%1.1f_cMult-%1.1f_bMult-%1.1f_JERsmear-%i_JEUShiftUp-%i_JEUShiftDown-%i_bJetEnergyShift-%i.root",do_data,do_mergeB,do_mergeC,pTrel_fit_low,pTrel_fit_high,c_multiplier,bGS_multiplier,do_JER_smear,do_JEU_up,do_JEU_down,do_bJetEnergyShift);
 
   cout << output_file_string.c_str() << endl;
 

@@ -1,7 +1,101 @@
-#+title: Analysis workflow
+#+title: workflow document
 
-* Making MC
+The purpose of this document is to outline the general workflow required to complete this analysis.
 
-I have created approx 43M events in PYTHIA+HYDJET to supplement the existing MC (for light-jets). The code and instructions on MC creation are in the ~MC_production~ repo.
+* Scans of the data
+
+* Raw scans of the MC
+
+First we complete raw scans of the MC.  These scans only have pThat weight applied.  We will use the distributions from these scans to derive the vz reweight factors (we will do hiBin later).
 
 
+* Random cone study in PYTHIA+HYDJET -> i.e. derive hiBin shift
+
+See which centrality definition best describes the data.  Sets the shift in the hiBin MC distribution.
+
+Use minimum bias data.  Use low-pThat region (15 < pThat < 20) of PYTHIA+HYDJET (to get primarily background tracks).
+
+Have developed the code for analyzing the random cones in ~src/randomCone/~ directory.
+
+Run the following:
+
+1. To measure ~nTrk~ distributions:
+
+#+begin_src sh
+
+  root -l nTrkRandomCone.C
+
+#+end_src   
+
+2. To measure ~pt~ distributions:
+
+#+begin_src sh
+
+  root -l ptRandomCone.C
+
+#+end_src   
+
+Presented in May 19 UIC group meeting: [[/home/clayton/Documents/nuclear/GroupMeeting/2025/2025-05-19.pdf][link]]
+
+Results:
+- nTrk aligns best for hiBinShift = 10
+- pT aligns best for hiBinShift = 4
+- To keep coherence with other analyses, we will stick with hiBinShift = 10
+
+** Latest scans
+
+*** DiJet
+~/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_pThat-20_mu12_pTmu-14_tight_hiBinShift-10_jetTrkMaxFilter_removeHYDJETjet0p45.root~
+
+*** DrippingTap
+~/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_batch1_pThat-20_mu12_pTmu-14_tight_hiBinShift-10_jetTrkMaxFilter_removeHYDJETjet0p45.root~
+~/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_batch2_pThat-20_mu12_pTmu-14_tight_hiBinShift-10_jetTrkMaxFilter_removeHYDJETjet0p45.root~
+
+* Derive vz reweights (PYTHIA vs. pp, PYTHIA+HYDJET vs. PbPb)
+
+
+We need to run the hiBin plot & reweight to get the fit function:
+- Go to the ~src/plots/vz~ directory.
+- Run the following:
+
+#+begin_src sh
+  root -l plot_and_reweight_vz.C
+#+end_src
+
+Uploaded new hiBin parameters (from full MC sample, hiBinShift = 10).
+Commit: b243852
+
+* Derive hiBin reweight (after apply hiBin shift)
+
+Next we derive the reweight function from the DATA/MC ratio of the hiBin distribution for events with a mu-tagged-jet.
+
+We need to run the hiBin plot & reweight to get the fit function:
+- Go to the ~src/plots/hiBin~ directory.
+- Run the following:
+
+#+begin_src sh
+  root -l plot_and_reweight_hiBin.C
+#+end_src
+
+Uploaded new hiBin parameters (from full MC sample, hiBinShift = 10).
+Commit: ee64019
+
+* Measure JES/JER for both mu-tagged and inclusive jets in PYTHIA & PYTHIA+HYDJET
+
+* Quantify the difference between mu-tagged & incl. jets JES/JER
+
+* Smear the inclusive jets by the JER difference
+
+* Subtract the JES difference from incl jets
+
+* Derive selection-correction factors (mu-tag, mu-reco, mu-trig) for b-jets for PYTHIA & PYTHIA+HYDJET
+
+* Fit templates and extract b-jet spectra
+
+* Apply correction factors
+
+* Scale by event normalization
+
+* divide normalized & corrected b-jet spectra by the JES/JER corrected incl-jet spectra
+
+* Get the inclusive b-jet fraction

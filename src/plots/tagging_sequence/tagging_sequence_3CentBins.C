@@ -23,6 +23,7 @@ void tagging_sequence_3CentBins(bool do_pp = 1,
 
 
   TString input_PYTHIA, input_PYTHIA_EnergyShift, input_PYTHIA_prime, input_PYTHIA_inclJets, input_PYTHIA_inclJets_ResolutionSmear;
+  TString input_PYTHIAHYDJET_prime, input_PYTHIAHYDJET_EnergyShift;
   TString input_pp_SingleMuon;
   TString input_pp_MinBias;
   TString input_PYTHIAHYDJET, input_PYTHIAHYDJET_inclJets, input_PYTHIAHYDJET_inclJets_ResolutionSmear;
@@ -63,8 +64,10 @@ void tagging_sequence_3CentBins(bool do_pp = 1,
     input_PYTHIA_inclJets = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_mu12_response_pThat-15_inclJets.root";
     input_PYTHIA_inclJets_ResolutionSmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/official/PYTHIA_mu12_response_pThat-15_inclJets_doJERCorrection.root";
     input_PYTHIAHYDJET = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/fineCentBins/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates.root";
-    input_PYTHIAHYDJET_inclJets = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PH_DiJet_pTjet-5_pThat-15_response.root";
-    input_PYTHIAHYDJET_inclJets_ResolutionSmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/platinum/PH_DiJet_pTjet-5_pThat-15_response_doJERCorrection.root";
+    input_PYTHIAHYDJET_inclJets = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/response/PH_DiJet_pTjet-5_pThat-20_hiBinShift-10_removeHYDJETjet0p45_response_3CentBins_2025-06-19.root";
+    input_PYTHIAHYDJET_inclJets_ResolutionSmear = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/response/PH_DiJet_pTjet-5_pThat-20_hiBinShift-10_removeHYDJETjet0p45_response_3CentBins_JERCorrection_2025-06-19.root";
+    input_PYTHIAHYDJET_prime = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/response/PH_DiJet_pTjet-5_pThat-20_hiBinShift-10_removeHYDJETjet0p45_response_3CentBins_muTaggedJets_2025-06-20.root";
+    input_PYTHIAHYDJET_EnergyShift = "/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/response/PH_DiJet_pTjet-5_pThat-20_hiBinShift-10_removeHYDJETjet0p45_response_3CentBins_muTaggedJets_BJetNeutrinoEnergyShift_2025-06-20.root";
 
   }
   else{};
@@ -85,8 +88,10 @@ void tagging_sequence_3CentBins(bool do_pp = 1,
   }
   else if(do_C1 || do_C2 || do_C3){
     f_py = TFile::Open(input_PYTHIAHYDJET);
-    f_pyp = TFile::Open(input_PYTHIA_prime);
-    f_pyE = TFile::Open(input_PYTHIA_EnergyShift);
+    f_pyp = TFile::Open(input_PYTHIAHYDJET_prime);
+    f_pyE = TFile::Open(input_PYTHIAHYDJET_EnergyShift);
+    //f_pyp = TFile::Open(input_PYTHIA_prime);
+    //f_pyE = TFile::Open(input_PYTHIA_EnergyShift);
     f_pyi = TFile::Open(input_PYTHIA_inclJets);
     f_phi = TFile::Open(input_PYTHIAHYDJET_inclJets);
     f_phr = TFile::Open(input_PYTHIAHYDJET_inclJets_ResolutionSmear);
@@ -123,39 +128,44 @@ void tagging_sequence_3CentBins(bool do_pp = 1,
   f_py->GetObject(Form("h_inclRecoJetPt_inclGenMuonTag_flavor%s",centrality_identifier.c_str()),H_genMuTag);
   f_py->GetObject(Form("h_inclRecoJetPt_matchedRecoMuonTag_flavor%s",centrality_identifier.c_str()),H_matchedRecoMuTag);
   f_py->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor%s",centrality_identifier.c_str()),H_trig);
-  f_pyp->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_trigp);
-  f_pyE->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_shift);
+ 
 
-  if(do_C3){
-    f_py->GetObject(Form("h_inclGenJetPt_flavor%s",centrality_add_identifier.c_str()),HH_inclGen);
-    f_py->GetObject(Form("h_inclRecoJetPt_flavor%s",centrality_add_identifier.c_str()),HH_inclReco);
-    f_py->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_flavor%s",centrality_add_identifier.c_str()),HH_inclMuTag);
-    f_py->GetObject(Form("h_inclRecoJetPt_inclGenMuonTag_flavor%s",centrality_add_identifier.c_str()),HH_genMuTag);
-    f_py->GetObject(Form("h_inclRecoJetPt_matchedRecoMuonTag_flavor%s",centrality_add_identifier.c_str()),HH_matchedRecoMuTag);
-    f_py->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor%s",centrality_add_identifier.c_str()),HH_trig);
+  // if(!do_pp){
+  //   f_py->GetObject(Form("h_inclGenJetPt_flavor%s",centrality_add_identifier.c_str()),HH_inclGen);
+  //   f_py->GetObject(Form("h_inclRecoJetPt_flavor%s",centrality_add_identifier.c_str()),HH_inclReco);
+  //   f_py->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_flavor%s",centrality_add_identifier.c_str()),HH_inclMuTag);
+  //   f_py->GetObject(Form("h_inclRecoJetPt_inclGenMuonTag_flavor%s",centrality_add_identifier.c_str()),HH_genMuTag);
+  //   f_py->GetObject(Form("h_inclRecoJetPt_matchedRecoMuonTag_flavor%s",centrality_add_identifier.c_str()),HH_matchedRecoMuTag);
+  //   f_py->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor%s",centrality_add_identifier.c_str()),HH_trig);
 
-    H_inclGen->Add(HH_inclGen);
-    H_inclReco->Add(HH_inclReco);
-    H_inclMuTag->Add(HH_inclMuTag);
-    H_genMuTag->Add(HH_genMuTag);
-    H_matchedRecoMuTag->Add(HH_matchedRecoMuTag);
-    H_trig->Add(HH_trig);
+    // H_inclGen->Add(HH_inclGen);
+    // H_inclReco->Add(HH_inclReco);
+    // H_inclMuTag->Add(HH_inclMuTag);
+    // H_genMuTag->Add(HH_genMuTag);
+    // H_matchedRecoMuTag->Add(HH_matchedRecoMuTag);
+    // H_trig->Add(HH_trig);
     
     //f_pyp->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_trigp);
     //f_pyE->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_shift);
 
-  }
+  // }
 
   
   if(do_pp){
     f_pyi->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_i);
     f_pyr->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_r);
+    f_pyp->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_trigp);
+    f_pyE->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_shift);
   }
   else{
-    // f_phi->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",centrality_identifier.c_str()),H_i);
-    // f_phr->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",centrality_identifier.c_str()),H_r);
+    //f_phi->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",centrality_identifier.c_str()),H_i);
+    //f_phr->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",centrality_identifier.c_str()),H_r);
     f_pyi->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_i);
     f_pyr->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_r);
+    f_pyp->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",centrality_identifier.c_str()),H_trigp);
+    f_pyE->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",centrality_identifier.c_str()),H_shift);
+    //f_pyp->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_trigp);
+    //f_pyp->GetObject(Form("h_matchedRecoJetPt_genJetPt_bJets%s",""),H_shift);
   }
 
   //f_pyp->GetObject(Form("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor%s",""),H_trigp);

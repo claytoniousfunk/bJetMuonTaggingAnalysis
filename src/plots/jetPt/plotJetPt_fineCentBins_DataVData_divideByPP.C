@@ -28,15 +28,17 @@ void plotJetPt_fineCentBins_DataVData_divideByPP(bool isPP = 1,
 
 
 
-  f1 = TFile::Open(goldenFile_pp_SingleMuon_mu12_newJetBins);
-  f2 = TFile::Open(goldenFile_pp_MinBias_mu12_newJetBins);
+  f1 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/final/pp_SingleMuon_mu12_tight_pTmu-14_projectableTemplates.root");
+  //f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/latest/pp_MinBias_mu12_pTmu-14_tight_jetTrkMaxFilter_2025-10-15.root");
+  f2 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/latest/pp_HighEGJet_Jet60HLT_mu12_pTmu-14_tight_jetTrkMaxFilter_2025-10-24.root");
      
 
 
 
     
-  f3 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/final/PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates.root");
-  f4 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/final/PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates.root");
+  f3 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/latest/PbPb_SingleMuon_scan_mu12_tight_pTmu-14_hiHFcut_fineCentBins_projectableTemplates_2025-05-28.root");
+  //f4 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/latest/PbPb_MinBias_scan_mu12_tight_pTmu-14_hiHFcut_2025-10-16.root");
+  f4 = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/latest/PbPb_HardProbes_Jet60HLT_mu12_tight_pTmu-14_hiHFcut_2025-10-27.root");
      
 
 
@@ -70,25 +72,47 @@ void plotJetPt_fineCentBins_DataVData_divideByPP(bool isPP = 1,
   // }
   // else{};
 
+  // if(isPP){
+  //   f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h1);
+  //   f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);
+  // }
+  // else if(isC4){
+  //   f3->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C4",h1);
+  //   f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);
+  // }
+  // else if(isC3){
+  //   f3->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C3",h1);
+  //   f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);
+  // }
+  // else if(isC2){
+  //   f3->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C2",h1);
+  //   f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);
+  // }
+  // else if(isC1){
+  //   f3->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C1",h1);
+  //   f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);   
+  // }
+  // else{};
+
   if(isPP){
-    f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h1);
-    f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);
+    f2->GetObject("h_inclRecoJetPt",h1);
+    f2->GetObject("h_inclRecoJetPt",h2);
   }
   else if(isC4){
-    f3->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C4",h1);
-    f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);
+    f4->GetObject("h_inclRecoJetPt_C4",h1);
+    f2->GetObject("h_inclRecoJetPt",h2);
   }
   else if(isC3){
-    f3->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C3",h1);
-    f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);
+    f4->GetObject("h_inclRecoJetPt_C3",h1);
+    f2->GetObject("h_inclRecoJetPt",h2);
   }
   else if(isC2){
-    f3->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C2",h1);
-    f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);
+    f4->GetObject("h_inclRecoJetPt_C2",h1);
+    f2->GetObject("h_inclRecoJetPt",h2);
   }
   else if(isC1){
-    f3->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_C1",h1);
-    f1->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn",h2);   
+    f4->GetObject("h_inclRecoJetPt_C1",h1);
+    f2->GetObject("h_inclRecoJetPt",h2);   
   }
   else{};
 

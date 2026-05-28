@@ -45,7 +45,7 @@ void bPurityCalculator(){
 
   
   double pTrel_fit_low  = 0.0;
-  double pTrel_fit_high = 3.0;
+  double pTrel_fit_high = 5.0;
 
   double c_multiplier = 1.0;
   double bGS_multiplier = 1.2;
@@ -188,8 +188,8 @@ void bPurityCalculator(){
 
 
   m->Add(g0);
-  //m->Add(g1);
-  //m->Add(g2);
+  m->Add(g1);
+  m->Add(g2);
  
 
   m->GetYaxis()->SetTitleSize(0.06);

@@ -33,27 +33,35 @@ void setErrorsToZero(TH1D *h){
 }
 
 
-void stylizeHistograms(TH1D *h0, TH1D *h1, TH1D *h2, TH1D *h3){
+void stylizeHistograms(TH1D *h0, TH1D *h1, TH1D *h2, TH1D *h3, TH1D *h4){
 
   double lw  = 2;
-  double ms = 1.4;
+  double ms = 2;
   
   h0->SetLineColor(kBlack);
   h0->SetMarkerColor(kBlack);
   h0->SetLineWidth(lw);
   h0->SetMarkerSize(ms);
-  h0->SetMarkerStyle(20);
+  h0->SetMarkerStyle(24);
   h0->SetStats(0);
   h0->SetTitle("");
 
-  h3->SetLineColor(kRed-4);
-  h3->SetMarkerColor(kRed-4);
+  h4->SetLineColor(kBlack);
+  h4->SetMarkerColor(kBlack);
+  h4->SetLineWidth(lw);
+  h4->SetMarkerSize(ms);
+  h4->SetMarkerStyle(33);
+  h4->SetStats(0);
+  h4->SetTitle("");
+
+  h3->SetLineColor(kBlue-4);
+  h3->SetMarkerColor(kBlue-4);
   h3->SetLineWidth(lw);
   h3->SetMarkerSize(ms);
   h3->SetMarkerStyle(21);
   h3->SetStats(0);
   h3->SetTitle("");
-
+  
   h2->SetLineColor(kGreen+2);
   h2->SetMarkerColor(kGreen+2);
   h2->SetLineWidth(lw);
@@ -62,8 +70,8 @@ void stylizeHistograms(TH1D *h0, TH1D *h1, TH1D *h2, TH1D *h3){
   h2->SetStats(0);
   h2->SetTitle("");
 
-  h1->SetLineColor(kMagenta-9);
-  h1->SetMarkerColor(kMagenta-9);
+  h1->SetLineColor(kRed-4);
+  h1->SetMarkerColor(kRed-4);
   h1->SetLineWidth(lw);
   h1->SetMarkerSize(ms);
   h1->SetMarkerStyle(47);
@@ -81,11 +89,12 @@ void newFractionCalculation_MC(){
   
   // load bPurity information
 
-  TFile *file_bPurity = TFile::Open("../../rootFiles/bPurityResults/final/bPurityResults_DATA-0_mergeB-0_mergeC-0_pTrel-0.0to5.0_cMult-1.0_bMult-1.0_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0_bJetEnergyShift-0.root");
+  TFile *file_bPurity = TFile::Open("../../rootFiles/bPurityResults/latest/bPurityResults_DATA-0_mergeB-0_mergeC-0_pTrel-0.0to5.0_cMult-1.0_bMult-1.0_JERsmear-0_JEUShiftUp-0_JEUShiftDown-0_bJetEnergyShift-0.root");
   
-  TH1D *bPurity_muTag_muTrig_pp, *bPurity_muTag_muTrig_C3, *bPurity_muTag_muTrig_C2, *bPurity_muTag_muTrig_C1;
+  TH1D *bPurity_muTag_muTrig_pp, *bPurity_muTag_muTrig_C4, *bPurity_muTag_muTrig_C3, *bPurity_muTag_muTrig_C2, *bPurity_muTag_muTrig_C1;
   
   file_bPurity->GetObject("bFracResults_pp",bPurity_muTag_muTrig_pp);
+  file_bPurity->GetObject("bFracResults_C4",bPurity_muTag_muTrig_C4);
   file_bPurity->GetObject("bFracResults_C3",bPurity_muTag_muTrig_C3);
   file_bPurity->GetObject("bFracResults_C2",bPurity_muTag_muTrig_C2);
   file_bPurity->GetObject("bFracResults_C1",bPurity_muTag_muTrig_C1);
@@ -94,11 +103,13 @@ void newFractionCalculation_MC(){
   // load correction factors information
   
   TFile *file_corrFactors_pp = TFile::Open("../../rootFiles/correctionFactors/correctionFactors_pp.root");
+  TFile *file_corrFactors_C4 = TFile::Open("../../rootFiles/correctionFactors/correctionFactors_C4.root");
   TFile *file_corrFactors_C3 = TFile::Open("../../rootFiles/correctionFactors/correctionFactors_C3.root");
   TFile *file_corrFactors_C2 = TFile::Open("../../rootFiles/correctionFactors/correctionFactors_C2.root");
   TFile *file_corrFactors_C1 = TFile::Open("../../rootFiles/correctionFactors/correctionFactors_C1.root");
 
   TH1D *corrFactor_1_pp, *corrFactor_2_pp, *corrFactor_3_pp, *corrFactor_3d_pp;
+  TH1D *corrFactor_1_C4, *corrFactor_2_C4, *corrFactor_3_C4, *corrFactor_3d_C4;
   TH1D *corrFactor_1_C3, *corrFactor_2_C3, *corrFactor_3_C3, *corrFactor_3d_C3;
   TH1D *corrFactor_1_C2, *corrFactor_2_C2, *corrFactor_3_C2, *corrFactor_3d_C2;
   TH1D *corrFactor_1_C1, *corrFactor_2_C1, *corrFactor_3_C1, *corrFactor_3d_C1;
@@ -108,6 +119,11 @@ void newFractionCalculation_MC(){
   file_corrFactors_pp->GetObject("corrFactor_3_pp",corrFactor_3_pp);
   file_corrFactors_pp->GetObject("corrFactor_3_data_pp",corrFactor_3d_pp);
 
+  file_corrFactors_C4->GetObject("corrFactor_1_C4",corrFactor_1_C4);
+  file_corrFactors_C4->GetObject("corrFactor_2_C4",corrFactor_2_C4);
+  file_corrFactors_C4->GetObject("corrFactor_3_C4",corrFactor_3_C4);
+  file_corrFactors_C4->GetObject("corrFactor_3_data_C4",corrFactor_3d_C4);
+  
   file_corrFactors_C3->GetObject("corrFactor_1_C3",corrFactor_1_C3);
   file_corrFactors_C3->GetObject("corrFactor_2_C3",corrFactor_2_C3);
   file_corrFactors_C3->GetObject("corrFactor_3_C3",corrFactor_3_C3);
@@ -129,6 +145,11 @@ void newFractionCalculation_MC(){
   setErrorsToZero(corrFactor_3_pp);
   setErrorsToZero(corrFactor_3d_pp);
 
+  setErrorsToZero(corrFactor_1_C4);
+  setErrorsToZero(corrFactor_2_C4);
+  setErrorsToZero(corrFactor_3_C4);
+  setErrorsToZero(corrFactor_3d_C4);
+
   setErrorsToZero(corrFactor_1_C3);
   setErrorsToZero(corrFactor_2_C3);
   setErrorsToZero(corrFactor_3_C3);
@@ -147,12 +168,14 @@ void newFractionCalculation_MC(){
 
   // load spectra
  
-  TFile *file_PY_DiJet = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/final/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-15_removeHYDJETjet_jetTrkMaxFilter_vzReweight_jetPtReweight_dRReweight_projectableTemplates.root");
+  // TFile *file_PY_DiJet = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/latest/PYTHIA_DiJet_withGS_mu12_tight_pTmu-14_pThat-20_removeHYDJETjet0p45_jetTrkMaxFilter_vzReweight_jetPtReweight_projectableTemplates_2025-06-17.root");
  
   // TFile *file_PH_DiJet = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/fineCentBins/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_weightCut0p005_fineCentBins_projectableTemplates.root");
 
-  TFile *file_PH_DiJet = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/final/allTemplates/jetPtReweight/PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_removeHYDJETjet_jetTrkMaxFilter_vzReweight_hiBinReweight_jetPtReweight_fineCentBins_projectableTemplates_allTemplates.root");
+  // TFile *file_PH_DiJet = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_pThat-20_mu12_pTmu-14_tight_hiBinReweight_hiBinShift-10_jetTrkMaxFilter_removeHYDJETjet0p45_2025-6-2.root");
 
+  TFile *file_PY_DiJet = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/latest/PYTHIA_DiJet_pThat-30_mu12_pTmu-15_tight_mu12TriggerEfficiencyCorrection_vzReweight_jetTrkMaxFilter_removeHYDJETjet0p35CutOnGen_2026-2-11.root");
+  TFile *file_PH_DiJet = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/PYTHIAHYDJET_DiJet_pThat-30_mu12_pTmu-15_tight_vzReweight_hiBinReweight_hiBinShift-10_leadingXjetDumpFilter_jetTrkMaxFilter_removeHYDJETjet0p35CutOnGen_WDecayFilter_2026-1-14.root");
   
   
   TH2D *H_jetPt_muTag_muTrig_pp, *H_jetPt_muTag_muTrig_C4, *H_jetPt_muTag_muTrig_C3, *H_jetPt_muTag_muTrig_C2, *H_jetPt_muTag_muTrig_C1;
@@ -165,6 +188,11 @@ void newFractionCalculation_MC(){
   TH1D *h_bGSJetPt_muTag_muTrig_pp, *h_bGSJetPt_muTag_muTrig_C4, *h_bGSJetPt_muTag_muTrig_C3, *h_bGSJetPt_muTag_muTrig_C2, *h_bGSJetPt_muTag_muTrig_C1;
   
   TH1D *h_jetPt_pp, *h_jetPt_C4, *h_jetPt_C3, *h_jetPt_C2, *h_jetPt_C1;
+  TH1D *h_bJetPt_pp, *h_bJetPt_C4, *h_bJetPt_C3, *h_bJetPt_C2, *h_bJetPt_C1;
+  TH1D *h_bbarJetPt_pp, *h_bbarJetPt_C4, *h_bbarJetPt_C3, *h_bbarJetPt_C2, *h_bbarJetPt_C1;
+  TH1D *h_bGSJetPt_pp, *h_bGSJetPt_C4, *h_bGSJetPt_C3, *h_bGSJetPt_C2, *h_bGSJetPt_C1;
+  TH1D *r_bJetPt_pp, *r_bJetPt_C4, *r_bJetPt_C3, *r_bJetPt_C2, *r_bJetPt_C1;
+
   
   TH1D *getEventNumber_muTag_muTrig_pp, *getEventNumber_muTag_muTrig_C4, *getEventNumber_muTag_muTrig_C3, *getEventNumber_muTag_muTrig_C2, *getEventNumber_muTag_muTrig_C1;
   TH1D *getEventNumber_muTag_pp_SingleMuon, *getEventNumber_muTag_C4_SingleMuon, *getEventNumber_muTag_C3_SingleMuon, *getEventNumber_muTag_C2_SingleMuon, *getEventNumber_muTag_C1_SingleMuon;
@@ -176,7 +204,7 @@ void newFractionCalculation_MC(){
 
   // jet spectra histograms
   file_PY_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor",H_jetPt_muTag_muTrig_pp);
-v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4",H_jetPt_muTag_muTrig_C4);
+  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4",H_jetPt_muTag_muTrig_C4);
   file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C3",H_jetPt_muTag_muTrig_C3);
   file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C2",H_jetPt_muTag_muTrig_C2);
   file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C1",H_jetPt_muTag_muTrig_C1);
@@ -222,6 +250,8 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
 
   h_bJetPt_muTag_muTrig_C1->Add(h_bbarJetPt_muTag_muTrig_C1);
   h_bJetPt_muTag_muTrig_C1->Add(h_bGSJetPt_muTag_muTrig_C1);
+
+  
   
 
   file_PY_DiJet->GetObject("h_inclRecoJetPt_flavor",H_jetPt_pp);
@@ -236,7 +266,53 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   h_jetPt_C2 = (TH1D*) H_jetPt_C2->ProjectionX("h_jetPt_C2",binFinder->FindBin(-5+ss),binFinder->FindBin(22-ss));
   h_jetPt_C1 = (TH1D*) H_jetPt_C1->ProjectionX("h_jetPt_C1",binFinder->FindBin(-5+ss),binFinder->FindBin(22-ss));
 
+  h_bJetPt_pp = (TH1D*) H_jetPt_pp->ProjectionX("h_bJetPt_pp",binFinder->FindBin(5+ss),binFinder->FindBin(6-ss));
+  h_bJetPt_C4 = (TH1D*) H_jetPt_C4->ProjectionX("h_bJetPt_C4",binFinder->FindBin(5+ss),binFinder->FindBin(6-ss));
+  h_bJetPt_C3 = (TH1D*) H_jetPt_C3->ProjectionX("h_bJetPt_C3",binFinder->FindBin(5+ss),binFinder->FindBin(6-ss));
+  h_bJetPt_C2 = (TH1D*) H_jetPt_C2->ProjectionX("h_bJetPt_C2",binFinder->FindBin(5+ss),binFinder->FindBin(6-ss));
+  h_bJetPt_C1 = (TH1D*) H_jetPt_C1->ProjectionX("h_bJetPt_C1",binFinder->FindBin(5+ss),binFinder->FindBin(6-ss));
 
+  h_bbarJetPt_pp = (TH1D*) H_jetPt_pp->ProjectionX("h_bbarJetPt_pp",binFinder->FindBin(-5+ss),binFinder->FindBin(-4-ss));
+  h_bbarJetPt_C4 = (TH1D*) H_jetPt_C4->ProjectionX("h_bbarJetPt_C4",binFinder->FindBin(-5+ss),binFinder->FindBin(-4-ss));
+  h_bbarJetPt_C3 = (TH1D*) H_jetPt_C3->ProjectionX("h_bbarJetPt_C3",binFinder->FindBin(-5+ss),binFinder->FindBin(-4-ss));
+  h_bbarJetPt_C2 = (TH1D*) H_jetPt_C2->ProjectionX("h_bbarJetPt_C2",binFinder->FindBin(-5+ss),binFinder->FindBin(-4-ss));
+  h_bbarJetPt_C1 = (TH1D*) H_jetPt_C1->ProjectionX("h_bbarJetPt_C1",binFinder->FindBin(-5+ss),binFinder->FindBin(-4-ss));
+
+  h_bGSJetPt_pp = (TH1D*) H_jetPt_pp->ProjectionX("h_bGSJetPt_pp",binFinder->FindBin(17+ss),binFinder->FindBin(18-ss));
+  h_bGSJetPt_C4 = (TH1D*) H_jetPt_C4->ProjectionX("h_bGSJetPt_C4",binFinder->FindBin(17+ss),binFinder->FindBin(18-ss));
+  h_bGSJetPt_C3 = (TH1D*) H_jetPt_C3->ProjectionX("h_bGSJetPt_C3",binFinder->FindBin(17+ss),binFinder->FindBin(18-ss));
+  h_bGSJetPt_C2 = (TH1D*) H_jetPt_C2->ProjectionX("h_bGSJetPt_C2",binFinder->FindBin(17+ss),binFinder->FindBin(18-ss));
+  h_bGSJetPt_C1 = (TH1D*) H_jetPt_C1->ProjectionX("h_bGSJetPt_C1",binFinder->FindBin(17+ss),binFinder->FindBin(18-ss));
+
+  h_bJetPt_pp->Add(h_bbarJetPt_pp);
+  h_bJetPt_pp->Add(h_bGSJetPt_pp);
+
+  h_bJetPt_C4->Add(h_bbarJetPt_C4);
+  h_bJetPt_C4->Add(h_bGSJetPt_C4);
+
+  h_bJetPt_C3->Add(h_bbarJetPt_C3);
+  h_bJetPt_C3->Add(h_bGSJetPt_C3);
+
+  h_bJetPt_C2->Add(h_bbarJetPt_C2);
+  h_bJetPt_C2->Add(h_bGSJetPt_C2);
+
+  h_bJetPt_C1->Add(h_bbarJetPt_C1);
+  h_bJetPt_C1->Add(h_bGSJetPt_C1);
+
+  r_bJetPt_pp = (TH1D*) h_bJetPt_pp->Clone("r_bJetPt_pp");
+  r_bJetPt_pp->Divide(h_bJetPt_pp,h_jetPt_pp,1,1,"B");
+
+  r_bJetPt_C4 = (TH1D*) h_bJetPt_C4->Clone("r_bJetPt_C4");
+  r_bJetPt_C4->Divide(h_bJetPt_C4,h_jetPt_C4,1,1,"B");
+
+  r_bJetPt_C3 = (TH1D*) h_bJetPt_C3->Clone("r_bJetPt_C3");
+  r_bJetPt_C3->Divide(h_bJetPt_C3,h_jetPt_C3,1,1,"B");
+
+  r_bJetPt_C2 = (TH1D*) h_bJetPt_C2->Clone("r_bJetPt_C2");
+  r_bJetPt_C2->Divide(h_bJetPt_C2,h_jetPt_C2,1,1,"B");
+
+  r_bJetPt_C1 = (TH1D*) h_bJetPt_C1->Clone("r_bJetPt_C1");
+  r_bJetPt_C1->Divide(h_bJetPt_C1,h_jetPt_C1,1,1,"B");
     
   // eventNumber histograms
   file_PY_DiJet->GetObject("h_vz_inclRecoMuonTag_triggerOn",getEventNumber_muTag_muTrig_pp);
@@ -257,13 +333,13 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   file_PH_DiJet->GetObject("h_vz_inclRecoMuonTag_C2",getEventNumber_muTag_C2_DiJet);
   file_PH_DiJet->GetObject("h_vz_inclRecoMuonTag_C1",getEventNumber_muTag_C1_DiJet);
 
-  file_PY_DiJet->GetObject("h_hiBin",getEventNumber_jet_pp_DiJet);
+  file_PY_DiJet->GetObject("h_vz",getEventNumber_jet_pp_DiJet);
   file_PH_DiJet->GetObject("h_hiBin",getEventNumber_jet_C4_DiJet);
   file_PH_DiJet->GetObject("h_hiBin",getEventNumber_jet_C3_DiJet);
   file_PH_DiJet->GetObject("h_hiBin",getEventNumber_jet_C2_DiJet);
   file_PH_DiJet->GetObject("h_hiBin",getEventNumber_jet_C1_DiJet);
 
-  file_PY_DiJet->GetObject("h_hiBin",getEventNumber_jet_pp_MinBias);
+  file_PY_DiJet->GetObject("h_vz",getEventNumber_jet_pp_MinBias);
   file_PH_DiJet->GetObject("h_hiBin",getEventNumber_jet_C4_MinBias);
   file_PH_DiJet->GetObject("h_hiBin",getEventNumber_jet_C3_MinBias);
   file_PH_DiJet->GetObject("h_hiBin",getEventNumber_jet_C2_MinBias);
@@ -280,97 +356,115 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   
   
   // merge centralities
-  h_jetPt_muTag_muTrig_C3->Add(h_jetPt_muTag_muTrig_C4);
-  h_bJetPt_muTag_muTrig_C3->Add(h_bJetPt_muTag_muTrig_C4);
-  h_jetPt_C3->Add(h_jetPt_C4);
+  // h_jetPt_muTag_muTrig_C3->Add(h_jetPt_muTag_muTrig_C4);
+  // h_bJetPt_muTag_muTrig_C3->Add(h_bJetPt_muTag_muTrig_C4);
+  // h_jetPt_C3->Add(h_jetPt_C4);
 
-  getEventNumber_muTag_muTrig_C3->Add(getEventNumber_muTag_muTrig_C4);
-  getEventNumber_muTag_C3_SingleMuon->Add(getEventNumber_muTag_C4_SingleMuon);
-  getEventNumber_muTag_C3_DiJet->Add(getEventNumber_muTag_C4_DiJet);
-  getEventNumber_jet_C3_DiJet->Add(getEventNumber_jet_C4_DiJet);
-  getEventNumber_jet_C3_MinBias->Add(getEventNumber_jet_C4_MinBias);
-  getEventNumber_C3_MinBias->Add(getEventNumber_C4_MinBias);
+  // getEventNumber_muTag_muTrig_C3->Add(getEventNumber_muTag_muTrig_C4);
+  // getEventNumber_muTag_C3_SingleMuon->Add(getEventNumber_muTag_C4_SingleMuon);
+  // getEventNumber_muTag_C3_DiJet->Add(getEventNumber_muTag_C4_DiJet);
+  // getEventNumber_jet_C3_DiJet->Add(getEventNumber_jet_C4_DiJet);
+  // getEventNumber_jet_C3_MinBias->Add(getEventNumber_jet_C4_MinBias);
+  // getEventNumber_C3_MinBias->Add(getEventNumber_C4_MinBias);
   
 
   // get event numbers
-  double N_evt_muTag_muTrig_pp, N_evt_muTag_muTrig_C3, N_evt_muTag_muTrig_C2, N_evt_muTag_muTrig_C1;
-  double N_evt_muTag_pp_SingleMuon, N_evt_muTag_C3_SingleMuon, N_evt_muTag_C2_SingleMuon, N_evt_muTag_C1_SingleMuon;
-  double N_evt_muTag_pp_DiJet, N_evt_muTag_C3_DiJet, N_evt_muTag_C2_DiJet, N_evt_muTag_C1_DiJet;
-  double N_evt_jet_pp_DiJet, N_evt_jet_C3_DiJet, N_evt_jet_C2_DiJet, N_evt_jet_C1_DiJet;
-  double N_evt_jet_pp_MinBias, N_evt_jet_C3_MinBias, N_evt_jet_C2_MinBias, N_evt_jet_C1_MinBias;
-  double N_evt_pp_MinBias, N_evt_C3_MinBias, N_evt_C2_MinBias, N_evt_C1_MinBias;
+  double N_evt_muTag_muTrig_pp, N_evt_muTag_muTrig_C4, N_evt_muTag_muTrig_C3, N_evt_muTag_muTrig_C2, N_evt_muTag_muTrig_C1;
+  double N_evt_muTag_pp_SingleMuon, N_evt_muTag_C4_SingleMuon, N_evt_muTag_C3_SingleMuon, N_evt_muTag_C2_SingleMuon, N_evt_muTag_C1_SingleMuon;
+  double N_evt_muTag_pp_DiJet, N_evt_muTag_C4_DiJet, N_evt_muTag_C3_DiJet, N_evt_muTag_C2_DiJet, N_evt_muTag_C1_DiJet;
+  double N_evt_jet_pp_DiJet, N_evt_jet_C4_DiJet, N_evt_jet_C3_DiJet, N_evt_jet_C2_DiJet, N_evt_jet_C1_DiJet;
+  double N_evt_jet_pp_MinBias, N_evt_jet_C4_MinBias, N_evt_jet_C3_MinBias, N_evt_jet_C2_MinBias, N_evt_jet_C1_MinBias;
+  double N_evt_pp_MinBias, N_evt_C4_MinBias, N_evt_C3_MinBias, N_evt_C2_MinBias, N_evt_C1_MinBias;
   
 
-  // N_evt_muTag_muTrig_pp = getEventNumber_muTag_muTrig_pp->Integral();
-  // N_evt_muTag_muTrig_C3 = getEventNumber_muTag_muTrig_C3->Integral();
-  // N_evt_muTag_muTrig_C2 = getEventNumber_muTag_muTrig_C2->Integral();
-  // N_evt_muTag_muTrig_C1 = getEventNumber_muTag_muTrig_C1->Integral();
+  N_evt_muTag_muTrig_pp = getEventNumber_muTag_muTrig_pp->Integral();
+  N_evt_muTag_muTrig_C4 = getEventNumber_muTag_muTrig_C4->Integral();
+  N_evt_muTag_muTrig_C3 = getEventNumber_muTag_muTrig_C3->Integral();
+  N_evt_muTag_muTrig_C2 = getEventNumber_muTag_muTrig_C2->Integral();
+  N_evt_muTag_muTrig_C1 = getEventNumber_muTag_muTrig_C1->Integral();
 
-  // //cout << "N_evt_muTag_muTrig_pp = " << N_evt_muTag_muTrig_pp << endl;
+  //cout << "N_evt_muTag_muTrig_pp = " << N_evt_muTag_muTrig_pp << endl;
 
-  // N_evt_muTag_pp_SingleMuon = getEventNumber_muTag_pp_SingleMuon->Integral();
-  // N_evt_muTag_C3_SingleMuon = getEventNumber_muTag_C3_SingleMuon->Integral();
-  // N_evt_muTag_C2_SingleMuon = getEventNumber_muTag_C2_SingleMuon->Integral();
-  // N_evt_muTag_C1_SingleMuon = getEventNumber_muTag_C1_SingleMuon->Integral();
+  N_evt_muTag_pp_SingleMuon = getEventNumber_muTag_pp_SingleMuon->Integral();
+  N_evt_muTag_C4_SingleMuon = getEventNumber_muTag_C4_SingleMuon->Integral();
+  N_evt_muTag_C3_SingleMuon = getEventNumber_muTag_C3_SingleMuon->Integral();
+  N_evt_muTag_C2_SingleMuon = getEventNumber_muTag_C2_SingleMuon->Integral();
+  N_evt_muTag_C1_SingleMuon = getEventNumber_muTag_C1_SingleMuon->Integral();
 
-  // //cout << "N_evt_muTag_pp_SingleMuon = " << N_evt_muTag_pp_SingleMuon << endl;
+  //cout << "N_evt_muTag_pp_SingleMuon = " << N_evt_muTag_pp_SingleMuon << endl;
 
-  // N_evt_muTag_pp_DiJet = getEventNumber_muTag_pp_DiJet->Integral();
-  // N_evt_muTag_C3_DiJet = getEventNumber_muTag_C3_DiJet->Integral();
-  // N_evt_muTag_C2_DiJet = getEventNumber_muTag_C2_DiJet->Integral();
-  // N_evt_muTag_C1_DiJet = getEventNumber_muTag_C1_DiJet->Integral();
+  N_evt_muTag_pp_DiJet = getEventNumber_muTag_pp_DiJet->Integral();
+  N_evt_muTag_C4_DiJet = getEventNumber_muTag_C4_DiJet->Integral();
+  N_evt_muTag_C3_DiJet = getEventNumber_muTag_C3_DiJet->Integral();
+  N_evt_muTag_C2_DiJet = getEventNumber_muTag_C2_DiJet->Integral();
+  N_evt_muTag_C1_DiJet = getEventNumber_muTag_C1_DiJet->Integral();
 
-  // //cout << "N_evt_muTag_pp_DiJet = " << N_evt_muTag_pp_DiJet << endl;
+  //cout << "N_evt_muTag_pp_DiJet = " << N_evt_muTag_pp_DiJet << endl;
 
-  // N_evt_jet_pp_DiJet = getEventNumber_jet_pp_DiJet->Integral();
-  // N_evt_jet_C3_DiJet = integrate(getEventNumber_jet_C3_DiJet,60,180); 
-  // N_evt_jet_C2_DiJet = integrate(getEventNumber_jet_C2_DiJet,20,60);
-  // N_evt_jet_C1_DiJet = integrate(getEventNumber_jet_C1_DiJet,0,20);
+  N_evt_jet_pp_DiJet = getEventNumber_jet_pp_DiJet->Integral();
+  N_evt_jet_C4_DiJet = integrate(getEventNumber_jet_C4_DiJet,100,180);
+  N_evt_jet_C3_DiJet = integrate(getEventNumber_jet_C3_DiJet,60,100); 
+  N_evt_jet_C2_DiJet = integrate(getEventNumber_jet_C2_DiJet,20,60);
+  N_evt_jet_C1_DiJet = integrate(getEventNumber_jet_C1_DiJet,0,20);
 
-  // //cout << "N_evt_jet_pp_DiJet = " << N_evt_jet_pp_DiJet << endl;
-  // //cout << "N_evt_jet_C3_DiJet = " << N_evt_jet_C3_DiJet << endl;
+  //cout << "N_evt_jet_pp_DiJet = " << N_evt_jet_pp_DiJet << endl;
+  //cout << "N_evt_jet_C3_DiJet = " << N_evt_jet_C3_DiJet << endl;
 
-  // N_evt_jet_pp_MinBias = getEventNumber_jet_pp_MinBias->Integral();
-  // N_evt_jet_C3_MinBias = integrate(getEventNumber_jet_C3_MinBias,60,180);
-  // N_evt_jet_C2_MinBias = integrate(getEventNumber_jet_C2_MinBias,20,60);
-  // N_evt_jet_C1_MinBias = integrate(getEventNumber_jet_C1_MinBias,0,20);
+  N_evt_jet_pp_MinBias = getEventNumber_jet_pp_MinBias->Integral();
+  N_evt_jet_C4_MinBias = integrate(getEventNumber_jet_C4_MinBias,100,180);
+  N_evt_jet_C3_MinBias = integrate(getEventNumber_jet_C3_MinBias,60,100);
+  N_evt_jet_C2_MinBias = integrate(getEventNumber_jet_C2_MinBias,20,60);
+  N_evt_jet_C1_MinBias = integrate(getEventNumber_jet_C1_MinBias,0,20);
 
-  // //cout << "N_evt_jet_pp_MinBias = " << N_evt_jet_pp_MinBias << endl;
+  //cout << "N_evt_jet_pp_MinBias = " << N_evt_jet_pp_MinBias << endl;
 
   N_evt_pp_MinBias = getEventNumber_pp_MinBias->Integral();
+  N_evt_C4_MinBias = getEventNumber_C4_MinBias->Integral();
   N_evt_C3_MinBias = getEventNumber_C3_MinBias->Integral();
   N_evt_C2_MinBias = getEventNumber_C2_MinBias->Integral();
   N_evt_C1_MinBias = getEventNumber_C1_MinBias->Integral();
 
   // //cout << "N_evt_pp_MinBias = " << N_evt_pp_MinBias << endl;
 
-  // double f_evt_jet_pp, f_evt_jet_C3, f_evt_jet_C2, f_evt_jet_C1;
-  // double f_evt_muTag_pp, f_evt_muTag_C3, f_evt_muTag_C2, f_evt_muTag_C1;
-  // double f_evt_muTrig_pp, f_evt_muTrig_C3, f_evt_muTrig_C2, f_evt_muTrig_C1;
+  double f_evt_jet_pp, f_evt_jet_C4, f_evt_jet_C3, f_evt_jet_C2, f_evt_jet_C1;
+  double f_evt_muTag_pp, f_evt_muTag_C4, f_evt_muTag_C3, f_evt_muTag_C2, f_evt_muTag_C1;
+  double f_evt_muTrig_pp, f_evt_muTrig_C4, f_evt_muTrig_C3, f_evt_muTrig_C2, f_evt_muTrig_C1;
 
-  // f_evt_jet_pp = N_evt_jet_pp_MinBias / N_evt_pp_MinBias;
-  // f_evt_jet_C3 = N_evt_jet_C3_MinBias / N_evt_C3_MinBias;
-  // f_evt_jet_C2 = N_evt_jet_C2_MinBias / N_evt_C2_MinBias;
-  // f_evt_jet_C1 = N_evt_jet_C1_MinBias / N_evt_C1_MinBias;
+  f_evt_jet_pp = N_evt_jet_pp_MinBias / N_evt_pp_MinBias;
+  f_evt_jet_C4 = N_evt_jet_C4_MinBias / N_evt_C4_MinBias;
+  f_evt_jet_C3 = N_evt_jet_C3_MinBias / N_evt_C3_MinBias;
+  f_evt_jet_C2 = N_evt_jet_C2_MinBias / N_evt_C2_MinBias;
+  f_evt_jet_C1 = N_evt_jet_C1_MinBias / N_evt_C1_MinBias;
 
-  // f_evt_muTag_pp = N_evt_muTag_pp_DiJet / N_evt_jet_pp_DiJet;
-  // f_evt_muTag_C3 = N_evt_muTag_C3_DiJet / N_evt_jet_C3_DiJet;
-  // f_evt_muTag_C2 = N_evt_muTag_C2_DiJet / N_evt_jet_C2_DiJet;
-  // f_evt_muTag_C1 = N_evt_muTag_C1_DiJet / N_evt_jet_C1_DiJet;
+  f_evt_muTag_pp = N_evt_muTag_pp_DiJet / N_evt_jet_pp_DiJet;
+  f_evt_muTag_C4 = N_evt_muTag_C4_DiJet / N_evt_jet_C4_DiJet; 
+  f_evt_muTag_C3 = N_evt_muTag_C3_DiJet / N_evt_jet_C3_DiJet;
+  f_evt_muTag_C2 = N_evt_muTag_C2_DiJet / N_evt_jet_C2_DiJet;
+  f_evt_muTag_C1 = N_evt_muTag_C1_DiJet / N_evt_jet_C1_DiJet;
 
-  // f_evt_muTrig_pp = N_evt_muTag_muTrig_pp / N_evt_muTag_pp_SingleMuon;
-  // f_evt_muTrig_C3 = N_evt_muTag_muTrig_C3 / N_evt_muTag_C3_SingleMuon;
-  // f_evt_muTrig_C2 = N_evt_muTag_muTrig_C2 / N_evt_muTag_C2_SingleMuon;
-  // f_evt_muTrig_C1 = N_evt_muTag_muTrig_C1 / N_evt_muTag_C1_SingleMuon;
+  f_evt_muTrig_pp = N_evt_muTag_muTrig_pp / N_evt_muTag_pp_SingleMuon;
+  f_evt_muTrig_C4 = N_evt_muTag_muTrig_C4 / N_evt_muTag_C4_SingleMuon;
+  f_evt_muTrig_C3 = N_evt_muTag_muTrig_C3 / N_evt_muTag_C3_SingleMuon;
+  f_evt_muTrig_C2 = N_evt_muTag_muTrig_C2 / N_evt_muTag_C2_SingleMuon;
+  f_evt_muTrig_C1 = N_evt_muTag_muTrig_C1 / N_evt_muTag_C1_SingleMuon;
   
- 
+  cout << "f_evt_jet_C4 = " << f_evt_jet_C4 << endl;
+  cout << "f_evt_muTag_C4 = " << f_evt_muTag_C4 << endl;
+  cout << "f_evt_muTrig_C4 = " << f_evt_muTrig_C4 << endl;
+
+  cout << "f_evt_jet_C3 = " << f_evt_jet_C3 << endl;
+  cout << "f_evt_muTag_C3 = " << f_evt_muTag_C3 << endl;
+  cout << "f_evt_muTrig_C3 = " << f_evt_muTrig_C3 << endl;
   
   // rebin
-  const int N_edge = 6;
-  double newAxis[N_edge] = {80,90,100,120,150,200};
+  const int N_edge = 8;
+  double newAxis[N_edge] = {80,90,100,120,150,200,300,500};
 
   h_jetPt_muTag_muTrig_pp = (TH1D*) h_jetPt_muTag_muTrig_pp->Rebin(N_edge-1,"h_jetPt_muTag_muTrig_pp",newAxis);
   divideByBinwidth(h_jetPt_muTag_muTrig_pp);
+
+  h_jetPt_muTag_muTrig_C4 = (TH1D*) h_jetPt_muTag_muTrig_C4->Rebin(N_edge-1,"h_jetPt_muTag_muTrig_C4",newAxis);
+  divideByBinwidth(h_jetPt_muTag_muTrig_C4);
 
   h_jetPt_muTag_muTrig_C3 = (TH1D*) h_jetPt_muTag_muTrig_C3->Rebin(N_edge-1,"h_jetPt_muTag_muTrig_C3",newAxis);
   divideByBinwidth(h_jetPt_muTag_muTrig_C3);
@@ -384,6 +478,9 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   h_bJetPt_muTag_muTrig_pp = (TH1D*) h_bJetPt_muTag_muTrig_pp->Rebin(N_edge-1,"h_bJetPt_muTag_muTrig_pp",newAxis);
   divideByBinwidth(h_bJetPt_muTag_muTrig_pp);
 
+  h_bJetPt_muTag_muTrig_C4 = (TH1D*) h_bJetPt_muTag_muTrig_C4->Rebin(N_edge-1,"h_bJetPt_muTag_muTrig_C4",newAxis);
+  divideByBinwidth(h_bJetPt_muTag_muTrig_C4);
+
   h_bJetPt_muTag_muTrig_C3 = (TH1D*) h_bJetPt_muTag_muTrig_C3->Rebin(N_edge-1,"h_bJetPt_muTag_muTrig_C3",newAxis);
   divideByBinwidth(h_bJetPt_muTag_muTrig_C3);
 
@@ -396,6 +493,9 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   h_jetPt_pp = (TH1D*) h_jetPt_pp->Rebin(N_edge-1,"h_jetPt_pp",newAxis);
   divideByBinwidth(h_jetPt_pp);
 
+  h_jetPt_C4 = (TH1D*) h_jetPt_C4->Rebin(N_edge-1,"h_jetPt_C4",newAxis);
+  divideByBinwidth(h_jetPt_C4);
+
   h_jetPt_C3 = (TH1D*) h_jetPt_C3->Rebin(N_edge-1,"h_jetPt_C3",newAxis);
   divideByBinwidth(h_jetPt_C3);
 
@@ -407,16 +507,16 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
 
   
 
-  stylizeHistograms(h_jetPt_muTag_muTrig_pp, h_jetPt_muTag_muTrig_C1, h_jetPt_muTag_muTrig_C2, h_jetPt_muTag_muTrig_C3);
-  stylizeHistograms(h_bJetPt_muTag_muTrig_pp, h_bJetPt_muTag_muTrig_C1, h_bJetPt_muTag_muTrig_C2, h_bJetPt_muTag_muTrig_C3);
-  stylizeHistograms(h_jetPt_pp, h_jetPt_C1, h_jetPt_C2, h_jetPt_C3);
+  stylizeHistograms(h_jetPt_muTag_muTrig_pp, h_jetPt_muTag_muTrig_C1, h_jetPt_muTag_muTrig_C2, h_jetPt_muTag_muTrig_C3, h_jetPt_muTag_muTrig_C4);
+  stylizeHistograms(h_bJetPt_muTag_muTrig_pp, h_bJetPt_muTag_muTrig_C1, h_bJetPt_muTag_muTrig_C2, h_bJetPt_muTag_muTrig_C3, h_bJetPt_muTag_muTrig_C4);
+  stylizeHistograms(h_jetPt_pp, h_jetPt_C1, h_jetPt_C2, h_jetPt_C3, h_jetPt_C4);
 
 
   // scale by 1/N_evt
-  h_jetPt_muTag_muTrig_pp->Scale(1./N_evt_pp_MinBias);
-  h_jetPt_muTag_muTrig_C3->Scale(1./N_evt_C3_MinBias);
-  h_jetPt_muTag_muTrig_C2->Scale(1./N_evt_C2_MinBias);
-  h_jetPt_muTag_muTrig_C1->Scale(1./N_evt_C1_MinBias);
+  // h_jetPt_muTag_muTrig_pp->Scale(1./N_evt_pp_MinBias);
+  // h_jetPt_muTag_muTrig_C3->Scale(1./N_evt_C3_MinBias);
+  // h_jetPt_muTag_muTrig_C2->Scale(1./N_evt_C2_MinBias);
+  // h_jetPt_muTag_muTrig_C1->Scale(1./N_evt_C1_MinBias);
 
   // h_bJetPt_muTag_muTrig_pp->Scale(1./N_evt_pp_MinBias);
   // h_bJetPt_muTag_muTrig_C3->Scale(1./N_evt_C3_MinBias);
@@ -424,22 +524,24 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   // h_bJetPt_muTag_muTrig_C1->Scale(1./N_evt_C1_MinBias);
   
   // scale by interal for now
-  selfNormalize(h_bJetPt_muTag_muTrig_pp);
-  selfNormalize(h_bJetPt_muTag_muTrig_C3);
-  selfNormalize(h_bJetPt_muTag_muTrig_C2);
-  selfNormalize(h_bJetPt_muTag_muTrig_C1);
+  // selfNormalize(h_bJetPt_muTag_muTrig_pp);
+  // selfNormalize(h_bJetPt_muTag_muTrig_C3);
+  // selfNormalize(h_bJetPt_muTag_muTrig_C2);
+  // selfNormalize(h_bJetPt_muTag_muTrig_C1);
 
   
   h_jetPt_pp->Scale(1./N_evt_pp_MinBias);
+  h_jetPt_C4->Scale(1./N_evt_C4_MinBias);
   h_jetPt_C3->Scale(1./N_evt_C3_MinBias);
   h_jetPt_C2->Scale(1./N_evt_C2_MinBias);
   h_jetPt_C1->Scale(1./N_evt_C1_MinBias);
 
   TLegend *leg = new TLegend(0.6,0.7,0.88,0.88);
   leg->SetBorderSize(0);
-  leg->SetTextSize(0.04);
+  leg->SetTextSize(0.03);
   leg->AddEntry(h_jetPt_pp,"PYTHIA","p");
-  leg->AddEntry(h_jetPt_C3,"PYTHIA+HYDJET 30-90%","p");
+  leg->AddEntry(h_jetPt_C4,"PYTHIA+HYDJET 50-80%","p");
+  leg->AddEntry(h_jetPt_C3,"PYTHIA+HYDJET 30-50%","p");
   leg->AddEntry(h_jetPt_C2,"PYTHIA+HYDJET 10-30%","p");
   leg->AddEntry(h_jetPt_C1,"PYTHIA+HYDJET 0-10%","p");
   
@@ -456,12 +558,14 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   h_jetPt_muTag_muTrig_pp->GetXaxis()->SetTitle("Jet #it{p}_{T} [GeV]");
   h_jetPt_muTag_muTrig_pp->GetYaxis()->SetRangeUser(0,0.06);
   h_jetPt_muTag_muTrig_pp->Draw();
+  h_jetPt_muTag_muTrig_C4->Draw("same");
   h_jetPt_muTag_muTrig_C3->Draw("same");
   h_jetPt_muTag_muTrig_C2->Draw("same");
   h_jetPt_muTag_muTrig_C1->Draw("same");
   canv_muTag_muTrig->SaveAs("./figures/spectra_muTag_muTrig.pdf");
   file_MuTagMuTrigJetSpectra = (TFile*) TFile::Open("./rootFiles/MuTagMuTrigJetSpectra/MC/histograms_MuTagMuTrigJetSpectra.root","recreate");
   h_jetPt_muTag_muTrig_pp->Write();
+  h_jetPt_muTag_muTrig_C4->Write();
   h_jetPt_muTag_muTrig_C3->Write();
   h_jetPt_muTag_muTrig_C2->Write();
   h_jetPt_muTag_muTrig_C1->Write();
@@ -498,6 +602,7 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   h_bJetPt_muTag_muTrig_pp->GetXaxis()->SetTitle("Jet #it{p}_{T} [GeV]");
   //h_bJetPt_muTag_muTrig_pp->GetYaxis()->SetRangeUser(0,0.06);
   h_bJetPt_muTag_muTrig_pp->Draw();
+  h_bJetPt_muTag_muTrig_C4->Draw("same");
   h_bJetPt_muTag_muTrig_C3->Draw("same");
   h_bJetPt_muTag_muTrig_C2->Draw("same");
   h_bJetPt_muTag_muTrig_C1->Draw("same");
@@ -505,6 +610,7 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   //  bPurity_muTag_muTrig_pp->Draw();
   file_MuTagMuTrigBJetSpectra = (TFile*) TFile::Open("./rootFiles/MuTagMuTrigBJetSpectra/MC/histograms_MuTagMuTrigBJetSpectra.root","recreate");
   h_bJetPt_muTag_muTrig_pp->Write();
+  h_bJetPt_muTag_muTrig_C4->Write();
   h_bJetPt_muTag_muTrig_C3->Write();
   h_bJetPt_muTag_muTrig_C2->Write();
   h_bJetPt_muTag_muTrig_C1->Write();
@@ -513,32 +619,38 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   
 
   // apply the correction factors
-  TH1D *h_bJetPt_corr_pp, *h_bJetPt_corr_C3, *h_bJetPt_corr_C2, *h_bJetPt_corr_C1;
+  TH1D *h_bJetPt_corr_pp, *h_bJetPt_corr_C4, *h_bJetPt_corr_C3, *h_bJetPt_corr_C2, *h_bJetPt_corr_C1;
 
   h_bJetPt_corr_pp = (TH1D*) h_bJetPt_muTag_muTrig_pp->Clone("h_bJetPt_corr_pp");
+  h_bJetPt_corr_C4 = (TH1D*) h_bJetPt_muTag_muTrig_C4->Clone("h_bJetPt_corr_C4");
   h_bJetPt_corr_C3 = (TH1D*) h_bJetPt_muTag_muTrig_C3->Clone("h_bJetPt_corr_C3");
   h_bJetPt_corr_C2 = (TH1D*) h_bJetPt_muTag_muTrig_C2->Clone("h_bJetPt_corr_C2");
   h_bJetPt_corr_C1 = (TH1D*) h_bJetPt_muTag_muTrig_C1->Clone("h_bJetPt_corr_C1");
 
-  // h_bJetPt_corr_pp->Divide(corrFactor_3d_pp);
-  // h_bJetPt_corr_pp->Divide(corrFactor_2_pp);
-  // h_bJetPt_corr_pp->Divide(corrFactor_1_pp);
-  // h_bJetPt_corr_pp->Scale(f_evt_jet_pp * f_evt_muTag_pp * f_evt_muTrig_pp);
+  h_bJetPt_corr_pp->Divide(corrFactor_3_pp);
+  h_bJetPt_corr_pp->Divide(corrFactor_2_pp);
+  h_bJetPt_corr_pp->Divide(corrFactor_1_pp);
+  h_bJetPt_corr_pp->Scale(f_evt_jet_pp * f_evt_muTag_pp * f_evt_muTrig_pp / (1.*N_evt_muTag_muTrig_pp));
 
-  // h_bJetPt_corr_C3->Divide(corrFactor_3d_C3);
-  // h_bJetPt_corr_C3->Divide(corrFactor_2_C3);
-  // h_bJetPt_corr_C3->Divide(corrFactor_1_C3);
-  // h_bJetPt_corr_C3->Scale(f_evt_jet_C3 * f_evt_muTag_C3 * f_evt_muTrig_C3);
+  h_bJetPt_corr_C4->Divide(corrFactor_3_C4);
+  h_bJetPt_corr_C4->Divide(corrFactor_2_C4);
+  h_bJetPt_corr_C4->Divide(corrFactor_1_C4);
+  h_bJetPt_corr_C4->Scale(f_evt_jet_C4 * f_evt_muTag_C4 * f_evt_muTrig_C4 / (1.*N_evt_muTag_muTrig_C4));
 
-  // h_bJetPt_corr_C2->Divide(corrFactor_3d_C2);
-  // h_bJetPt_corr_C2->Divide(corrFactor_2_C2);
-  // h_bJetPt_corr_C2->Divide(corrFactor_1_C2);
-  // h_bJetPt_corr_C2->Scale(f_evt_jet_C2 * f_evt_muTag_C2 * f_evt_muTrig_C2);
+  h_bJetPt_corr_C3->Divide(corrFactor_3_C3);
+  h_bJetPt_corr_C3->Divide(corrFactor_2_C3);
+  h_bJetPt_corr_C3->Divide(corrFactor_1_C3);
+  h_bJetPt_corr_C3->Scale(f_evt_jet_C3 * f_evt_muTag_C3 * f_evt_muTrig_C3 / (1.*N_evt_muTag_muTrig_C3));
 
-  // h_bJetPt_corr_C1->Divide(corrFactor_3d_C1);
-  // h_bJetPt_corr_C1->Divide(corrFactor_2_C1);
-  // h_bJetPt_corr_C1->Divide(corrFactor_1_C1);
-  // h_bJetPt_corr_C1->Scale(f_evt_jet_C1 * f_evt_muTag_C1 * f_evt_muTrig_C1);
+  h_bJetPt_corr_C2->Divide(corrFactor_3_C2);
+  h_bJetPt_corr_C2->Divide(corrFactor_2_C2);
+  h_bJetPt_corr_C2->Divide(corrFactor_1_C2);
+  h_bJetPt_corr_C2->Scale(f_evt_jet_C2 * f_evt_muTag_C2 * f_evt_muTrig_C2 / (1.*N_evt_muTag_muTrig_C2));
+
+  h_bJetPt_corr_C1->Divide(corrFactor_3_C1);
+  h_bJetPt_corr_C1->Divide(corrFactor_2_C1);
+  h_bJetPt_corr_C1->Divide(corrFactor_1_C1);
+  h_bJetPt_corr_C1->Scale(f_evt_jet_C1 * f_evt_muTag_C1 * f_evt_muTrig_C1 / (1.*N_evt_muTag_muTrig_C1));
 
   TCanvas *canv_bJet_corr = new TCanvas("canv_bJet_corr","canv_bJet_corr",700,700);
   canv_bJet_corr->cd();
@@ -552,12 +664,14 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   h_bJetPt_corr_pp->GetXaxis()->SetTitle("Jet #it{p}_{T} [GeV]");
   h_bJetPt_corr_pp->GetYaxis()->SetRangeUser(2e-10,5e-3);
   h_bJetPt_corr_pp->Draw();
+  h_bJetPt_corr_C4->Draw("same");
   h_bJetPt_corr_C3->Draw("same");
   h_bJetPt_corr_C2->Draw("same");
   h_bJetPt_corr_C1->Draw("same");
   canv_bJet_corr->SaveAs("./figures/spectra_bJet_corr.pdf");
   file_CorrectedBJetSpectra = (TFile*) TFile::Open("./rootFiles/CorrectedBJetSpectra/MC/histograms_CorrectedBJetSpectra.root","recreate");
   h_bJetPt_corr_pp->Write();
+  h_bJetPt_corr_C4->Write();
   h_bJetPt_corr_C3->Write();
   h_bJetPt_corr_C2->Write();
   h_bJetPt_corr_C1->Write();
@@ -577,17 +691,22 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   h_jetPt_pp->GetXaxis()->SetTitle("Jet #it{p}_{T} [GeV]");
   h_jetPt_pp->GetYaxis()->SetRangeUser(2e-10,5e-3);
   h_jetPt_pp->Draw();
+  h_jetPt_C4->Draw("same");
   h_jetPt_C3->Draw("same");
   h_jetPt_C2->Draw("same");
   h_jetPt_C1->Draw("same");
   canv_MinBias->SaveAs("./figures/spectra_MinBias.pdf");
   file_MinBiasJetSpectra = (TFile*) TFile::Open("./rootFiles/MinBiasJetSpectra/MC/histograms_MinBiasJetSpectra.root","recreate");
   h_jetPt_pp->Write();
+  h_jetPt_C4->Write();
   h_jetPt_C3->Write();
   h_jetPt_C2->Write();
   h_jetPt_C1->Write();
   file_MinBiasJetSpectra->Close();
 
+
+  TH1D *bFraction_C4 = (TH1D*) h_bJetPt_corr_C4->Clone("bFraction_C4");
+  bFraction_C4->Divide(h_bJetPt_corr_C4,h_bJetPt_corr_pp,1,1,"");
 
   TH1D *bFraction_C3 = (TH1D*) h_bJetPt_corr_C3->Clone("bFraction_C3");
   bFraction_C3->Divide(h_bJetPt_corr_C3,h_bJetPt_corr_pp,1,1,"");
@@ -597,6 +716,9 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
 
   TH1D *bFraction_C1 = (TH1D*) h_bJetPt_corr_C1->Clone("bFraction_C1");
   bFraction_C1->Divide(h_bJetPt_corr_C1,h_bJetPt_corr_pp,1,1,"");
+
+  TH1D *inclFraction_C4 = (TH1D*) h_jetPt_C4->Clone("inclFraction_C4");
+  inclFraction_C4->Divide(h_jetPt_C4,h_jetPt_pp,1,1,"");
 
   TH1D *inclFraction_C3 = (TH1D*) h_jetPt_C3->Clone("inclFraction_C3");
   inclFraction_C3->Divide(h_jetPt_C3,h_jetPt_pp,1,1,"");
@@ -609,6 +731,9 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
 
   TH1D *inclBFraction_pp = (TH1D*) h_bJetPt_corr_pp->Clone("inclBFraction_pp");
   inclBFraction_pp->Divide(h_bJetPt_corr_pp,h_jetPt_pp,1,1,"");
+
+  TH1D *inclBFraction_C4 = (TH1D*) h_bJetPt_corr_C4->Clone("inclBFraction_C4");
+  inclBFraction_C4->Divide(h_bJetPt_corr_C4,h_jetPt_C4,1,1,"");
 
   TH1D *inclBFraction_C3 = (TH1D*) h_bJetPt_corr_C3->Clone("inclBFraction_C3");
   inclBFraction_C3->Divide(h_bJetPt_corr_C3,h_jetPt_C3,1,1,"");
@@ -629,15 +754,19 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   pad1_inclBFraction->cd();
   inclBFraction_pp->GetYaxis()->SetTitle("Inclusive #it{b}-jet fraction");
   inclBFraction_pp->GetXaxis()->SetTitle("Jet #it{p}_{T} [GeV]");
-  inclBFraction_pp->GetYaxis()->SetRangeUser(0,0.15);
+  inclBFraction_pp->GetYaxis()->SetRangeUser(0,0.1);
+  inclBFraction_pp->GetXaxis()->SetRangeUser(90,300);
   inclBFraction_pp->Draw();
+  inclBFraction_C4->Draw("same");
   inclBFraction_C3->Draw("same");
   inclBFraction_C2->Draw("same");
   inclBFraction_C1->Draw("same");
+  r_bJetPt_pp->Draw("same hist l");
   leg->Draw();
   canv_inclBFraction->SaveAs("./figures/inclusiveBJetFraction.pdf");
   file_InclusiveBJetFraction = (TFile*) TFile::Open("./rootFiles/InclusiveBJetFraction/MC/histograms_InclusiveBJetFraction.root","recreate");
   inclBFraction_pp->Write();
+  inclBFraction_C4->Write();
   inclBFraction_C3->Write();
   inclBFraction_C2->Write();
   inclBFraction_C1->Write();
@@ -657,8 +786,10 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   bFraction_C3->Draw();
   bFraction_C2->Draw("same");
   bFraction_C1->Draw("same");
+  bFraction_C4->Draw("same");
   canv_bFraction->SaveAs("./figures/bJetPbPbToPP.pdf");
   file_BJetPbPbToPP = (TFile*) TFile::Open("./rootFiles/BJetPbPbToPP/MC/histograms_BJetPbPbToPP.root","recreate");
+  bFraction_C4->Write();
   bFraction_C3->Write();
   bFraction_C2->Write();
   bFraction_C1->Write();
@@ -678,12 +809,17 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   inclFraction_C3->Draw();
   inclFraction_C2->Draw("same");
   inclFraction_C1->Draw("same");
+  inclFraction_C4->Draw("same");
   canv_inclFraction->SaveAs("./figures/inclJetPbPbToPP.pdf");
   file_InclJetPbPbToPP = (TFile*) TFile::Open("./rootFiles/InclJetPbPbToPP/MC/histograms_InclJetPbPbToPP.root","recreate");
+  inclFraction_C4->Write();
   inclFraction_C3->Write();
   inclFraction_C2->Write();
   inclFraction_C1->Write();
   file_InclJetPbPbToPP->Close();
+
+  TH1D *R_C4 = (TH1D*) bFraction_C4->Clone("R_C4");
+  R_C4->Divide(bFraction_C4,inclFraction_C4,1,1,"");
 
   TH1D *R_C3 = (TH1D*) bFraction_C3->Clone("R_C3");
   R_C3->Divide(bFraction_C3,inclFraction_C3,1,1,"");
@@ -702,14 +838,17 @@ v  file_PH_DiJet->GetObject("h_inclRecoJetPt_inclRecoMuonTag_triggerOn_flavor_C4
   pad1_R->SetBottomMargin(0.15);
   pad1_R->Draw();
   pad1_R->cd();
-  R_C3->GetYaxis()->SetTitle("R^{b-corr}(PbPb/pp) / R^{incl}(PbPb/pp)");
+  R_C3->GetYaxis()->SetTitle("f_{b}(PbPb) / f_{b}(pp)");
   R_C3->GetXaxis()->SetTitle("Jet #it{p}_{T} [GeV]");
   R_C3->GetYaxis()->SetRangeUser(0,3.2);
+  R_C3->GetXaxis()->SetRangeUser(90,300);
   R_C3->Draw();
   R_C2->Draw("same");
   R_C1->Draw("same");
+  R_C4->Draw("same");
   canv_R->SaveAs("./figures/doubleRatio.pdf");
   file_DoubleRatio = (TFile*) TFile::Open("./rootFiles/DoubleRatio/MC/histograms_DoubleRatio.root","recreate");
+  R_C4->Write();
   R_C3->Write();
   R_C2->Write();
   R_C1->Write();

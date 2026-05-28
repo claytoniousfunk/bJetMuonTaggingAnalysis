@@ -229,7 +229,7 @@ void normalize_jetPt(TH1D *h1, TH1D *h2, TH1D *h3, TH1D *h4, TH1D *h5){
 }
 
 
-void plotJetTrkMax(int j = 3){
+void plotJetTrkMax(int j = 1){
 
   TString CMSString = "#font[62]{CMS}  #font[52]{Preliminary}";
   TString energyString = "#sqrt{#it{s}} = 5.02 TeV";
@@ -240,9 +240,10 @@ void plotJetTrkMax(int j = 3){
   else if(j == 2) jetPtString = "100 < #it{p}_{T}^{jet} (GeV) < 120, |#it{#eta}^{jet}| < 1.6";
   else if(j == 3) jetPtString = "120 < #it{p}_{T}^{jet} (GeV) < 150, |#it{#eta}^{jet}| < 1.6";
   else if(j == 4) jetPtString = "150 < #it{p}_{T}^{jet} (GeV) < 200, |#it{#eta}^{jet}| < 1.6";
+  else if(j == 5) jetPtString = "200 < #it{p}_{T}^{jet} (GeV) < 300, |#it{#eta}^{jet}| < 1.6";
   else{};
 
-  TString hadronPtString = "#it{p}_{T}^{h} > 5 GeV, |#it{#eta}^{h}| < 2.0";
+  TString hadronPtString = "#it{p}_{T}^{h} > 14 GeV, |#it{#eta}^{h}| < 2.0";
 
   TLine *li = new TLine();
   TLatex *la = new TLatex();
@@ -250,12 +251,11 @@ void plotJetTrkMax(int j = 3){
   la->SetTextSize(0.045);
 
   TFile *file_pp_mc = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/jetTrkMax/PYTHIA_DiJet_jetTrkMax_jet60_pThat-15.root");
-  //TFile *file_pp_mc = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIA/obsidian/jetTrkMax/PYTHIA_DiJet_jetTrkMax_jet60_hadronPtRelReweightJ1.root");
   TFile *file_pp_data = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/pp/obsidian/jetTrkMax/pp_jetTrkMax_jet60.root");
 
-  TFile *file_PbPb_mc = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/jetTrkMax/PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_jet80_pThat-15.root");
-  //TFile *file_PbPb_mc = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/obsidian/jetTrkMax/PYTHIAHYDJET_DiJet_jetTrkMax_fineCentBins_hadronPtRelReweightJ1.root");
-  TFile *file_PbPb_data = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/obsidian/jetTrkMax/PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_fineCentBins_jet80.root");
+  TFile *file_PbPb_mc = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/jetTrkMax/PYTHIAHYDJET_DiJet_jetTrkMax_pThat-20_trkpT-14_hiBinShift-10_ultraFineCentBins_2025-07-14.root");
+  //TFile *file_PbPb_mc = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PYTHIAHYDJET/latest/jetTrkMax/PYTHIAHYDJET_DiJet_jetTrkMax_pThat-20_mu12_pTmu-14_tight_hiBinReweight_hiBinShift-10_jetTrkMaxFilter_removeHYDJETjet0p45_2025-7-25.root");
+  TFile *file_PbPb_data = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/latest/jetTrkMax/PbPb_DiJet_onlyJets_withTrackMaxInfo_partial_jetTrkMax_jet60_ultraFineCentBins_2025-07-14.root");
 
   // jetPt
   TH1D *h_jetPt_C4_mc, *h_jetPt_C4_data;
@@ -278,8 +278,8 @@ void plotJetTrkMax(int j = 3){
 
 
   // retrieve jetPt
-  file_PbPb_mc->GetObject("h_jetPt_C4",h_jetPt_C4_mc);
-  file_PbPb_data->GetObject("h_jetPt_C4",h_jetPt_C4_data);
+  file_PbPb_mc->GetObject("h_jetPt_C5",h_jetPt_C4_mc);
+  file_PbPb_data->GetObject("h_jetPt_C5",h_jetPt_C4_data);
 
   file_PbPb_mc->GetObject("h_jetPt_C3",h_jetPt_C3_mc);
   file_PbPb_data->GetObject("h_jetPt_C3",h_jetPt_C3_data);
@@ -295,8 +295,8 @@ void plotJetTrkMax(int j = 3){
   
   
   // retrieve dR
-  file_PbPb_mc->GetObject(Form("h_jetTrkMaxDR_C4J%i",j),h_dR_C4_mc);
-  file_PbPb_data->GetObject(Form("h_jetTrkMaxDR_C4J%i",j),h_dR_C4_data);
+  file_PbPb_mc->GetObject(Form("h_jetTrkMaxDR_C5J%i",j),h_dR_C4_mc);
+  file_PbPb_data->GetObject(Form("h_jetTrkMaxDR_C5J%i",j),h_dR_C4_data);
   // file_PbPb_mc->GetObject(Form("h_jetTrkMaxDR_C0J%i",j),h_dR_C4_mc);
   // file_PbPb_data->GetObject(Form("h_jetTrkMaxDR_C0J%i",j),h_dR_C4_data);
 
@@ -576,20 +576,20 @@ void plotJetTrkMax(int j = 3){
   leg_data->SetBorderSize(0);
   leg_data->SetTextSize(0.04);
   leg_data->AddEntry(h_jetPt_pp_data,"pp","p");
-  leg_data->AddEntry(h_jetPt_C4_data,"PbPb 50-90%","p");
-  leg_data->AddEntry(h_jetPt_C3_data,"PbPb 30-50%","p");
-  leg_data->AddEntry(h_jetPt_C2_data,"PbPb 10-30%","p");
-  leg_data->AddEntry(h_jetPt_C1_data,"PbPb 0-10%","p");
+  leg_data->AddEntry(h_jetPt_C4_data,"PbPb 70-80%","p");
+  // leg_data->AddEntry(h_jetPt_C3_data,"PbPb 30-50%","p");
+  // leg_data->AddEntry(h_jetPt_C2_data,"PbPb 10-30%","p");
+  // leg_data->AddEntry(h_jetPt_C1_data,"PbPb 0-10%","p");
 
   TLegend *leg_mc = new TLegend(0.6,0.3,0.89,0.6);
   leg_mc->SetFillStyle(0);
   leg_mc->SetBorderSize(0);
   leg_mc->SetTextSize(0.04);
   leg_mc->AddEntry(h_jetPt_pp_mc,"PYTHIA","p");
-  leg_mc->AddEntry(h_jetPt_C4_mc,"PYTHIA+HYDJET 50-90%","p");
-  leg_mc->AddEntry(h_jetPt_C3_mc,"PYTHIA+HYDJET 30-50%","p");
-  leg_mc->AddEntry(h_jetPt_C2_mc,"PYTHIA+HYDJET 10-30%","p");
-  leg_mc->AddEntry(h_jetPt_C1_mc,"PYTHIA+HYDJET 0-10%","p");
+  leg_mc->AddEntry(h_jetPt_C4_mc,"PYTHIA+HYDJET 70-80%","p");
+  // leg_mc->AddEntry(h_jetPt_C3_mc,"PYTHIA+HYDJET 30-50%","p");
+  // leg_mc->AddEntry(h_jetPt_C2_mc,"PYTHIA+HYDJET 10-30%","p");
+  // leg_mc->AddEntry(h_jetPt_C1_mc,"PYTHIA+HYDJET 0-10%","p");
  
 
   double subTitleSize = 0.14;
@@ -636,12 +636,12 @@ void plotJetTrkMax(int j = 3){
   h_jetPt_pp_mc->Draw("same");
   h_jetPt_C4_data->Draw("same");
   h_jetPt_C4_mc->Draw("same");
-  h_jetPt_C3_data->Draw("same");
-  h_jetPt_C3_mc->Draw("same");
-  h_jetPt_C2_data->Draw("same");
-  h_jetPt_C2_mc->Draw("same");
-  h_jetPt_C1_data->Draw("same");
-  h_jetPt_C1_mc->Draw("same");
+  // h_jetPt_C3_data->Draw("same");
+  // h_jetPt_C3_mc->Draw("same");
+  // h_jetPt_C2_data->Draw("same");
+  // h_jetPt_C2_mc->Draw("same");
+  // h_jetPt_C1_data->Draw("same");
+  // h_jetPt_C1_mc->Draw("same");
   leg_data->Draw();
   leg_mc->Draw();
   la->DrawLatexNDC(0.12,0.92,CMSString);
@@ -733,16 +733,17 @@ void plotJetTrkMax(int j = 3){
   h_dR_pp_data->GetYaxis()->SetLabelSize(0.4*subLabelSize);
   h_dR_pp_data->GetYaxis()->SetTitleOffset(0.7);
   h_dR_pp_data->GetYaxis()->SetTitle("1/#it{N} d#it{N}/d(#Delta #it{r})");
+  h_dR_pp_data->GetYaxis()->SetRangeUser(0,30);
   h_dR_pp_data->Draw();
   h_dR_pp_mc->Draw("same");
   h_dR_C4_data->Draw("same");
   h_dR_C4_mc->Draw("same");
-  h_dR_C3_data->Draw("same");
-  h_dR_C3_mc->Draw("same");
-  h_dR_C2_data->Draw("same");
-  h_dR_C2_mc->Draw("same");
-  h_dR_C1_data->Draw("same");
-  h_dR_C1_mc->Draw("same");
+  // h_dR_C3_data->Draw("same");
+  // h_dR_C3_mc->Draw("same");
+  // h_dR_C2_data->Draw("same");
+  // h_dR_C2_mc->Draw("same");
+  // h_dR_C1_data->Draw("same");
+  // h_dR_C1_mc->Draw("same");
   leg_data->Draw();
   leg_mc->Draw();
   la->DrawLatexNDC(0.12,0.92,CMSString);
@@ -753,14 +754,15 @@ void plotJetTrkMax(int j = 3){
   rm_dR_pp->GetYaxis()->SetTitle("Data / MC");
   rm_dR_pp->GetYaxis()->SetTitleSize(subTitleSize);
   rm_dR_pp->GetYaxis()->SetLabelSize(subLabelSize);
-  rm_dR_pp->GetYaxis()->SetRangeUser(0.62,1.38);
+  //rm_dR_pp->GetYaxis()->SetRangeUser(0.62,1.38);
+  rm_dR_pp->GetYaxis()->SetRangeUser(0.5,2);
   rm_dR_pp->Draw();
-  rm_dR_pp->Fit("pol1");
+  //rm_dR_pp->Fit("pol1");
   rm_dR_C4->Draw("same");
-  //rm_dR_C4->Fit("pol4");
-  rm_dR_C3->Draw("same");
-  rm_dR_C2->Draw("same");
-  rm_dR_C1->Draw("same");
+  //rm_dR_C4->Fit("pol1");
+  // rm_dR_C3->Draw("same");
+  // rm_dR_C2->Draw("same");
+  // rm_dR_C1->Draw("same");
   li->SetLineStyle(7);
   li->DrawLine(0,1,0.3,1);
   pad_dR_3->cd();
@@ -769,9 +771,9 @@ void plotJetTrkMax(int j = 3){
   r_dR_C4_data->GetYaxis()->SetLabelSize(subLabelSize);
   r_dR_C4_data->GetYaxis()->SetRangeUser(0.3,1.7);
   r_dR_C4_data->Draw();
-  r_dR_C3_data->Draw("same");
-  r_dR_C2_data->Draw("same");
-  r_dR_C1_data->Draw("same");
+  // r_dR_C3_data->Draw("same");
+  // r_dR_C2_data->Draw("same");
+  // r_dR_C1_data->Draw("same");
   li->SetLineStyle(7);
   li->DrawLine(0,1,0.3,1);
   pad_dR_4->cd();
@@ -780,9 +782,9 @@ void plotJetTrkMax(int j = 3){
   r_dR_C4_mc->GetYaxis()->SetLabelSize(subLabelSize);
   r_dR_C4_mc->GetYaxis()->SetRangeUser(0.3,1.7);
   r_dR_C4_mc->Draw();
-  r_dR_C3_mc->Draw("same");
-  r_dR_C2_mc->Draw("same");
-  r_dR_C1_mc->Draw("same");
+  // r_dR_C3_mc->Draw("same");
+  // r_dR_C2_mc->Draw("same");
+  // r_dR_C1_mc->Draw("same");
   li->SetLineStyle(7);
   li->DrawLine(0,1,0.3,1);
   pad_dR_5->cd();
@@ -794,9 +796,9 @@ void plotJetTrkMax(int j = 3){
   R_dR_C4->GetXaxis()->SetTitle("#Delta #it{r}(leading-hadron,jet)");
   R_dR_C4->GetYaxis()->SetRangeUser(0.3,1.7);
   R_dR_C4->Draw();
-  R_dR_C3->Draw("same");
-  R_dR_C2->Draw("same");
-  R_dR_C1->Draw("same");
+  // R_dR_C3->Draw("same");
+  // R_dR_C2->Draw("same");
+  // R_dR_C1->Draw("same");
   li->SetLineStyle(7);
   li->DrawLine(0,1,0.3,1);
 
