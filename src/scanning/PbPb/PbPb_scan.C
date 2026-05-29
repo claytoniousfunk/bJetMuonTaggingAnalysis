@@ -260,7 +260,7 @@ void PbPb_scan(int group = 1){
     TString suffixEdit = "";
     //TString suffixEdit = "_ultraFineCentBins";
 
-    TString output = Form("%s%s%s_ultraFineCentBins/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
+    TString output = Form("%s%s%s/PbPb_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
 
     std::cout << "output dataset = " << output << std::endl;
 
