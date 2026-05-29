@@ -1231,101 +1231,103 @@ void PbPb_scan(int group = 1){
       }
 
 
-    }
+  
 
     
 
-  } // end event loop
+    } // end event loop
 
-  h_NEvents->Fill(eventCounter);
+    h_NEvents->Fill(eventCounter);
 
  
-  delete f;
-  // WRITE
-  auto wf = TFile::Open(output,"recreate");
+    delete f;
+    // WRITE
+    auto wf = TFile::Open(output,"recreate");
 
-  h_eventsBeforeSelection->Write();
-  h_eventsAfterSelection->Write();
-  h_NEvents->Write();
-  h_hiBin->Write();
-  h_hiBin_triggerOn->Write();
-  h_hiBin_jet60->Write();
-  h_hiBin_jet80->Write();
-  h_hiBin_jet100->Write();
-  h_hiBin_jet->Write();
-  h_hiBin_inclRecoMuonTag->Write();
-  h_hiBin_inclRecoMuonTag_triggerOn->Write();
-  h_inclMuPt->Write();
-  h_nMu_triggerOn->Write();
+    h_eventsBeforeSelection->Write();
+    h_eventsAfterSelection->Write();
+    h_NEvents->Write();
+    h_hiBin->Write();
+    h_hiBin_triggerOn->Write();
+    h_hiBin_jet60->Write();
+    h_hiBin_jet80->Write();
+    h_hiBin_jet100->Write();
+    h_hiBin_jet->Write();
+    h_hiBin_inclRecoMuonTag->Write();
+    h_hiBin_inclRecoMuonTag_triggerOn->Write();
+    h_inclMuPt->Write();
+    h_nMu_triggerOn->Write();
 
-  for(int i = 0; i < NCentralityIndices; i++){
+    for(int i = 0; i < NCentralityIndices; i++){
 
-    h_NJetPerEvent[i]->Write();
-    h_NMuTaggedJetPerEvent[i]->Write();
+      h_NJetPerEvent[i]->Write();
+      h_NMuTaggedJetPerEvent[i]->Write();
     
-    h_vz[i]->Write();
-    h_vz_triggerOn[i]->Write();
-    h_vz_jet60[i]->Write();
-    h_vz_jet80[i]->Write();
-    h_vz_jet100[i]->Write();
-    h_vz_jet100_withJetAbove130[i]->Write();
-    h_vz_jet[i]->Write();
-    h_vz_inclRecoMuonTag[i]->Write();
-    h_vz_inclRecoMuonTag_triggerOn[i]->Write();
-    h_dimuonMass[i]->Write();
-    h_dimuonMass_sameSign[i]->Write();
+      h_vz[i]->Write();
+      h_vz_triggerOn[i]->Write();
+      h_vz_jet60[i]->Write();
+      h_vz_jet80[i]->Write();
+      h_vz_jet100[i]->Write();
+      h_vz_jet100_withJetAbove130[i]->Write();
+      h_vz_jet[i]->Write();
+      h_vz_inclRecoMuonTag[i]->Write();
+      h_vz_inclRecoMuonTag_triggerOn[i]->Write();
+      h_dimuonMass[i]->Write();
+      h_dimuonMass_sameSign[i]->Write();
    
-    h_inclRecoJetPt[i]->Write();
-    h_inclRecoJetEta[i]->Write();
-    h_inclRecoJetPhi[i]->Write();
-    h_inclRecoJetPt_inclRecoJetEta[i]->Write();
-    h_inclRecoJetPt_inclRecoJetPhi[i]->Write();
+      h_inclRecoJetPt[i]->Write();
+      h_inclRecoJetEta[i]->Write();
+      h_inclRecoJetPhi[i]->Write();
+      h_inclRecoJetPt_inclRecoJetEta[i]->Write();
+      h_inclRecoJetPt_inclRecoJetPhi[i]->Write();
    
-    h_inclRecoJetPt_inclRecoMuonTag[i]->Write();
-    h_inclRecoJetEta_inclRecoMuonTag[i]->Write();
-    h_inclRecoJetPhi_inclRecoMuonTag[i]->Write();
-    h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag[i]->Write();
-    h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag[i]->Write();
+      h_inclRecoJetPt_inclRecoMuonTag[i]->Write();
+      h_inclRecoJetEta_inclRecoMuonTag[i]->Write();
+      h_inclRecoJetPhi_inclRecoMuonTag[i]->Write();
+      h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag[i]->Write();
+      h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag[i]->Write();
    
-    h_inclRecoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
-    h_inclRecoJetEta_inclRecoMuonTag_triggerOn[i]->Write();
-    h_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i]->Write();
-    h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn[i]->Write();
-    h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i]->Write();
+      h_inclRecoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
+      h_inclRecoJetEta_inclRecoMuonTag_triggerOn[i]->Write();
+      h_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i]->Write();
+      h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn[i]->Write();
+      h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i]->Write();
 
-    h_mupt_jetpt[i]->Write();
-    h_muptrel_jetpt[i]->Write();
+      h_mupt_jetpt[i]->Write();
+      h_muptrel_jetpt[i]->Write();
 
-    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
-    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
-    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
-    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
-    h_muJetDr_recoJetPt[i]->Write();
-    h_Jet60HLT[i]->Write();
-    h_Jet60HLT_Prescale[i]->Write();
-    h_Jet80HLT[i]->Write();
-    h_Jet80HLT_Prescale[i]->Write();
-    h_Jet100HLT[i]->Write();
-    h_Jet100HLT_Prescale[i]->Write();
+      h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
+      h_mupt_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
+      h_mueta_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
+      h_muphi_recoJetPt_inclRecoMuonTag_triggerOn[i]->Write();
+      h_muJetDr_recoJetPt[i]->Write();
+      h_Jet60HLT[i]->Write();
+      h_Jet60HLT_Prescale[i]->Write();
+      h_Jet80HLT[i]->Write();
+      h_Jet80HLT_Prescale[i]->Write();
+      h_Jet100HLT[i]->Write();
+      h_Jet100HLT_Prescale[i]->Write();
     
     
-    for(int j = 0; j < NJetPtIndices; j++){
+      for(int j = 0; j < NJetPtIndices; j++){
 
-      h_inclRecoJetEta_inclRecoJetPhi[i][j]->Write();
-      h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[i][j]->Write();
-      h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i][j]->Write();
-      h_muPtOverJetPt[i][j]->Write();
-      h_mupt_muptrel[i][j]->Write();
+	h_inclRecoJetEta_inclRecoJetPhi[i][j]->Write();
+	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag[i][j]->Write();
+	h_inclRecoJetEta_inclRecoJetPhi_inclRecoMuonTag_triggerOn[i][j]->Write();
+	h_muPtOverJetPt[i][j]->Write();
+	h_mupt_muptrel[i][j]->Write();
      
+      }
     }
-  }
 
-  for(int j = 0; j < NJetPtIndices; j++){
-    h_muptrel_hiBin[j]->Write();
-  }
+    for(int j = 0; j < NJetPtIndices; j++){
+      h_muptrel_hiBin[j]->Write();
+    }
 
-  wf->Close();
-  return;
-  // END WRITE
+    wf->Close();
+    return;
+    // END WRITE
+
+  }
 
 }
