@@ -258,8 +258,6 @@ void stylizeHistograms(TH1D *h1,
   h1->GetYaxis()->SetTitleSize(yTitleSize);
   h2->GetYaxis()->SetTitleSize(yTitleSize);
 
-  h1->GetYaxis()->SetTitle(yTitle);
-  h2->GetYaxis()->SetTitle(yTitle);
   
 }
 
@@ -282,7 +280,10 @@ void plotJetPt_HYDJETVsMinBias(bool doC16 = true,
 			       bool doC2 = false,
 			       bool doC1 = false){
 
-  TFile *f_HYDJET = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/HYDJET/canonical/");
+  bool doPerEventNormalization = true;
+  bool doPerJetNormalization = false;
+
+  TFile *f_HYDJET = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/HYDJET/canonical/HYDJET_pThat-unweighted_mu12_pTmu-15to999_tight_hiBinShift-10_jetTrkMaxFilter_WDecayFilter_2026-5-28_ultraFineCentBins.root");
   
   TFile *f_MinBias = TFile::Open("/home/clayton/Analysis/code/bJetMuonTaggingAnalysis/rootFiles/scanningOutput/PbPb/canonical/PbPb_MinBias_mu12_pTmu-15to999_tight_jetTrkMaxFilter_WDecayFilter_2026-5-28_ultraFineCentBins.root");
 
@@ -294,7 +295,8 @@ void plotJetPt_HYDJETVsMinBias(bool doC16 = true,
 
   f_HYDJET->GetObject(Form("h_inclRecoJetPt_flavor_%s",centString.Data()),H1);
   //h1 = (TH1D*) H1->ProjectionX("h1",H1->GetYaxis()->FindBin(18.),H1->GetYaxis()->FindBin(18.));
-  h1 = (TH1D*) H1->ProjectionX("h1",H1->GetYaxis()->FindBin(0.),H1->GetYaxis()->FindBin(0.));
+  //h1 = (TH1D*) H1->ProjectionX("h1",H1->GetYaxis()->FindBin(0.),H1->GetYaxis()->FindBin(0.));
+  h1 = (TH1D*) H1->ProjectionX("h1");
   f_HYDJET->GetObject("h_hiBin",n1);
 
   f_MinBias->GetObject(Form("h_inclRecoJetPt_%s",centString.Data()),h2);
@@ -308,8 +310,18 @@ void plotJetPt_HYDJETVsMinBias(bool doC16 = true,
   
   stylizeHistograms(h1,h2,doC16,doC15,doC14,doC13,doC12,doC11,doC10,doC9,doC8,doC7,doC6,doC5,doC4,doC3,doC2,doC1);
 
-  h1->Scale(1./N1);
-  h2->Scale(1./N2);
+  if(doPerEventNormalization){
+    h1->Scale(1./N1);
+    h2->Scale(1./N2);
+    h1->GetYaxis()->SetTitle("#frac{1}{#it{N}^{evt}} #frac{d#it{N}^{jet}}{d#it{p}_{T}} [GeV^{-1}]");
+    h2->GetYaxis()->SetTitle("#frac{1}{#it{N}^{evt}} #frac{d#it{N}^{jet}}{d#it{p}_{T}} [GeV^{-1}]");
+  }
+  else if(doPerJetNormalization){
+    h1->Scale(1./h1->Integral());
+    h2->Scale(1./h2->Integral());
+    h1->GetYaxis()->SetTitle("#frac{1}{#it{N}^{jet}} #frac{d#it{N}^{jet}}{d#it{p}_{T}} [GeV^{-1}]");
+    h2->GetYaxis()->SetTitle("#frac{1}{#it{N}^{jet}} #frac{d#it{N}^{jet}}{d#it{p}_{T}} [GeV^{-1}]");
+  }
 
   TH1D *r = (TH1D*) h2->Clone("r");
   r->Divide(h2,h1,1,1,"");
