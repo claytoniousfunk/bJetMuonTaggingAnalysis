@@ -26,7 +26,7 @@ bool fillMu5 = false;
 bool fillMu7 = false;
 bool fillMu12 = true;
 // spectra alterations
-bool applyMu12TriggerEfficiencyCorrection = true;
+bool applyMu12TriggerEfficiencyCorrection = false;
 bool doJESCorrection = false;
 bool doBJetNeutrinoEnergyShift = false;
 bool doJERCorrection = false;
