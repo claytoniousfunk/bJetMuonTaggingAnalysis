@@ -3,6 +3,9 @@
 TString configureOutputDatasetName(bool doSingleMuonSample,
 				   bool doMinBiasSample,
 				   bool doHighEGJetSample,
+				   bool applyJet15Trigger,
+				   bool applyJet30Trigger,
+				   bool applyJet40Trigger,
 				   bool applyJet60Trigger,
 				   bool applyJet80Trigger,
 				   bool applyJet100Trigger,
@@ -37,6 +40,9 @@ TString configureOutputDatasetName(bool doSingleMuonSample,
   result.Append(datasetIndicator);
 
   // general information
+  if(applyJet15Trigger) result.Append("_Jet15HLT");
+  if(applyJet30Trigger) result.Append("_Jet30HLT");
+  if(applyJet40Trigger) result.Append("_Jet40HLT");
   if(applyJet60Trigger) result.Append("_Jet60HLT");
   if(applyJet80Trigger) result.Append("_Jet80HLT");
   if(applyJet100Trigger) result.Append("_Jet100HLT");

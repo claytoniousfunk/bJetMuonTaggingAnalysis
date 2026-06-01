@@ -98,6 +98,12 @@ TH1D *h_hiBin;
 TH1D *h_vz_triggerOn;
 TH1D *h_hiBin_triggerOn;
 // -----------------------------------------events w/ jetTrigger----- -------
+TH1D *h_vz_jet15;
+TH1D *h_hiBin_jet15;
+TH1D *h_vz_jet30;
+TH1D *h_hiBin_jet30;
+TH1D *h_vz_jet40;
+TH1D *h_hiBin_jet40;
 TH1D *h_vz_jet60;
 TH1D *h_hiBin_jet60;
 TH1D *h_vz_jet80;
@@ -169,735 +175,786 @@ void pp_scan(int group = 1){
   }
   else{};
 
-  TString inputDataset = "";
-  TString inputFileName = "";
+  std::string inputFileList = "";
+  if(doSingleMuonSample) inputFileList = "../../../fileNames/fileNames_pp_SingleMuon.txt";
+  else if(doHighEGJetSample) inputFileList = "../../../fileNames/fileNames_pp_HighEGJet.txt";
+  else{};
 
-  inputDataset = getDatasetName(doSingleMuonSample,
-				doMinBiasSample,
-				doHighEGJetSample);
-
-  inputFileName = getInputFileName(doSingleMuonSample,
-				   doMinBiasSample,
-				   doHighEGJetSample);
-
-  TString input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
-  std::cout << "input dataset = " << input << std::endl;
-  TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
-
-  TString outputDatasetName = "";
-  outputDatasetName = configureOutputDatasetName(doSingleMuonSample,
-						 doMinBiasSample,
-						 doHighEGJetSample,
-						 applyJet60Trigger,
-						 applyJet80Trigger,
-						 applyJet100Trigger,
-						 applyAntiMu5Jet30Trigger,
-						 applyAntiMu5Jet40Trigger,
-						 applyAntiMu5Jet60Trigger,
-						 applyMu12TriggerEfficiencyCorrection,
-						 doJetTrkMaxFilter,
-						 doEtaPhiMask,
-						 doWDecayFilter,
-						 doJESCorrection,
-						 doBJetNeutrinoEnergyShift,
-						 doJERCorrection,
-						 apply_JER_smear,
-						 apply_JEU_shift_up,
-						 apply_JEU_shift_down,
-						 muPtCut,
-						 muPtMaxCut,
-						 fillMu5,
-						 fillMu7,
-						 fillMu12);
-
-  TString output = Form("%s%s/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-  //TString output = Form("%s%s_rawJetPt/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
-
-  std::cout << "output dataset = " << output << std::endl;
-
-
-  // JET ENERGY CORRECTIONS
-  vector<string> Files;
-  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
-  Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
-  // Files.push_back("../../../JetEnergyCorrections/Fall17_17Nov2017F_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
-  // Files.push_back("../../../JetEnergyCorrections/Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
-  JetCorrector JEC(Files);
-  JetUncertainty JEU("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
-  /// >>>>>>>>>>>>>>> print out some info
-  printIntroduction_pp_scan_V3p7();
-  readConfig();
-  // >>>>>>>>>>>>>>>> define histograms
-  // ---------------------- event histograms --------------------------------
-  h_eventsBeforeSelection = new TH1D("h_eventsBeforeSelection","events before selection",2,0,1);
-  h_eventsAfterSelection = new TH1D("h_eventsAfterSelection","events before selection",2,0,1);
-  // ------------ hiBin ---------------
-  h_hiBin = new TH1D("h_hiBin","hiBin, inclusive events",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_triggerOn = new TH1D("h_hiBin_triggerOn","hiBin, events with triggerOn",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_jet60 = new TH1D("h_hiBin_jet60","hiBin, events with jet60",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_jet80 = new TH1D("h_hiBin_jet80","hiBin, events with jet80",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_jet100 = new TH1D("h_hiBin_jet100","hiBin, events with jet100",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_jet = new TH1D("h_hiBin_jet","hiBin, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",NhiBinBins,hiBinMin,hiBinMax);
-  h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
-  // ------------ vz ------------------
-  h_vz = new TH1D("h_vz","vz, inclusive events",NVzBins,vzMin,vzMax);
-  h_vz_triggerOn = new TH1D("h_vz_triggerOn","vz, triggerOn",NVzBins,vzMin,vzMax);
-  h_vz_jet60 = new TH1D("h_vz_jet60","vz, events with jet60",NVzBins,vzMin,vzMax);
-  h_vz_jet80 = new TH1D("h_vz_jet80","vz, events with jet80",NVzBins,vzMin,vzMax);
-  h_vz_jet100 = new TH1D("h_vz_jet100","vz, events with jet100",NVzBins,vzMin,vzMax);
-  h_vz_jet = new TH1D("h_vz_jet","vz, events with inclRecoJet",NVzBins,vzMin,vzMax);
-  h_vz_inclRecoMuonTag = new TH1D("h_vz_inclRecoMuonTag","vz, events with inclRecoJet-inclRecoMuonTag",NVzBins,vzMin,vzMax);
-  h_vz_inclRecoMuonTag_triggerOn = new TH1D("h_vz_inclRecoMuonTag_triggerOn","vz, events with inclRecoJet-inclRecoMuonTag-triggerOn",NVzBins,vzMin,vzMax);
-  // ----------------------------------------- incl. reco jets --------------
-  h_inclRecoJetPt = new TH1D("h_inclRecoJetPt","incl. reco p_{T}^{jet}",NPtBins,ptMin,ptMax);
-  h_muTaggedRecoJetPt = new TH1D("h_muTaggedRecoJetPt","#mu-tagged reco p_{T}^{jet}",NPtBins,ptMin,ptMax);
-  h_muTaggedRecoJetPt_triggerOn = new TH1D("h_muTaggedRecoJetPt_triggerOn","#mu-tagged reco p_{T}^{jet}, trigger ON",NPtBins,ptMin,ptMax);
-  h_inclRecoJetEta = new TH1D("h_inclRecoJetEta","incl. reco #eta^{jet}",NEtaBins,etaMin,etaMax);
-  h_inclRecoJetPhi = new TH1D("h_inclRecoJetPhi","incl. reco #phi^{jet}",NPhiBins,phiMin,phiMax);
-  h_inclRecoJetPt_inclRecoJetEta = new TH2D("h_inclRecoJetPt_inclRecoJetEta","incl. reco #eta^{jet} vs. incl. reco p_{T}^{jet}",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
-  h_inclRecoJetPt_inclRecoJetPhi = new TH2D("h_inclRecoJetPt_inclRecoJetPhi","incl. reco #phi^{jet} vs. incl. reco p_{T}^{jet}",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
-  // ------------------------------ incl. reco jets + incl. reco muon tag ----
-  h_inclRecoJetPt_inclRecoMuonTag = new TH1D("h_inclRecoJetPt_inclRecoMuonTag","incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax);
-  h_inclRecoJetEta_inclRecoMuonTag = new TH1D("h_inclRecoJetEta_inclRecoMuonTag","incl. reco #eta^{jet}, tagged with incl. reco muon",NEtaBins,etaMin,etaMax);
-  h_inclRecoJetPhi_inclRecoMuonTag = new TH1D("h_inclRecoJetPhi_inclRecoMuonTag","incl. reco #phi^{jet}, tagged with incl. reco muon",NPhiBins,phiMin,phiMax);
-  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag","incl. reco #eta^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
-  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag","incl. reco #phi^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
-  // ---------- events w/ incl. reco jet + incl. reco muon tag + trigger on --
-  h_inclRecoJetPt_inclRecoMuonTag_triggerOn = new TH1D("h_inclRecoJetPt_inclRecoMuonTag_triggerOn","incl. reco p_{T}^{jet}, tagged with incl. reco muon, trigger ON",NPtBins,ptMin,ptMax);
-  h_inclRecoJetEta_inclRecoMuonTag_triggerOn = new TH1D("h_inclRecoJetEta_inclRecoMuonTag_triggerOn","incl. reco #eta^{jet}, tagged with incl. reco muon, trigger ON",NEtaBins,etaMin,etaMax);
-  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn = new TH1D("h_inclRecoJetPhi_inclRecoMuonTag_triggerOn","incl. reco #phi^{jet}, tagged with incl. reco muon, trigger ON",NPhiBins,phiMin,phiMax);
-  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn = new TH2D("h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn","incl. reco #eta^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
-  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn = new TH2D("h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn","incl. reco #phi^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
-  h_dimuonMass = new TH1D("h_dimuonMass","dimuon mass (opposite sign); m_{#mu#mu} [GeV]; Entries",NDimuonMassBins,dimuonMassMin,dimuonMassMax);
-  h_dimuonMass_sameSign = new TH1D("h_dimuonMass_sameSign","dimuon mass (same sign); m_{#mu#mu} [GeV]; Entries",NDimuonMassBins,dimuonMassMin,dimuonMassMax);
-  h_inclMuPt = new TH1D("h_inclMuPt","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
-
-
-
-  // muon-based 2d histograms
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{p}_{T}^{rel} vs jet #it{p}_{T}",NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{p}_{T} vs jet #it{p}_{T}",NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{#eta} vs jet #it{p}_{T}",NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{#phi} vs jet #it{p}_{T}",NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
-  h_muJetDr_recoJetPt = new TH2D("h_muJetDr_recoJetPt","#it{#Delta r}(muon,jet) vs jet #it{p}_{T}",NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
-  
-
-  // Sumw2 commands
-  h_eventsBeforeSelection->Sumw2();
-  h_eventsAfterSelection->Sumw2();
-  h_hiBin->Sumw2();
-  h_hiBin_triggerOn->Sumw2();
-  h_hiBin_jet60->Sumw2();
-  h_hiBin_jet80->Sumw2();
-  h_hiBin_jet100->Sumw2();
-  h_hiBin_jet->Sumw2();
-  h_hiBin_inclRecoMuonTag->Sumw2();
-  h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
-  h_vz->Sumw2();
-  h_vz_triggerOn->Sumw2();
-  h_vz_jet60->Sumw2();
-  h_vz_jet80->Sumw2();
-  h_vz_jet100->Sumw2();
-  h_vz_jet->Sumw2();
-  h_vz_inclRecoMuonTag->Sumw2();
-  h_vz_inclRecoMuonTag_triggerOn->Sumw2();
-
-  h_inclRecoJetPt->Sumw2();
-  h_muTaggedRecoJetPt->Sumw2();
-  h_muTaggedRecoJetPt_triggerOn->Sumw2();
-  h_inclRecoJetEta->Sumw2();
-  h_inclRecoJetPhi->Sumw2();
-  h_inclRecoJetPt_inclRecoJetEta->Sumw2();
-  h_inclRecoJetPt_inclRecoJetPhi->Sumw2();
-  
-  h_inclRecoJetPt_inclRecoMuonTag->Sumw2();
-  h_inclRecoJetEta_inclRecoMuonTag->Sumw2();
-  h_inclRecoJetPhi_inclRecoMuonTag->Sumw2();
-  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Sumw2();
-  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Sumw2();
-
-  h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
-  h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Sumw2();
-  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Sumw2();
-  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Sumw2();
-  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Sumw2();
-  h_inclMuPt->Sumw2();
-
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
-  h_muJetDr_recoJetPt->Sumw2();
-				 
-				 
-
-
-
-
-
-  TFile *f = TFile::Open(input);
-  cout << "	File opened!" << endl;
-  auto em = new eventMap(f);
-  em->isMC = isMC_status;
-  em->AASetup = AASetup_status;
-  cout << "	Initializing variables ... " << endl;
-  em->init();
-  cout << "	Loading jet..." << endl;
-  em->loadJet(jetTreeString);
-  cout << "	Loading muon..." << endl;
-  em->loadMuon(muonTreeString);
-  cout << "	Loading muon triggers..." << endl;
-  em->loadMuonTrigger(hltString);
-  //cout << "	Loading tracks..." << endl;
-  //em->loadTrack();
-  cout << "	Loading gen particles..." << endl;
-  em->loadGenParticle();
-  cout << "	Variables initilized!" << endl << endl ;
-  int NEvents = em->evtTree->GetEntries();
-  cout << "	Number of events = " << NEvents << endl;
-
-
-  // define event filters
-  if(doSingleMuonSample || doHighEGJetSample){
-    em->regEventFilter(NeventFilters_SingleMuon, eventFilters_SingleMuon);
+  std::ifstream instr(inputFileList.c_str(), std::ifstream::in);
+  if(!instr.is_open()){
+    cout << "filelist not found!! Exiting..." << endl;
+    return;
   }
+  std::string filename;
+  Int_t ifile = 0;
 
-  else if(doMinBiasSample){
-    //em->regEventFilter(NeventFilters_MinBias, eventFilters_MinBias);
-    em->regEventFilter(NeventFilters_SingleMuon, eventFilters_SingleMuon);
-  }
+  while(instr>>filename){
 
-  loadFitFxn_PYTHIA_JERCorrection();
-  loadFitFxn_pp_HLT();
-  
-  TRandom *randomGenerator = new TRandom2();
+    ifile++;
 
-  TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
-  JER_fxn->SetParameter(0,1.26585e-01);
-  JER_fxn->SetParameter(1,-9.72986e-01);
-  JER_fxn->SetParameter(2,3.67352e-04);
-  
-  
-  TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
-  TH2D *neutrino_energy_fraction_map;
-  TH1D *neutrino_energy_fraction_map_proj;
-  f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
+    if(ifile != group) continue;
 
-  TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
-  TH2D *neutrino_energy_map;
-  TH1D *neutrino_energy_map_proj;
-  f_neutrino_energy_map->GetObject("neutrino_energy_map",neutrino_energy_map);
+    std::string input = filename.c_str();
 
-  TFile *f_neutrino_tag_fraction = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_tag_fraction.root");
-  TH1D *neutrino_tag_fraction;
-  f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
+    // TString inputDataset = "";
+    // TString inputFileName = "";
 
-  // define JES correction function
-  TF1 *fxn_JES_Corr = new TF1("fxn_JES_Corr","[0] + [1]*x",80,500);
-  fxn_JES_Corr->SetParameter(0,0.907383);
-  fxn_JES_Corr->SetParameter(1,0.000114088);
-  
-  
-  // event loop
-  int evi_frac = 0;
-  for(int evi = 0; evi < NEvents; evi++){
+    // inputDataset = getDatasetName(doSingleMuonSample,
+    // 				doMinBiasSample,
+    // 				doHighEGJetSample);
 
-    if(evi == 0) cout << "Processing events..." << endl;
+    // inputFileName = getInputFileName(doSingleMuonSample,
+    // 				   doMinBiasSample,
+    // 				   doHighEGJetSample);
 
-    em->getEvent(evi); // load event info from eventMap
-    // em->muonTriggerTree->GetEntry(evi);
-    // em->jetEvtTree->GetEntry(evi);
-    // if(em->njet > 0){
-    //   em->recoJetTree->GetEntry(evi);
-    // }
-    // em->muonEvtTree->GetEntry(evi);
-    // if(em->nMu > 0){
-    //   em->muonTree->GetEntry(evi);
-    // }
+    // TString input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
+    
+    std::cout << "input dataset = " << input << std::endl;
 
-    if((100*evi / NEvents) % 5 == 0 && (100*evi / NEvents) > evi_frac){
+    TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
 
-      cout << "evt frac: " << evi_frac << "%" << endl;
+    TString outputDatasetName = "";
+    outputDatasetName = configureOutputDatasetName(doSingleMuonSample,
+						   doMinBiasSample,
+						   doHighEGJetSample,
+						   applyJet15Trigger,
+						   applyJet30Trigger,
+						   applyJet40Trigger,
+						   applyJet60Trigger,
+						   applyJet80Trigger,
+						   applyJet100Trigger,
+						   applyAntiMu5Jet30Trigger,
+						   applyAntiMu5Jet40Trigger,
+						   applyAntiMu5Jet60Trigger,
+						   applyMu12TriggerEfficiencyCorrection,
+						   doJetTrkMaxFilter,
+						   doEtaPhiMask,
+						   doWDecayFilter,
+						   doJESCorrection,
+						   doBJetNeutrinoEnergyShift,
+						   doJERCorrection,
+						   apply_JER_smear,
+						   apply_JEU_shift_up,
+						   apply_JEU_shift_down,
+						   muPtCut,
+						   muPtMaxCut,
+						   fillMu5,
+						   fillMu7,
+						   fillMu12);
 
+    TString output = Form("%s%s/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+    //TString output = Form("%s%s_rawJetPt/pp_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
+
+    std::cout << "output dataset = " << output << std::endl;
+
+    if(gSystem->AccessPathName(Form("%s%s",outputBaseDir.Data(),outputDatasetName.Data()))){
+      std::cout << "\033[1;31m Output directory not found: \033[0m " << Form("%s%s",outputBaseDir.Data(),outputDatasetName.Data()) << std::endl;
+      return;
     }
 
-    evi_frac = 100*evi / NEvents;
+    // JET ENERGY CORRECTIONS
+    vector<string> Files;
+    Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+    Files.push_back("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+    // Files.push_back("../../../JetEnergyCorrections/Fall17_17Nov2017F_V6_DATA_L2Relative_AK4PF.txt"); // L2Relative correction
+    // Files.push_back("../../../JetEnergyCorrections/Fall17_17Nov2017F_V6_DATA_L2L3Residual_AK4PF.txt"); // L2L3Residual correction
+    JetCorrector JEC(Files);
+    JetUncertainty JEU("../../../JetEnergyCorrections/Spring18_ppRef5TeV_V6_MC_Uncertainty_AK4PF.txt");
+    /// >>>>>>>>>>>>>>> print out some info
+    printIntroduction_pp_scan_V3p7();
+    readConfig();
+    // >>>>>>>>>>>>>>>> define histograms
+    // ---------------------- event histograms --------------------------------
+    h_eventsBeforeSelection = new TH1D("h_eventsBeforeSelection","events before selection",2,0,1);
+    h_eventsAfterSelection = new TH1D("h_eventsAfterSelection","events before selection",2,0,1);
+    // ------------ hiBin ---------------
+    h_hiBin = new TH1D("h_hiBin","hiBin, inclusive events",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_triggerOn = new TH1D("h_hiBin_triggerOn","hiBin, events with triggerOn",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_jet15 = new TH1D("h_hiBin_jet15","hiBin, events with jet15",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_jet30 = new TH1D("h_hiBin_jet30","hiBin, events with jet30",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_jet40 = new TH1D("h_hiBin_jet40","hiBin, events with jet40",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_jet60 = new TH1D("h_hiBin_jet60","hiBin, events with jet60",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_jet80 = new TH1D("h_hiBin_jet80","hiBin, events with jet80",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_jet100 = new TH1D("h_hiBin_jet100","hiBin, events with jet100",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_jet = new TH1D("h_hiBin_jet","hiBin, events with inclRecoJet",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_inclRecoMuonTag = new TH1D("h_hiBin_inclRecoMuonTag","hiBin, events with inclRecoJet-inclRecoMuonTag",NhiBinBins,hiBinMin,hiBinMax);
+    h_hiBin_inclRecoMuonTag_triggerOn = new TH1D("h_hiBin_inclRecoMuonTag_triggerOn","hiBin, events with inclRecoJet-inclRecoMuonTag-triggerOn",NhiBinBins,hiBinMin,hiBinMax);
+    // ------------ vz ------------------
+    h_vz = new TH1D("h_vz","vz, inclusive events",NVzBins,vzMin,vzMax);
+    h_vz_triggerOn = new TH1D("h_vz_triggerOn","vz, triggerOn",NVzBins,vzMin,vzMax);
+    h_vz_jet15 = new TH1D("h_vz_jet15","vz, events with jet15",NVzBins,vzMin,vzMax);
+    h_vz_jet30 = new TH1D("h_vz_jet30","vz, events with jet30",NVzBins,vzMin,vzMax);
+    h_vz_jet40 = new TH1D("h_vz_jet40","vz, events with jet40",NVzBins,vzMin,vzMax);
+    h_vz_jet60 = new TH1D("h_vz_jet60","vz, events with jet60",NVzBins,vzMin,vzMax);
+    h_vz_jet80 = new TH1D("h_vz_jet80","vz, events with jet80",NVzBins,vzMin,vzMax);
+    h_vz_jet100 = new TH1D("h_vz_jet100","vz, events with jet100",NVzBins,vzMin,vzMax);
+    h_vz_jet = new TH1D("h_vz_jet","vz, events with inclRecoJet",NVzBins,vzMin,vzMax);
+    h_vz_inclRecoMuonTag = new TH1D("h_vz_inclRecoMuonTag","vz, events with inclRecoJet-inclRecoMuonTag",NVzBins,vzMin,vzMax);
+    h_vz_inclRecoMuonTag_triggerOn = new TH1D("h_vz_inclRecoMuonTag_triggerOn","vz, events with inclRecoJet-inclRecoMuonTag-triggerOn",NVzBins,vzMin,vzMax);
+    // ----------------------------------------- incl. reco jets --------------
+    h_inclRecoJetPt = new TH1D("h_inclRecoJetPt","incl. reco p_{T}^{jet}",NPtBins,ptMin,ptMax);
+    h_muTaggedRecoJetPt = new TH1D("h_muTaggedRecoJetPt","#mu-tagged reco p_{T}^{jet}",NPtBins,ptMin,ptMax);
+    h_muTaggedRecoJetPt_triggerOn = new TH1D("h_muTaggedRecoJetPt_triggerOn","#mu-tagged reco p_{T}^{jet}, trigger ON",NPtBins,ptMin,ptMax);
+    h_inclRecoJetEta = new TH1D("h_inclRecoJetEta","incl. reco #eta^{jet}",NEtaBins,etaMin,etaMax);
+    h_inclRecoJetPhi = new TH1D("h_inclRecoJetPhi","incl. reco #phi^{jet}",NPhiBins,phiMin,phiMax);
+    h_inclRecoJetPt_inclRecoJetEta = new TH2D("h_inclRecoJetPt_inclRecoJetEta","incl. reco #eta^{jet} vs. incl. reco p_{T}^{jet}",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
+    h_inclRecoJetPt_inclRecoJetPhi = new TH2D("h_inclRecoJetPt_inclRecoJetPhi","incl. reco #phi^{jet} vs. incl. reco p_{T}^{jet}",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
+    // ------------------------------ incl. reco jets + incl. reco muon tag ----
+    h_inclRecoJetPt_inclRecoMuonTag = new TH1D("h_inclRecoJetPt_inclRecoMuonTag","incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax);
+    h_inclRecoJetEta_inclRecoMuonTag = new TH1D("h_inclRecoJetEta_inclRecoMuonTag","incl. reco #eta^{jet}, tagged with incl. reco muon",NEtaBins,etaMin,etaMax);
+    h_inclRecoJetPhi_inclRecoMuonTag = new TH1D("h_inclRecoJetPhi_inclRecoMuonTag","incl. reco #phi^{jet}, tagged with incl. reco muon",NPhiBins,phiMin,phiMax);
+    h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag","incl. reco #eta^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
+    h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag = new TH2D("h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag","incl. reco #phi^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
+    // ---------- events w/ incl. reco jet + incl. reco muon tag + trigger on --
+    h_inclRecoJetPt_inclRecoMuonTag_triggerOn = new TH1D("h_inclRecoJetPt_inclRecoMuonTag_triggerOn","incl. reco p_{T}^{jet}, tagged with incl. reco muon, trigger ON",NPtBins,ptMin,ptMax);
+    h_inclRecoJetEta_inclRecoMuonTag_triggerOn = new TH1D("h_inclRecoJetEta_inclRecoMuonTag_triggerOn","incl. reco #eta^{jet}, tagged with incl. reco muon, trigger ON",NEtaBins,etaMin,etaMax);
+    h_inclRecoJetPhi_inclRecoMuonTag_triggerOn = new TH1D("h_inclRecoJetPhi_inclRecoMuonTag_triggerOn","incl. reco #phi^{jet}, tagged with incl. reco muon, trigger ON",NPhiBins,phiMin,phiMax);
+    h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn = new TH2D("h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn","incl. reco #eta^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NEtaBins,etaMin,etaMax);
+    h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn = new TH2D("h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn","incl. reco #phi^{jet} vs. incl. reco p_{T}^{jet}, tagged with incl. reco muon",NPtBins,ptMin,ptMax,NPhiBins,phiMin,phiMax);
+    h_dimuonMass = new TH1D("h_dimuonMass","dimuon mass (opposite sign); m_{#mu#mu} [GeV]; Entries",NDimuonMassBins,dimuonMassMin,dimuonMassMax);
+    h_dimuonMass_sameSign = new TH1D("h_dimuonMass_sameSign","dimuon mass (same sign); m_{#mu#mu} [GeV]; Entries",NDimuonMassBins,dimuonMassMin,dimuonMassMax);
+    h_inclMuPt = new TH1D("h_inclMuPt","incl. muon p_{T}; muon p_{T}; Entries",NMuPtBins,muPtMin,muPtMax);
 
-    h_eventsBeforeSelection->Fill(1);
 
-    // global event cuts
-    if(fabs(em->vz) > 15.0) continue;
 
-    // event filters
-    if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
+    // muon-based 2d histograms
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{p}_{T}^{rel} vs jet #it{p}_{T}",NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_mupt_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{p}_{T} vs jet #it{p}_{T}",NMuPtBins,muPtMin,muPtMax,NPtBins,ptMin,ptMax);
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_mueta_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{#eta} vs jet #it{p}_{T}",NTrkEtaBins,trkEtaMin,trkEtaMax,NPtBins,ptMin,ptMax);
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn = new TH2D("h_muphi_recoJetPt_inclRecoMuonTag_triggerOn","muon #it{#phi} vs jet #it{p}_{T}",NPhiBins,phiMin,phiMax,NPtBins,ptMin,ptMax);
+    h_muJetDr_recoJetPt = new TH2D("h_muJetDr_recoJetPt","#it{#Delta r}(muon,jet) vs jet #it{p}_{T}",NdRBins,dRBinMin,dRBinMax,NPtBins,ptMin,ptMax);
+  
 
-    h_eventsAfterSelection->Fill(1);
+    // Sumw2 commands
+    h_eventsBeforeSelection->Sumw2();
+    h_eventsAfterSelection->Sumw2();
+    h_hiBin->Sumw2();
+    h_hiBin_triggerOn->Sumw2();
+    h_hiBin_jet15->Sumw2();
+    h_hiBin_jet30->Sumw2();
+    h_hiBin_jet40->Sumw2();
+    h_hiBin_jet60->Sumw2();
+    h_hiBin_jet80->Sumw2();
+    h_hiBin_jet100->Sumw2();
+    h_hiBin_jet->Sumw2();
+    h_hiBin_inclRecoMuonTag->Sumw2();
+    h_hiBin_inclRecoMuonTag_triggerOn->Sumw2();
+    h_vz->Sumw2();
+    h_vz_triggerOn->Sumw2();
+    h_vz_jet15->Sumw2();
+    h_vz_jet30->Sumw2();
+    h_vz_jet40->Sumw2();
+    h_vz_jet60->Sumw2();
+    h_vz_jet80->Sumw2();
+    h_vz_jet100->Sumw2();
+    h_vz_jet->Sumw2();
+    h_vz_inclRecoMuonTag->Sumw2();
+    h_vz_inclRecoMuonTag_triggerOn->Sumw2();
+
+    h_inclRecoJetPt->Sumw2();
+    h_muTaggedRecoJetPt->Sumw2();
+    h_muTaggedRecoJetPt_triggerOn->Sumw2();
+    h_inclRecoJetEta->Sumw2();
+    h_inclRecoJetPhi->Sumw2();
+    h_inclRecoJetPt_inclRecoJetEta->Sumw2();
+    h_inclRecoJetPt_inclRecoJetPhi->Sumw2();
+  
+    h_inclRecoJetPt_inclRecoMuonTag->Sumw2();
+    h_inclRecoJetEta_inclRecoMuonTag->Sumw2();
+    h_inclRecoJetPhi_inclRecoMuonTag->Sumw2();
+    h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Sumw2();
+    h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Sumw2();
+
+    h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
+    h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Sumw2();
+    h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Sumw2();
+    h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Sumw2();
+    h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Sumw2();
+    h_inclMuPt->Sumw2();
+
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn->Sumw2();
+    h_muJetDr_recoJetPt->Sumw2();
+				 
+				 
+
+
+
+
+
+    TFile *f = TFile::Open(input.c_str());
+    cout << "	File opened!" << endl;
+    auto em = new eventMap(f);
+    em->isMC = isMC_status;
+    em->AASetup = AASetup_status;
+    cout << "	Initializing variables ... " << endl;
+    em->init();
+    cout << "	Loading jet..." << endl;
+    em->loadJet("ak4PFJetAnalyzer/t");
+    cout << "	Loading muon..." << endl;
+    em->loadMuon("ggHiNtuplizerGED/EventTree");
+    cout << "	Loading muon triggers..." << endl;
+    em->loadMuonTrigger("hltanalysis/HltTree");
+    //cout << "	Loading tracks..." << endl;
+    //em->loadTrack();
+    cout << "	Loading gen particles..." << endl;
+    em->loadGenParticle();
+    cout << "	Variables initilized!" << endl << endl ;
+    int NEvents = em->evtTree->GetEntries();
+    cout << "	Number of events = " << NEvents << endl;
+
+
+    // define event filters
+    if(doSingleMuonSample || doHighEGJetSample){
+      em->regEventFilter(NeventFilters_SingleMuon, eventFilters_SingleMuon);
+    }
+
+    else if(doMinBiasSample){
+      //em->regEventFilter(NeventFilters_MinBias, eventFilters_MinBias);
+      em->regEventFilter(NeventFilters_SingleMuon, eventFilters_SingleMuon);
+    }
+
+    loadFitFxn_PYTHIA_JERCorrection();
+    loadFitFxn_pp_HLT();
+  
+    TRandom *randomGenerator = new TRandom2();
+
+    TF1 *JER_fxn = new TF1("JER_fxn","sqrt([0]*[0] + [1]*[1]/x + [2]*[2]/(x*x))",50,300);
+    JER_fxn->SetParameter(0,1.26585e-01);
+    JER_fxn->SetParameter(1,-9.72986e-01);
+    JER_fxn->SetParameter(2,3.67352e-04);
+  
+  
+    TFile *f_neutrino_energy_fraction_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_fraction_map.root");
+    TH2D *neutrino_energy_fraction_map;
+    TH1D *neutrino_energy_fraction_map_proj;
+    f_neutrino_energy_fraction_map->GetObject("neutrino_energy_fraction_map",neutrino_energy_fraction_map);
+
+    TFile *f_neutrino_energy_map = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_energy_map.root");
+    TH2D *neutrino_energy_map;
+    TH1D *neutrino_energy_map_proj;
+    f_neutrino_energy_map->GetObject("neutrino_energy_map",neutrino_energy_map);
+
+    TFile *f_neutrino_tag_fraction = TFile::Open("/eos/cms/store/group/phys_heavyions/cbennett/maps/neutrino_tag_fraction.root");
+    TH1D *neutrino_tag_fraction;
+    f_neutrino_tag_fraction->GetObject("neutrino_tag_fraction",neutrino_tag_fraction);
+
+    // define JES correction function
+    TF1 *fxn_JES_Corr = new TF1("fxn_JES_Corr","[0] + [1]*x",80,500);
+    fxn_JES_Corr->SetParameter(0,0.907383);
+    fxn_JES_Corr->SetParameter(1,0.000114088);
+  
+  
+    // event loop
+    int evi_frac = 0;
+    for(int evi = 0; evi < NEvents; evi++){
+
+      if(evi == 0) cout << "Processing events..." << endl;
+
+      em->getEvent(evi); // load event info from eventMap
+      // em->muonTriggerTree->GetEntry(evi);
+      // em->jetEvtTree->GetEntry(evi);
+      // if(em->njet > 0){
+      //   em->recoJetTree->GetEntry(evi);
+      // }
+      // em->muonEvtTree->GetEntry(evi);
+      // if(em->nMu > 0){
+      //   em->muonTree->GetEntry(evi);
+      // }
+
+      if((100*evi / NEvents) % 5 == 0 && (100*evi / NEvents) > evi_frac){
+
+	cout << "evt frac: " << evi_frac << "%" << endl;
+
+      }
+
+      evi_frac = 100*evi / NEvents;
+
+      h_eventsBeforeSelection->Fill(1);
+
+      // global event cuts
+      if(fabs(em->vz) > 15.0) continue;
+
+      // event filters
+      if(em->checkEventFilter()) continue; // comment out for local skims (already applied)
+
+      h_eventsAfterSelection->Fill(1);
        
-    // In data, event weight = 1
-    double w = 1.0;
+      // In data, event weight = 1
+      double w = 1.0;
 
-    h_vz->Fill(em->vz,w);
-    h_hiBin->Fill(em->hiBin,w);
+      h_vz->Fill(em->vz,w);
+      h_hiBin->Fill(em->hiBin,w);
     
-    if(em->HLT_HIAK4PFJet60_v1 == 1){
-      h_vz_jet60->Fill(em->vz,w);
-      h_hiBin_jet60->Fill(em->hiBin,w);
-    }
+      if(em->HLT_HIAK4PFJet60_v1 == 1){
+	h_vz_jet60->Fill(em->vz,w);
+	h_hiBin_jet60->Fill(em->hiBin,w);
+      }
 
-    if(em->HLT_HIAK4PFJet80_v1 == 1){
-      h_vz_jet80->Fill(em->vz,w);
-      h_hiBin_jet80->Fill(em->hiBin,w);
-    }
+      if(em->HLT_HIAK4PFJet80_v1 == 1){
+	h_vz_jet80->Fill(em->vz,w);
+	h_hiBin_jet80->Fill(em->hiBin,w);
+      }
 
-    if(em->HLT_HIAK4PFJet100_v1 == 1){
-      h_vz_jet100->Fill(em->vz,w);
-      h_hiBin_jet100->Fill(em->hiBin,w);
-    }
+      if(em->HLT_HIAK4PFJet100_v1 == 1){
+	h_vz_jet100->Fill(em->vz,w);
+	h_hiBin_jet100->Fill(em->hiBin,w);
+      }
 
     
    
-    int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
-    int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
-    bool evtTriggerDecision = false;
-    int triggerDecision_mu5 = em->HLT_HIL3Mu5_NHitQ10_v1;
-    int triggerDecision_mu5_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
-    int triggerDecision_mu7 = em->HLT_HIL3Mu7_v1;
-    int triggerDecision_mu7_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
-    int triggerDecision_mu12 = em->HLT_HIL3Mu12_v1;
-    int triggerDecision_mu12_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
+      int matchFlag[10] = {0,0,0,0,0,0,0,0,0,0};
+      int matchFlagR[10] = {0,0,0,0,0,0,0,0,0,0};
+      bool evtTriggerDecision = false;
+      int triggerDecision_mu5 = em->HLT_HIL3Mu5_NHitQ10_v1;
+      int triggerDecision_mu5_Prescl = em->HLT_HIL3Mu5_NHitQ10_v1_Prescl;
+      int triggerDecision_mu7 = em->HLT_HIL3Mu7_v1;
+      int triggerDecision_mu7_Prescl = em->HLT_HIL3Mu7_v1_Prescl;
+      int triggerDecision_mu12 = em->HLT_HIL3Mu12_v1;
+      int triggerDecision_mu12_Prescl = em->HLT_HIL3Mu12_v1_Prescl;
 
 
-    if(fillMu5){
-      if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl)){
-	evtTriggerDecision = true;
-	h_vz_triggerOn->Fill(em->vz,w);
-	h_hiBin_triggerOn->Fill(em->hiBin,w);
+      if(fillMu5){
+	if(triggerIsOn(triggerDecision_mu5,triggerDecision_mu5_Prescl)){
+	  evtTriggerDecision = true;
+	  h_vz_triggerOn->Fill(em->vz,w);
+	  h_hiBin_triggerOn->Fill(em->hiBin,w);
+	}
       }
-    }
-    else if(fillMu7){
-      if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
-	evtTriggerDecision = true;
-	h_vz_triggerOn->Fill(em->vz,w);
-	h_hiBin_triggerOn->Fill(em->hiBin,w);
+      else if(fillMu7){
+	if(triggerIsOn(triggerDecision_mu7,triggerDecision_mu7_Prescl)){
+	  evtTriggerDecision = true;
+	  h_vz_triggerOn->Fill(em->vz,w);
+	  h_hiBin_triggerOn->Fill(em->hiBin,w);
+	}
       }
-    }
-    else if(fillMu12){
-      if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
-	evtTriggerDecision = true;
-	h_vz_triggerOn->Fill(em->vz,w);
-	h_hiBin_triggerOn->Fill(em->hiBin,w);
+      else if(fillMu12){
+	if(triggerIsOn(triggerDecision_mu12,triggerDecision_mu12_Prescl)){
+	  evtTriggerDecision = true;
+	  h_vz_triggerOn->Fill(em->vz,w);
+	  h_hiBin_triggerOn->Fill(em->hiBin,w);
+	}
       }
-    }
-    else{};
+      else{};
 
-    // apply trigger if activated in config
-    if(applyJet60Trigger){
-      if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
-    }
-    if(applyJet80Trigger){
-      if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
-    }
-    if(applyJet100Trigger){
-      if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
-    }
-    if(applyAntiMu5Jet30Trigger){
-      if(em->HLT_HIL3Mu5_AK4PFJet30_v1 == 1) continue; // 1 because its an anti-trigger
-    }
-    if(applyAntiMu5Jet40Trigger){
-      if(em->HLT_HIL3Mu5_AK4PFJet40_v1 == 1) continue; // 1 because its an anti-trigger
-    }
-    if(applyAntiMu5Jet60Trigger){
-      if(em->HLT_HIL3Mu5_AK4PFJet60_v1 == 1) continue; // 1 because its an anti-trigger
-    }
+      // apply trigger if activated in config
+      if(applyJet15Trigger){
+	if(em->HLT_HIAK4PFJet15_v1 == 0) continue;
+      }
+      if(applyJet30Trigger){
+	if(em->HLT_HIAK4PFJet30_v1 == 0) continue;
+      }
+      if(applyJet40Trigger){
+	if(em->HLT_HIAK4PFJet40_v1 == 0) continue;
+      }
+      if(applyJet60Trigger){
+	if(em->HLT_HIAK4PFJet60_v1 == 0) continue;
+      }
+      if(applyJet80Trigger){
+	if(em->HLT_HIAK4PFJet80_v1 == 0) continue;
+      }
+      if(applyJet100Trigger){
+	if(em->HLT_HIAK4PFJet100_v1 == 0) continue;
+      }
+      if(applyAntiMu5Jet30Trigger){
+	if(em->HLT_HIL3Mu5_AK4PFJet30_v1 == 1) continue; // 1 because its an anti-trigger
+      }
+      if(applyAntiMu5Jet40Trigger){
+	if(em->HLT_HIL3Mu5_AK4PFJet40_v1 == 1) continue; // 1 because its an anti-trigger
+      }
+      if(applyAntiMu5Jet60Trigger){
+	if(em->HLT_HIL3Mu5_AK4PFJet60_v1 == 1) continue; // 1 because its an anti-trigger
+      }
     
 
 
-    // set the weight equal to the "gluing" parameter
+      // set the weight equal to the "gluing" parameter
    
-    // if(triggerDecision_Prescl == 0){ continue;}
-    // else if(triggerDecision_Prescl == 1){
-    //   w = 1.0 ;
-    // }
-    // else if(triggerDecision_Prescl == 3){
-    //   w = 1.0 / 6.04088 ;
-    // }
-    // else if(triggerDecision_Prescl == 5){
-    //   w = 1.0 / 8.68813 ;
-    // }
-    // else{ continue ;}
+      // if(triggerDecision_Prescl == 0){ continue;}
+      // else if(triggerDecision_Prescl == 1){
+      //   w = 1.0 ;
+      // }
+      // else if(triggerDecision_Prescl == 3){
+      //   w = 1.0 / 6.04088 ;
+      // }
+      // else if(triggerDecision_Prescl == 5){
+      //   w = 1.0 / 8.68813 ;
+      // }
+      // else{ continue ;}
  
-    double w_trig = w;
+      double w_trig = w;
    
-    bool eventHasGoodJet = false;
-    bool eventHasInclRecoMuonTag = false;
-    bool eventHasInclRecoMuonTagPlusTrigger = false;
-    bool eventHasMatchedRecoMuonTag = false;
-    bool eventHasMatchedRecoMuonTagPlusTrigger = false;
+      bool eventHasGoodJet = false;
+      bool eventHasInclRecoMuonTag = false;
+      bool eventHasInclRecoMuonTagPlusTrigger = false;
+      bool eventHasMatchedRecoMuonTag = false;
+      bool eventHasMatchedRecoMuonTagPlusTrigger = false;
 
 
     
 
 
 
-    double leadingRecoJetPt = 0.0;
-    //cout << "event " << evi << endl;
-    // RECO JET LOOP
-    for(int i = 0; i < em->njet ; i++){
+      double leadingRecoJetPt = 0.0;
+      //cout << "event " << evi << endl;
+      // RECO JET LOOP
+      for(int i = 0; i < em->njet ; i++){
 
-      // JET VARIABLES
+	// JET VARIABLES
 	
-      JEC.SetJetPT(em->rawpt[i]);
-      JEC.SetJetEta(em->jeteta[i]);
-      JEC.SetJetPhi(em->jetphi[i]);
+	JEC.SetJetPT(em->rawpt[i]);
+	JEC.SetJetEta(em->jeteta[i]);
+	JEC.SetJetPhi(em->jetphi[i]);
 
-      //double x = em->rawpt[i];  // use manual JEC
-      double x = JEC.GetCorrectedPT();  // use manual JEC
-      //double x = em->jetpt[i]; // use built-in JEC
-      double y = em->jeteta[i]; // recoJetEta
-      double z = em->jetphi[i]; // recoJetPhi
-      double jetTrkMax_i = em->jetTrkMax[i];
-      double inJetMuPt_i = em->mupt[i];
-      double inJetMuEta_i = em->mueta[i];
-      double inJetMuPhi_i = em->muphi[i];
-      double inJetMuPtRel_i = em->muptrel[i];
-      double muJetDr_i = -99.0;
+	//double x = em->rawpt[i];  // use manual JEC
+	double x = JEC.GetCorrectedPT();  // use manual JEC
+	//double x = em->jetpt[i]; // use built-in JEC
+	double y = em->jeteta[i]; // recoJetEta
+	double z = em->jetphi[i]; // recoJetPhi
+	double jetTrkMax_i = em->jetTrkMax[i];
+	double inJetMuPt_i = em->mupt[i];
+	double inJetMuEta_i = em->mueta[i];
+	double inJetMuPhi_i = em->muphi[i];
+	double inJetMuPtRel_i = em->muptrel[i];
+	double muJetDr_i = -99.0;
 
-      if(doJetTrkMaxFilter){
-	if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
-      }
+	if(doJetTrkMaxFilter){
+	  if(!passesJetTrkMaxFilter(jetTrkMax_i,x)) continue;
+	}
      
-      if(doEtaPhiMask){
-	if(etaPhiMask(y,z)) continue;
-      }
+	if(doEtaPhiMask){
+	  if(etaPhiMask(y,z)) continue;
+	}
 
-      if(doJESCorrection){
-	x = x * fxn_JES_Corr->Eval(x);
-      }
+	if(doJESCorrection){
+	  x = x * fxn_JES_Corr->Eval(x);
+	}
 
 
-      // initialize
-      double correctedPt_down = 1.0;
-      double correctedPt_up = 1.0;
+	// initialize
+	double correctedPt_down = 1.0;
+	double correctedPt_up = 1.0;
 
-      if(apply_JEU_shift_up){
-	correctedPt_up = x * (1 + JEU.GetUncertainty().second);
-	x = correctedPt_up;
-      }
-      else if(apply_JEU_shift_down){
-	correctedPt_down = x * (1 - JEU.GetUncertainty().first);
-	x = correctedPt_down;
-      }
+	if(apply_JEU_shift_up){
+	  correctedPt_up = x * (1 + JEU.GetUncertainty().second);
+	  x = correctedPt_up;
+	}
+	else if(apply_JEU_shift_down){
+	  correctedPt_down = x * (1 - JEU.GetUncertainty().first);
+	  x = correctedPt_down;
+	}
 
-      double mu = 1.0;
-      double sigma = 0.2;
-      double smear = 0.0;
+	double mu = 1.0;
+	double sigma = 0.2;
+	double smear = 0.0;
 
-      if(apply_JER_smear){
-	sigma = 0.663*JER_fxn->Eval(x); // apply a 20% smear
-	smear = randomGenerator->Gaus(mu,sigma);
-	x = x * smear;
-      }
+	if(apply_JER_smear){
+	  sigma = 0.663*JER_fxn->Eval(x); // apply a 20% smear
+	  smear = randomGenerator->Gaus(mu,sigma);
+	  x = x * smear;
+	}
       
-      double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
-      double smear_doBJetNeutrinoEnergyShift = 0.0;
-      if(doBJetNeutrinoEnergyShift){
-	//if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
-	skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
-	if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(x))) continue;
-	neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(x),neutrino_energy_map->GetYaxis()->FindBin(x)+1);
-	smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
-	x += smear_doBJetNeutrinoEnergyShift;
-      }
+	double skipDoBJetNeutrinoEnergyShift_diceRoll = 0.0;
+	double smear_doBJetNeutrinoEnergyShift = 0.0;
+	if(doBJetNeutrinoEnergyShift){
+	  //if(doBJetNeutrinoEnergyShift && hasRecoJetMuon){
+	  skipDoBJetNeutrinoEnergyShift_diceRoll = randomGenerator->Rndm();
+	  if(skipDoBJetNeutrinoEnergyShift_diceRoll > neutrino_tag_fraction->GetBinContent(neutrino_tag_fraction->FindBin(x))) continue;
+	  neutrino_energy_map_proj = (TH1D*) neutrino_energy_map->ProjectionX("neutrino_energy_map_proj", neutrino_energy_map->GetYaxis()->FindBin(x),neutrino_energy_map->GetYaxis()->FindBin(x)+1);
+	  smear_doBJetNeutrinoEnergyShift = neutrino_energy_map_proj->GetRandom();
+	  x += smear_doBJetNeutrinoEnergyShift;
+	}
 
-      double mu_JERCorrection = 1.0;
-      double sigma_JERCorrection = 0.2;
-      double smear_JERCorrection = 0.0; // smeared pT
-      double k_JERCorrection = 0.0; // smearing parameter
-      if(doJERCorrection){
-	k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
-	sigma_JERCorrection = k_JERCorrection*JER_fxn->Eval(x);
-	smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
-	x = x * smear_JERCorrection;
-      }
+	double mu_JERCorrection = 1.0;
+	double sigma_JERCorrection = 0.2;
+	double smear_JERCorrection = 0.0; // smeared pT
+	double k_JERCorrection = 0.0; // smearing parameter
+	if(doJERCorrection){
+	  k_JERCorrection = TMath::Sqrt(fitFxn_PYTHIA_JERCorrection->Eval(x)*fitFxn_PYTHIA_JERCorrection->Eval(x) - 1.);
+	  sigma_JERCorrection = k_JERCorrection*JER_fxn->Eval(x);
+	  smear_JERCorrection = randomGenerator->Gaus(mu_JERCorrection,sigma_JERCorrection);
+	  x = x * smear_JERCorrection;
+	}
 
       
-      //cout << "x" << endl;
+	//cout << "x" << endl;
      
-      double muPtRel = -1.0;
-      double muPt = -1.0;
-      double muEta = -99.0;
-      double muPhi = -99.0;
-      double muDr = -99.0;
+	double muPtRel = -1.0;
+	double muPt = -1.0;
+	double muEta = -99.0;
+	double muPhi = -99.0;
+	double muDr = -99.0;
 
-      bool hasInclRecoMuonTag = false;
+	bool hasInclRecoMuonTag = false;
 		
-      // jet kinematic cuts
-      if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
+	// jet kinematic cuts
+	if(TMath::Abs(y) > etaMax || x < jetPtCut) continue;
 
-      eventHasGoodJet = true;
-      if(x > leadingRecoJetPt) leadingRecoJetPt = x;
+	eventHasGoodJet = true;
+	if(x > leadingRecoJetPt) leadingRecoJetPt = x;
   
-      int jetPtIndex = getJetPtBin(x);
+	int jetPtIndex = getJetPtBin(x);
 
-      // look for recoMuon match to recoJet		
-      for(int m = 0; m < em->nMu; m++){
+	// look for recoMuon match to recoJet		
+	for(int m = 0; m < em->nMu; m++){
 
-	double muPt_m = em->muPt->at(m);
-	double muEta_m = em->muEta->at(m);
-	double muPhi_m = em->muPhi->at(m);
-	// skip if muon has already been matched to a jet in this event
-	if(matchFlagR[m] == 1) continue;
-	// muon kinematic cuts
-	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
-	// muon quality cuts
-	if(fillMu12){
-	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				  em->muInnerD0->at(m),
-				  em->muInnerDz->at(m),
-				  em->muMuonHits->at(m),
-				  em->muPixelHits->at(m),
-				  em->muIsGlobal->at(m),
-				  em->muIsPF->at(m),
-				  em->muStations->at(m),
-				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
-	}
-
-	else if(fillMu5 || fillMu7){
-	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-				       em->muInnerD0->at(m),
-				       em->muInnerDz->at(m),
-				       em->muPixelHits->at(m),
-				       em->muIsTracker->at(m),
-				       em->muIsGlobal->at(m),
-				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
-	}
-	else{};
-
-	if(doWDecayFilter){
-	  if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
-	}
-	// match to recoJets
-	if(getDr(muEta_m,muPhi_m,y,z) < epsilon_mm){
-
-	  matchFlagR[m] = 1;
-				
-	  hasInclRecoMuonTag = true;
-
-	  muPtRel = getPtRel(muPt_m,muEta_m,muPhi_m,x,y,z);
-	  muPt = muPt_m;
-	  muEta = muEta_m;
-	  muPhi = muPhi_m;
-	  muJetDr_i = getDr(muEta_m,muPhi_m,y,z);
-
-	}
-
-      }
-     
-      if(applyMu12TriggerEfficiencyCorrection){
-	w_trig = w / fitFxn_pp_HLT->Eval(muPt);
-      }
-
-      
-      // Fill the jet/event histograms
-      h_inclRecoJetPt->Fill(x,w);
-      if(inJetMuPt_i > 14. && fabs(inJetMuEta_i) < 2.){
-	h_muTaggedRecoJetPt->Fill(x,w);
-	if(evtTriggerDecision) h_muTaggedRecoJetPt_triggerOn->Fill(x,w);	  
-      }
-
-      
-      h_inclRecoJetEta->Fill(y,w);
-      h_inclRecoJetPhi->Fill(z,w);
-      h_inclRecoJetPt_inclRecoJetEta->Fill(x,y,w);
-      h_inclRecoJetPt_inclRecoJetPhi->Fill(x,z,w);
-     
-      if(hasInclRecoMuonTag){
-
-	eventHasInclRecoMuonTag = true;
-
-	h_inclRecoJetPt_inclRecoMuonTag->Fill(x,w);
-	h_inclRecoJetEta_inclRecoMuonTag->Fill(y,w);
-	h_inclRecoJetPhi_inclRecoMuonTag->Fill(z,w);
-	h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Fill(x,y,w);
-	h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Fill(x,z,w);
-
-       
-	if(evtTriggerDecision){
-	 
-	  eventHasInclRecoMuonTagPlusTrigger = true;
-
-	  h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Fill(x,w_trig);
-	  h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(y,w_trig);
-	  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(z,w_trig);
-	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(x,y,w_trig);
-	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(x,z,w_trig);
-	 
-	  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muPtRel,x,w_trig);
-	  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muPt,x,w_trig);
-	  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muEta,x,w_trig);
-	  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muPhi,x,w_trig);
-	  h_muJetDr_recoJetPt->Fill(muJetDr_i,x,w_trig);
-
-	  
-	} 
-
-      }
-
-    }
-    // END recoJet LOOP
-    
-    if(eventHasGoodJet && leadingRecoJetPt > 80){
-
-      h_vz_jet->Fill(em->vz,w);
-      h_hiBin_jet->Fill(em->hiBin,w);
-      
-      if(eventHasInclRecoMuonTag){
-
-	h_vz_inclRecoMuonTag->Fill(em->vz,w);
-	h_hiBin_inclRecoMuonTag->Fill(em->hiBin,w);
-
-	if(eventHasInclRecoMuonTagPlusTrigger){
-
-	  h_vz_inclRecoMuonTag_triggerOn->Fill(em->vz,w_trig);
-	  h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin,w_trig);
-	 
-	}
-       
-      }
-
-    }
-
-    
-    int loopMuonTrigger = 0;
-    int loopJetTrigger = 0;
-    
-    double loopMuonPtCut = 0.0;
-    double loopJetPtCut = 0.0;
-
-    if(applyJet60Trigger){
-
-      loopJetTrigger = em->HLT_HIAK4PFJet60_v1;
-      loopJetPtCut = 100.0;
-
-    }
-    else if(applyJet80Trigger){
-
-      loopJetTrigger = em->HLT_HIAK4PFJet80_v1;
-      loopJetPtCut = 130.0;
-
-    }
-    else if(applyJet100Trigger){
-
-      loopJetTrigger = em->HLT_HIAK4PFJet100_v1;
-      loopJetPtCut = 150.0;
-
-    }
-    else{
-      loopJetTrigger = 1;
-      loopJetPtCut = 0.;
-    }
-
-    if(fillMu5) loopMuonTrigger = triggerDecision_mu5;
-    else if(fillMu7) loopMuonTrigger = triggerDecision_mu7;
-    else if(fillMu12) loopMuonTrigger = triggerDecision_mu12;
-    else loopMuonTrigger = 1;
-    
-    // RECO MUON LOOP
-    double leadingMuonPt = 0.0;
-    double etaCut_Zloop = 2.4;
-    //if(triggerIsOn(loopTrigger,1) && eventHasGoodJet && leadingRecoJetPt > loopJetPtCut){
-    if(triggerIsOn(loopMuonTrigger,1)){
-      for(int m = 0; m < em->nMu; m++){
-
-	double muPt_m = em->muPt->at(m);
-	double muEta_m = em->muEta->at(m);
-	double muPhi_m = em->muPhi->at(m);
-
-	//cout << "(muPt, muEta, muPhi) = (" << muPt_m << ", " << muEta_m << ", " << muPhi_m << ")" << endl;
-
-	// skip if muon has already been matched to a jet in this event
-	// muon kinematic cuts
-	if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > etaCut_Zloop) continue;
-	// muon quality cuts
-	if(fillMu12){
-	  if(!isQualityMuon_tight(em->muChi2NDF->at(m),
-				  em->muInnerD0->at(m),
-				  em->muInnerDz->at(m),
-				  em->muMuonHits->at(m),
-				  em->muPixelHits->at(m),
-				  em->muIsGlobal->at(m),
-				  em->muIsPF->at(m),
-				  em->muStations->at(m),
-				  em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
-	}
-
-	else if(fillMu5 || fillMu7){
-	  if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
-				       em->muInnerD0->at(m),
-				       em->muInnerDz->at(m),
-				       em->muPixelHits->at(m),
-				       em->muIsTracker->at(m),
-				       em->muIsGlobal->at(m),
-				       em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
-	}
-	else{};
-
-	if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
-
-	h_inclMuPt->Fill(muPt_m,w);
-
-	for(int k = m+1; k < em->nMu; k++){
-
-	  double muPt_k = em->muPt->at(k);
-	  double muEta_k = em->muEta->at(k);
-	  double muPhi_k = em->muPhi->at(k);
-
-	  if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.4) continue;
-
+	  double muPt_m = em->muPt->at(m);
+	  double muEta_m = em->muEta->at(m);
+	  double muPhi_m = em->muPhi->at(m);
+	  // skip if muon has already been matched to a jet in this event
+	  if(matchFlagR[m] == 1) continue;
+	  // muon kinematic cuts
+	  if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > 2.0) continue;
 	  // muon quality cuts
 	  if(fillMu12){
-	    if(!isQualityMuon_tight(em->muChi2NDF->at(k),
-				    em->muInnerD0->at(k),
-				    em->muInnerDz->at(k),
-				    em->muMuonHits->at(k),
-				    em->muPixelHits->at(k),
-				    em->muIsGlobal->at(k),
-				    em->muIsPF->at(k),
-				    em->muStations->at(k),
-				    em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				    em->muInnerD0->at(m),
+				    em->muInnerDz->at(m),
+				    em->muMuonHits->at(m),
+				    em->muPixelHits->at(m),
+				    em->muIsGlobal->at(m),
+				    em->muIsPF->at(m),
+				    em->muStations->at(m),
+				    em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
 	  }
 
 	  else if(fillMu5 || fillMu7){
-	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(k),
-					 em->muInnerD0->at(k),
-					 em->muInnerDz->at(k),
-					 em->muPixelHits->at(k),
-					 em->muIsTracker->at(k),
-					 em->muIsGlobal->at(k),
-					 em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+					 em->muInnerD0->at(m),
+					 em->muInnerDz->at(m),
+					 em->muPixelHits->at(m),
+					 em->muIsTracker->at(m),
+					 em->muIsGlobal->at(m),
+					 em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts     
 	  }
 	  else{};
 
-	  double w_mk = w / (1. - (1. - fitFxn_pp_HLT->Eval(muPt_m))*(1. - fitFxn_pp_HLT->Eval(muPt_k)));
-	  //double w_mk = w;
-	  
-	  if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
+	  if(doWDecayFilter){
+	    if(isWDecayMuon(muPt_m,x)) continue; // skip if "WDecay" muon (has majority of jet pt) 
+	  }
+	  // match to recoJets
+	  if(getDr(muEta_m,muPhi_m,y,z) < epsilon_mm){
 
-	    h_dimuonMass->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
-	  
+	    matchFlagR[m] = 1;
+				
+	    hasInclRecoMuonTag = true;
+
+	    muPtRel = getPtRel(muPt_m,muEta_m,muPhi_m,x,y,z);
+	    muPt = muPt_m;
+	    muEta = muEta_m;
+	    muPhi = muPhi_m;
+	    muJetDr_i = getDr(muEta_m,muPhi_m,y,z);
+
 	  }
 
-	  else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
+	}
+     
+	if(applyMu12TriggerEfficiencyCorrection){
+	  w_trig = w / fitFxn_pp_HLT->Eval(muPt);
+	}
 
-	    h_dimuonMass_sameSign->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+      
+	// Fill the jet/event histograms
+	h_inclRecoJetPt->Fill(x,w);
+	if(inJetMuPt_i > 14. && fabs(inJetMuEta_i) < 2.){
+	  h_muTaggedRecoJetPt->Fill(x,w);
+	  if(evtTriggerDecision) h_muTaggedRecoJetPt_triggerOn->Fill(x,w);	  
+	}
+
+      
+	h_inclRecoJetEta->Fill(y,w);
+	h_inclRecoJetPhi->Fill(z,w);
+	h_inclRecoJetPt_inclRecoJetEta->Fill(x,y,w);
+	h_inclRecoJetPt_inclRecoJetPhi->Fill(x,z,w);
+     
+	if(hasInclRecoMuonTag){
+
+	  eventHasInclRecoMuonTag = true;
+
+	  h_inclRecoJetPt_inclRecoMuonTag->Fill(x,w);
+	  h_inclRecoJetEta_inclRecoMuonTag->Fill(y,w);
+	  h_inclRecoJetPhi_inclRecoMuonTag->Fill(z,w);
+	  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Fill(x,y,w);
+	  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Fill(x,z,w);
+
+       
+	  if(evtTriggerDecision){
+	 
+	    eventHasInclRecoMuonTagPlusTrigger = true;
+
+	    h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Fill(x,w_trig);
+	    h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(y,w_trig);
+	    h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(z,w_trig);
+	    h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Fill(x,y,w_trig);
+	    h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Fill(x,z,w_trig);
+	 
+	    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muPtRel,x,w_trig);
+	    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muPt,x,w_trig);
+	    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muEta,x,w_trig);
+	    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn->Fill(muPhi,x,w_trig);
+	    h_muJetDr_recoJetPt->Fill(muJetDr_i,x,w_trig);
+
 	  
-	  }
-	
+	  } 
+
 	}
 
       }
-    }
+      // END recoJet LOOP
+    
+      if(eventHasGoodJet && leadingRecoJetPt > 80){
+
+	h_vz_jet->Fill(em->vz,w);
+	h_hiBin_jet->Fill(em->hiBin,w);
+      
+	if(eventHasInclRecoMuonTag){
+
+	  h_vz_inclRecoMuonTag->Fill(em->vz,w);
+	  h_hiBin_inclRecoMuonTag->Fill(em->hiBin,w);
+
+	  if(eventHasInclRecoMuonTagPlusTrigger){
+
+	    h_vz_inclRecoMuonTag_triggerOn->Fill(em->vz,w_trig);
+	    h_hiBin_inclRecoMuonTag_triggerOn->Fill(em->hiBin,w_trig);
+	 
+	  }
+       
+	}
+
+      }
+
+    
+      int loopMuonTrigger = 0;
+      int loopJetTrigger = 0;
+    
+      double loopMuonPtCut = 0.0;
+      double loopJetPtCut = 0.0;
+
+      if(applyJet60Trigger){
+
+	loopJetTrigger = em->HLT_HIAK4PFJet60_v1;
+	loopJetPtCut = 100.0;
+
+      }
+      else if(applyJet80Trigger){
+
+	loopJetTrigger = em->HLT_HIAK4PFJet80_v1;
+	loopJetPtCut = 130.0;
+
+      }
+      else if(applyJet100Trigger){
+
+	loopJetTrigger = em->HLT_HIAK4PFJet100_v1;
+	loopJetPtCut = 150.0;
+
+      }
+      else{
+	loopJetTrigger = 1;
+	loopJetPtCut = 0.;
+      }
+
+      if(fillMu5) loopMuonTrigger = triggerDecision_mu5;
+      else if(fillMu7) loopMuonTrigger = triggerDecision_mu7;
+      else if(fillMu12) loopMuonTrigger = triggerDecision_mu12;
+      else loopMuonTrigger = 1;
+    
+      // RECO MUON LOOP
+      double leadingMuonPt = 0.0;
+      double etaCut_Zloop = 2.4;
+      //if(triggerIsOn(loopTrigger,1) && eventHasGoodJet && leadingRecoJetPt > loopJetPtCut){
+      if(triggerIsOn(loopMuonTrigger,1)){
+	for(int m = 0; m < em->nMu; m++){
+
+	  double muPt_m = em->muPt->at(m);
+	  double muEta_m = em->muEta->at(m);
+	  double muPhi_m = em->muPhi->at(m);
+
+	  //cout << "(muPt, muEta, muPhi) = (" << muPt_m << ", " << muEta_m << ", " << muPhi_m << ")" << endl;
+
+	  // skip if muon has already been matched to a jet in this event
+	  // muon kinematic cuts
+	  if(muPt_m < muPtCut || muPt_m > muPtMaxCut || fabs(muEta_m) > etaCut_Zloop) continue;
+	  // muon quality cuts
+	  if(fillMu12){
+	    if(!isQualityMuon_tight(em->muChi2NDF->at(m),
+				    em->muInnerD0->at(m),
+				    em->muInnerDz->at(m),
+				    em->muMuonHits->at(m),
+				    em->muPixelHits->at(m),
+				    em->muIsGlobal->at(m),
+				    em->muIsPF->at(m),
+				    em->muStations->at(m),
+				    em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	  }
+
+	  else if(fillMu5 || fillMu7){
+	    if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(m),
+					 em->muInnerD0->at(m),
+					 em->muInnerDz->at(m),
+					 em->muPixelHits->at(m),
+					 em->muIsTracker->at(m),
+					 em->muIsGlobal->at(m),
+					 em->muTrkLayers->at(m))) continue; // skip if muon doesnt pass quality cuts
+	  }
+	  else{};
+
+	  if(muPt_m > leadingMuonPt) leadingMuonPt = muPt_m;
+
+	  h_inclMuPt->Fill(muPt_m,w);
+
+	  for(int k = m+1; k < em->nMu; k++){
+
+	    double muPt_k = em->muPt->at(k);
+	    double muEta_k = em->muEta->at(k);
+	    double muPhi_k = em->muPhi->at(k);
+
+	    if(muPt_k < muPtCut || muPt_k > muPtMaxCut || fabs(muEta_k) > 2.4) continue;
+
+	    // muon quality cuts
+	    if(fillMu12){
+	      if(!isQualityMuon_tight(em->muChi2NDF->at(k),
+				      em->muInnerD0->at(k),
+				      em->muInnerDz->at(k),
+				      em->muMuonHits->at(k),
+				      em->muPixelHits->at(k),
+				      em->muIsGlobal->at(k),
+				      em->muIsPF->at(k),
+				      em->muStations->at(k),
+				      em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	    }
+
+	    else if(fillMu5 || fillMu7){
+	      if(!isQualityMuon_hybridSoft(em->muChi2NDF->at(k),
+					   em->muInnerD0->at(k),
+					   em->muInnerDz->at(k),
+					   em->muPixelHits->at(k),
+					   em->muIsTracker->at(k),
+					   em->muIsGlobal->at(k),
+					   em->muTrkLayers->at(k))) continue; // skip if muon doesnt pass quality cuts
+	    }
+	    else{};
+
+	    double w_mk = w / (1. - (1. - fitFxn_pp_HLT->Eval(muPt_m))*(1. - fitFxn_pp_HLT->Eval(muPt_k)));
+	    //double w_mk = w;
+	  
+	    if(em->muCharge->at(m)*em->muCharge->at(k) == -1){
+
+	      h_dimuonMass->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	  
+	    }
+
+	    else if(em->muCharge->at(m)*em->muCharge->at(k) == 1){
+
+	      h_dimuonMass_sameSign->Fill(calculateDimuonMass(muPt_m,muEta_m,muPhi_m,muPt_k,muEta_k,muPhi_k),w_mk);
+	  
+	    }
+	
+	  }
+
+	}
+      }
 
 
     
@@ -905,67 +962,75 @@ void pp_scan(int group = 1){
 
    
 
-  } // end event loop
+    } // end event loop
 
 
  
-  delete f;
-  // WRITE
-  auto wf = TFile::Open(output,"recreate");
+    delete f;
+    // WRITE
+    auto wf = TFile::Open(output,"recreate");
 
-  h_eventsBeforeSelection->Write();
-  h_eventsAfterSelection->Write();
-  h_hiBin->Write();
-  h_hiBin_triggerOn->Write();
-  h_hiBin_jet60->Write();
-  h_hiBin_jet80->Write();
-  h_hiBin_jet100->Write();
-  h_hiBin_jet->Write();
-  h_hiBin_inclRecoMuonTag->Write();
-  h_hiBin_inclRecoMuonTag_triggerOn->Write();
+    h_eventsBeforeSelection->Write();
+    h_eventsAfterSelection->Write();
+    h_hiBin->Write();
+    h_hiBin_triggerOn->Write();
+    h_hiBin_jet15->Write();
+    h_hiBin_jet30->Write();
+    h_hiBin_jet40->Write();
+    h_hiBin_jet60->Write();
+    h_hiBin_jet80->Write();
+    h_hiBin_jet100->Write();
+    h_hiBin_jet->Write();
+    h_hiBin_inclRecoMuonTag->Write();
+    h_hiBin_inclRecoMuonTag_triggerOn->Write();
 
-  h_vz->Write();
-  h_vz_triggerOn->Write();
-  h_vz_jet60->Write();
-  h_vz_jet80->Write();
-  h_vz_jet100->Write();
-  h_vz_jet->Write();
-  h_vz_inclRecoMuonTag->Write();
-  h_vz_inclRecoMuonTag_triggerOn->Write();
+    h_vz->Write();
+    h_vz_triggerOn->Write();
+    h_vz_jet15->Write();
+    h_vz_jet30->Write();
+    h_vz_jet40->Write();
+    h_vz_jet60->Write();
+    h_vz_jet80->Write();
+    h_vz_jet100->Write();
+    h_vz_jet->Write();
+    h_vz_inclRecoMuonTag->Write();
+    h_vz_inclRecoMuonTag_triggerOn->Write();
    
-  h_inclRecoJetPt->Write();
-  h_muTaggedRecoJetPt->Write();
-  h_muTaggedRecoJetPt_triggerOn->Write();
-  h_inclRecoJetEta->Write();
-  h_inclRecoJetPhi->Write();
-  h_inclRecoJetPt_inclRecoJetEta->Write();
-  h_inclRecoJetPt_inclRecoJetPhi->Write();
+    h_inclRecoJetPt->Write();
+    h_muTaggedRecoJetPt->Write();
+    h_muTaggedRecoJetPt_triggerOn->Write();
+    h_inclRecoJetEta->Write();
+    h_inclRecoJetPhi->Write();
+    h_inclRecoJetPt_inclRecoJetEta->Write();
+    h_inclRecoJetPt_inclRecoJetPhi->Write();
    
-  h_inclRecoJetPt_inclRecoMuonTag->Write();
-  h_inclRecoJetEta_inclRecoMuonTag->Write();
-  h_inclRecoJetPhi_inclRecoMuonTag->Write();
-  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Write();
-  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Write();
+    h_inclRecoJetPt_inclRecoMuonTag->Write();
+    h_inclRecoJetEta_inclRecoMuonTag->Write();
+    h_inclRecoJetPhi_inclRecoMuonTag->Write();
+    h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag->Write();
+    h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag->Write();
    
-  h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Write();
-  h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
-  h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
-  h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
-  h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
+    h_inclRecoJetPt_inclRecoMuonTag_triggerOn->Write();
+    h_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
+    h_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
+    h_inclRecoJetPt_inclRecoJetEta_inclRecoMuonTag_triggerOn->Write();
+    h_inclRecoJetPt_inclRecoJetPhi_inclRecoMuonTag_triggerOn->Write();
 
-  h_dimuonMass->Write();
-  h_dimuonMass_sameSign->Write();
-  h_inclMuPt->Write();
+    h_dimuonMass->Write();
+    h_dimuonMass_sameSign->Write();
+    h_inclMuPt->Write();
   
 
-  h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn->Write();
-  h_mupt_recoJetPt_inclRecoMuonTag_triggerOn->Write();
-  h_mueta_recoJetPt_inclRecoMuonTag_triggerOn->Write();
-  h_muphi_recoJetPt_inclRecoMuonTag_triggerOn->Write();
-  h_muJetDr_recoJetPt->Write();
+    h_muptrel_recoJetPt_inclRecoMuonTag_triggerOn->Write();
+    h_mupt_recoJetPt_inclRecoMuonTag_triggerOn->Write();
+    h_mueta_recoJetPt_inclRecoMuonTag_triggerOn->Write();
+    h_muphi_recoJetPt_inclRecoMuonTag_triggerOn->Write();
+    h_muJetDr_recoJetPt->Write();
 
-  wf->Close();
-  return;
-  // END WRITE
+    wf->Close();
+    return;
+    // END WRITE
+
+  }
 
 }
