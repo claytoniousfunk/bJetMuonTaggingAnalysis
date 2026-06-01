@@ -396,11 +396,11 @@ void pp_scan(int group = 1){
     cout << "	Loading muon..." << endl;
     em->loadMuon("ggHiNtuplizerGED/EventTree");
     cout << "	Loading muon triggers..." << endl;
-    em->loadMuonTrigger("hltanalysis/HltTree");
+    em->loadHLT("hltanalysis/HltTree");
     //cout << "	Loading tracks..." << endl;
     //em->loadTrack();
-    cout << "	Loading gen particles..." << endl;
-    em->loadGenParticle();
+    // cout << "	Loading gen particles..." << endl;
+    // em->loadGenParticle();
     cout << "	Variables initilized!" << endl << endl ;
     int NEvents = em->evtTree->GetEntries();
     cout << "	Number of events = " << NEvents << endl;
