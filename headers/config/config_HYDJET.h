@@ -35,7 +35,8 @@ bool doWDecayFilter = true;
 bool doBJetSpectraReweightToData = false;
 bool doPThatCorrelationFilter = false;
 // shifting the hiBin distribution by this amount
-int hiBinShift = 10;
+//int hiBinShift = 10;
+int hiBinShift = 0;
 // jet-alterations for closure
 bool doBJetNeutrinoEnergyShift = false;
 // experimental filters
