@@ -14,8 +14,8 @@ bool doEtaPhiMask = false;
 bool doWDecayFilter = true;
 // triggers
 bool applyJet15Trigger = false;
-bool applyJet30Trigger = true;
-bool applyJet40Trigger = false;
+bool applyJet30Trigger = false;
+bool applyJet40Trigger = true;
 bool applyJet60Trigger = false;
 bool applyJet80Trigger = false;
 bool applyJet100Trigger = false;
