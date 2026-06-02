@@ -15,9 +15,9 @@ bool doWDecayFilter = true;
 // triggers
 bool applyJet15Trigger = false;
 bool applyJet30Trigger = false;
-bool applyJet40Trigger = false;
+bool applyJet40Trigger = true;
 bool applyJet60Trigger = true;
-bool applyJet80Trigger = true;
+bool applyJet80Trigger = false;
 bool applyJet100Trigger = false;
 bool applyAntiMu5Jet30Trigger = false;
 bool applyAntiMu5Jet40Trigger = false;
