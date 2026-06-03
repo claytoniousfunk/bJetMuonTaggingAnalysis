@@ -392,7 +392,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 						   fillMu12);
 
     //TString suffixEdit = "_pfCandAnalyzer";
-    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_PFPT-10";
+    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_PFPT-15";
     
     TString output = Form("%s%s%s/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
     //TString output = Form("%s%s_ultraFineCentBins/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
@@ -1609,7 +1609,8 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 
 	  double dPhi_ik = acos(cos(pfPhi_k - recoJetPhi_i));
 
-	  if((dPhi_ik > 7.*TMath::Pi() / 8.) && (pfPt_k > 10.)  ) hasSubleadingPFCand = true;
+	  //if((dPhi_ik > 7.*TMath::Pi() / 8.) && (pfPt_k > 10.)  ) hasSubleadingPFCand = true;
+	  if((dPhi_ik > 7.*TMath::Pi() / 8.) && (pfPt_k > 15.)  ) hasSubleadingPFCand = true;
 	  
 	}
 	
