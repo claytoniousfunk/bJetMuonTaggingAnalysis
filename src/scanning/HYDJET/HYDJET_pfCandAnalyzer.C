@@ -392,7 +392,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 						   fillMu12);
 
     //TString suffixEdit = "_pfCandAnalyzer";
-    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer";
+    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_PFPT-10";
     
     TString output = Form("%s%s%s/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
     //TString output = Form("%s%s_ultraFineCentBins/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
@@ -1599,22 +1599,17 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 		        
 	int jetPtIndex = getJetPtBin(recoJetPt_i);
 
-	bool hasSubleadingJet = false;
-	// find subleading
-	for(int k = i+1; k < em->njet; k++){
-	  JEC.SetJetPT(em->rawpt[k]);
-	  JEC.SetJetEta(em->jeteta[k]);
-	  JEC.SetJetPhi(em->jetphi[k]);
+	bool hasSubleadingPFCand = false;
+	// find subleading PF candidate
+	for(int k = 0; k < em->nPFpart; k++){
 
-	  double recoJetPt_k = JEC.GetCorrectedPT();  // recoJetPt
-	  double recoJetEta_k = em->jeteta[k]; // recoJetEta
-	  double recoJetPhi_k = em->jetphi[k]; // recoJetPhi
+	  double pfPt_k = em->pfPt->at(k);
+	  double pfEta_k = em->pfEta->at(k);
+	  double pfPhi_k = em->pfPhi->at(k);
 
-	  double dPhi_ik = acos(cos(recoJetPhi_k - recoJetPhi_i));
+	  double dPhi_ik = acos(cos(pfPhi_k - recoJetPhi_i));
 
-
-	  // the following line checks for subleading jets. The 0.42 value comes from recoJetPt_k = 120, recoJetPt_i = 50, which is the back-to-back average
-	  if((dPhi_ik > 7.*TMath::Pi() / 8.) && (TMath::Abs(recoJetPt_k - recoJetPt_i)/(0.5*(recoJetPt_k + recoJetPt_i))  < 0.42) ) hasSubleadingJet = true;
+	  if((dPhi_ik > 7.*TMath::Pi() / 8.) && (pfPt_k > 10.)  ) hasSubleadingPFCand = true;
 	  
 	}
 	
@@ -1900,7 +1895,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	inclJetCounter++;
 	h_inclRecoJetPt_flavor[0]->Fill(recoJetPt_i,jetFlavorInt,w);
 	h_inclRecoJetPt_flavor[CentralityIndex]->Fill(recoJetPt_i,jetFlavorInt,w);
-	if(!hasSubleadingJet){
+	if(!hasSubleadingPFCand){
 	  h_inclRecoJetPtNoSubleading_flavor[0]->Fill(recoJetPt_i,jetFlavorInt,w);
 	  h_inclRecoJetPtNoSubleading_flavor[CentralityIndex]->Fill(recoJetPt_i,jetFlavorInt,w);
 	}
