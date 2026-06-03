@@ -391,8 +391,8 @@ void HYDJET_scan(int group = 1){
 						   fillMu7,
 						   fillMu12);
 
-    //TString suffixEdit = "";
-    TString suffixEdit = "_ultraFineCentBins";
+    //TString suffixEdit = "_pfCandAnalyzer";
+    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer";
     
     TString output = Form("%s%s%s/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
     //TString output = Form("%s%s_ultraFineCentBins/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
