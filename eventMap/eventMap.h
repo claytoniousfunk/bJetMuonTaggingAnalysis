@@ -89,6 +89,7 @@ public :
 
   // pfCandidate info
   std::vector<int> *pfId=0, *pfPt=0, *pfEta=0, *pfPhi=0;
+  int nPFpart = 0;
 
   //jet set
   static const int jetMax = 9999;
@@ -307,6 +308,7 @@ void eventMap::loadGenParticle(const char* name){
 void eventMap::loadParticleFlowAnalyzer(const char* name){
   pfTree = (TTree*) _file->Get(Form("%s/pftree",name));
   evtTree->AddFriend(pfTree);
+  evtTree->SetBranchAddress("nPFpart",&nPFpart);
   evtTree->SetBranchAddress("pfId",&pfId);
   evtTree->SetBranchAddress("pfPt",&pfPt);
   evtTree->SetBranchAddress("pfEta",&pfEta);
