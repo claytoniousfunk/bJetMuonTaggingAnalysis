@@ -300,7 +300,7 @@ TH2D *h_muptrel_hiBin_lJets[NJetPtIndices];
 TH1D *h_inclMuPt;
 TH1D *h_pfPt[NCentralityIndices];
 
-void HYDJET_scan(int group = 1){
+void HYDJET_pfCandAnalyzer(int group = 1){
   
 
   if(fillMu5){
