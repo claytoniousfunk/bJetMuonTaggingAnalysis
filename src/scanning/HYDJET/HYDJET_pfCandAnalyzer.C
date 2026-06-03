@@ -542,7 +542,7 @@ void HYDJET_scan(int group = 1){
 	h_muptrel_jetpt[i] = new TH2D(Form("h_muptrel_jetpt_C%i",i),Form("jetPt vs. muRelPt, hiBin %i - %i", centEdges[0], centEdges[NCentralityIndices-1]),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
 	h_leadingGenJetPt[i] = new TH1D(Form("h_leadingGenJetPt_C%i",i),Form("leadingGenJetPt, hiBin %i - %i",centEdges[0], centEdges[NCentralityIndices-1]),500,0,500);
 	h_leadingGenJetPt_xJets_greaterThanPthat[i] = new TH1D(Form("h_leadingGenJetPt_xJets_greaterThanPthat_C%i",i),Form("leadingGenJetPt, xJets, pT > pThat, hiBin %i - %i",centEdges[0], centEdges[NCentralityIndices-1]),500,0,500);
-	h_pfCand[i] = new TH1D(Form("h_pfCand_C%i",i),Form("pfCand pT, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),100,0,100);
+	h_pfPt[i] = new TH1D(Form("h_pfPt_C%i",i),Form("pfCand pT, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),100,0,100);
 
 	// fill templates
 
@@ -681,7 +681,7 @@ void HYDJET_scan(int group = 1){
 	h_muptrel_jetpt[i] = new TH2D(Form("h_muptrel_jetpt_C%i",i),Form("jetPt vs. muRelPt, hiBin %i - %i", centEdges[i-1], centEdges[i]),NMuRelPtBins,muRelPtMin,muRelPtMax,NPtBins,ptMin,ptMax);
 	h_leadingGenJetPt[i] = new TH1D(Form("h_leadingGenJetPt_C%i",i),Form("leadingGenJetPt, hiBin %i - %i",centEdges[i-1], centEdges[i]),500,0,500);
 	h_leadingGenJetPt_xJets_greaterThanPthat[i] = new TH1D(Form("h_leadingGenJetPt_xJets_greaterThanPthat_C%i",i),Form("leadingGenJetPt, xJets, pT > pThat, hiBin %i - %i",centEdges[i-1], centEdges[i]),500,0,500);
-	h_pfCand[i] = new TH1D(Form("h_pfCand_C%i",i),Form("pfCand pT, hiBin %i - %i",centEdges[i-1],centEdges[i]),100,0,100);
+	h_pfPt[i] = new TH1D(Form("h_pfPt_C%i",i),Form("pfCand pT, hiBin %i - %i",centEdges[i-1],centEdges[i]),100,0,100);
 	
 	// fill templates
 	for(int t = 0; t < NTemplateIndices; t++){
@@ -820,7 +820,7 @@ void HYDJET_scan(int group = 1){
 
       h_leadingGenJetPt[i]->Sumw2();
       h_leadingGenJetPt_xJets_greaterThanPthat[i]->Sumw2();
-      h_pfCand[i]->Sumw2();
+      h_pfPt[i]->Sumw2();
 
       for(int t = 0; t < NTemplateIndices; t++){
 	// allJets
@@ -1331,8 +1331,8 @@ void HYDJET_scan(int group = 1){
 
 	double pfPt_i = em->pfPt->at(i);
 
-	h_pfPt[0]->Fill(ptPt_i,w);
-	h_pfPt[CentralityIndex]->Fill(ptPt_i,w);
+	h_pfPt[0]->Fill(pfPt_i,w);
+	h_pfPt[CentralityIndex]->Fill(pfPt_i,w);
 	
       }
 
@@ -2869,7 +2869,7 @@ void HYDJET_scan(int group = 1){
 
       h_leadingGenJetPt[i]->Write();
       // h_leadingGenJetPt_xJets_greaterThanPthat[i]->Write();
-      h_pfCand[i]->Write();
+      h_pfPt[i]->Write();
 
       for(int t = 0; t < NTemplateIndices; t++){
 	// allJets
