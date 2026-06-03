@@ -306,7 +306,7 @@ void eventMap::loadGenParticle(const char* name){
 }
 
 void eventMap::loadParticleFlowAnalyzer(const char* name){
-  pfTree = (TTree*) _file->Get(Form("%s/pftree",name));
+  pfTree = (TTree*) _file->Get(Form("%s/pfTree",name));
   evtTree->AddFriend(pfTree);
   evtTree->SetBranchAddress("nPFpart",&nPFpart);
   evtTree->SetBranchAddress("pfId",&pfId);
