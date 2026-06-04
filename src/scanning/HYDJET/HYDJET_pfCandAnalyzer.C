@@ -826,7 +826,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
       h_leadingGenJetPt[i]->Sumw2();
       h_leadingGenJetPt_xJets_greaterThanPthat[i]->Sumw2();
       h_pfPt[i]->Sumw2();
-      h_pseudoJetpT[i]->Sumw2();
+      h_pseudoJetPt[i]->Sumw2();
 
       for(int t = 0; t < NTemplateIndices; t++){
 	// allJets
@@ -1338,7 +1338,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
       int N_generatedPseudoJets = 100; // define how many psuedo jets to create
       double psuedoJetCandPt_min = 1.0;
 
-      for(int k = 0; k < N_generatedPsuedoJets; k++){
+      for(int k = 0; k < N_generatedPseudoJets; k++){
 
 	double randEta_k = 3.2*randomGenerator->Rndm() - 1.6;
 	double randPhi_k = 2*pi*randomGenerator->Rndm() - pi;
@@ -1362,8 +1362,8 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	
 	}
 
-	h_psuedoJetPt[0]->Fill(pseudoJetPt_k,w);
-	h_psuedoJetPt[CentralityIndex]->Fill(pseudoJetPt_k,w);
+	h_pseudoJetPt[0]->Fill(pseudoJetPt_k,w);
+	h_pseudoJetPt[CentralityIndex]->Fill(pseudoJetPt_k,w);
 
       }
 
