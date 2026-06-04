@@ -1355,7 +1355,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	  }
 
 	  if(em->nPFpart == 0) continue;
-	  int randPFCandIndex = 0 + ( std::rand() % (em->nPFpart - 0 + 1) );
+	  int randPFCandIndex = 0 + ( std::rand() % (em->nPFpart-1 - 0 + 1) );
 	  
 	  double pfPt_j = em->pfPt->at(randPFCandIndex);
 	  double pfEta_j = em->pfEta->at(randPFCandIndex);
