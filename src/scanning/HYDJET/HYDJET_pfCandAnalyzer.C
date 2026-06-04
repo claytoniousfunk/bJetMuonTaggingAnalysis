@@ -299,9 +299,12 @@ TH2D *h_muptrel_hiBin_cJets[NJetPtIndices];
 TH2D *h_muptrel_hiBin_lJets[NJetPtIndices];
 TH1D *h_inclMuPt;
 TH1D *h_pfPt[NCentralityIndices];
+TH1D *h_pseudoJetPt[NCentralityIndices];
 
 void HYDJET_pfCandAnalyzer(int group = 1){
-  
+
+  double pi = TMath::Pi();
+  double dR_max = 0.4;
 
   if(fillMu5){
     muPtCut = 7.0;
@@ -392,7 +395,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 						   fillMu12);
 
     //TString suffixEdit = "_pfCandAnalyzer";
-    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_PFPT-20";
+    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_PFPT-10";
     
     TString output = Form("%s%s%s/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
     //TString output = Form("%s%s_ultraFineCentBins/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
@@ -543,6 +546,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	h_leadingGenJetPt[i] = new TH1D(Form("h_leadingGenJetPt_C%i",i),Form("leadingGenJetPt, hiBin %i - %i",centEdges[0], centEdges[NCentralityIndices-1]),500,0,500);
 	h_leadingGenJetPt_xJets_greaterThanPthat[i] = new TH1D(Form("h_leadingGenJetPt_xJets_greaterThanPthat_C%i",i),Form("leadingGenJetPt, xJets, pT > pThat, hiBin %i - %i",centEdges[0], centEdges[NCentralityIndices-1]),500,0,500);
 	h_pfPt[i] = new TH1D(Form("h_pfPt_C%i",i),Form("pfCand pT, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),100,0,100);
+	h_pseudoJetPt[i] = new TH1D(Form("h_pseudoJetPt_C%i",i),Form("PseudoJet pT, hiBin %i - %i",centEdges[0],centEdges[NCentralityIndices-1]),NPtBins,ptMin,ptMax);
 
 	// fill templates
 
@@ -682,6 +686,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	h_leadingGenJetPt[i] = new TH1D(Form("h_leadingGenJetPt_C%i",i),Form("leadingGenJetPt, hiBin %i - %i",centEdges[i-1], centEdges[i]),500,0,500);
 	h_leadingGenJetPt_xJets_greaterThanPthat[i] = new TH1D(Form("h_leadingGenJetPt_xJets_greaterThanPthat_C%i",i),Form("leadingGenJetPt, xJets, pT > pThat, hiBin %i - %i",centEdges[i-1], centEdges[i]),500,0,500);
 	h_pfPt[i] = new TH1D(Form("h_pfPt_C%i",i),Form("pfCand pT, hiBin %i - %i",centEdges[i-1],centEdges[i]),100,0,100);
+	h_pseudoJetPt[i] = new TH1D(Form("h_pseudoJetPt_C%i",i),Form("PseudoJet pT, hiBin %i - %i",centEdges[i-1],centEdges[i]),NPtBins,ptMin,ptMax);
 	
 	// fill templates
 	for(int t = 0; t < NTemplateIndices; t++){
@@ -821,6 +826,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
       h_leadingGenJetPt[i]->Sumw2();
       h_leadingGenJetPt_xJets_greaterThanPthat[i]->Sumw2();
       h_pfPt[i]->Sumw2();
+      h_pseudoJetpT[i]->Sumw2();
 
       for(int t = 0; t < NTemplateIndices; t++){
 	// allJets
@@ -1327,16 +1333,39 @@ void HYDJET_pfCandAnalyzer(int group = 1){
       else{};
 
       ///// PF Candidate Analyzer
-      for(int i = 0; i < em->nPFpart; i++){
+      ///// Psuedo Jet Calculator  
 
-	double pfPt_i = em->pfPt->at(i);
+      int N_generatedPseudoJets = 100; // define how many psuedo jets to create
+      double psuedoJetCandPt_min = 1.0;
 
-	h_pfPt[0]->Fill(pfPt_i,w);
-	h_pfPt[CentralityIndex]->Fill(pfPt_i,w);
+      for(int k = 0; k < N_generatedPsuedoJets; k++){
+
+	double randEta_k = 3.2*randomGenerator->Rndm() - 1.6;
+	double randPhi_k = 2*pi*randomGenerator->Rndm() - pi;
+	double pseudoJetPt_k = 0.;
+      
+	for(int j = 0; j < em->nPFpart; j++){
+
+	  double pfPt_j = em->pfPt->at(j);
+	  double pfEta_j = em->pfEta->at(j);
+	  double pfPhi_j = em->pfPhi->at(j);
+	  double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
+
+	  if(pfPt_j > psuedoJetCandPt_min && dR_kj < dR_max){
+
+	    h_pfPt[0]->Fill(pfPt_j,w);
+	    h_pfPt[CentralityIndex]->Fill(pfPt_j,w);
+
+	    pseudoJetPt_k += pfPt_j;
+	    
+	  }	  
 	
+	}
+
+	h_psuedoJetPt[0]->Fill(pseudoJetPt_k,w);
+	h_psuedoJetPt[CentralityIndex]->Fill(pseudoJetPt_k,w);
+
       }
-
-
 
 
 
@@ -1609,9 +1638,9 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 
 	  double dPhi_ik = acos(cos(pfPhi_k - recoJetPhi_i));
 
-	  //if((dPhi_ik > 7.*TMath::Pi() / 8.) && (pfPt_k > 10.)  ) hasSubleadingPFCand = true;
+	  if((dPhi_ik > 7.*TMath::Pi() / 8.) && (pfPt_k > 10.)  ) hasSubleadingPFCand = true;
 	  //if((dPhi_ik > 7.*TMath::Pi() / 8.) && (pfPt_k > 15.)  ) hasSubleadingPFCand = true;
-	  if((dPhi_ik > 7.*TMath::Pi() / 8.) && (pfPt_k > 20.)  ) hasSubleadingPFCand = true;
+	  //if((dPhi_ik > 7.*TMath::Pi() / 8.) && (pfPt_k > 20.)  ) hasSubleadingPFCand = true;
 	  
 	}
 	
@@ -2867,6 +2896,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
       h_leadingGenJetPt[i]->Write();
       // h_leadingGenJetPt_xJets_greaterThanPthat[i]->Write();
       h_pfPt[i]->Write();
+      h_pseudoJetPt[i]->Write();
 
       for(int t = 0; t < NTemplateIndices; t++){
 	// allJets
