@@ -88,7 +88,8 @@ public :
   vector<Int_t>  *gppdgIDp=0, *gpchgp=0, *gpsube=0, *gpStableTag=0;
 
   // pfCandidate info
-  std::vector<int> *pfId=0, *pfPt=0, *pfEta=0, *pfPhi=0;
+  std::vector<int> *pfId=0;
+  std::vector<double> *pfPt=0, *pfEta=0, *pfPhi=0;
   int nPFpart = 0;
 
   //jet set
