@@ -1349,7 +1349,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	for(int j = 0; j < em->nPFpart; j++){
 
 	  if(j>0){
-	    if((evi + j) > NEvents) mixedEventIndex = NEvents - (evi + j);
+	    if((evi + j) > NEvents) mixedEventIndex = (evi + j) - NEvents;
 	    else mixedEventIndex = evi + j;
 	    em->getEvent(mixedEventIndex);
 	  }
