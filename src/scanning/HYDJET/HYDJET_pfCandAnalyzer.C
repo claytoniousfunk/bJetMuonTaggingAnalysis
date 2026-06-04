@@ -320,7 +320,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
   }
   else{};
 
-  std::string inputFileList = "../../../fileNames/fileNames_MinBias_Hydjet_Drum5F_2018_5p02TeV_withTracks.txt";
+  std::string inputFileList = "../../../fileNames/fileNames_MinBias_Hydjet_Drum5F_2018_5p02TeV_withTracksAndPFCandidates.txt";
 
   std::ifstream instr(inputFileList.c_str(), std::ifstream::in);
   if(!instr.is_open()){
