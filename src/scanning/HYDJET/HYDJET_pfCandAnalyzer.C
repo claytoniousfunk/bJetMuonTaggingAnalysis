@@ -1354,9 +1354,12 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	    em->getEvent(mixedEventIndex);
 	  }
 
-	  double pfPt_j = em->pfPt->at(j);
-	  double pfEta_j = em->pfEta->at(j);
-	  double pfPhi_j = em->pfPhi->at(j);
+	  if(em->nPFpart == 0) continue;
+	  int randPFCandIndex = 0 + ( std::rand() % (em->nPFpart - 0 + 1) );
+	  
+	  double pfPt_j = em->pfPt->at(randPFCandIndex);
+	  double pfEta_j = em->pfEta->at(randPFCandIndex);
+	  double pfPhi_j = em->pfPhi->at(randPFCandIndex);
 	  double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
 
 	  if(pfPt_j > psuedoJetCandPt_min && dR_kj < dR_max){
