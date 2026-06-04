@@ -1343,8 +1343,16 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	double randEta_k = 3.2*randomGenerator->Rndm() - 1.6;
 	double randPhi_k = 2*pi*randomGenerator->Rndm() - pi;
 	double pseudoJetPt_k = 0.;
-      
+
+	int mixedEventIterator = 1;
+	int mixedEventIndex = 0;
 	for(int j = 0; j < em->nPFpart; j++){
+
+	  if(j>0){
+	    if((evi + j) > NEvents) mixedEventIndex = NEvents - (evi + j);
+	    else mixedEventIndex = evi + j;
+	    em->getEvent(mixedEventIndex);
+	  }
 
 	  double pfPt_j = em->pfPt->at(j);
 	  double pfEta_j = em->pfEta->at(j);
@@ -1366,6 +1374,9 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	h_pseudoJetPt[CentralityIndex]->Fill(pseudoJetPt_k,w);
 
       }
+
+
+      em->getEvent(evi);
 
 
 
