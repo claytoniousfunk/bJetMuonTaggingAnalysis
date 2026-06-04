@@ -1594,7 +1594,9 @@ void HYDJET_scan(int group = 1){
 
 	  double dPhi_ik = acos(cos(recoJetPhi_k - recoJetPhi_i));
 
-	  if((dPhi_ik > 2.*TMath::Pi() / 3.) && (TMath::Abs(recoJetPt_k - recoJetPt_i)/(0.5*(recoJetPt_k + recoJetPt_i))  < 0.42) ) hasSubleadingJet = true;
+
+	  // the following line checks for subleading jets. The 0.42 value comes from recoJetPt_k = 120, recoJetPt_i = 50, which is the back-to-back average
+	  if((dPhi_ik > 7.*TMath::Pi() / 8.) && (TMath::Abs(recoJetPt_k - recoJetPt_i)/(0.5*(recoJetPt_k + recoJetPt_i))  < 0.42) ) hasSubleadingJet = true;
 	  
 	}
 	
