@@ -395,7 +395,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 						   fillMu12);
 
     //TString suffixEdit = "_pfCandAnalyzer";
-    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_PFPT-15";
+    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_MixedEvent_PFPT-15";
     
     TString output = Form("%s%s%s/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
     //TString output = Form("%s%s_ultraFineCentBins/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),group);
@@ -1344,28 +1344,31 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	double randPhi_k = 2*pi*randomGenerator->Rndm() - pi;
 	double pseudoJetPt_k = 0.;
 
-	int mixedEventIterator = 1;
 	int mixedEventIndex = 0;
 	for(int j = 0; j < em->nPFpart; j++){
 
-	  // if(j>0){
-	  //   if((evi + j) > NEvents) mixedEventIndex = (evi + j) - NEvents;
-	  //   else mixedEventIndex = evi + j;
-	  //   em->getEvent(mixedEventIndex);
-	  // }
+	  if(j>0){
+	    if((evi + j) > NEvents) mixedEventIndex = (evi + j) - NEvents;
+	    else mixedEventIndex = evi + j;
+	    em->getEvent(mixedEventIndex);
+	  }
 
-	  // if(em->nPFpart == 0) continue;
-	  // int randPFCandIndex = 0 + ( std::rand() % (em->nPFpart-1 - 0 + 1) );
+	  if(em->nPFpart == 0) continue;
+
+	  //int randPFCandIndex = 0 + ( std::rand() % (em->nPFpart-1 - 0 + 1) );
+	  std::mt19937 rng(std::random_device{}());
+	  std::uniform_int_distribution<int> dist(0, em->nPFpart - 1);
+	  int randPFCandIndex = dist(rng);
 	  
-	  // double pfPt_j = em->pfPt->at(randPFCandIndex);
-	  // double pfEta_j = em->pfEta->at(randPFCandIndex);
-	  // double pfPhi_j = em->pfPhi->at(randPFCandIndex);
-	  // double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
-
-	  double pfPt_j = em->pfPt->at(j);
-	  double pfEta_j = em->pfEta->at(j);
-	  double pfPhi_j = em->pfPhi->at(j);
+	  double pfPt_j = em->pfPt->at(randPFCandIndex);
+	  double pfEta_j = em->pfEta->at(randPFCandIndex);
+	  double pfPhi_j = em->pfPhi->at(randPFCandIndex);
 	  double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
+
+	  // double pfPt_j = em->pfPt->at(j);
+	  // double pfEta_j = em->pfEta->at(j);
+	  // double pfPhi_j = em->pfPhi->at(j);
+	  // double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
 
 	  if(pfPt_j > psuedoJetCandPt_min && dR_kj < dR_max){
 
