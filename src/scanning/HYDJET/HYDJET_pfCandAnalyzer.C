@@ -117,6 +117,7 @@ TF1 *fitFxn_PYTHIAHYDJET_HLT_C4, *fitFxn_PYTHIAHYDJET_HLT_C3, *fitFxn_PYTHIAHYDJ
 #include "../../../headers/introductions/printIntroduction_PYTHIAHYDJET_scan_V3p7.h"
 // analysis config
 #include "../../../headers/config/config_HYDJET.h"
+#include "../../../headers/config/config_HYDJET_pfCandAnalyzer.h"
 // read config
 #include "../../../headers/config/readConfig.h"
 // remove HYDJET jets function
@@ -1363,30 +1364,32 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	while(sampledCandidates < NCandidatesToSample){ // loop through until I have built up enough PF candidates
 
 	  
-	  
-	  // if(j>0){
-	  //   mixedEventIndex = (evi + j) % NEvents;
-	  //   if(mixedEventIndex == evi){ j++; continue;} // skip this event if it's not a unique event
-	  //   em->getEvent(mixedEventIndex);
-	  //   mixedEventCentralityIndex = getCentBin(em->hiBin - hiBinShift);
-	  //   if(mixedEventCentralityIndex != CentralityIndex){ j++; continue;} // skip this event if the centrality doesn't match
+	  if(doEventMixing){
+	    if(j>0){
+	      mixedEventIndex = (evi + j) % NEvents;
+	      if(mixedEventIndex == evi){ j++; continue;} // skip this event if it's not a unique event
+	      em->getEvent(mixedEventIndex);
+	      mixedEventCentralityIndex = getCentBin(em->hiBin - hiBinShift);
+	      if(mixedEventCentralityIndex != CentralityIndex){ j++; continue;} // skip this event if the centrality doesn't match
 	    
-	  // }
+	    }
+	  }
+	  else{
+
+
+	  }
 
 	  if(em->nPFpart == 0) { j++; continue;}
 
 	  // grab a random PF candidate from this event
 	  std::uniform_int_distribution<int> dist(0, em->nPFpart - 1);
 	  int randPFCandIndex = dist(rng);
-	  
-	  // double pfPt_j = em->pfPt->at(randPFCandIndex);
-	  // double pfEta_j = em->pfEta->at(randPFCandIndex);
-	  // double pfPhi_j = em->pfPhi->at(randPFCandIndex);
-	  // double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
+	  int candidateIndex = j;
+	  if(doEventMixing) candidateIndex = randPFCandIndex;
 
-	  double pfPt_j = em->pfPt->at(j);
-	  double pfEta_j = em->pfEta->at(j);
-	  double pfPhi_j = em->pfPhi->at(j);
+	  double pfPt_j = em->pfPt->at(candidateIndex);
+	  double pfEta_j = em->pfEta->at(candidateIndex);
+	  double pfPhi_j = em->pfPhi->at(candidateIndex);
 	  double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
 
 	  sampledCandidates++;
