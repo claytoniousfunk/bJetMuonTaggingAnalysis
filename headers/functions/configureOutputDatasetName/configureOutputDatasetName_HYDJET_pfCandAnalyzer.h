@@ -41,7 +41,8 @@ TString configureOutputDatasetName(TString generator,
 				   bool fillMu7,
 				   bool fillMu12,
 				   double pseudoJetCandPt_min,
-				   bool doEventMixing)
+				   bool doEventMixing,
+				   double subleadingPFCandPt_min)
 {
 
   TString result = "output";
@@ -85,7 +86,8 @@ TString configureOutputDatasetName(TString generator,
   if(doBJetNeutrinoEnergyShift) result.Append("_BJetNeutrinoEnergyShift");
   if(doEventMixing) result.Append(Form("_mixedEventPseudoJets"));
   if(!doEventMixing) result.Append(Form("_sameEventPseudoJets"));
-  result.Append(Form("_pseudoJetPtMin-%1.1f",pseudoJetCandPt_min));
+  result.Append(Form("_pseudoJetCandPtMin-%1.1f",pseudoJetCandPt_min));
+  result.Append(Form("_subleadingPFCandPtMin-%2.0f",subleadingPFCandPt_min));
   
   TDatime dt;
   result.Append(Form("_%i-%i-%i",dt.GetYear(),dt.GetMonth(),dt.GetDay()));

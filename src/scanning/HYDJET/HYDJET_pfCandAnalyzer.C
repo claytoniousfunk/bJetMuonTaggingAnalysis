@@ -339,16 +339,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
     if(ifile != group) continue;
 
     std::string input = filename.c_str();  
-  
-    // TString inputDataset = "";
-    // TString inputFileName = "";
-
-    // inputDataset = getDatasetName();
-
-    // inputFileName = getInputFileName();
-
-    // TString input = Form("%s%s_%i.root",inputDataset.Data(),inputFileName.Data(),group);
-
+ 
     std::cout << "input dataset = " << input << std::endl;
 
     TString outputBaseDir = "/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/";
@@ -396,10 +387,11 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 						   fillMu7,
 						   fillMu12,
 						   pseudoJetCandPt_min,
-						   doEventMixing);
+						   doEventMixing,
+						   subleadingPFCandPt_min);
 
     //TString suffixEdit = "_pfCandAnalyzer";
-    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_PFPT-15";
+    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer";
     //TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_MixedEvent_PFPT-15";
     
     TString output = Form("%s%s%s/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
@@ -411,19 +403,6 @@ void HYDJET_pfCandAnalyzer(int group = 1){
       std::cout << "\033[1;31m Output directory not found: \033[0m " << Form("%s%s%s",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data()) << std::endl;
       return;
     }
-  
-    // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_DiJet_withGS_withWTA_2/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-    // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_DiJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_vzReweight_hiBinReweight_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_noHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);
-
-    // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_MuJet_withGS_withWTA_2/PYTHIAHYDJET_MuJet_skim_output_%i.root",group);
-    // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_MuJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_vzReweight_hiBinReweight_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_noHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);
-
-    // TString input = Form("/eos/user/c/cbennett/skims/output_PYTHIAHYDJET_BJet_withGS_withWTA_2/PYTHIAHYDJET_BJet_skim_output_%i.root",group);
-    // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PYTHIAHYDJET_BJet_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_vzReweight_hiBinReweight_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_noHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);  
-
-    // TString input = Form("/eos/cms/store/group/phys_heavyions/cbennett/skims/dripping-tap/output_skim_PH_DiJet_batch15/PYTHIAHYDJET_DiJet_skim_output_%i.root",group);
-    // TString output = Form("/eos/cms/store/group/phys_heavyions/cbennett/scanningOutput/output_PH_DiJet_batch15_withGS_scan_mu12_tight_pTmu-14_pThat-15_hiHFcut_vzReweight_hiBinReweight_jetTrkMaxFilter_removeHYDJETjet0p45_fineCentBins_projectableTemplates_allTemplates_noHiBinShift/PYTHIAHYDJET_scan_output_%i.root",group);
-
   
   
     // JET ENERGY CORRECTIONS
