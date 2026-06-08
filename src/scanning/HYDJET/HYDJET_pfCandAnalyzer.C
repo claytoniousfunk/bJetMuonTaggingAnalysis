@@ -124,7 +124,7 @@ TF1 *fitFxn_PYTHIAHYDJET_HLT_C4, *fitFxn_PYTHIAHYDJET_HLT_C3, *fitFxn_PYTHIAHYDJ
 // dataset naming functions
 #include "../../../headers/functions/getDatasetName/getDatasetName_HYDJET.h"
 #include "../../../headers/functions/getInputFileName/getInputFileName_HYDJET.h"
-#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_HYDJET.h"
+#include "../../../headers/functions/configureOutputDatasetName/configureOutputDatasetName_HYDJET_pfCandAnalyzer.h"
 
 //~~~~~~~~~~~  initialize histograms ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // >>>>>>>>>> Reco jets
@@ -393,7 +393,8 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 						   muPtMaxCut,
 						   fillMu5,
 						   fillMu7,
-						   fillMu12);
+						   fillMu12,
+						   pseudoJetCandPt_min);
 
     //TString suffixEdit = "_pfCandAnalyzer";
     TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_PFPT-15";
