@@ -395,7 +395,8 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 						   fillMu5,
 						   fillMu7,
 						   fillMu12,
-						   pseudoJetCandPt_min);
+						   pseudoJetCandPt_min,
+						   doEventMixing);
 
     //TString suffixEdit = "_pfCandAnalyzer";
     TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_PFPT-15";
