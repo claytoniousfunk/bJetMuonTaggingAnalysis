@@ -391,7 +391,8 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 						   subleadingPFCandPt_min);
 
     //TString suffixEdit = "_pfCandAnalyzer";
-    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer";
+    //TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer";
+    TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzerCS";
     //TString suffixEdit = "_ultraFineCentBins_pfCandAnalyzer_MixedEvent_PFPT-15";
     
     TString output = Form("%s%s%s/HYDJET_scan_output_%i.root",outputBaseDir.Data(),outputDatasetName.Data(),suffixEdit.Data(),group);
@@ -1112,8 +1113,8 @@ void HYDJET_pfCandAnalyzer(int group = 1){
     cout << "	Number of events = " << NEvents << endl;
     int NJets = em->recoJetTree->GetEntries();
     cout << "     Number of jets = " << NJets << endl;
-    //em->loadParticleFlowAnalyzer("pfcandAnalyzerCS");
-    em->loadParticleFlowAnalyzer("pfcandAnalyzer");
+    em->loadParticleFlowAnalyzer("pfcandAnalyzerCS");
+    //em->loadParticleFlowAnalyzer("pfcandAnalyzer");
 
     // define event filters
     em->regEventFilter(NeventFilters, eventFilters);
