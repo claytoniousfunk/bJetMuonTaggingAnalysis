@@ -1,3 +1,6 @@
+const int NJetPtIndices = 7;
+const int NJetFlavorIndices = 7;
+
 //flavors
 
 int isUJet = 1;
