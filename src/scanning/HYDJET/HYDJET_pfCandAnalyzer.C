@@ -1356,7 +1356,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	int mixedEventCentralityIndex = 0;
 
 	int j = 0;
-	while(sampledCandidates < NCandidatesToSample && j < 10*NEvents){ // loop through until I have built up enough PF candidates
+	while(sampledCandidates < NCandidatesToSample){ // loop through until I have built up enough PF candidates
 
 	  
 	  
