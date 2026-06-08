@@ -37,9 +37,10 @@
 // jet uncertainty
 #include "../../../JetEnergyCorrections/JetUncertainty.h"
 // general analysis variables
-//#include "../../../headers/AnalysisSetupV2p2.h" // coarse centrality bins
-//#include "../../../headers/AnalysisSetupV2p3.h" // nominal centrality bins
-#include "../../../headers/AnalysisSetupV2p4.h" // fine centrality bins
+#include "../../../headers/AnalysisSetup/common.h"
+#include "../../../headers/AnalysisSetup/centrality_ultraFineCentBins.h"
+#include "../../../headers/AnalysisSetup/pseudoJets.h"
+
 // vz-fit parameters
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu5.h"
 //#include "../../../headers/fitParameters/vzFitParams_PH_mu7.h"
@@ -1338,7 +1339,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
       ///// Psuedo Jet Calculator  
 
       int N_generatedPseudoJets = 10; // define how many psuedo jets to create
-      double pseudoJetCandPt_min = 0.0;
+
       std::mt19937 rng(std::random_device{}());
       
       for(int k = 0; k < N_generatedPseudoJets; k++){
