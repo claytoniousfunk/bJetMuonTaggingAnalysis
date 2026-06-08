@@ -1360,14 +1360,14 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 
 	  
 	  
-	  // if(j>0){
-	  //   mixedEventIndex = (evi + j) % NEvents;
-	  //   if(mixedEventIndex == evi){ j++; continue;} // skip this event if it's not a unique event
-	  //   em->getEvent(mixedEventIndex);
-	  //   mixedEventCentralityIndex = getCentBin(em->hiBin - hiBinShift);
-	  //   if(mixedEventCentralityIndex != CentralityIndex){ j++; continue;} // skip this event if the centrality doesn't match
+	  if(j>0){
+	    mixedEventIndex = (evi + j) % NEvents;
+	    if(mixedEventIndex == evi){ j++; continue;} // skip this event if it's not a unique event
+	    em->getEvent(mixedEventIndex);
+	    mixedEventCentralityIndex = getCentBin(em->hiBin - hiBinShift);
+	    if(mixedEventCentralityIndex != CentralityIndex){ j++; continue;} // skip this event if the centrality doesn't match
 	    
-	  // }
+	  }
 
 	  if(em->nPFpart == 0) { j++; continue;}
 
@@ -1375,15 +1375,15 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	  std::uniform_int_distribution<int> dist(0, em->nPFpart - 1);
 	  int randPFCandIndex = dist(rng);
 	  
-	  // double pfPt_j = em->pfPt->at(randPFCandIndex);
-	  // double pfEta_j = em->pfEta->at(randPFCandIndex);
-	  // double pfPhi_j = em->pfPhi->at(randPFCandIndex);
-	  // double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
-
-	  double pfPt_j = em->pfPt->at(j);
-	  double pfEta_j = em->pfEta->at(j);
-	  double pfPhi_j = em->pfPhi->at(j);
+	  double pfPt_j = em->pfPt->at(randPFCandIndex);
+	  double pfEta_j = em->pfEta->at(randPFCandIndex);
+	  double pfPhi_j = em->pfPhi->at(randPFCandIndex);
 	  double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
+
+	  // double pfPt_j = em->pfPt->at(j);
+	  // double pfEta_j = em->pfEta->at(j);
+	  // double pfPhi_j = em->pfPhi->at(j);
+	  // double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
 
 	  sampledCandidates++;
 	  j++;
