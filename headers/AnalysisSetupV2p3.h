@@ -164,5 +164,7 @@ const double weightCut = 0.07;
 const int NTemplateIndices = 4;
 const string templateIndexNames[NTemplateIndices] = {"nominal","JERSmear","JEUShiftUp","JEUShiftDown"};
 
+// pfCandidateAnalysis variables
+double pseudoJetCandPt_min = 0.0;
 
 
