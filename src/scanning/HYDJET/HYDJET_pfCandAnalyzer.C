@@ -1335,28 +1335,43 @@ void HYDJET_pfCandAnalyzer(int group = 1){
       ///// PF Candidate Analyzer
       ///// Psuedo Jet Calculator  
 
-      int N_generatedPseudoJets = 100; // define how many psuedo jets to create
-      double psuedoJetCandPt_min = 1.0;
-
+      int N_generatedPseudoJets = 10; // define how many psuedo jets to create
+      double pseudoJetCandPt_min = 1.0;
+      std::mt19937 rng(std::random_device{}());
+      
       for(int k = 0; k < N_generatedPseudoJets; k++){
 
+	// sample a random point in eta/phi space
 	double randEta_k = 3.2*randomGenerator->Rndm() - 1.6;
 	double randPhi_k = 2*pi*randomGenerator->Rndm() - pi;
+
+	// define pT of our pseudoJet
 	double pseudoJetPt_k = 0.;
 
-	int mixedEventIndex = 0;
-	for(int j = 0; j < em->nPFpart; j++){
+	// how many canidates we wish to sample for this event
+	int NCandidatesToSample = em->nPFpart;
+	int sampledCandidates = 0;
 
+	int mixedEventIndex = 0;
+	int mixedEventCentralityIndex = 0;
+
+	int j = 0;
+	while(sampledCandidates < NCandidatesToSample && j < 10*NEvents){ // loop through until I have built up enough PF candidates
+
+	  
+	  
 	  if(j>0){
-	    if((evi + j) > NEvents) mixedEventIndex = (evi + j) - NEvents;
-	    else mixedEventIndex = evi + j;
+	    mixedEventIndex = (evi + j) % NEvents;
+	    if(mixedEventIndex == evi){ j++; continue;} // skip this event if it's not a unique event
 	    em->getEvent(mixedEventIndex);
+	    mixedEventCentralityIndex = getCentBin(em->hiBin - hiBinShift);
+	    if(mixedEventCentralityIndex != CentralityIndex){ j++; continue;} // skip this event if the centrality doesn't match
+	    
 	  }
 
-	  if(em->nPFpart == 0) continue;
+	  if(em->nPFpart == 0) { j++; continue;}
 
-	  //int randPFCandIndex = 0 + ( std::rand() % (em->nPFpart-1 - 0 + 1) );
-	  std::mt19937 rng(std::random_device{}());
+	  // grab a random PF candidate from this event
 	  std::uniform_int_distribution<int> dist(0, em->nPFpart - 1);
 	  int randPFCandIndex = dist(rng);
 	  
@@ -1365,12 +1380,11 @@ void HYDJET_pfCandAnalyzer(int group = 1){
 	  double pfPhi_j = em->pfPhi->at(randPFCandIndex);
 	  double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
 
-	  // double pfPt_j = em->pfPt->at(j);
-	  // double pfEta_j = em->pfEta->at(j);
-	  // double pfPhi_j = em->pfPhi->at(j);
-	  // double dR_kj = getDr(randEta_k,randPhi_k,pfEta_j,pfPhi_j);
+	  sampledCandidates++;
+	  j++;
 
-	  if(pfPt_j > psuedoJetCandPt_min && dR_kj < dR_max){
+	  // check if random PF candidate falls within pseudoJet cone, add to pseudoJetPt if so
+	  if(pfPt_j > pseudoJetCandPt_min && dR_kj < dR_max){
 
 	    h_pfPt[0]->Fill(pfPt_j,w);
 	    h_pfPt[CentralityIndex]->Fill(pfPt_j,w);
