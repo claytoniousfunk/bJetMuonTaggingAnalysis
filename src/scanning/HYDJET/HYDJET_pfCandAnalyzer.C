@@ -1335,7 +1335,7 @@ void HYDJET_pfCandAnalyzer(int group = 1){
       ///// PF Candidate Analyzer
       ///// Psuedo Jet Calculator  
 
-      int N_generatedPseudoJets = 1; // define how many psuedo jets to create
+      int N_generatedPseudoJets = 10; // define how many psuedo jets to create
       double pseudoJetCandPt_min = 1.0;
       std::mt19937 rng(std::random_device{}());
       
